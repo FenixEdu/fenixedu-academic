@@ -5,6 +5,7 @@ package net.sourceforge.fenixedu.presentationTier.renderers.inquiries;
 
 import net.sourceforge.fenixedu.dataTransferObject.inquiries.InquiryQuestionDTO;
 import net.sourceforge.fenixedu.domain.inquiries.InquiryQuestionHeader;
+import net.sourceforge.fenixedu.domain.inquiries.InquiryRadioGroupQuestion;
 import net.sourceforge.fenixedu.domain.inquiries.QuestionScale;
 
 import org.apache.commons.lang.StringUtils;
@@ -48,6 +49,9 @@ public class InquiryRadioGroupQuestionRenderer extends InputRenderer {
 		for (int iter = 0; iter < choices.getScaleLength(); iter++) {
 		    HtmlRadioButton button = group.createRadioButton();
 		    button.setUserValue(choices.getScaleValues()[iter]);
+		    if (!((InquiryRadioGroupQuestion) radioQuestion.getInquiryQuestion()).getIsMatrix()) {
+			button.setText(choices.getScale()[iter].toString());
+		    }
 		    if (!StringUtils.isEmpty(radioQuestion.getResponseValue())
 			    && choices.getScaleValues()[iter].equals(radioQuestion.getResponseValue())) {
 			button.setChecked(true);

@@ -8211,7 +8211,22 @@ class inquiries.InquiryTemplate extends DomainObject {
 	}
 	
 	class inquiries.ResultsInquiryTemplate extends inquiries.InquiryTemplate {
-	}	
+	}
+	
+	class inquiries.StudentRegistrationInquiryTemplate extends inquiries.InquiryTemplate {
+	}
+	
+	class inquiries.StudentCycleInquiryTemplate extends inquiries.InquiryTemplate {	
+	}
+	
+		class inquiries.Student1rstCycleInquiryTemplate extends inquiries.StudentCycleInquiryTemplate {	
+		}
+		
+		class inquiries.Student1rstAnd2ndCycleInquiryTemplate extends inquiries.StudentCycleInquiryTemplate {	
+		}
+		
+		class inquiries.StudentOtherCycleInquiryTemplate extends inquiries.StudentCycleInquiryTemplate {	
+		}
 	
 class inquiries.InquiryBlock extends DomainObject {	
 	Integer blockOrder;
@@ -8249,6 +8264,7 @@ class inquiries.InquiryQuestion extends DomainObject {
 	}
 	
 	class inquiries.InquiryRadioGroupQuestion extends inquiries.InquiryQuestion {
+		Boolean isMatrix;
 	}
 
 class inquiries.QuestionCondition extends DomainObject {	
@@ -8318,6 +8334,18 @@ class inquiries.InquiryAnswer extends DomainObject {
 	
 	class inquiries.InquiryCoordinatorAnswer extends inquiries.InquiryAnswer {	
 	}
+	
+	class inquiries.InquiryStudentCycleAnswer extends inquiries.InquiryAnswer {	
+	}
+	
+		class inquiries.InquiryStudent1rstCycleAnswer extends inquiries.InquiryStudentCycleAnswer {	
+		}
+		
+		class inquiries.InquiryStudent1rstAnd2ndCycleAnswer extends inquiries.InquiryStudentCycleAnswer {	
+		}
+		
+		class inquiries.InquiryStudentOtherCycleAnswer extends inquiries.InquiryStudentCycleAnswer {	
+		}
 
 class inquiries.QuestionAnswer extends DomainObject {
 	String answer;    
@@ -8858,6 +8886,13 @@ relation InquiryRegentAnswerProfessorship {
         multiplicity 1..1;
     }
 	inquiries.InquiryRegentAnswer playsRole inquiryRegentAnswer;
+}
+
+relation InquiryStudentCycleAnswerRegistration {
+	student.Registration playsRole registration {
+        multiplicity 1..1;
+    }
+	inquiries.InquiryStudentCycleAnswer playsRole inquiryStudentCycleAnswer;
 }
 
 relation InquiryCoordinatorAnswerCoordinator {
@@ -21083,6 +21118,13 @@ relation DegreeDesignationDegreeClassification {
     raides.DegreeDesignation playsRole degreeDesignations {
         multiplicity *;
     }
+}
+
+relation UnitDegreeDesignation {
+    raides.DegreeDesignation playsRole degreesDesignations {
+        multiplicity *;
+    }
+    organizationalStructure.Unit playsRole institution;
 }
 
 relation RootDomainObjectPersonalIngressionData {

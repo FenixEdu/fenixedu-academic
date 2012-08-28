@@ -24,9 +24,9 @@ import pt.ist.fenixWebFramework.renderers.components.HtmlRadioButton;
 import pt.ist.fenixWebFramework.renderers.components.HtmlRadioButtonGroup;
 import pt.ist.fenixWebFramework.renderers.components.HtmlTable;
 import pt.ist.fenixWebFramework.renderers.components.HtmlTableCell;
+import pt.ist.fenixWebFramework.renderers.components.HtmlTableCell.CellType;
 import pt.ist.fenixWebFramework.renderers.components.HtmlTableRow;
 import pt.ist.fenixWebFramework.renderers.components.HtmlText;
-import pt.ist.fenixWebFramework.renderers.components.HtmlTableCell.CellType;
 import pt.ist.fenixWebFramework.renderers.contexts.PresentationContext;
 import pt.ist.fenixWebFramework.renderers.layouts.Layout;
 import pt.ist.fenixWebFramework.renderers.model.MetaObject;
@@ -179,8 +179,10 @@ public class InquiryGroupQuestionRenderer extends InputRenderer {
 		    properties.put("readOnly", isReadOnly());
 		    newContext.setProperties(properties);
 
+		    InquiryRadioGroupQuestion radioGroupQuestion = (InquiryRadioGroupQuestion) inquiryQuestion
+			    .getInquiryQuestion();
 		    formComponent = (HtmlFormComponent) kit.render(newContext, metaSlot.getObject(), metaSlot.getType());
-		    boolean hasGroupQuestionContions = inquiryQuestion.getInquiryQuestion().hasGroupDependentQuestionCondition();
+		    boolean hasGroupQuestionContions = radioGroupQuestion.hasGroupDependentQuestionCondition();
 		    int iter = 0;
 		    for (HtmlRadioButton htmlRadioButton : ((HtmlRadioButtonGroup) formComponent).getRadioButtons()) {
 			htmlRadioButton.bind(metaSlot);
@@ -189,8 +191,21 @@ public class InquiryGroupQuestionRenderer extends InputRenderer {
 			    htmlRadioButton.setOnDblClick(getOnclickJS());
 			}
 			htmlRadioButton.setDisabled(isReadOnly());
-			questionRow.createCell().setBody(htmlRadioButton);
-			iter++;
+
+			if (radioGroupQuestion.getIsMatrix()) {
+			    questionRow.createCell().setBody(htmlRadioButton);
+			    iter++;
+			} else {
+			    HtmlTableRow radioRow = mainTable.createRow();
+			    HtmlTableCell firstCell = radioRow.createCell(CellType.HEADER);
+			    firstCell.setBody(new HtmlText(htmlRadioButton.getText()));
+			    firstCell.addClass("firstcol");
+			    htmlRadioButton.setText(null); //removing the label, so that it only appears in the right place
+			    radioRow.createCell().setBody(htmlRadioButton);
+			    labelCell.setColspan(2); //to adjust
+			    applyStyles(radioRow);
+			    iter = 1;
+			}
 		    }
 
 		    setColNumber(iter);
@@ -262,6 +277,11 @@ public class InquiryGroupQuestionRenderer extends InputRenderer {
 
 	private void createHeaderRow(final InquiryQuestionHeader inquiryQuestionHeader, final HtmlTable mainTable,
 		boolean required, String[] conditionValues, InquiryQuestion inquiryQuestion) {
+	    if (inquiryQuestion instanceof InquiryRadioGroupQuestion) {
+		if (!((InquiryRadioGroupQuestion) inquiryQuestion).getIsMatrix()) {
+		    return;
+		}
+	    }
 	    final HtmlTableRow headerRow = mainTable.createRow();
 
 	    final HtmlTableCell firstHeaderCell = headerRow.createCell(CellType.HEADER);

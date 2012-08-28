@@ -51,5 +51,7 @@
         <put name="body" value="/candidate/degree/showOperationFinished.jsp"></put>
     </definition>
    
-    
+    <definition name="degreeCandidacy.fill.inquiry" extends="candidate.masterPage">
+        <put name="body" value="/candidate/degree/fillFirstTimeCycleInquiry.jsp"></put>
+    </definition>
 </tiles-definitions>

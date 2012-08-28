@@ -1,4 +1,5 @@
 <%@ page language="java"%>
+<%@ page isELIgnored="true"%>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
 <html:xhtml />
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
@@ -6,9 +7,9 @@
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr"%>
 
 <bean:define id="currentFormPosition" name="operation" property="currentFormPosition" />
-<bean:define id="totalForms" name="operation" property="totalForms" />
+<bean:define id="totalForms" name="operation" property="totalForms" type="java.lang.Integer"/>
 <h2>
-	<bean:message name="operation" property="type.qualifiedName" bundle="ENUMERATION_RESOURCES"/> (<bean:write name="currentFormPosition"/>/<bean:write name="totalForms"/>)
+	<bean:message name="operation" property="type.qualifiedName" bundle="ENUMERATION_RESOURCES"/> (<bean:write name="currentFormPosition"/>/<%= String.valueOf(totalForms + 1) %>)
 </h2>
 
 <h3 class="mtop15">

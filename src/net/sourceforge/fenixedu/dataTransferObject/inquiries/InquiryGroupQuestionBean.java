@@ -46,6 +46,14 @@ public class InquiryGroupQuestionBean implements Serializable {
 	}
     }
 
+    public InquiryGroupQuestionBean(InquiryGroupQuestion inquiryGroupQuestion) {
+	initGroup(inquiryGroupQuestion);
+	setVisible(true);
+	for (InquiryQuestion inquiryQuestion : inquiryGroupQuestion.getInquiryQuestions()) {
+	    getInquiryQuestions().add(new InquiryQuestionDTO(inquiryQuestion));
+	}
+    }
+
     private void initGroup(InquiryGroupQuestion groupQuestion) {
 	setInquiryGroupQuestion(groupQuestion);
 	setInquiryQuestions(new TreeSet<InquiryQuestionDTO>(new BeanComparator("inquiryQuestion.questionOrder")));
@@ -58,7 +66,7 @@ public class InquiryGroupQuestionBean implements Serializable {
 	setConditionValues(getInquiryGroupQuestion().getConditionValues(studentInquiryRegistry));
     }
 
-    //validação para parte curricular do aluno, qd depender de resultados de respostas tem q se adaptar isto
+    //TODO validação para parte curricular do aluno, qd depender de resultados de respostas tem q se adaptar isto
     public String validate(Set<InquiryBlockDTO> inquiryBlocks) {
 	if (isVisible()) {
 	    Set<InquiryQuestionDTO> questions = getInquiryQuestions();

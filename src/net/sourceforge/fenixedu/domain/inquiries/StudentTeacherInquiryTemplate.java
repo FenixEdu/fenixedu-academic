@@ -9,15 +9,9 @@ import org.joda.time.DateTime;
 
 public class StudentTeacherInquiryTemplate extends StudentTeacherInquiryTemplate_Base {
 
-    public StudentTeacherInquiryTemplate() {
-	super();
-    }
-
     public StudentTeacherInquiryTemplate(DateTime begin, DateTime end) {
-	this();
-	validateInquiryPeriod(begin, end);
-	setResponsePeriodBegin(begin);
-	setResponsePeriodEnd(end);
+	super();
+	init(begin, end);
     }
 
     public static StudentTeacherInquiryTemplate getCurrentTemplate() {

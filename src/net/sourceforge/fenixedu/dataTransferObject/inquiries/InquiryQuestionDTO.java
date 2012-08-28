@@ -35,6 +35,11 @@ public class InquiryQuestionDTO implements Serializable {
 	}
     }
 
+    public InquiryQuestionDTO(InquiryQuestion inquiryQuestion) {
+	setInquiryQuestion(inquiryQuestion);
+	setVisible(true);
+    }
+
     private void setConditionOptions(StudentInquiryRegistry studentInquiryRegistry) {
 	setVisible(getInquiryQuestion().isVisible(studentInquiryRegistry));
 	setConditionValues(getInquiryQuestion().getConditionValues(studentInquiryRegistry));

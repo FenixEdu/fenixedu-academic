@@ -36,6 +36,13 @@ public class InquiryBlockDTO implements Serializable {
 	}
     }
 
+    public InquiryBlockDTO(InquiryBlock inquiryBlock) {
+	initBlock(inquiryBlock);
+	for (InquiryGroupQuestion inquiryGroupQuestion : inquiryBlock.getInquiryGroupsQuestionsSet()) {
+	    getInquiryGroups().add(new InquiryGroupQuestionBean(inquiryGroupQuestion));
+	}
+    }
+
     private void initBlock(InquiryBlock inquiryBlock) {
 	setInquiryBlock(inquiryBlock);
 	ComparatorChain comparatorChain = new ComparatorChain();

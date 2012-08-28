@@ -43,3 +43,4 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "Adjust Inquiry Model" alterInquiryModel.sql

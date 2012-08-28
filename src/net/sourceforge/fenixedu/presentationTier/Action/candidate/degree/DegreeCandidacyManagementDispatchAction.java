@@ -20,6 +20,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.candidacy.LogFirstTimeCa
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.student.ReadStudentTimeTable;
 import net.sourceforge.fenixedu.dataTransferObject.InfoLesson;
+import net.sourceforge.fenixedu.dataTransferObject.inquiries.StudentFirstTimeCycleInquiryBean;
 import net.sourceforge.fenixedu.domain.accounting.PaymentCode;
 import net.sourceforge.fenixedu.domain.accounting.PaymentCodeType;
 import net.sourceforge.fenixedu.domain.accounting.installments.InstallmentForFirstTimeStudents;
@@ -30,6 +31,7 @@ import net.sourceforge.fenixedu.domain.candidacy.FirstTimeCandidacyStage;
 import net.sourceforge.fenixedu.domain.candidacy.StudentCandidacy;
 import net.sourceforge.fenixedu.domain.candidacy.workflow.CandidacyOperation;
 import net.sourceforge.fenixedu.domain.candidacy.workflow.PrintAllDocumentsOperation;
+import net.sourceforge.fenixedu.domain.inquiries.Student1rstCycleInquiryTemplate;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.util.workflow.Form;
@@ -81,7 +83,8 @@ public class DegreeCandidacyManagementDispatchAction extends FenixDispatchAction
 	request.setAttribute("candidacy", getCandidacy(request));
 	request.setAttribute("schemaSuffix", getSchemaSuffixForPerson(request));
 
-	if (operation != null && operation.isInput()) {
+	if (operation != null && operation.isInput()
+		&& !operation.getType().equals(CandidacyOperationType.FIRST_TIME_CYLE_INQUIRY)) {
 	    LogFirstTimeCandidacyTimestamp.logTimestamp(getCandidacy(request), FirstTimeCandidacyStage.STARTED_FILLING_FORMS);
 	    request.setAttribute("currentForm", operation.moveToNextForm());
 	    return mapping.findForward("fillData");
@@ -114,19 +117,66 @@ public class DegreeCandidacyManagementDispatchAction extends FenixDispatchAction
 	} else {
 	    final StudentCandidacy candidacy = getCandidacy(request);
 	    if (candidacy.isConcluded()) {
-		request.setAttribute("schemaSuffix", getSchemaSuffixForPerson(request));
-		request.setAttribute("candidacyID", candidacy.getIdInternal());
 
-		addActionMessage(request, "warning.candidacy.process.is.already.concluded");
+		if (candidacy.getRegistration().hasAnyStudentsInquiryRegistries()) {
 
-		return showCandidacyDetails(mapping, actionForm, request, response);
+		    request.setAttribute("schemaSuffix", getSchemaSuffixForPerson(request));
+		    request.setAttribute("candidacyID", candidacy.getIdInternal());
+
+		    addActionMessage(request, "warning.candidacy.process.is.already.concluded");
+
+		    return showCandidacyDetails(mapping, actionForm, request, response);
+
+		} else {
+		    return processInquiry(candidacy, mapping, request);
+		}
 	    }
 
 	    executeOperation(mapping, actionForm, request, response, operation);
 	    LogFirstTimeCandidacyTimestamp.logTimestamp(candidacy, FirstTimeCandidacyStage.FINISHED_FILLING_FORMS);
 
-	    return new ActionForward(buildSummaryPdfGeneratorURL(request, candidacy), true);
+	    return processInquiry(candidacy, mapping, request);
 	}
+    }
+
+    private ActionForward processInquiry(StudentCandidacy candidacy, ActionMapping mapping, HttpServletRequest request) {
+	Student1rstCycleInquiryTemplate currentTemplate = Student1rstCycleInquiryTemplate.getCurrentTemplate();
+	StudentFirstTimeCycleInquiryBean studentInquiryBean = new StudentFirstTimeCycleInquiryBean(currentTemplate,
+		candidacy.getRegistration());
+	studentInquiryBean.setCandidacy(candidacy);
+	request.setAttribute("studentInquiryBean", studentInquiryBean);
+
+	return mapping.findForward("firstTimeCyleInquiry");
+    }
+
+    public ActionForward saveInquiry(ActionMapping actionMapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
+
+	final StudentFirstTimeCycleInquiryBean studentInquiryBean = getRenderedObject("studentInquiryBean");
+	RenderUtils.invalidateViewState();
+	String validationResult = studentInquiryBean.validateInquiry();
+	if (!Boolean.valueOf(validationResult)) {
+	    if (!validationResult.equalsIgnoreCase("false")) {
+		addActionMessage(request, "error.inquiries.fillInQuestion", validationResult);
+	    } else {
+		addActionMessage(request, "error.inquiries.fillAllRequiredFields");
+	    }
+	    request.setAttribute("studentInquiryBean", studentInquiryBean);
+	    return actionMapping.findForward("firstTimeCyleInquiry");
+	}
+	studentInquiryBean.saveAnswers();
+
+	return new ActionForward(buildSummaryPdfGeneratorURL(request, studentInquiryBean.getCandidacy()), true);
+    }
+
+    public ActionForward postBackStudentInquiry(ActionMapping actionMapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
+	final StudentFirstTimeCycleInquiryBean studentInquiryBean = getRenderedObject("studentInquiryBean");
+	studentInquiryBean.setGroupsVisibility();
+	RenderUtils.invalidateViewState();
+
+	request.setAttribute("studentInquiryBean", studentInquiryBean);
+	return actionMapping.findForward("firstTimeCyleInquiry");
     }
 
     private boolean validateCurrentForm(HttpServletRequest request) {
@@ -134,8 +184,8 @@ public class DegreeCandidacyManagementDispatchAction extends FenixDispatchAction
 		.getObject();
 	final List<LabelFormatter> messages = form.validate();
 	if (!messages.isEmpty()) {
-	    request.setAttribute("formMessages", solveLabelFormatterArgs(request, messages.toArray(new LabelFormatter[messages
-		    .size()])));
+	    request.setAttribute("formMessages",
+		    solveLabelFormatterArgs(request, messages.toArray(new LabelFormatter[messages.size()])));
 	    request.setAttribute("currentForm", form);
 
 	    return false;
@@ -152,8 +202,7 @@ public class DegreeCandidacyManagementDispatchAction extends FenixDispatchAction
 	final IUserView userView = getUserView(request);
 
 	if (candidacyOperation == null) {
-	    // possible due to first-time candidacy summary generation link in
-	    // manager portal
+	    // possible due to first-time candidacy summary generation link in manager portal
 	    candidacyOperation = new PrintAllDocumentsOperation(RoleType.STUDENT, getCandidacy(request));
 	} else {
 	    ExecuteStateOperation.run(candidacyOperation, getLoggedPerson(request));
@@ -192,8 +241,10 @@ public class DegreeCandidacyManagementDispatchAction extends FenixDispatchAction
 		    .getAvailablePaymentCodes()));
 	    request.setAttribute("totalGratuityPaymentCode", totalGratuityPaymentCode(getCandidacy(request)
 		    .getAvailablePaymentCodes()));
-	    request.setAttribute("firstInstallmentEndDate", calculateFirstInstallmentEndDate(getCandidacy(request)
-		    .getRegistration(), getCandidacy(request).getAvailablePaymentCodes()));
+	    request.setAttribute(
+		    "firstInstallmentEndDate",
+		    calculateFirstInstallmentEndDate(getCandidacy(request).getRegistration(), getCandidacy(request)
+			    .getAvailablePaymentCodes()));
 	    request.setAttribute("sibsEntityCode", PropertiesManager.getProperty("sibs.entityCode"));
 
 	    final List<InfoLesson> infoLessons = ReadStudentTimeTable.run(getCandidacy(request).getRegistration());
@@ -206,8 +257,10 @@ public class DegreeCandidacyManagementDispatchAction extends FenixDispatchAction
 	    return mapping.findForward("printSystemAccessData");
 
 	} else if (candidacyOperation.getType() == CandidacyOperationType.FILL_PERSONAL_DATA) {
-	    request.setAttribute("aditionalInformation", getResources(request).getMessage(
-		    "label.candidacy.username.changed.message", userView.getPerson().getIstUsername()));
+	    request.setAttribute(
+		    "aditionalInformation",
+		    getResources(request).getMessage("label.candidacy.username.changed.message",
+			    userView.getPerson().getIstUsername()));
 	} else if (candidacyOperation.getType() == CandidacyOperationType.PRINT_GRATUITY_PAYMENT_CODES) {
 	    request.setAttribute("registration", getCandidacy(request).getRegistration());
 	    request.setAttribute("paymentCodes", getCandidacy(request).getAvailablePaymentCodes());
@@ -219,8 +272,10 @@ public class DegreeCandidacyManagementDispatchAction extends FenixDispatchAction
 	    request.setAttribute("totalGratuityPaymentCode", totalGratuityPaymentCode(getCandidacy(request)
 		    .getAvailablePaymentCodes()));
 
-	    request.setAttribute("firstInstallmentEndDate", calculateFirstInstallmentEndDate(getCandidacy(request)
-		    .getRegistration(), getCandidacy(request).getAvailablePaymentCodes()));
+	    request.setAttribute(
+		    "firstInstallmentEndDate",
+		    calculateFirstInstallmentEndDate(getCandidacy(request).getRegistration(), getCandidacy(request)
+			    .getAvailablePaymentCodes()));
 
 	    return mapping.findForward("printGratuityPaymentCodes");
 
