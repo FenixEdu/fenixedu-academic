@@ -492,32 +492,33 @@ public class Protocol extends Protocol_Base {
     }
 
     @SuppressWarnings("unchecked")
-    public String generateResponsiblesJSON() {
+    public JSONArray generateResponsiblesJSON() {
 
-	Unit ISTUnit = RootDomainObject.getInstance().getInstitutionUnit();
+	final Unit ISTUnit = RootDomainObject.getInstance().getInstitutionUnit();
+
+	final Unit UTLUnit = Unit.fromOID(107374258258l);
 
 	JSONArray jsonArray = new JSONArray();
 
-	boolean hasISTUnit = getUnits().size() == 0;
+	Unit institutionUnit = getUnits().size() == 0 ? ISTUnit : null;
 
 	for (Unit unit : getUnits()) {
-	    if (unit.equals(ISTUnit) || unit.getOID() == 107374258258l) {
-		if (unit.getOID() == 107374258258l)
-		    System.out.println("WARNING: Adding IST unit in place of UTL!");
-		hasISTUnit = true;
+	    if (unit.equals(ISTUnit) || unit.equals(UTLUnit)) {
+		institutionUnit = unit;
 		break;
 	    }
 	}
 
-	if (hasISTUnit)
-	    jsonArray.add(getISTUnit());
+	if (institutionUnit != null)
+	    jsonArray.add(getInstitutionUnit(institutionUnit == ISTUnit));
 
 	for (Unit unit : getUnits()) {
 
-	    if (unit.equals(ISTUnit) || unit.getOID() == 107374258258l)
+	    if (unit.equals(ISTUnit) || unit.equals(UTLUnit))
 		continue;
 
 	    JSONObject object = new JSONObject();
+	    String json = jsonArray.toJSONString();
 
 	    object.put("type", "INTERNAL");
 
@@ -528,7 +529,7 @@ public class Protocol extends Protocol_Base {
 
 	    object.put("costCenter", costCenterCode);
 
-	    if (hasISTUnit) {
+	    if (institutionUnit != null) {
 
 		object.put("functions", "");
 
@@ -547,11 +548,6 @@ public class Protocol extends Protocol_Base {
 		JSONArray istPeople = new JSONArray();
 
 		for (Person person : getResponsibles()) {
-
-		    // String userName = person.getUsername();
-
-		    // if (userName.startsWith("INA"))
-		    // continue;
 
 		    istPeople.add(person.getUsername());
 		}
@@ -581,28 +577,22 @@ public class Protocol extends Protocol_Base {
 	    for (Person person : people) {
 		peopleArray.add(person.getPartyName().exportAsString());
 	    }
-
 	    object.put("people", peopleArray);
 
 	    jsonArray.add(object);
 
 	}
 
-	String json = jsonArray.toJSONString();
-
-	// System.out.println("Sending json string for protocol " +
-	// getProtocolNumber() + ": \n" + json);
-
-	return json;
+	return jsonArray;
     }
 
     @SuppressWarnings("unchecked")
-    private JSONObject getISTUnit() {
+    private JSONObject getInstitutionUnit(boolean ist) {
 	JSONObject obj = new JSONObject();
 
 	obj.put("type", "INTERNAL");
 
-	obj.put("costCenter", Integer.valueOf(-1));
+	obj.put("costCenter", ist ? Integer.valueOf(-1) : Integer.valueOf(-2));
 
 	List<String> functions = new ArrayList<String>();
 
@@ -615,8 +605,7 @@ public class Protocol extends Protocol_Base {
 	JSONArray istPeople = new JSONArray();
 
 	for (Person person : getResponsibles()) {
-	    if (!person.getUsername().startsWith("INA"))
-		istPeople.add(person.getUsername());
+	    istPeople.add(person.getUsername());
 	}
 
 	obj.put("people", istPeople);
@@ -657,36 +646,30 @@ public class Protocol extends Protocol_Base {
 	});
     }
 
+    @SuppressWarnings("unchecked")
     private JSONArray getHistoriesJSON() {
 	JSONArray array = new JSONArray();
 	for (ProtocolHistory history : getProtocolHistories()) {
 	    JSONObject obj = new JSONObject();
-	    obj.put("beginDate", history.getBeginDate());
-	    obj.put("endDate", history.getEndDate());
+	    obj.put("beginDate", history.getBeginDate() == null ? "" : history.getBeginDate().toString());
+	    obj.put("endDate", history.getEndDate() == null ? "" : history.getEndDate().toString());
 	    array.add(obj);
 	}
 	return array;
     }
 
-    public static String exportAllProtocols() {
-	JSONArray array = new JSONArray();
-
-	List<Protocol> protocols = RootDomainObject.getInstance().getProtocols();
-
-	for (Protocol protocol : protocols) {
-	    JSONObject obj = new JSONObject();
-	    obj.put("active", protocol.getActive());
-	    obj.put("observations", protocol.getObservations());
-	    obj.put("protocolAction", protocol.getProtocolActionString());
-	    obj.put("protocolNumber", protocol.getProtocolNumber());
-	    obj.put("scientificAreas", protocol.getScientificAreas());
-	    obj.put("signedDate", protocol.getSignedDate());
-	    obj.put("fileArray", protocol.getFilesJSON());
-	    obj.put("responsiblesJSON", protocol.generateResponsiblesJSON());
-	    obj.put("histories", protocol.getHistoriesJSON());
-	    array.add(obj);
-	}
-
-	return array.toJSONString();
+    public JSONObject readProtocol() {
+	JSONObject obj = new JSONObject();
+	obj.put("active", getActive());
+	obj.put("observations", getObservations());
+	obj.put("protocolAction", getProtocolActionString());
+	obj.put("protocolNumber", getProtocolNumber());
+	obj.put("scientificAreas", getScientificAreas());
+	obj.put("signedDate", getSignedDate() == null ? "" : getSignedDate().toString());
+	obj.put("fileArray", getFilesJSON());
+	obj.put("responsiblesJSON", generateResponsiblesJSON());
+	obj.put("histories", getHistoriesJSON());
+	return obj;
     }
+
 }

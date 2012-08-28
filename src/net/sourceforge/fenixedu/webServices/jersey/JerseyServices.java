@@ -14,9 +14,11 @@ import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.User;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
 import net.sourceforge.fenixedu.domain.person.RoleType;
+import net.sourceforge.fenixedu.domain.protocols.Protocol;
 import net.sourceforge.fenixedu.domain.student.Student;
 
 import org.apache.commons.lang.StringUtils;
+import org.json.simple.JSONArray;
 
 @Path("/services")
 public class JerseyServices {
@@ -31,8 +33,9 @@ public class JerseyServices {
     @GET
     @Produces(MediaType.TEXT_PLAIN)
     @Path("remotePerson")
-    public String remotePerson(@QueryParam("username") final String username, @QueryParam("method") final String method)
-	    throws NoSuchMethodException, SecurityException, IllegalAccessException, IllegalArgumentException,
+    public String remotePerson(@QueryParam("username")
+    final String username, @QueryParam("method")
+    final String method) throws NoSuchMethodException, SecurityException, IllegalAccessException, IllegalArgumentException,
 	    InvocationTargetException {
 	final Person person = Person.readPersonByUsername(username);
 	if (person != null) {
@@ -45,7 +48,8 @@ public class JerseyServices {
     @GET
     @Produces(MediaType.TEXT_PLAIN)
     @Path("readAllUserData")
-    public static String readAllUserData(@QueryParam("types") final String types) {
+    public static String readAllUserData(@QueryParam("types")
+    final String types) {
 	RoleType[] roles;
 	if (types != null && StringUtils.isNotBlank(types)) {
 	    roles = new RoleType[types.split("-").length];
@@ -101,10 +105,22 @@ public class JerseyServices {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @Path("readAllStudentInfoForJobBank")
-    public static String readAllStudentInfoForJobBank(@QueryParam("username") final String username) {
+    public static String readAllStudentInfoForJobBank(@QueryParam("username")
+    final String username) {
 	final Person person = Person.readPersonByUsername(username);
 	final Student student = person.getStudent();
 	return student != null ? student.readAllStudentInfoForJobBank() : StringUtils.EMPTY;
+    }
+
+    @GET
+    @Produces(MediaType.TEXT_PLAIN)
+    @Path("readAllProtocols")
+    public static String readAllProtocols() {
+	JSONArray array = new JSONArray();
+	for (Protocol protocol : RootDomainObject.getInstance().getProtocols()) {
+	    array.add(protocol.readProtocol());
+	}
+	return array.toJSONString();
     }
 
 }
