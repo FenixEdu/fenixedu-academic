@@ -65,6 +65,13 @@
             	</html:link>  
         	</li>
         </logic:present>
+        <logic:present user="ist23000">
+	        <li>
+    	        <html:link page="/manageSecondCycleThesis.do?method=firstPage">
+        	        <bean:message key="navigation.list.jury.proposals"/> (novo)
+            	</html:link>  
+        	</li>
+        </logic:present>
         <li>
 <!--
 -->
