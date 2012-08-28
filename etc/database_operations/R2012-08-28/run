@@ -43,3 +43,4 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "[RAIDES] Add relation from DegreeDesignation to the institution Unit (few seconds)" raidesDegreeDesignationUnit.sql
