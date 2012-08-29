@@ -162,5 +162,6 @@
 	<classpathentry kind="lib" path="web/WEB-INF/lib/guava-12.0.jar"/>
 	<classpathentry kind="lib" path="web/WEB-INF/lib/jersey-bundle-1.12.jar"/>
 	<classpathentry kind="lib" path="web/WEB-INF/lib/jsr311-api-1.1.jar"/>
+	<classpathentry kind="lib" path="web/WEB-INF/lib/jsoup-1.6.3.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
