@@ -45,3 +45,5 @@ function executeWithTempFile() {
 
 execute "Adjust Inquiry Model" alterInquiryModel.sql
 execute "Remove the raides education level enum (few seconds)" raidesRevertEducationLevel.sql
+execute "Convert Tables to UTF-8" updateTablesToUtf8.sql
+echo "ALTER DATABASE $DB CHARACTER SET utf8;" | mysql -u$USER -f -h$DB_HOST $DB
