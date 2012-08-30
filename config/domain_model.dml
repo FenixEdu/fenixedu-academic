@@ -21118,13 +21118,6 @@ relation DegreeDesignationDegreeClassification {
     }
 }
 
-relation UnitDegreeDesignation {
-    raides.DegreeDesignation playsRole degreesDesignations {
-        multiplicity *;
-    }
-    organizationalStructure.Unit playsRole institution;
-}
-
 relation RootDomainObjectPersonalIngressionData {
     RootDomainObject playsRole rootDomainObject;
     student.PersonalIngressionData playsRole personalIngressionsData {
