@@ -50,7 +50,6 @@ enum net.sourceforge.fenixedu.domain.PrescriptionEnum                           
 enum net.sourceforge.fenixedu.domain.ProfessionType                                                                       as ProfessionType;
 enum net.sourceforge.fenixedu.domain.ProfessionalSituationConditionType                                                   as ProfessionalSituationConditionType;
 enum net.sourceforge.fenixedu.domain.QualificationType                                                                    as QualificationType;
-enum net.sourceforge.fenixedu.domain.RaidesEducationLevelType                                                             as RaidesEducationLevelType;
 enum net.sourceforge.fenixedu.domain.RequestState                                                                         as RequestState;
 enum net.sourceforge.fenixedu.domain.RoleOperationType																	  as RoleOperationType;
 enum net.sourceforge.fenixedu.domain.SalaryType                                                                           as SalaryType;
@@ -8452,7 +8451,6 @@ class util.EmailTask extends .pt.ist.fenixframework.plugins.scheduler.domain.Tas
 class raides.DegreeDesignation extends DomainObject {
 	String code;
 	String description;
-	RaidesEducationLevelType educationLevel;
 }
 
 class raides.DegreeClassification extends DomainObject {
