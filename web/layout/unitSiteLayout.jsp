@@ -65,7 +65,7 @@
 
 	<tr>
 	
-		<td rowspan="3" id="latnav_container" width="155">
+		<td rowspan="3" id="latnav_container">
 			<!--MAIN NAVIGATION -->   
 			<div id="latnav">
 				<tiles:insert attribute="main_navigation" ignore="true"/>
