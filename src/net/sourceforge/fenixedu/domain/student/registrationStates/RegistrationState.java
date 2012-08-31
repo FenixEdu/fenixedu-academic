@@ -93,30 +93,43 @@ public abstract class RegistrationState extends RegistrationState_Base implement
 	switch (stateType) {
 	case REGISTERED:
 	    newState = new RegisteredState(registration, person, dateTime);
+	    break;
 	case CANCELED:
 	    newState = new CanceledState(registration, person, dateTime);
+	    break;
 	case CONCLUDED:
 	    newState = new ConcludedState(registration, person, dateTime);
+	    break;
 	case FLUNKED:
 	    newState = new FlunkedState(registration, person, dateTime);
+	    break;
 	case INTERRUPTED:
 	    newState = new InterruptedState(registration, person, dateTime);
+	    break;
 	case SCHOOLPARTCONCLUDED:
 	    newState = new SchoolPartConcludedState(registration, person, dateTime);
+	    break;
 	case STUDYPLANCONCLUDED:
 	    newState = new StudyPlanConcludedState(registration, person, dateTime);
+	    break;
 	case INTERNAL_ABANDON:
 	    newState = new InternalAbandonState(registration, person, dateTime);
+	    break;
 	case EXTERNAL_ABANDON:
 	    newState = new ExternalAbandonState(registration, person, dateTime);
+	    break;
 	case MOBILITY:
 	    newState = new MobilityState(registration, person, dateTime);
+	    break;
 	case TRANSITION:
 	    newState = new TransitionalState(registration, person, dateTime);
+	    break;
 	case TRANSITED:
 	    newState = new TransitedState(registration, person, dateTime);
+	    break;
 	case INACTIVE:
 	    newState = new InactiveState(registration, person, dateTime);
+	    break;
 	}
 	registration.getStudent().updateStudentRole();
 
