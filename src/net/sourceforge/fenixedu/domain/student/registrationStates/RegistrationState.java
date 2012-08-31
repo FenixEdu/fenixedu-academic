@@ -62,6 +62,7 @@ public abstract class RegistrationState extends RegistrationState_Base implement
     }
 
     public static Comparator<RegistrationState> DATE_COMPARATOR = new Comparator<RegistrationState>() {
+	@Override
 	public int compare(RegistrationState leftState, RegistrationState rightState) {
 	    int comparationResult = leftState.getStateDate().compareTo(rightState.getStateDate());
 	    return (comparationResult == 0) ? leftState.getIdInternal().compareTo(rightState.getIdInternal()) : comparationResult;
@@ -69,6 +70,7 @@ public abstract class RegistrationState extends RegistrationState_Base implement
     };
 
     public static Comparator<RegistrationState> DATE_AND_STATE_TYPE_COMPARATOR = new Comparator<RegistrationState>() {
+	@Override
 	public int compare(RegistrationState leftState, RegistrationState rightState) {
 	    int comparationResult = DATE_COMPARATOR.compare(leftState, rightState);
 	    if (comparationResult != 0) {
@@ -87,40 +89,38 @@ public abstract class RegistrationState extends RegistrationState_Base implement
     private static RegistrationState createState(Registration registration, Person person, DateTime dateTime,
 	    RegistrationStateType stateType) {
 
-	try {
-	    switch (stateType) {
-	    case REGISTERED:
-		return new RegisteredState(registration, person, dateTime);
-	    case CANCELED:
-		return new CanceledState(registration, person, dateTime);
-	    case CONCLUDED:
-		return new ConcludedState(registration, person, dateTime);
-	    case FLUNKED:
-		return new FlunkedState(registration, person, dateTime);
-	    case INTERRUPTED:
-		return new InterruptedState(registration, person, dateTime);
-	    case SCHOOLPARTCONCLUDED:
-		return new SchoolPartConcludedState(registration, person, dateTime);
-	    case STUDYPLANCONCLUDED:
-		return new StudyPlanConcludedState(registration, person, dateTime);
-	    case INTERNAL_ABANDON:
-		return new InternalAbandonState(registration, person, dateTime);
-	    case EXTERNAL_ABANDON:
-		return new ExternalAbandonState(registration, person, dateTime);
-	    case MOBILITY:
-		return new MobilityState(registration, person, dateTime);
-	    case TRANSITION:
-		return new TransitionalState(registration, person, dateTime);
-	    case TRANSITED:
-		return new TransitedState(registration, person, dateTime);
-	    case INACTIVE:
-		return new InactiveState(registration, person, dateTime);
-	    }
-	} finally {
-	    registration.getStudent().updateStudentRole();
+	RegistrationState newState = null;
+	switch (stateType) {
+	case REGISTERED:
+	    newState = new RegisteredState(registration, person, dateTime);
+	case CANCELED:
+	    newState = new CanceledState(registration, person, dateTime);
+	case CONCLUDED:
+	    newState = new ConcludedState(registration, person, dateTime);
+	case FLUNKED:
+	    newState = new FlunkedState(registration, person, dateTime);
+	case INTERRUPTED:
+	    newState = new InterruptedState(registration, person, dateTime);
+	case SCHOOLPARTCONCLUDED:
+	    newState = new SchoolPartConcludedState(registration, person, dateTime);
+	case STUDYPLANCONCLUDED:
+	    newState = new StudyPlanConcludedState(registration, person, dateTime);
+	case INTERNAL_ABANDON:
+	    newState = new InternalAbandonState(registration, person, dateTime);
+	case EXTERNAL_ABANDON:
+	    newState = new ExternalAbandonState(registration, person, dateTime);
+	case MOBILITY:
+	    newState = new MobilityState(registration, person, dateTime);
+	case TRANSITION:
+	    newState = new TransitionalState(registration, person, dateTime);
+	case TRANSITED:
+	    newState = new TransitedState(registration, person, dateTime);
+	case INACTIVE:
+	    newState = new InactiveState(registration, person, dateTime);
 	}
+	registration.getStudent().updateStudentRole();
 
-	return null;
+	return newState;
     }
 
     protected void init(Registration registration, Person responsiblePerson, DateTime stateDate) {
@@ -142,6 +142,7 @@ public abstract class RegistrationState extends RegistrationState_Base implement
 	init(registration, null, null);
     }
 
+    @Override
     final public IState nextState() {
 	return nextState(new StateBean(defaultNextStateType().toString()));
     }
@@ -150,6 +151,7 @@ public abstract class RegistrationState extends RegistrationState_Base implement
 	throw new DomainException("error.no.default.nextState.defined");
     }
 
+    @Override
     public IState nextState(final StateBean bean) {
 	return createState(getRegistration(), bean.getResponsible(), bean.getStateDateTime(), RegistrationStateType.valueOf(bean
 		.getNextState()));
@@ -219,7 +221,7 @@ public abstract class RegistrationState extends RegistrationState_Base implement
 		.getRegistrationStates());
 	Collections.sort(sortedRegistrationsStates, DATE_COMPARATOR);
 	for (ListIterator<RegistrationState> iter = sortedRegistrationsStates.listIterator(); iter.hasNext();) {
-	    RegistrationState state = (RegistrationState) iter.next();
+	    RegistrationState state = iter.next();
 	    if (state.equals(this)) {
 		if (iter.hasNext()) {
 		    return iter.next();
@@ -236,7 +238,7 @@ public abstract class RegistrationState extends RegistrationState_Base implement
 	Collections.sort(sortedRegistrationsStates, DATE_COMPARATOR);
 	for (ListIterator<RegistrationState> iter = sortedRegistrationsStates.listIterator(sortedRegistrationsStates.size()); iter
 		.hasPrevious();) {
-	    RegistrationState state = (RegistrationState) iter.previous();
+	    RegistrationState state = iter.previous();
 	    if (state.equals(this)) {
 		if (iter.hasPrevious()) {
 		    return iter.previous();
@@ -263,6 +265,7 @@ public abstract class RegistrationState extends RegistrationState_Base implement
 	    setInteger(idInternal);
 	}
 
+	@Override
 	public Object execute() {
 	    RootDomainObject.getInstance().readRegistrationStateByOID(getInteger()).delete();
 	    return null;
@@ -287,6 +290,7 @@ public abstract class RegistrationState extends RegistrationState_Base implement
 	    return (RegistrationState) new RegistrationStateCreator(reg, responsible, creation, stateType).execute();
 	}
 
+	@Override
 	public Object execute() {
 	    RegistrationState createdState = null;
 
