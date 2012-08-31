@@ -58,7 +58,7 @@ numa escola nacional ou estrangeira.</p>
 
 <h2 id="2">Vagas</h2>
 
-<table class="tab_lay" width="99%" cellspacing="0" summary="InformaÃ§Ãµes sobre vagas por licenciatura para candidatos titulares de Curso MÃ©dio e Superior ">
+<table class="tab_lay" width="99%" cellspacing="0" summary="Informações sobre vagas por licenciatura para candidatos titulares de Curso Médio e Superior ">
 	<tr>
 		<th>Cursos</th>
 		<th>Campus</th>
@@ -165,7 +165,7 @@ numa escola nacional ou estrangeira.</p>
 
 
 <h2 id="3">Propinas</h2>
-<p>Para o ano lectivo de 2008/2009 a propina para as Licenciaturas de 1º ciclo e 1º ciclo de Mestrados Integrados foi fixada no valor de 972,14 €.</p>
+<p>Para o ano lectivo de 2008/2009 a propina para as Licenciaturas de 1º ciclo e 1º ciclo de Mestrados Integrados foi fixada no valor de 972,14 &euro;.</p>
 
 
 <h2 id="4">Prazos</h2>

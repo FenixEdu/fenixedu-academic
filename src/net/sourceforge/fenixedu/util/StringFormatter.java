@@ -28,6 +28,7 @@ public class StringFormatter {
 
     protected static Set<String> allCapSet = new HashSet<String>();
 
+
     static {
 	// PT
 	// artigos
@@ -191,7 +192,6 @@ public class StringFormatter {
 	    } else {
 		// The first word is always capitalized (some courses' name
 		// begin with an article)
-		// (ex: Os Láseres na Instrumentação e Medida)
 		if (i == 0) {
 		    capitalizedName.append(WordUtils.capitalize(lowerCaseName[i]));
 		} else {
