@@ -44,3 +44,6 @@ function executeWithTempFile() {
 }
 
 echo "ALTER DATABASE $DB CHARACTER SET utf8;" | mysql -u$USER -f -h$DB_HOST $DB
+execute "Adjust Inquiry Model" alterInquiryModel.sql
+execute "Remove the raides education level enum (few seconds)" raidesRevertEducationLevel.sql
+execute "Convert Tables to UTF-8 (it takes ~ 80 minutes)" updateTablesToUtf8.sql
