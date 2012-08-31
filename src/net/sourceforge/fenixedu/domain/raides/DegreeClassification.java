@@ -13,4 +13,21 @@ public class DegreeClassification extends DegreeClassification_Base {
 	setAbbreviation(abbreviation);
 	setClassificationOrder(order);
     }
+
+    public DegreeClassification(String code, String description1, String description2, String abbreviation) {
+	super();
+	setRootDomainObject(RootDomainObject.getInstance());
+	setCode(code);
+	setDescription1(description1);
+	setDescription2(description2);
+	setAbbreviation(abbreviation);
+    }
+
+    public void delete() {
+	for (DegreeDesignation designation : getDegreeDesignations()) {
+	    removeDegreeDesignations(designation);
+	}
+	removeRootDomainObject();
+	deleteDomainObject();
+    }
 }
