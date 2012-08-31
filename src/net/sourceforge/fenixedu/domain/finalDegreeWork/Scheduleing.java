@@ -233,6 +233,28 @@ public class Scheduleing extends Scheduleing_Base {
 	return null;
     }
 
+    public DateTime getStartOfProposalPeriodDateTime() {
+	final YearMonthDay startYearMonthDay = getStartOfProposalPeriodDateYearMonthDay();
+	final HourMinuteSecond startHourMinuteSecond = getStartOfProposalPeriodTimeHourMinuteSecond();
+	return toDateTime(startYearMonthDay, startHourMinuteSecond);
+    }
+
+    public void setStartOfProposalPeriodDateTime(final DateTime dateTime) {
+	setStartOfProposalPeriodDateYearMonthDay(dateTime.toYearMonthDay());
+	setStartOfProposalPeriodTimeHourMinuteSecond(new HourMinuteSecond(dateTime.getHourOfDay(), dateTime.getMinuteOfHour(), dateTime.getSecondOfMinute()));
+    }
+
+    public DateTime getEndOfProposalPeriodDateTime() {
+	final YearMonthDay startYearMonthDay = getEndOfProposalPeriodDateYearMonthDay();
+	final HourMinuteSecond startHourMinuteSecond = getEndOfProposalPeriodTimeHourMinuteSecond();
+	return toDateTime(startYearMonthDay, startHourMinuteSecond);
+    }
+
+    public void setEndOfProposalPeriodDateTime(final DateTime dateTime) {
+	setEndOfProposalPeriodDateYearMonthDay(dateTime.toYearMonthDay());
+	setEndOfProposalPeriodTimeHourMinuteSecond(new HourMinuteSecond(dateTime.getHourOfDay(), dateTime.getMinuteOfHour(), dateTime.getSecondOfMinute()));
+    }
+
     public Interval getProposalPeriodInterval() {
 	final YearMonthDay startYearMonthDay = getStartOfProposalPeriodDateYearMonthDay();
 	final HourMinuteSecond startHourMinuteSecond = getStartOfProposalPeriodTimeHourMinuteSecond();
@@ -243,6 +265,28 @@ public class Scheduleing extends Scheduleing_Base {
 	final DateTime end = toDateTime(endYearMonthDay, endMinuteSecond);
 
 	return toInterval(start, end);
+    }
+
+    public DateTime getStartOfCandidacyPeriodDateTime() {
+	final YearMonthDay startYearMonthDay = getStartOfCandidacyPeriodDateYearMonthDay();
+	final HourMinuteSecond startHourMinuteSecond = getStartOfCandidacyPeriodTimeHourMinuteSecond();
+	return toDateTime(startYearMonthDay, startHourMinuteSecond);
+    }
+
+    public void setStartOfCandidacyPeriodDateTime(final DateTime dateTime) {
+	setStartOfCandidacyPeriodDateYearMonthDay(dateTime.toYearMonthDay());
+	setStartOfCandidacyPeriodTimeHourMinuteSecond(new HourMinuteSecond(dateTime.getHourOfDay(), dateTime.getMinuteOfHour(), dateTime.getSecondOfMinute()));
+    }
+
+    public DateTime getEndOfCandidacyPeriodDateTime() {
+	final YearMonthDay startYearMonthDay = getEndOfCandidacyPeriodDateYearMonthDay();
+	final HourMinuteSecond startHourMinuteSecond = getEndOfCandidacyPeriodTimeHourMinuteSecond();
+	return toDateTime(startYearMonthDay, startHourMinuteSecond);
+    }
+
+    public void setEndOfCandidacyPeriodDateTime(final DateTime dateTime) {
+	setEndOfCandidacyPeriodDateYearMonthDay(dateTime.toYearMonthDay());
+	setEndOfCandidacyPeriodTimeHourMinuteSecond(new HourMinuteSecond(dateTime.getHourOfDay(), dateTime.getMinuteOfHour(), dateTime.getSecondOfMinute()));
     }
 
     public Interval getCandidacyPeriodInterval() {

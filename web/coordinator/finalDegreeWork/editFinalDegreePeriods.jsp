@@ -44,59 +44,40 @@
 </p>
 
 <div id="wrap">
-			<fr:form action="<%= "/manageFinalDegreeWork.do?method=finalDegreeWorkInfo&page=0&degreeCurricularPlanID=" + degreeCurricularPlanID + "&executionDegreeOID=" + executionDegreeOID%>">
-            
+	<fr:form action="<%= "/manageFinalDegreeWork.do?method=finalDegreeWorkInfo&page=0&degreeCurricularPlanID=" + degreeCurricularPlanID + "&executionDegreeOID=" + executionDegreeOID%>">
             <p class="mbottom05"><strong><bean:message key="finalDegreeWorkProposal.setProposalPeriod.header"/></strong></p>
-	        <table class="tstyle5 thlight thleft tdright mtop05 mbottom05">
-				<tr>
-					<th><bean:message key="finalDegreeWorkProposal.setProposalPeriod.start"/></th>
-					<td>
-						<fr:edit name="executionDegree" slot="scheduling.startOfProposalPeriodDateYearMonthDay" validator="pt.ist.fenixWebFramework.renderers.validators.DateValidator"/>
-					</td>
-					<td>
-					<fr:edit name="executionDegree" slot="scheduling.startOfProposalPeriodTimeHourMinuteSecond"/>
-						
-					</td>
-				</tr>
-				<tr>
-					<th><bean:message key="finalDegreeWorkProposal.setProposalPeriod.end"/></th>
-					<td>
-						<fr:edit name="executionDegree" slot="scheduling.endOfProposalPeriodDateYearMonthDay" validator="pt.ist.fenixWebFramework.renderers.validators.DateValidator"/>
-						
-					</td>
-					<td>
-						<fr:edit name="executionDegree" slot="scheduling.endOfProposalPeriodTimeHourMinuteSecond"/>
-						
-					</td>
-				</tr>
-
-			</table>
+			<fr:messages for="proposalPeriods">
+				<li><span class="error0"><fr:message show="label"/>:<fr:message /></span></li>
+			</fr:messages>
+            <div style="border: thin; margin-left: 25px; padding-left: 25px; background-color: whiteSmoke; width: 50%">
+            	<fr:edit name="executionDegree" id="proposalPeriods">
+            		<fr:schema bundle="APPLICATION_RESOURCES" type="net.sourceforge.fenixedu.domain.ExecutionDegree">
+	            		<fr:slot name="scheduling.startOfProposalPeriodDateTime" key="finalDegreeWorkProposal.setProposalPeriod.start"
+    	        				validator="net.sourceforge.fenixedu.presentationTier.renderers.validators.DateTimeValidator">
+        	    		</fr:slot>
+	            		<fr:slot name="scheduling.endOfProposalPeriodDateTime" key="finalDegreeWorkProposal.setProposalPeriod.end"
+    	        				validator="net.sourceforge.fenixedu.presentationTier.renderers.validators.DateTimeValidator">
+        	    		</fr:slot>
+            		</fr:schema>
+            	</fr:edit>
+            </div>
 
 			<p class="mbottom05"><strong><bean:message key="finalDegreeWorkCandidacy.setCandidacyPeriod.header"/></strong></p>
-			<table class="tstyle5 thlight thleft tdright mtop05 mbottom05">
-				<tr><th><bean:message key="finalDegreeWorkProposal.setProposalPeriod.start"/></th>
-					<td>
-						<fr:edit name="executionDegree" slot="scheduling.startOfCandidacyPeriodDateYearMonthDay" validator="pt.ist.fenixWebFramework.renderers.validators.DateValidator"/>
-						
-					</td>
-					<td>
-						<fr:edit name="executionDegree" slot="scheduling.startOfCandidacyPeriodTimeHourMinuteSecond"/>
-						
-					</td>
-				</tr>
-				<tr>
-					<th><bean:message key="finalDegreeWorkProposal.setProposalPeriod.end"/></th>
-					<td>
-						<fr:edit name="executionDegree" slot="scheduling.endOfCandidacyPeriodDateYearMonthDay" validator="pt.ist.fenixWebFramework.renderers.validators.DateValidator"/>
-						
-					</td>
-					<td>
-						<fr:edit name="executionDegree" slot="scheduling.endOfCandidacyPeriodTimeHourMinuteSecond"/>
-						
-					</td>
-				</tr>
-
-			</table> 
-			<p><input value="Submeter" type="submit"></p>
-			</fr:form>
+			<fr:messages for="candidacyPeriods">
+				<li><span class="error0"><fr:message show="label"/>:<fr:message /></span></li>
+			</fr:messages>
+            <div style="border: thin; margin-left: 25px; padding-left: 25px; background-color: whiteSmoke; width: 50%">
+            	<fr:edit name="executionDegree" id="candidacyPeriods">
+            		<fr:schema bundle="APPLICATION_RESOURCES" type="net.sourceforge.fenixedu.domain.ExecutionDegree">
+	            		<fr:slot name="scheduling.startOfCandidacyPeriodDateTime" key="finalDegreeWorkProposal.setProposalPeriod.start"
+    	        				validator="net.sourceforge.fenixedu.presentationTier.renderers.validators.DateTimeValidator">
+        	    		</fr:slot>
+	            		<fr:slot name="scheduling.endOfCandidacyPeriodDateTime" key="finalDegreeWorkProposal.setProposalPeriod.end"
+    	        				validator="net.sourceforge.fenixedu.presentationTier.renderers.validators.DateTimeValidator">
+        	    		</fr:slot>
+            		</fr:schema>
+            	</fr:edit>
+            </div>
+		<p><input value="Submeter" type="submit"></p>
+	</fr:form>
 </div>
