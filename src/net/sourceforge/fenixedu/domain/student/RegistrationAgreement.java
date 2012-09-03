@@ -57,7 +57,9 @@ public enum RegistrationAgreement {
 
     CHINA_AGREEMENTS(false, false), RUSSIA_AGREEMENTS(false, false),
 
-    AFRICA_AGREEMENTS(false, false), BRAZIL_AGREEMENTS(false, false);
+    AFRICA_AGREEMENTS(false, false), BRAZIL_AGREEMENTS(false, false),
+    
+    SCIENCE_WITHOUT_BORDERS(false, false);
 
     private boolean enrolmentByStudentAllowed;
 
