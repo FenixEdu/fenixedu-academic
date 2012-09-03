@@ -43,4 +43,3 @@ function executeWithTempFile() {
 	echo
 }
 
-echo "ALTER DATABASE $DB CHARACTER SET utf8;" | mysql -u$USER -f -h$DB_HOST $DB
