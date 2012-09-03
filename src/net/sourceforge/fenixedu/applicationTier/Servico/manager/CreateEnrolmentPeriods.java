@@ -4,7 +4,6 @@ import java.util.Date;
 import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.EnrolmentPeriodInClasses;
 import net.sourceforge.fenixedu.domain.EnrolmentPeriodInCurricularCourses;
@@ -48,10 +47,8 @@ public class CreateEnrolmentPeriods {
 
     private static void createReingressionPeriodsForPreBolonhaDegrees(final ExecutionSemester executionSemester,
 	    final DegreeType degreeType, final Date startDate, final Date endDate, final List<DegreeCurricularPlan> dcpList) {
-	for (final Degree degree : Degree.readAllByDegreeType(degreeType)) {
-	    for (final DegreeCurricularPlan degreeCurricularPlan : dcpList) {
-		new ReingressionPeriod(degreeCurricularPlan, executionSemester, startDate, endDate);
-	    }
+	for (final DegreeCurricularPlan degreeCurricularPlan : dcpList) {
+	    new ReingressionPeriod(degreeCurricularPlan, executionSemester, startDate, endDate);
 	}
     }
 
@@ -63,8 +60,7 @@ public class CreateEnrolmentPeriods {
 
     private static void createEnrolmentPeriodsForBolonhaDegrees(final ExecutionSemester executionSemester,
 	    final DegreeType degreeType, final EnrolmentPeriodType enrolmentPeriodType, final Date startDate, final Date endDate,
-	    final List<DegreeCurricularPlan> dcpList)
-	    throws FenixServiceException {
+	    final List<DegreeCurricularPlan> dcpList) throws FenixServiceException {
 
 	for (final DegreeCurricularPlan degreeCurricularPlan : dcpList) {
 
