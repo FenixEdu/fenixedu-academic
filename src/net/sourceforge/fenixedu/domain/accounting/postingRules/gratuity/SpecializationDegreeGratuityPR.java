@@ -191,7 +191,7 @@ public abstract class SpecializationDegreeGratuityPR extends SpecializationDegre
     }
 
     @Override
-    public Money calculateTotalAmountToPay(Event event, DateTime when, boolean applyDiscount) {
+    protected Money doCalculationForAmountToPay(Event event, DateTime when, boolean applyDiscount) {
 	final Money result;
 	if (((GratuityEvent) event).isCustomEnrolmentModel()) {
 	    result = calculateSpecializationDegreeGratuityTotalAmountToPay(event);
@@ -199,9 +199,14 @@ public abstract class SpecializationDegreeGratuityPR extends SpecializationDegre
 	    result = getSpecializationDegreeTotalAmount();
 	}
 
-	final BigDecimal discountPercentage = applyDiscount ? getDiscountPercentage(event, result) : BigDecimal.ZERO;
+	return result;
+    }
 
-	return result.multiply(BigDecimal.ONE.subtract(discountPercentage));
+    @Override
+    protected Money subtractFromExemptions(Event event, DateTime when, boolean applyDiscount, Money amountToPay) {
+	final BigDecimal discountPercentage = applyDiscount ? getDiscountPercentage(event, amountToPay) : BigDecimal.ZERO;
+
+	return amountToPay.multiply(BigDecimal.ONE.subtract(discountPercentage));
     }
 
     abstract protected Money calculateSpecializationDegreeGratuityTotalAmountToPay(Event event);

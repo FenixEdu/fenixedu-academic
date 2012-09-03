@@ -193,7 +193,7 @@ abstract public class DFAGratuityPR extends DFAGratuityPR_Base implements IGratu
     }
 
     @Override
-    public Money calculateTotalAmountToPay(Event event, DateTime when, boolean applyDiscount) {
+    protected Money doCalculationForAmountToPay(Event event, DateTime when, boolean applyDiscount) {
 	final Money result;
 	if (((GratuityEvent) event).isCustomEnrolmentModel()) {
 	    result = calculateDFAGratuityTotalAmountToPay(event);
@@ -201,12 +201,17 @@ abstract public class DFAGratuityPR extends DFAGratuityPR_Base implements IGratu
 	    result = getDfaTotalAmount();
 	}
 
-	final BigDecimal discountPercentage = applyDiscount ? getDiscountPercentage(event, result) : BigDecimal.ZERO;
-
-	return result.multiply(BigDecimal.ONE.subtract(discountPercentage));
+	return result;
     }
 
     abstract protected Money calculateDFAGratuityTotalAmountToPay(Event event);
+
+    @Override
+    protected Money subtractFromExemptions(Event event, DateTime when, boolean applyDiscount, Money amountToPay) {
+	final BigDecimal discountPercentage = applyDiscount ? getDiscountPercentage(event, amountToPay) : BigDecimal.ZERO;
+
+	return amountToPay.multiply(BigDecimal.ONE.subtract(discountPercentage));
+    }
 
     private BigDecimal getDiscountPercentage(final Event event, final Money amount) {
 	return ((DfaGratuityEvent) event).calculateDiscountPercentage(amount);

@@ -15,7 +15,9 @@ import net.sourceforge.fenixedu.domain.accounting.AccountingTransaction;
 import net.sourceforge.fenixedu.domain.accounting.EntryType;
 import net.sourceforge.fenixedu.domain.accounting.Event;
 import net.sourceforge.fenixedu.domain.accounting.EventType;
+import net.sourceforge.fenixedu.domain.accounting.Exemption;
 import net.sourceforge.fenixedu.domain.accounting.ServiceAgreementTemplate;
+import net.sourceforge.fenixedu.domain.accounting.events.AcademicEventExemption;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.exceptions.DomainExceptionWithLabelFormatter;
 import net.sourceforge.fenixedu.util.Money;
@@ -80,9 +82,27 @@ public abstract class BaseAmountPlusAmountPerUnitPR extends BaseAmountPlusAmount
     }
 
     @Override
-    public Money calculateTotalAmountToPay(Event event, DateTime when, boolean applyDiscount) {
+    protected Money doCalculationForAmountToPay(Event event, DateTime when, boolean applyDiscount) {
 	return getBaseAmount().add(getAmountForUnits(event));
+    }
 
+    @Override
+    protected Money subtractFromExemptions(Event event, DateTime when, boolean applyDiscount, Money amountToPay) {
+	if (event.hasAnyExemptions()) {
+	    List<Exemption> exemptions = event.getExemptions();
+
+	    for (Exemption exemption : exemptions) {
+		AcademicEventExemption academicEventExemption = (AcademicEventExemption) exemption;
+
+		amountToPay = amountToPay.subtract(academicEventExemption.getValue());
+	    }
+	}
+
+	if (amountToPay.isNegative()) {
+	    return Money.ZERO;
+	}
+
+	return amountToPay;
     }
 
     @Override

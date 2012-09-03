@@ -29,8 +29,8 @@ public abstract class FixedAmountWithPenaltyPR extends FixedAmountWithPenaltyPR_
     }
 
     @Override
-    public Money calculateTotalAmountToPay(Event event, DateTime when, boolean applyDiscount) {
-	return super.calculateTotalAmountToPay(event, when, applyDiscount).add(
+    protected Money doCalculationForAmountToPay(Event event, DateTime when, boolean applyDiscount) {
+	return super.doCalculationForAmountToPay(event, when, applyDiscount).add(
 		hasPenalty(event, when) ? getFixedAmountPenalty() : Money.ZERO);
     }
 

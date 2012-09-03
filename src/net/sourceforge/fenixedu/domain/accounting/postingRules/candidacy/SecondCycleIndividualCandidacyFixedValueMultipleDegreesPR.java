@@ -4,7 +4,6 @@ import net.sourceforge.fenixedu.domain.accounting.EntryType;
 import net.sourceforge.fenixedu.domain.accounting.Event;
 import net.sourceforge.fenixedu.domain.accounting.EventType;
 import net.sourceforge.fenixedu.domain.accounting.ServiceAgreementTemplate;
-import net.sourceforge.fenixedu.domain.accounting.events.candidacy.SecondCycleIndividualCandidacyEvent;
 import net.sourceforge.fenixedu.util.Money;
 
 import org.joda.time.DateTime;
@@ -32,13 +31,7 @@ public class SecondCycleIndividualCandidacyFixedValueMultipleDegreesPR extends S
     }
 
     @Override
-    public Money calculateTotalAmountToPay(Event event, DateTime when, boolean applyDiscount) {
-	final SecondCycleIndividualCandidacyEvent candidacyEvent = (SecondCycleIndividualCandidacyEvent) event;
-
-	if (candidacyEvent.hasSecondCycleIndividualCandidacyExemption()) {
-	    return Money.ZERO;
-	}
-
+    protected Money doCalculationForAmountToPay(Event event, DateTime when, boolean applyDiscount) {
 	return getFixedAmount();
     }
 

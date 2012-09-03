@@ -24,8 +24,12 @@ public class InsurancePR extends InsurancePR_Base {
     }
 
     @Override
-    public Money calculateTotalAmountToPay(Event event, DateTime when, boolean applyDiscount) {
+    protected Money doCalculationForAmountToPay(Event event, DateTime when, boolean applyDiscount) {
+	return getFixedAmount();
+    }
 
+    @Override
+    protected Money subtractFromExemptions(Event event, DateTime when, boolean applyDiscount, Money amountToPay) {
 	if (event instanceof InsuranceEvent) {
 	    InsuranceEvent insuranceEvent = (InsuranceEvent) event;
 	    if (insuranceEvent.hasInsuranceExemption()) {
@@ -38,7 +42,7 @@ public class InsurancePR extends InsurancePR_Base {
 	    }
 	}
 
-	return getFixedAmount();
+	return amountToPay;
     }
 
     @Checked("PostingRulePredicates.editPredicate")

@@ -41,14 +41,18 @@ public class PastDegreeGratuityPR extends PastDegreeGratuityPR_Base {
     }
 
     @Override
-    public Money calculateTotalAmountToPay(Event event, DateTime when, boolean applyDiscount) {
+    protected Money doCalculationForAmountToPay(Event event, DateTime when, boolean applyDiscount) {
 	final Money amountToPay = ((PastDegreeGratuityEvent) event).getPastDegreeGratuityAmount();
 	final PastDegreeGratuityEvent pastDegreeGratuityEvent = (PastDegreeGratuityEvent) event;
 	final BigDecimal discountPercentage = applyDiscount ? pastDegreeGratuityEvent.calculateDiscountPercentage(amountToPay)
 		: BigDecimal.ZERO;
 
 	return amountToPay.multiply(BigDecimal.ONE.subtract(discountPercentage));
+    }
 
+    @Override
+    protected Money subtractFromExemptions(Event event, DateTime when, boolean applyDiscount, Money amountToPay) {
+	return amountToPay;
     }
 
     @Override

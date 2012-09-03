@@ -30,9 +30,7 @@ public class PhdThesisRequestFeePR extends PhdThesisRequestFeePR_Base {
     }
 
     @Override
-    public Money calculateTotalAmountToPay(Event event, DateTime when, boolean applyDiscount) {
-	Money amountToPay = super.calculateTotalAmountToPay(event, when, applyDiscount);
-
+    protected Money subtractFromExemptions(Event event, DateTime when, boolean applyDiscount, Money amountToPay) {
 	final PhdThesisRequestFee requestEvent = (PhdThesisRequestFee) event;
 	if (requestEvent.hasPhdEventExemption()) {
 	    amountToPay = amountToPay.subtract(requestEvent.getPhdEventExemption().getValue());

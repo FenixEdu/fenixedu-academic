@@ -25,19 +25,6 @@ public class DegreeFinalizationCertificateRequestPR extends DegreeFinalizationCe
 		endDate, serviceAgreementTemplate, baseAmount, amountPerUnit, amountPerPage, maximumAmount);
     }
 
-    @Override
-    public Money calculateTotalAmountToPay(Event event, DateTime when) {
-	final Money total = super.calculateTotalAmountToPay(event, when);
-
-	final DegreeFinalizationCertificateRequestEvent requestEvent = (DegreeFinalizationCertificateRequestEvent) event;
-
-	if (requestEvent.hasAcademicEventExemption()) {
-	    return total.subtract(requestEvent.getAcademicEventExemption().getValue());
-	}
-
-	return total;
-    }
-
     @Checked("PostingRulePredicates.editPredicate")
     public DegreeFinalizationCertificateRequestPR edit(Money baseAmount, Money amountPerUnit, Money amountPerPage,
 	    Money maximumAmount) {
@@ -46,5 +33,20 @@ public class DegreeFinalizationCertificateRequestPR extends DegreeFinalizationCe
 
 	return new DegreeFinalizationCertificateRequestPR(new DateTime().minus(1000), null, getServiceAgreementTemplate(),
 		baseAmount, amountPerUnit, amountPerPage, maximumAmount);
+    }
+
+    @Override
+    protected Money subtractFromExemptions(Event event, DateTime when, boolean applyDiscount, Money amountToPay) {
+	final DegreeFinalizationCertificateRequestEvent requestEvent = (DegreeFinalizationCertificateRequestEvent) event;
+
+	if (requestEvent.hasAcademicEventExemption()) {
+	    return amountToPay.subtract(requestEvent.getAcademicEventExemption().getValue());
+	}
+
+	if (amountToPay.isNegative()) {
+	    return Money.ZERO;
+	}
+
+	return amountToPay;
     }
 }

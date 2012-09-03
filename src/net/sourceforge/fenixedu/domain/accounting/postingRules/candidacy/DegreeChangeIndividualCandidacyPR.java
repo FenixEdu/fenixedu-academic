@@ -72,7 +72,7 @@ public class DegreeChangeIndividualCandidacyPR extends DegreeChangeIndividualCan
     }
 
     @Override
-    public Money calculateTotalAmountToPay(Event event, DateTime when, boolean applyDiscount) {
+    protected Money doCalculationForAmountToPay(Event event, DateTime when, boolean applyDiscount) {
 	DegreeChangeIndividualCandidacy individualCandidacy = ((DegreeChangeIndividualCandidacyEvent) event)
 		.getIndividualCandidacy();
 	final PrecedentDegreeInformation information = individualCandidacy.getRefactoredPrecedentDegreeInformation();
@@ -87,6 +87,11 @@ public class DegreeChangeIndividualCandidacyPR extends DegreeChangeIndividualCan
 		return getAmountForExternalStudent();
 	    }
 	}
+    }
+
+    @Override
+    protected Money subtractFromExemptions(Event event, DateTime when, boolean applyDiscount, Money amountToPay) {
+	return amountToPay;
     }
 
     @Override

@@ -38,25 +38,25 @@ public class Over23IndividualCandidacyPR extends Over23IndividualCandidacyPR_Bas
     }
 
     @Override
-    public Money calculateTotalAmountToPay(Event event, DateTime when, boolean applyDiscount) {
+    protected Money subtractFromExemptions(Event event, DateTime when, boolean applyDiscount, Money amountToPay) {
 	if (!event.hasAnyExemptions()) {
-	    return getFixedAmount();
+	    return amountToPay;
 	}
-
-	Money amount = getFixedAmount();
 
 	for (Exemption exemption : event.getExemptions()) {
 	    if (exemption.isAcademicEventExemption()) {
 		AcademicEventExemption academicEventExemption = (AcademicEventExemption) exemption;
-		amount = amount.subtract(academicEventExemption.getValue());
+		amountToPay = amountToPay.subtract(academicEventExemption.getValue());
 	    }
 	}
 
-	if (amount.isNegative()) {
+	if (amountToPay.isNegative()) {
 	    return Money.ZERO;
 	}
 
-	return amount;
+	return amountToPay;
+
     }
+
 
 }

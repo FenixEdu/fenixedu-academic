@@ -33,8 +33,13 @@ public class ExternalScholarshipPhdGratuityContribuitionPR extends ExternalSchol
     }
 
     @Override
-    public Money calculateTotalAmountToPay(Event event, DateTime when, boolean applyDiscount) {
+    protected Money doCalculationForAmountToPay(Event event, DateTime when, boolean applyDiscount) {
 	return ((ExternalScholarshipPhdGratuityContribuitionEvent) event).getPhdGratuityExternalScholarshipExemption().getValue();
+    }
+
+    @Override
+    protected Money subtractFromExemptions(Event event, DateTime when, boolean applyDiscount, Money amountToPay) {
+	return amountToPay;
     }
 
     @Override
@@ -61,4 +66,5 @@ public class ExternalScholarshipPhdGratuityContribuitionPR extends ExternalSchol
             Money amount, AccountingTransactionDetailDTO transactionDetailDTO) {
         return depositAmount(responsibleUser, event, fromAcount, toAccount, amount, EntryType.EXTERNAL_SCOLARSHIP_PAYMENT, transactionDetailDTO);
     }
+
 }

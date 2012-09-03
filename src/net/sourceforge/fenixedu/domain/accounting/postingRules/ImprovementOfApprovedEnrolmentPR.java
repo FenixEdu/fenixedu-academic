@@ -66,7 +66,7 @@ public class ImprovementOfApprovedEnrolmentPR extends ImprovementOfApprovedEnrol
     }
 
     @Override
-    public Money calculateTotalAmountToPay(Event event, DateTime when, boolean applyDiscount) {
+    protected Money doCalculationForAmountToPay(Event event, DateTime when, boolean applyDiscount) {
 	final ImprovementOfApprovedEnrolmentEvent improvementOfApprovedEnrolmentEvent = (ImprovementOfApprovedEnrolmentEvent) event;
 	final boolean hasPenalty = hasPenalty(event, when);
 
@@ -76,6 +76,11 @@ public class ImprovementOfApprovedEnrolmentPR extends ImprovementOfApprovedEnrol
 	}
 
 	return result;
+    }
+
+    @Override
+    protected Money subtractFromExemptions(Event event, DateTime when, boolean applyDiscount, Money amountToPay) {
+	return amountToPay;
     }
 
     private boolean hasPenalty(final Event event, final DateTime when) {

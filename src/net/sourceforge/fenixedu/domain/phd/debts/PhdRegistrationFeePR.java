@@ -33,16 +33,21 @@ public class PhdRegistrationFeePR extends PhdRegistrationFeePR_Base {
     }
 
     @Override
-    public Money calculateTotalAmountToPay(Event event, DateTime when, boolean applyDiscount) {
-	Money total = super.calculateTotalAmountToPay(event, when, applyDiscount).add(
+    protected Money doCalculationForAmountToPay(Event event, DateTime when, boolean applyDiscount) {
+	Money total = super.doCalculationForAmountToPay(event, when, applyDiscount).add(
 		hasPenalty(event, when) ? getFixedAmountPenalty() : Money.ZERO);
 
+	return total;
+    }
+
+    @Override
+    protected Money subtractFromExemptions(Event event, DateTime when, boolean applyDiscount, Money amountToPay) {
 	final PhdRegistrationFee feeEvent = (PhdRegistrationFee) event;
 	if (feeEvent.hasPhdEventExemption()) {
-	    total = total.subtract(feeEvent.getPhdEventExemption().getValue());
+	    amountToPay = amountToPay.subtract(feeEvent.getPhdEventExemption().getValue());
 	}
 
-	return total.isPositive() ? total : Money.ZERO;
+	return amountToPay.isPositive() ? amountToPay : Money.ZERO;
     }
 
     @Override

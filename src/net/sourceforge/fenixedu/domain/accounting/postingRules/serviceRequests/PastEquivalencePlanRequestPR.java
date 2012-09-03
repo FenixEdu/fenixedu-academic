@@ -34,8 +34,13 @@ public class PastEquivalencePlanRequestPR extends PastEquivalencePlanRequestPR_B
     }
 
     @Override
-    public Money calculateTotalAmountToPay(final Event event, final DateTime when, final boolean applyDiscount) {
+    protected Money doCalculationForAmountToPay(final Event event, final DateTime when, final boolean applyDiscount) {
 	return ((PastEquivalencePlanRequestEvent) event).getPastAmount();
+    }
+
+    @Override
+    protected Money subtractFromExemptions(Event event, DateTime when, boolean applyDiscount, Money amountToPay) {
+	return amountToPay;
     }
 
     @Override

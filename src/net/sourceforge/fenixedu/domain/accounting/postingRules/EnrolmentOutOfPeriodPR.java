@@ -75,9 +75,14 @@ public class EnrolmentOutOfPeriodPR extends EnrolmentOutOfPeriodPR_Base {
     }
 
     @Override
-    public Money calculateTotalAmountToPay(Event event, DateTime when, boolean applyDiscount) {
+    protected Money doCalculationForAmountToPay(Event event, DateTime when, boolean applyDiscount) {
 	final Money result = getBaseAmount().add(getAmountPerDay().multiply(new BigDecimal(calculatNumberOfDays(event))));
 	return result.greaterThan(getMaxAmount()) ? getMaxAmount() : result;
+    }
+
+    @Override
+    protected Money subtractFromExemptions(Event event, DateTime when, boolean applyDiscount, Money amountToPay) {
+	return amountToPay;
     }
 
     private Integer calculatNumberOfDays(Event event) {

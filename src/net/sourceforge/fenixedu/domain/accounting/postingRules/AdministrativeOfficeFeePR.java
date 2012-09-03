@@ -86,16 +86,14 @@ public class AdministrativeOfficeFeePR extends AdministrativeOfficeFeePR_Base {
     }
 
     @Override
-    public Money calculateTotalAmountToPay(Event event, DateTime when, boolean applyDiscount) {
-
+    protected Money subtractFromExemptions(Event event, DateTime when, boolean applyDiscount, Money amountToPay) {
 	if (!applyDiscount) {
-	    return super.calculateTotalAmountToPay(event, when, applyDiscount);
+	    return amountToPay;
 	}
 
 	final AdministrativeOfficeFeeAndInsuranceEvent administrativeOfficeFeeAndInsuranceEvent = (AdministrativeOfficeFeeAndInsuranceEvent) event;
-	return administrativeOfficeFeeAndInsuranceEvent.hasAdministrativeOfficeFeeAndInsuranceExemption() ? Money.ZERO : super
-		.calculateTotalAmountToPay(event, when, applyDiscount);
-
+	return administrativeOfficeFeeAndInsuranceEvent.hasAdministrativeOfficeFeeAndInsuranceExemption() ? Money.ZERO
+		: amountToPay;
     }
 
     @Override

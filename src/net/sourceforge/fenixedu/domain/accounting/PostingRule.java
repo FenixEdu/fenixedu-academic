@@ -260,7 +260,7 @@ public abstract class PostingRule extends PostingRule_Base {
 	return true;
     }
 
-    public Money calculateTotalAmountToPay(Event event, DateTime when) {
+    public final Money calculateTotalAmountToPay(Event event, DateTime when) {
 	return calculateTotalAmountToPay(event, when, true);
     }
 
@@ -337,7 +337,19 @@ public abstract class PostingRule extends PostingRule_Base {
 	return getEventType().equals(eventType);
     }
 
-    abstract public Money calculateTotalAmountToPay(Event event, DateTime when, boolean applyDiscount);
+    public final Money calculateTotalAmountToPay(Event event, DateTime when, boolean applyDiscount) {
+	Money amountToPay = doCalculationForAmountToPay(event, when, applyDiscount);
+
+	if (!event.isExemptionAppliable()) {
+	    return amountToPay;
+	}
+
+	return subtractFromExemptions(event, when, applyDiscount, amountToPay);
+    }
+
+    protected abstract Money doCalculationForAmountToPay(Event event, DateTime when, boolean applyDiscount);
+    
+    protected abstract Money subtractFromExemptions(Event event, DateTime when, boolean applyDiscount, Money amountToPay);
 
     public PaymentCodeType calculatePaymentCodeTypeFromEvent(Event event, DateTime when, boolean applyDiscount) {
 	throw new DomainException("error.accounting.PostingRule.cannot.calculate.payment.code.type");

@@ -1,10 +1,8 @@
 package net.sourceforge.fenixedu.domain.accounting.postingRules.serviceRequests;
 
 import net.sourceforge.fenixedu.domain.accounting.EntryType;
-import net.sourceforge.fenixedu.domain.accounting.Event;
 import net.sourceforge.fenixedu.domain.accounting.EventType;
 import net.sourceforge.fenixedu.domain.accounting.ServiceAgreementTemplate;
-import net.sourceforge.fenixedu.domain.accounting.events.serviceRequests.AcademicServiceRequestEvent;
 import net.sourceforge.fenixedu.util.Money;
 
 import org.joda.time.DateTime;
@@ -30,15 +28,4 @@ public class DiplomaRequestPR extends DiplomaRequestPR_Base {
 		getServiceAgreementTemplate(), fixedAmount);
     }
 
-    @Override
-    public Money calculateTotalAmountToPay(Event event, DateTime when) {
-	Money amountToPay = super.calculateTotalAmountToPay(event, when);
-
-	final AcademicServiceRequestEvent requestEvent = (AcademicServiceRequestEvent) event;
-	if (requestEvent.hasAcademicEventExemption()) {
-	    amountToPay = amountToPay.subtract(requestEvent.getAcademicEventExemption().getValue());
-	}
-
-	return amountToPay.isPositive() ? amountToPay : Money.ZERO;
-    }
 }

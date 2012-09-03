@@ -84,58 +84,31 @@ public class PhdGratuityPR extends PhdGratuityPR_Base {
     }
 
     @Override
-    public Money calculateTotalAmountToPay(Event event, DateTime when, boolean applyDiscount) {
+    protected Money doCalculationForAmountToPay(Event event, DateTime when, boolean applyDiscount) {
 	PhdGratuityEvent phdGratuityEvent = (PhdGratuityEvent) event;
 	Money gratuity = getGratuityByProcess(phdGratuityEvent.getPhdIndividualProgramProcess());
-	return calculateTotalAmountToPayFromGratuity(when, phdGratuityEvent, gratuity);
+	return gratuity;
     }
 
-    private Money calculateTotalAmountToPayFromGratuity(DateTime when, PhdGratuityEvent phdGratuityEvent, Money gratuity) {
-	LocalDate programStartDate = phdGratuityEvent.getPhdGratuityDate().toLocalDate(); // phdGratuityEvent.getPhdIndividualProgramProcess().getWhenFormalizedRegistration();
-	gratuity = adjustGratuityWithExmptions(phdGratuityEvent, gratuity);
+    @Override
+    protected Money subtractFromExemptions(Event event, DateTime when, boolean applyDiscount, Money amountToPay) {
+	PhdGratuityEvent phdGratuityEvent = (PhdGratuityEvent) event;
+
+	amountToPay = adjustGratuityWithExmptions(phdGratuityEvent, amountToPay);
 
 	BigDecimal percentage = new BigDecimal(0);
 	for (Exemption exemption : phdGratuityEvent.getExemptions()) {
 	    if (exemption.isGratuityExemption()) {
-		percentage = percentage.add(((GratuityExemption) exemption).calculateDiscountPercentage(gratuity));
+		percentage = percentage.add(((GratuityExemption) exemption).calculateDiscountPercentage(amountToPay));
 	    }
 	}
 
-	gratuity = gratuity.subtract(gratuity.multiply(percentage));
-	if (gratuity.lessOrEqualThan(Money.ZERO)) {
+	amountToPay = amountToPay.subtract(amountToPay.multiply(percentage));
+	if (amountToPay.lessOrEqualThan(Money.ZERO)) {
 	    return Money.ZERO;
 	}
 	
-	return gratuity;
-	//
-	// if (phdGratuityEvent.getLimitDateToPay().isAfter(when)) {
-	// return gratuity;
-	// }
-	//
-	// Money payedAmount =
-	// phdGratuityEvent.getPayedAmount(phdGratuityEvent.getLimitDateToPay());
-	//
-	// if (payedAmount.greaterOrEqualThan(gratuity)) {
-	// return gratuity;
-	// }
-	//
-	// DateTime lastPaymentDate = phdGratuityEvent.getLastPaymentDate();
-	// payedAmount = phdGratuityEvent.getPayedAmount(lastPaymentDate);
-	//
-	// if (!hasFineExemption(phdGratuityEvent)) {
-	// if (lastPaymentDate != null) {
-	// Money gratuityWithFine = gratuity.add(getFine(programStartDate,
-	// lastPaymentDate, gratuity));
-	//
-	// if (payedAmount.greaterOrEqualThan(gratuityWithFine)) {
-	// return gratuityWithFine;
-	// }
-	// }
-	// return gratuity.add(getFine(programStartDate, when, gratuity));
-	// }else{
-	// return gratuity;
-	// }
-	
+	return amountToPay;
     }
 
     private boolean hasFineExemption(PhdGratuityEvent phdGratuityEvent) {

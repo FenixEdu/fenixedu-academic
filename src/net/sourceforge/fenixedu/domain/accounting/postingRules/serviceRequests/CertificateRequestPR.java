@@ -1,14 +1,11 @@
 package net.sourceforge.fenixedu.domain.accounting.postingRules.serviceRequests;
 
 import java.math.BigDecimal;
-import java.util.List;
 
 import net.sourceforge.fenixedu.domain.accounting.EntryType;
 import net.sourceforge.fenixedu.domain.accounting.Event;
 import net.sourceforge.fenixedu.domain.accounting.EventType;
-import net.sourceforge.fenixedu.domain.accounting.Exemption;
 import net.sourceforge.fenixedu.domain.accounting.ServiceAgreementTemplate;
-import net.sourceforge.fenixedu.domain.accounting.events.AcademicEventExemption;
 import net.sourceforge.fenixedu.domain.accounting.events.serviceRequests.CertificateRequestEvent;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.util.Money;
@@ -61,25 +58,11 @@ public class CertificateRequestPR extends CertificateRequestPR_Base {
     }
 
     @Override
-    public Money calculateTotalAmountToPay(Event event, DateTime when, boolean applyDiscount) {
+    protected Money doCalculationForAmountToPay(Event event, DateTime when, boolean applyDiscount) {
 	final CertificateRequestEvent certificateRequestEvent = (CertificateRequestEvent) event;
 	Money totalAmountToPay = isUrgent(certificateRequestEvent) ? getBaseAmount().multiply(BigDecimal.valueOf(2)).add(
-		getAmountForUnits(event)) : super.calculateTotalAmountToPay(event, when, applyDiscount);
+		getAmountForUnits(event)) : super.doCalculationForAmountToPay(event, when, applyDiscount);
 	totalAmountToPay = totalAmountToPay.add(calculateAmountToPayForPages(certificateRequestEvent));
-
-	if (event.hasAnyExemptions()) {
-	    List<Exemption> exemptions = event.getExemptions();
-
-	    for (Exemption exemption : exemptions) {
-		AcademicEventExemption academicEventExemption = (AcademicEventExemption) exemption;
-
-		totalAmountToPay = totalAmountToPay.subtract(academicEventExemption.getValue());
-	    }
-	}
-
-	if (totalAmountToPay.isNegative()) {
-	    return Money.ZERO;
-	}
 
 	return totalAmountToPay;
     }

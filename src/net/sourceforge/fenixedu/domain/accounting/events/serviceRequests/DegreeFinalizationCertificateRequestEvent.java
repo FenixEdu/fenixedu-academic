@@ -44,8 +44,4 @@ public class DegreeFinalizationCertificateRequestEvent extends DegreeFinalizatio
 	}
     }
 
-    @Override
-    public boolean isExemptionAppliable() {
-	return true;
-    }
 }

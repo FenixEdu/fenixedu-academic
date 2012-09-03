@@ -78,7 +78,7 @@ public class StandaloneEnrolmentGratuityPR extends StandaloneEnrolmentGratuityPR
     }
 
     @Override
-    public Money calculateTotalAmountToPay(Event event, DateTime when, boolean applyDiscount) {
+    protected Money doCalculationForAmountToPay(Event event, DateTime when, boolean applyDiscount) {
 	final GratuityEvent gratuityEvent = (GratuityEvent) event;
 
 	Money result = Money.ZERO;
@@ -86,22 +86,29 @@ public class StandaloneEnrolmentGratuityPR extends StandaloneEnrolmentGratuityPR
 	    result = result.add(calculateAmountForDegreeCurricularPlan(entry.getKey(), entry.getValue(), gratuityEvent));
 	}
 
+	return result;
+    }
+
+    @Override
+    protected Money subtractFromExemptions(Event event, DateTime when, boolean applyDiscount, Money amountToPay) {
+	final GratuityEvent gratuityEvent = (GratuityEvent) event;
+
 	if (!gratuityEvent.hasGratuityExemption()) {
-	    return result;
+	    return amountToPay;
 	}
 
 	GratuityExemption gratuityExemption = gratuityEvent.getGratuityExemption();
 
 	if (gratuityExemption.isValueExemption()) {
-	    result = result.subtract(((ValueGratuityExemption) gratuityExemption).getValue());
+	    amountToPay = amountToPay.subtract(((ValueGratuityExemption) gratuityExemption).getValue());
 	} else {
 	    PercentageGratuityExemption percentageGratuityExemption = (PercentageGratuityExemption) gratuityExemption;
 	    BigDecimal percentage = percentageGratuityExemption.getPercentage();
-	    Money toRemove = result.multiply(percentage);
-	    result = result.subtract(toRemove);
+	    Money toRemove = amountToPay.multiply(percentage);
+	    amountToPay = amountToPay.subtract(toRemove);
 	}
 
-	return result.isNegative() ? Money.ZERO : result;
+	return amountToPay.isNegative() ? Money.ZERO : amountToPay;
     }
 
     /**

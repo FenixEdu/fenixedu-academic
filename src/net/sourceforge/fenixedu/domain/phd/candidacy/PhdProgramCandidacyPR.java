@@ -30,9 +30,7 @@ public class PhdProgramCandidacyPR extends PhdProgramCandidacyPR_Base {
     }
 
     @Override
-    public Money calculateTotalAmountToPay(Event event, DateTime when, boolean applyDiscount) {
-	Money amountToPay = super.calculateTotalAmountToPay(event, when, applyDiscount);
-
+    protected Money subtractFromExemptions(Event event, DateTime when, boolean applyDiscount, Money amountToPay) {
 	final PhdProgramCandidacyEvent candidacyEvent = (PhdProgramCandidacyEvent) event;
 	if (candidacyEvent.hasPhdEventExemption()) {
 	    amountToPay = amountToPay.subtract(candidacyEvent.getPhdEventExemption().getValue());
@@ -40,4 +38,5 @@ public class PhdProgramCandidacyPR extends PhdProgramCandidacyPR_Base {
 
 	return amountToPay.isPositive() ? amountToPay : Money.ZERO;
     }
+
 }

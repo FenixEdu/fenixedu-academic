@@ -8,6 +8,7 @@ import java.util.Set;
 import net.sourceforge.fenixedu.dataTransferObject.accounting.AccountingTransactionDetailDTO;
 import net.sourceforge.fenixedu.dataTransferObject.accounting.EntryDTO;
 import net.sourceforge.fenixedu.domain.User;
+import net.sourceforge.fenixedu.domain.accounting.AcademicEvent;
 import net.sourceforge.fenixedu.domain.accounting.Account;
 import net.sourceforge.fenixedu.domain.accounting.AccountingTransaction;
 import net.sourceforge.fenixedu.domain.accounting.EntryType;
@@ -49,8 +50,8 @@ public class FixedAmountPR extends FixedAmountPR_Base {
     }
 
     @Override
-    protected Set<AccountingTransaction> internalProcess(User user, Collection<EntryDTO> entryDTOs, Event event, Account fromAccount,
-	    Account toAccount, AccountingTransactionDetailDTO transactionDetail) {
+    protected Set<AccountingTransaction> internalProcess(User user, Collection<EntryDTO> entryDTOs, Event event,
+	    Account fromAccount, Account toAccount, AccountingTransactionDetailDTO transactionDetail) {
 
 	if (entryDTOs.size() != 1) {
 	    throw new DomainException("error.accounting.postingRules.FixedAmountPR.invalid.number.of.entryDTOs");
@@ -72,8 +73,8 @@ public class FixedAmountPR extends FixedAmountPR_Base {
     protected void checkIfCanAddAmount(Money amountToPay, final Event event, final DateTime when) {
 	if (amountToPay.compareTo(calculateTotalAmountToPay(event, when)) < 0) {
 	    throw new DomainExceptionWithLabelFormatter(
-		    "error.accounting.postingRules.FixedAmountPR.amount.being.payed.must.match.amount.to.pay", event
-			    .getDescriptionForEntryType(getEntryType()));
+		    "error.accounting.postingRules.FixedAmountPR.amount.being.payed.must.match.amount.to.pay",
+		    event.getDescriptionForEntryType(getEntryType()));
 	}
     }
 
@@ -85,8 +86,23 @@ public class FixedAmountPR extends FixedAmountPR_Base {
     }
 
     @Override
-    public Money calculateTotalAmountToPay(Event event, DateTime when, boolean applyDiscount) {
+    protected Money doCalculationForAmountToPay(Event event, DateTime when, boolean applyDiscount) {
 	return getFixedAmount();
+    }
+
+    @Override
+    protected Money subtractFromExemptions(Event event, DateTime when, boolean applyDiscount, Money amountToPay) {
+
+	if (event instanceof AcademicEvent) {
+	    final AcademicEvent requestEvent = (AcademicEvent) event;
+	    if (requestEvent.hasAcademicEventExemption()) {
+		amountToPay = amountToPay.subtract(requestEvent.getAcademicEventExemption().getValue());
+	    }
+
+	    return amountToPay.isPositive() ? amountToPay : Money.ZERO;
+	}
+
+	return amountToPay;
     }
 
     @Checked("PostingRulePredicates.editPredicate")

@@ -37,17 +37,21 @@ public class SecondCycleIndividualCandidacyPR extends SecondCycleIndividualCandi
     }
 
     @Override
-    public Money calculateTotalAmountToPay(Event event, DateTime when, boolean applyDiscount) {
+    protected Money doCalculationForAmountToPay(Event event, DateTime when, boolean applyDiscount) {
+	SecondCycleIndividualCandidacyEvent secondCycleEvent = (SecondCycleIndividualCandidacyEvent) event;
+	return super.doCalculationForAmountToPay(event, when, applyDiscount).multiply(
+		((SecondCycleIndividualCandidacy) secondCycleEvent.getIndividualCandidacy()).getSelectedDegrees().size());
+    }
+
+    @Override
+    protected Money subtractFromExemptions(Event event, DateTime when, boolean applyDiscount, Money amountToPay) {
 	final SecondCycleIndividualCandidacyEvent candidacyEvent = (SecondCycleIndividualCandidacyEvent) event;
 
 	if (candidacyEvent.hasSecondCycleIndividualCandidacyExemption()) {
 	    return Money.ZERO;
 	}
 
-	SecondCycleIndividualCandidacyEvent secondCycleEvent = (SecondCycleIndividualCandidacyEvent) event;
-
-	return super.calculateTotalAmountToPay(event, when, applyDiscount).multiply(
-		((SecondCycleIndividualCandidacy) secondCycleEvent.getIndividualCandidacy()).getSelectedDegrees().size());
+	return amountToPay;
     }
 
     @Override

@@ -39,7 +39,7 @@ public class ResidencePR extends ResidencePR_Base {
     }
 
     @Override
-    public Money calculateTotalAmountToPay(Event event, DateTime when, boolean applyDiscount) {
+    protected Money doCalculationForAmountToPay(Event event, DateTime when, boolean applyDiscount) {
 	ResidenceEvent residenceEvent = (ResidenceEvent) event;
 	Money baseValue = residenceEvent.getRoomValue();
 	if (residenceEvent.getPaymentLimitDate().isAfter(when)) {
@@ -47,6 +47,11 @@ public class ResidencePR extends ResidencePR_Base {
 	}
 	return baseValue.add(getPenaltyPerDay().multiply(
 		BigDecimal.valueOf(Days.daysBetween(residenceEvent.getPaymentLimitDate(), when).getDays())));
+    }
+
+    @Override
+    protected Money subtractFromExemptions(Event event, DateTime when, boolean applyDiscount, Money amountToPay) {
+	return amountToPay;
     }
 
     @Override

@@ -42,7 +42,6 @@ public class FixedAmountWithPenaltyFromDatePR extends FixedAmountWithPenaltyFrom
 	    throw new DomainException(
 		    "error.accounting.postingRules.FixedAmountWithPenaltyFromDatePR.whenToApplyFixedAmountPenalty.cannot.be.null");
 	}
-
     }
 
     @Override

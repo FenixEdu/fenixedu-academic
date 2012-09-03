@@ -65,7 +65,7 @@ public class EquivalencePlanRequestPR extends EquivalencePlanRequestPR_Base {
     }
 
     @Override
-    public Money calculateTotalAmountToPay(final Event event, final DateTime when, boolean applyDiscount) {
+    protected Money doCalculationForAmountToPay(final Event event, final DateTime when, boolean applyDiscount) {
 	final EquivalencePlanRequestEvent planRequest = (EquivalencePlanRequestEvent) event;
 
 	Money amountToPay = getAmountPerUnit();
@@ -79,6 +79,13 @@ public class EquivalencePlanRequestPR extends EquivalencePlanRequestPR_Base {
 		amountToPay = getMaximumAmount();
 	    }
 	}
+
+	return amountToPay;
+    }
+
+    @Override
+    protected Money subtractFromExemptions(Event event, DateTime when, boolean applyDiscount, Money amountToPay) {
+	final EquivalencePlanRequestEvent planRequest = (EquivalencePlanRequestEvent) event;
 
 	if (planRequest.hasAcademicEventExemption()) {
 	    amountToPay = amountToPay.subtract(planRequest.getAcademicEventExemption().getValue());

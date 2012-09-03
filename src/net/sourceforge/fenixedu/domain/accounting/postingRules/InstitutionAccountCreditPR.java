@@ -2,7 +2,6 @@ package net.sourceforge.fenixedu.domain.accounting.postingRules;
 
 import java.util.Collection;
 import java.util.Collections;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -11,7 +10,6 @@ import net.sourceforge.fenixedu.dataTransferObject.accounting.EntryDTO;
 import net.sourceforge.fenixedu.domain.User;
 import net.sourceforge.fenixedu.domain.accounting.Account;
 import net.sourceforge.fenixedu.domain.accounting.AccountingTransaction;
-import net.sourceforge.fenixedu.domain.accounting.Entry;
 import net.sourceforge.fenixedu.domain.accounting.EntryType;
 import net.sourceforge.fenixedu.domain.accounting.Event;
 import net.sourceforge.fenixedu.domain.accounting.EventType;
@@ -34,13 +32,18 @@ public class InstitutionAccountCreditPR extends InstitutionAccountCreditPR_Base 
     }
 
     @Override
-    public Money calculateTotalAmountToPay(final Event event, final DateTime when, final boolean applyDiscount) {
+    protected Money doCalculationForAmountToPay(final Event event, final DateTime when, final boolean applyDiscount) {
 	Money result = Money.ZERO;
 	final InstitutionAffiliationEvent iaEvent = (InstitutionAffiliationEvent) event;
 	for (final MicroPaymentEvent otherEvent : iaEvent.getMicroPaymentEventSet()) {
 	    result = result.add(otherEvent.getAmount());
 	}
 	return result;
+    }
+    
+    @Override
+    protected Money subtractFromExemptions(Event event, DateTime when, boolean applyDiscount, Money amountToPay) {
+	return amountToPay;
     }
 
     @Override

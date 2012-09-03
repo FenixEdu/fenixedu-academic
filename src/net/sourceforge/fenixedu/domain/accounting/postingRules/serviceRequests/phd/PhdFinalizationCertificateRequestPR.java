@@ -27,11 +27,11 @@ public class PhdFinalizationCertificateRequestPR extends PhdFinalizationCertific
     }
 
     @Override
-    public Money calculateTotalAmountToPay(Event event, DateTime when, boolean applyDiscount) {
+    protected Money doCalculationForAmountToPay(Event event, DateTime when, boolean applyDiscount) {
 	AcademicServiceRequestEvent academicServiceRequestEvent = (AcademicServiceRequestEvent) event;
 	AcademicServiceRequest academicServiceRequest = academicServiceRequestEvent.getAcademicServiceRequest();
 
-	return super.calculateTotalAmountToPay(academicServiceRequestEvent, when, applyDiscount).multiply(
+	return super.doCalculationForAmountToPay(academicServiceRequestEvent, when, applyDiscount).multiply(
 		academicServiceRequest.isUrgentRequest() ? 2 : 1);
     }
 
