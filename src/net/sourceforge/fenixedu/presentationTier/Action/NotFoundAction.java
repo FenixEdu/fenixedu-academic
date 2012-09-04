@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.presentationTier.Action;
 
-import javax.servlet.ServletOutputStream;
+import java.io.PrintWriter;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -19,16 +20,15 @@ public class NotFoundAction extends Action {
             throws Exception {
 	response.setStatus(HttpServletResponse.SC_NOT_FOUND);
 	response.addIntHeader("Not Found", HttpServletResponse.SC_NOT_FOUND);
-	response.setContentType("text/html");
-	final ServletOutputStream outputStream = response.getOutputStream();
-//	final StringBuilder stringBuilder = new StringBuilder();
-	outputStream.print("<html xmlns=\"http://www.w3.org/1999/xhtml\" lang=\"pt\" xml:lang=\"pt\">");
-	outputStream.print("<meta http-equiv=\"Content-Type\" content=\"text/html; charset=" + PropertiesManager.DEFAULT_CHARSET + "\" />");
-	outputStream.print("<body><h1>");
-	outputStream.print(BundleUtil.getStringFromResourceBundle("resources.GlobalResources", "error.message.resource.not.found"));
-	outputStream.print("</body></html>");
-//	stringBuilder.toString();
-	outputStream.close();
+	response.setContentType("text/html; charset=" + PropertiesManager.DEFAULT_CHARSET);
+	final PrintWriter writer = response.getWriter();
+	writer.print("<html xmlns=\"http://www.w3.org/1999/xhtml\" lang=\"pt\" xml:lang=\"pt\">");
+	writer.print("<meta http-equiv=\"Content-Type\" content=\"text/html; charset=" + PropertiesManager.DEFAULT_CHARSET
+		+ "\" />");
+	writer.print("<body><h1>");
+	writer.print(BundleUtil.getStringFromResourceBundle("resources.GlobalResources", "error.message.resource.not.found"));
+	writer.print("</body></html>");
+	writer.close();
 	return null;
     }
 
