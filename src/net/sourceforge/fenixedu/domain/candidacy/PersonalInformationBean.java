@@ -636,6 +636,11 @@ public class PersonalInformationBean implements Serializable {
 	setRaidesDegreeDesignation(null);
     }
 
+    public void resetDegree() {
+	setDegreeDesignation(null);
+	setRaidesDegreeDesignation(null);
+    }
+
     public String getFormattedValues() {
 	Formatter result = new Formatter();
 

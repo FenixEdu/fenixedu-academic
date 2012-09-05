@@ -78,7 +78,7 @@ hideButtons();
 				<fr:property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.DistinctCountriesProvider" />
 			</fr:slot>	
 			<% if (personalInformationBean.isUnitFromRaidesListMandatory()) { %>
-				<fr:slot name="institutionUnitName" layout="autoComplete" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
+				<fr:slot name="institutionUnitName" layout="autoCompleteWithPostBack" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
 					<fr:property name="size" value="50"/>
 					<fr:property name="labelField" value="unit.name"/>
 					<fr:property name="indicatorShown" value="true"/>
@@ -87,13 +87,14 @@ hideButtons();
 					<fr:property name="className" value="net.sourceforge.fenixedu.domain.organizationalStructure.UnitName"/>
 					<fr:property name="minChars" value="4"/>
 					<fr:property name="rawSlotName" value="institutionName"/>
+					<fr:property name="destination" value="institutionPostBack"/>
 				</fr:slot>
 				<fr:slot name="raidesDegreeDesignation" layout="autoComplete" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
 			    	<fr:property name="size" value="50"/>
 					<fr:property name="labelField" value="description"/>
 					<fr:property name="indicatorShown" value="true"/>
 					<fr:property name="serviceName" value="SearchRaidesDegreeDesignations"/>
-					<fr:property name="serviceArgs" value="slot=description,size=50"/>
+					<fr:property name="serviceArgs" value="<%="slot=description,size=50,filterUnitOID=" + ((personalInformationBean.getInstitution() != null) ? personalInformationBean.getInstitution().getExternalId() : "null") %>"/>
 					<fr:property name="className" value="net.sourceforge.fenixedu.domain.raides.DegreeDesignation"/>
 					<fr:property name="minChars" value="3"/>
 			    </fr:slot>
@@ -127,6 +128,7 @@ hideButtons();
 			<fr:property name="columnClasses" value="width300px,,tdclear tderror1"/>
 			<fr:destination name="invalid" path="/editMissingCandidacyInformation.do?method=prepareEditInvalid" />
 			<fr:destination name="postback" path="/editMissingCandidacyInformation.do?method=prepareEditPostback" />
+			<fr:destination name="institutionPostBack" path="/editMissingCandidacyInformation.do?method=prepareEditInstitutionPostback" />
 		</fr:layout>
 	</fr:edit>
 	
