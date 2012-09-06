@@ -71,7 +71,8 @@ public class ProcessCandidacyPrintAllDocumentsFilter implements Filter {
 	    InputStream istream = getClass().getResourceAsStream(CGD_PDF_PATH);
 	    PdfReader reader = new PdfReader(istream);
 	    reader.getAcroForm().remove(PdfName.SIGFLAGS);
-
+	    reader.selectPages("1,3,4"); // updated to new cgd form since page 2
+					 // is blank
 	    ByteArrayOutputStream output = new ByteArrayOutputStream();
 	    PdfStamper stamper = new PdfStamper(reader, output);
 	    form = stamper.getAcroFields();
@@ -97,8 +98,8 @@ public class ProcessCandidacyPrintAllDocumentsFilter implements Filter {
 	    if (emissionDate != null) {
 		setField("Cod_data_2", emissionDate.toString(DateTimeFormat.forPattern("ddMMyyyy")));
 	    }
-	    setField("Cod_data_3", person.getExpirationDateOfDocumentIdYearMonthDay().toString(
-		    DateTimeFormat.forPattern("ddMMyyyy")));
+	    setField("Cod_data_3",
+		    person.getExpirationDateOfDocumentIdYearMonthDay().toString(DateTimeFormat.forPattern("ddMMyyyy")));
 
 	    setField("T_NomeMae", person.getNameOfMother());
 	    setField("T_NomePai", person.getNameOfFather());
@@ -316,8 +317,8 @@ public class ProcessCandidacyPrintAllDocumentsFilter implements Filter {
 		map.put("idDocEmissionDate", emissionDate.toString(DateTimeFormat.forPattern("dd/MM/yyyy")));
 	    }
 
-	    map.put("idDocExpirationDate", person.getExpirationDateOfDocumentIdYearMonthDay().toString(
-		    DateTimeFormat.forPattern("dd/MM/yyyy")));
+	    map.put("idDocExpirationDate",
+		    person.getExpirationDateOfDocumentIdYearMonthDay().toString(DateTimeFormat.forPattern("dd/MM/yyyy")));
 	    map.put("idDocEmissionLocation", person.getEmissionLocationOfDocumentId());
 
 	    String nif = person.getSocialSecurityNumber();
@@ -366,7 +367,9 @@ public class ProcessCandidacyPrintAllDocumentsFilter implements Filter {
 
     private String buildRedirectURL(HttpServletRequest request, final StudentCandidacy candidacy) {
 	String url = "/candidate/degreeCandidacyManagement.do?method=showCandidacyDetails&candidacyID="
-		+ candidacy.getIdInternal() + "&" +  net.sourceforge.fenixedu.presentationTier.servlets.filters.ContentInjectionRewriter.CONTEXT_ATTRIBUTE_NAME + "=/portal-do-candidato/portal-do-candidato";
+		+ candidacy.getIdInternal() + "&"
+		+ net.sourceforge.fenixedu.presentationTier.servlets.filters.ContentInjectionRewriter.CONTEXT_ATTRIBUTE_NAME
+		+ "=/portal-do-candidato/portal-do-candidato";
 
 	String urlWithChecksum = pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter
 		.injectChecksumInUrl(request.getContextPath(), url);
