@@ -75,6 +75,7 @@
 			</fr:layout>
 			<fr:destination name="invalid" path="<%="/degreeCandidacyManagement.do?method=showCurrentForm&currentFormPosition=" + currentFormPosition%>"/>
 			<fr:destination name="districtSelectionPostback" path="<%="/degreeCandidacyManagement.do?method=showCurrentForm&postback=true&currentFormPosition=" + currentFormPosition%>"/>
+			<fr:destination name="institutionPostBack" path="<%="/degreeCandidacyManagement.do?method=showCurrentForm&postback=true&currentFormPosition=" + currentFormPosition%>"/>
 		</fr:edit>	
 	</logic:equal>
 	<logic:equal name="isInputForm" value="false">

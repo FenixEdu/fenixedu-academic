@@ -751,22 +751,23 @@
 		<property name="destination" value="districtSelectionPostback" />
 	</slot>
 	<slot name="otherSchoolLevel" />
-	<slot name="institutionUnitName" layout="autoComplete" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
+	<slot name="institutionUnitName" layout="autoCompleteWithPostBack" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
 		<property name="size" value="50"/>
 		<property name="labelField" value="unit.name"/>
 		<property name="indicatorShown" value="true"/>
-		<property name="serviceName" value="SearchExternalUnits"/>
+		<property name="serviceName" value="SearchRaidesDegreeUnits"/>
 		<property name="serviceArgs" value="slot=name,size=20"/>
 		<property name="className" value="net.sourceforge.fenixedu.domain.organizationalStructure.UnitName"/>
-		<property name="minChars" value="2"/>
+		<property name="minChars" value="4"/>
 		<property name="rawSlotName" value="institutionName"/>
+		<property name="destination" value="institutionPostBack"/> 
 	</slot>
     <slot name="raidesDegreeDesignation" layout="autoComplete" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
 	   	<property name="size" value="50"/>
 		<property name="labelField" value="description"/>
 		<property name="indicatorShown" value="true"/>
 		<property name="serviceName" value="SearchRaidesDegreeDesignations"/>
-		<property name="serviceArgs" value="slot=description,size=50"/>
+		<property name="serviceArgs" value="slot=description,size=50,filterUnitOID=${institution.externalId}"/>
 		<property name="className" value="net.sourceforge.fenixedu.domain.raides.DegreeDesignation"/>
 		<property name="minChars" value="3"/>
 	</slot>
