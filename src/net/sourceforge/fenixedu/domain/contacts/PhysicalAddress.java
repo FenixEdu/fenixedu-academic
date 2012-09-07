@@ -66,15 +66,21 @@ public class PhysicalAddress extends PhysicalAddress_Base {
 	if (data == null) {
 	    return;
 	}
-	super.setAddress(data.getAddress());
-	super.setAreaCode(data.getAreaCode());
-	super.setAreaOfAreaCode(data.getAreaOfAreaCode());
-	super.setArea(data.getArea());
-	super.setParishOfResidence(data.getParishOfResidence());
-	super.setDistrictSubdivisionOfResidence(data.getDistrictSubdivisionOfResidence());
-	super.setDistrictOfResidence(data.getDistrictOfResidence());
-	super.setCountryOfResidence(data.getCountryOfResidence());
-	setLastModifiedDate(new DateTime());
+	if (!data.equals(new PhysicalAddressData(this))) {
+	    super.setAddress(data.getAddress());
+	    super.setAreaCode(data.getAreaCode());
+	    super.setAreaOfAreaCode(data.getAreaOfAreaCode());
+	    super.setArea(data.getArea());
+	    super.setParishOfResidence(data.getParishOfResidence());
+	    super.setDistrictSubdivisionOfResidence(data.getDistrictSubdivisionOfResidence());
+	    super.setDistrictOfResidence(data.getDistrictOfResidence());
+	    super.setCountryOfResidence(data.getCountryOfResidence());
+	    if (!waitsValidation()) {
+		new PhysicalAddressValidation(this);
+	    }
+	    setLastModifiedDate(new DateTime());
+	}
+
     }
 
     // Called from renders with edit clause.

@@ -230,11 +230,7 @@ public class FillPersonalDataOperation extends CandidacyOperation {
 
     protected void fillContacts() {
 	final Person person = getStudentCandidacy().getPerson();
-
-	person.setEmail(getContactsForm().getEmail());
-	if (person.hasDefaultEmailAddress()) {
-	    person.getDefaultEmailAddress().setVisibleToPublic(getContactsForm().isEmailAvailable());
-	}
+	person.setDefaultEmailAddressValue(getContactsForm().getEmail(), false, getContactsForm().isEmailAvailable());
 
 	person.setDefaultPhoneNumber(getContactsForm().getPhoneNumber());
 
@@ -273,7 +269,9 @@ public class FillPersonalDataOperation extends CandidacyOperation {
 		    getResidenceInformationForm().getSchoolTimeParishOfResidence(), getResidenceInformationForm()
 			    .getSchoolTimeDistrictSubdivisionOfResidence().getName(), getResidenceInformationForm()
 			    .getSchoolTimeDistrictSubdivisionOfResidence().getDistrict().getName(), Country.readDefault());
-	    PhysicalAddress.createPhysicalAddress(person, physicalAddressData, PartyContactType.PERSONAL, false);
+	    final PhysicalAddress address = PhysicalAddress.createPhysicalAddress(person, physicalAddressData,
+		    PartyContactType.PERSONAL, false);
+	    address.setValid();
 	}
     }
 
@@ -287,7 +285,7 @@ public class FillPersonalDataOperation extends CandidacyOperation {
 		getResidenceInformationForm().getAreaCode(), getResidenceInformationForm().getAreaOfAreaCode(),
 		getResidenceInformationForm().getArea(), getResidenceInformationForm().getParishOfResidence(),
 		districtSubdivisionOfResidence, districtOfResidence, getResidenceInformationForm().getCountryOfResidence());
-	person.setDefaultPhysicalAddressData(physicalAddressData);
+	person.setDefaultPhysicalAddressData(physicalAddressData, true);
     }
 
     protected void fillFiliation() {

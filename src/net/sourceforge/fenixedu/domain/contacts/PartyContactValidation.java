@@ -47,6 +47,9 @@ public abstract class PartyContactValidation extends PartyContactValidation_Base
 
     public void init(PartyContact contact) {
 	setPartyContact(contact);
+	if (contact.isDefault()) {
+	    setToBeDefault(Boolean.TRUE);
+	}
     }
 
     public PartyContactValidation(PartyContact contact) {

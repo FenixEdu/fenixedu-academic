@@ -79,8 +79,13 @@ public class MobilePhone extends MobilePhone_Base {
     }
 
     public void edit(final String number) {
-	super.setNumber(number);
-	setLastModifiedDate(new DateTime());
+	if (!StringUtils.equals(getNumber(), number)) {
+	    super.setNumber(number);
+	    if (!waitsValidation()) {
+		new PhoneValidation(this);
+	    }
+	    setLastModifiedDate(new DateTime());
+	}
     }
 
     @Override

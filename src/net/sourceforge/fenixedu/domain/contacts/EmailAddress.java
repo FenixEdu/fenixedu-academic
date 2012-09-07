@@ -102,7 +102,12 @@ public class EmailAddress extends EmailAddress_Base {
     @Service
     public void edit(final String value) {
 	if (!isInstitutionalType()) {
-	    super.setValue(value);
+	    if (!StringUtils.equals(value, getValue())) {
+		super.setValue(value);
+		if (!waitsValidation()) {
+		    new EmailValidation(this);
+		}
+	    }
 	    setLastModifiedDate(new DateTime());
 	}
     }
