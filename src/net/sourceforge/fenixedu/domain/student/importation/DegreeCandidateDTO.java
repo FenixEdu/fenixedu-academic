@@ -16,6 +16,7 @@ import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.candidacy.Ingression;
+import net.sourceforge.fenixedu.domain.contacts.MobilePhone;
 import net.sourceforge.fenixedu.domain.contacts.PartyContactType;
 import net.sourceforge.fenixedu.domain.contacts.Phone;
 import net.sourceforge.fenixedu.domain.contacts.PhysicalAddress;
@@ -30,6 +31,7 @@ import org.apache.commons.lang.StringUtils;
 import org.joda.time.YearMonthDay;
 
 import pt.utl.ist.fenix.tools.loaders.IFileLine;
+import pt.utl.ist.fenix.tools.util.PhoneUtil;
 
 public class DegreeCandidateDTO implements IFileLine {
 
@@ -377,8 +379,14 @@ public class DegreeCandidateDTO implements IFileLine {
 		getAddress(), getAreaCode(), getAreaOfAreaCode(), null), PartyContactType.PERSONAL, true);
 	createPhysicalAddress.setValid();
 
-	final Phone createPhone = Phone.createPhone(person, getPhoneNumber(), PartyContactType.PERSONAL, true);
-	createPhone.setValid();
+	if (PhoneUtil.isMobileNumber(getPhoneNumber())) {
+	    final MobilePhone createMobilePhone = MobilePhone.createMobilePhone(person, getPhoneNumber(),
+		    PartyContactType.PERSONAL, true);
+	    createMobilePhone.setValid();
+	} else {
+	    final Phone createPhone = Phone.createPhone(person, getPhoneNumber(), PartyContactType.PERSONAL, true);
+	    createPhone.setValid();
+	}
 
 	return person;
     }
