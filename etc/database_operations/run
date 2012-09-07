@@ -43,3 +43,4 @@ function executeWithTempFile() {
 	echo
 }
 
+run "Alter table StudentDataShareAuthorization" alterTableStudentAuthorization.sql

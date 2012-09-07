@@ -1,0 +1,2 @@
+alter table `STUDENT_DATA_SHARE_AUTHORIZATION` add `OJB_CONCRETE_CLASS` varchar(255) NOT NULL DEFAULT '';
+update `STUDENT_DATA_SHARE_AUTHORIZATION` set `OJB_CONCRETE_CLASS` = 'net.sourceforge.fenixedu.domain.student.StudentDataShareAuthorization';
