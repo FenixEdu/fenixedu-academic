@@ -143,6 +143,10 @@ public class OriginInformationForm extends Form {
 	return raidesDegreeDesignation;
     }
 
+    private static String roundUpGrade(String grade) {
+	return String.valueOf(Math.round(Float.valueOf(grade)));
+    }
+
     @Override
     public List<LabelFormatter> validate() {
 	if (this.schoolLevel == SchoolLevelType.OTHER && StringUtils.isEmpty(this.otherSchoolLevel)) {
@@ -178,7 +182,7 @@ public class OriginInformationForm extends Form {
 	final OriginInformationForm result = new OriginInformationForm();
 	result.setHighSchoolType(studentCandidacy.getHighSchoolType());
 	if (studentCandidacy.hasPrecedentDegreeInformation()) {
-	    result.setConclusionGrade(studentCandidacy.getPrecedentDegreeInformation().getConclusionGrade());
+	    result.setConclusionGrade(roundUpGrade(studentCandidacy.getPrecedentDegreeInformation().getConclusionGrade()));
 	    result.setDegreeDesignation(studentCandidacy.getPrecedentDegreeInformation().getDegreeDesignation());
 	    result.setInstitution(studentCandidacy.getPrecedentDegreeInformation().getInstitution());
 	}
