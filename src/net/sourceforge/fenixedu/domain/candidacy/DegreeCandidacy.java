@@ -15,7 +15,6 @@ import net.sourceforge.fenixedu.domain.candidacy.workflow.PrintMeasurementTestDa
 import net.sourceforge.fenixedu.domain.candidacy.workflow.PrintRegistrationDeclarationOperation;
 import net.sourceforge.fenixedu.domain.candidacy.workflow.PrintScheduleOperation;
 import net.sourceforge.fenixedu.domain.candidacy.workflow.PrintSystemAccessDataOperation;
-import net.sourceforge.fenixedu.domain.candidacy.workflow.PrintUnder23TransportsDeclarationOperation;
 import net.sourceforge.fenixedu.domain.candidacy.workflow.RegistrationOperation;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.util.workflow.Operation;
@@ -61,7 +60,7 @@ public class DegreeCandidacy extends DegreeCandidacy_Base {
 	    operations.add(new PrintScheduleOperation(Collections.singleton(RoleType.STUDENT), this));
 	    operations.add(new PrintRegistrationDeclarationOperation(Collections.singleton(RoleType.STUDENT), this));
 	    operations.add(new PrintSystemAccessDataOperation(Collections.singleton(RoleType.STUDENT), this));
-	    operations.add(new PrintUnder23TransportsDeclarationOperation(RoleType.STUDENT, this));
+	    //operations.add(new PrintUnder23TransportsDeclarationOperation(RoleType.STUDENT, this));
 	    operations.add(new PrintMeasurementTestDateOperation(RoleType.STUDENT, this));
 	    operations.add(new PrintAllDocumentsOperation(RoleType.STUDENT, this));
 	    break;
