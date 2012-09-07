@@ -587,9 +587,10 @@
 </schema>
 
 <schema name="ResidenceInformationForm" type="net.sourceforge.fenixedu.domain.candidacy.workflow.form.ResidenceInformationForm" bundle="CANDIDATE_RESOURCES">
-	<slot name="countryOfResidence" layout="menu-select" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"> 
+	<slot name="countryOfResidence" layout="menu-select-postback" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"> 
 		<property name="format" value="${name}"/>
 		<property name="sortBy" value="name=asc" />
+		<property name="destination" value="countrySelectionPostback" />
 		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.DistinctCountriesProvider" />
 	</slot>
     <slot name="address">
@@ -607,7 +608,7 @@
     <slot name="areaOfAreaCode" />
     <slot name="area"/>
     <slot name="districtOfResidence" layout="menu-select-postback" >
-    	<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.DistrictsProvider"/>
+    	<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.candidacy.DistrictsForResidenceInformationFormProvider"/>
 		<property name="format" value="${name}"/>
 		<property name="destination" value="districtSelectionPostback" />
 		<property name="sortBy" value="name=asc" />
@@ -694,11 +695,23 @@
     <slot name="homepageAvailable" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
 </schema>
 
-<schema name="InquiryAboutYieldingPersonalDataForm" type="net.sourceforge.fenixedu.domain.candidacy.workflow.form.InquiryAboutYieldingPersonalDataForm" bundle="CANDIDATE_RESOURCES">
-	<slot name="personalDataAuthorizationChoice" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" />
+<schema name="InquiryAboutYieldingPersonalDataForm" type="net.sourceforge.fenixedu.domain.candidacy.workflow.form.InquiryAboutYieldingPersonalDataForm" bundle="CANDIDATE_RESOURCES">	
+	<slot name="personalDataAuthorizationForStudentsAssociation" layout="radio" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" >
+		<property name="trueLabel" value="label.true" />
+		<property name="falseLabel" value="label.false" />
+		<property name="bundle" value="APPLICATION_RESOURCES" />
+	</slot>
+	<slot name="personalDataAuthorizationChoice" layout="menu-select" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" >
+		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.student.PersonalDataAuthorizationProvider" />
+	</slot>
 </schema>
 
 <schema name="OriginInformationForm" type="net.sourceforge.fenixedu.domain.candidacy.workflow.form.OriginInformationForm" bundle="CANDIDATE_RESOURCES">
+	<slot name="countryWhereFinishedPreviousCompleteDegree" layout="menu-select" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"> 
+		<property name="format" value="${name}"/>
+		<property name="sortBy" value="name=asc" />
+		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.DistinctCountriesProvider" />
+	</slot>
 	<slot name="schoolLevel" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" layout="menu-select-postback">
 		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.candidacy.SchoolLevelTypeForStudentProvider" />
 		<property name="destination" value="districtSelectionPostback" />
@@ -738,14 +751,14 @@
             <property name="bundle" value="CANDIDATE_RESOURCES"/>
         </validator>
     </slot>
+</schema>
+
+<schema name="OriginInformationForm.higherEducation" type="net.sourceforge.fenixedu.domain.candidacy.workflow.form.OriginInformationForm" bundle="CANDIDATE_RESOURCES">
 	<slot name="countryWhereFinishedPreviousCompleteDegree" layout="menu-select" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"> 
 		<property name="format" value="${name}"/>
 		<property name="sortBy" value="name=asc" />
 		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.DistinctCountriesProvider" />
-	</slot>
-</schema>
-
-<schema name="OriginInformationForm.higherEducation" type="net.sourceforge.fenixedu.domain.candidacy.workflow.form.OriginInformationForm" bundle="CANDIDATE_RESOURCES">
+	</slot>	
 	<slot name="schoolLevel" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" layout="menu-select-postback">
 		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.candidacy.SchoolLevelTypeForStudentProvider" />
 		<property name="destination" value="districtSelectionPostback" />
@@ -791,11 +804,6 @@
             <property name="bundle" value="CANDIDATE_RESOURCES"/>
         </validator>
     </slot>
-	<slot name="countryWhereFinishedPreviousCompleteDegree" layout="menu-select" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"> 
-		<property name="format" value="${name}"/>
-		<property name="sortBy" value="name=asc" />
-		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.DistinctCountriesProvider" />
-	</slot>
 </schema>
 
 <schema name="OriginInformationForm.highSchoolOrEquivalent" type="net.sourceforge.fenixedu.domain.candidacy.workflow.form.OriginInformationForm" bundle="CANDIDATE_RESOURCES" extends="OriginInformationForm">

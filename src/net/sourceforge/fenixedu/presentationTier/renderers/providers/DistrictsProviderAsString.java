@@ -1,7 +1,10 @@
 package net.sourceforge.fenixedu.presentationTier.renderers.providers;
 
-import java.util.SortedSet;
-import java.util.TreeSet;
+import java.text.Collator;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Locale;
 
 import net.sourceforge.fenixedu.domain.District;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
@@ -16,12 +19,14 @@ public class DistrictsProviderAsString implements DataProvider {
 
     @Override
     public Object provide(Object source, Object currentValue) {
-	final SortedSet<String> result = new TreeSet<String>();
+	final List<String> result = new ArrayList<String>();
 
+	Collator ptsCollator = Collator.getInstance(new Locale("pt"));
 	for (final District each : RootDomainObject.getInstance().getDistricts()) {
 	    result.add(each.getName());
 	}
 
+	Collections.sort(result, ptsCollator);
 	return result;
     }
 
