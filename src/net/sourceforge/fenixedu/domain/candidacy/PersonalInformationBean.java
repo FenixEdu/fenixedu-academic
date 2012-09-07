@@ -524,6 +524,11 @@ public class PersonalInformationBean implements Serializable {
 	    result.add("error.CandidacyInformationBean.other.school.level.description.is.required");
 	}
 
+	if (isUnitFromRaidesListMandatory() && hasRaidesDegreeDesignation()
+		&& !getRaidesDegreeDesignation().getInstitutionUnit().contains(getInstitution())) {
+	    result.add("error.CandidacyInformationBean.designation.must.match.institution");
+	}
+
 	if (getGrantOwnerType() != null && getGrantOwnerType() == GrantOwnerType.OTHER_INSTITUTION_GRANT_OWNER
 		&& getGrantOwnerProvider() == null) {
 	    result
@@ -706,6 +711,10 @@ public class PersonalInformationBean implements Serializable {
 
     public DegreeDesignation getRaidesDegreeDesignation() {
 	return raidesDegreeDesignation;
+    }
+
+    public boolean hasRaidesDegreeDesignation() {
+	return raidesDegreeDesignation != null;
     }
 
     public void setDegreeChangeOrTransferOrErasmusStudent(boolean degreeChangeOrTransferOrErasmusStudent) {
