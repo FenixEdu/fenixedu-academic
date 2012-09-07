@@ -1007,10 +1007,20 @@ public abstract class Party extends Party_Base implements Comparable<Party> {
     }
 
     public void setDefaultMobilePhoneNumber(final String number) {
+	setDefaultMobilePhoneNumber(number, false);
+    }
+
+    public void setDefaultMobilePhoneNumber(final String number, final boolean valid) {
+	MobilePhone mobilePhone;
 	if (hasDefaultMobilePhone()) {
-	    getDefaultMobilePhone().edit(number);
+	    mobilePhone = getDefaultMobilePhone();
+	    mobilePhone.edit(number);
 	} else {
-	    MobilePhone.createMobilePhone(this, number, PartyContactType.PERSONAL, true);
+	    mobilePhone = MobilePhone.createMobilePhone(this, number, PartyContactType.PERSONAL, true);
+	}
+
+	if (valid) {
+	    mobilePhone.setValid();
 	}
     }
 
