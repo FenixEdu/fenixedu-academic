@@ -24,11 +24,11 @@
 
 <body>
 
-<div>
+<%--<div>
 	<jsp:include page="printUnder23TransportsDeclaration.jsp" />
-</div>
+</div>--%>
 
-<div style="page-break-before: always;">
+<div>
 	<jsp:include page="printRegistrationDeclaration.jsp" />
 </div>
 

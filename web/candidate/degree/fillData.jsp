@@ -25,8 +25,6 @@
 </logic:notEmpty>
 
 
-
-
 <logic:present name="formMessages">
 	<ul>
 	<logic:iterate id="formMessage" name="formMessages">
@@ -75,6 +73,7 @@
 			</fr:layout>
 			<fr:destination name="invalid" path="<%="/degreeCandidacyManagement.do?method=showCurrentForm&currentFormPosition=" + currentFormPosition%>"/>
 			<fr:destination name="districtSelectionPostback" path="<%="/degreeCandidacyManagement.do?method=showCurrentForm&postback=true&currentFormPosition=" + currentFormPosition%>"/>
+			<fr:destination name="countrySelectionPostback" path="<%="/degreeCandidacyManagement.do?method=showCurrentForm&postback=true&country=true&currentFormPosition=" + currentFormPosition%>"/>			
 			<fr:destination name="institutionPostBack" path="<%="/degreeCandidacyManagement.do?method=showCurrentForm&postback=true&currentFormPosition=" + currentFormPosition%>"/>
 		</fr:edit>	
 	</logic:equal>

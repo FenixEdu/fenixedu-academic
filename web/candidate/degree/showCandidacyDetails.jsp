@@ -55,24 +55,11 @@
 			<logic:equal name="operationType" value="PRINT_REGISTRATION_DECLARATION"> 
 				<bean:define id="requiresNewWindow" value="true" />
 			</logic:equal>
-			<logic:equal name="operationType" value="PRINT_UNDER_23_TRANSPORTS_DECLARATION">
-				<bean:define id="requiresNewWindow" value="true" />
-			</logic:equal>
 			<logic:equal name="operationType" value="PRINT_ALL_DOCUMENTS">
 				<bean:define id="requiresNewWindow" value="true" />
 			</logic:equal>
 
-			<logic:present name="requiresNewWindow">				
-				<logic:equal name="operationType" value="PRINT_ALL_DOCUMENTS">
-					<logic:present name="isInTaguspark">
-						<li>
-							<strong><bean:message  key="label.important" bundle="CANDIDATE_RESOURCES"/>:</strong>
-							<html:link action="<%= "/degreeCandidacyManagement.do?method=showSummaryFile&amp;candidacyID=" + candidacyID%>" target="_blank">
-								<bean:message name="operation" property="type.qualifiedName" bundle="ENUMERATION_RESOURCES"/>
-							</html:link>
-						</li>
-					</logic:present>
-				</logic:equal>
+			<logic:present name="requiresNewWindow">								
 				<logic:notEqual name="operationType" value="PRINT_ALL_DOCUMENTS">
 					<li>
 						<html:link action="<%= "/degreeCandidacyManagement.do?method=doOperation&amp;operationType=" + operationType + "&amp;candidacyID=" + candidacyID%>" target="_blank">
@@ -81,17 +68,7 @@
 					</li>
 				</logic:notEqual>				
 			</logic:present>
-			<logic:notPresent name="requiresNewWindow">
-				<logic:equal name="operationType" value="PRINT_ALL_DOCUMENTS">
-					<logic:present name="isInTaguspark">
-						<li>
-							<strong><bean:message  key="label.important" bundle="CANDIDATE_RESOURCES"/>:</strong>
-							<html:link action="<%= "/degreeCandidacyManagement.do?method=showSummaryFile&amp;candidacyID=" + candidacyID%>">
-								<bean:message name="operation" property="type.qualifiedName" bundle="ENUMERATION_RESOURCES"/>
-							</html:link>
-						</li>
-					</logic:present>
-				</logic:equal>
+			<logic:notPresent name="requiresNewWindow">				
 				<logic:notEqual name="operationType" value="PRINT_ALL_DOCUMENTS">
 					<li>
 						<html:link action="<%= "/degreeCandidacyManagement.do?method=doOperation&amp;operationType=" + operationType + "&amp;candidacyID=" + candidacyID%>">
