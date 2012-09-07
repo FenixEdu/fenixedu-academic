@@ -160,16 +160,31 @@ public class OriginInformationForm extends Form {
 
     @Override
     public String getSchemaName() {
-	String schemaName = super.getSchemaName();
 	if (getSchoolLevel() != null) {
-	    if (getSchoolLevel().isHigherEducation()) {
-		schemaName += ".higherEducation";
+	    if (getInstitution() != null) {
+		if (getSchoolLevel().isHigherEducation() && StringUtils.isEmpty(getInstitution().getCode())) {
+		    setInstitution(null);
+		    setInstitutionName(null);
+		    setInstitutionUnitName(null);
+		}
+		if (getSchoolLevel().isHighSchoolOrEquivalent() && !StringUtils.isEmpty(getInstitution().getCode())) {
+		    setInstitution(null);
+		    setInstitutionName(null);
+		    setInstitutionUnitName(null);
+		}
+	    }
+
+	    if (getSchoolLevel().isHigherEducation() && getInstitution() != null) {
+		return super.getSchemaName() + ".higherEducation";
+	    }
+	    if (getSchoolLevel().isHigherEducation() && getInstitution() == null) {
+		return super.getSchemaName() + ".higherEducationNoInstitution";
 	    }
 	    if (getSchoolLevel().isHighSchoolOrEquivalent()) {
-		schemaName += ".highSchoolOrEquivalent";
+		return super.getSchemaName() + ".highSchoolOrEquivalent";
 	    }
 	}
-	return schemaName;
+	return super.getSchemaName();
     }
 
     @Override
