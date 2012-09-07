@@ -1097,7 +1097,7 @@ public abstract class Party extends Party_Base implements Comparable<Party> {
 		emailAddress = EmailAddress.createEmailAddress(this, email, PartyContactType.PERSONAL, true);
 	    }
 	    emailAddress.setVisibleToPublic(visibleToPublic);
-	    if (emailAddress != null && valid) {
+	    if (valid) {
 		emailAddress.setValid();
 	    }
 	}
