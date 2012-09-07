@@ -226,6 +226,8 @@ public class FillPersonalDataOperation extends CandidacyOperation {
     protected void fillPersonalDataAuthorizationChoice() {
 	getStudentCandidacy().setStudentPersonalDataAuthorizationChoice(
 		getInquiryAboutYieldingPersonalDataForm().getPersonalDataAuthorizationChoice());
+	getStudentCandidacy().setStudentPersonalDataStudentsAssociationAuthorization(
+		getInquiryAboutYieldingPersonalDataForm().getPersonalDataAuthorizationForStudentsAssociation());
     }
 
     protected void fillContacts() {
