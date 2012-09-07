@@ -1083,6 +1083,10 @@ public abstract class Party extends Party_Base implements Comparable<Party> {
 	setDefaultEmailAddressValue(email, false, false);
     }
 
+    public void setDefaultEmailAddressValue(final String email, final boolean valid) {
+	setDefaultEmailAddressValue(email, valid, false);
+    }
+
     public void setDefaultEmailAddressValue(final String email, final boolean valid, final boolean visibleToPublic) {
 	if (!StringUtils.isEmpty(email)) {
 	    final EmailAddress emailAddress;
