@@ -67,7 +67,15 @@
 
 <h3 class="mtop15 mbottom05"><bean:message key="title.coordinator.thesis.edit.proposal" bundle="APPLICATION_RESOURCES"/></h3>
 
-<fr:view name="thesis" schema="coordinator.thesis.state">
+<fr:view name="thesis">
+	<fr:schema type="net.sourceforge.fenixedu.domain.thesis.Thesis" bundle="APPLICATION_RESOURCES">
+		<fr:slot name="enrolment.executionPeriod.qualifiedName" key="label.curricular.course.semester"/>
+    	<fr:slot name="state" key="label.thesis.state"/>
+    	<fr:slot name="valid" key="label.thesis.valid">
+        	<fr:property name="trueLabel" value="label.coordinator.thesis.valid.true"/>
+        	<fr:property name="falseLabel" value="label.coordinator.thesis.valid.false"/>
+    	</fr:slot>
+	</fr:schema>
     <fr:layout name="tabular">
     	<fr:property name="classes" value="tstyle2 thlight thright mtop05"/>
     	<fr:property name="columnClasses" value="width12em,,"/>
