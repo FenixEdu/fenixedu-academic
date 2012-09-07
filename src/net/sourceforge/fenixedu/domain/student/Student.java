@@ -84,12 +84,13 @@ import org.apache.commons.collections.Predicate;
 import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
 import org.joda.time.YearMonthDay;
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
 
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.ist.fenixWebFramework.services.Service;
 import pt.ist.fenixframework.pstm.Transaction;
+
+import com.google.gwt.json.client.JSONArray;
+import com.google.gwt.json.client.JSONObject;
 
 public class Student extends Student_Base {
 
@@ -400,6 +401,10 @@ public class Student extends Student_Base {
 	new StudentDataShareAuthorization(this, authorization);
     }
 
+    public void setStudentPersonalDataStudentsAssociationAuthorization(StudentPersonalDataAuthorizationChoice authorization) {
+	new StudentDataShareStudentsAssociationAuthorization(this, authorization);
+    }
+
     public boolean hasFilledAuthorizationInformationInCurrentExecutionYear() {
 	return getActivePersonalDataAuthorization() != null
 		&& getActivePersonalDataAuthorization().getSince().isAfter(
@@ -421,9 +426,11 @@ public class Student extends Student_Base {
     public StudentDataShareAuthorization getPersonalDataAuthorizationAt(DateTime when) {
 	StudentDataShareAuthorization target = null;
 	for (StudentDataShareAuthorization authorization : getStudentDataShareAuthorizationSet()) {
-	    if (authorization.getSince().isBefore(when)) {
-		if (target == null || authorization.getSince().isAfter(target.getSince())) {
-		    target = authorization;
+	    if (!(authorization instanceof StudentDataShareStudentsAssociationAuthorization)) {
+		if (authorization.getSince().isBefore(when)) {
+		    if (target == null || authorization.getSince().isAfter(target.getSince())) {
+			target = authorization;
+		    }
 		}
 	    }
 	}
@@ -436,6 +443,21 @@ public class Student extends Student_Base {
 		&& (authorization.getAuthorizationChoice().equals(StudentPersonalDataAuthorizationChoice.PROFESSIONAL_ENDS)
 			|| authorization.getAuthorizationChoice().equals(StudentPersonalDataAuthorizationChoice.ALL_ENDS) || authorization
 			.getAuthorizationChoice().equals(StudentPersonalDataAuthorizationChoice.SEVERAL_ENDS));
+    }
+
+    public StudentDataShareAuthorization getActivePersonalDataAuthorizationStudentsAssociation() {
+	StudentDataShareAuthorization target = null;
+	DateTime now = new DateTime();
+	for (StudentDataShareAuthorization authorization : getStudentDataShareAuthorizationSet()) {
+	    if (authorization instanceof StudentDataShareStudentsAssociationAuthorization) {
+		if (authorization.getSince().isBefore(now)) {
+		    if (target == null || authorization.getSince().isAfter(target.getSince())) {
+			target = authorization;
+		    }
+		}
+	    }
+	}
+	return target;
     }
 
     private void createCurrentYearStudentData() {
@@ -2058,35 +2080,36 @@ public class Student extends Student_Base {
 	int i = 0;
 	for (Registration registration : registrations) {
 	    JSONObject studentInfoForJobBank = new JSONObject();
-	    studentInfoForJobBank.put("username", registration.getPerson().getUsername());
-	    studentInfoForJobBank.put("hasPersonalDataAuthorization", registration.getStudent()
-		    .hasPersonalDataAuthorizationForProfessionalPurposesAt().toString());
-	    Person person = registration.getStudent().getPerson();
-	    studentInfoForJobBank.put("dateOfBirth", person.getDateOfBirthYearMonthDay() == null ? null : person
-		    .getDateOfBirthYearMonthDay().toString());
-	    studentInfoForJobBank.put("nationality", person.getCountry() == null ? null : person.getCountry().getName());
-	    studentInfoForJobBank.put("address", person.getDefaultPhysicalAddress().getAddress());
-	    studentInfoForJobBank.put("area", person.getDefaultPhysicalAddress().getArea());
-	    studentInfoForJobBank.put("areaCode", person.getDefaultPhysicalAddress().getAreaCode());
-	    studentInfoForJobBank.put("districtSubdivisionOfResidence", person.getDefaultPhysicalAddress()
-		    .getDistrictSubdivisionOfResidence());
-	    studentInfoForJobBank.put("mobilePhone", person.getDefaultMobilePhoneNumber());
-	    studentInfoForJobBank.put("phone", person.getDefaultPhoneNumber());
-	    studentInfoForJobBank.put("email", person.getEmailForSendingEmails());
-	    studentInfoForJobBank.put("remoteRegistrationOID", registration.getExternalId());
-	    studentInfoForJobBank.put("number", registration.getNumber().toString());
-	    studentInfoForJobBank.put("degreeOID", registration.getDegree().getExternalId());
-	    studentInfoForJobBank.put("isConcluded", String.valueOf(registration.isRegistrationConclusionProcessed()));
-	    studentInfoForJobBank.put("curricularYear", String.valueOf(registration.getCurricularYear()));
+	    //	    studentInfoForJobBank.put("username", registration.getPerson().getUsername());
+	    //	    studentInfoForJobBank.put("hasPersonalDataAuthorization", registration.getStudent()
+	    //		    .hasPersonalDataAuthorizationForProfessionalPurposesAt().toString());
+	    //	    Person person = registration.getStudent().getPerson();
+	    //	    studentInfoForJobBank.put("dateOfBirth", person.getDateOfBirthYearMonthDay() == null ? null : person
+	    //		    .getDateOfBirthYearMonthDay().toString());
+	    //	    studentInfoForJobBank.put("nationality", person.getCountry() == null ? null : person.getCountry().getName());
+	    //	    studentInfoForJobBank.put("address", person.getDefaultPhysicalAddress().getAddress());
+	    //	    studentInfoForJobBank.put("area", person.getDefaultPhysicalAddress().getArea());
+	    //	    studentInfoForJobBank.put("areaCode", person.getDefaultPhysicalAddress().getAreaCode());
+	    //	    studentInfoForJobBank.put("districtSubdivisionOfResidence", person.getDefaultPhysicalAddress()
+	    //		    .getDistrictSubdivisionOfResidence());
+	    //	    studentInfoForJobBank.put("mobilePhone", person.getDefaultMobilePhoneNumber());
+	    //	    studentInfoForJobBank.put("phone", person.getDefaultPhoneNumber());
+	    //	    studentInfoForJobBank.put("email", person.getEmailForSendingEmails());
+	    //	    studentInfoForJobBank.put("remoteRegistrationOID", registration.getExternalId());
+	    //	    studentInfoForJobBank.put("number", registration.getNumber().toString());
+	    //	    studentInfoForJobBank.put("degreeOID", registration.getDegree().getExternalId());
+	    //	    studentInfoForJobBank.put("isConcluded", String.valueOf(registration.isRegistrationConclusionProcessed()));
+	    //	    studentInfoForJobBank.put("curricularYear", String.valueOf(registration.getCurricularYear()));
 	    for (CycleCurriculumGroup cycleCurriculumGroup : registration.getLastStudentCurricularPlan()
 		    .getCycleCurriculumGroups()) {
-		studentInfoForJobBank.put(cycleCurriculumGroup.getCycleType().name(), cycleCurriculumGroup.getAverage()
-			.toString());
+		//		studentInfoForJobBank.put(cycleCurriculumGroup.getCycleType().name(), cycleCurriculumGroup.getAverage()
+		//			.toString());
 
 	    }
-	    infos.add(studentInfoForJobBank);
+	    //	    infos.add(studentInfoForJobBank);
 	}
-	return infos.toJSONString();
+	//	return infos.toJSONString();
+	return null;
     }
 
     public PersonalIngressionData getLatestPersonalIngressionData() {

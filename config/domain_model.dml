@@ -3080,6 +3080,7 @@ class DomainObject {
             Boolean applyForResidence;
             String notesAboutResidenceAppliance;
             StudentPersonalDataAuthorizationChoice studentPersonalDataAuthorizationChoice;
+            StudentPersonalDataAuthorizationChoice studentPersonalDataStudentsAssociationAuthorization;
             
             Boolean dislocatedFromPermanentResidence;
             Integer placingOption;
@@ -5607,10 +5608,13 @@ class DomainObject {
         Boolean workingStudent;
     }
     
-    class student.StudentDataShareAuthorization {
+    class student.StudentDataShareAuthorization extends DomainObject {
     	StudentPersonalDataAuthorizationChoice authorizationChoice (REQUIRED);
     	DateTime since (REQUIRED);
     }
+    	
+    	class student.StudentDataShareStudentsAssociationAuthorization extends student.StudentDataShareAuthorization {
+    	}
 
     class student.StudentStatute extends DomainObject {
         StudentStatuteType statuteType;

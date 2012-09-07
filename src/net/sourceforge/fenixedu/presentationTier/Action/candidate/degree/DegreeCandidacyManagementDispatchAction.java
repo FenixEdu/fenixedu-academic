@@ -31,6 +31,7 @@ import net.sourceforge.fenixedu.domain.candidacy.FirstTimeCandidacyStage;
 import net.sourceforge.fenixedu.domain.candidacy.StudentCandidacy;
 import net.sourceforge.fenixedu.domain.candidacy.workflow.CandidacyOperation;
 import net.sourceforge.fenixedu.domain.candidacy.workflow.PrintAllDocumentsOperation;
+import net.sourceforge.fenixedu.domain.candidacy.workflow.form.ResidenceInformationForm;
 import net.sourceforge.fenixedu.domain.inquiries.Student1rstCycleInquiryTemplate;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.student.Registration;
@@ -141,6 +142,9 @@ public class DegreeCandidacyManagementDispatchAction extends FenixDispatchAction
 
     private ActionForward processInquiry(StudentCandidacy candidacy, ActionMapping mapping, HttpServletRequest request) {
 	Student1rstCycleInquiryTemplate currentTemplate = Student1rstCycleInquiryTemplate.getCurrentTemplate();
+	if (candidacy.getRegistration().hasAnyStudentsInquiryRegistries()) {
+	    return processInquiry(candidacy, mapping, request);
+	}
 	StudentFirstTimeCycleInquiryBean studentInquiryBean = new StudentFirstTimeCycleInquiryBean(currentTemplate,
 		candidacy.getRegistration());
 	studentInquiryBean.setCandidacy(candidacy);
@@ -166,6 +170,8 @@ public class DegreeCandidacyManagementDispatchAction extends FenixDispatchAction
 	}
 	studentInquiryBean.saveAnswers();
 
+	LogFirstTimeCandidacyTimestamp.logTimestamp(studentInquiryBean.getCandidacy(),
+		FirstTimeCandidacyStage.FINISHED_FILLING_INQUIRY);
 	return new ActionForward(buildSummaryPdfGeneratorURL(request, studentInquiryBean.getCandidacy()), true);
     }
 
@@ -355,11 +361,15 @@ public class DegreeCandidacyManagementDispatchAction extends FenixDispatchAction
 
 	request.setAttribute("candidacy", getCandidacy(request));
 	request.setAttribute("operation", RenderUtils.getViewState("operation-view-state").getMetaObject().getObject());
-	request.setAttribute("currentForm", RenderUtils.getViewState("fillData" + getCurrentFormPosition(request))
-		.getMetaObject().getObject());
+	Form form = (Form) RenderUtils.getViewState("fillData" + getCurrentFormPosition(request)).getMetaObject().getObject();
+	request.setAttribute("currentForm", form);
 	request.setAttribute("schemaSuffix", getSchemaSuffixForPerson(request));
 
 	if (isPostback(request)) {
+	    if (getFromRequest(request, "country") != null) {
+		ResidenceInformationForm rif = (ResidenceInformationForm) form;
+		rif.setDistrictSubdivisionOfResidence(null);
+	    }
 	    RenderUtils.invalidateViewState();
 	}
 
