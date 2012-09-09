@@ -38,7 +38,7 @@ public class DegreeCandidateDTO implements IFileLine {
     private static final SimpleDateFormat DATE_FORMAT;
 
     static {
-	DATE_FORMAT = new SimpleDateFormat("dd-MM-yyyy", new Locale("pt", "PT"));
+	DATE_FORMAT = new SimpleDateFormat("dd/MM/yyyy", new Locale("pt", "PT"));
 	DATE_FORMAT.setLenient(false);
     }
 
