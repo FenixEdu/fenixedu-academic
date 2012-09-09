@@ -166,12 +166,18 @@ public class OriginInformationForm extends Form {
 		    setInstitution(null);
 		    setInstitutionName(null);
 		    setInstitutionUnitName(null);
+		    setRaidesDegreeDesignation(null);
 		}
 		if (getSchoolLevel().isHighSchoolOrEquivalent() && !StringUtils.isEmpty(getInstitution().getCode())) {
 		    setInstitution(null);
 		    setInstitutionName(null);
 		    setInstitutionUnitName(null);
+		    setRaidesDegreeDesignation(null);
 		}
+	    } else {
+		setInstitution(null);
+		setInstitutionName(null);
+		setInstitutionUnitName(null);
 	    }
 
 	    if (getSchoolLevel().isHigherEducation() && getInstitution() != null) {

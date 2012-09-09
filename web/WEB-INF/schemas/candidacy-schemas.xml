@@ -714,7 +714,7 @@
 	</slot>
 	<slot name="schoolLevel" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" layout="menu-select-postback">
 		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.candidacy.SchoolLevelTypeForStudentProvider" />
-		<property name="destination" value="districtSelectionPostback" />
+		<property name="destination" value="institutionPostBack" />
 	</slot>
 	<slot name="otherSchoolLevel" />
 	<slot name="institutionUnitName" layout="autoComplete" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
@@ -761,7 +761,7 @@
 	</slot>	
 	<slot name="schoolLevel" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" layout="menu-select-postback">
 		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.candidacy.SchoolLevelTypeForStudentProvider" />
-		<property name="destination" value="districtSelectionPostback" />
+		<property name="destination" value="institutionPostBack" />
 	</slot>
 	<slot name="otherSchoolLevel" />
 	<slot name="institutionUnitName" layout="autoCompleteWithPostBack" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
@@ -813,7 +813,7 @@
 	</slot>	
 	<slot name="schoolLevel" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" layout="menu-select-postback">
 		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.candidacy.SchoolLevelTypeForStudentProvider" />
-		<property name="destination" value="districtSelectionPostback" />
+		<property name="destination" value="institutionPostBack" />
 	</slot>
 	<slot name="otherSchoolLevel" />
 	<slot name="institutionUnitName" layout="autoCompleteWithPostBack" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
