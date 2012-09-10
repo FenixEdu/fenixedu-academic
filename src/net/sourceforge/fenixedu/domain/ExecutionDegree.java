@@ -819,8 +819,11 @@ public class ExecutionDegree extends ExecutionDegree_Base implements Comparable<
     public List<StudentCandidacy> getFirstCycleCandidaciesBy(CandidacySituationType candidacySituationType) {
 	final List<StudentCandidacy> result = new ArrayList<StudentCandidacy>();
 	for (final StudentCandidacy candidacy : getFirstCycleCandidacies()) {
-	    if (candidacy.getActiveCandidacySituation().getCandidacySituationType() == candidacySituationType) {
-		result.add(candidacy);
+	    //TODO remove this first if when data is corrected
+	    if (candidacy.getActiveCandidacySituation() != null) {
+		if (candidacy.getActiveCandidacySituation().getCandidacySituationType() == candidacySituationType) {
+		    result.add(candidacy);
+		}
 	    }
 	}
 	return result;
