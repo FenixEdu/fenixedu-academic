@@ -41,6 +41,13 @@
 	<%= nameOfFather.toString().toUpperCase() %> 
 	<bean:message key="label.candidacy.registration.declaration.section5"/> 
 	<%= nameOfMother.toString().toUpperCase() %>,
+	<bean:message key="label.candidacy.registration.declaration.section5.1"/>
+	<bean:define id="physicalAddress" name="person" property="defaultPhysicalAddress" />
+	<bean:write name="person" property="address"/>,
+	<bean:write name="person" property="area"/>,
+	<bean:write name="physicalAddress" property="districtSubdivisionOfResidence" />
+	<bean:message key="label.candidacy.registration.declaration.section5.2"/>
+	<bean:write name="physicalAddress" property="areaCode" /> <bean:write name="physicalAddress" property="areaOfAreaCode" />,
 	<bean:message key="label.candidacy.registration.declaration.section6"/> 
 	<bean:write name="executionYear" property="year"/> 
 	<bean:message key="label.candidacy.registration.declaration.section7"/> 
