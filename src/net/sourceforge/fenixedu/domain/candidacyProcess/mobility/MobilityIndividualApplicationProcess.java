@@ -44,6 +44,7 @@ import org.apache.commons.collections.Predicate;
 import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
 import org.restlet.Client;
+import org.restlet.Context;
 import org.restlet.Request;
 import org.restlet.Response;
 import org.restlet.data.ChallengeResponse;
@@ -1377,18 +1378,33 @@ public class MobilityIndividualApplicationProcess extends MobilityIndividualAppl
 	request.setChallengeResponse(authentication);
 
 	// Ask to the HTTP client connector to handle the call
-	Client client = new Client(Protocol.HTTPS);
-	Response response = client.handle(request);
+	Client client = null;
+	try {
+	    client = new Client(Protocol.HTTPS);
+	    Response response = client.handle(request);
 
-	if (response.getStatus().equals(Status.SUCCESS_OK)) {
-	    System.out.println(String.format("Imported username %s", process.getPersonalDetails().getPerson().getIstUsername()));
-	    return true;
-	} else {
-	    System.out.println("error.erasmus.create.user: " + process.getPersonalDetails().getPerson().getIstUsername() + " "
-		    + response.getStatus().getName() + " " + new Integer(response.getStatus().getCode()).toString());
-	    throw new DomainException("error.erasmus.create.user", new String[] {
-		    process.getPersonalDetails().getPerson().getIstUsername(), response.getStatus().getName(),
-		    new Integer(response.getStatus().getCode()).toString() });
+	    if (response.getStatus().equals(Status.SUCCESS_OK)) {
+		System.out.println(String.format("Imported username %s", process.getPersonalDetails().getPerson()
+			.getIstUsername()));
+		return true;
+	    } else {
+		System.out.println("error.erasmus.create.user: " + process.getPersonalDetails().getPerson().getIstUsername()
+			+ " " + response.getStatus().getName() + " " + new Integer(response.getStatus().getCode()).toString());
+		throw new DomainException("error.erasmus.create.user", new String[] {
+			process.getPersonalDetails().getPerson().getIstUsername(), response.getStatus().getName(),
+			new Integer(response.getStatus().getCode()).toString() });
+	    }
+	} finally {
+	    try {
+		Context.setCurrent(null);
+		Response.setCurrent(null);
+		if (client != null)
+		    client.stop();
+	    } catch (Exception e) {
+		// Cannot stop the client, this WILL cause a memory leak!
+		e.printStackTrace();
+	    }
+
 	}
     }
 

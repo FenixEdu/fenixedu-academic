@@ -30,6 +30,7 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.util.Base64;
 import org.restlet.Client;
+import org.restlet.Context;
 import org.restlet.Request;
 import org.restlet.Response;
 import org.restlet.data.Method;
@@ -123,24 +124,32 @@ public class MonitorSystemDA extends FenixDispatchAction {
 	final SSLContext sc = SSLContext.getInstance("SSL");
 	sc.init(null, trustAllCerts, new java.security.SecureRandom());
 
-	Client client = new Client(Protocol.HTTPS);
-	client.setContext(new org.restlet.Context());
-	client.getContext().getAttributes().put("sslContextFactory", new SslContextFactory() {
-	    @Override
-	    public SSLContext createSslContext() throws Exception {
-		return sc;
+	Client client = null;
+	try {
+	    client = new Client(Protocol.HTTPS);
+	    client.setContext(new org.restlet.Context());
+	    client.getContext().getAttributes().put("sslContextFactory", new SslContextFactory() {
+		@Override
+		public SSLContext createSslContext() throws Exception {
+		    return sc;
+		}
+
+		@Override
+		public void init(Series<Parameter> parameters) {
+		}
+	    });
+
+	    final Response responseFromClient = client.handle(new Request(Method.POST, reference, null));
+
+	    if (responseFromClient.getStatus().getCode() != 200) {
+		throw new DomainException(responseFromClient.getStatus().getThrowable() != null ? responseFromClient.getStatus()
+			.getThrowable().getMessage() : "error.equivalence.externalEntity");
 	    }
-
-	    @Override
-	    public void init(Series<Parameter> parameters) {
-	    }
-	});
-
-	final Response responseFromClient = client.handle(new Request(Method.POST, reference, null));
-
-	if (responseFromClient.getStatus().getCode() != 200) {
-	    throw new DomainException(responseFromClient.getStatus().getThrowable() != null ? responseFromClient.getStatus()
-		    .getThrowable().getMessage() : "error.equivalence.externalEntity");
+	} finally {
+	    Context.setCurrent(null);
+	    Response.setCurrent(null);
+	    if (client != null)
+		client.stop();
 	}
 
 	return mapping.findForward("Show");

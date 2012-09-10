@@ -179,25 +179,38 @@ public class SendAcademicServiceRequestToExternalEntity extends FenixService {
 	    final SSLContext sc = SSLContext.getInstance("SSL");
 	    sc.init(null, trustAllCerts, new java.security.SecureRandom());
 
-	    Client client = new Client(Protocol.HTTPS);
-	    client.setContext(new org.restlet.Context());
-	    client.getContext().getAttributes().put("sslContextFactory", new SslContextFactory() {
-		@Override
-		public SSLContext createSslContext() throws Exception {
-		    return sc;
+	    Client client = null;
+	    try {
+		client = new Client(Protocol.HTTPS);
+		client.setContext(new org.restlet.Context());
+		client.getContext().getAttributes().put("sslContextFactory", new SslContextFactory() {
+		    @Override
+		    public SSLContext createSslContext() throws Exception {
+			return sc;
+		    }
+
+		    @Override
+		    public void init(Series<Parameter> parameters) {
+		    }
+		});
+
+		Request request = new Request(Method.POST, reference, ir);
+		final Response response = client.handle(request);
+
+		if (response.getStatus().getCode() != 200) {
+		    throw new DomainException(response.getStatus().getThrowable() != null ? response.getStatus().getThrowable()
+			    .getMessage() : "error.equivalence.externalEntity");
 		}
-
-		@Override
-		public void init(Series<Parameter> parameters) {
+	    } finally {
+		try {
+		    org.restlet.Context.setCurrent(null);
+		    Response.setCurrent(null);
+		    if (client != null)
+			client.stop();
+		} catch (Exception e) {
+		    // Cannot stop the client, this WILL cause a memory leak!
+		    e.printStackTrace();
 		}
-	    });
-
-	    Request request = new Request(Method.POST, reference, ir);
-	    final Response response = client.handle(request);
-
-	    if (response.getStatus().getCode() != 200) {
-		throw new DomainException(response.getStatus().getThrowable() != null ? response.getStatus().getThrowable()
-			.getMessage() : "error.equivalence.externalEntity");
 	    }
 	}
 
