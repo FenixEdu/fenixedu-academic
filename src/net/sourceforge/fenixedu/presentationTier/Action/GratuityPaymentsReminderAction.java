@@ -43,12 +43,12 @@ public class GratuityPaymentsReminderAction extends FenixDispatchAction {
 	    PaymentPlan paymentPlan = debtPaymentCode.getInstallment().getPaymentPlan();
 
 	    if (paymentPlan.isForPartialRegime() && debtPaymentCode.getInstallment().getOrder() == 1) {
-		request.setAttribute("remnantGratuity", true);
+		request.setAttribute("remnantGratuity", false);
 		request.setAttribute("remainingPaymentEndDate", "15 de Dezembro de 2011");
 		request.setAttribute("remainingPaymentDebt", debtPaymentCode.getMinAmount().toString());
 		request.setAttribute("remainingPaymentCode", debtPaymentCode.getCode());
 	    } else if (debtPaymentCode.getInstallment().getOrder() == 3) {
-		request.setAttribute("remnantGratuity", true);
+		request.setAttribute("remnantGratuity", false);
 		request.setAttribute("remainingPaymentEndDate", "31 de Maio de 2012");
 		request.setAttribute("remainingPaymentDebt", debtPaymentCode.getMinAmount().toString());
 		request.setAttribute("remainingPaymentCode", debtPaymentCode.getCode());
