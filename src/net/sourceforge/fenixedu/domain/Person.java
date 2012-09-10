@@ -516,7 +516,7 @@ public class Person extends Person_Base {
 	physicalAddress.setCountryOfResidence(Country.readByTwoLetterCode(personDTO.getCountry()));
 
 	if (!physicalAddress.isEmpty()) {
-	    setDefaultPhysicalAddressData(physicalAddress);
+	    setDefaultPhysicalAddressData(physicalAddress, true);
 	}
 
     }
