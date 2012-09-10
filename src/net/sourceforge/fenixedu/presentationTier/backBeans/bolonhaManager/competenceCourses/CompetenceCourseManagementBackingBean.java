@@ -3,6 +3,7 @@
  */
 package net.sourceforge.fenixedu.presentationTier.backBeans.bolonhaManager.competenceCourses;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -12,6 +13,7 @@ import java.util.TreeSet;
 import javax.faces.component.UISelectItems;
 import javax.faces.event.ValueChangeEvent;
 import javax.faces.model.SelectItem;
+import javax.servlet.ServletOutputStream;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
@@ -23,9 +25,13 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.dataTransferObject.bolonhaManager.CourseLoad;
 import net.sourceforge.fenixedu.domain.CompetenceCourse;
 import net.sourceforge.fenixedu.domain.CompetenceCourseType;
+import net.sourceforge.fenixedu.domain.CurricularCourse;
+import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
+import net.sourceforge.fenixedu.domain.DegreeModuleScope;
 import net.sourceforge.fenixedu.domain.Department;
 import net.sourceforge.fenixedu.domain.DepartmentSite;
 import net.sourceforge.fenixedu.domain.Employee;
+import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
@@ -55,6 +61,8 @@ import org.apache.commons.collections.comparators.ReverseComparator;
 
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.ist.fenixWebFramework.services.Service;
+import pt.utl.ist.fenix.tools.util.excel.Spreadsheet;
+import pt.utl.ist.fenix.tools.util.excel.Spreadsheet.Row;
 
 public class CompetenceCourseManagementBackingBean extends FenixBackingBean {
     private final ResourceBundle bolonhaResources = getResourceBundle("resources/BolonhaManagerResources");
@@ -1220,4 +1228,5 @@ public class CompetenceCourseManagementBackingBean extends FenixBackingBean {
 	stage = null;
 	bibliographicReferenceID = null;
     }
+
 }

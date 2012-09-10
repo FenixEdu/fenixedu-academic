@@ -1,5 +1,10 @@
 package net.sourceforge.fenixedu.presentationTier.Action.BolonhaManager;
 
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -7,13 +12,23 @@ import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterExce
 import net.sourceforge.fenixedu.applicationTier.Servico.bolonhaManager.DeleteCompetenceCourseInformationChangeRequest;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.CompetenceCourse;
+import net.sourceforge.fenixedu.domain.CurricularCourse;
+import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
+import net.sourceforge.fenixedu.domain.DegreeModuleScope;
+import net.sourceforge.fenixedu.domain.Department;
+import net.sourceforge.fenixedu.domain.Employee;
+import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.degreeStructure.CompetenceCourseInformation;
 import net.sourceforge.fenixedu.domain.degreeStructure.CompetenceCourseInformationChangeRequest;
+import net.sourceforge.fenixedu.domain.degreeStructure.CurricularStage;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.domain.organizationalStructure.DepartmentUnit;
+import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
+import net.sourceforge.fenixedu.util.BundleUtil;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.struts.action.ActionForm;
@@ -27,12 +42,8 @@ import pt.ist.fenixWebFramework.services.Service;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
-import pt.ist.fenixWebFramework.struts.annotations.Forward;
-import pt.ist.fenixWebFramework.struts.annotations.Forwards;
-import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
+import pt.utl.ist.fenix.tools.util.excel.Spreadsheet;
+import pt.utl.ist.fenix.tools.util.excel.Spreadsheet.Row;
 
 @Mapping(module = "bolonhaManager", path = "/competenceCourses/manageVersions")
 @Forwards( {
@@ -353,4 +364,65 @@ public class ManageCompetenceCourseInformationVersions extends FenixDispatchActi
 
 	return true;
     }
+
+    public ActionForward exportCompetenceCourseExecutionToExcel(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+	final List<CompetenceCourse> competenceCourses = getDepartmentCompetenceCourses();
+
+	try {
+	    response.setContentType("application/vnd.ms-excel");
+	    response.setHeader("Content-disposition", "attachment; filename=list.xls");
+
+	    final ServletOutputStream outputStream = response.getOutputStream();
+
+	    final Spreadsheet spreadsheet = new Spreadsheet("list");
+	    spreadsheet.setHeader(BundleUtil.getStringFromResourceBundle("resources.BolonhaManagerResources", "competenceCourse"));
+	    spreadsheet.setHeader(BundleUtil.getStringFromResourceBundle("resources.BolonhaManagerResources", "curricularPlan"));
+	    spreadsheet.setHeader(BundleUtil.getStringFromResourceBundle("resources.BolonhaManagerResources", "curricularYear"));
+	    spreadsheet.setHeader(BundleUtil.getStringFromResourceBundle("resources.BolonhaManagerResources", "label.semester"));
+
+	    for (final CompetenceCourse competenceCourse : competenceCourses) {
+		if (competenceCourse.getCurricularStage() == CurricularStage.APPROVED) {
+		    for (final CurricularCourse curricularCourse : competenceCourse.getAssociatedCurricularCoursesSet()) {
+			for (final ExecutionCourse executionCourse : curricularCourse.getAssociatedExecutionCoursesSet()) {
+			    final ExecutionSemester executionSemester = executionCourse.getExecutionPeriod();
+			    for (final DegreeModuleScope degreeModuleScope : curricularCourse.getDegreeModuleScopes()) {
+				if (degreeModuleScope.isActiveForExecutionPeriod(executionSemester)) {
+				    final DegreeCurricularPlan degreeCurricularPlan = curricularCourse.getDegreeCurricularPlan();
+				    final Row row = spreadsheet.addRow();
+
+				    row.setCell(competenceCourse.getName(executionSemester));
+				    row.setCell(degreeCurricularPlan.getName());
+				    row.setCell(degreeModuleScope.getCurricularYear());
+				    row.setCell(degreeModuleScope.getCurricularSemester());
+				}
+			    }
+			}
+		    }
+		}
+	    }
+
+	    spreadsheet.exportToXLSSheet(outputStream);
+	    outputStream.flush();
+	    response.flushBuffer();
+	} catch (final IOException e) {
+	    throw new FenixServiceException(e);
+	}
+	return null;
+    }
+
+    public List<CompetenceCourse> getDepartmentCompetenceCourses() {
+	DepartmentUnit selectedDepartmentUnit = getPersonDepartment().getDepartmentUnit();
+	if (selectedDepartmentUnit != null) {
+	    return selectedDepartmentUnit.getCompetenceCourses(CurricularStage.APPROVED);
+	}
+	return new ArrayList<CompetenceCourse>();
+    }
+
+    public Department getPersonDepartment() {
+	final Person person = AccessControl.getPerson();
+	final Employee employee = person == null ? null : person.getEmployee();
+	return employee == null ? null : employee.getCurrentDepartmentWorkingPlace();
+    }
+
 }

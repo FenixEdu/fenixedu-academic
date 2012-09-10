@@ -106,7 +106,11 @@
 		<h:panelGroup rendered="#{!CompetenceCourseManagement.canView}">
 			<h:outputText value="<br/><em>#{bolonhaBundle['notMemberInCompetenceCourseManagementGroup']}</em><br/>" escape="false"/>
 		</h:panelGroup>
-	
+
+		<h:graphicImage id="image" alt="Excel" url="/images/excel.gif" />
+		<h:outputText value="&nbsp;" escape="false" />
+		<h:outputText value="<a href='#{CompetenceCourseManagement.contextPath}/bolonhaManager/competenceCourses/manageVersions.do?method=exportCompetenceCourseExecutionToExcel'>#{bolonhaBundle['course.group.studies.plan']}</a>" escape="false"/>
+
 	</h:panelGroup>
 	<h:panelGroup rendered="#{empty CompetenceCourseManagement.personDepartment}">
 		<h:outputText value="<i>#{bolonhaBundle['no.current.department.working.place']}</i><br/>" escape="false"/>
