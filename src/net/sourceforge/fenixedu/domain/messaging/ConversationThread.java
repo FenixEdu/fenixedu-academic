@@ -41,10 +41,10 @@ public class ConversationThread extends ConversationThread_Base implements IDate
 	    throw new DomainException("conversationThread.forum.cannot.be.null");
 	}
 
-	if (getParents().isEmpty()) {
+	if (!hasAnyParents()) {
 	    new DateOrderedNode(forum, this, Boolean.FALSE);
 	} else {
-	    getParents().get(0).setParent(forum);
+	    getUniqueParentNode().setParent(forum);
 	}
     }
 
@@ -72,7 +72,7 @@ public class ConversationThread extends ConversationThread_Base implements IDate
     }
 
     public Forum getForum() {
-	return (getParents().isEmpty()) ? null : (Forum) getParents().get(0).getParent();
+	return (Forum) getUniqueParentContainer();
     }
 
     public void checkIfPersonCanWrite(Person person) {
@@ -122,6 +122,7 @@ public class ConversationThread extends ConversationThread_Base implements IDate
 	return getChildrenCount();
     }
 
+    @Override
     public DateTime getContentDate() {
 	return getCreationDate();
     }

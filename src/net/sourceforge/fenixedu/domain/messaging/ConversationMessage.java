@@ -57,17 +57,18 @@ public class ConversationMessage extends ConversationMessage_Base implements IDa
 	    throw new DomainException("conversationMessage.conversationThread.cannot.be.null");
 	}
 
-	if (getParents().isEmpty()) {
+	if (!hasAnyParents()) {
 	    new DateOrderedNode(conversationThread, this, Boolean.TRUE);
 	} else {
-	    getParents().get(0).setParent(conversationThread);
+	    getUniqueParentNode().setParent(conversationThread);
 	}
     }
 
     public ConversationThread getConversationThread() {
-	return (getParents().isEmpty()) ? null : (ConversationThread) getParents().get(0).getParent();
+	return (ConversationThread) getUniqueParentContainer();
     }
 
+    @Override
     public DateTime getContentDate() {
 	return getCreationDate();
     }

@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
-import java.util.Set;
 
 import net.sourceforge.fenixedu.domain.File;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
@@ -20,6 +19,7 @@ import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 public class Announcement extends Announcement_Base {
 
     public static final Comparator<Announcement> NEWEST_FIRST = new Comparator<Announcement>() {
+	@Override
 	public int compare(Announcement o1, Announcement o2) {
 	    int result = o2.getBeginComparationDate().compareTo(o1.getBeginComparationDate());
 	    return result != 0 ? result : o1.getIdInternal().compareTo(o2.getIdInternal());
@@ -28,6 +28,7 @@ public class Announcement extends Announcement_Base {
 
     public static final Comparator<Announcement> SUBJECT_BEGIN_DATE = new Comparator<Announcement>() {
 
+	@Override
 	public int compare(Announcement o1, Announcement o2) {
 	    DateTime referedSubjectBegin = o1.getReferedSubjectBegin();
 	    DateTime referedSubjectBegin2 = o2.getReferedSubjectBegin();
@@ -46,6 +47,7 @@ public class Announcement extends Announcement_Base {
     };
 
     public static final Comparator<Announcement> PRIORITY_FIRST = new Comparator<Announcement>() {
+	@Override
 	public int compare(Announcement o1, Announcement o2) {
 	    int priority1 = (o1.getPriority() != null ? o1.getPriority() : 0);
 	    int priority2 = (o2.getPriority() != null ? o2.getPriority() : 0);
@@ -253,8 +255,7 @@ public class Announcement extends Announcement_Base {
     }
 
     public AnnouncementNode getAnnouncementNode() {
-	final Set<Node> parents = getParentsSet();
-	return parents.isEmpty() ? null : (AnnouncementNode) parents.iterator().next();
+	return (AnnouncementNode) getUniqueParentNode();
     }
 
     public AnnouncementBoard getAnnouncementBoard() {

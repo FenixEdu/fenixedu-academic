@@ -28,7 +28,7 @@ public abstract class Node extends Node_Base implements MenuEntry, Comparable<No
 	    public void afterRemove(Node node, Content content) {
 		super.afterRemove(node, content);
 		if (node != null && content != null) {
-		    if (content.getParents().isEmpty()) {
+		    if (!content.hasAnyParents()) {
 			content.delete();
 		    }
 		}
@@ -57,6 +57,7 @@ public abstract class Node extends Node_Base implements MenuEntry, Comparable<No
 	setAscending(isAscending);
     }
 
+    @Override
     public boolean isNodeVisible() {
 	return super.getVisible() && getChild().isAvailable();
     }
@@ -76,34 +77,42 @@ public abstract class Node extends Node_Base implements MenuEntry, Comparable<No
 	deleteDomainObject();
     }
 
+    @Override
     public String getEntryId() {
 	return getChild().getContentId();
     }
 
+    @Override
     public MultiLanguageString getName() {
 	return getChild().getName();
     }
 
+    @Override
     public String getPath() {
 	return getChild().getPath();
     }
 
+    @Override
     public MultiLanguageString getTitle() {
 	return getChild().getTitle();
     }
 
+    @Override
     public boolean isAvailable(FunctionalityContext context) {
 	return getChild().isAvailable(context);
     }
 
+    @Override
     public boolean isAvailable() {
 	return getChild().isAvailable();
     }
 
+    @Override
     public Collection<MenuEntry> getChildren() {
 	return getChild().getMenu();
     }
 
+    @Override
     public Content getReferingContent() {
 	return getChild();
     }

@@ -5,7 +5,6 @@ import java.util.Collection;
 import java.util.Comparator;
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.Servico.AuthenticateKerberos.SetIsPassKerberos;
 import net.sourceforge.fenixedu.domain.contents.Attachment;
 import net.sourceforge.fenixedu.domain.contents.Content;
 import net.sourceforge.fenixedu.domain.contents.ExplicitOrderNode;
@@ -24,6 +23,7 @@ public class Item extends Item_Base {
 
     public static final Comparator<Item> COMPARATOR_BY_ORDER = new Comparator<Item>() {
 
+	@Override
 	public int compare(Item o1, Item o2) {
 	    final int co = o1.getItemOrder().compareTo(o2.getItemOrder());
 	    if (co != 0) {
@@ -60,6 +60,7 @@ public class Item extends Item_Base {
 	setShowName(showName);
     }
 
+    @Override
     public void setName(MultiLanguageString name) {
 	if (name == null) {
 	    throw new NullPointerException();
@@ -77,7 +78,7 @@ public class Item extends Item_Base {
      *         <code>null</code> if the item is the last
      */
     public Item getNextItem() {
-	List<Item> items = (List<Item>) getParents().get(0).getParent().getOrderedChildren(Item.class);
+	List<Item> items = (List<Item>) getUniqueParentContainer().getOrderedChildren(Item.class);
 	Integer order = items.indexOf(this) + 1;
 	return order < items.size() ? items.get(order) : null;
     }
@@ -93,9 +94,9 @@ public class Item extends Item_Base {
      */
     public void setNextItem(Item item) {
 	if (item != null) {
-	    setItemOrder(((ExplicitOrderNode) item.getParents().get(0)).getNodeOrder());
+	    setItemOrder(item.getUniqueParentExplicitOrderNode().getNodeOrder());
 	} else {
-	    List<Item> items = (List<Item>) getParents().get(0).getParent().getChildren(Item.class);
+	    List<Item> items = (List<Item>) getUniqueParentContainer().getChildren(Item.class);
 	    setItemOrder(items.size() - 1);
 	}
     }
@@ -162,27 +163,31 @@ public class Item extends Item_Base {
     }
 
     public void removeSection() {
-	getParents().get(0).delete();
+	getUniqueParentExplicitOrderNode().delete();
     }
 
     public Section getSection() {
-	return (Section) getParents().get(0).getParent();
+	return (Section) getUniqueParentContainer();
+    }
+
+    private ExplicitOrderNode getUniqueParentExplicitOrderNode() {
+	return (ExplicitOrderNode) getUniqueParentNode();
     }
 
     public Integer getItemOrder() {
-	return ((ExplicitOrderNode) getParents().get(0)).getNodeOrder();
+	return getUniqueParentExplicitOrderNode().getNodeOrder();
     }
 
     public void setItemOrder(Integer nodeOrder) {
-	((ExplicitOrderNode) getParents().get(0)).setNodeOrder(nodeOrder);
+	getUniqueParentExplicitOrderNode().setNodeOrder(nodeOrder);
     }
 
     public void setVisible(Boolean visible) {
-	getParents().get(0).setVisible(visible);
+	getUniqueParentExplicitOrderNode().setVisible(visible);
     }
 
     public Boolean getVisible() {
-	return getParents().get(0).getVisible();
+	return getUniqueParentExplicitOrderNode().getVisible();
     }
 
     @Override

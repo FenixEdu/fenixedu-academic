@@ -21,6 +21,7 @@ import net.sourceforge.fenixedu.domain.functionalities.FunctionalityContext;
 import net.sourceforge.fenixedu.domain.functionalities.GroupAvailability;
 import net.sourceforge.fenixedu.domain.functionalities.Module;
 
+import org.apache.log4j.Logger;
 import org.joda.time.DateTime;
 
 import pt.utl.ist.fenix.tools.util.StringNormalizer;
@@ -36,6 +37,8 @@ import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
  * @author pcma
  */
 public abstract class Content extends Content_Base {
+
+    private static final Logger logger = Logger.getLogger(Content.class);
 
     public Content() {
 	super();
@@ -56,7 +59,7 @@ public abstract class Content extends Content_Base {
 	return false;
     }
 
-    public <T extends Container> Collection<T> getParents(Class<T> type) {
+    protected <T extends Container> Collection<T> getParents(Class<T> type) {
 	List<T> parents = new ArrayList<T>();
 
 	for (Node node : getParents()) {
@@ -72,9 +75,28 @@ public abstract class Content extends Content_Base {
 	return parents;
     }
 
-    public <T extends Container> T getParent(Class<T> type) {
+    public <T extends Container> T getUniqueParentContainer(Class<T> type) {
 	Collection<T> parents = getParents(type);
+	if (parents.size() > 1) {
+	    logger.warn("requesting unique parent of type " + type + " from content with more than one parent: " + this);
+	}
+
 	return parents.isEmpty() ? null : parents.iterator().next();
+    }
+
+    /**
+     * This graph is used as a simple tree, anyway.
+     */
+    public Node getUniqueParentNode() {
+	if (getParentsCount() > 1) {
+	    logger.warn("requesting unique parent from content with more than one parent: " + this);
+	}
+
+	return hasAnyParents() ? getParentsIterator().next() : null;
+    }
+
+    public Container getUniqueParentContainer() {
+	return hasAnyParents() ? getUniqueParentNode().getParent() : null;
     }
 
     public Node getParentNode(Container parent) {
@@ -220,7 +242,7 @@ public abstract class Content extends Content_Base {
 		    return true;
 		}
 	    }
-	    return getParentsSet().isEmpty();
+	    return !hasAnyParents();
 	} else {
 	    return isPublicGroup(availabilityPolicy.getTargetGroup());
 	}

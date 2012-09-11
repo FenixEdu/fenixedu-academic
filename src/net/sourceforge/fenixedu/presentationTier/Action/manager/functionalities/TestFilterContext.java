@@ -33,14 +33,17 @@ public class TestFilterContext implements FunctionalityContext {
 	this.functionality = functionality;
     }
 
+    @Override
     public HttpServletRequest getRequest() {
 	return this.request;
     }
 
+    @Override
     public IUserView getUserView() {
 	return this.userView;
     }
 
+    @Override
     public User getLoggedUser() {
 	return this.userView == null ? null : AccessControl.getPerson().getUser();
     }
@@ -112,36 +115,42 @@ public class TestFilterContext implements FunctionalityContext {
 
     }
 
+    @Override
     public Container getSelectedContainer() {
 	Portal root = Portal.getRootPortal();
 
-	Section section = ((List<Section>) functionality.getParents(Section.class)).get(0);
+	Section section = functionality.getUniqueParentContainer(Section.class);
 	List<Content> path = root.getPathTo(section);
 
 	return path.size() <= 2 ? (Container) root : (Container) path.get(2);
     }
 
+    @Override
     public Container getSelectedTopLevelContainer() {
 	Portal root = Portal.getRootPortal();
 
-	Section section = ((List<Section>) functionality.getParents(Section.class)).get(0);
+	Section section = functionality.getUniqueParentContainer(Section.class);
 	return (Container) root.getPathTo(section).get(2);
     }
 
+    @Override
     public Content getLastContentInPath(Class type) {
 	// TODO Auto-generated method stub
 	return null;
     }
 
+    @Override
     public String getCurrentContextPath() {
 	// TODO Auto-generated method stub
 	return null;
     }
 
+    @Override
     public List<Content> getSelectedContents() {
 	return Collections.emptyList();
     }
 
+    @Override
     public Content getSelectedContent() {
 	// TODO Auto-generated method stub
 	return null;

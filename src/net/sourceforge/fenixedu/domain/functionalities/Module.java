@@ -43,6 +43,7 @@ public class Module extends Module_Base implements IFunctionality {
 	setPrefix(prefix);
     }
 
+    @Override
     public Module getModule() {
 	for (Node node : getParents()) {
 	    if (node.getParent() instanceof Module) {
@@ -53,6 +54,7 @@ public class Module extends Module_Base implements IFunctionality {
 	return null;
     }
 
+    @Override
     public void setModule(Module module) {
 	Module oldModule = getModule();
 	module.addChild(this);
@@ -94,7 +96,7 @@ public class Module extends Module_Base implements IFunctionality {
      * @return the prefix of this module as seen be the client
      */
     public String getPublicPrefix() {
-	Module parent = getParent(Module.class);
+	Module parent = getUniqueParentContainer(Module.class);
 
 	String prefix = getNormalizedPrefix();
 	if (parent != null) {

@@ -17,6 +17,7 @@ import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
 
 public class FileItemGroupProvider implements DataProvider {
 
+    @Override
     public Object provide(Object source, Object currentValue) {
 	Site site = null;
 
@@ -25,11 +26,11 @@ public class FileItemGroupProvider implements DataProvider {
 	    site = fileContent.getSite();
 
 	    if (site == null) {
-		UnitAnnouncementBoard board = fileContent.getAttachment().getParent(UnitAnnouncementBoard.class);
+		UnitAnnouncementBoard board = fileContent.getAttachment().getUniqueParentContainer(UnitAnnouncementBoard.class);
 		if (board != null) {
 		    site = board.getUnit().getSite();
 		} else {
-		    ExecutionCourseAnnouncementBoard executionBoard = fileContent.getAttachment().getParent(
+		    ExecutionCourseAnnouncementBoard executionBoard = fileContent.getAttachment().getUniqueParentContainer(
 			    ExecutionCourseAnnouncementBoard.class);
 		    if (executionBoard != null) {
 			site = executionBoard.getExecutionCourse().getSite();
@@ -64,6 +65,7 @@ public class FileItemGroupProvider implements DataProvider {
 	return groups;
     }
 
+    @Override
     public Converter getConverter() {
 	return null;
     }

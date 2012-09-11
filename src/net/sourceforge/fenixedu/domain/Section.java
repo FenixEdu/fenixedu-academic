@@ -32,6 +32,7 @@ public class Section extends Section_Base {
 
     public static final Comparator<Section> COMPARATOR_BY_ORDER = new Comparator<Section>() {
 
+	@Override
 	public int compare(Section o1, Section o2) {
 	    final int co = o1.getSectionOrder().compareTo(o2.getSectionOrder());
 	    if (co != 0) {
@@ -79,6 +80,7 @@ public class Section extends Section_Base {
 	setPermittedGroup(permittedGroup);
     }
 
+    @Override
     public void setName(MultiLanguageString name) {
 	if (name == null || name.isEmpty()) {
 	    throw new NullPointerException();
@@ -104,9 +106,9 @@ public class Section extends Section_Base {
      *         section or <code>null</code> if the section is the last
      */
     public Section getNextSection() {
-
-	Integer order = ((ExplicitOrderNode) getParents().get(0)).getNodeOrder() + 1;
-	Container container = ((ExplicitOrderNode) getParents().get(0)).getParent();
+	final ExplicitOrderNode node = getUniqueParentExplicitOrderNode();
+	Integer order = node.getNodeOrder() + 1;
+	Container container = node.getParent();
 	List<Section> sections = new ArrayList<Section>(container.getOrderedChildren(Section.class));
 	return order < sections.size() ? sections.get(order) : null;
 
@@ -123,9 +125,9 @@ public class Section extends Section_Base {
      */
     public void setNextSection(Section section) {
 	if (section != null) {
-	    setSectionOrder(((ExplicitOrderNode) section.getParents().get(0)).getNodeOrder());
+	    setSectionOrder(section.getUniqueParentExplicitOrderNode().getNodeOrder());
 	} else {
-	    Collection<Section> sections = (Collection<Section>) ((ExplicitOrderNode) getParents().get(0)).getParent()
+	    Collection<Section> sections = getUniqueParentExplicitOrderNode().getParent()
 		    .getOrderedChildren(Section.class);
 	    setSectionOrder(sections.size() - 1);
 	}
@@ -231,22 +233,25 @@ public class Section extends Section_Base {
 	return getAssociatedItems().size();
     }
 
+    private ExplicitOrderNode getUniqueParentExplicitOrderNode() {
+	return (ExplicitOrderNode) getUniqueParentNode();
+    }
+
     public Integer getSectionOrder() {
-	return getParents().isEmpty() ? null : ((ExplicitOrderNode) getParents().get(0)).getNodeOrder();
+	return !hasAnyParents() ? null : getUniqueParentExplicitOrderNode().getNodeOrder();
     }
 
     public void setSectionOrder(Integer order) {
-	((ExplicitOrderNode) getParents().get(0)).setNodeOrder(order);
+	getUniqueParentExplicitOrderNode().setNodeOrder(order);
     }
 
     public Section getSuperiorSection() {
-	return getParents().isEmpty() || !(getParents().get(0).getParent() instanceof Section) ? null : (Section) getParents()
-		.get(0).getParent();
+	return !hasAnyParents() || !(getUniqueParentContainer() instanceof Section) ? null : (Section) getUniqueParentContainer();
     }
 
     public void removeSuperiorSection() {
-	if (!getParents().isEmpty()) {
-	    getParents().get(0).delete();
+	if (!hasAnyParents()) {
+	    getUniqueParentExplicitOrderNode().delete();
 	}
     }
 
@@ -334,11 +339,11 @@ public class Section extends Section_Base {
     }
 
     public void setVisible(Boolean visible) {
-	getParents().get(0).setVisible(visible);
+	getUniqueParentExplicitOrderNode().setVisible(visible);
     }
 
     public Boolean getVisible() {
-	return getParents().get(0).getVisible();
+	return getUniqueParentExplicitOrderNode().getVisible();
     }
 
     @Override

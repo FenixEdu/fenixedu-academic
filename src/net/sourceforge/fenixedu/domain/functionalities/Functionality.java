@@ -40,6 +40,7 @@ public class Functionality extends Functionality_Base implements IFunctionality 
      */
     public static class FunctionalityComparator implements Comparator<Functionality> {
 
+	@Override
 	public int compare(Functionality f1, Functionality f2) {
 	    Integer order1 = f1.getOrder();
 	    Integer order2 = f2.getOrder();
@@ -115,6 +116,7 @@ public class Functionality extends Functionality_Base implements IFunctionality 
      * @return the module containing this functionality or <code>null</code> if
      *         this is a top level functionality
      */
+    @Override
     public Module getModule() {
 	for (Node node : getParents()) {
 	    Content content = node.getParent();
@@ -125,6 +127,7 @@ public class Functionality extends Functionality_Base implements IFunctionality 
 	return null;
     }
 
+    @Override
     public void setModule(Module module) {
 	invalidatePath();
 	Module oldModule = getModule();
@@ -411,7 +414,7 @@ public class Functionality extends Functionality_Base implements IFunctionality 
 	    return;
 	}
 
-	moveToModule(module.getParent(Module.class));
+	moveToModule(module.getUniqueParentContainer(Module.class));
     }
 
     /**
@@ -487,6 +490,7 @@ public class Functionality extends Functionality_Base implements IFunctionality 
      * @return <code>true</code> if the functionality is available for the
      *         person hold in the context
      */
+    @Override
     public boolean isAvailable(FunctionalityContext context) {
 	if (context == null) {
 	    return true;
@@ -644,7 +648,7 @@ public class Functionality extends Functionality_Base implements IFunctionality 
 	    Module currentModule = modules.poll();
 
 	    for (Node node : currentModule.getChildren()) {
-		Content content = (Content) node.getChild();
+		Content content = node.getChild();
 		if (content instanceof Functionality) {
 		    functionalities.add((Functionality) content);
 		} else if (content instanceof Module) {

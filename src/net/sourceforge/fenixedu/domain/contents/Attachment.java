@@ -44,12 +44,12 @@ public class Attachment extends Attachment_Base {
 
     public Site getSite() {
 	Section section = null;
-	Item item = getParent(Item.class);
+	Item item = getUniqueParentContainer(Item.class);
 
 	if (item != null) {
 	    section = item.getSection();
 	} else {
-	    section = getParent(Section.class);
+	    section = getUniqueParentContainer(Section.class);
 	}
 	return section == null ? null : section.getSite();
     }
