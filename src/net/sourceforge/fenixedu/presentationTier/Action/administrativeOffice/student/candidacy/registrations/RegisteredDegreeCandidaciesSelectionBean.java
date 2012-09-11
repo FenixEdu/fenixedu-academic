@@ -186,7 +186,8 @@ public class RegisteredDegreeCandidaciesSelectionBean implements Serializable {
 	row.setCell(getPersonalEmailAddress(person));
 	row.setCell(getPhone(person));
 	row.setCell(getMobilePhone(person));
-	row.setCell(candidacy.getDislocatedFromPermanentResidence() ? "Sim" : "Nao");
+	row.setCell(candidacy.getDislocatedFromPermanentResidence() != null
+		&& candidacy.getDislocatedFromPermanentResidence().booleanValue() ? "Sim" : "Nao");
 	row.setCell(getShiftNames(candidacy));
     }
 
