@@ -72,6 +72,9 @@ public class DegreeCandidacyManagementDispatchAction extends FenixDispatchAction
 	    request.setAttribute("isInTaguspark", "true");
 	}
 
+	if (candidacy.isConcluded() && !candidacy.getRegistration().hasInquiryStudentCycleAnswer()) {
+	    return processInquiry(candidacy, mapping, request);
+	}
 	return mapping.findForward("showCandidacyDetails");
     }
 
@@ -119,7 +122,7 @@ public class DegreeCandidacyManagementDispatchAction extends FenixDispatchAction
 	    final StudentCandidacy candidacy = getCandidacy(request);
 	    if (candidacy.isConcluded()) {
 
-		if (candidacy.getRegistration().hasAnyStudentsInquiryRegistries()) {
+		if (candidacy.getRegistration().hasInquiryStudentCycleAnswer()) {
 
 		    request.setAttribute("schemaSuffix", getSchemaSuffixForPerson(request));
 		    request.setAttribute("candidacyID", candidacy.getIdInternal());
@@ -142,8 +145,8 @@ public class DegreeCandidacyManagementDispatchAction extends FenixDispatchAction
 
     private ActionForward processInquiry(StudentCandidacy candidacy, ActionMapping mapping, HttpServletRequest request) {
 	Student1rstCycleInquiryTemplate currentTemplate = Student1rstCycleInquiryTemplate.getCurrentTemplate();
-	if (candidacy.getRegistration().hasAnyStudentsInquiryRegistries()) {
-	    return processInquiry(candidacy, mapping, request);
+	if (candidacy.getRegistration().hasInquiryStudentCycleAnswer()) {
+	    return new ActionForward(buildSummaryPdfGeneratorURL(request, candidacy), true);
 	}
 	StudentFirstTimeCycleInquiryBean studentInquiryBean = new StudentFirstTimeCycleInquiryBean(currentTemplate,
 		candidacy.getRegistration());
