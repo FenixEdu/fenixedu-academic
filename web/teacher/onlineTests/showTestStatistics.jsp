@@ -45,7 +45,7 @@
 		<%}
 		 if(testQuestion.getStudentSubQuestions().size()>1){
 		 	if(itemIndex.equals(new Integer(0))){%>
-		 		<tr><td><span class="error">Esta pergunta ï¿½ uma pergunta com alï¿½neas. Apï¿½s responder poderï¿½ surgir uma nova alï¿½nea para responder.</span></td></tr>
+		 		<tr><td><span class="error">Esta pergunta é uma pergunta com alíneas. Após responder poderá surgir uma nova alínea para responder.</span></td></tr>
 		 	<%}%>
 			<tr><td><br/><b><bean:write name="subQuestion" property="title"/></b></td></tr>
 		<%}%>
@@ -198,7 +198,7 @@
 				</tr>
 			</logic:iterate>
 		<%}else{ %>
-			<logic:iterate id="statistic" name="infoInquiryStatistic" property="optionStatistics"indexId="i">
+			<logic:iterate id="statistic" name="infoInquiryStatistic" property="optionStatistics" indexId="i">
 				<tr>
 				<logic:equal name="i" value="<%=new Integer(size.intValue()-1).toString()%>">
 				<td><b><bean:write name="statistic" property="label"/>:</logic:equal>
