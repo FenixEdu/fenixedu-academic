@@ -66,5 +66,8 @@ public class ExternalScholarshipPhdGratuityContribuitionPR extends ExternalSchol
             Money amount, AccountingTransactionDetailDTO transactionDetailDTO) {
         return depositAmount(responsibleUser, event, fromAcount, toAccount, amount, EntryType.EXTERNAL_SCOLARSHIP_PAYMENT, transactionDetailDTO);
     }
-
+    @Override
+    public boolean isVisible() {
+        return false;
+    }
 }
