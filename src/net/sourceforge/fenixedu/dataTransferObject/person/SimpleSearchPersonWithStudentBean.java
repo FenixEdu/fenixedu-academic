@@ -29,6 +29,8 @@ public class SimpleSearchPersonWithStudentBean implements Serializable {
 
     private Integer studentNumber;
 
+    private String paymentCode;
+
     public SimpleSearchPersonWithStudentBean() {
 	super();
     }
@@ -119,6 +121,14 @@ public class SimpleSearchPersonWithStudentBean implements Serializable {
 
     public void setUsername(String username) {
 	this.username = username;
+    }
+
+    public String getPaymentCode() {
+	return this.paymentCode;
+    }
+
+    public void setPaymentCode(final String paymentCode) {
+	this.paymentCode = paymentCode;
     }
 
 }

@@ -16,8 +16,10 @@ import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.LoginAlias;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Role;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.Teacher;
+import net.sourceforge.fenixedu.domain.accounting.PaymentCode;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.person.IDDocumentType;
 import net.sourceforge.fenixedu.domain.person.RoleType;
@@ -60,6 +62,8 @@ public class SearchPerson extends FenixService implements Serializable {
 
 	private Integer mechanoGraphicalNumber;
 
+	private String paymentCode;
+
 	public SearchParameters() {
 	}
 
@@ -68,13 +72,13 @@ public class SearchPerson extends FenixService implements Serializable {
 		Integer studentNumber, Boolean externalPersons, Boolean showOnlySearchableResearchers) {
 
 	    this(name, email, username, documentIdNumber, idDocumentType, roleType, degreeTypeString, degreeId, departmentId,
-		    activePersons, studentNumber, externalPersons);
+		    activePersons, studentNumber, externalPersons, (String) null);
 	    setShowOnlySearchableResearchers(showOnlySearchableResearchers);
 	}
 
 	public SearchParameters(String name, String email, String username, String documentIdNumber, String idDocumentType,
 		String roleType, String degreeTypeString, Integer degreeId, Integer departmentId, Boolean activePersons,
-		Integer studentNumber, Boolean externalPersons) {
+		Integer studentNumber, Boolean externalPersons, String paymentCode) {
 	    this();
 
 	    setActivePersons(activePersons);
@@ -87,6 +91,7 @@ public class SearchPerson extends FenixService implements Serializable {
 	    }
 	    setStudentNumber(studentNumber);
 	    setExternalPersons(externalPersons);
+	    setPaymentCode(paymentCode);
 
 	    if (roleType != null && roleType.length() > 0) {
 		role = Role.getRoleByRoleType(RoleType.valueOf(roleType));
@@ -110,7 +115,8 @@ public class SearchPerson extends FenixService implements Serializable {
 		    && StringUtils.isEmpty(this.documentIdNumber) && this.role == null && this.degree == null
 		    && this.department == null && this.degreeType == null && this.nameWords == null && this.studentNumber == null
 		    && this.mechanoGraphicalNumber == null && this.idDocumentType == null
-		    && this.showOnlySearchableResearchers == null;
+		    && this.showOnlySearchableResearchers == null
+		    && (this.paymentCode == null || this.paymentCode.trim().isEmpty());
 	}
 
 	private static String[] getNameWords(String name) {
@@ -238,6 +244,15 @@ public class SearchPerson extends FenixService implements Serializable {
 	public void setShowOnlySearchableResearchers(Boolean showOnlySearchableResearchers) {
 	    this.showOnlySearchableResearchers = showOnlySearchableResearchers;
 	}
+
+	public String getPaymentCode() {
+	    return this.paymentCode;
+	}
+
+	public void setPaymentCode(final String paymentCode) {
+	    this.paymentCode = paymentCode;
+	}
+
     }
 
     public CollectionPager<Person> run(SearchParameters searchParameters, Predicate predicate) {
@@ -319,6 +334,18 @@ public class SearchPerson extends FenixService implements Serializable {
 		persons.addAll(Person.findExternalPerson(searchParameters.getName()));
 	    }
 
+	} else if (searchParameters.getPaymentCode() != null && !searchParameters.getPaymentCode().trim().isEmpty()) {
+	    String paymentCode = searchParameters.getPaymentCode().trim();
+
+	    List<PaymentCode> paymentCodes = RootDomainObject.getInstance().getPaymentCodes();
+	    persons = new ArrayList<Person>();
+
+	    for (PaymentCode code : paymentCodes) {
+		if (code.getCode().equals(paymentCode)) {
+		    persons.add(code.getPerson());
+		    break;
+		}
+	    }
 	} else {
 	    persons = new ArrayList<Person>(0);
 	}

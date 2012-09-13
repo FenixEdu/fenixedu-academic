@@ -133,7 +133,7 @@ public class PaymentsManagementDA extends FenixDispatchAction {
 	final SearchParameters searchParameters = new SearchPerson.SearchParameters(searchPersonBean.getName(), null,
 		searchPersonBean.getUsername(), searchPersonBean.getDocumentIdNumber(),
 		searchPersonBean.getIdDocumentType() != null ? searchPersonBean.getIdDocumentType().toString() : null, null,
-		null, null, null, null, searchPersonBean.getStudentNumber(), Boolean.FALSE);
+		null, null, null, null, searchPersonBean.getStudentNumber(), Boolean.FALSE, searchPersonBean.getPaymentCode());
 
 	final SearchPersonPredicate predicate = new SearchPerson.SearchPersonPredicate(searchParameters);
 

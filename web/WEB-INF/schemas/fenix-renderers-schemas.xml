@@ -663,6 +663,7 @@
 		</slot>
 		<slot name="name"/>
 		<slot name="username"/>
+		<slot name="paymentCode" />
 	</schema>
 		
     <schema name="group.description" type="java.lang.Object">
