@@ -344,7 +344,7 @@ public class LibraryAttendance implements Serializable {
 
     public void advancedSearch(int pageNumber) {
 	SearchParameters searchParameters = new SearchPerson.SearchParameters(getPersonName(), null, null, null, null,
-		getPersonTypeName(), null, null, null, Boolean.TRUE, null, Boolean.FALSE);
+		getPersonTypeName(), null, null, null, Boolean.TRUE, null, Boolean.FALSE, (String) null);
 
 	SearchPersonPredicate predicate = new SearchPerson.SearchPersonPredicate(searchParameters);
 

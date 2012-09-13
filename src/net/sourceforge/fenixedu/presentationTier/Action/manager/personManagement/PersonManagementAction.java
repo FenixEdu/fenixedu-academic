@@ -42,19 +42,10 @@ import org.apache.struts.action.DynaActionForm;
 import pt.ist.fenixWebFramework.renderers.components.state.IViewState;
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.security.UserView;
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.utl.ist.fenix.tools.util.CollectionPager;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
-import pt.ist.fenixWebFramework.struts.annotations.Forward;
-import pt.ist.fenixWebFramework.struts.annotations.Forwards;
-import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
-import pt.ist.fenixWebFramework.struts.annotations.Forward;
-import pt.ist.fenixWebFramework.struts.annotations.Forwards;
-import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 /**
  * @author T�nia Pous�o
@@ -133,7 +124,7 @@ public class PersonManagementAction extends FenixDispatchAction {
 	}
 
 	SearchParameters searchParameters = new SearchPerson.SearchParameters(name, email, username, documentIdNumber, null,
-		null, null, null, null, null, null, null);
+		null, null, null, null, null, null, null, (String) null);
 
 	if ((mechanoGraphicalNumber != null) && (mechanoGraphicalNumber.length() > 0)) {
 	    searchParameters.setMechanoGraphicalNumber(Integer.parseInt(mechanoGraphicalNumber));
@@ -194,7 +185,7 @@ public class PersonManagementAction extends FenixDispatchAction {
 
 	SearchParameters searchParameters = new SearchPerson.SearchParameters(bean.getName(), null, null, bean
 		.getDocumentIdNumber(), bean.getIdDocumentType() != null ? bean.getIdDocumentType().getName() : null, null, null,
-		null, null, null, null, null);
+ null, null, null, null, null, (String) null);
 
 	SearchPersonPredicate predicate = new SearchPerson.SearchPersonPredicate(searchParameters);
 
@@ -454,7 +445,7 @@ public class PersonManagementAction extends FenixDispatchAction {
 	PersonBean personBean = (PersonBean) viewState.getMetaObject().getObject();
 
 	SearchPerson.SearchParameters parameters = new SearchParameters(personBean.getName(), null, personBean.getUsername(),
-		personBean.getDocumentIdNumber(), null, null, null, null, null, null, null, null);
+		personBean.getDocumentIdNumber(), null, null, null, null, null, null, null, null, (String) null);
 	SearchPersonPredicate predicate = new SearchPerson.SearchPersonPredicate(parameters);
 
 	CollectionPager<Person> persons = (CollectionPager<Person>) executeService("SearchPerson", new Object[] { parameters,

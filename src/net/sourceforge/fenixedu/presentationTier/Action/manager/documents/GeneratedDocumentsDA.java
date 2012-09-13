@@ -27,12 +27,6 @@ import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.utl.ist.fenix.tools.util.CollectionPager;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
-import pt.ist.fenixWebFramework.struts.annotations.Forward;
-import pt.ist.fenixWebFramework.struts.annotations.Forwards;
-import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 /**
  * @author Pedro Santos (pmrsa)
@@ -59,7 +53,7 @@ public class GeneratedDocumentsDA extends FenixDispatchAction {
 	if (searchBean.hasAddressee()) {
 	    SearchPerson.SearchParameters parameters = new SearchParameters(searchBean.getAddressee().getName(), null, searchBean
 		    .getAddressee().getUsername(), searchBean.getAddressee().getDocumentIdNumber(), null, null, null, null, null,
-		    null, null, null);
+		    null, null, null, (String) null);
 	    SearchPersonPredicate predicate = new SearchPerson.SearchPersonPredicate(parameters);
 	    CollectionPager<Person> persons = (CollectionPager<Person>) executeService("SearchPerson", new Object[] { parameters,
 		    predicate });
@@ -72,7 +66,7 @@ public class GeneratedDocumentsDA extends FenixDispatchAction {
 	if (searchBean.hasOperator()) {
 	    SearchPerson.SearchParameters parameters = new SearchParameters(searchBean.getOperator().getName(), null, searchBean
 		    .getOperator().getUsername(), searchBean.getOperator().getDocumentIdNumber(), null, null, null, null, null,
-		    null, null, null);
+		    null, null, null, (String) null);
 	    SearchPersonPredicate predicate = new SearchPerson.SearchPersonPredicate(parameters);
 	    CollectionPager<Person> operators = (CollectionPager<Person>) executeService("SearchPerson", new Object[] {
 		    parameters, predicate });
@@ -108,7 +102,7 @@ public class GeneratedDocumentsDA extends FenixDispatchAction {
 	    HttpServletResponse response) throws Exception {
 	PersonBean personBean = getRenderedObject();
 	SearchPerson.SearchParameters parameters = new SearchParameters(personBean.getName(), null, personBean.getUsername(),
-		personBean.getDocumentIdNumber(), null, null, null, null, null, null, null, null);
+		personBean.getDocumentIdNumber(), null, null, null, null, null, null, null, null, (String) null);
 	SearchPersonPredicate predicate = new SearchPerson.SearchPersonPredicate(parameters);
 	CollectionPager<Person> persons = (CollectionPager<Person>) executeService("SearchPerson", new Object[] { parameters,
 		predicate });

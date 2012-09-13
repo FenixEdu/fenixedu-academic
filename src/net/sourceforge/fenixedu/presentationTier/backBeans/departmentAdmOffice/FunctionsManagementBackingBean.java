@@ -30,7 +30,6 @@ import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.grant.owner.GrantOwner;
 import net.sourceforge.fenixedu.domain.organizationalStructure.AccountabilityTypeEnum;
@@ -292,7 +291,7 @@ public class FunctionsManagementBackingBean extends FenixBackingBean {
     private Collection<Person> getAllValidPersonsByName() throws FenixServiceException, FenixFilterException {
 
 	SearchParameters searchParameters = new SearchPerson.SearchParameters(personName, null, null, null, null, null, null,
-		null, null, Boolean.TRUE, null, Boolean.FALSE);
+		null, null, Boolean.TRUE, null, Boolean.FALSE, (String) null);
 	SearchPersonPredicate predicate = new SearchPerson.SearchPersonPredicate(searchParameters);
 
 	CollectionPager<Person> allPersons = (CollectionPager<Person>) ServiceUtils.executeService("SearchPerson", new Object[] {

@@ -24,7 +24,7 @@ public class SearchPersonMatchingAnyParameter extends SearchPerson {
 
 	SearchParameters searchParameters = new SearchPersonMatchingAnyParameter.SearchParameters(name, email, username,
 		documentIdNumber, idDocumentType == null ? null : idDocumentType.name(), roleType, degreeTypeString, degreeId,
-		departmentId, activePersons, studentNumber, externalPersons);
+		departmentId, activePersons, studentNumber, externalPersons, (String) null);
 
 	if (searchParameters.emptyParameters()) {
 	    return new CollectionPager<Person>(new HashSet<Person>(), 25);

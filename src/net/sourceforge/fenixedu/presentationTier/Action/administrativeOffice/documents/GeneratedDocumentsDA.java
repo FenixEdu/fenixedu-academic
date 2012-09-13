@@ -35,12 +35,6 @@ import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.utl.ist.fenix.tools.util.CollectionPager;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
-import pt.ist.fenixWebFramework.struts.annotations.Forward;
-import pt.ist.fenixWebFramework.struts.annotations.Forwards;
-import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 @Mapping(path = "/generatedDocuments", module = "academicAdminOffice", formBeanClass = FenixActionForm.class)
 @Forwards( {
@@ -86,7 +80,7 @@ public class GeneratedDocumentsDA extends FenixDispatchAction {
 	final SearchParameters searchParameters = new SearchPerson.SearchParameters(searchPersonBean.getName(), null,
 		searchPersonBean.getUsername(), searchPersonBean.getDocumentIdNumber(),
 		searchPersonBean.getIdDocumentType() != null ? searchPersonBean.getIdDocumentType().toString() : null, null,
-		null, null, null, null, searchPersonBean.getStudentNumber(), Boolean.FALSE);
+		null, null, null, null, searchPersonBean.getStudentNumber(), Boolean.FALSE, (String) null);
 
 	final SearchPersonPredicate predicate = new SearchPerson.SearchPersonPredicate(searchParameters);
 

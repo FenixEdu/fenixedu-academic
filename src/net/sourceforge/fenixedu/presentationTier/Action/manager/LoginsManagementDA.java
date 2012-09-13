@@ -43,7 +43,7 @@ public class LoginsManagementDA extends FenixDispatchAction {
 	PersonBean personBean = (PersonBean) viewState.getMetaObject().getObject();
 
 	SearchPerson.SearchParameters parameters = new SearchParameters(personBean.getName(), null, personBean.getUsername(),
-		personBean.getDocumentIdNumber(), null, null, null, null, null, null, null, null);
+		personBean.getDocumentIdNumber(), null, null, null, null, null, null, null, null, (String) null);
 	SearchPersonPredicate predicate = new SearchPerson.SearchPersonPredicate(parameters);
 
 	CollectionPager<Person> persons = (CollectionPager<Person>) executeService("SearchPerson", new Object[] { parameters,
