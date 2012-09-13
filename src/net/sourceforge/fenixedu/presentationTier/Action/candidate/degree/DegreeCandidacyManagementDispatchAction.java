@@ -160,21 +160,24 @@ public class DegreeCandidacyManagementDispatchAction extends FenixDispatchAction
 	    HttpServletResponse response) throws Exception {
 
 	final StudentFirstTimeCycleInquiryBean studentInquiryBean = getRenderedObject("studentInquiryBean");
-	RenderUtils.invalidateViewState();
-	String validationResult = studentInquiryBean.validateInquiry();
-	if (!Boolean.valueOf(validationResult)) {
-	    if (!validationResult.equalsIgnoreCase("false")) {
-		addActionMessage(request, "error.inquiries.fillInQuestion", validationResult);
-	    } else {
-		addActionMessage(request, "error.inquiries.fillAllRequiredFields");
-	    }
-	    request.setAttribute("studentInquiryBean", studentInquiryBean);
-	    return actionMapping.findForward("firstTimeCyleInquiry");
-	}
-	studentInquiryBean.saveAnswers();
 
-	LogFirstTimeCandidacyTimestamp.logTimestamp(studentInquiryBean.getCandidacy(),
-		FirstTimeCandidacyStage.FINISHED_FILLING_INQUIRY);
+	if (!studentInquiryBean.getRegistration().hasInquiryStudentCycleAnswer()) {
+	    RenderUtils.invalidateViewState();
+	    String validationResult = studentInquiryBean.validateInquiry();
+	    if (!Boolean.valueOf(validationResult)) {
+		if (!validationResult.equalsIgnoreCase("false")) {
+		    addActionMessage(request, "error.inquiries.fillInQuestion", validationResult);
+		} else {
+		    addActionMessage(request, "error.inquiries.fillAllRequiredFields");
+		}
+		request.setAttribute("studentInquiryBean", studentInquiryBean);
+		return actionMapping.findForward("firstTimeCyleInquiry");
+	    }
+	    studentInquiryBean.saveAnswers();
+
+	    LogFirstTimeCandidacyTimestamp.logTimestamp(studentInquiryBean.getCandidacy(),
+		    FirstTimeCandidacyStage.FINISHED_FILLING_INQUIRY);
+	}
 	return new ActionForward(buildSummaryPdfGeneratorURL(request, studentInquiryBean.getCandidacy()), true);
     }
 
@@ -407,7 +410,9 @@ public class DegreeCandidacyManagementDispatchAction extends FenixDispatchAction
 
     private String buildSummaryPdfGeneratorURL(HttpServletRequest request, final StudentCandidacy candidacy) {
 	String url = "/candidate/degreeCandidacyManagement.do?method=doOperation&operationType=PRINT_ALL_DOCUMENTS&candidacyID="
-		+ candidacy.getIdInternal() + "&" +  net.sourceforge.fenixedu.presentationTier.servlets.filters.ContentInjectionRewriter.CONTEXT_ATTRIBUTE_NAME + "=/portal-do-candidato/portal-do-candidato";
+		+ candidacy.getIdInternal() + "&"
+		+ net.sourceforge.fenixedu.presentationTier.servlets.filters.ContentInjectionRewriter.CONTEXT_ATTRIBUTE_NAME
+		+ "=/portal-do-candidato/portal-do-candidato";
 
 	String urlWithChecksum = pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter
 		.injectChecksumInUrl(request.getContextPath(), url);
