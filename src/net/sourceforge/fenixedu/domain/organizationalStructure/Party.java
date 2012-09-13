@@ -63,13 +63,12 @@ import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
 import org.apache.commons.collections.comparators.ComparatorChain;
 import org.apache.commons.lang.StringUtils;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
 
 import pt.utl.ist.fenix.tools.util.StringNormalizer;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
-
-import com.google.gwt.json.client.JSONArray;
-import com.google.gwt.json.client.JSONObject;
 
 public abstract class Party extends Party_Base implements Comparable<Party> {
 
