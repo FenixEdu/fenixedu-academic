@@ -40,9 +40,18 @@ public class LibraryCardSystem extends LibraryCardSystem_Base {
     }
 
     public static class HigherClearenceGroupBuilder implements GroupBuilder {
+
+	static final public String GROUP_EXPRESSION_NAME = "libraryHigherClearanceGroup";
+
 	@Override
 	public Group build(Object[] arguments) {
 	    return new Group() {
+
+		@Override
+		protected String getGroupExpressionName() {
+		    return GROUP_EXPRESSION_NAME;
+		}
+
 		@Override
 		protected Argument[] getExpressionArguments() {
 		    return new Argument[0];

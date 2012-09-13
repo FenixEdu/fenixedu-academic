@@ -5,7 +5,7 @@ import java.util.Hashtable;
 import java.util.Map;
 
 import net.sourceforge.fenixedu._development.LogLevel;
-import net.sourceforge.fenixedu.domain.LibraryCardSystem;
+import net.sourceforge.fenixedu.domain.LibraryCardSystem.HigherClearenceGroupBuilder;
 import net.sourceforge.fenixedu.domain.ManagementGroups;
 import net.sourceforge.fenixedu.domain.accessControl.ActiveAssistantCoordinatorCycle1Group;
 import net.sourceforge.fenixedu.domain.accessControl.ActiveAssistantCoordinatorCycle2Group;
@@ -279,7 +279,7 @@ public class GroupBuilderRegistry {
 	register("notUpdatedAlumniInfoForSpecificTimeGroup", NotUpdatedAlumniInfoForSpecificTimeGroup.class,
 		new NotUpdatedAlumniInfoForSpecificTimeGroup.Builder());
 	register("alumniDegreeGroup", AlumniDegreeGroup.class, new AlumniDegreeGroup.Builder());
-	register("libraryHigherClearanceGroup", FixedSetGroup.class, new LibraryCardSystem.HigherClearenceGroupBuilder());
+	register(HigherClearenceGroupBuilder.GROUP_EXPRESSION_NAME, FixedSetGroup.class, new HigherClearenceGroupBuilder());
 	register("author", AuthorGroup.class, new AuthorGroup.AuthorGroupBuilder());
 	register("projectDepartmentAccessGroup", ProjectDepartmentAccessGroup.class, new ProjectDepartmentAccessGroup.Builder());
 
