@@ -14,14 +14,17 @@ import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
+import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.domain.accessControl.PersonGroup;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.teacher.DegreeTeachingService;
 import net.sourceforge.fenixedu.domain.util.email.ExecutionCourseSender;
 import net.sourceforge.fenixedu.domain.util.email.Message;
 import net.sourceforge.fenixedu.domain.util.email.Recipient;
+import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.util.BundleUtil;
 import net.sourceforge.fenixedu.util.DiaSemana;
 
@@ -346,12 +349,16 @@ public class Shift extends Shift_Base {
     }
 
     public boolean reserveForStudent(final Registration registration) {
-	if (getLotacao().intValue() > getStudentsCount()) {
+	final boolean result = getLotacao().intValue() > getStudentsCount();
+	if (result || isResourceAllocationManager()) {
 	    addStudents(registration);
-	    return true;
-	} else {
-	    return false;
 	}
+	return result;
+    }
+
+    private boolean isResourceAllocationManager() {
+	final Person person = AccessControl.getPerson();
+	return person != null && person.hasRole(RoleType.RESOURCE_ALLOCATION_MANAGER);
     }
 
     public SortedSet<ShiftEnrolment> getShiftEnrolmentsOrderedByDate() {
