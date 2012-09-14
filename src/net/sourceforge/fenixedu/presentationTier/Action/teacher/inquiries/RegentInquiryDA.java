@@ -65,7 +65,11 @@ public class RegentInquiryDA extends FenixDispatchAction {
 
 	RegentInquiryTemplate inquiryTemplate = RegentInquiryTemplate.getTemplateByExecutionPeriod(executionCourse
 		.getExecutionPeriod());
-	if (inquiryTemplate == null) {
+	//if the inquiry doesn't exist or is from the execution period right before the current one and isn't open and has no results,
+	//that means that is not to answer and has no data to see
+	if (inquiryTemplate == null
+		|| (inquiryTemplate.getExecutionPeriod().getNextExecutionPeriod().isCurrent() && !inquiryTemplate.isOpen() && !inquiryTemplate
+			.getExecutionPeriod().hasAnyInquiryResults())) {
 	    return actionMapping.findForward("inquiriesClosed");
 	} else if (!inquiryTemplate.isOpen()) {
 	    request.setAttribute("readMode", "readMode");
