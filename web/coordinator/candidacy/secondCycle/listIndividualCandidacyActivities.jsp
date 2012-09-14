@@ -8,7 +8,7 @@
 <bean:define id="parentProcessId" name="parentProcess" property="idInternal" />
 <bean:define id="individualCandidacyProcess" name="process"/>
 <bean:define id="degreeCurricularPlanID" name="degreeCurricularPlanID"/>
-
+<bean:define id="candidacy" name="individualCandidacyProcess" property="candidacy" />
 <em><bean:message key="label.candidacies" bundle="APPLICATION_RESOURCES"/></em>
 <logic:notEmpty name="process">
 	<h2><bean:write name="process" property="displayName" /> </h2>

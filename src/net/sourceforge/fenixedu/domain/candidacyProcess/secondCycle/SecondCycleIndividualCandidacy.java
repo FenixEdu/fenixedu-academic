@@ -133,12 +133,45 @@ public class SecondCycleIndividualCandidacy extends SecondCycleIndividualCandida
 	setOtherEducation(otherEducation);
     }
 
-    private void putSelectedDegrees(final Set<Degree> selectedDegrees) {
-	while (!getSelectedDegrees().isEmpty()) {
-	    removeSelectedDegrees(getSelectedDegrees().iterator().next());
+    private void putSelectedDegrees(final Set<Degree> selectedDegreeList) {
+	for (Degree degree : getSelectedDegrees()){
+	    if (selectedDegreeList.contains(degree)){
+		if (getSecondCycleIndividualCandidacySeriesGradeForDegree(degree) == null){
+		    SecondCycleIndividualCandidacySeriesGrade newSCICSeriesGrade = new SecondCycleIndividualCandidacySeriesGrade();
+		    newSCICSeriesGrade.setDegree(degree);
+		    getIndividualCandidacySeriesGrade().add(newSCICSeriesGrade);
+		}
+	    }else{
+		SecondCycleIndividualCandidacySeriesGrade seriesGrade = getSecondCycleIndividualCandidacySeriesGradeForDegree(degree);
+		if (seriesGrade == null){
+		    throw new RuntimeException("should.exist.series.grade.to.delete");
+		}else{
+		    if (!seriesGrade.isClean()){
+			throw new RuntimeException("cannot.delete.series.grade.with.grades");
+		    }else{
+			seriesGrade.delete();
+		    }
+		}
+	    }
 	}
+	
+	while (!getSelectedDegrees().isEmpty()) {
+	    getSelectedDegrees().remove(getSelectedDegrees().iterator().next());
+	}
+	
+	getSelectedDegrees().addAll(selectedDegreeList);
 
-	getSelectedDegrees().addAll(selectedDegrees);
+	IndividualCandidacyEvent individualCandidacyEvent = (IndividualCandidacyEvent) getEvent();
+	if (individualCandidacyEvent != null && individualCandidacyEvent.getAmountToPay().isPositive() && getEvent().isClosed()) {
+	    individualCandidacyEvent.open();
+
+	    List<AccountingEventPaymentCode> paymentCodes = individualCandidacyEvent.getAllPaymentCodes();
+
+	    for (AccountingEventPaymentCode accountingEventPaymentCode : paymentCodes) {
+		accountingEventPaymentCode.setState(PaymentCodeState.NEW);
+	    }
+
+	}
 
 	if (getSelectedDegrees().isEmpty()) {
 	    throw new DomainException("this shouldnt happen");
@@ -357,11 +390,15 @@ public class SecondCycleIndividualCandidacy extends SecondCycleIndividualCandida
 	return null;
     }
 
-    private SecondCycleIndividualCandidacySeriesGrade getSecondCycleIndividualCandidacySeriesGrade() {
+    public SecondCycleIndividualCandidacySeriesGrade getSecondCycleIndividualCandidacySeriesGrade() {
 	if (getIndividualCandidacySeriesGradeCount() == 0) {
 	    return null;
 	} else {
-	    return getSecondCycleIndividualCandidacySeriesGradeForDegree(getSelectedDegree());
+	    if (getIndividualCandidacySeriesGradeCount() == 1){
+		return getSecondCycleIndividualCandidacySeriesGradeForDegree(getSelectedDegrees().get(0));
+	    }else{
+		return getSecondCycleIndividualCandidacySeriesGradeForDegree(getSelectedDegree());
+	    }
 	}
     }
 
