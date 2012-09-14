@@ -2,6 +2,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.enrollment.shift;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
@@ -25,7 +26,7 @@ public class ReadClassTimeTableByStudent extends FenixService {
 	    throw new FenixServiceException("error.readClassTimeTableByStudent.noSchoolClass");
 	}
 
-	final List<ExecutionCourse> attendingExecutionCourses = registration
+	final Set<ExecutionCourse> attendingExecutionCourses = registration
 		.getAttendingExecutionCoursesForCurrentExecutionPeriod();
 
 	final List<Shift> shifts = new ArrayList<Shift>();

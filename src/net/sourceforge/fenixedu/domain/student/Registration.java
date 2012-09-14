@@ -1626,8 +1626,8 @@ public class Registration extends Registration_Base {
 	return enroledImprovements;
     }
 
-    final public List<ExecutionCourse> getAttendingExecutionCoursesForCurrentExecutionPeriod() {
-	final List<ExecutionCourse> result = new ArrayList<ExecutionCourse>();
+    final public Set<ExecutionCourse> getAttendingExecutionCoursesForCurrentExecutionPeriod() {
+	final Set<ExecutionCourse> result = new HashSet<ExecutionCourse>();
 	for (final Attends attends : getAssociatedAttendsSet()) {
 	    if (attends.getExecutionCourse().getExecutionPeriod().getState().equals(PeriodState.CURRENT)) {
 		result.add(attends.getExecutionCourse());

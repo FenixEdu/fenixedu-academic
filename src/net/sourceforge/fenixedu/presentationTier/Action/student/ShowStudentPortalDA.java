@@ -48,13 +48,10 @@ public class ShowStudentPortalDA extends FenixDispatchAction {
 	final Student student = getLoggedPerson(request).getStudent();
 	if (student != null) {
 	    for (Registration registration : student.getActiveRegistrationsIn(ExecutionSemester.readActualExecutionSemester())) {
-		executionCourses = new ArrayList<ExecutionCourse>();
 		DegreeCurricularPlan degreeCurricularPlan = registration.getActiveDegreeCurricularPlan();
-		for (ExecutionCourse executionCourse : registration.getAttendingExecutionCoursesForCurrentExecutionPeriod()) {
-		    executionCourses.add(executionCourse);
-		}
-		if (executionCourses.isEmpty() == false) {
-		    studentPortalBeans.add(new StudentPortalBean(registration.getDegree(), student, executionCourses,
+		if (registration.getAttendingExecutionCoursesForCurrentExecutionPeriod().isEmpty() == false) {
+		    studentPortalBeans.add(new StudentPortalBean(registration.getDegree(), student, registration
+			    .getAttendingExecutionCoursesForCurrentExecutionPeriod(),
 			    degreeCurricularPlan));
 		}
 		if (hasSpecialSeasonEnrolments(student)) {

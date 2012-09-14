@@ -6,6 +6,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.ResourceBundle;
+import java.util.Set;
 
 import net.sourceforge.fenixedu.domain.Attends;
 import net.sourceforge.fenixedu.domain.Degree;
@@ -21,6 +22,7 @@ import net.sourceforge.fenixedu.domain.WrittenTest;
 import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.util.EvaluationType;
 
+import org.apache.commons.beanutils.BeanComparator;
 import org.joda.time.DateTime;
 import org.joda.time.YearMonthDay;
 
@@ -341,7 +343,7 @@ public class StudentPortalBean implements Serializable {
     private Student student;
     private List<ExecutionCoursesAnnouncements> executionCoursesAnnouncements;
 
-    public StudentPortalBean(final Degree degree, final Student student, final List<ExecutionCourse> executionCourses,
+    public StudentPortalBean(final Degree degree, final Student student, final Set<ExecutionCourse> executionCourses,
 	    final DegreeCurricularPlan activeDegreeCurricularPlan) {
 	super();
 	setDegree(degree);
@@ -350,6 +352,7 @@ public class StudentPortalBean implements Serializable {
 	for (ExecutionCourse executionCourse : executionCourses) {
 	    addExecutionCoursesAnnouncement(new ExecutionCoursesAnnouncements(executionCourse));
 	}
+	Collections.sort(getExecutionCoursesAnnouncements(), new BeanComparator("executionCourse.name"));
     }
 
     public Degree getDegree() {
