@@ -139,7 +139,11 @@ public abstract class Group implements Serializable, IGroup {
     }
 
     protected String getGroupExpressionName() {
-	String name = GroupBuilderRegistry.getNameOfBuilder(this.getClass());
+	return getGroupExpressionName(this.getClass());
+    }
+
+    static public String getGroupExpressionName(final Class<? extends Group> groupClass) {
+	String name = GroupBuilderRegistry.getNameOfBuilder(groupClass);
 
 	if (name == null) {
 	    throw new DomainException("accessControl.group.expression.noName");
