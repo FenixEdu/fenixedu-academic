@@ -28,7 +28,7 @@ public class ExecutionCourseTeachersGroup extends AbstractExecutionCourseTeacher
 		"label.net.sourceforge.fenixedu.domain.accessControl.ExecutionCourseTeachersGroupWithName",
 		new String[] { getExecutionCourse().getNome() });
     }
-
+    
     @Override
     protected Argument[] getExpressionArguments() {
 	return new Argument[] { new IdOperator(getObject()) };
@@ -36,6 +36,7 @@ public class ExecutionCourseTeachersGroup extends AbstractExecutionCourseTeacher
 
     public static class Builder implements GroupBuilder {
 
+	@Override
 	public Group build(Object[] arguments) {
 	    try {
 		return new ExecutionCourseTeachersGroup((ExecutionCourse) arguments[0]);
@@ -45,10 +46,12 @@ public class ExecutionCourseTeachersGroup extends AbstractExecutionCourseTeacher
 	    }
 	}
 
+	@Override
 	public int getMinArguments() {
-	    return 0;
+	    return 1;
 	}
 
+	@Override
 	public int getMaxArguments() {
 	    return 1;
 	}

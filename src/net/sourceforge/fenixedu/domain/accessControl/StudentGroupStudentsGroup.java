@@ -56,6 +56,7 @@ public class StudentGroupStudentsGroup extends DomainBackedGroup<StudentGroup> {
 
     public static class Builder implements GroupBuilder {
 
+	@Override
 	public Group build(Object[] arguments) {
 	    try {
 		return new StudentGroupStudentsGroup((StudentGroup) arguments[0]);
@@ -65,10 +66,12 @@ public class StudentGroupStudentsGroup extends DomainBackedGroup<StudentGroup> {
 	    }
 	}
 
+	@Override
 	public int getMinArguments() {
-	    return 0;
+	    return 1;
 	}
 
+	@Override
 	public int getMaxArguments() {
 	    return 1;
 	}

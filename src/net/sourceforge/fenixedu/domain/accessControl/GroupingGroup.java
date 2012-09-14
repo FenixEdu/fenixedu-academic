@@ -36,6 +36,7 @@ public class GroupingGroup extends DomainBackedGroup<Grouping> {
 
     public static class Builder implements GroupBuilder {
 
+	@Override
 	public Group build(Object[] arguments) {
 	    try {
 		return new GroupingGroup((Grouping) arguments[0]);
@@ -45,10 +46,12 @@ public class GroupingGroup extends DomainBackedGroup<Grouping> {
 	    }
 	}
 
+	@Override
 	public int getMinArguments() {
-	    return 0;
+	    return 1;
 	}
 
+	@Override
 	public int getMaxArguments() {
 	    return 1;
 	}

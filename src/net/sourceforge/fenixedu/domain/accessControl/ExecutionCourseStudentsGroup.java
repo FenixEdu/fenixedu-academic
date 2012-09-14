@@ -19,6 +19,7 @@ public class ExecutionCourseStudentsGroup extends ExecutionCourseGroup {
     private static final long serialVersionUID = 1L;
 
     private class AttendPersonTransformer implements Transformer {
+	@Override
 	public Object transform(Object object) {
 	    Attends attend = (Attends) object;
 	    return attend.getRegistration().getPerson();
@@ -59,6 +60,7 @@ public class ExecutionCourseStudentsGroup extends ExecutionCourseGroup {
 
     public static class Builder implements GroupBuilder {
 
+	@Override
 	public Group build(Object[] arguments) {
 	    try {
 		return new ExecutionCourseStudentsGroup((ExecutionCourse) arguments[0]);
@@ -68,10 +70,12 @@ public class ExecutionCourseStudentsGroup extends ExecutionCourseGroup {
 	    }
 	}
 
+	@Override
 	public int getMinArguments() {
-	    return 0;
+	    return 1;
 	}
 
+	@Override
 	public int getMaxArguments() {
 	    return 1;
 	}

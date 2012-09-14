@@ -116,6 +116,7 @@ public class CompetenceCourseGroup extends ExecutionCourseGroup {
 
     public static class Builder implements GroupBuilder {
 
+	@Override
 	public Group build(Object[] arguments) {
 	    try {
 		return new CompetenceCourseGroup((ExecutionCourse) arguments[0]);
@@ -125,10 +126,12 @@ public class CompetenceCourseGroup extends ExecutionCourseGroup {
 	    }
 	}
 
+	@Override
 	public int getMinArguments() {
-	    return 0;
+	    return 1;
 	}
 
+	@Override
 	public int getMaxArguments() {
 	    return 1;
 	}

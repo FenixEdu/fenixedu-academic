@@ -114,6 +114,7 @@ public class DegreesOfExecutionCourseGroup extends ExecutionCourseGroup {
 
     public static class Builder implements GroupBuilder {
 
+	@Override
 	public Group build(Object[] arguments) {
 	    try {
 		return new DegreesOfExecutionCourseGroup((ExecutionCourse) arguments[0]);
@@ -123,10 +124,12 @@ public class DegreesOfExecutionCourseGroup extends ExecutionCourseGroup {
 	    }
 	}
 
+	@Override
 	public int getMinArguments() {
-	    return 0;
+	    return 1;
 	}
 
+	@Override
 	public int getMaxArguments() {
 	    return 1;
 	}

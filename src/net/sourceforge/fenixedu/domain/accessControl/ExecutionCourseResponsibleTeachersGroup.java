@@ -32,6 +32,7 @@ public class ExecutionCourseResponsibleTeachersGroup extends AbstractExecutionCo
 
     public static class Builder implements GroupBuilder {
 
+	@Override
 	public Group build(Object[] arguments) {
 	    try {
 		return new ExecutionCourseResponsibleTeachersGroup((ExecutionCourse) arguments[0]);
@@ -41,10 +42,12 @@ public class ExecutionCourseResponsibleTeachersGroup extends AbstractExecutionCo
 	    }
 	}
 
+	@Override
 	public int getMinArguments() {
-	    return 0;
+	    return 1;
 	}
 
+	@Override
 	public int getMaxArguments() {
 	    return 1;
 	}
