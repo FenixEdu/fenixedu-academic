@@ -6,6 +6,12 @@
 <%@ taglib uri="/WEB-INF/app.tld" prefix="app" %>
 <html:xhtml/>
 
+<html:messages id="message" message="true">
+	<span class="error">
+		<bean:write name="message" filter="false"/>
+	</span>
+</html:messages>
+
 <logic:present name="teacherBean">
 	<fr:edit id="teacherBean" name="teacherBean" action="/credits.do?method=showTeacherCredits">
 		<fr:schema bundle="TEACHER_CREDITS_SHEET_RESOURCES" type="net.sourceforge.fenixedu.domain.credits.util.TeacherCreditsBean">

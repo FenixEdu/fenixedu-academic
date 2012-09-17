@@ -43,3 +43,6 @@ function executeWithTempFile() {
 	echo
 }
 
+
+
+execute "Alter teacher credits tables" alterTeacherCreditsTables.sql

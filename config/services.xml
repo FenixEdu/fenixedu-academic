@@ -761,15 +761,6 @@
     </service>
 
     <service>
-        <name>CreateTeacherInstitutionWorkTime</name>
-        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.teacher.services.CreateTeacherInstitutionWorkTime</implementationClass>
-        <isTransactional>true</isTransactional>
-        <filterChains>
-            <chain name="CreditsServicesAuthorization"/>
-        </filterChains>
-    </service>
-
-    <service>
         <name>CreateTeacherServiceDistribution</name>
         <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.teacherServiceDistribution.CreateTeacherServiceDistribution</implementationClass>
         <isTransactional>true</isTransactional>
@@ -1062,15 +1053,6 @@
         <isTransactional>true</isTransactional>
         <filterChains>
             <chain name="ExecutionCourseLecturingTeacherAuthorization"/>
-        </filterChains>
-    </service>
-
-    <service>
-        <name>DeleteInstitutionWorkTimeByOID</name>
-        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.teacher.services.DeleteInstitutionWorkTimeByOID</implementationClass>
-        <isTransactional>true</isTransactional>
-        <filterChains>
-            <chain name="CreditsServicesAuthorization"/>
         </filterChains>
     </service>
 
@@ -1751,15 +1733,6 @@
         <isTransactional>true</isTransactional>
         <filterChains>
             <chain name="EditTeacherInformationAuthorization"/>
-        </filterChains>
-    </service>
-
-    <service>
-        <name>EditTeacherInstitutionWorkTime</name>
-        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.teacher.services.EditTeacherInstitutionWorkTime</implementationClass>
-        <isTransactional>true</isTransactional>
-        <filterChains>
-            <chain name="CreditsServicesAuthorization"/>
         </filterChains>
     </service>
 

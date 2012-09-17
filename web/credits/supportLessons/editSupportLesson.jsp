@@ -4,25 +4,39 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/enum.tld" prefix="e" %>
+<%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr" %>
+
+<jsp:include page="../teacherCreditsStyles.jsp"/>
 
 <bean:define id="teacher" name="professorship" property="teacher" scope="request" />
-<bean:define id="executionCourse" name="professorship" property="executionCourse" scope="request" />
-<bean:define id="executionPeriod" name="executionCourse" property="executionPeriod"/>
-<bean:define id="executionPeriodId" name="executionPeriod" property="idInternal" />
+<bean:define id="executionPeriodId" name="professorship" property="executionCourse.executionPeriod.idInternal"/>
 
-<h2><bean:message key="label.teaching.service.alter" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></h2>
+<h3><bean:message key="label.teacherCreditsSheet.supportLessons" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></h3>
 
-<div class="infoop mtop2 mbottom1">
-	<p class="mvert025"><b><bean:message key="label.teacher.name"/>:</b> <bean:write name="teacher" property="person.name"/></p>
-	<p class="mvert025"><bean:define id="teacherId" name="teacher" property="teacherId"/><b><bean:message key="label.teacher.number"/>:</b> <bean:write name="teacherId"/></p>
-	<p class="mvert025"><b> <bean:message key="label.execution-course.name"/>:</b> <bean:write name="executionCourse" property="nome"/></p>
-	<p class="mvert025"><b> <bean:message key="label.execution-period"/>:</b> <bean:write name="executionPeriod" property="name"/> - <bean:write name="executionPeriod" property="executionYear.year"/></p>
-</div>
+<bean:define id="url" type="java.lang.String">/publico/retrievePersonalPhoto.do?method=retrieveByUUID&amp;contentContextPath_PATH=/homepage&amp;uuid=<bean:write name="professorship" property="teacher.person.username"/></bean:define>
+<table class="headerTable"><tr>
+<td><img src="<%= request.getContextPath() + url %>"/></td>
+<td >
+	<fr:view name="professorship">
+		<fr:schema bundle="TEACHER_CREDITS_SHEET_RESOURCES" type="net.sourceforge.fenixedu.domain.Professorship">
+			<fr:slot name="teacher.person.presentationName" key="label.name"/>
+			<fr:slot name="executionCourse.nome" key="label.course"/>
+			<fr:slot name="executionCourse.executionPeriod" key="label.execution-period" layout="format">
+				<fr:property name="format" value="${name}  ${executionYear.year}" />
+			</fr:slot>
+		</fr:schema>
+		<fr:layout name="tabular">
+			<fr:property name="classes" value="creditsStyle"/>
+		</fr:layout>
+	</fr:view>
+	</td>
+</tr></table>
 
 
 <logic:messagesPresent>
 	<span class="error"><!-- Error messages go here --><html:errors /></span>
 </logic:messagesPresent>
+
 
 <p>
 	<strong>

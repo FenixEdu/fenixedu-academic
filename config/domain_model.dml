@@ -6002,6 +6002,12 @@ class DomainObject {
             String serviceExemptionNotes;
             String thesisNote;
         }
+        
+        class teacher.TeacherServiceComment extends teacher.TeacherServiceItem {
+            String content;
+            DateTime creationDate;
+            DateTime lastModifiedDate;
+        }
 
     class teacher.WeeklyOcupation extends DomainObject {
         DateTime lastModificationDateDateTime;
@@ -8055,6 +8061,9 @@ class candidacy.MeasurementTestRoom extends DomainObject {
 }
 
 class TeacherCreditsQueueJob extends QueueJob{
+}
+
+class credits.CreditsPersonFunctionsSharedQueueJob extends QueueJob{
 }
 
 class administrativeOffice.curriculumValidation.DocumentPrintRequest extends DomainObject {
@@ -20311,6 +20320,14 @@ relation TeacherCreditsQueueJobExecutionSemester {
 		multiplicity *;
 	}
 }
+
+relation CreditPersonFunctionsSharedQueueJobExecutionSemester {
+	ExecutionSemester playsRole executionSemester;
+	credits.CreditsPersonFunctionsSharedQueueJob playsRole creditsPersonFunctionsSharedQueueJob{
+		multiplicity *;
+	}
+}
+
 relation RootDomainObjectTeacherCreditsState {
 	RootDomainObject playsRole rootDomainObject;
 	TeacherCreditsState playsRole teacherCreditsState {
@@ -21305,6 +21322,7 @@ class credits.AnnualTeachingCredits extends DomainObject {
 	BigDecimal yearCredits;
 	BigDecimal finalCredits;
 	BigDecimal accumulatedCredits;
+	Boolean hasAnyLimitation;
 	DateTime creationDate;
     DateTime lastModifiedDate;
 }
@@ -21351,4 +21369,18 @@ relation RootDomainObjectAnnualCreditsState {
 	credits.AnnualCreditsState playsRole annualCreditsStates {
 		multiplicity *;
 	}
+}
+
+relation TeacherServiceCommentPerson {
+	Person playsRole createdBy; 
+	teacher.TeacherServiceComment playsRole teacherServiceComment {
+		multiplicity *;
+	}
+}
+
+relation OtherServiceExecutionSemester {
+    teacher.OtherService playsRole otherServicesCorrections{
+        multiplicity *;
+    }
+    ExecutionSemester playsRole correctedExecutionSemester;
 }

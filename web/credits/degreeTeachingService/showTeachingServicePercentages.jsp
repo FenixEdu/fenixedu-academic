@@ -4,6 +4,9 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/taglibs-datetime.tld" prefix="dt"%>
+<%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr" %>
+
+<jsp:include page="../teacherCreditsStyles.jsp"/>
 
 <bean:define id="hoursPattern">HH : mm</bean:define>
 <bean:define id="teacher" name="professorship" property="teacher" scope="request" />
@@ -11,20 +14,32 @@
 <bean:define id="executionCourse" name="professorship" property="executionCourse" scope="request" />
 <bean:define id="executionPeriodId" name="executionCourse" property="executionPeriod.idInternal" />
 
-<h2><bean:message key="label.teaching.service.alter" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></h2>
+<h3><bean:message key="label.teacherCreditsSheet.professorships" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></h3>
 
-<div class="infoop mtop2 mbottom1">
-	<p class="mvert025"><b><bean:message key="label.teacher.name" />:</b> <bean:write name="teacher" property="person.name"/></p>
-	<p class="mvert025"><b><bean:message key="label.teacher.id" />:</b> <bean:write name="teacher" property="teacherId"/></p>
-	<p class="mvert025"><b> <bean:message key="label.execution-course.name" />:</b> <bean:write name="executionCourse" property="nome"/></p>
-	<p class="mvert025"><b><bean:message key="label.execution-period" />:</b> <bean:write name="executionCourse" property="executionPeriod.name"/> - <bean:write name="executionCourse" property="executionPeriod.executionYear.year"/></p>
-</div>
+<bean:define id="url" type="java.lang.String">/publico/retrievePersonalPhoto.do?method=retrieveByUUID&amp;contentContextPath_PATH=/homepage&amp;uuid=<bean:write name="professorship" property="teacher.person.username"/></bean:define>
+<table class="headerTable"><tr>
+<td><img src="<%= request.getContextPath() + url %>"/></td>
+<td >
+	<fr:view name="professorship">
+		<fr:schema bundle="TEACHER_CREDITS_SHEET_RESOURCES" type="net.sourceforge.fenixedu.domain.Professorship">
+			<fr:slot name="teacher.person.presentationName" key="label.name"/>
+			<fr:slot name="executionCourse.nome" key="label.course"/>
+			<fr:slot name="executionCourse.executionPeriod" key="label.execution-period" layout="format">
+				<fr:property name="format" value="${name}  ${executionYear.year}" />
+			</fr:slot>
+		</fr:schema>
+		<fr:layout name="tabular">
+			<fr:property name="classes" value="creditsStyle"/>
+		</fr:layout>
+	</fr:view>
+	</td>
+</tr></table>
+
+
 <bean:define id="teacherId" name="teacher" property="externalId"/>
+<bean:define id="executionYearOid" name="executionCourse" property="executionPeriod.executionYear.externalId" />
 
-<p class="infoop2">
-<bean:message key="label.teaching.service.help.top" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/>
-</p>
-
+<p><html:link page="<%="/credits.do?method=viewAnnualTeachingCredits&amp;executionYearOid="+executionYearOid+"&teacherOid="+teacherId%>"><bean:message key="link.return"/></html:link></p>
 
 <span class="error"><!-- Error messages go here --><html:errors /></span>
 <html:messages id="message" message="true">
@@ -33,11 +48,12 @@
 	</span>
 </html:messages>
 
-<p class="mbottom0"><strong>Disciplinas Leccionadas em Licenciatura - Aulas</strong></p>
-
+<h3 class="separator2 mtop2"><bean:message key="label.teacherCreditsSheet.shiftProfessorships" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></h3>
+<p class="infoop2">
+<bean:message key="label.teaching.service.help.top" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/>
+</p>
 <html:form action="/degreeTeachingServiceManagement">
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.teacherId" property="teacherId" value="<%= teacherId.toString() %>"/>
-	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.teacherId" property="teacherId" value="<%= teacherId.toString() %>" />
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.executionPeriodId" property="executionPeriodId" />
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.executionCourseId" property="executionCourseId"/>
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.professorshipID" property="professorshipID"/>
@@ -201,12 +217,59 @@
 	
 	<p class="mtop05"><bean:message key="label.teaching.service.help.bottom" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></p>
 	
-	<p class="mtop2">
+
 	<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton">
 		<bean:message key="button.save"/>
 	</html:submit>
-	<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton" onclick="this.form.method.value='cancel';this.form.page.value='0'">
-			<bean:message key="button.cancel"/>
-	</html:submit>
-	</p>	
 </html:form>
+
+<h3 class="separator2 mtop2"><bean:message key="label.teacherCreditsSheet.supportLessons" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></h3>
+
+<bean:define id="link" type="java.lang.String">/supportLessonsManagement.do?method=prepareEdit&amp;page=0&amp;professorshipID=<bean:write name="professorship" property="idInternal"/></bean:define>
+<html:link page="<%= link %>"><bean:message key="link.support-lesson.create"/></html:link>
+
+<bean:define id="supportLessonList" name="professorship" property="supportLessonsOrderedByStartTimeAndWeekDay"/>
+<logic:notEmpty name="supportLessonList">
+		<table class="tstyle4">
+		<tr>
+			<th><bean:message key="label.support-lesson.weekday"/></th>			
+			<th><bean:message key="label.support-lesson.start-time"/></th>						
+			<th><bean:message key="label.support-lesson.end-time"/></th>									
+			<th><bean:message key="label.support-lesson.place"/></th>												
+			<th><bean:message key="label.support-lesson.edit"/></th>												
+			<th><bean:message key="label.support-lesson.delete"/></th>																		
+		</tr>
+
+		<bean:define id="linkDelete" type="java.lang.String">/supportLessonsManagement.do?method=deleteSupportLesson&amp;page=0&amp;professorshipID=<bean:write name="professorship" property="idInternal"/></bean:define>
+		<logic:iterate id="supportLesson" name="supportLessonList">
+			<tr>
+				<td>
+					<bean:write name="supportLesson" property="weekDay"/>
+				</td>			
+				<td>
+					<dt:format patternId="hoursPattern">
+						<bean:write name="supportLesson" property="startTime.time"/>
+					</dt:format>
+				</td>			
+				<td>
+					<dt:format patternId="hoursPattern">
+						<bean:write name="supportLesson" property="endTime.time"/>
+					</dt:format>
+				</td>			
+				<td>
+					<bean:write name="supportLesson" property="place"/>
+				</td>			
+				<td >
+					<html:link page="<%= link %>" paramId="supportLessonID" paramName="supportLesson" paramProperty="idInternal" >
+						<bean:message key="link.edit"/>
+					</html:link>
+				</td>
+				<td >
+					<html:link page="<%= linkDelete %>" paramId="supportLessonID" paramName="supportLesson" paramProperty="idInternal" >
+						<bean:message key="link.delete"/>
+					</html:link>
+				</td>
+			</tr>
+		</logic:iterate>
+	</table>	
+</logic:notEmpty>

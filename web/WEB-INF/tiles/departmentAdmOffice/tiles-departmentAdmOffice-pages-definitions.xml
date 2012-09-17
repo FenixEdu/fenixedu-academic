@@ -68,13 +68,6 @@
         <put name="body" value="/credits/degreeTeachingService/showTeachingServicePercentages.jsp"/>
     </definition>
      
-    <definition name="show-teacher-execution-course-support-lessons" extends="creditsManagement.masterPage">
-        <put name="body" value="/credits/supportLessons/showProfessorshipSupportLessons.jsp"/>
-    </definition> 
-    <definition name="edit-support-lesson" extends="creditsManagement.masterPage">
-	    <put name="body" value="/credits/supportLessons/editSupportLesson.jsp"/>       
-    </definition>      
-
     <definition name="list-teacher-advise-services" extends="creditsManagement.masterPage">
         <put name="body" value="/credits/adviseServices/showTeacherAdviseServices.jsp"/>
     </definition>    

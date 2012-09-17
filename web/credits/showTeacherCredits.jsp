@@ -6,35 +6,38 @@
 <%@ taglib uri="/WEB-INF/app.tld" prefix="app" %>
 <html:xhtml/>
 
-<style>
-	.tstyle1 th.total {
-	background:#e5e5e5;
-	}
+<jsp:include page="teacherCreditsStyles.jsp"/>
 
-	.credits td:hover {
-		background:#ffffed;
-	}
-</style>
 
 <em><bean:message key="label.teacherService.credits"/></em>
-<h2><bean:message key="link.teacherCreditsSheet.view" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></h2>
+<h3><bean:message key="link.teacherCreditsSheet.view" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></h3>
 
 <logic:present name="teacherBean">
-
-	<fr:view name="teacherBean" property="teacher">
+	<bean:define id="url" type="java.lang.String">/publico/retrievePersonalPhoto.do?method=retrieveByUUID&amp;contentContextPath_PATH=/homepage&amp;uuid=<bean:write name="teacherBean" property="teacher.person.username"/></bean:define>
+	<table class="headerTable"><tr>
+	<td><img src="<%= request.getContextPath() + url %>"/></td>
+	<td ><fr:view name="teacherBean" property="teacher">
 		<fr:schema bundle="TEACHER_CREDITS_SHEET_RESOURCES" type="net.sourceforge.fenixedu.domain.Teacher">
-			<fr:slot name="person.name" key="label.name"/>
-			<fr:slot name="teacherId" key="label.teacher.id"/>
+			<fr:slot name="person.presentationName" key="label.name"/>
 			<fr:slot name="currentWorkingDepartment.name" key="label.department" layout="null-as-label"/>
 		</fr:schema>
 		<fr:layout name="tabular">
-			<fr:property name="classes" value="tstyle2 thlight thright mtop05 mbottom05"/>
-    		<fr:property name="columnClasses" value="width12em,,"/>
+			<fr:property name="classes" value="creditsStyle"/>
 		</fr:layout>
-	</fr:view>
+	</fr:view></td>
+	</tr></table>
 
+
+
+<%--
+<p><html:link page='<%= "/annualTeachingCreditsDocument.do?method=getAnnualTeachingCreditsPdf" %>'>
+		pdf
+</html:link></p>
+ --%>
 	<logic:notEmpty name="teacherBean" property="annualTeachingCredits">
-		<fr:view name="teacherBean" property="annualTeachingCredits">
+		<fr:view name="teacherBean" property="annualTeachingCredits" schema="show.teacherCreditsBean">
+			
+			
 			<fr:schema bundle="TEACHER_CREDITS_SHEET_RESOURCES" type="net.sourceforge.fenixedu.domain.credits.util.TeacherCreditsBean">
 				<fr:slot name="executionYear" key="label.executionYear" layout="link">
 					<fr:property name="subSchema" value="net.sourceforge.fenixedu.domain.ExecutionYear.view"/>
@@ -92,12 +95,36 @@
 					<fr:property name="subLayout" value="decimal-format"/>
 					<fr:property name="headerToolTip" value="label.credits.accumulatedCredits"/>
 				</fr:slot>
+				<fr:slot name="corrections" key="label.empty"/>
 			</fr:schema>
+			
 			<fr:layout name="tabular-row">
 				<fr:property name="classes" value="tstyle1 printborder credits" />
-				<fr:property name="columnClasses" value="bgcolor3 acenter" />
-				<fr:property name="headerClasses" value="acenter,acenter,acenter,acenter,acenter,acenter,acenter,acenter,acenter,acenter total,acenter total,acenter total,acenter total" />
+				<fr:property name="columnClasses" value="bgcolor3 acenter,bgcolor3 acenter,bgcolor3 acenter,bgcolor3 acenter,bgcolor3 acenter,bgcolor3 acenter,bgcolor3 acenter,bgcolor3 acenter,bgcolor3 acenter,bgcolor3 acenter,bgcolor3 acenter,bgcolor3 acenter,bgcolor3 acenter,tdclear tderror1,tdclear tderror1" />
+				<fr:property name="headerClasses" value="acenter,acenter,acenter,acenter,acenter,acenter,acenter,acenter,acenter,acenter total,acenter total,acenter total,acenter total,thclear,thclear" />
 			</fr:layout>
 		</fr:view>
+		
+		<logic:equal name="teacherBean" property="hasAnyYearWithCreditsLimitation" value="true">
+			<p><span class="tderror1">(*) </span><bean:message key="message.hasCreditsLimitation" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></p>
+		</logic:equal>
+		<logic:equal name="teacherBean" property="hasAnyYearWithCorrections" value="true">
+			<p><span class="tderror1">(**) </span><bean:message key="message.creditsCorrections" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></p>
+		</logic:equal>
+		
+		<p><strong><bean:message key="label.credits.legenda" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></strong>
+		<br/><strong><bean:message key="label.credits.teachingCredits.simpleCode" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></strong>: <bean:message key="label.credits.teachingCredits" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/>
+		<br/><strong><bean:message key="label.credits.masterDegreeTheses.simpleCode" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></strong>: <bean:message key="label.credits.masterDegreeTheses" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/>
+		<br/><strong><bean:message key="label.credits.phdDegreeTheses.simpleCode" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></strong>: <bean:message key="label.credits.phdDegreeTheses" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/>
+		<br/><strong><bean:message key="label.credits.projectsAndTutorials.simpleCode" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></strong>: <bean:message key="label.credits.projectsAndTutorials" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/>
+		<br/><strong><bean:message key="label.credits.managementPositions.simpleCode" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></strong>: <bean:message key="label.credits.managementPositions.code.definition" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/>
+		<br/><strong><bean:message key="label.credits.otherCredits.simpleCode" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></strong>: <bean:message key="label.credits.otherTypeCreditLine.code.explanation" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/>
+		<br/><strong><bean:message key="label.credits.creditsReduction.simpleCode" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></strong>: <bean:message key="label.credits.creditsReduction" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/>
+		<br/><strong><bean:message key="label.credits.serviceExemptionSituations.simpleCode" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></strong>: <bean:message key="label.credits.serviceExemptionSituations.code.definition" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/>
+		<br/><strong><bean:message key="label.credits.normalizedAcademicCredits.simpleCode" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></strong>: <bean:message key="label.credits.normalizedAcademicCredits" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/>
+		<br/><strong><bean:message key="label.credits.yearCredits.simpleCode" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></strong>: <bean:message key="label.credits.yearCredits" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/>
+		<br/><strong><bean:message key="label.credits.finalCredits.simpleCode" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></strong>: <bean:message key="label.credits.finalCredits" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/>
+		<br/><strong><bean:message key="label.credits.accumulatedCredits.simpleCode" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></strong>: <bean:message key="label.credits.accumulatedCredits" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/>
+		</p>
 	</logic:notEmpty>
 </logic:present>

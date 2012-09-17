@@ -48,11 +48,11 @@
 					<bean:message key="link.teacherExecutionCourseAssociation"/>
 				</html:link>
 			</li>
-			<li>
+			<%--<li>
 				<html:link page="/creditsManagementIndex.do">
 					<bean:message key="link.teacherCreditsManagement"/>
 				</html:link>
-			</li>
+			</li>--%>
 			<li>
 				<html:link page="/teacherSearchForSummariesManagement.do?method=searchForm&amp;page=0">
 					<bean:message key="link.summaries"/>
@@ -61,6 +61,15 @@
 			<li>
 				<html:link page="/searchTeachers.do?method=download">
 					<bean:message key="link.teachers.search"/>
+				</html:link>
+			</li>
+
+			<li class="navheader">
+				<strong><bean:message key="label.credits" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></strong>
+			</li>
+			<li>
+				<html:link page="/credits.do?method=prepareTeacherSearch">
+					<bean:message key="label.credits" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/>
 				</html:link>
 			</li>
 
@@ -108,7 +117,6 @@
 					</li>					
 				</logic:equal>
 			</logic:notEmpty>
-			
 	</logic:present>
 
 	<li class="navheader">

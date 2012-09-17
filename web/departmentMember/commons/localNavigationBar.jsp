@@ -40,9 +40,13 @@
 				</html:link>
 			</li>
 		</logic:notEmpty>
-  		<li>
-  		
+  		<%--<li>
 		  	<html:link page="/showAllTeacherCreditsResume.do?method=showTeacherCreditsResume">
+		  		<bean:message key="link.teacher.credits"/>
+		  	</html:link>  
+		</li>--%>
+		<li>
+		  	<html:link page="/credits.do?method=showTeacherCredits">
 		  		<bean:message key="link.teacher.credits"/>
 		  	</html:link>  
 		</li>

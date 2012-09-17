@@ -19,14 +19,6 @@
         <put name="body" value="/credits/degreeTeachingService/showTeachingServicePercentages.jsp"/>
     </definition> 
 	 
-	<!-- SupportLesson -->
-    <definition name="show-teacher-execution-course-support-lessons" extends="departmentMember.masterPage">
-        <put name="body" value="/credits/supportLessons/showProfessorshipSupportLessons.jsp"/>
-    </definition> 
-    <definition name="edit-support-lesson" extends="departmentMember.masterPage">
-        <put name="body" value="/credits/supportLessons/editSupportLesson.jsp"/>
-    </definition>   
-         
     <!-- WorkingTime -->
     <definition name="list-institution-working-time" extends="departmentMember.masterPage">
         <put name="body" value="/credits/workingTime/showTeacherWorkingTime.jsp"/>

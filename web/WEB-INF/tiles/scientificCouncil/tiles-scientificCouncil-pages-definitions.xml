@@ -94,14 +94,6 @@
         <put name="body" value="/credits/adviseServices/showTeacherAdviseServices.jsp"/>
     </definition>        
         
-    <!-- SupportLesson -->
-    <definition name="show-teacher-execution-course-support-lessons" extends="scientificCouncil.masterPage">
-        <put name="body" value="/credits/supportLessons/showProfessorshipSupportLessons.jsp"/>
-    </definition> 
-    <definition name="edit-support-lesson" extends="scientificCouncil.masterPage">
-        <put name="body" value="/credits/supportLessons/editSupportLesson.jsp"/>
-    </definition>   
-    
     <!-- DegreeTeachingService -->
     <definition name="show-teaching-service-percentages" extends="scientificCouncil.masterPage">
         <put name="body" value="/credits/degreeTeachingService/showTeachingServicePercentages.jsp"/>
@@ -274,5 +266,4 @@
      <definition name="df.page.send.email.redirect" extends="scientificCouncil.masterPage">
         <put name="body" value="/email/sendEmailRedirect.jsp"/>
     </definition>
-
 </tiles-definitions>

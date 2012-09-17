@@ -7,54 +7,40 @@
 <html:xhtml/>
 
 <em><bean:message key="label.teacherService.credits"/></em>
-
+<jsp:include page="teacherCreditsStyles.jsp"/>
 
 <logic:present name="annualTeachingCreditsBean">
 	<h3><bean:message key="label.teacherService.credits"/>&nbsp;<bean:write name="annualTeachingCreditsBean" property="executionYear.name"/></h3>
-
-	<fr:view name="annualTeachingCreditsBean">
-		<fr:schema bundle="TEACHER_CREDITS_SHEET_RESOURCES" type="net.sourceforge.fenixedu.domain.credits.util.AnnualTeachingCreditsBean">
-			<fr:slot name="teacher.person.name" key="label.name"/>
-			<fr:slot name="teacher.teacherId" key="label.teacher.id"/>
-			<fr:slot name="professionalCategoryName" key="label.category" layout="null-as-label"/>
-			<fr:slot name="departmentName" key="label.department" layout="null-as-label"/>
-		</fr:schema>
-		<fr:layout name="tabular">
-			<fr:property name="classes" value="tstyle2 thlight thright mtop05 mbottom05"/>
-    		<fr:property name="columnClasses" value="width12em,,"/>
-		</fr:layout>
-	</fr:view>
+	<bean:define id="url" type="java.lang.String">/publico/retrievePersonalPhoto.do?method=retrieveByUUID&amp;contentContextPath_PATH=/homepage&amp;uuid=<bean:write name="annualTeachingCreditsBean" property="teacher.person.username"/></bean:define>
+	<table class="headerTable"><tr>	
+		<td><img src="<%= request.getContextPath() + url %>" /></td>
+		<td >
+		
+		<fr:view name="annualTeachingCreditsBean">
+			<fr:schema bundle="TEACHER_CREDITS_SHEET_RESOURCES" type="net.sourceforge.fenixedu.domain.credits.util.AnnualTeachingCreditsBean">
+				<fr:slot name="teacher.person.presentationName" key="label.name"/>
+				<fr:slot name="professionalCategoryName" key="label.category" layout="null-as-label"/>
+				<fr:slot name="departmentName" key="label.department" layout="null-as-label"/>
+			</fr:schema>
+			<fr:layout name="tabular">
+	    		<fr:property name="classes" value="creditsStyle"/>
+			</fr:layout>
+		</fr:view>
+		
+		</td></tr></table>
 </logic:present>
 
-<bean:define id="teacherId" name="annualTeachingCreditsBean" property="teacher.externalId"/>
-
-<style>
-	h2.separator2 {
-		cursor:pointer;
-		padding:10px;
-	}
-	h2.separator2 img {
-		margin-right:2px;
-	}
-	h2.separator2.highlight {
-		background:#eee9dd;
-	}	
-	.panel .mtop2 {
-		margin:8px 0px 0px !important;
-	}
-	.inner-panel {
-		display:none;
-		margin:10px 0 50px;
-	}
-	#wrap .panel.first {
-		margin-top:30px;
-	}
-</style>
 
 <script language="Javascript" type="text/javascript">
 <!--
 $(document).ready(function() {
-	$('h3.separator2').click(function () {
+	$('h3.infoop').hover(function () {
+		$(this).addClass('hovered');
+	},
+	function () {
+		$(this).removeClass('hovered');
+	});
+	$('h3.infoop').click(function () {
 		$(this).toggleClass('highlight');
 		$(this).parent().find('.inner-panel').toggle();
 		if ($(this).hasClass('highlight')) {
@@ -67,18 +53,33 @@ $(document).ready(function() {
 //-->
 </script>
 
+<bean:define id="teacherId" name="annualTeachingCreditsBean" property="teacher.externalId"/>
 <bean:define id="executionYearOid" name="annualTeachingCreditsBean" property="executionYear.externalId"/>
+<bean:define id="roleType" name="annualTeachingCreditsBean" property="roleType"/>
 
 <%--
 <p><html:link page='<%= "/credits.do?method=recalculateCredits&amp;executionYearOid=" + executionYearOid + "&amp;teacherOid=" + teacherId %>'>
 		recalcular
 </html:link></p>
 --%>		
-<div class="panel first"><h3 class="separator2 mtop2"><img id="status-icon" width="15px" alt="" src="<%= request.getContextPath() +"/images/right30.png" %>">
-<bean:message key="label.teacherCreditsSheet.professorships" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></h3>
+<bean:define id="areCreditsCalculated" name="annualTeachingCreditsBean" property="areCreditsCalculated"/>
+<logic:equal name="areCreditsCalculated" value="true">
+	<div class="panel first">
+		<h3 class="credits-header mtop2"><b>Carga Lectiva Nominal</b><span><fr:view name="annualTeachingCreditsBean" property="annualTeachingLoad"><fr:layout name="decimal-format"><fr:property name="format" value="######0.00 'Créditos'"/></fr:layout></fr:view></span></h3>
+		<h3 class="credits-header mtop2"><b>Créditos Obtidos<logic:equal name="annualTeachingCreditsBean" property="hasAnyLimitation" value="true"><span class="tderror1"> *</span></logic:equal></b><span><fr:view name="annualTeachingCreditsBean" property="yearCredits"><fr:layout name="decimal-format"><fr:property name="format" value="######0.00 'Créditos'"/></fr:layout></fr:view></span></h3>
+		<h3 class="credits-header mtop2"><b>Créditos Finais</b><span><fr:view name="annualTeachingCreditsBean" property="finalCredits"><fr:layout name="decimal-format"><fr:property name="format" value="######0.00 'Créditos'"/></fr:layout></fr:view></span></h3>
+	</div>
+</logic:equal>
+
+
+<div class="panel first"><h3 class="infoop mtop2"><img id="status-icon" width="15px" alt="" src="<%= request.getContextPath() +"/images/right30.png" %>">
+<b><bean:message key="label.teacherCreditsSheet.professorships" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></b>
+<logic:equal name="areCreditsCalculated" value="true">
+	<span><fr:view name="annualTeachingCreditsBean" property="teachingCredits"><fr:layout name="decimal-format"><fr:property name="format" value="######0.00 'Créditos'"/></fr:layout></fr:view></span>
+</logic:equal></h3>
 	<div class="inner-panel" style="display: none;">
 		<logic:iterate id="annualTeachingCreditsByPeriodBean" name="annualTeachingCreditsBean" property="annualTeachingCreditsByPeriodBeans">
-		<h3 class="infoop"><bean:write name="annualTeachingCreditsByPeriodBean" property="executionPeriod.qualifiedName"/></h3>
+		<h3><bean:write name="annualTeachingCreditsByPeriodBean" property="executionPeriod.qualifiedName"/></h3>
 			<bean:size id="totalNumberOfProfessorship" name="annualTeachingCreditsByPeriodBean" property="professorships"/>
 			<logic:equal name="totalNumberOfProfessorship" value="0">
 				<bean:message key="label.teacherCreditsSheet.noDataFound" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/>
@@ -99,6 +100,7 @@ $(document).ready(function() {
 						<th><bean:message key="label.lesson.room" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></th>			
 					</tr> 
 				
+				<bean:define id="canEditCreditsInfo" name="annualTeachingCreditsByPeriodBean" property="canEditTeacherCredits"/>
 				<logic:iterate id="professorship" name="annualTeachingCreditsByPeriodBean" property="professorships">
 					<bean:define id="professorshipID" name="professorship" property="idInternal"/>
 					<bean:define id="executionPeriodId" name="professorship" property="executionCourse.executionPeriod.idInternal"/>
@@ -111,12 +113,14 @@ $(document).ready(function() {
 								<logic:equal name="indexLessons" value="0">
 									<logic:equal name="indexShifts" value="0">
 										<td rowspan="<%= totalNumberOfLessons%>">
-										<bean:write name="professorship" property="executionCourse.name"/> (<bean:write name="professorship" property="degreeSiglas"/>)
-										 <%--
-										<html:link page='<%= "/degreeTeachingServiceManagement.do?page=0&amp;method=showTeachingServiceDetails&amp;professorshipID="+professorshipID + "&amp;executionPeriodId="+ executionPeriodId %>'>
-											<bean:write name="professorship" property="executionCourse.name"/> (<bean:write name="professorship" property="degreeSiglas"/>)
-										</html:link>
-										 --%>
+											<logic:equal name="canEditCreditsInfo" value="true">
+												<html:link page='<%= "/degreeTeachingServiceManagement.do?page=0&amp;method=showTeachingServiceDetails&amp;professorshipID="+professorshipID + "&amp;executionPeriodId="+ executionPeriodId %>'>
+													<bean:write name="professorship" property="executionCourse.name"/> (<bean:write name="professorship" property="degreeSiglas"/>)
+												</html:link>
+											</logic:equal>
+											<logic:notEqual name="canEditCreditsInfo" value="true">
+												<bean:write name="professorship" property="executionCourse.name"/> (<bean:write name="professorship" property="degreeSiglas"/>)
+											</logic:notEqual>									
 										</td>
 									</logic:equal>							
 									<td rowspan="<%= numberOfLessons %>"><bean:write name="degreeTeachingService" property="shift.nome"/></td>
@@ -163,11 +167,21 @@ $(document).ready(function() {
 		</logic:iterate>
 	</div>
 </div>
-<div class="panel"><h3 class="separator2 mtop2"><img id="status-icon" width="15px" alt="" src="<%= request.getContextPath() +"/images/right30.png" %>"> <bean:message key="label.teacherCreditsSheet.institutionWorkingTime" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></h3>
+<div class="panel"><h3 class="infoop mtop2"><img id="status-icon" width="15px" alt="" src="<%= request.getContextPath() +"/images/right30.png" %>">
+<b><bean:message key="label.teacherCreditsSheet.institutionWorkingTime" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></b>
+<logic:equal name="areCreditsCalculated" value="true">
+	<span>-</span>
+</logic:equal></h3>
 	<div class="inner-panel" style="display: none;">
 		<logic:iterate id="annualTeachingCreditsByPeriodBean" name="annualTeachingCreditsBean" property="annualTeachingCreditsByPeriodBeans">
-			<h3 class="infoop"><bean:write name="annualTeachingCreditsByPeriodBean" property="executionPeriod.qualifiedName"/></h3>
-			<bean:define id="executionPeriodId" name="annualTeachingCreditsByPeriodBean" property="executionPeriod.idInternal"/>
+			<h3><bean:write name="annualTeachingCreditsByPeriodBean" property="executionPeriod.qualifiedName"/></h3>
+			<bean:define id="executionPeriodId" name="annualTeachingCreditsByPeriodBean" property="executionPeriod.externalId"/>
+			<bean:define id="canEditCreditsInfo" name="annualTeachingCreditsByPeriodBean" property="canEditTeacherCredits"/>
+			<logic:equal name="canEditCreditsInfo" value="true">
+				<p><html:link page='<%= "/institutionWorkingTimeManagement.do?method=create&amp;page=0" + "&amp;executionPeriodId=" + executionPeriodId + "&amp;teacherId=" + teacherId %>'>
+					<bean:message key="link.teacher-institution-working-time.create"/>
+				</html:link></p>
+			</logic:equal>
 			<fr:view name="annualTeachingCreditsByPeriodBean" property="institutionWorkTime">
 				<fr:schema bundle="TEACHER_CREDITS_SHEET_RESOURCES" type="net.sourceforge.fenixedu.domain.teacher.InstitutionWorkTime">
 					<fr:slot name="weekDay" key="label.teacher-institution-working-time.weekday"/>
@@ -180,19 +194,28 @@ $(document).ready(function() {
 				</fr:schema>
 				<fr:layout name="tabular">
 					<fr:property name="classes" value="tstyle2 thlight thleft mtop05 mbottom05"/>
-		    		<fr:property name="columnClasses" value="width12em"/>
+		    		<fr:property name="columnClasses" value="width12em,,,"/>
+					<logic:equal name="canEditCreditsInfo" value="true">
+						<fr:property name="link(edit)" value="/institutionWorkingTimeManagement.do?method=prepareEdit" />
+						<fr:property name="key(edit)" value="label.edit" />
+						<fr:property name="param(edit)" value="externalId/institutionWorkTimeOid" />
+						<fr:property name="bundle(edit)" value="TEACHER_CREDITS_SHEET_RESOURCES" />
+						<fr:property name="link(delete)" value="/institutionWorkingTimeManagement.do?method=delete" />
+						<fr:property name="key(delete)" value="label.delete" />
+						<fr:property name="param(delete)" value="externalId/institutionWorkTimeOid" />
+						<fr:property name="bundle(delete)" value="TEACHER_CREDITS_SHEET_RESOURCES" />
+					</logic:equal>
 				</fr:layout>
 			</fr:view>
-			<%-- 
-			<p><html:link page='<%= "/institutionWorkingTimeManagement.do?method=showTeacherWorkingTimePeriods&amp;page=0" + "&amp;executionPeriodId=" + executionPeriodId + "&amp;teacherId=" + teacherId %>'>
-				<bean:message key="link.change"/>&nbsp;<bean:write name="annualTeachingCreditsByPeriodBean" property="executionPeriod.qualifiedName"/>
-			</html:link></p>
-			--%>
 		</logic:iterate>
 	</div>
 </div>
 
-<div class="panel"><h3 class="separator2 mtop2"><img id="status-icon" width="15px" alt="" src="<%= request.getContextPath() +"/images/right30.png" %>"> <bean:message key="label.credits.masterDegreeTheses" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></h3>
+<div class="panel"><h3 class="infoop mtop2"><img id="status-icon" width="15px" alt="" src="<%= request.getContextPath() +"/images/right30.png" %>">
+<b><bean:message key="label.credits.masterDegreeTheses" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></b>
+<logic:equal name="areCreditsCalculated" value="true">
+	<span><fr:view name="annualTeachingCreditsBean" property="masterDegreeThesesCredits"><fr:layout name="decimal-format"><fr:property name="format" value="######0.00 'Créditos'"/></fr:layout></fr:view></span>
+</logic:equal></h3>
 	<div class="inner-panel" style="display: none;">
 	<logic:empty name="annualTeachingCreditsBean" property="masterDegreeThesis">
 		<bean:message key="label.teacherCreditsSheet.noDataFound" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/>
@@ -215,13 +238,39 @@ $(document).ready(function() {
 	</logic:notEmpty>
 	</div>
 </div>
-<div class="panel"><h3 class="separator2 mtop2"><img id="status-icon" width="15px" alt="" src="<%= request.getContextPath() +"/images/right30.png" %>"> <bean:message key="label.credits.phdDegreeTheses" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></h3>
+<div class="panel"><h3 class="infoop mtop2"><img id="status-icon" width="15px" alt="" src="<%= request.getContextPath() +"/images/right30.png" %>">
+<b><bean:message key="label.credits.phdDegreeTheses" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></b>
+<logic:equal name="areCreditsCalculated" value="true">
+	<span><fr:view name="annualTeachingCreditsBean" property="phdDegreeThesesCredits"><fr:layout name="decimal-format"><fr:property name="format" value="######0.00 'Créditos'"/></fr:layout></fr:view></span>
+</logic:equal></h3>
 	<div class="inner-panel" style="display: none;">
-		<bean:message key="label.teacherCreditsSheet.noDataFound" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/>
+		<bean:define id="phdDegreeTheses" name="annualTeachingCreditsBean" property="phdDegreeTheses"/>
+		<logic:empty name="phdDegreeTheses">
+			<bean:message key="label.teacherCreditsSheet.noDataFound" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/>
+		</logic:empty>
+		<logic:notEmpty name="phdDegreeTheses">
+			<fr:view name="phdDegreeTheses">
+				<fr:schema bundle="TEACHER_CREDITS_SHEET_RESOURCES" type="net.sourceforge.fenixedu.domain.phd.InternalPhdParticipant">
+					<fr:slot name="individualProcess.student.number" key="label.teacher-thesis-student.student-number"/>
+					<fr:slot name="individualProcess.student.person.name" key="label.teacher-thesis-student.student-name"/>
+					<fr:slot name="individualProcess.thesisTitle" key="label.teacher-thesis-student.title"/>
+					<fr:slot name="individualProcess.conclusionDate" key="label.date"/>
+					<fr:slot name="roleOnProcess" key="label.teacher-thesis-student.function" layout="null-as-label"/>
+					<fr:slot name="individualProcess.assistantGuidingsCount" key="label.teacher-assistant-guiding-number"/>
+				</fr:schema>
+				<fr:layout name="tabular">
+					<fr:property name="classes" value="tstyle2 thlight thleft mtop05 mbottom05"/>
+				</fr:layout>
+			</fr:view>
+		</logic:notEmpty>
 	</div>
 </div>
 
-<div class="panel"><h3 class="separator2 mtop2"><img id="status-icon" width="15px" alt="" src="<%= request.getContextPath() +"/images/right30.png" %>"> <bean:message key="label.credits.projectsAndTutorials" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></h3>
+<div class="panel"><h3 class="infoop mtop2"><img id="status-icon" width="15px" alt="" src="<%= request.getContextPath() +"/images/right30.png" %>">
+<b><bean:message key="label.credits.projectsAndTutorials" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></b>
+<logic:equal name="areCreditsCalculated" value="true">
+	<span><fr:view name="annualTeachingCreditsBean" property="projectsTutorialsCredits"><fr:layout name="decimal-format"><fr:property name="format" value="######0.00 'Créditos'"/></fr:layout></fr:view></span>
+</logic:equal></h3>
 	<div class="inner-panel" style="display: none;">
 	<bean:define id="projectAndTutorialProfessorships" name="annualTeachingCreditsBean" property="projectAndTutorialProfessorships"/>
 	<logic:empty name="projectAndTutorialProfessorships">
@@ -253,41 +302,42 @@ $(document).ready(function() {
 						<fr:property name="classes" value="tstyle2 thlight thleft mtop05 mbottom05"/>
 					</fr:layout>
 				</fr:view>
-			</logic:present>
-			<%-- 
-			<html:link page='<%= "/degreeProjectTutorialService.do?page=0&amp;method=showProjectTutorialServiceDetails&amp;professorshipID="+professorshipID + "&amp;executionPeriodId="+ executionPeriodId %>'>
-				<bean:message key="link.change" />
-			</html:link>
-			--%>
+			</logic:present> 
+			<bean:define id="canEditCreditsInfo" name="annualTeachingCreditsBean" property="canEditTeacherCredits"/>
+			<logic:equal name="canEditCreditsInfo" value="true">
+				<html:link page='<%= "/degreeProjectTutorialService.do?page=0&amp;method=showProjectTutorialServiceDetails&amp;professorshipID="+professorshipID + "&amp;executionPeriodId="+ executionPeriodId %>'>
+					<bean:message key="link.change" />
+				</html:link>
+			</logic:equal>
 		</logic:iterate>
 	</logic:notEmpty>
 	</div>
 </div>
 
-<div class="panel"><h3 class="separator2 mtop2"><img id="status-icon" width="15px" alt="" src="<%= request.getContextPath() +"/images/right30.png" %>"> <bean:message key="label.credits.creditsReduction" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></h3>
-	<div class="inner-panel" style="display: none;">
-		<bean:define id="creditsReductionService" name="annualTeachingCreditsBean" property="creditsReductionService"/>
-		<logic:empty name="creditsReductionService">
-			<bean:message key="label.teacherCreditsSheet.noDataFound" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/>
-		</logic:empty>
-		<logic:notEmpty name="creditsReductionService">
-			<fr:view name="creditsReductionService">
-				<fr:schema bundle="TEACHER_CREDITS_SHEET_RESOURCES" type="net.sourceforge.fenixedu.domain.teacher.ReductionService">
-					<fr:slot name="teacherService.executionPeriod.name" key="label.period"/>
-					<fr:slot name="creditsReduction" key="label.managementPosition.credits" layout="null-as-label"/>
-				</fr:schema>
-				<fr:layout name="tabular">
-					<fr:property name="classes" value="tstyle2 thlight thleft mtop05 mbottom05"/>
-				</fr:layout>
-			</fr:view>
-		</logic:notEmpty>
-	</div>
-</div>
-
-<div class="panel"><h3 class="separator2 mtop2"><img id="status-icon" width="15px" alt="" src="<%= request.getContextPath() +"/images/right30.png" %>"> <bean:message key="label.teacherCreditsSheet.managementPositionLines" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></h3>
+<div class="panel"><h3 class="infoop mtop2"><img id="status-icon" width="15px" alt="" src="<%= request.getContextPath() +"/images/right30.png" %>">
+<b><bean:message key="label.teacherCreditsSheet.managementPositionLines" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></b>
+<logic:equal name="areCreditsCalculated" value="true">
+	<span><fr:view name="annualTeachingCreditsBean" property="managementFunctionCredits"><fr:layout name="decimal-format"><fr:property name="format" value="######0.00 'Créditos'"/></fr:layout></fr:view></span>
+</logic:equal></h3>
 	<div class="inner-panel" style="display: none;">
 		<logic:iterate id="annualTeachingCreditsByPeriodBean" name="annualTeachingCreditsBean" property="annualTeachingCreditsByPeriodBeans">
-			<h3 class="infoop"><bean:write name="annualTeachingCreditsByPeriodBean" property="executionPeriod.qualifiedName"/></h3>
+			<h3><bean:write name="annualTeachingCreditsByPeriodBean" property="executionPeriod.qualifiedName"/></h3>
+			<bean:define id="executionPeriodOid" name="annualTeachingCreditsByPeriodBean" property="executionPeriod.externalId"/>
+			<bean:define id="canEditTeacherManagementFunctions" name="annualTeachingCreditsByPeriodBean" property="canEditTeacherManagementFunctions"/>
+			<p><logic:equal name="roleType" value="SCIENTIFIC_COUNCIL">
+				<html:link page='<%= "/managePersonFunctionsShared.do?method=prepareToAddPersonFunction&amp;page=0" + "&amp;executionPeriodOid=" + executionPeriodOid + "&amp;teacherOid=" + teacherId %>'>
+					<%--<bean:message key="link.change"/>&nbsp;<bean:write name="annualTeachingCreditsByPeriodBean" property="executionPeriod.qualifiedName"/>--%>
+					Inserir Cargo de Gestão Académica
+				</html:link>
+				|
+			</logic:equal>
+			<logic:equal name="canEditTeacherManagementFunctions" value="true">
+				<html:link page='<%= "/managePersonFunctionsShared.do?method=prepareToAddPersonFunctionShared&amp;page=0" + "&amp;executionPeriodOid=" + executionPeriodOid + "&amp;teacherOid=" + teacherId %>'>
+					<%--<bean:message key="link.change"/>&nbsp;<bean:write name="annualTeachingCreditsByPeriodBean" property="executionPeriod.qualifiedName"/>--%>
+					Inserir Cargo de Gestão de Unidades
+				</html:link>
+			</logic:equal></p>
+			
 			<bean:define id="personFunctions" name="annualTeachingCreditsByPeriodBean" property="personFunctions"/>
 			<logic:empty name="personFunctions">
 				<bean:message key="label.teacherCreditsSheet.noDataFound" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/>
@@ -297,12 +347,28 @@ $(document).ready(function() {
 					<fr:schema bundle="TEACHER_CREDITS_SHEET_RESOURCES" type="net.sourceforge.fenixedu.domain.organizationalStructure.PersonFunction">
 						<fr:slot name="function.name" key="label.managementPosition.position"/>
 						<fr:slot name="function.unit.name" key="label.managementPosition.unit"/>
-						<fr:slot name="credits" key="label.managementPosition.credits"/>
 						<fr:slot name="beginDateInDateType" key="label.managementPosition.start"/>
 						<fr:slot name="endDateInDateType" key="label.managementPosition.end"/>
+						<logic:equal name="areCreditsCalculated" value="true">	
+							<fr:slot name="credits" key="label.managementPosition.credits"/>
+						</logic:equal>
 					</fr:schema>
 					<fr:layout name="tabular">
 						<fr:property name="classes" value="tstyle2 thlight thleft mtop05 mbottom05"/>
+						<logic:equal name="canEditTeacherManagementFunctions" value="true">
+							<fr:property name="link(edit)" value="/managePersonFunctionsShared.do?method=prepareToEditPersonFunctionShared" />
+							<fr:property name="key(edit)" value="label.edit" />
+							<fr:property name="param(edit)" value="externalId/personFunctionOid" />
+							<fr:property name="bundle(edit)" value="TEACHER_CREDITS_SHEET_RESOURCES" />
+							<fr:property name="visibleIf(edit)" value="personFunctionShared" />
+						</logic:equal>
+						<logic:equal name="roleType" value="SCIENTIFIC_COUNCIL">
+							<fr:property name="link(edit2)" value="<%="/managePersonFunctionsShared.do?method=prepareToEditPersonFunction&executionPeriodOid="+executionPeriodOid%>" />
+							<fr:property name="key(edit2)" value="label.edit" />
+							<fr:property name="param(edit2)" value="externalId/personFunctionOid" />
+							<fr:property name="bundle(edit2)" value="TEACHER_CREDITS_SHEET_RESOURCES" />
+							<fr:property name="visibleIfNot(edit2)" value="personFunctionShared" />
+						</logic:equal>
 					</fr:layout>
 				</fr:view>
 			</logic:notEmpty>
@@ -310,16 +376,20 @@ $(document).ready(function() {
 	</div>
 </div>
 
-<div class="panel"><h3 class="separator2 mtop2"><img id="status-icon" width="15px" alt="" src="<%= request.getContextPath() +"/images/right30.png" %>"> <bean:message key="label.teacherCreditsSheet.otherTypeCreditLines" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></h3>
+<div class="panel"><h3 class="infoop mtop2"><img id="status-icon" width="15px" alt="" src="<%= request.getContextPath() +"/images/right30.png" %>">
+<b><bean:message key="label.teacherCreditsSheet.otherTypeCreditLines" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></b>
+<logic:equal name="areCreditsCalculated" value="true">
+	<span><fr:view name="annualTeachingCreditsBean" property="othersCredits"><fr:layout name="decimal-format"><fr:property name="format" value="######0.00 'Créditos'"/></fr:layout></fr:view></span>
+</logic:equal></h3>
 	<div class="inner-panel" style="display: none;">
 		<logic:iterate id="annualTeachingCreditsByPeriodBean" name="annualTeachingCreditsBean" property="annualTeachingCreditsByPeriodBeans">
-			<h3 class="infoop"><bean:write name="annualTeachingCreditsByPeriodBean" property="executionPeriod.qualifiedName"/></h3>
-			<bean:define id="executionPeriodId" name="annualTeachingCreditsByPeriodBean" property="executionPeriod.idInternal"/>
-			<%-- 
-			<p><html:link page='<%= "/otherServiceManagement.do?page=0&amp;method=showOtherServices&amp;teacherId="+ teacherId + "&amp;executionPeriodId="+ executionPeriodId %>'>
-				<bean:message key="link.change"/>&nbsp;<bean:write name="annualTeachingCreditsByPeriodBean" property="executionPeriod.qualifiedName"/>
-			</html:link></p>
-			--%>
+			<h3><bean:write name="annualTeachingCreditsByPeriodBean" property="executionPeriod.qualifiedName"/></h3>
+			<bean:define id="executionPeriodOid" name="annualTeachingCreditsByPeriodBean" property="executionPeriod.externalId"/>
+			<logic:equal name="roleType" value="SCIENTIFIC_COUNCIL">
+				<p><html:link page='<%= "/otherServiceManagement.do?page=0&amp;method=prepareEditOtherService&amp;teacherId="+ teacherId + "&amp;executionPeriodOid="+ executionPeriodOid %>'>
+					<bean:message key="label.insertNew" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/>
+				</html:link></p>
+			</logic:equal>
 			<bean:define id="otherServices" name="annualTeachingCreditsByPeriodBean" property="otherServices"/>
 			<logic:empty name="otherServices">
 				<bean:message key="label.teacherCreditsSheet.noDataFound" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/>
@@ -327,11 +397,22 @@ $(document).ready(function() {
 			<logic:notEmpty name="otherServices">
 				<fr:view name="annualTeachingCreditsByPeriodBean" property="otherServices">
 					<fr:schema bundle="TEACHER_CREDITS_SHEET_RESOURCES" type="net.sourceforge.fenixedu.domain.teacher.OtherService">
-						<fr:slot name="credits" key="label.otherTypeCreditLine.credits"/>
+						<fr:slot name="credits" key="label.credits"/>
 						<fr:slot name="reason" key="label.otherTypeCreditLine.reason"/>
+						<fr:slot name="correctedExecutionSemester.executionYear.name" key="label.executionYear"/>
 					</fr:schema>
 					<fr:layout name="tabular">
 						<fr:property name="classes" value="tstyle2 thlight thleft mtop05 mbottom05"/>
+						<logic:equal name="roleType" value="SCIENTIFIC_COUNCIL">
+							<fr:property name="link(edit)" value="/otherServiceManagement.do?method=prepareEditOtherService" />
+							<fr:property name="key(edit)" value="label.edit" />
+							<fr:property name="param(edit)" value="externalId/otherServiceOid" />
+							<fr:property name="bundle(edit)" value="TEACHER_CREDITS_SHEET_RESOURCES" />
+							<fr:property name="link(delete)" value="/otherServiceManagement.do?method=deleteOtherService" />
+							<fr:property name="key(delete)" value="label.delete" />
+							<fr:property name="param(delete)" value="externalId/otherServiceOid" />
+							<fr:property name="bundle(delete)" value="TEACHER_CREDITS_SHEET_RESOURCES" />
+						</logic:equal>
 					</fr:layout>
 				</fr:view>
 			</logic:notEmpty>
@@ -339,10 +420,40 @@ $(document).ready(function() {
 	</div>
 </div>	
 
-<div class="panel"><h3 class="separator2 mtop2"><img id="status-icon" width="15px" alt="" src="<%= request.getContextPath() +"/images/right30.png" %>"> <bean:message key="label.teacherCreditsSheet.serviceExemptionLines" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></h3>
+<div class="panel"><h3 class="infoop mtop2"><img id="status-icon" width="15px" alt="" src="<%= request.getContextPath() +"/images/right30.png" %>">
+<b><bean:message key="label.credits.creditsReduction" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></b>
+<logic:equal name="areCreditsCalculated" value="true">
+	<span><fr:view name="annualTeachingCreditsBean" property="creditsReduction"><fr:layout name="decimal-format"><fr:property name="format" value="######0.00 'Créditos'"/></fr:layout></fr:view></span>
+</logic:equal></h3>
+	<div class="inner-panel" style="display: none;">
+		<fr:view name="annualTeachingCreditsBean" property="annualTeachingCreditsByPeriodBeans">
+			<fr:schema bundle="TEACHER_CREDITS_SHEET_RESOURCES" type="net.sourceforge.fenixedu.domain.credits.util.AnnualTeachingCreditsByPeriodBean">
+				<fr:slot name="executionPeriod.name" key="label.period"/>
+				<fr:slot name="creditsReductionService" key="label.credits" layout="null-as-label">
+						<fr:property name="subSchema" value="show.reductionService"/>
+						<fr:property name="subLayout" value="values"/>
+				</fr:slot>
+			</fr:schema>
+			<fr:layout name="tabular">
+				<fr:property name="classes" value="tstyle2 thlight thleft mtop05 mbottom05"/>
+			    <fr:property name="link(edit)" value="/creditsReductions.do?method=editCreditsReduction" />
+				<fr:property name="key(edit)" value="label.edit" />
+				<fr:property name="param(edit)" value="executionPeriod.externalId/executionPeriodOID,teacher.externalId/teacherOID" />
+				<fr:property name="bundle(edit)" value="TEACHER_CREDITS_SHEET_RESOURCES" />
+				<fr:property name="visibleIf(edit)" value="canEditTeacherCreditsReductions" />
+			</fr:layout>
+		</fr:view>
+	</div>
+</div>
+
+<div class="panel"><h3 class="infoop mtop2"><img id="status-icon" width="15px" alt="" src="<%= request.getContextPath() +"/images/right30.png" %>">
+<b><bean:message key="label.teacherCreditsSheet.serviceExemptionLines" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></b>
+<logic:equal name="areCreditsCalculated" value="true">
+	<span><fr:view name="annualTeachingCreditsBean" property="serviceExemptionCredits"><fr:layout name="decimal-format"><fr:property name="format" value="######0.00 'Créditos'"/></fr:layout></fr:view></span>
+</logic:equal></h3>
 	<div class="inner-panel" style="display: none;">
 		<logic:iterate id="annualTeachingCreditsByPeriodBean" name="annualTeachingCreditsBean" property="annualTeachingCreditsByPeriodBeans">
-			<h3 class="infoop"><bean:write name="annualTeachingCreditsByPeriodBean" property="executionPeriod.qualifiedName"/></h3>
+			<h3><bean:write name="annualTeachingCreditsByPeriodBean" property="executionPeriod.qualifiedName"/></h3>
 			<bean:define id="serviceExemptions" name="annualTeachingCreditsByPeriodBean" property="serviceExemptions"/>
 			<logic:empty name="serviceExemptions">
 				<bean:message key="label.teacherCreditsSheet.noDataFound" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/>
@@ -362,3 +473,56 @@ $(document).ready(function() {
 		</logic:iterate>
 	</div>
 </div>
+
+
+<div class="panel"><h3 class="infoop mtop2"><img id="status-icon" width="15px" alt="" src="<%= request.getContextPath() +"/images/right30.png" %>">
+<b><bean:message key="label.notes" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></b>
+<logic:equal name="areCreditsCalculated" value="true">
+	<span>-</span>
+</logic:equal></h3>
+	<div class="inner-panel" style="display: none;">
+		<bean:define id="canEditCreditsInfo" name="annualTeachingCreditsBean" property="canEditTeacherCreditsInAnyPeriod"/>
+		<logic:equal name="canEditCreditsInfo" value="true">
+			<p><html:link page='<%= "/teacherServiceComments.do?page=0&amp;method=editTeacherServiceComment&amp;teacherOid="+teacherId + "&amp;executionYearOid="+ executionYearOid %>'>
+				<bean:message key="label.newComment"  bundle="TEACHER_CREDITS_SHEET_RESOURCES"/>
+			</html:link></p>
+		</logic:equal>
+	
+		<bean:define id="teacherServiceComments" name="annualTeachingCreditsBean" property="teacherServiceComments"/>
+		<logic:empty name="teacherServiceComments">
+			<bean:message key="label.teacherCreditsSheet.noDataFound" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/>
+		</logic:empty>
+		<logic:notEmpty name="teacherServiceComments">
+			<fr:view name="teacherServiceComments">
+				<fr:schema bundle="TEACHER_CREDITS_SHEET_RESOURCES" type="net.sourceforge.fenixedu.domain.teacher.TeacherServiceComment">
+					<fr:slot name="content" key="label.comment"/>
+					<fr:slot name="createdBy" key="label.user">
+						<fr:property name="format" value="${name} (${username})"/>
+					</fr:slot>
+					<fr:slot name="lastModifiedDate" key="label.date"/>
+				</fr:schema>
+				<fr:layout name="tabular">
+					<fr:property name="classes" value="tstyle2 thlight thleft mtop05 mbottom05"/>
+					<logic:equal name="canEditCreditsInfo" value="true">
+						<fr:property name="link(edit)" value="/teacherServiceComments.do?method=editTeacherServiceComment" />
+						<fr:property name="key(edit)" value="label.edit" />
+						<fr:property name="param(edit)" value="externalId/teacherServiceCommentOid" />
+						<fr:property name="bundle(edit)" value="TEACHER_CREDITS_SHEET_RESOURCES" />
+						<fr:property name="visibleIf(edit)" value="canEdit" />
+						<fr:property name="link(delete)" value="/teacherServiceComments.do?method=deleteTeacherServiceComment" />
+						<fr:property name="key(delete)" value="label.delete" />
+						<fr:property name="param(delete)" value="externalId/teacherServiceCommentOid" />
+						<fr:property name="bundle(delete)" value="TEACHER_CREDITS_SHEET_RESOURCES" />
+						<fr:property name="visibleIf(delete)" value="canEdit" />
+					</logic:equal>
+				</fr:layout>
+			</fr:view>
+		</logic:notEmpty>
+	</div>
+</div>
+
+<logic:equal name="areCreditsCalculated" value="true">
+	<logic:equal name="annualTeachingCreditsBean" property="hasAnyLimitation" value="true">
+		<p><span class="tderror1">* </span><bean:message key="message.hasCreditsLimitation" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></p>
+	</logic:equal>
+</logic:equal>

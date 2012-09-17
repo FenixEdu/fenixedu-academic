@@ -9,27 +9,22 @@
 <em><bean:message key="label.teacherService.credits"/></em>
 <h2><bean:message key="label.teacherService.credits.resume"/></h2>
 
-<div class="infoop2">
-	<bean:message key="label.teacherService.credits.explanation"/><br/>
-	<em><bean:message key="label.teacherService.credits.diferentCategories.explanation"/></em>
-</div>
-<style>
-	.tstyle1 th.total {
-		background:#e5e5e5;
-	}
-</style>
-
 <logic:present name="teacherBean">
-	<fr:view name="teacherBean" property="teacher">
+	<jsp:include page="teacherCreditsStyles.jsp"/>
+	
+	<bean:define id="url" type="java.lang.String">/publico/retrievePersonalPhoto.do?method=retrieveByUUID&amp;contentContextPath_PATH=/homepage&amp;uuid=<bean:write name="teacherBean" property="teacher.person.username"/></bean:define>
+	<table class="headerTable"><tr>
+	<td><img src="<%= request.getContextPath() + url %>"/></td>
+	<td ><fr:view name="teacherBean" property="teacher">
 		<fr:schema bundle="TEACHER_CREDITS_SHEET_RESOURCES" type="net.sourceforge.fenixedu.domain.Teacher">
-			<fr:slot name="person.name" key="label.name"/>
-			<fr:slot name="teacherId" key="label.teacher.id"/>
+			<fr:slot name="person.presentationName" key="label.name"/>
 			<fr:slot name="currentWorkingDepartment.name" key="label.department" layout="null-as-label"/>
 		</fr:schema>
 		<fr:layout name="tabular">
-			<fr:property name="columnClasses" value="aleft" />
+			<fr:property name="classes" value="creditsStyle"/>
 		</fr:layout>
-	</fr:view>
+	</fr:view></td>
+	</tr></table>
 
 	<logic:notEmpty name="teacherBean" property="pastTeachingCredits">
 		<fr:view name="teacherBean" property="pastTeachingCredits">
@@ -49,14 +44,19 @@
 				<fr:slot name="mandatoryLessonHours" key="label.credits.normalizedAcademicCredits.simpleCode" layout="null-as-label"/>
 				<fr:slot name="finalLineCredits" key="label.credits.finalCredits.simpleCode" layout="null-as-label"/>
 				<fr:slot name="totalLineCredits" key="label.credits.totalCredits" layout="null-as-label"/>
+				<fr:slot name="corrections" key="label.empty"/>
 			</fr:schema>
 			<fr:layout name="tabular">
 				<fr:property name="classes" value="tstyle1 printborder" />
-				<fr:property name="columnClasses" value="bgcolor3 acenter" />
-				<fr:property name="headerClasses" value=",,,,,,,,,,total,total,total,total" />
+				<fr:property name="columnClasses" value="bgcolor3 acenter,bgcolor3 acenter,bgcolor3 acenter,bgcolor3 acenter,bgcolor3 acenter,bgcolor3 acenter,bgcolor3 acenter,bgcolor3 acenter,bgcolor3 acenter,bgcolor3 acenter,bgcolor3 acenter,bgcolor3 acenter,bgcolor3 acenter,bgcolor3 acenter,tdclear tderror1" />
+				<fr:property name="headerClasses" value=",,,,,,,,,,total,total,total,total,thclear" />
 			</fr:layout>
 		</fr:view>
 	</logic:notEmpty>
+	
+	<logic:equal name="teacherBean" property="hasAnyYearWithCorrections" value="true">
+		<p><span class="tderror1">(**) </span>Correcções efectuadas no ano lectivo indicado</p>
+	</logic:equal>
 	
 	<p><strong><bean:message key="label.credits.legenda" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/>:</strong><br/>
 	<bean:message key="label.credits.lessons.code" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/> - <bean:message key="label.credits.lessons.code.definition" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/>,&nbsp;
