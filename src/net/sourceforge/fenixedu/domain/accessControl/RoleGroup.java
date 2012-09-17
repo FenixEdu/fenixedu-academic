@@ -97,7 +97,7 @@ public class RoleGroup extends LeafGroup {
 
     @Override
     public String getPresentationNameKey() {
-	return super.getPresentationNameKey() + "." + roleType;
+	return "label.name." + RoleTypeGroup.class.getSimpleName() + "." + roleType;
     }
 
     /**
