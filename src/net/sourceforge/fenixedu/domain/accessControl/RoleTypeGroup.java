@@ -46,7 +46,7 @@ public class RoleTypeGroup extends Group {
     public String getName() {
 	final String name = BundleUtil.getStringFromResourceBundle(getPresentationNameBundle(), super.getPresentationNameKey()
 		+ "." + roleType);
-	return name != null ? name : super.getName();
+	return name != null && !name.contains(roleType.toString()) ? name : super.getName();
     }
 
     @Override
