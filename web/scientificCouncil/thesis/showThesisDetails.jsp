@@ -275,11 +275,11 @@
 		
 		<div class="infoop2 mvert15">
     		<p>
-        		<bean:message key="label.student.thesis.upload.dissertation.message"/>
+    			<bean:message key="label.student.thesis.upload.extended.abstract.message"/>
     		</p>
 		</div>
 
-		<fr:form encoding="multipart/form-data" action="<%= "/manageSecondCycleThesis.do?method=substituteDissertation&amp;thesisOid=" + thesis.getExternalId() %>">
+		<fr:form encoding="multipart/form-data" action="<%= "/manageSecondCycleThesis.do?method=substituteExtendedAbstract&amp;thesisOid=" + thesis.getExternalId() %>">
     		<fr:edit id="thesisDissertationFileBean" name="thesisDissertationFileBean" schema="student.thesisBean.upload.dissertation">
         		<fr:layout name="tabular">
             		<fr:property name="classes" value="tstyle5 tdtop thlight thright thmiddle"/>
@@ -304,11 +304,11 @@
 		
 		<div class="infoop2 mvert15">
     		<p>
-        		<bean:message key="label.student.thesis.upload.extended.abstract.message"/>
+    			<bean:message key="label.student.thesis.upload.dissertation.message"/>
     		</p>
 		</div>
 
-		<fr:form encoding="multipart/form-data" action="<%= "/manageSecondCycleThesis.do?method=substituteExtendedAbstract&amp;thesisOid=" + thesis.getExternalId() %>">
+		<fr:form encoding="multipart/form-data" action="<%= "/manageSecondCycleThesis.do?method=substituteDissertation&amp;thesisOid=" + thesis.getExternalId() %>">
     		<fr:edit id="thesisExtendendAbstractFileBean" name="thesisExtendendAbstractFileBean" schema="student.thesisBean.upload">
         		<fr:layout name="tabular">
             		<fr:property name="classes" value="tstyle5 tdtop thlight thright thmiddle"/>
