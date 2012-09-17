@@ -18,6 +18,16 @@ public class DegreeCoordinatorsGroup extends Group {
     private static final long serialVersionUID = -7559780015187749338L;
 
     @Override
+    public String getPresentationNameBundle() {
+	return "resources.SiteResources";
+    }
+
+    @Override
+    public String getPresentationNameKey() {
+	return "label." + getClass().getName();
+    }
+
+    @Override
     public Set<Person> getElements() {
 	final Set<Person> elements = super.buildSet();
 	final Collection<ExecutionYear> executionYears = RootDomainObject.getInstance().getExecutionYears();
