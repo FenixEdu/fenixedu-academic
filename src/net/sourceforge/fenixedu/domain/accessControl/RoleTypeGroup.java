@@ -44,13 +44,9 @@ public class RoleTypeGroup extends Group {
 
     @Override
     public String getName() {
-	final String name = BundleUtil.getStringFromResourceBundle(getPresentationNameBundle(), getPresentationNameKey());
+	final String name = BundleUtil.getStringFromResourceBundle(getPresentationNameBundle(), super.getPresentationNameKey()
+		+ "." + roleType);
 	return name != null ? name : super.getName();
-    }
-
-    @Override
-    public String getPresentationNameKey() {
-	return super.getPresentationNameKey() + "." + roleType;
     }
 
     @Override
