@@ -155,10 +155,12 @@
 		<filter-name>ProcessCandidacyPrintAllDocumentsFilter</filter-name>
 		<filter-class>net.sourceforge.fenixedu.presentationTier.servlets.filters.ProcessCandidacyPrintAllDocumentsFilter</filter-class>
 	</filter>
+<!--
 	<filter>
 		<filter-name>AnnualTeachingCreditsDocumentFilter</filter-name>
 		<filter-class>net.sourceforge.fenixedu.presentationTier.servlets.filters.AnnualTeachingCreditsDocumentFilter</filter-class>
 	</filter>	
+-->
 	<!-- Filter Mapping -->
 	<filter-mapping>
 		<filter-name>JerseyAuthFilter</filter-name>
@@ -266,10 +268,12 @@
 		<filter-name>ProcessCandidacyPrintAllDocumentsFilter</filter-name>
 		<url-pattern>/candidate/*</url-pattern>
 	</filter-mapping>
+<!--
 	<filter-mapping>
 		<filter-name>AnnualTeachingCreditsDocumentFilter</filter-name>
 		<url-pattern>/scientificCouncil/annualTeachingCreditsDocument.do</url-pattern>
 	</filter-mapping>
+-->
     <!-- Listeners -->
 	<listener>
 		<listener-class>
