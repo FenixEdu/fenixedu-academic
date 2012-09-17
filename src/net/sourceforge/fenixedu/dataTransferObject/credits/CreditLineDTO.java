@@ -4,11 +4,15 @@
 package net.sourceforge.fenixedu.dataTransferObject.credits;
 
 import java.text.ParseException;
+import java.util.Set;
+import java.util.TreeSet;
 
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
+import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.TeacherCredits;
 import net.sourceforge.fenixedu.domain.TeacherCreditsDocument;
+import net.sourceforge.fenixedu.domain.teacher.OtherService;
 import net.sourceforge.fenixedu.domain.teacher.TeacherService;
 
 /**
@@ -48,6 +52,8 @@ public class CreditLineDTO {
 
     private Teacher teacher;
 
+    private Set<ExecutionYear> correctionInYears = new TreeSet<ExecutionYear>(ExecutionYear.COMPARATOR_BY_YEAR);
+
     public CreditLineDTO(ExecutionSemester executionSemester, TeacherService teacherService, double managementCredits,
 	    double exemptionCredits, double lessonHours, Teacher teacher, double thesesCredits) throws ParseException {
 
@@ -74,6 +80,14 @@ public class CreditLineDTO {
 		    + getOtherCredits() + getManagementCredits() + getServiceExemptionCredits();
 	}
 	setTotalCredits(round(totalCredits));
+
+	for (OtherService otherService : executionSemester.getOtherServicesCorrections()) {
+	    if (otherService.getTeacherService().getTeacher().equals(teacher)
+		    && !otherService.getCorrectedExecutionSemester()
+			    .equals(otherService.getTeacherService().getExecutionPeriod())) {
+		correctionInYears.add(otherService.getTeacherService().getExecutionPeriod().getExecutionYear());
+	    }
+	}
     }
 
     public CreditLineDTO(ExecutionSemester executionSemester, TeacherCredits teacherCredits) {
@@ -92,6 +106,14 @@ public class CreditLineDTO {
 	setManagementCredits(teacherCredits.getManagementCredits().doubleValue());
 	setServiceExemptionCredits(teacherCredits.getServiceExemptionCredits().doubleValue());
 	setTotalCredits(teacherCredits.getTotalCredits().doubleValue());
+
+	for (OtherService otherService : executionSemester.getOtherServicesCorrections()) {
+	    if (otherService.getTeacherService().getTeacher().equals(teacherCredits.getTeacher())
+		    && !otherService.getCorrectedExecutionSemester()
+			    .equals(otherService.getTeacherService().getExecutionPeriod())) {
+		correctionInYears.add(otherService.getTeacherService().getExecutionPeriod().getExecutionYear());
+	    }
+	}
     }
 
     public double getFinalLineCredits() {
@@ -234,5 +256,21 @@ public class CreditLineDTO {
     public TeacherCreditsDocument getTeacherCreditsDocument() {
 	TeacherCredits teacherCredits = TeacherCredits.readTeacherCredits(executionSemester, teacher);
 	return teacherCredits != null ? teacherCredits.getLastTeacherCreditsDocument() : null;
+    }
+
+    public String getCorrections() {
+	StringBuilder result = new StringBuilder();
+	for (ExecutionYear executionTear : correctionInYears) {
+	    result.append("(** ").append(executionTear.getName()).append(") ");
+	}
+	return result.toString();
+    }
+
+    public Set<ExecutionYear> getCorrectionInYears() {
+	return correctionInYears;
+    }
+
+    public void setCorrectionInYears(Set<ExecutionYear> correctionInYears) {
+	this.correctionInYears = correctionInYears;
     }
 }

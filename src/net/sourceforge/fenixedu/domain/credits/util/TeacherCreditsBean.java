@@ -15,6 +15,8 @@ public class TeacherCreditsBean implements Serializable {
     private Teacher teacher;
     private Set<AnnualTeachingCreditsBean> annualTeachingCredits;
     private Set<CreditLineDTO> pastTeachingCredits;
+    private boolean hasAnyYearWithCreditsLimitation = false;
+    private boolean hasAnyYearWithCorrections = false;
 
     public TeacherCreditsBean(Teacher teacher) {
 	this.teacher = teacher;
@@ -39,6 +41,22 @@ public class TeacherCreditsBean implements Serializable {
 	return annualTeachingCredits;
     }
 
+    public boolean getHasAnyYearWithCreditsLimitation() {
+	return hasAnyYearWithCreditsLimitation;
+    }
+
+    public void setHasAnyYearWithCreditsLimitation(boolean hasAnyYearWithCreditsLimitation) {
+	this.hasAnyYearWithCreditsLimitation = hasAnyYearWithCreditsLimitation;
+    }
+
+    public boolean isHasAnyYearWithCorrections() {
+	return hasAnyYearWithCorrections;
+    }
+
+    public void setHasAnyYearWithCorrections(boolean hasAnyYearWithCorrections) {
+	this.hasAnyYearWithCorrections = hasAnyYearWithCorrections;
+    }
+
     public void prepareAnnualTeachingCredits() {
 	annualTeachingCredits = new TreeSet<AnnualTeachingCreditsBean>(new Comparator<AnnualTeachingCreditsBean>() {
 
@@ -51,13 +69,21 @@ public class TeacherCreditsBean implements Serializable {
 	boolean hasCurrentYear = false;
 	ExecutionYear currentExecutionYear = ExecutionYear.readCurrentExecutionYear();
 	for (AnnualTeachingCredits annualTeachingCredits : teacher.getAnnualTeachingCredits()) {
-	    this.annualTeachingCredits.add(new AnnualTeachingCreditsBean(annualTeachingCredits));
+	    AnnualTeachingCreditsBean annualTeachingCreditsBean = new AnnualTeachingCreditsBean(annualTeachingCredits, null);
+	    this.annualTeachingCredits.add(annualTeachingCreditsBean);
 	    if (annualTeachingCredits.getAnnualCreditsState().getExecutionYear().equals(currentExecutionYear)) {
 		hasCurrentYear = true;
 	    }
+	    if (annualTeachingCredits.getHasAnyLimitation()) {
+		hasAnyYearWithCreditsLimitation = true;
+	    }
+	    if (annualTeachingCreditsBean.getCorrectionInYears().size() > 0) {
+		hasAnyYearWithCorrections = true;
+	    }
 	}
 	if (!hasCurrentYear) {
-	    this.annualTeachingCredits.add(new AnnualTeachingCreditsBean(currentExecutionYear, teacher));
+	    // this.annualTeachingCredits.add(new
+	    // AnnualTeachingCreditsBean(currentExecutionYear, teacher, null));
 	}
     }
 
@@ -70,8 +96,12 @@ public class TeacherCreditsBean implements Serializable {
 	    }
 	});
 	for (TeacherCredits teacherCredits : teacher.getTeacherCredits()) {
-	    pastTeachingCredits.add(new CreditLineDTO(teacherCredits.getTeacherCreditsState().getExecutionSemester(),
-		    teacherCredits));
+	    CreditLineDTO creditLineDTO = new CreditLineDTO(teacherCredits.getTeacherCreditsState().getExecutionSemester(),
+		    teacherCredits);
+	    pastTeachingCredits.add(creditLineDTO);
+	    if (creditLineDTO.getCorrectionInYears().size() > 0) {
+		hasAnyYearWithCorrections = true;
+	    }
 	}
     }
 

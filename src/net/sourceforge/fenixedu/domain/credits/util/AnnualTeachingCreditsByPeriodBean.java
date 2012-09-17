@@ -9,9 +9,11 @@ import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.Professorship;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.organizationalStructure.PersonFunction;
+import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.personnelSection.contracts.PersonContractSituation;
 import net.sourceforge.fenixedu.domain.teacher.InstitutionWorkTime;
 import net.sourceforge.fenixedu.domain.teacher.OtherService;
+import net.sourceforge.fenixedu.domain.teacher.ReductionService;
 import net.sourceforge.fenixedu.domain.teacher.TeacherService;
 import net.sourceforge.fenixedu.domain.teacher.TeacherServiceNotes;
 
@@ -23,8 +25,11 @@ public class AnnualTeachingCreditsByPeriodBean implements Serializable {
     private ExecutionSemester executionPeriod;
     private Teacher teacher;
     private TeacherServiceNotes teacherServiceNotes;
+    private Boolean canEditTeacherCredits;
+    private Boolean canEditTeacherCreditsReductions;
+    private Boolean canEditTeacherManagementFunctions;
 
-    public AnnualTeachingCreditsByPeriodBean(ExecutionSemester executionPeriod, Teacher teacher) {
+    public AnnualTeachingCreditsByPeriodBean(ExecutionSemester executionPeriod, Teacher teacher, RoleType roleType) {
 	super();
 	this.executionPeriod = executionPeriod;
 	this.teacher = teacher;
@@ -32,6 +37,11 @@ public class AnnualTeachingCreditsByPeriodBean implements Serializable {
 	if (teacherService != null) {
 	    this.teacherServiceNotes = teacherService.getTeacherServiceNotes();
 	}
+	setCanEditTeacherCredits(executionPeriod.isInValidCreditsPeriod(roleType));
+	setCanEditTeacherCreditsReductions(roleType == null || roleType.equals(RoleType.DEPARTMENT_ADMINISTRATIVE_OFFICE) ? false
+		: getCanEditTeacherCredits());
+	setCanEditTeacherManagementFunctions(roleType == null || roleType.equals(RoleType.DEPARTMENT_MEMBER) ? false
+		: getCanEditTeacherCredits());
     }
 
     public List<Professorship> getProfessorships() {
@@ -87,6 +97,11 @@ public class AnnualTeachingCreditsByPeriodBean implements Serializable {
 	return new ArrayList<PersonContractSituation>(teacher.getValidTeacherServiceExemptions(executionYearInterval));
     }
 
+    public ReductionService getCreditsReductionService() {
+	TeacherService teacherService = teacher.getTeacherServiceByExecutionPeriod(executionPeriod);
+	return teacherService != null ? teacherService.getReductionService() : null;
+    }
+
     public Teacher getTeacher() {
 	return teacher;
     }
@@ -99,4 +114,27 @@ public class AnnualTeachingCreditsByPeriodBean implements Serializable {
 	return teacherServiceNotes;
     }
 
+    public Boolean getCanEditTeacherCredits() {
+	return canEditTeacherCredits;
+    }
+
+    public void setCanEditTeacherCredits(Boolean canEditTeacherCredits) {
+	this.canEditTeacherCredits = canEditTeacherCredits;
+    }
+
+    public Boolean getCanEditTeacherCreditsReductions() {
+	return canEditTeacherCreditsReductions;
+    }
+
+    public void setCanEditTeacherCreditsReductions(Boolean canEditTeacherCreditsReductions) {
+	this.canEditTeacherCreditsReductions = canEditTeacherCreditsReductions;
+    }
+
+    public Boolean getCanEditTeacherManagementFunctions() {
+	return canEditTeacherManagementFunctions;
+    }
+
+    public void setCanEditTeacherManagementFunctions(Boolean canEditTeacherManagementFunctions) {
+	this.canEditTeacherManagementFunctions = canEditTeacherManagementFunctions;
+    }
 }

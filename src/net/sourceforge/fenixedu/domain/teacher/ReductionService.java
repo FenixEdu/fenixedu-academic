@@ -12,13 +12,21 @@ public class ReductionService extends ReductionService_Base {
     public ReductionService(final TeacherService teacherService, final BigDecimal creditsReduction) {
 	super();
 	setRootDomainObject(RootDomainObject.getInstance());
-	if (teacherService == null || creditsReduction == null) {
+	if (teacherService == null) {
 	    throw new DomainException("arguments can't be null");
-	}
-	if (creditsReduction.compareTo(MAX_CREDITS_REDUCTION) > 0) {
-	    throw new DomainException("reduction can't be more than 3");
 	}
 	setTeacherService(teacherService);
 	setCreditsReduction(creditsReduction);
+    }
+
+    @Override
+    public void setCreditsReduction(BigDecimal creditsReduction) {
+	if (creditsReduction == null || creditsReduction.compareTo(BigDecimal.ZERO) < 0) {
+	    creditsReduction = BigDecimal.ZERO;
+	}
+	if (creditsReduction.compareTo(MAX_CREDITS_REDUCTION) > 0) {
+	    throw new DomainException("label.creditsReduction.exceededMaxAllowed");
+	}
+	super.setCreditsReduction(creditsReduction);
     }
 }

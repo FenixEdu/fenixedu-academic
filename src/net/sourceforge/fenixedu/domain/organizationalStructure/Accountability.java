@@ -46,6 +46,10 @@ public class Accountability extends Accountability_Base {
 	return false;
     }
 
+    public boolean isPersonFunctionShared() {
+	return false;
+    }
+
     public Date getBeginDateInDateType() {
 	return (getBeginDate() != null) ? getBeginDate().toDateTimeAtCurrentTime().toDate() : null;
     }

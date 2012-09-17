@@ -17,6 +17,7 @@ public class AnnualTeachingCredits extends AnnualTeachingCredits_Base {
 	super();
 	setTeacher(teacher);
 	setAnnualCreditsState(annualCreditsState);
+	setHasAnyLimitation(false);
 	setCreationDate(new DateTime());
     }
 
@@ -82,6 +83,8 @@ public class AnnualTeachingCredits extends AnnualTeachingCredits_Base {
 		BigDecimal thisSemesterYearCredits = thisSemesterTeachingLoad;
 		if (thisSemesterTeachingLoad.compareTo(reductionAndManagement) > 0) {
 		    thisSemesterYearCredits = reductionAndManagement;
+		} else {
+		    setHasAnyLimitation(true);
 		}
 		yearCredits = yearCredits.add(thisSemesterYearCredits);
 		if (getTeacher().isActiveForSemester(executionSemester) && !getTeacher().isMonitor(executionSemester)) {

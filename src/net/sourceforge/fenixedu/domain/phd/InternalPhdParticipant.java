@@ -2,6 +2,9 @@ package net.sourceforge.fenixedu.domain.phd;
 
 import static net.sourceforge.fenixedu.util.StringUtils.EMPTY;
 import static net.sourceforge.fenixedu.util.StringUtils.isEmpty;
+
+import java.util.ResourceBundle;
+
 import net.sourceforge.fenixedu.domain.Department;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Qualification;
@@ -9,6 +12,7 @@ import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.contacts.PhysicalAddress;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.UnitAcronym;
+import pt.utl.ist.fenix.tools.util.i18n.Language;
 import dml.runtime.RelationAdapter;
 
 public class InternalPhdParticipant extends InternalPhdParticipant_Base {
@@ -154,6 +158,17 @@ public class InternalPhdParticipant extends InternalPhdParticipant_Base {
     @Override
     public boolean isTeacher() {
 	return getTeacher() != null;
+    }
+
+    public String getRoleOnProcess() {
+	ResourceBundle resourceBundle = ResourceBundle.getBundle("resources.PhdResources", Language.getLocale());
+	if (getIndividualProcess().isGuider(getPerson())) {
+	    return resourceBundle.getString("label.phd.guiding");
+	}
+	if (getIndividualProcess().isAssistantGuider(getPerson())) {
+	    return resourceBundle.getString("label.phd.assistant.guiding");
+	}
+	return null;
     }
 
 }

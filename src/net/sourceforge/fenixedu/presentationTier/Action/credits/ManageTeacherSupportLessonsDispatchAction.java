@@ -7,7 +7,6 @@ import java.util.Calendar;
 import java.util.Date;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
@@ -22,8 +21,6 @@ import net.sourceforge.fenixedu.util.DiaSemana;
 import net.sourceforge.fenixedu.util.WeekDay;
 
 import org.apache.struts.action.ActionForm;
-import org.apache.struts.action.ActionForward;
-import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.ActionMessage;
 import org.apache.struts.action.ActionMessages;
 import org.apache.struts.action.DynaActionForm;
@@ -34,13 +31,6 @@ import org.apache.struts.action.DynaActionForm;
  */
 
 public class ManageTeacherSupportLessonsDispatchAction extends FenixDispatchAction {
-
-    protected void getSupportLessons(HttpServletRequest request, Professorship professorship) {
-	if (!professorship.getSupportLessons().isEmpty()) {
-	    request.setAttribute("supportLessonList", professorship.getSupportLessonsOrderedByStartTimeAndWeekDay());
-	}
-	request.setAttribute("professorship", professorship);
-    }
 
     protected void prepareToEdit(SupportLesson supportLesson, Professorship professorship, DynaActionForm supportLessonForm,
 	    HttpServletRequest request) throws NumberFormatException, FenixFilterException, FenixServiceException {
@@ -83,12 +73,12 @@ public class ManageTeacherSupportLessonsDispatchAction extends FenixDispatchActi
 	supportLessonDTO.setWeekDay(getCorrectWeekDay((String) supportLessonForm.get("weekDay")));
 	Calendar calendar = Calendar.getInstance();
 
-	setHoursAndMinutes(calendar, Integer.valueOf((String) supportLessonForm.get("startTimeHour")), Integer
-		.valueOf((String) supportLessonForm.get("startTimeMinutes")));
+	setHoursAndMinutes(calendar, Integer.valueOf((String) supportLessonForm.get("startTimeHour")),
+		Integer.valueOf((String) supportLessonForm.get("startTimeMinutes")));
 	supportLessonDTO.setStartTime(new Date(calendar.getTimeInMillis()));
 
-	setHoursAndMinutes(calendar, Integer.valueOf((String) supportLessonForm.get("endTimeHour")), Integer
-		.valueOf((String) supportLessonForm.get("endTimeMinutes")));
+	setHoursAndMinutes(calendar, Integer.valueOf((String) supportLessonForm.get("endTimeHour")),
+		Integer.valueOf((String) supportLessonForm.get("endTimeMinutes")));
 	supportLessonDTO.setEndTime(new Date(calendar.getTimeInMillis()));
 	supportLessonDTO.setPlace((String) supportLessonForm.get("place"));
 
@@ -117,17 +107,6 @@ public class ManageTeacherSupportLessonsDispatchAction extends FenixDispatchActi
 	} catch (DomainException e) {
 	    saveMessages(request, e);
 	}
-    }
-
-    public ActionForward cancel(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
-	    throws NumberFormatException, FenixFilterException, FenixServiceException {
-
-	DynaActionForm supportLessonForm = (DynaActionForm) form;
-	Integer professorshipID = (Integer) supportLessonForm.get("professorshipID");
-	Professorship professorship = rootDomainObject.readProfessorshipByOID(professorshipID);
-
-	getSupportLessons(request, professorship);
-	return mapping.findForward("list-support-lessons");
     }
 
     private String getValidWeekDay(Integer diaSemana) {

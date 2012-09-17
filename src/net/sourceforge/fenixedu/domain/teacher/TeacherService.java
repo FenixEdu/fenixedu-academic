@@ -278,6 +278,14 @@ public class TeacherService extends TeacherService_Base {
 	});
     }
 
+    public List<TeacherServiceComment> getTeacherServiceComments() {
+	return (List<TeacherServiceComment>) CollectionUtils.select(getServiceItems(), new Predicate() {
+	    public boolean evaluate(Object arg0) {
+		return arg0 instanceof TeacherServiceComment;
+	    }
+	});
+    }
+
     private Double round(double n) {
 	return Math.round((n * 100.0)) / 100.0;
     }

@@ -1,4 +1,4 @@
-package net.sourceforge.fenixedu.presentationTier.Action.departmentAdmOffice.credits;
+package net.sourceforge.fenixedu.presentationTier.Action.credits.departmentAdmOffice;
 
 import java.util.List;
 
@@ -32,33 +32,15 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 
 @Mapping(module = "departmentAdmOffice", path = "/supportLessonsManagement", input = "/supportLessonsManagement.do?method=prepareEdit&page=0", attribute = "supportLessonForm", formBean = "supportLessonForm", scope = "request", parameter = "method")
 @Forwards(value = {
-	@Forward(name = "successfull-delete", path = "/supportLessonsManagement.do?method=showSupportLessons&page=0"),
-	@Forward(name = "successfull-edit", path = "/supportLessonsManagement.do?method=showSupportLessons&page=0"),
-	@Forward(name = "edit-support-lesson", path = "edit-support-lesson"),
-	@Forward(name = "list-support-lessons", path = "show-teacher-execution-course-support-lessons"),
-	@Forward(name = "teacher-not-found", path = "/showAllTeacherCreditsResume.do?method=showTeacherCreditsResume&page=0") })
+	@Forward(name = "successfull-delete", path = "/degreeTeachingServiceManagement.do?method=showTeachingServiceDetails"),
+	@Forward(name = "successfull-edit", path = "/degreeTeachingServiceManagement.do?method=showTeachingServiceDetails"),
+	@Forward(name = "edit-support-lesson", path = "/credits/supportLessons/editSupportLesson.jsp"),
+	@Forward(name = "list-support-lessons", path = "/degreeTeachingServiceManagement.do?method=showTeachingServiceDetails"),
+	@Forward(name = "teacher-not-found", path = "/credits.do?method=viewAnnualTeachingCredits") })
 @Exceptions(value = {
 	@ExceptionHandling(type = net.sourceforge.fenixedu.presentationTier.Action.credits.ManageTeacherSupportLessonsDispatchAction.InvalidPeriodException.class, key = "message.invalidPeriod", handler = org.apache.struts.action.ExceptionHandler.class, path = "/supportLessonsManagement.do?method=prepareEdit&page=0", scope = "request"),
 	@ExceptionHandling(type = net.sourceforge.fenixedu.domain.exceptions.DomainException.class, handler = net.sourceforge.fenixedu.presentationTier.config.FenixDomainExceptionHandler.class, scope = "request") })
 public class DepartmentAdmOfficeManageTeacherSupportLessonsDispatchAction extends ManageTeacherSupportLessonsDispatchAction {
-
-    public ActionForward showSupportLessons(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) throws NumberFormatException, FenixFilterException, FenixServiceException {
-
-	DynaActionForm supportLessonForm = (DynaActionForm) form;
-	Integer professorshipID = (Integer) supportLessonForm.get("professorshipID");
-	Professorship professorship = rootDomainObject.readProfessorshipByOID(professorshipID);
-
-	if (professorship == null
-		|| professorship.getTeacher() == null
-		|| !isTeacherOfManageableDepartments(professorship.getTeacher(), professorship.getExecutionCourse()
-			.getExecutionPeriod(), request)) {
-	    return mapping.findForward("teacher-not-found");
-	}
-
-	getSupportLessons(request, professorship);
-	return mapping.findForward("list-support-lessons");
-    }
 
     public ActionForward prepareEdit(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) throws NumberFormatException, FenixFilterException, FenixServiceException {

@@ -13,6 +13,7 @@ import java.util.Set;
 
 import net.sourceforge.fenixedu._development.PropertiesManager;
 import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
+import net.sourceforge.fenixedu.domain.credits.CreditsPersonFunctionsSharedQueueJob;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.inquiries.InquiryGlobalComment;
@@ -164,7 +165,7 @@ public class ExecutionSemester extends ExecutionSemester_Base implements Compara
 	    new TeacherCreditsFillingForTeacherCE(parentEntry, new MultiLanguageString(
 		    applicationResourcesBundle.getString("label.TeacherCreditsFillingCE.entry.title")), null, begin, end,
 		    rootEntry);
-
+	    new CreditsPersonFunctionsSharedQueueJob(this);
 	} else {
 	    creditsFillingCE.edit(begin, end);
 	}
@@ -389,9 +390,7 @@ public class ExecutionSemester extends ExecutionSemester_Base implements Compara
 
     public void checkValidCreditsPeriod(RoleType roleType) {
 	if (roleType != RoleType.SCIENTIFIC_COUNCIL) {
-
 	    TeacherCreditsFillingCE validCreditsPerid = getValidCreditsPeriod(roleType);
-
 	    if (validCreditsPerid == null) {
 		throw new DomainException("message.invalid.credits.period2");
 	    } else if (!validCreditsPerid.containsNow()) {
@@ -399,6 +398,17 @@ public class ExecutionSemester extends ExecutionSemester_Base implements Compara
 			"dd-MM-yyy HH:mm"), validCreditsPerid.getEnd().toString("dd-MM-yyy HH:mm"));
 	    }
 	}
+    }
+
+    public boolean isInValidCreditsPeriod(RoleType roleType) {
+	if (roleType == null) {
+	    return false;
+	}
+	if (roleType == RoleType.SCIENTIFIC_COUNCIL) {
+	    return true;
+	}
+	TeacherCreditsFillingCE validCreditsPerid = getValidCreditsPeriod(roleType);
+	return validCreditsPerid != null && validCreditsPerid.containsNow();
     }
 
     public TeacherCreditsFillingCE getValidCreditsPeriod(RoleType roleType) {

@@ -9,6 +9,9 @@ public class DegreeProjectTutorialService extends DegreeProjectTutorialService_B
 	super();
 	setRootDomainObject(RootDomainObject.getInstance());
 	setProfessorship(professorship);
+	TeacherService teacherService = professorship.getTeacher().getTeacherServiceByExecutionPeriod(
+		professorship.getExecutionCourse().getExecutionYear().getNextExecutionYear().getFirstExecutionPeriod());
+	setTeacherService(teacherService);
     }
 
 }
