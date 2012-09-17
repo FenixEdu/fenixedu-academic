@@ -82,7 +82,7 @@
 			    final String server = request.getServerName();
 			    final int port = request.getServerPort();
 		%>
-				<a href="<%= casConfig.getCasLoginUrl() + "?service=" + schema + "://" + server + (port == 80 || port == 443 ? "" : ":" + port) + request.getContextPath() + item.getReversePath() %>">
+				<a href="<%= "https://barra.ist.utl.pt/login?next=" + schema + "://" + server + (port == 80 || port == 443 ? "" : ":" + port) + request.getContextPath() + item.getReversePath() %>">
             		<bean:message key="link.section.view.login" bundle="SITE_RESOURCES"/>
        			</a>.
 		<%

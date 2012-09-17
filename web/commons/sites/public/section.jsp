@@ -18,6 +18,7 @@
 <bean:define id="context" value="<%= contextParam + "=" + contextParamValue %>"/>
 <%@ taglib uri="/WEB-INF/app.tld" prefix="app" %>
 
+
 <logic:present name="section">
     <bean:define id="section" name="section" type="net.sourceforge.fenixedu.domain.Section"/>
 
@@ -41,7 +42,7 @@
 			    final String server = request.getServerName();
 			    final int port = request.getServerPort();
 		%>
-				<a href="<%= casConfig.getCasLoginUrl() + "?service=" + schema + "://" + server + (port == 80 || port == 443 ? "" : ":" + port) + request.getContextPath() + section.getReversePath() %>">
+				<a href="<%= "https://barra.ist.utl.pt/login?next=" + schema + "://" + server + (port == 80 || port == 443 ? "" : ":" + port) + request.getContextPath() + section.getReversePath() %>">
             		<bean:message key="link.section.view.login" bundle="SITE_RESOURCES"/>
        			</a>.
 		<%

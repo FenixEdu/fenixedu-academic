@@ -51,6 +51,10 @@ public class SiteMenuRenderer extends OutputRenderer {
     private String empty;
 
     private String depthStyle;
+    
+    private String selectedTopItemClass = "menu-top-item-selected";
+    
+    private String selectedChildItemClass = "menu-child-item-selected";
 
     public SiteMenuRenderer() {
 	super();
@@ -65,6 +69,22 @@ public class SiteMenuRenderer extends OutputRenderer {
 
     public void setDepthStyle(String depthStyle) {
 	this.depthStyle = depthStyle;
+    }
+    
+    public String getSelectedTopItemClass() {
+	return selectedTopItemClass;
+    }
+
+    public void setSelectedTopItemClass(String selectedTopItemClass) {
+	this.selectedTopItemClass = selectedTopItemClass;
+    }
+    
+    public String getSelectedChildItemClass() {
+	return selectedChildItemClass;
+    }
+
+    public void setSelectedChildItemClass(String selectedChildItemClass) {
+	this.selectedChildItemClass = selectedChildItemClass;
     }
 
     public boolean isContextRelative() {
@@ -175,7 +195,7 @@ public class SiteMenuRenderer extends OutputRenderer {
 		    Content content = entry.getReferingContent();
 		    if (!(content instanceof Item || content instanceof Forum || content instanceof Attachment)) {
 			HtmlListItem item = list.createItem();
-			item.addChild(generateComponent(context, content, true));
+			item.addChild(generateComponent(context, content, true, depth));
 			if (depth > 0) {
 			    item.setStyle(getDepthStyle());
 			}
@@ -189,7 +209,8 @@ public class SiteMenuRenderer extends OutputRenderer {
 		}
 	    }
 
-	    private HtmlLink generateLink(final String url, final HtmlComponent body, final boolean isPublic) {
+	    private HtmlLink generateLink(FilterFunctionalityContext context, Content content, final HtmlComponent body, final boolean isPublic, Integer depth) {
+		final String url = getPath(context, content);
 		final String preapendedComment = isPublic ? pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX
 			: pt.ist.fenixWebFramework.servlets.filters.contentRewrite.RequestRewriter.HAS_CONTEXT_PREFIX;
 		HtmlLink link = new HtmlLinkWithPreprendedComment(preapendedComment);
@@ -197,6 +218,14 @@ public class SiteMenuRenderer extends OutputRenderer {
 		link.setContextRelative(false);
 		link.setUrl(url);
 		link.setBody(body);
+		
+		if(context.getSelectedContents().contains(content)) {
+		    if (depth == 0) {
+			link.addClass(getSelectedTopItemClass());
+		    } else if (depth > 0) {
+			link.addClass(getSelectedChildItemClass());
+		    }
+		}
 
 		String contextParamValue = getContextParamValue();
 		if (contextParamValue != null) {
@@ -207,14 +236,14 @@ public class SiteMenuRenderer extends OutputRenderer {
 
 	    }
 
-	    public HtmlComponent generateComponent(FilterFunctionalityContext context, Content content, boolean canMakeLink) {
+	    public HtmlComponent generateComponent(FilterFunctionalityContext context, Content content, boolean canMakeLink, Integer depth) {
 
 		HtmlText text = new HtmlText(content.getName().getContent());
 		text.setFace(Face.STANDARD);
 		HtmlComponent component = text;
 
 		if (content.isAvailable()) {
-		    component = generateLink(getPath(context, content), component, content.isPublic());
+		    component = generateLink(context, content, component, content.isPublic(), depth);
 		}
 
 		MultiLanguageString title = content.getTitle();

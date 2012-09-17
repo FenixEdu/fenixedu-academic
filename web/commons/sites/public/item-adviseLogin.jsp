@@ -45,8 +45,26 @@
 
     <p>
         <em><bean:message key="message.item.view.mustLogin" bundle="SITE_RESOURCES"/></em>
-        <html:link page="<%= String.format("%s?method=itemWithLogin&amp;%s&amp;itemID=%s", actionName, context, item.getIdInternal()) %>">
-            <bean:message key="link.item.view.login" bundle="SITE_RESOURCES"/>
-       </html:link>.
+        <%
+			final Config c = FenixWebFramework.getConfig();
+			final String serverName = request.getServerName();
+			final CasConfig casConfig = c.getCasConfig(serverName);
+			if (casConfig != null && casConfig.isCasEnabled()) {
+			    final String schema = request.getScheme();
+			    final String server = request.getServerName();
+			    final int port = request.getServerPort();
+		%>
+				<a href="<%= "https://barra.ist.utl.pt/login?next=" + schema + "://" + server + (port == 80 || port == 443 ? "" : ":" + port) + request.getContextPath() + section.getReversePath() %>">
+            		<bean:message key="link.section.view.login" bundle="SITE_RESOURCES"/>
+       			</a>.
+		<%
+			} else {
+		%>
+	            <html:link page="<%= String.format("%s?method=sectionWithLogin&amp;%s&amp;sectionID=%s", actionName, context, section.getIdInternal()) %>">
+    	            <bean:message key="link.section.view.login" bundle="SITE_RESOURCES"/>
+        	   </html:link>.
+       	<%
+			}
+       	%>
     </p>
 </logic:present>

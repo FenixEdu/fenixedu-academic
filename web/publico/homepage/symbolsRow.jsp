@@ -8,10 +8,11 @@
 <bean:define id="searchUrl" type="java.lang.String"><bean:message bundle="GLOBAL_RESOURCES" key="search.url"/></bean:define>
 <bean:define id="searchDomain" type="java.lang.String"><bean:message bundle="GLOBAL_RESOURCES" key="search.domain"/></bean:define>
 <bean:define id="searchSite" type="java.lang.String"><bean:message bundle="GLOBAL_RESOURCES" key="search.site"/></bean:define>
+<bean:define id="searchTitle" type="java.lang.String"><bean:message bundle="GLOBAL_RESOURCES" key="search.title"/></bean:define>
 
 <div id="logoist">
 	<a href="<%= institutionUrl %>">
-		<img alt="<bean:message key="institution.logo" bundle="IMAGE_RESOURCES" />" width="234" height="51" src="<bean:message bundle="GLOBAL_RESOURCES" key="university.logo.public" arg0="<%= request.getContextPath() %>"/>"/>
+		<img alt="<bean:message key="institution.logo" bundle="IMAGE_RESOURCES" />" src="<bean:message bundle="GLOBAL_RESOURCES" key="university.logo.public" arg0="<%= request.getContextPath() %>"/>"/>
 	</a>
 </div>
 
@@ -32,8 +33,7 @@
 		<input alt="input.domains" type="hidden" name="domains" value="<%= searchDomain %>" />
 		<input alt="input.sitesearch" type="hidden" name="sitesearch" value="<%= searchSite %>" />
 		<label for="textfield">
-			<bean:message bundle="GLOBAL_RESOURCES" key="search.title"/>:
-			<input alt="input.q" type="text" id="textfield" name="q" size="17"/>
+			<input alt="input.q" placeholder="<%= searchTitle %>" type="text" id="textfield" name="q" size="17"/>
 		</label>
 		<input alt="input.sa" type="submit" id="submit" name="sa" value="Google" />
 	</form>

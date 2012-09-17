@@ -3,11 +3,11 @@
 
 <bean:define id="institutionUrl" type="java.lang.String"><bean:message key="institution.url" bundle="GLOBAL_RESOURCES"/></bean:define>
 <bean:define id="fenixUrl" type="java.lang.String"><bean:message key="fenix.url" bundle="GLOBAL_RESOURCES"/></bean:define>
+<bean:define id="searchTitle" type="java.lang.String"><bean:message bundle="GLOBAL_RESOURCES" key="search.title"/></bean:define>
 
 <div id="logoist">
 	<a href="<%= institutionUrl %>">
-		<img alt="<bean:message key="institution.logo" bundle="IMAGE_RESOURCES" />" width="234" height="51"
-			src="<bean:message key="university.logo.public" bundle="GLOBAL_RESOURCES" arg0="<%= request.getContextPath() %>"/>"/>
+		<img alt="<bean:message key="institution.logo" bundle="IMAGE_RESOURCES" />" src="<bean:message key="university.logo.public" bundle="GLOBAL_RESOURCES" arg0="<%= request.getContextPath() %>"/>"/>
 	</a>
 </div>
 <div id="header_links">
@@ -34,8 +34,7 @@
 		<input type="hidden" name="cof" value="FORID:10" />
 		<input type="hidden" name="ie" value="UTF-8" />
 		<label for="textfield">
-			<bean:message bundle="GLOBAL_RESOURCES" key="search.title"/>:
-			<input alt="input.q" type="text" id="textfield" name="q" size="17"/>
+			<input alt="input.q" placeholder="<%= searchTitle %>" type="text" id="textfield" name="q" size="17"/>
 		</label>
 		<label for="submit_button">
 			<input alt="input.sa" type="submit" id="submit" name="sa" value="Google" />

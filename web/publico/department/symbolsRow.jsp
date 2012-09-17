@@ -23,7 +23,7 @@
 		final String finalLanguage = Language.getLanguage().name();
     	//String finalLanguage = language == null ? "pt" : String.valueOf(language);
         request.setAttribute("siteDefaultLogo", 
-        	String.format("%s/images/departments/%s_%s.gif", request.getContextPath(), unit.getAcronym(), finalLanguage));
+        	String.format("%s/images/newImage2012/%s_%s.png", request.getContextPath(), unit.getAcronym(), finalLanguage));
     }
 %>
 <jsp:include page="../customized/symbolsRow.jsp"/>
