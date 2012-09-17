@@ -495,6 +495,16 @@ public class PersonalInformationBean implements Serializable {
 	    result.add("error.CandidacyInformationBean.required.information.must.be.filled");
 	}
 
+	LocalDate now = new LocalDate();
+	if (now.getYear() < getConclusionYear()) {
+	    result.add("error.personalInformation.year.after.current");
+	}
+
+	int birthYear = getStudent().getPerson().getDateOfBirthYearMonthDay().getYear();
+	if (getConclusionYear() < (birthYear + 15)) {
+	    result.add("error.personalInformation.year.before.fifteenYearOld.limit");
+	}
+
 	if (isUnitFromRaidesListMandatory()) {
 	    if (getInstitution() == null) {
 		result.add("error.personalInformation.required.institution");

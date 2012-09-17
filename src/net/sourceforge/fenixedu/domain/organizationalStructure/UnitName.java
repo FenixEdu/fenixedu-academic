@@ -45,7 +45,7 @@ public class UnitName extends UnitName_Base implements Comparable<UnitName> {
 
     public static class InternalUnitNameAndTypeLimitedOrderedSet extends UnitNameLimitedOrderedSet {
 
-	private Class<? extends Unit> unitType;
+	private final Class<? extends Unit> unitType;
 
 	public InternalUnitNameAndTypeLimitedOrderedSet(int maxElements, Class<? extends Unit> unitType) {
 	    super(maxElements);
@@ -92,7 +92,7 @@ public class UnitName extends UnitName_Base implements Comparable<UnitName> {
 
     public static class ExternalAcademicUnitNameLimitedOrderedSet extends UnitNameLimitedOrderedSet {
 
-	private Unit institutionUnit = RootDomainObject.getInstance().getInstitutionUnit();
+	private final Unit institutionUnit = RootDomainObject.getInstance().getInstitutionUnit();
 
 	public ExternalAcademicUnitNameLimitedOrderedSet(final int maxElements) {
 	    super(maxElements);
@@ -100,8 +100,12 @@ public class UnitName extends UnitName_Base implements Comparable<UnitName> {
 
 	@Override
 	public boolean add(final UnitName unitName) {
-	    return unitName.getIsExternalUnit() && StringUtils.isNumeric(unitName.getUnit().getCode()) ? super.add(unitName)
-		    : false;
+	    String code = unitName.getUnit().getCode();
+	    if (unitName.getIsExternalUnit() && !StringUtils.isEmpty(code) && StringUtils.isNumeric(code)) {
+		super.add(unitName);
+		return true;
+	    }
+	    return false;
 	}
     }
 
@@ -112,6 +116,7 @@ public class UnitName extends UnitName_Base implements Comparable<UnitName> {
 	setIsExternalUnit(Boolean.valueOf(!unit.isInternal()));
     }
 
+    @Override
     public int compareTo(UnitName unitName) {
 	final int stringCompare = getName().compareTo(unitName.getName());
 	return stringCompare == 0 ? getIdInternal().compareTo(unitName.getIdInternal()) : stringCompare;

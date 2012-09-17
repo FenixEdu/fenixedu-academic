@@ -94,7 +94,7 @@ hideButtons();
 					<fr:property name="labelField" value="description"/>
 					<fr:property name="indicatorShown" value="true"/>
 					<fr:property name="serviceName" value="SearchRaidesDegreeDesignations"/>
-					<fr:property name="serviceArgs" value="<%="slot=description,size=50,filterUnitOID=" + ((personalInformationBean.getInstitution() != null) ? personalInformationBean.getInstitution().getExternalId() : "null") %>"/>
+					<fr:property name="serviceArgs" value="<%="slot=description,size=50,filterSchoolLevelName=" + ((personalInformationBean.getSchoolLevel() != null) ? personalInformationBean.getSchoolLevel().getName() : "null") + ",filterUnitOID=" + ((personalInformationBean.getInstitution() != null) ? personalInformationBean.getInstitution().getExternalId() : "null") %>"/>
 					<fr:property name="className" value="net.sourceforge.fenixedu.domain.raides.DegreeDesignation"/>
 					<fr:property name="minChars" value="3"/>
 			    </fr:slot>

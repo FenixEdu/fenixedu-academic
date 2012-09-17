@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
+import com.google.common.collect.Lists;
+
 public enum SchoolLevelType {
 
     UNKNOWN(false, false, false),
@@ -25,7 +27,17 @@ public enum SchoolLevelType {
 	}
     },
 
-    TECHNICAL_SPECIALIZATION(true, true, false),
+    TECHNICAL_SPECIALIZATION(true, true, false) {
+	@Override
+	public boolean isHigherEducation() {
+	    return true;
+	}
+
+	@Override
+	public List<String> getEquivalentDegreeClassifications() {
+	    return Lists.newArrayList("C", "C0");
+	}
+    },
 
     MEDIUM_EDUCATION(false, true, false),
 
@@ -34,12 +46,58 @@ public enum SchoolLevelType {
 	public boolean isHigherEducation() {
 	    return true;
 	}
+
+	@Override
+	public List<String> getEquivalentDegreeClassifications() {
+	    return Lists.newArrayList("A", "B", "BC", "DB", "EB", "MD");
+	}
+    },
+
+    BACHELOR_DEGREE_PRE_BOLOGNA(true, true, true) {
+	@Override
+	public boolean isHigherEducation() {
+	    return true;
+	}
+
+	@Override
+	public List<String> getEquivalentDegreeClassifications() {
+	    return Lists.newArrayList("BL", "LB", "PB");
+	}
     },
 
     DEGREE(true, true, false) {
 	@Override
 	public boolean isHigherEducation() {
 	    return true;
+	}
+
+	@Override
+	public List<String> getEquivalentDegreeClassifications() {
+	    return Lists.newArrayList("L1", "PM");
+	}
+    },
+
+    DEGREE_PRE_BOLOGNA(true, true, false) {
+	@Override
+	public boolean isHigherEducation() {
+	    return true;
+	}
+
+	@Override
+	public List<String> getEquivalentDegreeClassifications() {
+	    return Lists.newArrayList("DD", "DL", "EL", "L", "LT", "P");
+	}
+    },
+
+    DEGREE_TERMINAL_PART(true, true, false) {
+	@Override
+	public boolean isHigherEducation() {
+	    return true;
+	}
+
+	@Override
+	public List<String> getEquivalentDegreeClassifications() {
+	    return Lists.newArrayList("LT");
 	}
     },
 
@@ -48,12 +106,58 @@ public enum SchoolLevelType {
 	public boolean isHigherEducation() {
 	    return true;
 	}
+
+	@Override
+	public List<String> getEquivalentDegreeClassifications() {
+	    return Lists.newArrayList("M2");
+	}
+    },
+
+    MASTER_DEGREE_INTEGRATED(true, false, false) {
+	@Override
+	public boolean isHigherEducation() {
+	    return true;
+	}
+
+	@Override
+	public List<String> getEquivalentDegreeClassifications() {
+	    return Lists.newArrayList("MI", "MT");
+	}
+    },
+
+    MASTER_DEGREE_PRE_BOLOGNA(true, false, false) {
+	@Override
+	public boolean isHigherEducation() {
+	    return true;
+	}
+
+	@Override
+	public List<String> getEquivalentDegreeClassifications() {
+	    return Lists.newArrayList("M");
+	}
     },
 
     DOCTORATE_DEGREE(true, true, true) {
 	@Override
 	public boolean isHigherEducation() {
 	    return true;
+	}
+
+	@Override
+	public List<String> getEquivalentDegreeClassifications() {
+	    return Lists.newArrayList("D3");
+	}
+    },
+
+    DOCTORATE_DEGREE_PRE_BOLOGNA(true, false, false) {
+	@Override
+	public boolean isHigherEducation() {
+	    return true;
+	}
+	
+	@Override
+	public List<String> getEquivalentDegreeClassifications() {
+	    return Lists.newArrayList("D");
 	}
     },
 
@@ -79,6 +183,10 @@ public enum SchoolLevelType {
 
     public boolean isHigherEducation() {
 	return false;
+    }
+
+    public List<String> getEquivalentDegreeClassifications() {
+	return new ArrayList<String>();
     }
 
     public String getName() {
