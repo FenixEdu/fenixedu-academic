@@ -1073,8 +1073,10 @@ public class Thesis extends Thesis_Base {
 	    groupType = FileResultPermittedGroupType.INSTITUTION;
 	}
 	final net.sourceforge.fenixedu.domain.research.result.publication.Thesis publication = getPublication();
-	for (final ResearchResultDocumentFile researchResultDocumentFile : publication.getResultDocumentFilesSet()) {
-	    researchResultDocumentFile.setFileResultPermittedGroupType(groupType);
+	if (publication != null) {
+	    for (final ResearchResultDocumentFile researchResultDocumentFile : publication.getResultDocumentFilesSet()) {
+		researchResultDocumentFile.setFileResultPermittedGroupType(groupType);
+	    }
 	}
     }
 
