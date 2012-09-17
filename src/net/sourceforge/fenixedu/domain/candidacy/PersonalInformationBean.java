@@ -496,12 +496,12 @@ public class PersonalInformationBean implements Serializable {
 	}
 
 	LocalDate now = new LocalDate();
-	if (now.getYear() < getConclusionYear()) {
+	if (getConclusionYear() != null && now.getYear() < getConclusionYear()) {
 	    result.add("error.personalInformation.year.after.current");
 	}
 
 	int birthYear = getStudent().getPerson().getDateOfBirthYearMonthDay().getYear();
-	if (getConclusionYear() < (birthYear + 15)) {
+	if (getConclusionYear() != null && getConclusionYear() < (birthYear + 15)) {
 	    result.add("error.personalInformation.year.before.fifteenYearOld.limit");
 	}
 
