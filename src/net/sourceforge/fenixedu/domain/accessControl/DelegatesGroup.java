@@ -75,9 +75,10 @@ public class DelegatesGroup extends LeafGroup {
     public String getName() {
 	final ResourceBundle resourceBundle = ResourceBundle.getBundle(getPresentationNameBundle(), Language.getLocale());
 	if (hasDegree()) {
-	    return super.getName() + " " + resourceBundle.getString("label.of") + " " + getDegree().getSigla();
+	    return resourceBundle.getString("label." + getClass().getSimpleName()) + " " + resourceBundle.getString("label.of")
+		    + " " + getDegree().getSigla();
 	} else {
-	    return resourceBundle.getString(super.getPresentationNameKey() + "." + getFunctionType().getName());
+	    return resourceBundle.getString("label." + getClass().getSimpleName() + "." + getFunctionType().getName());
 	}
     }
 

@@ -112,7 +112,7 @@ public class DelegateStudentsGroup extends LeafGroup {
 
     @Override
     public String getPresentationNameKey() {
-	return super.getPresentationNameKey() + "." + getFunctionType().getName()
+	return "label." + getClass().getSimpleName() + "." + getFunctionType().getName()
 		+ (getSender().hasStudent() ? "" : ".coordinator");
     }
 
