@@ -7,6 +7,7 @@ import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Role;
 import net.sourceforge.fenixedu.domain.accessControl.groups.language.Argument;
 import net.sourceforge.fenixedu.domain.person.RoleType;
+import net.sourceforge.fenixedu.util.BundleUtil;
 
 public class RoleTypeGroup extends Group {
 
@@ -39,6 +40,12 @@ public class RoleTypeGroup extends Group {
     @Override
     protected Argument[] getExpressionArguments() {
 	return null;
+    }
+
+    @Override
+    public String getName() {
+	final String name = BundleUtil.getStringFromResourceBundle(getPresentationNameBundle(), getPresentationNameKey());
+	return name != null ? name : super.getName();
     }
 
     @Override
