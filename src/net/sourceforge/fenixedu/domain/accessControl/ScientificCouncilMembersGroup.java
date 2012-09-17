@@ -13,4 +13,9 @@ public class ScientificCouncilMembersGroup extends RoleTypeGroup {
 	super(RoleType.SCIENTIFIC_COUNCIL);
     }
 
+    @Override
+    public String getPresentationNameKey() {
+	return "label.name." + getClass().getSimpleName();
+    }
+
 }
