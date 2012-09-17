@@ -44,6 +44,11 @@ public class DynamicGroup extends Group implements GroupContextProvider {
 	return this.name;
     }
 
+    @Override
+    public boolean hasPresentationNameDynamic() {
+	return true;
+    }
+
     /**
      * @return the list of arguments available to this dynamic group
      */
@@ -74,6 +79,7 @@ public class DynamicGroup extends Group implements GroupContextProvider {
     /**
      * @return the current expression group context
      */
+    @Override
     public GroupContext getContext() {
 	return this.provider.getContext();
     }

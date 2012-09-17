@@ -7,7 +7,6 @@ import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.util.BundleUtil;
 
 public class DegreeAllCoordinatorsGroup extends DegreeGroup {
 
@@ -18,11 +17,8 @@ public class DegreeAllCoordinatorsGroup extends DegreeGroup {
     private static final long serialVersionUID = 1L;
 
     @Override
-    public String getName() {
-	String name = BundleUtil.getStringFromResourceBundle("resources.GroupNameResources", "label.name."
-		+ getClass().getSimpleName(), getDegree().getPresentationName());
-	name = name != null ? name : getExpression();
-	return name;
+    public String[] getPresentationNameKeyArgs() {
+	return new String[] { getDegree().getPresentationName() };
     }
 
     @Override

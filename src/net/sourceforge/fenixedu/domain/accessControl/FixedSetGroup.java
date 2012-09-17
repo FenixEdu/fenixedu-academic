@@ -40,6 +40,11 @@ public class FixedSetGroup extends LeafGroup {
 	return name;
     }
 
+    @Override
+    public boolean hasPresentationNameDynamic() {
+	return true;
+    }
+
     public FixedSetGroup(Person... persons) {
 	this();
 
@@ -109,6 +114,7 @@ public class FixedSetGroup extends LeafGroup {
 
     public static class Builder implements GroupBuilder {
 
+	@Override
 	public Group build(Object[] arguments) {
 	    List<Person> persons = new ArrayList<Person>();
 
@@ -137,10 +143,12 @@ public class FixedSetGroup extends LeafGroup {
 	    return new FixedSetGroup(persons);
 	}
 
+	@Override
 	public int getMinArguments() {
 	    return 0;
 	}
 
+	@Override
 	public int getMaxArguments() {
 	    return Integer.MAX_VALUE;
 	}

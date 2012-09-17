@@ -13,7 +13,6 @@ import net.sourceforge.fenixedu.domain.accessControl.groups.language.StaticArgum
 import net.sourceforge.fenixedu.domain.accessControl.groups.language.exceptions.VariableNotDefinedException;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.student.Registration;
-import net.sourceforge.fenixedu.util.BundleUtil;
 
 public class StudentsFromDegreeTypeGroup extends Group {
 
@@ -40,9 +39,8 @@ public class StudentsFromDegreeTypeGroup extends Group {
     }
 
     @Override
-    public String getName() {
-	return BundleUtil.getStringFromResourceBundle("resources.GroupNameResources",
-		"label.name." + getClass().getSimpleName() + "." + degreeType.toString());
+    public String getPresentationNameKey() {
+	return super.getPresentationNameKey() + "." + degreeType.toString();
     }
 
     @Override
@@ -52,6 +50,7 @@ public class StudentsFromDegreeTypeGroup extends Group {
 
     public static class Builder implements GroupBuilder {
 
+	@Override
 	public Group build(Object[] arguments) {
 	    final DegreeType degreeType = DegreeType.valueOf((String) arguments[0]);
 	    if (degreeType == null) {
@@ -61,10 +60,12 @@ public class StudentsFromDegreeTypeGroup extends Group {
 
 	}
 
+	@Override
 	public int getMaxArguments() {
 	    return 1;
 	}
 
+	@Override
 	public int getMinArguments() {
 	    return 1;
 	}

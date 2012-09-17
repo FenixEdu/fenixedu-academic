@@ -16,6 +16,7 @@ public abstract class AbstractExecutionCourseTeachersGroup extends ExecutionCour
 
     protected class ProfessorshipPersonTransformer implements Transformer {
 
+	@Override
 	public Object transform(Object arg0) {
 	    Professorship professorship = (Professorship) arg0;
 
@@ -57,4 +58,5 @@ public abstract class AbstractExecutionCourseTeachersGroup extends ExecutionCour
 	}
 	return false;
     }
+
 }

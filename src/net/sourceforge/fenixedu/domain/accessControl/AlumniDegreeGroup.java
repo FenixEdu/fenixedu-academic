@@ -47,12 +47,13 @@ public class AlumniDegreeGroup extends DegreeGroup {
     }
     
     @Override
-    public String getName() {
-	return BundleUtil.getStringFromResourceBundle("resources.GroupNameResources", "label.name.AlumniDegreeGroup", getDegree().getPresentationName());
+    public String[] getPresentationNameKeyArgs() {
+	return new String[] { getDegree().getPresentationName() };
     }
     
     public static class Builder extends DegreeGroup.DegreeGroupBuilder {
 
+	@Override
 	public Group build(Object[] arguments) {
 	    return new AlumniDegreeGroup(getDegree(arguments));
 	}

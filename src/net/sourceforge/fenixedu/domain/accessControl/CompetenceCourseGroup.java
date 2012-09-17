@@ -17,7 +17,6 @@ import net.sourceforge.fenixedu.domain.accessControl.groups.language.exceptions.
 import net.sourceforge.fenixedu.domain.accessControl.groups.language.operators.IdOperator;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.Student;
-import net.sourceforge.fenixedu.util.BundleUtil;
 
 /**
  * This group represents the group of students associated to at least one degree
@@ -34,14 +33,6 @@ public class CompetenceCourseGroup extends ExecutionCourseGroup {
 
     public CompetenceCourseGroup(ExecutionCourse executionCourse) {
 	super(executionCourse);
-    }
-
-    @Override
-    public String getName() {
-	
-	return BundleUtil.getStringFromResourceBundle("resources.SiteResources",
-		"label.net.sourceforge.fenixedu.domain.accessControl.CompetenceCourseGroup",
-		new String[] { getExecutionCourse().getNome() });
     }
 
     @Override

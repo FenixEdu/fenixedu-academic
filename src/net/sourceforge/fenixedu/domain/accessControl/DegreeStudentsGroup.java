@@ -7,7 +7,6 @@ import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.student.Registration;
-import net.sourceforge.fenixedu.util.BundleUtil;
 
 public class DegreeStudentsGroup extends DegreeGroup {
 
@@ -48,13 +47,13 @@ public class DegreeStudentsGroup extends DegreeGroup {
 	return false;
     }
 
-
     @Override
-    public String getName() {
-	return BundleUtil.getStringFromResourceBundle("resources/GroupNameResources", "label.name." + getClass().getSimpleName(), getObject().getPresentationName());
+    public String[] getPresentationNameKeyArgs() {
+	return new String[] { getObject().getPresentationName() };
     }
 
     public static class Builder extends DegreeGroup.DegreeGroupBuilder {
+	@Override
 	public Group build(Object[] arguments) {
 	    return new DegreeStudentsGroup(getDegree(arguments));
 	}

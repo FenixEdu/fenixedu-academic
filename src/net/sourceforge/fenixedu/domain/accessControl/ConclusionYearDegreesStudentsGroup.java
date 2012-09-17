@@ -14,7 +14,6 @@ import net.sourceforge.fenixedu.domain.accessControl.groups.language.GroupBuilde
 import net.sourceforge.fenixedu.domain.accessControl.groups.language.exceptions.WrongTypeOfArgumentException;
 import net.sourceforge.fenixedu.domain.accessControl.groups.language.operators.IdOperator;
 import net.sourceforge.fenixedu.domain.student.Registration;
-import net.sourceforge.fenixedu.util.BundleUtil;
 
 import org.apache.commons.lang.ArrayUtils;
 import org.joda.time.LocalDate;
@@ -97,10 +96,9 @@ public class ConclusionYearDegreesStudentsGroup extends LeafGroup {
 
     @Override
     public String getName() {
-	StringBuilder executionYears = new StringBuilder(
-		BundleUtil.getStringFromResourceBundle("resources.GroupNameResources",
-		"label.name.executionYear", getRegistrationEnd().getName()));
-	StringBuilder degreeNames = new StringBuilder();
+	final StringBuilder executionYears = new StringBuilder(super.getName());
+
+	final StringBuilder degreeNames = new StringBuilder();
 	for (Iterator<Degree> iterator = getDegrees().iterator(); iterator.hasNext();) {
 	    Degree degree = iterator.next();
 	    degreeNames.append(degree.getPresentationName());
@@ -111,8 +109,24 @@ public class ConclusionYearDegreesStudentsGroup extends LeafGroup {
 	return executionYears.append(degreeNames).toString();
     }
 
+    @Override
+    public boolean hasPresentationNameDynamic() {
+	return true;
+    }
+
+    @Override
+    public String getPresentationNameKey() {
+	return "label.name.executionYear";
+    }
+
+    @Override
+    public String[] getPresentationNameKeyArgs() {
+	return new String[] { getRegistrationEnd().getName() };
+    }
+
     public static class Builder implements GroupBuilder {
 
+	@Override
 	public Group build(Object[] arguments) {
 	    List<Degree> degrees = new ArrayList<Degree>();
 	    ExecutionYear endRegistrationYear;
@@ -131,10 +145,12 @@ public class ConclusionYearDegreesStudentsGroup extends LeafGroup {
 	    return new ConclusionYearDegreesStudentsGroup(degrees, endRegistrationYear);
 	}
 
+	@Override
 	public int getMinArguments() {
 	    return 2;
 	}
 
+	@Override
 	public int getMaxArguments() {
 	    return 50;
 	}

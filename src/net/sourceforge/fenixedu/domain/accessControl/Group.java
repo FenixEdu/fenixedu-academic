@@ -167,9 +167,29 @@ public abstract class Group implements Serializable, IGroup {
 
     @Override
     public String getName() {
-	String name = BundleUtil.getStringFromResourceBundle("resources.GroupNameResources", "label.name."
-		+ getClass().getSimpleName());
+	final String name = BundleUtil.getStringFromResourceBundle(getPresentationNameBundle(), getPresentationNameKey(),
+		getPresentationNameKeyArgs());
 	return name != null ? name : getExpression();
+    }
+
+    @Override
+    public boolean hasPresentationNameDynamic() {
+	return false;
+    }
+
+    @Override
+    public String getPresentationNameBundle() {
+	return "resources.GroupNameResources";
+    }
+
+    @Override
+    public String getPresentationNameKey() {
+	return "label.name." + getClass().getSimpleName();
+    }
+
+    @Override
+    public String[] getPresentationNameKeyArgs() {
+	return null;
     }
 
     /**

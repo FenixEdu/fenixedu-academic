@@ -25,6 +25,11 @@ public class PersonGroup extends DomainBackedGroup<Person> {
     }
 
     @Override
+    public boolean hasPresentationNameDynamic() {
+	return true;
+    }
+
+    @Override
     public Set<Person> getElements() {
 	Set<Person> elements = super.buildSet();
 
@@ -60,6 +65,7 @@ public class PersonGroup extends DomainBackedGroup<Person> {
      */
     public static class Builder implements GroupBuilder {
 
+	@Override
 	public Group build(Object[] arguments) {
 	    if (arguments.length != 1) {
 		throw new WrongNumberOfArgumentsException(arguments.length, getMinArguments(), getMaxArguments());
@@ -110,10 +116,12 @@ public class PersonGroup extends DomainBackedGroup<Person> {
 	    return new PersonGroup(person);
 	}
 
+	@Override
 	public int getMinArguments() {
 	    return 1;
 	}
 
+	@Override
 	public int getMaxArguments() {
 	    return 1;
 	}

@@ -15,7 +15,6 @@ import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CycleCurriculumGroup;
-import net.sourceforge.fenixedu.util.BundleUtil;
 
 public class DegreeStudentsCycleGroup extends DegreeStudentsGroup {
 
@@ -79,13 +78,13 @@ public class DegreeStudentsCycleGroup extends DegreeStudentsGroup {
     }
 
     @Override
-    public String getName() {
-	return BundleUtil.getStringFromResourceBundle("resources.GroupNameResources",
-		"label.name." + getClass().getSimpleName(), getObject().getPresentationName(), getCycleType().getDescription());
+    public String[] getPresentationNameKeyArgs() {
+	return new String[] { getObject().getPresentationName(), getCycleType().getDescription() };
     }
 
     public static class Builder implements GroupBuilder {
 
+	@Override
 	public Group build(Object[] arguments) {
 	    try {
 		final String cycleTypeName = (String) arguments[1];
@@ -97,10 +96,12 @@ public class DegreeStudentsCycleGroup extends DegreeStudentsGroup {
 	    }
 	}
 
+	@Override
 	public int getMinArguments() {
 	    return 2;
 	}
 
+	@Override
 	public int getMaxArguments() {
 	    return 2;
 	}

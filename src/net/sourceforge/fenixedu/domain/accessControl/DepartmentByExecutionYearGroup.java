@@ -8,7 +8,6 @@ import net.sourceforge.fenixedu.domain.accessControl.groups.language.Argument;
 import net.sourceforge.fenixedu.domain.accessControl.groups.language.GroupBuilder;
 import net.sourceforge.fenixedu.domain.accessControl.groups.language.StaticArgument;
 import net.sourceforge.fenixedu.domain.accessControl.groups.language.exceptions.WrongTypeOfArgumentException;
-import net.sourceforge.fenixedu.util.BundleUtil;
 
 public abstract class DepartmentByExecutionYearGroup extends LeafGroup {
 
@@ -57,17 +56,13 @@ public abstract class DepartmentByExecutionYearGroup extends LeafGroup {
     }
 
     @Override
-    public String getName() {
-	return BundleUtil.getStringFromResourceBundle("resources/GroupNameResources", "label.name." + getClass().getSimpleName());
-    }
-
-    @Override
     protected Argument[] getExpressionArguments() {
 	return new Argument[] { new StaticArgument(getExecutionYear().getYear()), new StaticArgument(getDepartment().getName()) };
     }
 
     public static abstract class Builder implements GroupBuilder {
 
+	@Override
 	public Group build(Object[] arguments) {
 	    String yearName;
 	    String departmentName;
@@ -89,10 +84,12 @@ public abstract class DepartmentByExecutionYearGroup extends LeafGroup {
 
 	protected abstract DepartmentByExecutionYearGroup buildConcreteGroup(String year, String department);
 
+	@Override
 	public int getMinArguments() {
 	    return 2;
 	}
 
+	@Override
 	public int getMaxArguments() {
 	    return 2;
 	}

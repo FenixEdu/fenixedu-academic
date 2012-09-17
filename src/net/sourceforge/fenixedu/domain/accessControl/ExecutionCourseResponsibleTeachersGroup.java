@@ -8,7 +8,6 @@ import net.sourceforge.fenixedu.domain.accessControl.groups.language.Argument;
 import net.sourceforge.fenixedu.domain.accessControl.groups.language.GroupBuilder;
 import net.sourceforge.fenixedu.domain.accessControl.groups.language.exceptions.GroupDynamicExpressionException;
 import net.sourceforge.fenixedu.domain.accessControl.groups.language.operators.IdOperator;
-import net.sourceforge.fenixedu.util.BundleUtil;
 
 public class ExecutionCourseResponsibleTeachersGroup extends AbstractExecutionCourseTeachersGroup {
 
@@ -19,10 +18,8 @@ public class ExecutionCourseResponsibleTeachersGroup extends AbstractExecutionCo
     }
 
     @Override
-    public String getName() {
-	return BundleUtil.getStringFromResourceBundle("resources.SiteResources",
-		"label.net.sourceforge.fenixedu.domain.accessControl.ExecutionCourseResponsibleTeachersGroupWithName",
-		new String[] { getExecutionCourse().getNome() });
+    public String getPresentationNameKey() {
+	return super.getPresentationNameKey() + "ExecutionCourseTeachersGroupWithName";
     }
 
     @Override

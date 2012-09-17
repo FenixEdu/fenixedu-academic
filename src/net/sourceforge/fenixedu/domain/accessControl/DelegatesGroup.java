@@ -73,13 +73,22 @@ public class DelegatesGroup extends LeafGroup {
 
     @Override
     public String getName() {
-	final ResourceBundle resourceBundle = ResourceBundle.getBundle("resources.DelegateResources", Language.getLocale());
+	final ResourceBundle resourceBundle = ResourceBundle.getBundle(getPresentationNameBundle(), Language.getLocale());
 	if (hasDegree()) {
-	    return resourceBundle.getString("label." + getClass().getSimpleName()) + " " + resourceBundle.getString("label.of")
-		    + " " + getDegree().getSigla();
+	    return super.getName() + " " + resourceBundle.getString("label.of") + " " + getDegree().getSigla();
 	} else {
-	    return resourceBundle.getString("label." + getClass().getSimpleName() + "." + getFunctionType().getName());
+	    return resourceBundle.getString(super.getPresentationNameKey() + "." + getFunctionType().getName());
 	}
+    }
+
+    @Override
+    public boolean hasPresentationNameDynamic() {
+	return true;
+    }
+
+    @Override
+    public String getPresentationNameBundle() {
+	return "resources.DelegateResources";
     }
 
     public Degree getDegree() {
@@ -96,6 +105,7 @@ public class DelegatesGroup extends LeafGroup {
 
     public static class Builder implements GroupBuilder {
 
+	@Override
 	public Group build(Object[] arguments) {
 	    final Object arg0 = arguments[0];
 	    if (arg0 instanceof Degree) {
@@ -110,10 +120,12 @@ public class DelegatesGroup extends LeafGroup {
 	    }
 	}
 
+	@Override
 	public int getMaxArguments() {
 	    return 1;
 	}
 
+	@Override
 	public int getMinArguments() {
 	    return 1;
 	}

@@ -16,6 +16,7 @@ import net.sourceforge.fenixedu.domain.Person;
  * @version $Id$
  */
 public interface IGroup {
+
     public int getElementsCount();
 
     public boolean isMember(Person person);
@@ -27,4 +28,13 @@ public interface IGroup {
     public String getExpression();
 
     public String getName();
+
+    public boolean hasPresentationNameDynamic();
+
+    public String getPresentationNameBundle();
+
+    public String getPresentationNameKey();
+
+    public String[] getPresentationNameKeyArgs();
+
 }

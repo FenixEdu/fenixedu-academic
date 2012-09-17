@@ -43,12 +43,18 @@ public class VigilancyGroup extends DomainBackedGroup<Vigilancy> {
     }
 
     @Override
+    public boolean hasPresentationNameDynamic() {
+	return true;
+    }
+
+    @Override
     protected Argument[] getExpressionArguments() {
 	return new Argument[] { new IdOperator(getObject()) };
     }
 
     public static class Builder implements GroupBuilder {
 
+	@Override
 	public Group build(Object[] arguments) {
 	    Vigilancy vigilancy = (Vigilancy) arguments[0];
 	    if (vigilancy == null) {
@@ -58,10 +64,12 @@ public class VigilancyGroup extends DomainBackedGroup<Vigilancy> {
 
 	}
 
+	@Override
 	public int getMaxArguments() {
 	    return 1;
 	}
 
+	@Override
 	public int getMinArguments() {
 	    return 1;
 	}

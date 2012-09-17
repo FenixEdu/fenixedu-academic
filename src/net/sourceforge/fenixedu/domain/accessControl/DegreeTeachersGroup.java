@@ -8,13 +8,9 @@ import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Professorship;
-import net.sourceforge.fenixedu.util.BundleUtil;
 
 public class DegreeTeachersGroup extends DegreeGroup {
 
-    /**
-         * 
-         */
     private static final long serialVersionUID = 8466471514890333054L;
 
     public DegreeTeachersGroup(Degree degree) {
@@ -22,9 +18,8 @@ public class DegreeTeachersGroup extends DegreeGroup {
     }
 
     @Override
-    public String getName() {
-	return BundleUtil.getStringFromResourceBundle("resources.GroupNameResources", "label.name." + getClass().getSimpleName(),
-		getObject().getName());
+    public String[] getPresentationNameKeyArgs() {
+	return new String[] { getObject().getName() };
     }
 
     @Override

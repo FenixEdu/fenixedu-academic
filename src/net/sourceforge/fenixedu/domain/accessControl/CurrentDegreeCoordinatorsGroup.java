@@ -5,7 +5,6 @@ import java.util.Set;
 import net.sourceforge.fenixedu.domain.Coordinator;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.util.BundleUtil;
 
 /**
  * Group of all the persons in the last coordination team defined for the target
@@ -25,10 +24,8 @@ public class CurrentDegreeCoordinatorsGroup extends DegreeGroup {
     }
 
     @Override
-    public String getName() {
-	String name = BundleUtil.getStringFromResourceBundle("resources.GroupNameResources",
-		"label.name." + getClass().getSimpleName(), new String[] { getDegree().getNameI18N().getContent() });
-	return name != null ? name : getExpression();
+    public String[] getPresentationNameKeyArgs() {
+	return new String[] { getDegree().getNameI18N().getContent() };
     }
 
     @Override
@@ -46,6 +43,7 @@ public class CurrentDegreeCoordinatorsGroup extends DegreeGroup {
     
     public static class Builder extends DegreeGroup.DegreeGroupBuilder {
 
+	@Override
 	public Group build(Object[] arguments) {
 	    return new CurrentDegreeCoordinatorsGroup(getDegree(arguments));
 	}

@@ -10,7 +10,6 @@ import net.sourceforge.fenixedu.domain.accessControl.groups.language.exceptions.
 import net.sourceforge.fenixedu.domain.accessControl.groups.language.operators.IdOperator;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Contract;
 import net.sourceforge.fenixedu.domain.organizationalStructure.ScientificAreaUnit;
-import net.sourceforge.fenixedu.util.BundleUtil;
 
 public class ScientificAreaMemberGroup extends DomainBackedGroup<ScientificAreaUnit> {
 
@@ -18,9 +17,19 @@ public class ScientificAreaMemberGroup extends DomainBackedGroup<ScientificAreaU
 	super(unit);
     }
 
-    public String getName() {
-	return BundleUtil.getStringFromResourceBundle("resources.DepartmentMemberResources",
-		"label.scientificUnitElement", new String[] { getObject().getName() });
+    @Override
+    public String getPresentationNameBundle() {
+	return "resources.DepartmentMemberResources";
+    }
+
+    @Override
+    public String getPresentationNameKey() {
+	return "label.scientificUnitElement";
+    }
+
+    @Override
+    public String[] getPresentationNameKeyArgs() {
+	return new String[] { getObject().getName() };
     }
 
     @Override
@@ -44,6 +53,7 @@ public class ScientificAreaMemberGroup extends DomainBackedGroup<ScientificAreaU
 
     public static class Builder implements GroupBuilder {
 
+	@Override
 	public Group build(Object[] arguments) {
 	    ScientificAreaUnit unit = (ScientificAreaUnit) arguments[0];
 	    if (unit == null) {
@@ -53,10 +63,12 @@ public class ScientificAreaMemberGroup extends DomainBackedGroup<ScientificAreaU
 
 	}
 
+	@Override
 	public int getMaxArguments() {
 	    return 1;
 	}
 
+	@Override
 	public int getMinArguments() {
 	    return 1;
 	}

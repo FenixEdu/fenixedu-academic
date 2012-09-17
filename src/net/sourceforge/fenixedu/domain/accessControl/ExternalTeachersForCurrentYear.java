@@ -10,7 +10,6 @@ import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.TeacherAuthorization;
 import net.sourceforge.fenixedu.domain.accessControl.groups.language.Argument;
-import net.sourceforge.fenixedu.util.BundleUtil;
 
 public class ExternalTeachersForCurrentYear extends Group {
 
@@ -47,12 +46,6 @@ public class ExternalTeachersForCurrentYear extends Group {
     @Override
     protected Argument[] getExpressionArguments() {
 	return null;
-    }
-
-    @Override
-    public String getName() {
-	String name = BundleUtil.getStringFromResourceBundle("resources.GroupNameResources", "label.name." + getClass().getSimpleName());
-	return name != null ? name : super.getName();
     }
 
 }

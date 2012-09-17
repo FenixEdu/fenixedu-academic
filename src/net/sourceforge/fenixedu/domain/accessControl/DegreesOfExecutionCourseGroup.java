@@ -17,7 +17,6 @@ import net.sourceforge.fenixedu.domain.accessControl.groups.language.GroupBuilde
 import net.sourceforge.fenixedu.domain.accessControl.groups.language.exceptions.GroupDynamicExpressionException;
 import net.sourceforge.fenixedu.domain.accessControl.groups.language.operators.IdOperator;
 import net.sourceforge.fenixedu.domain.student.Registration;
-import net.sourceforge.fenixedu.util.BundleUtil;
 
 /**
  * This group represents the group of students associated to at least one degree
@@ -34,13 +33,6 @@ public class DegreesOfExecutionCourseGroup extends ExecutionCourseGroup {
 
     public DegreesOfExecutionCourseGroup(ExecutionCourse executionCourse) {
 	super(executionCourse);
-    }
-
-    @Override
-    public String getName() {
-	return BundleUtil.getStringFromResourceBundle("resources.SiteResources",
-		"label.net.sourceforge.fenixedu.domain.accessControl.DegreesOfExecutionCourseGroup",
-		new String[] { getExecutionCourse().getNome() });
     }
 
     @Override

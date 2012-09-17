@@ -96,8 +96,8 @@ public class RoleGroup extends LeafGroup {
     }
 
     @Override
-    public String getName() {
-	return new RoleTypeGroup(roleType).getName();
+    public String getPresentationNameKey() {
+	return super.getPresentationNameKey() + "." + roleType;
     }
 
     /**
@@ -107,6 +107,7 @@ public class RoleGroup extends LeafGroup {
      */
     public static class Builder implements GroupBuilder {
 
+	@Override
 	public Group build(Object[] arguments) {
 	    if (arguments.length != 1) {
 		throw new WrongNumberOfArgumentsException(arguments.length, getMinArguments(), getMaxArguments());
@@ -129,10 +130,12 @@ public class RoleGroup extends LeafGroup {
 	    }
 	}
 
+	@Override
 	public int getMinArguments() {
 	    return 1;
 	}
 
+	@Override
 	public int getMaxArguments() {
 	    return 1;
 	}

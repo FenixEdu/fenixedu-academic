@@ -20,8 +20,14 @@ public class PersistentGroup extends DomainBackedGroup<PersistentGroupMembers> {
 	return getObject();
     }
 
+    @Override
     public String getName() {
 	return getObject().getName();
+    }
+
+    @Override
+    public boolean hasPresentationNameDynamic() {
+	return true;
     }
 
     @Override
@@ -50,14 +56,17 @@ public class PersistentGroup extends DomainBackedGroup<PersistentGroupMembers> {
 
     public static class Builder implements GroupBuilder {
 
+	@Override
 	public Group build(Object[] arguments) {
 	    return new PersistentGroup((PersistentGroupMembers) arguments[0]);
 	}
 
+	@Override
 	public int getMinArguments() {
 	    return 1;
 	}
 
+	@Override
 	public int getMaxArguments() {
 	    return 1;
 	}

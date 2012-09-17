@@ -16,7 +16,6 @@ import net.sourceforge.fenixedu.domain.accessControl.groups.language.operators.I
 import net.sourceforge.fenixedu.domain.organizationalStructure.FunctionType;
 import net.sourceforge.fenixedu.domain.organizationalStructure.PersonFunction;
 import net.sourceforge.fenixedu.domain.student.Student;
-import net.sourceforge.fenixedu.util.BundleUtil;
 
 public class DelegateStudentsGroup extends LeafGroup {
 
@@ -68,6 +67,7 @@ public class DelegateStudentsGroup extends LeafGroup {
 
     public static class Builder implements GroupBuilder {
 
+	@Override
 	public Group build(Object[] arguments) {
 	    try {
 		if (arguments.length > 1 && arguments[1] != null) {
@@ -83,10 +83,12 @@ public class DelegateStudentsGroup extends LeafGroup {
 	    }
 	}
 
+	@Override
 	public int getMinArguments() {
 	    return 1;
 	}
 
+	@Override
 	public int getMaxArguments() {
 	    return 2;
 	}
@@ -104,13 +106,14 @@ public class DelegateStudentsGroup extends LeafGroup {
     }
 
     @Override
-    public String getName() {
-	if (getSender().hasStudent())
-	    return BundleUtil.getStringFromResourceBundle("resources.DelegateResources", "label." + getClass().getSimpleName()
-		    + "." + getFunctionType().getName());
-	else
-	    return BundleUtil.getStringFromResourceBundle("resources.DelegateResources", "label." + getClass().getSimpleName()
-		    + "." + getFunctionType().getName() + ".coordinator");
+    public String getPresentationNameBundle() {
+	return "resources.DelegateResources";
+    }
+
+    @Override
+    public String getPresentationNameKey() {
+	return super.getPresentationNameKey() + "." + getFunctionType().getName()
+		+ (getSender().hasStudent() ? "" : ".coordinator");
     }
 
     public FunctionType getFunctionType() {

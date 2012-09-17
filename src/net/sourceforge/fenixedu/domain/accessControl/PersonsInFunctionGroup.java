@@ -8,7 +8,6 @@ import net.sourceforge.fenixedu.domain.accessControl.groups.language.GroupBuilde
 import net.sourceforge.fenixedu.domain.accessControl.groups.language.operators.IdOperator;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Function;
 import net.sourceforge.fenixedu.domain.organizationalStructure.PersonFunction;
-import net.sourceforge.fenixedu.util.BundleUtil;
 
 import org.joda.time.YearMonthDay;
 
@@ -50,21 +49,23 @@ public class PersonsInFunctionGroup extends DomainBackedGroup<Function> {
     }
 
     @Override
-    public String getName() {
-	return BundleUtil.getStringFromResourceBundle("resources.GroupNameResources",
-		"label.name." + getClass().getSimpleName(), getObject().getName(), getObject().getUnit().getName());
+    public String[] getPresentationNameKeyArgs() {
+	return new String[] { getObject().getName(), getObject().getUnit().getName() };
     }
 
     public static class Builder implements GroupBuilder {
 
+	@Override
 	public Group build(Object[] arguments) {
 	    return new PersonsInFunctionGroup((Function) arguments[0]);
 	}
 
+	@Override
 	public int getMaxArguments() {
 	    return 1;
 	}
 
+	@Override
 	public int getMinArguments() {
 	    return 1;
 	}

@@ -8,7 +8,6 @@ import net.sourceforge.fenixedu.domain.UnitSite;
 import net.sourceforge.fenixedu.domain.accessControl.groups.language.Argument;
 import net.sourceforge.fenixedu.domain.accessControl.groups.language.GroupBuilder;
 import net.sourceforge.fenixedu.domain.accessControl.groups.language.operators.IdOperator;
-import net.sourceforge.fenixedu.util.BundleUtil;
 
 public class WebSiteManagersGroup extends DomainBackedGroup<UnitSite> {
 
@@ -33,22 +32,24 @@ public class WebSiteManagersGroup extends DomainBackedGroup<UnitSite> {
     }
 
     @Override
-    public String getName() {
-	return BundleUtil.getStringFromResourceBundle("resources.GroupNameResources",
-		"label.name." + getClass().getSimpleName(), getObject().getUnit().getName());
+    public String[] getPresentationNameKeyArgs() {
+	return new String[] { getObject().getUnit().getName() };
     }
 
     public static class Builder implements GroupBuilder {
 
+	@Override
 	public Group build(Object[] arguments) {
 	    UnitSite site = (UnitSite) arguments[0];
 	    return new WebSiteManagersGroup(site);
 	}
 
+	@Override
 	public int getMaxArguments() {
 	    return 1;
 	}
 
+	@Override
 	public int getMinArguments() {
 	    return 1;
 	}

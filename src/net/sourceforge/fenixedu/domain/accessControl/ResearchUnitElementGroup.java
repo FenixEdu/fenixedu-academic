@@ -9,7 +9,6 @@ import net.sourceforge.fenixedu.domain.accessControl.groups.language.GroupBuilde
 import net.sourceforge.fenixedu.domain.accessControl.groups.language.exceptions.VariableNotDefinedException;
 import net.sourceforge.fenixedu.domain.accessControl.groups.language.operators.IdOperator;
 import net.sourceforge.fenixedu.domain.organizationalStructure.ResearchUnit;
-import net.sourceforge.fenixedu.util.BundleUtil;
 
 public class ResearchUnitElementGroup extends DomainBackedGroup<ResearchUnit> {
 
@@ -23,8 +22,13 @@ public class ResearchUnitElementGroup extends DomainBackedGroup<ResearchUnit> {
     }
 
     @Override
-    public String getName() {
-	return BundleUtil.getMessageFromModuleOrApplication("Researcher", "label.researchUnitElement");
+    public String getPresentationNameBundle() {
+	return "resources.Researcher";
+    }
+
+    @Override
+    public String getPresentationNameKey() {
+	return "label.researchUnitElement";
     }
 
     @Override
@@ -44,6 +48,7 @@ public class ResearchUnitElementGroup extends DomainBackedGroup<ResearchUnit> {
 
     public static class Builder implements GroupBuilder {
 
+	@Override
 	public Group build(Object[] arguments) {
 	    ResearchUnit unit = (ResearchUnit) arguments[0];
 	    if (unit == null) {
@@ -53,10 +58,12 @@ public class ResearchUnitElementGroup extends DomainBackedGroup<ResearchUnit> {
 
 	}
 
+	@Override
 	public int getMaxArguments() {
 	    return 1;
 	}
 
+	@Override
 	public int getMinArguments() {
 	    return 1;
 	}

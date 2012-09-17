@@ -24,4 +24,19 @@ public abstract class ExecutionCourseGroup extends DomainBackedGroup<ExecutionCo
 	return getExecutionCourse() != null;
     }
 
+    @Override
+    final public String getPresentationNameBundle() {
+	return "resources.SiteResources";
+    }
+
+    @Override
+    public String getPresentationNameKey() {
+	return "label.net.sourceforge.fenixedu.domain.accessControl." + this.getClass().getSimpleName();
+    }
+
+    @Override
+    final public String[] getPresentationNameKeyArgs() {
+	return new String[] { getExecutionCourse().getNome() };
+    }
+
 }

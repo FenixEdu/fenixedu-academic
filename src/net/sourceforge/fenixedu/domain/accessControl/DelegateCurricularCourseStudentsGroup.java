@@ -13,7 +13,6 @@ import net.sourceforge.fenixedu.domain.accessControl.groups.language.GroupBuilde
 import net.sourceforge.fenixedu.domain.accessControl.groups.language.exceptions.GroupDynamicExpressionException;
 import net.sourceforge.fenixedu.domain.accessControl.groups.language.operators.IdOperator;
 import net.sourceforge.fenixedu.domain.student.Registration;
-import net.sourceforge.fenixedu.util.BundleUtil;
 
 public class DelegateCurricularCourseStudentsGroup extends LeafGroup {
 
@@ -49,6 +48,7 @@ public class DelegateCurricularCourseStudentsGroup extends LeafGroup {
 
     public static class Builder implements GroupBuilder {
 
+	@Override
 	public Group build(Object[] arguments) {
 	    try {
 		return new DelegateCurricularCourseStudentsGroup((CurricularCourse) arguments[0], (ExecutionYear) arguments[1]);
@@ -58,10 +58,12 @@ public class DelegateCurricularCourseStudentsGroup extends LeafGroup {
 	    }
 	}
 
+	@Override
 	public int getMinArguments() {
 	    return 2;
 	}
 
+	@Override
 	public int getMaxArguments() {
 	    return 2;
 	}
@@ -80,8 +82,22 @@ public class DelegateCurricularCourseStudentsGroup extends LeafGroup {
 
     @Override
     public String getName() {
-	return getCurricularCourse().getName() + " - " + getNumberOfEnrolledStudents() + " "
-		+ BundleUtil.getStringFromResourceBundle("resources.DelegateResources", "label.enrolledStudents");
+	return getCurricularCourse().getName() + " - " + getNumberOfEnrolledStudents() + " " + super.getName();
+    }
+
+    @Override
+    public boolean hasPresentationNameDynamic() {
+	return true;
+    }
+
+    @Override
+    public String getPresentationNameBundle() {
+	return "resources.DelegateResources";
+    }
+
+    @Override
+    public String getPresentationNameKey() {
+	return "label.enrolledStudents";
     }
 
     public ExecutionYear getExecutionYear() {

@@ -10,7 +10,6 @@ import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.personnelSection.contracts.GiafProfessionalData;
 import net.sourceforge.fenixedu.domain.personnelSection.contracts.PersonProfessionalData;
 import net.sourceforge.fenixedu.domain.teacher.CategoryType;
-import net.sourceforge.fenixedu.util.BundleUtil;
 
 public class AllEmployeesGroup extends Group {
 
@@ -52,10 +51,8 @@ public class AllEmployeesGroup extends Group {
     }
 
     @Override
-    public String getName() {
-	String name = BundleUtil.getStringFromResourceBundle("resources.GroupNameResources", "label.name."
-		+ getClass().getSimpleName() + "." + RoleType.EMPLOYEE);
-	return name != null ? name : super.getName();
+    public String getPresentationNameKey() {
+	return super.getPresentationNameKey() + "." + RoleType.EMPLOYEE;
     }
 
 }

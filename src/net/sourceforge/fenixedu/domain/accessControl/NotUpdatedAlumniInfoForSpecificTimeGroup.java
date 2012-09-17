@@ -130,15 +130,16 @@ public class NotUpdatedAlumniInfoForSpecificTimeGroup extends LeafGroup {
 	String key = "label.name.alumniInfoNotUpdated.oneItem";
 	int iter=0;
 	if(isCheckFormationNotUpdated()) {
-	    args[iter] = BundleUtil.getStringFromResourceBundle("resources.GroupNameResources", "label.name.alumni.formationInfo");
+	    args[iter] = BundleUtil.getStringFromResourceBundle(getPresentationNameBundle(), "label.name.alumni.formationInfo");
 	    iter++;
 	}
 	if(isCheckJobNotUpdated()) {
-	    args[iter] = BundleUtil.getStringFromResourceBundle("resources.GroupNameResources", "label.name.alumni.jobInfo");
+	    args[iter] = BundleUtil.getStringFromResourceBundle(getPresentationNameBundle(), "label.name.alumni.jobInfo");
 	    iter++;
 	}
 	if(isCheckPersonalDataNotUpdated()) {
-	    args[iter] = BundleUtil.getStringFromResourceBundle("resources.GroupNameResources", "label.name.alumni.personalDataInfo");
+	    args[iter] = BundleUtil
+		    .getStringFromResourceBundle(getPresentationNameBundle(), "label.name.alumni.personalDataInfo");
 	    iter++;
 	}
 	if(iter == 2) {
@@ -147,11 +148,17 @@ public class NotUpdatedAlumniInfoForSpecificTimeGroup extends LeafGroup {
 	    key = "label.name.alumniInfoNotUpdated.threeItems";
 	}
 	args[iter]=getDaysNotUpdated().toString();
-	return BundleUtil.getStringFromResourceBundle("resources.GroupNameResources", key, args);
+	return BundleUtil.getStringFromResourceBundle(getPresentationNameBundle(), key, args);
+    }
+
+    @Override
+    public boolean hasPresentationNameDynamic() {
+	return true;
     }
 
     public static class Builder implements GroupBuilder {
 
+	@Override
 	public Group build(Object[] arguments) {
 	    Integer daysOperator;
 	    String jobArgument;
@@ -181,10 +188,12 @@ public class NotUpdatedAlumniInfoForSpecificTimeGroup extends LeafGroup {
 		    .valueOf(formationArgument), Boolean.valueOf(personalDataArgument));
 	}
 
+	@Override
 	public int getMinArguments() {
 	    return 4;
 	}
 
+	@Override
 	public int getMaxArguments() {
 	    return 4;
 	}

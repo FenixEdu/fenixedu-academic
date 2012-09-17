@@ -12,7 +12,6 @@ import net.sourceforge.fenixedu.domain.accessControl.groups.language.operators.I
 import net.sourceforge.fenixedu.domain.organizationalStructure.Accountability;
 import net.sourceforge.fenixedu.domain.organizationalStructure.ResearchContract;
 import net.sourceforge.fenixedu.domain.organizationalStructure.ResearchUnit;
-import net.sourceforge.fenixedu.util.BundleUtil;
 
 public class ResearchUnitMembersGroup extends DomainBackedGroup<ResearchUnit> {
 
@@ -26,8 +25,13 @@ public class ResearchUnitMembersGroup extends DomainBackedGroup<ResearchUnit> {
     }
 
     @Override
-    public String getName() {
-	return BundleUtil.getMessageFromModuleOrApplication("Messaging", "label." + classType.getSimpleName());
+    public String getPresentationNameBundle() {
+	return "resources.Messaging";
+    }
+
+    @Override
+    public String getPresentationNameKey() {
+	return "label." + classType.getSimpleName();
     }
 
     @Override
@@ -58,6 +62,7 @@ public class ResearchUnitMembersGroup extends DomainBackedGroup<ResearchUnit> {
 
     public static class Builder implements GroupBuilder {
 
+	@Override
 	public Group build(Object[] arguments) {
 	    ResearchUnit unit = (ResearchUnit) arguments[0];
 	    Class type = (Class) arguments[1];
@@ -68,10 +73,12 @@ public class ResearchUnitMembersGroup extends DomainBackedGroup<ResearchUnit> {
 
 	}
 
+	@Override
 	public int getMaxArguments() {
 	    return 2;
 	}
 
+	@Override
 	public int getMinArguments() {
 	    return 2;
 	}

@@ -14,7 +14,6 @@ import net.sourceforge.fenixedu.domain.accessControl.groups.language.exceptions.
 import net.sourceforge.fenixedu.domain.accessControl.groups.language.operators.IdOperator;
 import net.sourceforge.fenixedu.domain.space.Campus;
 import net.sourceforge.fenixedu.domain.student.Registration;
-import net.sourceforge.fenixedu.util.BundleUtil;
 
 public class AllStudentsByCampus extends Group {
 
@@ -47,10 +46,8 @@ public class AllStudentsByCampus extends Group {
     }
 
     @Override
-    public String getName() {
-	String name = BundleUtil.getStringFromResourceBundle("resources.GroupNameResources",
-		"label.name." + getClass().getSimpleName(), new String[] { getCampus().getName() });
-	return name != null ? name : super.getName();
+    public String[] getPresentationNameKeyArgs() {
+	return new String[] { getCampus().getName() };
     }
 
     @Override
@@ -60,6 +57,7 @@ public class AllStudentsByCampus extends Group {
 
     public static class Builder implements GroupBuilder {
 
+	@Override
 	public Group build(Object[] arguments) {
 	    final Campus campus = (Campus) arguments[0];
 	    if (campus == null) {
@@ -69,10 +67,12 @@ public class AllStudentsByCampus extends Group {
 
 	}
 
+	@Override
 	public int getMaxArguments() {
 	    return 1;
 	}
 
+	@Override
 	public int getMinArguments() {
 	    return 1;
 	}
