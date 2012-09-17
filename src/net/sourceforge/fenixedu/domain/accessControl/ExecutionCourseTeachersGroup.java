@@ -23,7 +23,7 @@ public class ExecutionCourseTeachersGroup extends AbstractExecutionCourseTeacher
 
     @Override
     public String getPresentationNameKey() {
-	return super.getPresentationNameKey() + "ExecutionCourseTeachersGroupWithName";
+	return "label.net.sourceforge.fenixedu.domain.accessControl.ExecutionCourseTeachersGroupWithName";
     }
     
     @Override
