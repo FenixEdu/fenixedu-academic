@@ -20,6 +20,22 @@ public class InternalOrExternalTeacherGroup extends DomainBackedGroup<Person> {
     }
 
     @Override
+    public boolean equals(Object other) {
+	boolean result = other != null;
+
+	if (result) {
+	    result = other.getClass().equals(this);
+	}
+
+	return result;
+    }
+
+    @Override
+    public int hashCode() {
+	return getClass().hashCode();
+    }
+
+    @Override
     public boolean isMember(Person person) {
 
 	return person != null && (person.hasRole(RoleType.TEACHER) || person.hasAnyProfessorships());
