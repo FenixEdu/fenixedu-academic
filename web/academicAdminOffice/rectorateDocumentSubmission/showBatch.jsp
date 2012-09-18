@@ -108,13 +108,15 @@
 		
 		<logic:present role="ACADEMIC_ADMINISTRATIVE_OFFICE">
             <fr:property name="link(print)" value="/documentRequestsManagement.do?method=printDocument" />
-        </logic:present>
-        <logic:present role="RECTORATE">
-            <fr:property name="link(print)" value="<%= "/rectorateIncomingBatches.do?method=printDocument&batchOid=" + batchOid %>"/>
-        </logic:present>
             <fr:property name="param(print)" value="idInternal/documentRequestId" />
             <fr:property name="key(print)" value="link.rectorateSubmission.reprint" />
             <fr:property name="bundle(print)" value="ACADEMIC_OFFICE_RESOURCES" />
+        </logic:present>
+<%-- 
+        <logic:present role="RECTORATE">
+            <fr:property name="link(print)" value="<%= "/rectorateIncomingBatches.do?method=printDocument&batchOid=" + batchOid %>"/>
+        </logic:present>
+--%>
 
 		<logic:present role="ACADEMIC_ADMINISTRATIVE_OFFICE">
             <fr:property name="linkFormat(receive)" value="${receivedActionLink}" />
