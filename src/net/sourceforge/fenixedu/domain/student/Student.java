@@ -426,11 +426,9 @@ public class Student extends Student_Base {
     public StudentDataShareAuthorization getPersonalDataAuthorizationAt(DateTime when) {
 	StudentDataShareAuthorization target = null;
 	for (StudentDataShareAuthorization authorization : getStudentDataShareAuthorizationSet()) {
-	    if (!(authorization instanceof StudentDataShareStudentsAssociationAuthorization)) {
-		if (authorization.getSince().isBefore(when)) {
-		    if (target == null || authorization.getSince().isAfter(target.getSince())) {
-			target = authorization;
-		    }
+	    if (authorization.isStudentDataShareAuthorization() && authorization.getSince().isBefore(when)) {
+		if (target == null || authorization.getSince().isAfter(target.getSince())) {
+		    target = authorization;
 		}
 	    }
 	}
@@ -1537,8 +1535,7 @@ public class Student extends Student_Base {
     }
 
     /*
-     * If student has delegate role, get the curricular courses he is
-     * responsible for
+     * If student has delegate role, get the curricular courses he is responsible for
      */
     public Set<CurricularCourse> getCurricularCoursesResponsibleForByFunctionType(FunctionType delegateFunctionType,
 	    ExecutionYear executionYear) {
@@ -1916,18 +1913,14 @@ public class Student extends Student_Base {
 		}
 
 		/*
-		 * The conditions below are not equivalent of bolonha master
-		 * degree registrations
+		 * The conditions below are not equivalent of bolonha master degree registrations
 		 * 
-		 * What if the student is enrolled on bolonha degree and master
-		 * degree at the same time? He will be able to subscribe. But
-		 * this rule is not applied for integrated master degrees
-		 * students
+		 * What if the student is enrolled on bolonha degree and master degree at the same time? He will be able to subscribe.
+		 * But this rule is not applied for integrated master degrees students
 		 * 
 		 * if (hasConcludedFirstCycle(registration)) { return true; }
 		 * 
-		 * if (hasAnyOtherConcludedFirstCycle(registration)) { return
-		 * true; }
+		 * if (hasAnyOtherConcludedFirstCycle(registration)) { return true; }
 		 */
 	    }
 	}

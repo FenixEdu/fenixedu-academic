@@ -32,4 +32,8 @@ public class StudentDataShareAuthorization extends StudentDataShareAuthorization
     protected RootDomainObject getRootDomainObject() {
 	return getStudent().getRootDomainObject();
     }
+
+    public boolean isStudentDataShareAuthorization() {
+	return true;
+    }
 }

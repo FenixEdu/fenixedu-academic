@@ -8,4 +8,9 @@ public class StudentDataShareStudentsAssociationAuthorization extends StudentDat
 	super();
 	init(student, authorization);
     }
+
+    @Override
+    public boolean isStudentDataShareAuthorization() {
+	return false;
+    }
 }
