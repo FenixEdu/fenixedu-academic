@@ -7,4 +7,10 @@ public class AllAlumniGroup extends RoleTypeGroup {
     public AllAlumniGroup() {
 	super(RoleType.ALUMNI);
     }
+
+    @Override
+    public String getPresentationNameKey() {
+	return "label.name." + getClass().getSimpleName();
+    }
+
 }
