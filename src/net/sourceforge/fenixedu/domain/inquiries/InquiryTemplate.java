@@ -22,7 +22,8 @@ public abstract class InquiryTemplate extends InquiryTemplate_Base {
     }
 
     public boolean isOpen() {
-	return !getResponsePeriodBegin().isAfterNow() && !getResponsePeriodEnd().isBeforeNow();
+	return !getResponsePeriodBegin().isAfterNow()
+		&& (getResponsePeriodEnd() == null || !getResponsePeriodEnd().isBeforeNow());
     }
 
     public int getNumberOfQuestions() {
