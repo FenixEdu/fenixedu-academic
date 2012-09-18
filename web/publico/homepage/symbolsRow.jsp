@@ -16,6 +16,7 @@
 	</a>
 </div>
 
+<% if (!PropertiesManager.useBarraAsAuthenticationBroker()) { %>
 <div id="header_links">
 	<a href="<%= loginUrl %>">
 		<bean:message bundle="GLOBAL_RESOURCES" key="dot.login"/>
@@ -26,6 +27,7 @@
 		<bean:message bundle="GLOBAL_RESOURCES" key="siteMap.title"/>
 	</a>
 </div>
+<% } %>
 
 <div id="search">
 	<form method="get" action="<%= searchUrl %>">

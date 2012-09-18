@@ -42,6 +42,10 @@ public class PropertiesManager extends pt.utl.ist.fenix.tools.util.PropertiesMan
     public static boolean isInDevelopmentMode() {
 	return PropertiesManager.getBooleanProperty("development.mode");
     }
+    
+    public static boolean useBarraAsAuthenticationBroker() {
+	return PropertiesManager.getBooleanProperty("barra.as.authentication.broker");
+    }
 
     public static String getProperty(final String key) {
 	return properties.getProperty(key);

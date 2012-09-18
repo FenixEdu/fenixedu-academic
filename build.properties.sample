@@ -36,6 +36,11 @@ fenix.framework.codeGenerator=pt.ist.fenixframework.pstm.dml.FenixCodeGeneratorO
 # that is being run in test mode.
 development.mode=true
 
+#----------------------------------------------
+# Barra as authentication broker
+#----------------------------------------------
+barra.as.authentication.broker=false
+
 #
 #
 #------------------------------------------------------------------------------
@@ -346,7 +351,7 @@ webServices.PersonInformation.getPersonInformation.password=p
 webServices.PaymentManagement.username=u
 webServices.PaymentManagement.password=p
 
-external.application.workflow.equivalences.uri=<URL da aplicação>/rest/equivalenceProcess/
+external.application.workflow.equivalences.uri=<URL da aplicaï¿½ï¿½o>/rest/equivalenceProcess/
 external.application.workflow.equivalences.uri.secret=password
 #------------------------------------------------------------------------------
 # Miscellaneous 

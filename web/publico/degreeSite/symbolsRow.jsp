@@ -1,3 +1,4 @@
+<%@page import="net.sourceforge.fenixedu._development.PropertiesManager"%>
 <%@ page language="java" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 
@@ -10,11 +11,14 @@
 		<img alt="<bean:message key="institution.logo" bundle="IMAGE_RESOURCES" />" src="<bean:message key="university.logo.public" bundle="GLOBAL_RESOURCES" arg0="<%= request.getContextPath() %>"/>"/>
 	</a>
 </div>
+
+<% if (!PropertiesManager.useBarraAsAuthenticationBroker()) { %>
 <div id="header_links">
 	<a href="<%= fenixUrl %>/loginPage.jsp">Login <bean:message key="dot.title" bundle="GLOBAL_RESOURCES"/></a>
 	| <a href="<%= institutionUrl %>/pt/sobre-IST/contacto">Contactos</a>
 	| <a href="<%= institutionUrl %>/html/mapadosite/">Mapa do Site</a>
 </div>
+<% } %>
 
 <div id="search">
 	<%--
