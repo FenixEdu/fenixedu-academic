@@ -42,6 +42,11 @@ public class RoleTypeGroup extends Group {
     }
 
     @Override
+    public String getPresentationNameKey() {
+	return super.getPresentationNameKey() + "." + roleType;
+    }
+
+    @Override
     public boolean equals(Object obj) {
 	if (!(obj instanceof RoleTypeGroup)) {
 	    return false;
