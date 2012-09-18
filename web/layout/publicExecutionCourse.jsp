@@ -56,7 +56,8 @@
 	</head>
 
 	<body>
-	<script id="ist-bar" data-login="https://www.ist.utl.pt/?login_action=login" data-fluid="true" <% if(AccessControl.getUserView() == null) {%> data-use-offline="true" <%} %> data-next-param="service" src="https://barra.ist.utl.pt/site_media/static/js/barra.js"></script>
+	
+	<script id="ist-bar" data-login="https://fenix.ist.utl.pt/loginPage.jsp" data-fluid="true" <% if(AccessControl.getUserView() == null) {%> data-use-offline="true" <%} %> data-next-param="service" src="https://barra.ist.utl.pt/site_media/static/js/barra.js"></script>
 	<jsp:include page="deployWarning.jsp" flush="true"/>
 		<div id="header">
 			<tiles:insert attribute="symbols_row" ignore="true" />
