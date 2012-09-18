@@ -501,8 +501,8 @@ public class PersonalInformationBean implements Serializable {
 	}
 
 	int birthYear = getStudent().getPerson().getDateOfBirthYearMonthDay().getYear();
-	if (getConclusionYear() != null && getConclusionYear() < (birthYear + 15)) {
-	    result.add("error.personalInformation.year.before.fifteenYearOld.limit");
+	if (getConclusionYear() != null && getConclusionYear() < birthYear) {
+	    result.add("error.personalInformation.year.before.birthday");
 	}
 
 	if (isUnitFromRaidesListMandatory()) {

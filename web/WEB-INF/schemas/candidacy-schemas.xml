@@ -780,7 +780,7 @@
 		<property name="labelField" value="description"/>
 		<property name="indicatorShown" value="true"/>
 		<property name="serviceName" value="SearchRaidesDegreeDesignations"/>
-		<property name="serviceArgs" value="slot=description,size=50,filterUnitOID=${institution.externalId}"/>
+		<property name="serviceArgs" value="slot=description,size=50,filterSchoolLevelName=${schoolLevel.name},filterUnitOID=${institution.externalId}"/>
 		<property name="className" value="net.sourceforge.fenixedu.domain.raides.DegreeDesignation"/>
 		<property name="minChars" value="3"/>
 	</slot>
@@ -832,7 +832,7 @@
 		<property name="labelField" value="description"/>
 		<property name="indicatorShown" value="true"/>
 		<property name="serviceName" value="SearchRaidesDegreeDesignations"/>
-		<property name="serviceArgs" value="slot=description,size=50,filterUnitOID=null"/>
+		<property name="serviceArgs" value="slot=description,size=50,filterSchoolLevelName==null,filterUnitOID=null"/>
 		<property name="className" value="net.sourceforge.fenixedu.domain.raides.DegreeDesignation"/>
 		<property name="minChars" value="3"/>
 	</slot>

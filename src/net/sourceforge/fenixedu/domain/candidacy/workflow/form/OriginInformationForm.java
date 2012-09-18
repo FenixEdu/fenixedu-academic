@@ -13,6 +13,7 @@ import net.sourceforge.fenixedu.domain.raides.DegreeDesignation;
 import net.sourceforge.fenixedu.domain.util.workflow.Form;
 
 import org.apache.commons.lang.StringUtils;
+import org.joda.time.LocalDate;
 
 import pt.utl.ist.fenix.tools.resources.LabelFormatter;
 
@@ -32,6 +33,8 @@ public class OriginInformationForm extends Form {
     private String degreeDesignation;
 
     private Integer conclusionYear;
+
+    private Integer birthYear;
 
     private Unit institution;
 
@@ -78,6 +81,14 @@ public class OriginInformationForm extends Form {
 
     public void setConclusionYear(Integer conclusionYear) {
 	this.conclusionYear = conclusionYear;
+    }
+
+    public Integer getBirthYear() {
+	return birthYear;
+    }
+
+    public void setBirthYear(Integer birthYear) {
+	this.birthYear = birthYear;
     }
 
     public String getDegreeDesignation() {
@@ -149,9 +160,20 @@ public class OriginInformationForm extends Form {
 
     @Override
     public List<LabelFormatter> validate() {
-	if (this.schoolLevel == SchoolLevelType.OTHER && StringUtils.isEmpty(this.otherSchoolLevel)) {
+	if (schoolLevel == SchoolLevelType.OTHER && StringUtils.isEmpty(otherSchoolLevel)) {
 	    return Collections.singletonList(new LabelFormatter().appendLabel(
-		    "error.candidacy.workflow.OriginInformationForm.otherSchoolLevel.must.be.filled", "application"));
+		    "error.candidacy.workflow.OriginInformationForm.otherSchoolLevel.must.be.filled", "candidate"));
+	}
+
+	LocalDate now = new LocalDate();
+	if (now.getYear() < conclusionYear) {
+	    return Collections.singletonList(new LabelFormatter().appendLabel("error.personalInformation.year.after.current",
+		    "candidate"));
+	}
+
+	if (conclusionYear < getBirthYear()) {
+	    return Collections.singletonList(new LabelFormatter().appendLabel("error.personalInformation.year.before.birthday",
+		    "candidate"));
 	}
 
 	return Collections.emptyList();
@@ -200,15 +222,16 @@ public class OriginInformationForm extends Form {
 
     public static OriginInformationForm createFrom(final StudentCandidacy studentCandidacy) {
 
-	final OriginInformationForm result = new OriginInformationForm();
-	result.setHighSchoolType(studentCandidacy.getHighSchoolType());
+	final OriginInformationForm form = new OriginInformationForm();
+	form.setBirthYear(studentCandidacy.getPerson().getDateOfBirthYearMonthDay().getYear());
+	form.setHighSchoolType(studentCandidacy.getHighSchoolType());
 	if (studentCandidacy.hasPrecedentDegreeInformation()) {
-	    result.setConclusionGrade(roundUpGrade(studentCandidacy.getPrecedentDegreeInformation().getConclusionGrade()));
-	    result.setDegreeDesignation(studentCandidacy.getPrecedentDegreeInformation().getDegreeDesignation());
-	    result.setInstitution(studentCandidacy.getPrecedentDegreeInformation().getInstitution());
+	    form.setConclusionGrade(roundUpGrade(studentCandidacy.getPrecedentDegreeInformation().getConclusionGrade()));
+	    form.setDegreeDesignation(studentCandidacy.getPrecedentDegreeInformation().getDegreeDesignation());
+	    form.setInstitution(studentCandidacy.getPrecedentDegreeInformation().getInstitution());
 	}
 
-	return result;
+	return form;
 
     }
 }
