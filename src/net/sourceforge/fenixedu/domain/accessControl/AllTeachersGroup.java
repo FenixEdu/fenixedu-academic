@@ -8,4 +8,9 @@ public class AllTeachersGroup extends RoleTypeGroup {
 	super(RoleType.TEACHER);
     }
 
+    @Override
+    public String getPresentationNameKey() {
+	return "label.name." + getClass().getSimpleName();
+    }
+
 }

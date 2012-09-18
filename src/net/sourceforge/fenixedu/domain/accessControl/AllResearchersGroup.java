@@ -8,4 +8,9 @@ public class AllResearchersGroup extends RoleTypeGroup {
 	super(RoleType.RESEARCHER);
     }
 
+    @Override
+    public String getPresentationNameKey() {
+	return "label.name." + getClass().getSimpleName();
+    }
+
 }
