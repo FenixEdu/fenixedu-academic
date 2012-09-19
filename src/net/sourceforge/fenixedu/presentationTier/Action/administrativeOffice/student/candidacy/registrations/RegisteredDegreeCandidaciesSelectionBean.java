@@ -153,6 +153,7 @@ public class RegisteredDegreeCandidaciesSelectionBean implements Serializable {
 
     private void addHeaders(Spreadsheet spreadsheet) {
 	spreadsheet.setHeader("Data de Matricula");
+	spreadsheet.setHeader("Tipo Ingresso");
 	spreadsheet.setHeader("Curso");
 	spreadsheet.setHeader("Nº de Aluno");
 	spreadsheet.setHeader("Nome");
@@ -174,6 +175,7 @@ public class RegisteredDegreeCandidaciesSelectionBean implements Serializable {
 	final ExecutionYear executionYear = ExecutionYear.readCurrentExecutionYear();
 
 	row.setCell(candidacy.getActiveCandidacySituation().getSituationDate().toString("dd/MM/yyyy HH:mm"));
+	row.setCell(candidacy.getRegistration().getIngression().getName());
 	row.setCell(candidacy.getExecutionDegree().getDegree().getNameFor(executionYear).getContent());
 	row.setCell(candidacy.getRegistration().getNumber().toString());
 	row.setCell(person.getName());
