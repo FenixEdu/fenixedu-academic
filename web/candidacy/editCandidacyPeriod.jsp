@@ -4,6 +4,84 @@
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr"%>
 <html:xhtml/>
 
+<style>
+.MobilityApplicationProcessCreation-PreLoadConfigurations-Frame-Ok {
+	border: 1px dotted #112233;
+	height: 80px;
+	width: 390px;
+}
+
+.MobilityApplicationProcessCreation-PreLoadConfigurations-Frame-Warn {
+	border: 1px dotted #112233;
+	height: 80px;
+	width: 540px;
+}
+
+.MobilityApplicationProcessCreation-PreLoadConfigurations-Frame-Error {
+	border: 1px dotted #112233;
+	height: 80px;
+	width: 400px;
+}
+
+.MobilityApplicationProcessCreation-PreLoadConfigurations-Panel-Ok {
+	background-color: rgb(240, 240, 240);
+	margin: 5px;
+	height: 70px;
+}
+
+.MobilityApplicationProcessCreation-PreLoadConfigurations-Panel-Warn {
+	background-color: rgb(255, 230, 163);
+	margin: 5px;
+	height: 70px;
+}
+
+.MobilityApplicationProcessCreation-PreLoadConfigurations-Panel-Error {
+	background-color: rgb(255, 110, 107);
+	margin: 5px;
+	height: 70px;
+}
+
+a {border-bottom: none !important;}
+
+.MobilityApplicationProcessCreation-PreLoadConfigurations-Link {
+	display: inline;
+	position: relative;
+	top: 21px;
+	left: 20px;
+}
+
+.MobilityApplicationProcessCreation-PreLoadConfigurations-MessageBox {
+	display: inline;
+	position: relative;
+	background: white;
+	top: 20px;
+	left: 30px;
+	padding: 6px;
+}
+
+.MobilityApplicationProcessCreation-PreLoadConfigurations-MessageIcon {
+	position:relative;
+	top:4px;
+	padding-right: 4px;
+}
+
+.MobilityApplicationProcessCreation-PreLoadConfigurations-Message-Ok {
+	font-style: oblique;
+	background: white;
+}
+
+.MobilityApplicationProcessCreation-PreLoadConfigurations-Message-Warn {
+	font-style: oblique;
+	background: white;
+}
+
+.MobilityApplicationProcessCreation-PreLoadConfigurations-Message-Error {
+	font-weight: bold;
+	background: white;
+}
+
+</style>
+
 <em><bean:message key="label.candidacies" bundle="APPLICATION_RESOURCES"/></em>
 <h2><bean:message name="processName" bundle="CASE_HANDLING_RESOURCES"/></h2>
 
@@ -14,7 +92,9 @@
 </html:messages>
 
 <bean:define id="processId" name="process" property="idInternal" />
+<bean:define id="processEid" name="process" property="externalId" />
 <bean:define id="processName" name="processName" />
+<bean:define id="preloadLevel" name="preLoadLevel" />
 
 <fr:hasMessages for="candidacyProcessBean" type="conversion">
 	<ul class="nobullet list6">
@@ -35,4 +115,29 @@
 	<fr:destination name="cancel"  path='<%= "/caseHandling" + processName.toString() + ".do?method=listProcessAllowedActivities&amp;processId=" + processId %>' />
 </fr:edit>
 <br/>
-<em><bean:message key="renderers.validator.required.mark.explanation" bundle="RENDERER_RESOURCES" /></em>
+
+<h3>Pré-carregamento de configurações</h3>
+<div class="MobilityApplicationProcessCreation-PreLoadConfigurations-Frame-<%=preloadLevel%>">
+	<div class="MobilityApplicationProcessCreation-PreLoadConfigurations-Panel-<%=preloadLevel%>">
+		<div class="MobilityApplicationProcessCreation-PreLoadConfigurations-Link">
+			<a href='<%= request.getContextPath() + "/academicAdminOffice/caseHandling" + processName.toString() + ".do?method=preLoadLastConfigurations&amp;processEid=" + processEid + "&amp;processId=" + processId %>'>
+				<button <% if (preloadLevel == "Error") %> disabled="disabled" <% ; %>type='button'>Carregar configurações</button>
+			</a>
+		</div>
+		<% 	String iconName = "";
+			if(preloadLevel == "Ok") {
+			    iconName = "/images/accept_gray.gif";
+			}
+			if(preloadLevel == "Warn") {
+			    iconName = "/images/sign_notification.png";
+			}
+			if(preloadLevel == "Error") {
+			    iconName = "/images/iconRemoveOn.png";
+			}
+		%>
+		<div class="MobilityApplicationProcessCreation-PreLoadConfigurations-MessageBox">
+			<img class="MobilityApplicationProcessCreation-PreLoadConfigurations-MessageIcon" src='<%= request.getContextPath() + iconName%>' /> <span class="MobilityApplicationProcessCreation-PreLoadConfigurations-Message-<%=preloadLevel%>"><bean:message key='<%= "mobilityApplicationProcess.editProcess.preLoadMessage" + preloadLevel%>' bundle="CASE_HANDLING_RESOURCES" /></span>
+		</div>
+	</div>
+</div>
+

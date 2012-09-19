@@ -30,9 +30,11 @@ import org.apache.struts.action.ActionMapping;
 import pt.ist.fenixWebFramework.rendererExtensions.converters.DomainObjectKeyConverter;
 import pt.ist.fenixWebFramework.renderers.DataProvider;
 import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
+import pt.ist.fenixWebFramework.services.Service;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 import pt.utl.ist.fenix.tools.util.excel.Spreadsheet;
 
 @Mapping(path = "/caseHandlingMobilityApplicationProcess", module = "academicAdminOffice", formBeanClass = ErasmusCandidacyProcessDA.ErasmusCandidacyProcessForm.class)
@@ -76,9 +78,18 @@ public class ErasmusCandidacyProcessDA extends CandidacyProcessDA {
     public ActionForward prepareExecuteEditCandidacyPeriod(ActionMapping mapping, ActionForm actionForm,
 	    HttpServletRequest request, HttpServletResponse response) {
 	final CandidacyProcess process = getProcess(request);
+	final MobilityApplicationProcess map = (MobilityApplicationProcess) process;
 	final MobilityApplicationProcessBean bean = new MobilityApplicationProcessBean(process);
 	bean.setForSemester(((MobilityApplicationProcess) process).getForSemester());
 	request.setAttribute("candidacyProcessBean", bean);
+	if (map.hasAnyChildProcesses()) {
+	    request.setAttribute("preLoadLevel", "Error");
+	} else if (map.hasAnyCoordinators() || map.getCandidacyPeriod().getMobilityQuotasCount() > 0 || map.getCandidacyPeriod().getEmailTemplatesCount() > 0) {
+	    request.setAttribute("preLoadLevel", "Warn");
+	} else {
+	    request.setAttribute("preLoadLevel", "Ok");
+	}
+	
 	return mapping.findForward("prepare-edit-candidacy-period");
     }
 
@@ -90,6 +101,20 @@ public class ErasmusCandidacyProcessDA extends CandidacyProcessDA {
 	request.setAttribute("chooseDegreeBeanSchemaName", "ErasmusChooseDegreeBean.selectDegree");
 	request.setAttribute("chooseMobilityProgramBeanSchemaName", "MobilityChooseProgramBean.selectMobilityProgram");
 	return super.execute(mapping, actionForm, request, response);
+    }
+    
+    public ActionForward preLoadLastConfigurations(ActionMapping mapping, ActionForm actionForm,
+	    HttpServletRequest request, HttpServletResponse response) {
+	String processEid = (String) request.getParameter("processEid");
+	MobilityApplicationProcess process = AbstractDomainObject.fromExternalId(processEid);
+	preLoadLastProcessConfigurations(process);
+	return listProcessAllowedActivities(mapping, actionForm, request, response);
+    }
+    
+    @Service
+    private void preLoadLastProcessConfigurations(MobilityApplicationProcess process) {
+	process.resetConfigurations();
+	process.preLoadLastConfigurations();
     }
 
     protected void setChooseMobilityProgramBean(HttpServletRequest request) {

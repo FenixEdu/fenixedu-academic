@@ -58,6 +58,8 @@ public class MobilityEmailTemplate extends MobilityEmailTemplate_Base {
     }
 
     public void delete() {
+	removeMobilityProgram();
+	removePeriod();
 	removeRootDomainObject();
 	deleteDomainObject();
     }

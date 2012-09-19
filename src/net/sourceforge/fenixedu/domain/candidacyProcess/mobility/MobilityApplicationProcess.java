@@ -6,6 +6,7 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 import java.util.ResourceBundle;
+import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeMap;
 import java.util.TreeSet;
@@ -16,6 +17,7 @@ import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.ExecutionInterval;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.QueueJob;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyProcessBean;
 import net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyProcessState;
@@ -30,6 +32,7 @@ import net.sourceforge.fenixedu.domain.candidacyProcess.erasmus.reports.ErasmusC
 import net.sourceforge.fenixedu.domain.candidacyProcess.secondCycle.SecondCycleIndividualCandidacyProcess;
 import net.sourceforge.fenixedu.domain.caseHandling.Activity;
 import net.sourceforge.fenixedu.domain.caseHandling.PreConditionNotValidException;
+import net.sourceforge.fenixedu.domain.caseHandling.Process;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.period.MobilityApplicationPeriod;
 import net.sourceforge.fenixedu.domain.person.RoleType;
@@ -101,6 +104,67 @@ public class MobilityApplicationProcess extends MobilityApplicationProcess_Base 
 	setForSemester(null);
 	removeRootDomainObject();
 	deleteDomainObject();
+    }
+    
+    public void resetConfigurations() {
+	if (getChildProcessesCount() > 0) {
+	    throw new DomainException("error.mobility.application.process.cant.delete.configurations.it.has.applications");
+	}
+	for (MobilityQuota quota : getCandidacyPeriod().getMobilityQuotasSet()) {
+	    quota.delete();
+	}
+	for (MobilityCoordinator coord : getCoordinatorsSet()) {
+	    coord.delete();
+	}
+	for (MobilityEmailTemplate template : getApplicationPeriod().getEmailTemplatesSet()) {
+	    template.delete();
+	}
+    }
+    
+    public void preLoadLastConfigurations() {
+	// Get very last process (independently of its season, 1st or 2nd semester)
+	MobilityApplicationProcess lastProcess = getLastSeasonProcess(null);
+	
+	// Copy all openings from previous process
+	Set<MobilityQuota> lastSeasonQuotas = lastProcess.getCandidacyPeriod().getMobilityQuotasSet();
+	for (MobilityQuota quota : lastSeasonQuotas) {
+	    new MobilityQuota(getApplicationPeriod(), quota.getDegree(), quota.getMobilityAgreement(), quota.getNumberOfOpenings());
+	}
+	
+	// Copy all coordinators from previous process
+	Set<MobilityCoordinator> lastSeasonCoordinators = lastProcess.getCoordinatorsSet();
+	for (MobilityCoordinator coord : lastSeasonCoordinators) {
+	    new MobilityCoordinator(this, coord.getTeacher(), coord.getDegree());
+	}
+	
+	// Copy all email templates
+	for (MobilityEmailTemplate template : lastProcess.getApplicationPeriod().getEmailTemplates()) {
+	    MobilityEmailTemplate.create(getApplicationPeriod(), template.getMobilityProgram(), template.getType(), template.getSubject(), template.getBody());
+	}
+    }
+    
+    private MobilityApplicationProcess getLastSeasonProcess(ErasmusApplyForSemesterType forSemester) {
+	MobilityApplicationProcess lastProcess = null;
+	Boolean lookForSameSeasonType = (forSemester != null);
+	for (Process proc : RootDomainObject.getInstance().getProcessesSet()) {
+	    if (proc instanceof MobilityApplicationProcess) {
+		MobilityApplicationProcess mobAppProc = ((MobilityApplicationProcess) proc);
+		if (mobAppProc == this) {
+		    continue;
+		}
+		if (lookForSameSeasonType && mobAppProc.getForSemester() != forSemester) {
+		    continue;
+		}
+		if (lastProcess == null) {
+		    lastProcess = mobAppProc;
+		    continue;
+		}
+		if (mobAppProc.getCandidacyStart().isAfter(lastProcess.getCandidacyEnd())) {
+		    lastProcess = mobAppProc;
+		}
+	    }
+	}
+	return lastProcess;
     }
 
     public List<MobilityIndividualApplicationProcess> getValidErasmusIndividualCandidacies() {
