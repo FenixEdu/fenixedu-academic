@@ -5,6 +5,8 @@ import java.io.Serializable;
 import net.sourceforge.fenixedu.domain.accessControl.Group;
 import net.sourceforge.fenixedu.domain.contents.Content;
 
+import org.apache.commons.lang.StringUtils;
+
 /**
  * Helper used to collect a single expression string from the user.
  * 
@@ -43,6 +45,10 @@ public class ExpressionBean implements Serializable {
 	    // replace \r\n or \r newlines
 	    this.expression = expression.replaceAll("\\r\\n?", "\n");
 	}
+    }
+
+    public boolean isEmpty() {
+	return StringUtils.isBlank(this.expression);
     }
 
 }
