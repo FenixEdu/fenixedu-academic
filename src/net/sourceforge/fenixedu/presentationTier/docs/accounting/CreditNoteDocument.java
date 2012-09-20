@@ -71,6 +71,7 @@ public class CreditNoteDocument extends FenixReport {
 	addParameter("name", this.creditNote.getReceipt().getPerson().getName());
 
 	addParameter("ownerUnit", this.creditNote.getReceipt().getOwnerUnit().getName());
+	addParameter("ownerUnitPhone", this.creditNote.getReceipt().getOwnerUnit().getDefaultPhoneNumber());
 	addParameter("ownerUnitCostCenter", this.creditNote.getReceipt().getOwnerUnit().getCostCenterCode().toString());
 
 	addParameter("creditNoteNumber", this.creditNote.getNumber() + "/" + this.creditNote.getYear().toString());

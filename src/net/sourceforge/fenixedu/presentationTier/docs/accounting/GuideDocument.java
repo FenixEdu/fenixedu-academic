@@ -68,6 +68,7 @@ public class GuideDocument extends FenixReport {
 	addParameter("total", this.paymentsManagementDTO.getTotalAmountToPay().toPlainString());
 	addParameter("date", new LocalDate().toString(DD_MMMM_YYYY, getLocale()));
 	addParameter("unit", unit.getName());
+	addParameter("unitPhone", unit.getDefaultPhoneNumber());
 	addParameter("costCenter", unit.getCostCenterCode().toString());
 	addParameter("documentIdType", this.paymentsManagementDTO.getPerson().getIdDocumentType().getLocalizedName());
 	addParameter("documentIdNumber", this.paymentsManagementDTO.getPerson().getDocumentIdNumber());
