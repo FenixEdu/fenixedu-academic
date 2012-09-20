@@ -30,4 +30,13 @@ public class DegreeClassification extends DegreeClassification_Base {
 	removeRootDomainObject();
 	deleteDomainObject();
     }
+
+    public static DegreeClassification readByCode(String code) {
+	for (DegreeClassification degreeClassification : RootDomainObject.getInstance().getDegreeClassificationsSet()) {
+	    if (degreeClassification.getCode().equals(code)) {
+		return degreeClassification;
+	    }
+	}
+	return null;
+    }
 }

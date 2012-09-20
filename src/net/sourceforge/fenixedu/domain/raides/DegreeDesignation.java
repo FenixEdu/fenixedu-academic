@@ -1,6 +1,10 @@
 package net.sourceforge.fenixedu.domain.raides;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import net.sourceforge.fenixedu.domain.RootDomainObject;
+import net.sourceforge.fenixedu.domain.SchoolLevelType;
 
 public class DegreeDesignation extends DegreeDesignation_Base {
 
@@ -14,6 +18,29 @@ public class DegreeDesignation extends DegreeDesignation_Base {
 
     public static DegreeDesignation readByName(String degreeDesignationName) {
 	for (DegreeDesignation degreeDesignation : RootDomainObject.getInstance().getDegreeDesignationsSet()) {
+	    if (degreeDesignation.getDescription().equalsIgnoreCase(degreeDesignationName)) {
+		return degreeDesignation;
+	    }
+	}
+	return null;
+    }
+
+    public static DegreeDesignation readByNameAndSchoolLevel(String degreeDesignationName, SchoolLevelType schoolLevel) {
+	if ((schoolLevel == null) || (degreeDesignationName == null)) {
+	    return null;
+	}
+
+	List<DegreeClassification> possibleClassifications = new ArrayList<DegreeClassification>();
+	for (String code : schoolLevel.getEquivalentDegreeClassifications()) {
+	    possibleClassifications.add(DegreeClassification.readByCode(code));
+	}
+	
+	List<DegreeDesignation> possibleDesignations = new ArrayList<DegreeDesignation>();
+	for (DegreeClassification classification : possibleClassifications) {
+	    possibleDesignations.addAll(classification.getDegreeDesignations());
+	}
+	
+	for (DegreeDesignation degreeDesignation : possibleDesignations) {
 	    if (degreeDesignation.getDescription().equalsIgnoreCase(degreeDesignationName)) {
 		return degreeDesignation;
 	    }

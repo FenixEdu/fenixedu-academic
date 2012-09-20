@@ -13,6 +13,7 @@ import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.candidacy.Ingression;
 import net.sourceforge.fenixedu.domain.candidacy.PersonalInformationBean;
 import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
+import net.sourceforge.fenixedu.domain.raides.DegreeDesignation;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.StudentStatute;
 import net.sourceforge.fenixedu.domain.student.StudentStatuteType;
@@ -88,6 +89,7 @@ public class RaidesCommonReportFieldsWrapper {
 	spreadsheet.setHeader("Grau Precedente");
 	spreadsheet.setHeader("Outro Grau Precedente");
 	spreadsheet.setHeader("grau habl anterior compl");
+	spreadsheet.setHeader("Codigo do grau habl anterior");
 	spreadsheet.setHeader("Outro grau habl anterior compl");
 	spreadsheet.setHeader("país habilitação anterior");
 	spreadsheet.setHeader("ano de conclusão da habilitação anterior");
@@ -413,11 +415,16 @@ public class RaidesCommonReportFieldsWrapper {
 	row.setCell(personalInformationBean.getPrecedentSchoolLevel() != null ? personalInformationBean.getPrecedentSchoolLevel()
 		.getName() : "");
 
-	// OutroGrau Precedente
+	// Outro Grau Precedente
 	row.setCell(personalInformationBean.getOtherPrecedentSchoolLevel());
 
 	// grau da habl anterior compl
 	row.setCell(personalInformationBean.getSchoolLevel() != null ? personalInformationBean.getSchoolLevel().getName() : "");
+	
+	// Codigo do grau habl anterior
+	DegreeDesignation designation = DegreeDesignation.readByNameAndSchoolLevel(
+		personalInformationBean.getDegreeDesignation(), personalInformationBean.getPrecedentSchoolLevel());
+	row.setCell(designation != null ? designation.getDegreeClassification().getCode() : "");
 
 	// Outro grau da habl anterior compl
 	row.setCell(personalInformationBean.getOtherSchoolLevel());
