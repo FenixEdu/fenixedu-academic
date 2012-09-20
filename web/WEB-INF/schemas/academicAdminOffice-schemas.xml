@@ -1555,7 +1555,9 @@
 
 <schema name="StudentDataByExecutionYear" type="net.sourceforge.fenixedu.domain.student.StudentDataByExecutionYear" bundle="APPLICATION_RESOURCES">
 	<slot name="executionYear.year" label="label.executionYear.year" />
-	<slot name="personalDataAuthorization" label="label.personalDataAuthorization" />
+	<slot name="personalDataAuthorization" label="label.personalDataAuthorization" layout="menu-select">
+		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.student.PersonalDataAuthorizationProvider" />
+	</slot>
 </schema>
 
 <schema name="IRegistrationBean.edit-cycleCurriculumGroup" type="net.sourceforge.fenixedu.dataTransferObject.student.IRegistrationBean" bundle="APPLICATION_RESOURCES">

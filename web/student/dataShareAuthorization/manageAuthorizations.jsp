@@ -26,6 +26,7 @@
                 <fr:slot name="personalDataAuthorization" key="label.student.dataShareAuthorization" layout="menu-postback"
                     required="true">
                     <fr:property name="defaultOptionHidden" value="true" />
+                    <fr:property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.student.PersonalDataAuthorizationProvider" />
                 </fr:slot>
             </fr:schema>
             <fr:layout name="tabular">

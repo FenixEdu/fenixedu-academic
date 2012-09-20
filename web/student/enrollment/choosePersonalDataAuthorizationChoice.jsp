@@ -18,8 +18,9 @@
 
         <fr:edit name="student" schema="Student.editPersonalDataAuthorization">
             <fr:schema type="net.sourceforge.fenixedu.domain.student.Student" bundle="APPLICATION_RESOURCES">
-                <fr:slot name="personalDataAuthorization"
-                    validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" />
+                <fr:slot name="personalDataAuthorization" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" layout="menu-select">
+                    <fr:property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.student.PersonalDataAuthorizationProvider" />
+                </fr:slot>
             </fr:schema>
             <fr:layout name="tabular">
                 <fr:property name="classes" value="tstyle2 thlight thright" />
