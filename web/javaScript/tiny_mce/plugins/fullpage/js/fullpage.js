@@ -21,9 +21,9 @@
 		'HTML 4.01 Frameset=<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN" "http://www.w3.org/TR/html4/frameset.dtd">';
 
 	var defaultEncodings = 
+		'Unicode (UTF-8)=utf-8,' +
 		'Western european (iso-8859-1)=iso-8859-1,' +
 		'Central European (iso-8859-2)=iso-8859-2,' +
-		'Unicode (UTF-8)=utf-8,' +
 		'Chinese traditional (Big5)=big5,' +
 		'Cyrillic (iso-8859-5)=iso-8859-5,' +
 		'Japanese (iso-2022-jp)=iso-2022-jp,' +

@@ -21,7 +21,7 @@ var cssFile;
 var generateXHTML;
 
 var lang = "en";
-var encoding = "iso-8859-1";
+var encoding = "utf-8";
 
 
 function initRTE(imgPath, incPath, css, genXHTML) {
