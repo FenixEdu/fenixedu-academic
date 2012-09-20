@@ -1,12 +1,21 @@
 package net.sourceforge.fenixedu.presentationTier.Action.coordinator.candidacy.standalone;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.domain.CurricularCourse;
+import net.sourceforge.fenixedu.domain.Degree;
+import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
+import net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyProcess;
+import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyProcess;
+import net.sourceforge.fenixedu.domain.candidacyProcess.standalone.StandaloneIndividualCandidacyProcess;
 import net.sourceforge.fenixedu.presentationTier.Action.masterDegree.coordinator.CoordinatedDegreeInfo;
 
 import org.apache.struts.action.ActionForm;
@@ -64,6 +73,37 @@ public class StandaloneCandidacyProcessDA extends
     public ActionForward executeIntroduceCandidacyResults(ActionMapping mapping, ActionForm actionForm,
 	    HttpServletRequest request, HttpServletResponse response) throws FenixFilterException, FenixServiceException {
 	throw new RuntimeException("not allowed");
+    }
+
+    @Override
+    protected List<IndividualCandidacyProcess> getChildProcesses(CandidacyProcess process, HttpServletRequest request) {
+	final DegreeCurricularPlan degreeCurricularPlan = getDegreeCurricularPlan(request);
+	final List<IndividualCandidacyProcess> result = new ArrayList(super.getChildProcesses(process, request));
+	for (final Iterator<IndividualCandidacyProcess> i = result.iterator(); i.hasNext(); ) {
+	    final StandaloneIndividualCandidacyProcess individualCandidacyProcess = (StandaloneIndividualCandidacyProcess) i.next();
+	    if (!matchesDegree(degreeCurricularPlan, individualCandidacyProcess)) {
+		i.remove();
+	    }
+	}
+        return result;
+    }
+
+    private boolean matchesDegree(final DegreeCurricularPlan degreeCurricularPlan, final StandaloneIndividualCandidacyProcess individualCandidacyProcess) {
+	if (degreeCurricularPlan == null) {
+	    return true;
+	}
+	for (final CurricularCourse curricularCourse : individualCandidacyProcess.getCurricularCourses()) {
+	    final Degree degree = curricularCourse.getDegree();
+	    if (degree == degreeCurricularPlan.getDegree()) {
+		return true;
+	    }
+	}
+	return false;
+    }
+
+    private DegreeCurricularPlan getDegreeCurricularPlan(final HttpServletRequest request) {
+	final String param = request.getParameter("degreeCurricularPlanID");
+	return param == null || param.isEmpty() ? null : rootDomainObject.readDegreeCurricularPlanByOID(new Integer(param));
     }
 
 }
