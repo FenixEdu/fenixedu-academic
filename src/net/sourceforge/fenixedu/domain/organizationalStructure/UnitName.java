@@ -101,11 +101,8 @@ public class UnitName extends UnitName_Base implements Comparable<UnitName> {
 	@Override
 	public boolean add(final UnitName unitName) {
 	    String code = unitName.getUnit().getCode();
-	    if (unitName.getIsExternalUnit() && !StringUtils.isEmpty(code) && StringUtils.isNumeric(code)) {
-		super.add(unitName);
-		return true;
-	    }
-	    return false;
+	    return unitName.getIsExternalUnit() && !StringUtils.isEmpty(code)
+		    && StringUtils.isNumeric(code) && super.add(unitName);
 	}
     }
 
