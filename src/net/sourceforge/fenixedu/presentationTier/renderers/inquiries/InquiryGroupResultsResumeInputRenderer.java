@@ -104,13 +104,13 @@ public class InquiryGroupResultsResumeInputRenderer extends InquiryGroupResultsR
 	HtmlBlockContainer allCommentsBlock = super.createComments(questionResultsSummaryBean);
 
 	HtmlBlockContainer commentBlock = new HtmlBlockContainer();
-	String commentHeader = "Coment·rio";
+	String commentHeader = "Coment√°rio";
 	if (questionResultsSummaryBean.getPersonCategory().equals(ResultPersonCategory.REGENT)
 		&& questionResultsSummaryBean.getQuestionResult().getProfessorship() != null) {
 	    InquiryResultComment resultComment = questionResultsSummaryBean.getQuestionResult().getInquiryResultComment(
 		    questionResultsSummaryBean.getCommentPerson(), ResultPersonCategory.TEACHER);
 	    if (resultComment != null && !StringUtils.isEmpty(resultComment.getComment())) {
-		commentHeader = "Se desejar, pode acrescentar um coment·rio (opcional)";
+		commentHeader = "Se desejar, pode acrescentar um coment√°rio (opcional)";
 	    }
 	}
 	HtmlText commentText = new HtmlText("<p class=\"mbottom05\">" + commentHeader + "</p>");

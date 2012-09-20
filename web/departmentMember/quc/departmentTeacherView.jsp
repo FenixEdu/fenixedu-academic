@@ -28,7 +28,7 @@ font-weight: normal;
 <h2><bean:message key="title.inquiry.quc.department" bundle="INQUIRIES_RESOURCES"/></h2>
 
 <h3><bean:write name="departmentTeacherDetailsBean" property="teacher.name"/> 
-	(<bean:write name="executionPeriod" property="semester"/>บ <bean:message key="label.inquiries.semester" bundle="INQUIRIES_RESOURCES"/> 
+	(<bean:write name="executionPeriod" property="semester"/>ยบ <bean:message key="label.inquiries.semester" bundle="INQUIRIES_RESOURCES"/> 
 	<bean:write name="executionPeriod" property="executionYear.year"/>)</h3>
 
 <div class="teacher">

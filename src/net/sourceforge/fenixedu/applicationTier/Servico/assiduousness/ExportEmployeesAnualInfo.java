@@ -67,7 +67,7 @@ public class ExportEmployeesAnualInfo extends FenixService {
 	    AssiduousnessStatus assiduousnessStatus, LocalDate beginDate, LocalDate endDate) {
 	List<Leave> leaves = employeeAnualInfo.getEmployee().getAssiduousness().getLeaves(beginDate, endDate);
 	EmployeeMonthInfo employeeMonthInfo = employeeAnualInfo.getCurrentMonthInfo();
-	// categoria - n„o temos
+	// categoria - n√£o temos
 	List<AssiduousnessClosedMonth> assiduousnessClosedMonths = getAssiduousnessClosedMonths(closedMonth, employeeAnualInfo
 		.getEmployee().getAssiduousness());
 	for (AssiduousnessClosedMonth assiduousnessClosedMonth : assiduousnessClosedMonths) {
@@ -102,7 +102,7 @@ public class ExportEmployeesAnualInfo extends FenixService {
 		employeeMonthInfo.setUsedLowSeasonVacations(countLeaveNumberOfWorkDays(leaves, beginDate, endDate, "FEB"));
 		employeeMonthInfo.setUsedExtraWorkVacations(getJustificationWorkingDays(leaves, beginDate, endDate, "FHE",
 			"FH1306"));
-		employeeMonthInfo.setUsedHalfDaysVacations(getJustificationWorkingDays(leaves, beginDate, endDate, "1/2 F…RIAS",
+		employeeMonthInfo.setUsedHalfDaysVacations(getJustificationWorkingDays(leaves, beginDate, endDate, "1/2 F√âRIAS",
 			"1/2 FER"));
 
 		// TODO not supported yet, dispensas adquiridas no mes por work
@@ -129,7 +129,7 @@ public class ExportEmployeesAnualInfo extends FenixService {
 		employeeMonthInfo.setWorkStudentExamDay(countLeaveNumberOfDays(leaves, beginDate, endDate, "TRAEST"));
 		employeeMonthInfo.setFormationCoursesNotAuthorized(countLeaveNumberOfDays(leaves, beginDate, endDate, "CURSO"));
 		employeeMonthInfo.setFormationCoursesAuthorized(countLeaveNumberOfDays(leaves, beginDate, endDate, "CURCD"));
-		employeeMonthInfo.setPrison(countLeaveNumberOfDays(leaves, beginDate, endDate, "PRIS√O"));
+		employeeMonthInfo.setPrison(countLeaveNumberOfDays(leaves, beginDate, endDate, "PRIS√ÉO"));
 		employeeMonthInfo.setMissForFulfilmentOfObligation(countLeaveNumberOfDays(leaves, beginDate, endDate, "A62"));
 		employeeMonthInfo.setUnionActivity(countLeaveNumberOfDays(leaves, beginDate, endDate, "A.SINDIC"));
 		employeeMonthInfo.setMissWithLostOfIncome(countLeaveNumberOfDays(leaves, beginDate, endDate, "A68"));

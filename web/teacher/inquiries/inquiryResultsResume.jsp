@@ -9,7 +9,7 @@
 <em><bean:message key="title.teacherPortal" bundle="INQUIRIES_RESOURCES"/></em>
 <h2><bean:message key="title.inquiry.quc.teacher" bundle="INQUIRIES_RESOURCES"/></h2>
 
-<h3><bean:write name="executionCourse" property="name"/> - <bean:write name="executionCourse" property="sigla"/> (<bean:write name="executionSemester" property="semester"/>บ Semestre <bean:write name="executionSemester" property="executionYear.year"/>)</h3>
+<h3><bean:write name="executionCourse" property="name"/> - <bean:write name="executionCourse" property="sigla"/> (<bean:write name="executionSemester" property="semester"/>ยบ Semestre <bean:write name="executionSemester" property="executionYear.year"/>)</h3>
 
 <p><bean:message key="message.teacher.resume.inquiry" bundle="INQUIRIES_RESOURCES"/></p>
 

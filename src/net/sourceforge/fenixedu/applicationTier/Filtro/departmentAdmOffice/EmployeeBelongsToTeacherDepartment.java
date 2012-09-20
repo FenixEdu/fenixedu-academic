@@ -40,7 +40,7 @@ public class EmployeeBelongsToTeacherDepartment extends Filtro {
 	}
 	final Employee employee = person.getEmployee();
 	if (employee == null) {
-	    throw new NotAuthorizedFilterException("Não existe funcionario");
+	    throw new NotAuthorizedFilterException("NÃ£o existe funcionario");
 	}
 	return getDepartment(employee);
     }

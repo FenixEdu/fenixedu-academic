@@ -25,7 +25,7 @@ public class EditTeacherInformation extends FenixService {
 	editOrientations(infoOrientations, teacher);
 	editPublicationNumbers(infoPublicationsNumbers, teacher);
 
-	// TODO <cargos de gestão>
+	// TODO <cargos de gestÃ£o>
 
 	return Boolean.TRUE;
     }

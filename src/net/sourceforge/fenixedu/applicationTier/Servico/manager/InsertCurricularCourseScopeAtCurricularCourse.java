@@ -46,9 +46,9 @@ public class InsertCurricularCourseScopeAtCurricularCourse extends FenixService 
 	} catch (IllegalWriteException iwe) {
 	    throw iwe;
 	} catch (RuntimeException e) {
-	    throw new ExistingServiceException("O âmbito pertencente ao ramo " + branch.getCode() + ", no "
-		    + curricularSemester.getCurricularYear().getYear() + "º ano,  " + curricularSemester.getSemester()
-		    + "º semestre");
+	    throw new ExistingServiceException("O Ã¢mbito pertencente ao ramo " + branch.getCode() + ", no "
+		    + curricularSemester.getCurricularYear().getYear() + "Âº ano,  " + curricularSemester.getSemester()
+		    + "Âº semestre");
 	}
     }
 

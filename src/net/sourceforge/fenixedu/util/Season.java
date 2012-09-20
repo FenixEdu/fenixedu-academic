@@ -24,9 +24,9 @@ public class Season extends FenixUtil {
 
     private static String[] SEASON_KEYS = { "label.firstSeason", "label.secondSeason", "label.specialSeason" };
 
-    public static final String SEASON1_STRING = "1ª Época";
-    public static final String SEASON2_STRING = "2ª Época";
-    public static final String SPECIAL_SEASON_STRING = "Época Especial";
+    public static final String SEASON1_STRING = "1Âª Ã‰poca";
+    public static final String SEASON2_STRING = "2Âª Ã‰poca";
+    public static final String SPECIAL_SEASON_STRING = "Ã‰poca Especial";
     public static final String DEFAULT = "[Escolha a Epoca]";
 
     public static final Season SEASON1_OBJ = new Season(SEASON1);

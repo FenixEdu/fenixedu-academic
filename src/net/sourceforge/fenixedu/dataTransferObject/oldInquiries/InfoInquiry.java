@@ -14,7 +14,7 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
 import net.sourceforge.fenixedu.dataTransferObject.InfoObject;
 
 /**
- * @author Jo„o Fialho & Rita Ferreira
+ * @author Jo√£o Fialho & Rita Ferreira
  * 
  */
 public class InfoInquiry extends InfoObject implements Comparable {

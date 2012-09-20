@@ -238,7 +238,7 @@ public class ErrorLogDispatchAction extends FenixDispatchAction {
 
     private String nameForFilter(String filter) {
 	if (filter.equals("exception")) {
-	    return "Excepção";
+	    return "ExcepÃ§Ã£o";
 	} else if (filter.equals("url")) {
 	    return "URL";
 	} else if (filter.equals("user")) {

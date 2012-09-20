@@ -33,13 +33,13 @@ import org.apache.struts.validator.DynaValidatorForm;
 import pt.ist.fenixWebFramework.security.UserView;
 
 /**
- * @author Tânia Nunes
+ * @author TÃ¢nia Nunes
  * 
  */
 public class ExamEnrollmentDispatchAction extends FenixDispatchAction {
 
     /**
-     * @author Fernanda Quitério 15/07/2003
+     * @author Fernanda QuitÃ©rio 15/07/2003
      * 
      */
     public ActionForward prepareEnrolmentManagement(ActionMapping mapping, ActionForm form, HttpServletRequest request,
@@ -83,7 +83,7 @@ public class ExamEnrollmentDispatchAction extends FenixDispatchAction {
     }
 
     /**
-     * @author Fernanda Quitério 15/07/2003
+     * @author Fernanda QuitÃ©rio 15/07/2003
      * 
      */
     public ActionForward prepareEditEvaluationEnrolment(ActionMapping mapping, ActionForm form, HttpServletRequest request,

@@ -4,7 +4,7 @@
   <font color="#023264" size="-1">
 
     <h2>
-		Na AprovaÁ„o de Candidaturas n„o poder· carregar no Bot„o Retroceder no Browser.
+		Na Aprova√ß√£o de Candidaturas n√£o poder√° carregar no Bot√£o Retroceder no Browser.
     </h2>
 
   </font>

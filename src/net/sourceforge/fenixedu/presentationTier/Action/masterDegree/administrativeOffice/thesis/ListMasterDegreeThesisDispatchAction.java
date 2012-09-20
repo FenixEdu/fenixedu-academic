@@ -70,7 +70,7 @@ public class ListMasterDegreeThesisDispatchAction extends FenixDispatchAction {
 	    throws IOException {
 	Formatter resultFormatter = new Formatter();
 	for (MasterDegreeThesis thesis : masterDegreeThesisCollection) {
-	    resultFormatter.format("%d\t%s\tFénix\t", thesis.getStudentCurricularPlan().getRegistration().getNumber(), thesis
+	    resultFormatter.format("%d\t%s\tFÃ©nix\t", thesis.getStudentCurricularPlan().getRegistration().getNumber(), thesis
 		    .getStudentCurricularPlan().getDegreeCurricularPlan().getDegree().getNome());
 
 	    List<Teacher> guiders = thesis.getActiveMasterDegreeThesisDataVersion().getGuiders();

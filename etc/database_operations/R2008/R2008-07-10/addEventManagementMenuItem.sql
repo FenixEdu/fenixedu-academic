@@ -2,7 +2,7 @@ SET AUTOCOMMIT = 0;
 
 START TRANSACTION;
 
-INSERT INTO CONTENT (EXECUTION_PATH,VISIBLE,KEY_EXECUTION_PATH_VALUE,CONTENT_ID,CREATION_DATE,NAME,TITLE,BODY,DESCRIPTION,NORMALIZED_NAME,KEY_PORTAL,KEY_AVAILABILITY_POLICY,KEY_ROOT_DOMAIN_OBJECT,KEY_CREATOR,OJB_CONCRETE_CLASS) VALUES ('/residenceEventManagement.do?method=manageResidenceEvents',null,1,'59b41f63-739d-4132-9366-3ab6ad2ac3e3','2008-07-10 11:36:06','pt13:Gerir Dívidas','pt13:Gerir Dívidas',null,null,'pt13:gerir-dividas',null,null,1,null,'net.sourceforge.fenixedu.domain.functionalities.Functionality')  ;
+INSERT INTO CONTENT (EXECUTION_PATH,VISIBLE,KEY_EXECUTION_PATH_VALUE,CONTENT_ID,CREATION_DATE,NAME,TITLE,BODY,DESCRIPTION,NORMALIZED_NAME,KEY_PORTAL,KEY_AVAILABILITY_POLICY,KEY_ROOT_DOMAIN_OBJECT,KEY_CREATOR,OJB_CONCRETE_CLASS) VALUES ('/residenceEventManagement.do?method=manageResidenceEvents',null,1,'59b41f63-739d-4132-9366-3ab6ad2ac3e3','2008-07-10 11:36:06','pt13:Gerir DÃ­vidas','pt13:Gerir DÃ­vidas',null,null,'pt13:gerir-dividas',null,null,1,null,'net.sourceforge.fenixedu.domain.functionalities.Functionality')  ;
 
 INSERT INTO NODE (NODE_ORDER,ASCENDING,VISIBLE,CONTENT_ID,KEY_CHILD,KEY_PARENT,KEY_ROOT_DOMAIN_OBJECT,OJB_CONCRETE_CLASS) VALUES (2,1,1,'b2ed8d40-1d12-45a2-a4e4-9eb43f0a7293:59b41f63-739d-4132-9366-3ab6ad2ac3e3',2,3,1,'net.sourceforge.fenixedu.domain.contents.ExplicitOrderNode')  ;
 

@@ -17,7 +17,7 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoGratuitySituation;
 import net.sourceforge.fenixedu.presentationTier.Action.masterDegree.utils.PresentationConstants;
 
 /**
- * @author Tânia Pousão
+ * @author TÃ¢nia PousÃ£o
  * 
  */
 public class GratuityFileSIBS extends GratuityFile {
@@ -46,7 +46,7 @@ public class GratuityFileSIBS extends GratuityFile {
 	    file = new File(System.getProperty("java.io.tmpdir") + File.separator + fileName);
 	    writer = new BufferedWriter(new FileWriter(file));
 
-	    // errors if student hasn´t address or nothing to pay
+	    // errors if student hasnÂ´t address or nothing to pay
 	    fileNameErrors = "erros_" + nameFile((InfoGratuitySituation) infoGratuitySituations.get(0));
 	    fileErrors = new File(System.getProperty("java.io.tmpdir") + File.separator + fileNameErrors);
 	    writerErrors = new BufferedWriter(new FileWriter(fileErrors));

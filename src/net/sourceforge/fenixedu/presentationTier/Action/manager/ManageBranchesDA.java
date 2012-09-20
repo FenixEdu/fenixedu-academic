@@ -194,7 +194,7 @@ public class ManageBranchesDA extends FenixDispatchAction {
 	String nameEn = (String) insertForm.get("nameEn");
 	String code = (String) insertForm.get("code");
 
-	// Constructing errors in case the user doesn´t submit the name or the
+	// Constructing errors in case the user doesnÂ´t submit the name or the
 	// code
 	ActionErrors errors = buildErrors(code, name);
 	if (errors != null) {
@@ -266,7 +266,7 @@ public class ManageBranchesDA extends FenixDispatchAction {
 	String nameEn = (String) editForm.get("nameEn");
 	String code = (String) editForm.get("code");
 
-	// Constructing errors in case the user doesn´t submit the name or the
+	// Constructing errors in case the user doesnÂ´t submit the name or the
 	// code
 	ActionErrors errors = buildErrors(code, name);
 	if (errors != null) {

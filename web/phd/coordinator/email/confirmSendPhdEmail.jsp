@@ -71,7 +71,7 @@
 	
 	<table class="tstyle2 thlight thright mvert0 tgluetop mbottom0 ulnomargin width800px">
 		<tr>
-			<th class="width150px">Destinat·rios:</th>
+			<th class="width150px">Destinat√°rios:</th>
 			<td class="xpto">
 
 			<div>

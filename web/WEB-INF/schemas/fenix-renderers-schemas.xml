@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="ISO-8859-1"?>
+<?xml version="1.0" encoding="UTF-8"?>
 
 <!-- TODO: make this a public id or at least obsolute 
      Currently there is a semi-hack built in the RendererPlugin to accept this format.
@@ -125,7 +125,7 @@
     <slot name="name">
         <validator class="pt.ist.fenixWebFramework.renderers.validators.RegexpValidator">
             <property name="regexp" value="\p{Space}*[^ ]+\p{Space}+[^ ]+.*"/>
-            <property name="message" value="Escreva pelo menos o primeiro e último nome"/>
+            <property name="message" value="Escreva pelo menos o primeiro e Ãºltimo nome"/>
             <property name="key" value="false"/>
         </validator>
         <property name="size" value="50"/>
@@ -148,7 +148,7 @@
     <slot name="name">
         <validator class="pt.ist.fenixWebFramework.renderers.validators.RegexpValidator">
             <property name="regexp" value="\p{Space}*[^ ]+\p{Space}+[^ ]+.*"/>
-            <property name="message" value="Escreva pelo menos o primeiro e último nome"/>
+            <property name="message" value="Escreva pelo menos o primeiro e Ãºltimo nome"/>
             <property name="key" value="false"/>
         </validator>
         <property name="size" value="50"/>
@@ -167,7 +167,7 @@
     <slot name="name">
         <validator class="pt.ist.fenixWebFramework.renderers.validators.RegexpValidator">
             <property name="regexp" value="\p{Space}*[^ ]+\p{Space}+[^ ]+.*"/>
-            <property name="message" value="Escreva pelo menos o primeiro e último nome"/>
+            <property name="message" value="Escreva pelo menos o primeiro e Ãºltimo nome"/>
             <property name="key" value="false"/>
         </validator>
         <property name="size" value="50"/>
@@ -265,7 +265,7 @@
 		<slot name="name" key="person.name" default="[Primeiro Ultimo]">
 			<validator class="pt.ist.fenixWebFramework.renderers.validators.RegexpValidator">
 				<property name="regexp" value="\p{Space}*[^ ]+\p{Space}+[^ ]+.*" />
-				<property name="message" value="Escreva pelo menos o primeiro e último nome" />
+				<property name="message" value="Escreva pelo menos o primeiro e Ãºltimo nome" />
 				<property name="key" value="false" />
 			</validator>
 			<property name="size" value="50" />
@@ -581,7 +581,7 @@
 	<schema name="list.student.execution.periods" type="net.sourceforge.fenixedu.dataTransferObject.student.ManageStudentStatuteBean" bundle="APPLICATION_RESOURCES">
 	<slot name="executionPeriod" key="label.net.sourceforge.fenixedu.domain.ProjectSubmission.execution.semester" layout="menu-select-postback">
     	<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.StudentExecutionPeriodsProvider"/>
-    	<property name="format" value="${year} - ${semester}º Sem."/>	
+    	<property name="format" value="${year} - ${semester}Âº Sem."/>	
     	<property name="destination" value="postBack"/>
     </slot>
 	</schema>

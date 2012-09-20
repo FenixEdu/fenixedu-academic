@@ -17,7 +17,7 @@ import net.sourceforge.fenixedu.presentationTier.TagLib.sop.examsMap.renderers.E
 
 public class ExamsMapForRoomRenderer implements IExamsMapRenderer {
 
-    private String[] daysOfWeek = { "Segunda", "Terça", "Quarta", "Quinta", "Sexta", "Sábado" };
+    private String[] daysOfWeek = { "Segunda", "TerÃ§a", "Quarta", "Quinta", "Sexta", "SÃ¡bado" };
 
     private int numberOfWeks;
 

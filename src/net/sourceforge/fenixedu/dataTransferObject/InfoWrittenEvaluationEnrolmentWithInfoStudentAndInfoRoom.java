@@ -7,7 +7,7 @@ package net.sourceforge.fenixedu.dataTransferObject;
 import net.sourceforge.fenixedu.domain.WrittenEvaluationEnrolment;
 
 /**
- * @author T‚nia Pous„o
+ * @author T√¢nia Pous√£o
  * 
  */
 public class InfoWrittenEvaluationEnrolmentWithInfoStudentAndInfoRoom extends InfoWrittenEvaluationEnrolment {

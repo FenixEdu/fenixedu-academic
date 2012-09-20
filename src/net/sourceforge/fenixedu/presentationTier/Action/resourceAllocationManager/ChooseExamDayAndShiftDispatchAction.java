@@ -73,7 +73,7 @@ public class ChooseExamDayAndShiftDispatchAction extends FenixContextDispatchAct
 	examDateAndTime.set(Calendar.MILLISECOND, 0);
 
 	request.setAttribute(PresentationConstants.EXAM_DATEANDTIME_STR, "" + year + "/" + (month.intValue() + 1) + "/" + day
-		+ "  às  " + beginning + " horas");
+		+ "  Ã s  " + beginning + " horas");
 
 	request.removeAttribute(PresentationConstants.EXAM_DATEANDTIME);
 	request.setAttribute(PresentationConstants.EXAM_DATEANDTIME, examDateAndTime);

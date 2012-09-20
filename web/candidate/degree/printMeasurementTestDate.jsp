@@ -34,7 +34,7 @@ margin-left: 0px;
 <body>
 
 <div id="measurementTestContent">
-	<div style="text-align: center;"><span style="text-decoration: underline;">PROVA DE AFERI«√O</span></div>
+	<div style="text-align: center;"><span style="text-decoration: underline;">PROVA DE AFERI√á√ÉO</span></div>
 	<br/><br/>
 	
 	<div style="text-align: justify;font-size: 95%;">
@@ -44,26 +44,26 @@ margin-left: 0px;
 		</p>
 		
 		<p>
-		O IST em associaÁ„o com a Sociedade Portuguesa de Matem·tica promove 
-		este ano lectivo uma prova de aferiÁ„o para todos os alunos ingressados no
-		1∫ ano. Esta prova È obrigatÛria e ter· influÍncia na classificaÁ„o da 
-		cadeira de C·lculo Diferencial e Integral I ou Matem·tica I.
+		O IST em associa√ß√£o com a Sociedade Portuguesa de Matem√°tica promove 
+		este ano lectivo uma prova de aferi√ß√£o para todos os alunos ingressados no
+		1¬∫ ano. Esta prova √© obrigat√≥ria e ter√° influ√™ncia na classifica√ß√£o da 
+		cadeira de C√°lculo Diferencial e Integral I ou Matem√°tica I.
 		</p>
 		
 		<p>
 		
 		
-		A prova realizar-se-· no dia <%= ((Registration)request.getAttribute("registration")).getMeasurementTestRoom().getShift().getDate().toString("dd 'de' MMMM", Language.getLocale())  %> e ter· uma duraÁ„o aproximada de 3 horas, pelo que, neste dia, ser„o suspensas as aulas do 1∫ ano. 
+		A prova realizar-se-√° no dia <%= ((Registration)request.getAttribute("registration")).getMeasurementTestRoom().getShift().getDate().toString("dd 'de' MMMM", Language.getLocale())  %> e ter√° uma dura√ß√£o aproximada de 3 horas, pelo que, neste dia, ser√£o suspensas as aulas do 1¬∫ ano. 
 		</p>
 		
 		<p>
-		A realizaÁ„o da sua prova de aferiÁ„o ter· lugar na sala <bean:write name="registration" property="measurementTestRoom.name"/>,  onde dever· comparecer  ‡s <%= ((Registration)request.getAttribute("registration")).getMeasurementTestRoom().getShift().getDate().toString("HH:mm", Language.getLocale())  %> horas munido de BI ou cart„o de cidad„o, l·pis e borracha.
+		A realiza√ß√£o da sua prova de aferi√ß√£o ter√° lugar na sala <bean:write name="registration" property="measurementTestRoom.name"/>,  onde dever√° comparecer  √†s <%= ((Registration)request.getAttribute("registration")).getMeasurementTestRoom().getShift().getDate().toString("HH:mm", Language.getLocale())  %> horas munido de BI ou cart√£o de cidad√£o, l√°pis e borracha.
 		</p>
 		
 		<br/>
 		<p>
-		P'lo Conselho de Gest„o<br/>
-		Prof. RogÈrio ColaÁo
+		P'lo Conselho de Gest√£o<br/>
+		Prof. Rog√©rio Cola√ßo
 		</p>
 	
 	</div>

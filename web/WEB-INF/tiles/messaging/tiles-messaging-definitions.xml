@@ -1,10 +1,10 @@
-<?xml version="1.0" encoding="ISO-8859-1"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE tiles-definitions PUBLIC "-//Apache Software Foundation//DTD Tiles Configuration 1.1//EN" "http://jakarta.apache.org/struts/dtds/tiles-config_1_1.dtd">
 <!-- Tiles definitions -->
 <tiles-definitions>
 	<definition name="definition.messaging.masterPage" extends="df.layout.two-column">
-		<put name="title" value="Portal de Comunicação"/>
-		<put name="serviceName" value="Portal de Comunicação"/>
+		<put name="title" value="Portal de ComunicaÃ§Ã£o"/>
+		<put name="serviceName" value="Portal de ComunicaÃ§Ã£o"/>
 		<put name="rss" value="/messaging/announcements/rssHeader.jsp"/>
 		<put name="keywords" value="/messaging/announcements/keywordsHeader.jsp"/>		
 		<put name="navGeral" value="/commons/commonGeneralNavigationBar.jsp"/>

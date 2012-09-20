@@ -7,7 +7,7 @@ import net.sourceforge.fenixedu.domain.Degree;
 import pt.ist.fenixWebFramework.services.Service;
 
 /**
- * @author T‚nia Pous„o Create on 3/Dez/2003
+ * @author T√¢nia Pous√£o Create on 3/Dez/2003
  */
 public class CourseOfTheExpectedDegree extends FenixService {
 

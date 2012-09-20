@@ -83,7 +83,7 @@ font-weight: normal;
 <em><bean:message key="title.teacherPortal" bundle="INQUIRIES_RESOURCES"/></em>
 <h2><bean:message key="title.inquiry.quc.regent" bundle="INQUIRIES_RESOURCES"/></h2>
 
-<h3><bean:write name="executionCourse" property="name"/> - <bean:write name="executionCourse" property="sigla"/> (<bean:write name="executionPeriod" property="semester"/>บ Semestre <bean:write name="executionPeriod" property="executionYear.year"/>)</h3>
+<h3><bean:write name="executionCourse" property="name"/> - <bean:write name="executionCourse" property="sigla"/> (<bean:write name="executionPeriod" property="semester"/>ยบ Semestre <bean:write name="executionPeriod" property="executionYear.year"/>)</h3>
 
 <p><bean:message key="message.regent.details.inquiry" bundle="INQUIRIES_RESOURCES"/></p>
 

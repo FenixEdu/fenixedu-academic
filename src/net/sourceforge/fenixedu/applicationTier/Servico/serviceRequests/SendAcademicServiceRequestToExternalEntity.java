@@ -78,10 +78,10 @@ public class SendAcademicServiceRequestToExternalEntity extends FenixService {
 
     private static final Logger logger = Logger.getLogger(SendAcademicServiceRequestToExternalEntity.class);
 
-    private static final String COURSE_LABEL = "Nome da disciplina do currículo de Bolonha";
+    private static final String COURSE_LABEL = "Nome da disciplina do currÃ­culo de Bolonha";
     private static final String COURSE_ECTS = "ECTS";
     private static final String EQUIVALENT_COURSE_LABEL = "Nome da(s) disciplina(s) considerada(s) equivalente(s)";
-    private static final String GRADE_LABEL = "Classificação";
+    private static final String GRADE_LABEL = "ClassificaÃ§Ã£o";
     private static final String GRADE_SCALE = "Escala";
     private static final String MEC2006 = "MEC 2006"; //remove after when the process is open to all degrees    
 
@@ -328,16 +328,16 @@ public class SendAcademicServiceRequestToExternalEntity extends FenixService {
 		HSSFSheet hssfSheet = spreadsheet.getSheet();
 		spreadsheet.newRow();
 		spreadsheet.newRow();
-		spreadsheet.addCell("Número de cadeiras pedidas:", unshadedUnlockedNormalTextAndFont);
+		spreadsheet.addCell("NÃºmero de cadeiras pedidas:", unshadedUnlockedNormalTextAndFont);
 		spreadsheet.addCell(numberOfEquivalencesRequested, unshadedNormalTextAndFont);
 
 		spreadsheet.newRow();
-		spreadsheet.addCell("Número de equivalências dadas:", unshadedUnlockedNormalTextAndFont);
+		spreadsheet.addCell("NÃºmero de equivalÃªncias dadas:", unshadedUnlockedNormalTextAndFont);
 		spreadsheet.addCell(StringUtils.EMPTY, unshadedNormalTextAndFont);
 		spreadsheet.newRow();
 		spreadsheet
 			.addCell(
-				"Homologado pelo Conselho Científico ................................................................................................................. IstId: ........................ em ....../......../...........",
+				"Homologado pelo Conselho CientÃ­fico ................................................................................................................. IstId: ........................ em ....../......../...........",
 				unshadedNormalTextAndFont);
 		hssfSheet.addMergedRegion(new CellRangeAddress(spreadsheet.getRow().getRowNum(),
 			spreadsheet.getRow().getRowNum(), 0, 4));
@@ -404,7 +404,7 @@ public class SendAcademicServiceRequestToExternalEntity extends FenixService {
 	String degreeNameAndYear = registration.getLastDegreeCurricularPlan().getDegree().getNameI18N().toString();
 	spreadsheet.addCell(degreeNameAndYear, spreadsheet.getExcelStyle().getTitleStyle());
 	spreadsheet.newRow();
-	String studentNameAndNumber = registration.getPerson().getName() + " - Nº" + registration.getStudent().getNumber();
+	String studentNameAndNumber = registration.getPerson().getName() + " - NÂº" + registration.getStudent().getNumber();
 	spreadsheet.addCell(studentNameAndNumber);
 	spreadsheet.newRow();
 	spreadsheet.addCell(COURSE_LABEL, spreadsheet.getExcelStyle().getTitleStyle());
@@ -420,7 +420,7 @@ public class SendAcademicServiceRequestToExternalEntity extends FenixService {
 		+ executionYear.getName();
 	spreadsheet.addCell(degreeNameAndYear, spreadsheet.getExcelStyle().getTitleStyle());
 	spreadsheet.newRow();
-	String studentNameAndNumber = registration.getPerson().getName() + " - Nº" + registration.getStudent().getNumber();
+	String studentNameAndNumber = registration.getPerson().getName() + " - NÂº" + registration.getStudent().getNumber();
 	spreadsheet.addCell(studentNameAndNumber);
 	spreadsheet.newRow();
 	spreadsheet.addCell(COURSE_LABEL, spreadsheet.getExcelStyle().getTitleStyle());

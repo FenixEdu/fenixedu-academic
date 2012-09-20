@@ -16,7 +16,7 @@
 		<table class="tstyle1 thlight tdcenter">
 			<tr>
 				<th>Nome</th>
-				<th>Conteúdo</th>
+				<th>ConteÃºdo</th>
 			</tr>
 			<tr>
 				<td class="aleft"><bean:message key="cardGeneration.campusCode"/></td>

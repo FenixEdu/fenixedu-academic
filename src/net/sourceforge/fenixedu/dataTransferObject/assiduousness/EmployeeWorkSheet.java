@@ -142,7 +142,7 @@ public class EmployeeWorkSheet implements Serializable {
 	justificationsDuration = new HashMap<JustificationMotive, Duration>();
     }
 
-    // Para um mês já fechado
+    // Para um mÃªs jÃ¡ fechado
     public EmployeeWorkSheet(Employee employee, ClosedMonth closedMonth, LocalDate beginDate, LocalDate endDate) {
 	setEmployee(employee);
 	intMaps();
@@ -162,7 +162,7 @@ public class EmployeeWorkSheet implements Serializable {
 	}
     }
 
-    // Para um mês aberto
+    // Para um mÃªs aberto
     public EmployeeWorkSheet(Employee employee, LocalDate beginDate, LocalDate endDate) {
 	setEmployee(employee);
 	intMaps();

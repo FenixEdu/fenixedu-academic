@@ -26,7 +26,7 @@
 		</li>
 	</logic:equal>
 	<li>
-		<a href="#" onclick="switchDisplay('instructions');">Instruções</a>
+		<a href="#" onclick="switchDisplay('instructions');">InstruÃ§Ãµes</a>
 	</li>
 </ul>
 

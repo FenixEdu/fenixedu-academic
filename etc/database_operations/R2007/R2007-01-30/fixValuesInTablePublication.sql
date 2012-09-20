@@ -5,13 +5,13 @@ update PUBLICATION_DATA set COUNTRY = 'Estados Unidos da America' where COUNTRY=
 update PUBLICATION_DATA set COUNTRY = 'Reino Unido' where COUNTRY='UK' or COUNTRY='U.K.' or COUNTRY='United Kingdom';
 update PUBLICATION_DATA set COUNTRY = 'Alemanha' where COUNTRY='Germany';
 update PUBLICATION_DATA set COUNTRY = 'Holanda' where COUNTRY='Netherlands' or COUNTRY='The Netherlands'or COUNTRY='Holland';
-update PUBLICATION_DATA set COUNTRY = 'Franca' where COUNTRY='FranÁa' or COUNTRY='France';
-update PUBLICATION_DATA set COUNTRY = 'Canada' where COUNTRY='Canad·';
-update PUBLICATION_DATA set COUNTRY = 'Italia' where COUNTRY='It·lia';
+update PUBLICATION_DATA set COUNTRY = 'Franca' where COUNTRY='Fran√ßa' or COUNTRY='France';
+update PUBLICATION_DATA set COUNTRY = 'Canada' where COUNTRY='Canad√°';
+update PUBLICATION_DATA set COUNTRY = 'Italia' where COUNTRY='It√°lia';
 update PUBLICATION_DATA set COUNTRY = 'Irlanda' where COUNTRY='Ireland';
-update PUBLICATION_DATA set COUNTRY = 'Belgica' where COUNTRY='BÈlgica';
-update PUBLICATION_DATA set COUNTRY = 'Croacia' where COUNTRY='Cro·cia';
-update PUBLICATION_DATA set COUNTRY = 'Suica' where COUNTRY='SuiÁa'or COUNTRY='Switzerland';
+update PUBLICATION_DATA set COUNTRY = 'Belgica' where COUNTRY='B√©lgica';
+update PUBLICATION_DATA set COUNTRY = 'Croacia' where COUNTRY='Cro√°cia';
+update PUBLICATION_DATA set COUNTRY = 'Suica' where COUNTRY='Sui√ßa'or COUNTRY='Switzerland';
 update PUBLICATION_DATA set COUNTRY = 'Eslovaquia' where COUNTRY='Slovakia';
 --England??
 

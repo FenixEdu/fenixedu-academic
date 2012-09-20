@@ -16,7 +16,7 @@ import net.sourceforge.fenixedu.injectionCode.IGroup;
 
 public class ScientificCouncilUnit extends ScientificCouncilUnit_Base {
 
-    private static final String COORDINATION_COMMITTEE_NAME = "Comiss„o Executiva";
+    private static final String COORDINATION_COMMITTEE_NAME = "Comiss√£o Executiva";
     private static final String COORDINATION_COMMITTEE_MEMBER_NAME = "Membro";
 
     protected ScientificCouncilUnit() {

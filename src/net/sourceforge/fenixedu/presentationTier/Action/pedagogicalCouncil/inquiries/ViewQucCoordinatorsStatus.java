@@ -54,7 +54,7 @@ public class ViewQucCoordinatorsStatus extends FenixDispatchAction {
 	    if (executionDegree.hasAnyInquiryResults()) {
 		for (Coordinator coordinator : executionDegree.getCoordinatorsListSet()) {
 		    if (coordinator.getResponsible()
-		    //h· casos em que a secret·ria est· n„o sÛ como coordenadora de curso mas tambÈm como respons·vel...
+		    //h√° casos em que a secret√°ria est√° n√£o s√≥ como coordenadora de curso mas tamb√©m como respons√°vel...
 			    && coordinator.getPerson().hasTeacher()) {
 			InquiryCoordinatorAnswer inquiryCoordinatorAnswer = null;
 			if (coordinatorInquiryTemplate.getShared()) {

@@ -80,7 +80,7 @@ public class ClassTimeTableLessonContentRenderer implements LessonSlotContentRen
 	    }
 	    strBuffer.append(" - ");
 	    strBuffer.append(infoExam.getSeason().getSeason());
-	    strBuffer.append("ª época");
+	    strBuffer.append("Âª Ã©poca");
 	} else if (showOccupation instanceof InfoWrittenTest) {
 	    InfoWrittenTest infoWrittenTest = (InfoWrittenTest) showOccupation;
 	    for (int iterEC = 0; iterEC < infoWrittenTest.getAssociatedExecutionCourse().size(); iterEC++) {

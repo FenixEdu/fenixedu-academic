@@ -247,9 +247,9 @@
 							<span class="emphasis-box">info</span>
 						</td>
 						<td class="infoop">
-							<strong>Nota:</strong> Na indicaçãodo nome pode ser fornecido apenas parte do nome do júri externo.<br/>
-							Exemplo 1: Para selecionar todos os júris externos que começam com a letra "A" escreva <strong>A%</strong><br/>
-							Exemplo 2: Para selecionar todos os júris externos que começam com a letra "A" e que tenham um segundo nome que começam com a letra "M" escreva <strong>A% M%</strong>
+							<strong>Nota:</strong> Na indicaÃ§Ã£odo nome pode ser fornecido apenas parte do nome do jÃºri externo.<br/>
+							Exemplo 1: Para selecionar todos os jÃºris externos que comeÃ§am com a letra "A" escreva <strong>A%</strong><br/>
+							Exemplo 2: Para selecionar todos os jÃºris externos que comeÃ§am com a letra "A" e que tenham um segundo nome que comeÃ§am com a letra "M" escreva <strong>A% M%</strong>
 						</td>
 					</tr>
 				</table></td>	

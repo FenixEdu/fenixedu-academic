@@ -41,6 +41,6 @@
 <fr:form action='<%= mappingPath + ".do?method=prepareCandidacyCreationForStork" %>'>
 	<fr:edit id="individualCandidacyProcessBean" name="individualCandidacyProcessBean" visible="false" />
 	
-	<p class="mtop2"><html:submit><bean:message key="button.continue" bundle="APPLICATION_RESOURCES"/> »</html:submit></p>
+	<p class="mtop2"><html:submit><bean:message key="button.continue" bundle="APPLICATION_RESOURCES"/> Â»</html:submit></p>
 </fr:form>
 

@@ -13,7 +13,7 @@
 	<em class="printhidden"><bean:message key="link.writtenEvaluationManagement"/></em>
 	<h2>Salas livres dia <bean:write name="<%=PresentationConstants.DATE%>"/>
  		das <bean:write name="<%=PresentationConstants.START_TIME%>"/>
- 		às <bean:write name="<%=PresentationConstants.END_TIME%>"/></h2>
+ 		Ã s <bean:write name="<%=PresentationConstants.END_TIME%>"/></h2>
  
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="sort"/>
 	
@@ -54,7 +54,7 @@
 		</table>
 	</logic:present>
 	<logic:notPresent name="<%=PresentationConstants.AVAILABLE_ROOMS%>">
-		Não existem salas disponíveis.
+		NÃ£o existem salas disponÃ­veis.
 	</logic:notPresent>
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.day" property="day" />
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.month" property="month" />

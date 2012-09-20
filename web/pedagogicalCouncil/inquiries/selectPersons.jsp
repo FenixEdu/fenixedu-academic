@@ -10,7 +10,7 @@
 <h3>
 	<bean:write name="auditProcessBean" property="executionCourse.name"/>
 	<bean:define id="executionSemester" name="auditProcessBean" property="executionCourse.executionPeriod"/>
-	(<bean:write name="executionSemester" property="semester"/>บ Semestre <bean:write name="executionSemester" property="executionYear.year"/>)
+	(<bean:write name="executionSemester" property="semester"/>ยบ Semestre <bean:write name="executionSemester" property="executionYear.year"/>)
 </h3>
 
 <p class="mvert05"><bean:message key="message.audit.selectPersons" bundle="INQUIRIES_RESOURCES"/></p>

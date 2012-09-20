@@ -7,5 +7,5 @@
 <h2><bean:message key="label.facultyAdmOffice.portal.name"/></h2>
 	
 <p>
-	Bem-vindo ao portal da secção de pessoal docente e investigador.
+	Bem-vindo ao portal da secÃ§Ã£o de pessoal docente e investigador.
 </p>

@@ -13,7 +13,7 @@ import pt.ist.fenixWebFramework.renderers.model.MetaSlot;
  * perform a postback whenever a valid option listed as auto-completion is
  * chosen.
  * 
- * @author Jo„o Neves - JoaoRoxoNeves@ist.utl.pt
+ * @author Jo√£o Neves - JoaoRoxoNeves@ist.utl.pt
  */
 public class AutoCompleteInputRendererWithPostBack extends AutoCompleteInputRenderer {
 

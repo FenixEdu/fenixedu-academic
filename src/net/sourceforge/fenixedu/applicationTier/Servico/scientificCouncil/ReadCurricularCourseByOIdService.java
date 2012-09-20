@@ -13,7 +13,7 @@ import net.sourceforge.fenixedu.domain.CurricularCourse;
 import pt.ist.fenixWebFramework.services.Service;
 
 /**
- * @author Jo„o Mota
+ * @author Jo√£o Mota
  * 
  *         23/Jul/2003 fenix-head ServidorAplicacao.Servico.scientificCouncil
  * 

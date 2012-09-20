@@ -6,7 +6,7 @@
 package net.sourceforge.fenixedu.presentationTier.Action.exceptions;
 
 /**
- * @author Jo„o Mota
+ * @author Jo√£o Mota
  */
 public class notAuthorizedActionDeleteException extends FenixActionException {
     public static String key = "errors.invalid.delete.with.objects";

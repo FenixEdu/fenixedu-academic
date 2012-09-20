@@ -16,9 +16,9 @@
 	<html:hidden property="degreeCurricularPlanID" value="<%= request.getAttribute("degreeCurricularPlanID").toString() %>"/>
 
 <div class="infoop2">
-	Nota: Na indicaçãodo nome pode ser fornecido apenas parte do nome da disciplina.<br/>
-	Exemplo 1: Para selecionar todas as disciplinas que começam com a letra "A" escreva <strong>A%</strong><br />
-	Exemplo 2: Para selecionar todas as disciplinas que começam com a letra "A" e que tenham um segundo nome que começa com a letra "M" escreva <strong>A% M%</strong><br />
+	Nota: Na indicaÃ§Ã£odo nome pode ser fornecido apenas parte do nome da disciplina.<br/>
+	Exemplo 1: Para selecionar todas as disciplinas que comeÃ§am com a letra "A" escreva <strong>A%</strong><br />
+	Exemplo 2: Para selecionar todas as disciplinas que comeÃ§am com a letra "A" e que tenham um segundo nome que comeÃ§a com a letra "M" escreva <strong>A% M%</strong><br />
 </div>
 
 

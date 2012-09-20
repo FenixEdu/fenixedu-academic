@@ -53,5 +53,5 @@
 	<bean:define id="infoStudentCurricularPlan" name="<%= PresentationConstants.INFO_STUDENT_CURRICULAR_PLAN%>"/>
 	<logic:notEmpty name="infoStudentCurricularPlan"  property="givenCredits" >
 		<br/>
-		Atribuição de Créditos:  <bean:write name="infoStudentCurricularPlan"  property="givenCredits" /> Créditos
+		AtribuiÃ§Ã£o de CrÃ©ditos:  <bean:write name="infoStudentCurricularPlan"  property="givenCredits" /> CrÃ©ditos
 	</logic:notEmpty>

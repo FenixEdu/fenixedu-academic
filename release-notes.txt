@@ -116,8 +116,8 @@ Release 2004-05-26
  
 NEW FEATURES: 
 =============
-- [on 01-06-2004 by Fernanda QuitÈrio] public portal - added warning about changes in LEIC degree curricular plan
-- [on 01-06-2004 by Fernanda QuitÈrio] public portal - changed label in IST main page from 'Instituto' to 'InÌcio'
+- [on 01-06-2004 by Fernanda Quit√©rio] public portal - added warning about changes in LEIC degree curricular plan
+- [on 01-06-2004 by Fernanda Quit√©rio] public portal - changed label in IST main page from 'Instituto' to 'In√≠cio'
 - [feature request #225] - coordinator portal - added extra information on execution courses page
 - Added the general class properties concept. For more information related to this,
   see file docs/txt/general-class-properties-doc.txt.
@@ -135,7 +135,7 @@ NEW FEATURES:
 - Grant Contracts are now renewd (using Grant Contract Regimes as regimes of Grant Contract)
 - Adding new Correction forms (temporarily WE HOPE!) to correct key references in erroneus data in database.
 - Search of persons can now be restricted only to grant owners.
-- New correction type. Now the teacher can choose the test correction type, between fÈnix formulas and the values specified in the xml document.
+- New correction type. Now the teacher can choose the test correction type, between f√©nix formulas and the values specified in the xml document.
 - New types of questions: multiple choice, multiple response, numerical (integer and decimal) and strings.
 - Allow showing the feedback specified in xml document.
 - Added local EJB interface.
@@ -165,7 +165,7 @@ CHANGES:
 - Added the creationDate attribute in Enrolment.
 - Updated OJB library to snapshot from head of cvs (currently on version RC6).
 - Updated text on Login Page to be more informative
-- [on 01-06-2004 by Fernanda QuitÈrio] public portal - changed jsp for IST layout, removing duplicated 'div header'
+- [on 01-06-2004 by Fernanda Quit√©rio] public portal - changed jsp for IST layout, removing duplicated 'div header'
 - The algorithm for test question distribution was improved.
 - Change the form for student tests.
 - The response field type in studentTestQuestion is now a xml string (using xmlEncode and XMLDecode) instead of an integer.
@@ -183,14 +183,14 @@ BUG FIXES:
 - fixed bug [ #245 ] Associate rooms to exam: SOP interface for exams managment
 - fixed bug [ #244 ] Execution Course Listing: SOP interface for shift creation
 - fixed bug [ #248 ] masterDegree portal: curricular courses with p type must not appear for declaration and certificate purposes
-- [on 03-06-2004 by Fernanda QuitÈrio] master degree portal: fixed grammar in text for declarations and certificates
+- [on 03-06-2004 by Fernanda Quit√©rio] master degree portal: fixed grammar in text for declarations and certificates
 - fixed bug [ #256 ] Students unable to confirm final degree work attribution
 - fixed bug [ #153 ] fixed problem of enrolment evaluations
 - fixed bug [ #259 ] assiduousness portal
 - fixed bug in summary use cases: modified InfoSummary.java, SummaryMAnagerAction.java and ReadSummaries.java files
 - fixed bug in execution course site about summaries: modified method findLesson in ExecutionCourseSiteComponentBuilder.java file
 - fixed bug [ #257 ] manager portal: added error message when inserting duplicated execution course
-- [on 09-06-2004 by Fernanda QuitÈrio] assiduousness portal: fixed counting of time in case of irregular lunch periods
+- [on 09-06-2004 by Fernanda Quit√©rio] assiduousness portal: fixed counting of time in case of irregular lunch periods
 KNOWN ISSUES:
 =============
 
@@ -217,7 +217,7 @@ NEW FEATURES:
 - new images for IST site
 - task [#179] Student Candidacy for Final Degree Works
 - task [#181] View of Student Candidacies
-- task [#175] FÈnix Error Page - don't kill session when showing the error page.
+- task [#175] F√©nix Error Page - don't kill session when showing the error page.
 - task [#175] Attribution of final degree work (and confirmation)
 - Create a new Person as a Grant Owner
 - Create a new Grant Owner related to an already existent person.
@@ -237,7 +237,7 @@ NEW FEATURES:
   (end and beggining). Exams associated to room occupations to make the room
   search algorithm more reliable.
 - In form EditGrantOwner, the validation.xml file required that document id number is a integer, when it olny should be required.
-- A qualification can have a empty date (for monitors, who are in 5∫ year and still didn't complete the degree).
+- A qualification can have a empty date (for monitors, who are in 5¬∫ year and still didn't complete the degree).
 - Correcting Grant Actions and JSP associated with QUALIFICATION (date can now be null).
 - A teacher could not be associated with a Grant Cost Center.. now.. he can!
 - In editing a grant part the waiting time was enormous. Changing from drop list to a text box in form.
@@ -257,7 +257,7 @@ NOTES:
 - Uncommented public links to exams.
  	
 CHANGES:
-- Coordinators label in english in showDegreeSiteDescriptionEnglish.jsp By T‚nia Pous„o
+- Coordinators label in english in showDegreeSiteDescriptionEnglish.jsp By T√¢nia Pous√£o
 - webSiteManager: changed interface for adding and editing an item. Only the relevant dates appear for each section:
   - creation date for news
   - item begin and end date for events
@@ -508,13 +508,13 @@ CHANGES:
 
 
 BUG FIXES:
-- fixed bug [ #182 ] by T‚nia Pous„o Manager - Execution Courses (in jsp.manager.executionCourseManagement: prepareEditECChooseExecDegreeAndCurYear.jsp, prepareEditExecutionCourse.jsp)
-- fixed bug [ #191 ] by T‚nia Pous„o Manager - Editing Execution Course (in jsp.manager.executionCourseManagement: prepareEditECChooseExecDegreeAndCurYear.jsp, prepareEditExecutionCourse.jsp)
-- fixed bug [ #210 ] by T‚nia Pous„o Gratuites - Rounding Values (modified ServidorAplicacao.Servico.masterDegree.administrativeOffice.gratuity.ReadGratuitySituationListByExecutionDegreeAndSpecialization.java)
+- fixed bug [ #182 ] by T√¢nia Pous√£o Manager - Execution Courses (in jsp.manager.executionCourseManagement: prepareEditECChooseExecDegreeAndCurYear.jsp, prepareEditExecutionCourse.jsp)
+- fixed bug [ #191 ] by T√¢nia Pous√£o Manager - Editing Execution Course (in jsp.manager.executionCourseManagement: prepareEditECChooseExecDegreeAndCurYear.jsp, prepareEditExecutionCourse.jsp)
+- fixed bug [ #210 ] by T√¢nia Pous√£o Gratuites - Rounding Values (modified ServidorAplicacao.Servico.masterDegree.administrativeOffice.gratuity.ReadGratuitySituationListByExecutionDegreeAndSpecialization.java)
 - fixed bug [ #215 ] Missing filter function for public tfc listing.
 - fixed bug [ #216 ] Missing link to view final degree work proposal listings.
 - fixed bug [ #183 ] Login Page
-- fixed bug [ #181 ] Inserting new items in Section Management ("Gest„o de Pautas")
+- fixed bug [ #181 ] Inserting new items in Section Management ("Gest√£o de Pautas")
 - fixed bug [ #180 ] bug with users with grantOwner role
 - websiteManager: fixed sections that have accent in word and it was not shown
 - webSiteManager: fixed archive of items that was mixing months from different years
@@ -593,7 +593,7 @@ CHANGES:
 
 BUG FIXES:
 - fixed bug [ #183 ] Login Page
-- fixed bug [ #181 ] Inserting new items in Section Management ("Gest„o de Pautas")
+- fixed bug [ #181 ] Inserting new items in Section Management ("Gest√£o de Pautas")
 - fixed bug [ #180 ] bug with users with grantOwner role
 - websiteManager: fixed sections that have accent in word and it was not shown
 - webSiteManager: fixed archive of items that was mixing months from different years
@@ -724,7 +724,7 @@ CHANGES:
    access an invalid test
 
 BUG FIXES:
-- fixed [#116 ]- www.ist.utl.pt/serviÁos/	
+- fixed [#116 ]- www.ist.utl.pt/servi√ßos/	
 - fixed IST person migration
 - Corrected input forward for create exams mapping on SOP's interface.
 - Corrected sucessful forward for create exams mapping on SOP's interface to avoid stack overflow.

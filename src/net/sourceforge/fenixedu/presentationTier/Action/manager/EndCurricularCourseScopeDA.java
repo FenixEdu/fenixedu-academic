@@ -44,7 +44,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 /**
- * @author Fernanda Quitério 27/10/2003
+ * @author Fernanda QuitÃ©rio 27/10/2003
  * 
  */
 @Mapping(module = "manager", path = "/endCurricularCourseScope", input = "/endCurricularCourseScope.do?method=prepareEnd&page=0", attribute = "curricularCourseScopeForm", formBean = "curricularCourseScopeForm", scope = "request", parameter = "method")

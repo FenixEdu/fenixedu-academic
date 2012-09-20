@@ -119,7 +119,7 @@ public class CoordinatorEvaluationManagementBackingBean extends FenixBackingBean
 	    this.curricularYearsLabels = new ArrayList();
 	    this.curricularYearsLabels.add(new SelectItem(0, "Todos"));
 	    for (int i = 1; i <= 5; i++) {
-		this.curricularYearsLabels.add(new SelectItem(i, i + " บ"));
+		this.curricularYearsLabels.add(new SelectItem(i, i + " ยบ"));
 	    }
 	}
 	return this.curricularYearsLabels;

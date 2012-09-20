@@ -43,7 +43,7 @@ import org.apache.struts.util.LabelValueBean;
 import pt.ist.fenixWebFramework.security.UserView;
 
 /**
- * @author T‚nia Pous„o
+ * @author T√¢nia Pous√£o
  * 
  */
 public class ExemptionGratuityAction extends FenixDispatchAction {

@@ -8,17 +8,17 @@ insert into AVAILABILITY_POLICY(OJB_CONCRETE_CLASS, EXPRESSION, TARGET_GROUP, KE
 select 'net.sourceforge.fenixedu.domain.functionalities.ExpressionGroupAvailability', 'role(PARKING_MANAGER)','role(PARKING_MANAGER)', C.ID_INTERNAL FROM CONTENT C WHERE CONTENT_ID='452f211a-fada-102a-b5ba-0013d3b09da0';
 
 
--- Gest„o de website
+-- Gest√£o de website
 insert into CONTENT(OJB_CONCRETE_CLASS,CONTENT_ID,NAME,CREATION_DATE,PREFIX,KEY_AVAILABILITY_POLICY,VISIBLE,EXECUTION_PATH)
-values('net.sourceforge.fenixedu.domain.functionalities.Module','421011e0-fadc-102a-b5ba-0013d3b09da0','pt17:Gest„o do WebSite',NOW(),'/webSiteManager',NULL,'1','/webSiteManager/index.do');
+values('net.sourceforge.fenixedu.domain.functionalities.Module','421011e0-fadc-102a-b5ba-0013d3b09da0','pt17:Gest√£o do WebSite',NOW(),'/webSiteManager',NULL,'1','/webSiteManager/index.do');
 
 insert into AVAILABILITY_POLICY(OJB_CONCRETE_CLASS, EXPRESSION, TARGET_GROUP, KEY_CONTENT) 
 select 'net.sourceforge.fenixedu.domain.functionalities.ExpressionGroupAvailability', 'role(WEBSITE_MANAGER)','role(WEBSITE_MANAGER)', C.ID_INTERNAL FROM
 CONTENT C WHERE CONTENT_ID='421011e0-fadc-102a-b5ba-0013d3b09da0';
 
--- CoordenaÁ„o de Exames AKA AvaliaÁ„o
+-- Coordena√ß√£o de Exames AKA Avalia√ß√£o
 insert into CONTENT(OJB_CONCRETE_CLASS,CONTENT_ID,NAME,CREATION_DATE,PREFIX,KEY_AVAILABILITY_POLICY,VISIBLE,EXECUTION_PATH)
-values('net.sourceforge.fenixedu.domain.functionalities.Module','e0181ae0-fb8b-102a-b5ba-0013d3b09da0','pt9:AvaliaÁ„o',NOW(),'/examCoordination',NULL,'1','/examCoordination/index.do');
+values('net.sourceforge.fenixedu.domain.functionalities.Module','e0181ae0-fb8b-102a-b5ba-0013d3b09da0','pt9:Avalia√ß√£o',NOW(),'/examCoordination',NULL,'1','/examCoordination/index.do');
 
 insert into AVAILABILITY_POLICY(OJB_CONCRETE_CLASS, EXPRESSION, TARGET_GROUP, KEY_CONTENT)
 select 'net.sourceforge.fenixedu.domain.functionalities.ExpressionGroupAvailability', 'role(EXAM_COORDINATOR)','role(EXAM_COORDINATOR)', C.ID_INTERNAL FROM
@@ -27,7 +27,7 @@ CONTENT C WHERE CONTENT_ID='e0181ae0-fb8b-102a-b5ba-0013d3b09da0';
 -- Academic Admin Office
 
 insert into CONTENT(OJB_CONCRETE_CLASS,CONTENT_ID,NAME,CREATION_DATE,PREFIX,KEY_AVAILABILITY_POLICY,VISIBLE,EXECUTION_PATH)
-values('net.sourceforge.fenixedu.domain.functionalities.Module','3d30565c-fb8c-102a-b5ba-0013d3b09da0','pt20:Secretaria AcadÈmica',NOW(),'/academicAdminOffice',NULL,'1','/academicAdminOffice/index.do');
+values('net.sourceforge.fenixedu.domain.functionalities.Module','3d30565c-fb8c-102a-b5ba-0013d3b09da0','pt20:Secretaria Acad√©mica',NOW(),'/academicAdminOffice',NULL,'1','/academicAdminOffice/index.do');
 
 insert into AVAILABILITY_POLICY(OJB_CONCRETE_CLASS, EXPRESSION, TARGET_GROUP, KEY_CONTENT)
 select 'net.sourceforge.fenixedu.domain.functionalities.ExpressionGroupAvailability', 'role(ACADEMIC_ADMINISTRATIVE_OFFICE)','role(ACADEMIC_ADMINISTRATIVE_OFFICE)', C.ID_INTERNAL FROM

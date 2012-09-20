@@ -9,7 +9,7 @@
 <jsp:include page="qucChooseSemesterAndHeaderMenu.jsp"/>
 
 <h3><bean:message key="link.quc.resume" bundle="INQUIRIES_RESOURCES"/> (<bean:write name="executionSemester" property="executionYear.year"/> - 
-	<bean:write name="executionSemester" property="semester"/>บ <bean:message key="label.inquiries.semester" bundle="INQUIRIES_RESOURCES"/>)</h3>
+	<bean:write name="executionSemester" property="semester"/>ยบ <bean:message key="label.inquiries.semester" bundle="INQUIRIES_RESOURCES"/>)</h3>
 
 <p><bean:message key="message.department.resume" bundle="INQUIRIES_RESOURCES"/></p>
 

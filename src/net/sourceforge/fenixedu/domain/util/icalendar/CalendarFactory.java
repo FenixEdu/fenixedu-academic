@@ -23,7 +23,7 @@ import net.fortuna.ical4j.model.property.Url;
 import net.fortuna.ical4j.model.property.Version;
 
 public class CalendarFactory {
-    public static String PROD_ID_COMPANY = "Instituto Superior Técnico";
+    public static String PROD_ID_COMPANY = "Instituto Superior TÃ©cnico";
     public static String PROD_ID_APPLICATION = "Sistema Fenix";
     public static TimeZone TIMEZONE = TimeZoneRegistryFactory.getInstance().createRegistry().getTimeZone("Europe/Lisbon");
 

@@ -561,7 +561,7 @@ a,input,.symbol {
 		var availableYears = getYears(parseInt($(ui.draggable).find("#availableYears").html()));
 		
 		if(availableYears.length == 0) {
-			alert("Seleccione pelo menos um ano válido para o curso escolhido!");
+			alert("Seleccione pelo menos um ano vÃ¡lido para o curso escolhido!");
 			return;
 		}
 				
@@ -621,7 +621,7 @@ a,input,.symbol {
 		for(i in years) {
 			if(returnStr.length > 0)
 				returnStr += ', ';
-			returnStr += years[i]  + 'º';
+			returnStr += years[i]  + 'Âº';
 		}
 		
 		if(returnStr.length == 2)
@@ -639,7 +639,7 @@ a,input,.symbol {
 	
 	function showLeaveWarning() {
 		$(window).bind('beforeunload', function(){
-		    return "Tem alterações não guardadas. Tem a certeza que pretende sair da página?";
+		    return "Tem alteraÃ§Ãµes nÃ£o guardadas. Tem a certeza que pretende sair da pÃ¡gina?";
 		});
 		$("form").submit(function(){
 		    $(window).unbind("beforeunload");
@@ -716,7 +716,7 @@ a,input,.symbol {
 	}
 	
 	function deletePeriod(element, index) {
-		if(!confirm("Tem a certeza que pretende apagar este período? Todos os cursos associados ficarão sem período associado."))
+		if(!confirm("Tem a certeza que pretende apagar este perÃ­odo? Todos os cursos associados ficarÃ£o sem perÃ­odo associado."))
 			return;
 		
 		var form = element.parents().eq(3);

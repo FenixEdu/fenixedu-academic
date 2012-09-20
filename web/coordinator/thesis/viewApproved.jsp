@@ -156,7 +156,7 @@
 </logic:notEmpty>
 
 
-<%-- Confirmação --%>
+<%-- ConfirmaÃ§Ã£o --%>
 <h3 class="mtop15 mbottom05"><bean:message key="title.coordinator.thesis.confirm.section"/></h3>
 
 <p id="confirmation">

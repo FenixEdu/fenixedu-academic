@@ -52,6 +52,6 @@
 		</fr:edit>
 
 	</fieldset>	
-	<p class="mtop15"><html:submit><bean:message bundle="PHD_RESOURCES" key="label.continue"/> »</html:submit></p>
+	<p class="mtop15"><html:submit><bean:message bundle="PHD_RESOURCES" key="label.continue"/> Â»</html:submit></p>
 </fr:form>
 </div>

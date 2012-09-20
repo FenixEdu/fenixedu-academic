@@ -290,7 +290,7 @@ public class StudentInquiryBean implements Serializable {
 		.getWeeklyHoursSpentInClassesSeason());
 	inquiryCourseAnswer.setWeeklyHoursSpentPercentage(getInquiryRegistry().getWeeklyHoursSpentPercentage());
 
-	inquiryCourseAnswer.setCommittedFraud(Boolean.FALSE);//TODO actualmente n„o existe registo desta info no fenix
+	inquiryCourseAnswer.setCommittedFraud(Boolean.FALSE);//TODO actualmente n√£o existe registo desta info no fenix
 	inquiryCourseAnswer.setGrade(getInquiryRegistry().getLastGradeInterval());
 	for (InquiryBlockDTO inquiryBlockDTO : getCurricularCourseBlocks()) {
 	    for (InquiryGroupQuestionBean groupQuestionBean : inquiryBlockDTO.getInquiryGroups()) {

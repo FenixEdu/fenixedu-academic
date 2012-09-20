@@ -240,7 +240,7 @@ public class PerformanceGridRenderer extends OutputRenderer {
 	    if (columnIndex < one.getSlots().size()) {
 		return new HtmlText(one.getSlots().get(columnIndex).getLabel());
 	    } else {
-		HtmlText text = new HtmlText(getSemester(columnIndex) + "บ Sem");
+		HtmlText text = new HtmlText(getSemester(columnIndex) + "ยบ Sem");
 		text.setClasses("nowrap");
 		return text;
 	    }
@@ -254,7 +254,7 @@ public class PerformanceGridRenderer extends OutputRenderer {
 	    } else if (columnIndex >= numberOfSlots && columnIndex < numberOfSlots + 2) {
 		return RenderUtils.getResourceString(getPerformanceGridBundle(), "label.approvedRatio");
 	    } else {
-		return getYear(columnIndex) + "บ Ano";
+		return getYear(columnIndex) + "ยบ Ano";
 	    }
 	}
 

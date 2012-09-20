@@ -42,7 +42,7 @@
 	
 	<logic:notPresent name="candidacyBean">
 		<em><bean:message key="label.php.public.candidacy.hash.not.found" bundle="PHD_RESOURCES"/></em>
-		<a href="#" onclick="javascript:document.getElementById('skipValidationId').value='true';javascript:document.getElementById('method').value='backToViewCandidacy';document.getElementById('editPhdInformationForm').submit();">« <bean:message bundle="PHD_RESOURCES" key="label.back"/></a>
+		<a href="#" onclick="javascript:document.getElementById('skipValidationId').value='true';javascript:document.getElementById('method').value='backToViewCandidacy';document.getElementById('editPhdInformationForm').submit();">Â« <bean:message bundle="PHD_RESOURCES" key="label.back"/></a>
 	</logic:notPresent>
 	
 	<logic:present name="candidacyBean">

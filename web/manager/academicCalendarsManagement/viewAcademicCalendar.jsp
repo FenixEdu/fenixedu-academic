@@ -132,7 +132,7 @@
 				<html:link page="<%= "/academicCalendarsManagement.do?method=prepareEditEntry&amp;rootEntryID=" + rootEntryID + "&amp;begin=" + beginDate + "&amp;end=" + endDate %>" paramId="entryID" paramName="entryBean" paramProperty="entry.idInternal">
 					<bean:message bundle="MANAGER_RESOURCES" key="label.edit.academic.calendar.entry"/>
 				</html:link>,		
-				<html:link page="<%= "/academicCalendarsManagement.do?method=deleteEntry&amp;rootEntryID=" + rootEntryID + "&amp;begin=" + beginDate + "&amp;end=" + endDate %>" paramId="entryID" paramName="entryBean" paramProperty="entry.idInternal" onclick="return confirm('Tem a certeza que deseja apagar o calendário?')">
+				<html:link page="<%= "/academicCalendarsManagement.do?method=deleteEntry&amp;rootEntryID=" + rootEntryID + "&amp;begin=" + beginDate + "&amp;end=" + endDate %>" paramId="entryID" paramName="entryBean" paramProperty="entry.idInternal" onclick="return confirm('Tem a certeza que deseja apagar o calendÃ¡rio?')">
 					<bean:message bundle="MANAGER_RESOURCES" key="label.delete.academic.calendar"/>
 				</html:link>
 			</p>

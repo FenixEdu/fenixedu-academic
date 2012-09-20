@@ -10,7 +10,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.domain.Grouping;
 
 /**
- * @author T‚nia Pous„o
+ * @author T√¢nia Pous√£o
  * 
  */
 public class DeleteGrouping extends FenixService {

@@ -93,7 +93,7 @@ public class ReadShiftsByExecutionCourseIDAuthorizationFilter extends Filtro {
 		while (executionDegreesIterator.hasNext()) {
 		    ExecutionDegree executionDegree = (ExecutionDegree) executionDegreesIterator.next();
 
-		    // modified by T‚nia Pous„o
+		    // modified by T√¢nia Pous√£o
 		    Coordinator coordinator = executionDegree.getCoordinatorByTeacher(person);
 
 		    if (coordinator != null) {

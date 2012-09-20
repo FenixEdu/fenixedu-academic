@@ -5,9 +5,9 @@
 <%@ taglib uri="/WEB-INF/taglibs-datetime.tld" prefix="dt"%>
 <html:xhtml/>
 
-<em>Cartões de Identificação</em>
+<em>CartÃµes de IdentificaÃ§Ã£o</em>
 <h2><bean:message key="link.manage.card.generation" /></h2>
-<p><html:link page="/manageCardGeneration.do?method=manageCardGenerationBatch">« Voltar</html:link></p>
+<p><html:link page="/manageCardGeneration.do?method=manageCardGenerationBatch">Â« Voltar</html:link></p>
 
 <br/>
 

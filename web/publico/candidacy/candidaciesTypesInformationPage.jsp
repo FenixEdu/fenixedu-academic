@@ -96,17 +96,17 @@
 </style>
 
 
-<div class="col_right_photo"><img src="http://www.ist.utl.pt/img/perfil/candidato_photo.jpg" alt="[Foto] Inscrições na secretaria" width="150" height="100" /></div>
+<div class="col_right_photo"><img src="http://www.ist.utl.pt/img/perfil/candidato_photo.jpg" alt="[Foto] InscriÃ§Ãµes na secretaria" width="150" height="100" /></div>
 <h1>Candidato</h1> 
 <p class="greytxt">Bem-vindo &agrave; p&aacute;gina informativa destinada aos  Candidatos a ingressar no IST. O objectivo &eacute; fornecer aqui os links que pensamos serem mais &uacute;teis para o seu processo de candidatura.</p>
 <h2>Com o IST, entra no melhor ensino superior europeu</h2>
 
-<p>O Instituto Superior Técnico (IST), escola de referência em Engenharia, Ciência e Tecnologia, implementou, a partir do ano lectivo de 2006/2007, uma reforma de todas as suas formações de acordo com o Processo de Bolonha.</p>
+<p>O Instituto Superior TÃ©cnico (IST), escola de referÃªncia em Engenharia, CiÃªncia e Tecnologia, implementou, a partir do ano lectivo de 2006/2007, uma reforma de todas as suas formaÃ§Ãµes de acordo com o Processo de Bolonha.</p>
 <p>Esta reforma visa:</p>
 <ul>
-	<li>aumentar a mobilidade dos estudantes a nível nacional e internacional;</li>
+	<li>aumentar a mobilidade dos estudantes a nÃ­vel nacional e internacional;</li>
 	<li>adoptar um novo modelo de ensino/aprendizagem;</li>
-	<li>complementar a formação dos alunos em áreas transversais.</li>
+	<li>complementar a formaÃ§Ã£o dos alunos em Ã¡reas transversais.</li>
 </ul>
 <p>Os antigos cursos de licenciatura de 5 anos transformaram-se, no novo modelo, em mestrados integrados de 5 anos ou em cursos organizados em dois ciclos sucessivos, conferindo respectivamente os graus de licenciado e de mestre (3+2).</p>
 
@@ -130,7 +130,7 @@
 <p>Na sequ&ecirc;ncia destas forma&ccedil;&otilde;es de 1&ordm; e 2&ordm; ciclo, o IST, como grande escola europeia na &aacute;rea da Engenharia, Ci&ecirc;ncia e Tecnologia, oferece um amplo leque de forma&ccedil;&otilde;es p&oacute;s-graduadas de &iacute;ndole profissionalizante ou mais vocacionadas para a Investiga&ccedil;&atilde;o, o Desenvolvimento e a Inova&ccedil;&atilde;o. Neste &acirc;mbito o IST est&aacute; fortemente envolvido em programas de coopera&ccedil;&atilde;o com as melhores escolas europeias no &acirc;mbito da rede CLUSTER e tamb&eacute;m com universidades americanas de refer&ecirc;ncia como sejam o MIT, a CMU ou a UTAustin.</p>
 
 <h2>Contacto</h2>
-<h3><a href="http://nape.ist.utl.pt/nape/index.php">Núcleo de Apoio ao Estudante (NAPE)</a></h3>
+<h3><a href="http://nape.ist.utl.pt/nape/index.php">NÃºcleo de Apoio ao Estudante (NAPE)</a></h3>
 <p><strong>IST - Alameda </strong><br />
 	Tlf: 218 417 251 / 218 419 155 <br />
 	Fax: 218 419 344

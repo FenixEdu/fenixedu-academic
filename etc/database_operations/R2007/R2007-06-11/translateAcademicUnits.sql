@@ -1,14 +1,14 @@
 UPDATE `DEPARTMENT`
 	SET `REAL_NAME_EN` = 'Department of Chemical and Biological Engineering (DEQB)'
-	WHERE `REAL_NAME`  = 'Departamento de Engenharia QuÌmica e BiolÛgica (DEQB)';
+	WHERE `REAL_NAME`  = 'Departamento de Engenharia Qu√≠mica e Biol√≥gica (DEQB)';
 UPDATE `DEPARTMENT`
 	SET `REAL_NAME_EN` = 'Department of Civil Engineering and Architecture (DECivil)'
 	WHERE `REAL_NAME`  = 'Departamento de Engenharia Civil e Arquitectura (DECivil)';
 UPDATE `DEPARTMENT`
 	SET `REAL_NAME_EN` = 'Mechanical Engineering Department (DEM)'
-	WHERE `REAL_NAME`  = 'Departamento de Engenharia Mec‚nica (DEM)';
+	WHERE `REAL_NAME`  = 'Departamento de Engenharia Mec√¢nica (DEM)';
 UPDATE `DEPARTMENT`
-	SET `REAL_NAME_EN` = 'Departamento de FÌsica (DF)'
+	SET `REAL_NAME_EN` = 'Departamento de F√≠sica (DF)'
 	WHERE `REAL_NAME`  = 'Department of Physics (DF)';
 UPDATE `DEPARTMENT`
 	SET `REAL_NAME_EN` = 'Department of Mining and Earth Resources (DEMG)'
@@ -21,16 +21,16 @@ ALTER TABLE `PARTY` ADD COLUMN `NAME_EN` VARCHAR(255) DEFAULT NULL AFTER `NAME`;
 
 UPDATE PARTY 
 	SET NAME_EN = 'Hydraulics and Water and Environmental Resources Section'
-	WHERE NAME  = 'SecÁ„o de Hidraulica e Recursos HÌdricos e Ambientais';
+	WHERE NAME  = 'Sec√ß√£o de Hidraulica e Recursos H√≠dricos e Ambientais';
 UPDATE PARTY 
 	SET NAME_EN = 'Structural Mechanics and Structures Section'
-	WHERE NAME  = 'SecÁ„o de Mec‚nica Estrutural e Estruturas';
+	WHERE NAME  = 'Sec√ß√£o de Mec√¢nica Estrutural e Estruturas';
 UPDATE PARTY 
 	SET NAME_EN = 'Systems and Aided Design Section'
-	WHERE NAME  = 'SecÁ„o de Sistemas de Apoio ao Projecto';
+	WHERE NAME  = 'Sec√ß√£o de Sistemas de Apoio ao Projecto';
 UPDATE PARTY
 	SET NAME_EN = 'Urban Planning, Transportation and Systems Section'
-	WHERE NAME  = 'SecÁ„o de Urbanismo, Transportes, Vias e Sistemas';
+	WHERE NAME  = 'Sec√ß√£o de Urbanismo, Transportes, Vias e Sistemas';
 UPDATE PARTY
 	SET NAME_EN = 'Architecture Section'
 	WHERE NAME  = 'Seccao de Arquitectura';
@@ -42,59 +42,59 @@ UPDATE PARTY
 	WHERE NAME  = 'Seccao de Geotecnia';
 UPDATE PARTY
 	SET NAME_EN = 'Computers Scientific Area' 
-	WHERE NAME  = '¡rea CientÌfica de Computadores';
+	WHERE NAME  = '√Årea Cient√≠fica de Computadores';
 UPDATE PARTY
 	SET NAME_EN = 'Electronics Scientific Area' 
-	WHERE NAME  = '¡rea CientÌfica de ElectrÛnica';
+	WHERE NAME  = '√Årea Cient√≠fica de Electr√≥nica';
 UPDATE PARTY
 	SET NAME_EN = 'Energy Scientific Area' 
-	WHERE NAME  = '¡rea CientÌfica de Energia';
+	WHERE NAME  = '√Årea Cient√≠fica de Energia';
 UPDATE PARTY
 	SET NAME_EN = 'Systems, Decision and Control Scientific Area' 
-	WHERE NAME  = '¡rea CientÌfica de Sistemas, Decis„o e Controlo';
+	WHERE NAME  = '√Årea Cient√≠fica de Sistemas, Decis√£o e Controlo';
 UPDATE PARTY
 	SET NAME_EN = 'Telecommunications Scientific Area' 
-	WHERE NAME  = '¡rea CientÌfica de TelecomunicaÁıes';
+	WHERE NAME  = '√Årea Cient√≠fica de Telecomunica√ß√µes';
 UPDATE PARTY
 	SET NAME_EN = 'Mineralogy and Petrology Laboratory' 
-	WHERE NAME  = 'LaboratÛrio de Mineralogia e Petrologia';
+	WHERE NAME  = 'Laborat√≥rio de Mineralogia e Petrologia';
 UPDATE PARTY
 	SET NAME_EN = 'Mining Exploitation Section' 
-	WHERE NAME  = 'SecÁ„o de ExploraÁ„o de Minas';
+	WHERE NAME  = 'Sec√ß√£o de Explora√ß√£o de Minas';
 UPDATE PARTY
 	SET NAME_EN = 'Minerallurgy and Mining Planning Section' 
-	WHERE NAME  = 'LaboratÛrio de Mineralurgia e Planeamento Mineiro';
+	WHERE NAME  = 'Laborat√≥rio de Mineralurgia e Planeamento Mineiro';
 UPDATE PARTY 
 	SET NAME_EN = 'Applied Geology Laboratory' 
-	WHERE NAME  = 'LaboratÛrio de Geologia Aplicada';
+	WHERE NAME  = 'Laborat√≥rio de Geologia Aplicada';
 UPDATE PARTY 
 	SET NAME_EN = 'Mechanical Design Section' 
-	WHERE NAME  = 'SecÁ„o de Projecto Mec‚nico';
+	WHERE NAME  = 'Sec√ß√£o de Projecto Mec√¢nico';
 UPDATE PARTY 
 	SET NAME_EN = 'Systems Section' 
-	WHERE NAME  = 'SecÁ„o de Sistemas';
+	WHERE NAME  = 'Sec√ß√£o de Sistemas';
 UPDATE PARTY 
 	SET NAME_EN = 'Mechanics Technology Section' 
-	WHERE NAME  = 'SecÁ„o de Tecnologia Mec‚nica';
+	WHERE NAME  = 'Sec√ß√£o de Tecnologia Mec√¢nica';
 UPDATE PARTY 
 	SET NAME_EN = 'Thermofluids and Energy Section' 
-	WHERE NAME  = 'SecÁ„o de Termofluidos e Energia';
+	WHERE NAME  = 'Sec√ß√£o de Termofluidos e Energia';
 UPDATE PARTY 
 	SET NAME_EN = 'Environment and Energy Section' 
-	WHERE NAME  = 'SecÁ„o de Ambiente e Energia';
+	WHERE NAME  = 'Sec√ß√£o de Ambiente e Energia';
 UPDATE PARTY 
 	SET NAME_EN = 'Aerospace Mechanics Section' 
-	WHERE NAME  = 'SecÁ„o de Mec‚nica Aeroespacial';
+	WHERE NAME  = 'Sec√ß√£o de Mec√¢nica Aeroespacial';
 UPDATE PARTY 
 	SET NAME_EN = 'Algebra and Mathematical Analysis Section' 
-	WHERE NAME  = 'SecÁ„o de ¡lgebra e An·lise';
+	WHERE NAME  = 'Sec√ß√£o de √Ålgebra e An√°lise';
 UPDATE PARTY
 	SET NAME_EN = 'Computation Science Section'
-	WHERE NAME  = 'SecÁ„o de CiÍncia da ComputaÁ„o';
+	WHERE NAME  = 'Sec√ß√£o de Ci√™ncia da Computa√ß√£o';
 UPDATE PARTY
 	SET NAME_EN = 'Statistics and Applications Section'
-	WHERE NAME  = 'SecÁ„o de EstatÌstica e AplicaÁıes';
+	WHERE NAME  = 'Sec√ß√£o de Estat√≠stica e Aplica√ß√µes';
 UPDATE PARTY
 	SET NAME_EN = 'Applied Mathematics and Numerical Analysis Section'
-	WHERE NAME  = 'SecÁ„o de Matem·tica Aplicada e An·lise NumÈrica';
+	WHERE NAME  = 'Sec√ß√£o de Matem√°tica Aplicada e An√°lise Num√©rica';
 

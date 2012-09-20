@@ -64,7 +64,7 @@
 				<strong>
 				The Erasmus web application allowed you to authenticate using your National citizen identification. 
 				By using such method you would be able to access all the information of your course (schedules, classes, etc.) 
-				before arriving to Instituto Superior Técnico (in fact you would be receiving an email just now to inform on how to proceed), 
+				before arriving to Instituto Superior TÃ©cnico (in fact you would be receiving an email just now to inform on how to proceed), 
 				however you choose not to use it. IST would like to know the reason for that choice, please choose one of the available reasons:
 				</strong>
 			</p>

@@ -1,7 +1,7 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager;
 
 /**
- * @author Jo„o Mota
+ * @author Jo√£o Mota
  *  
  */
 

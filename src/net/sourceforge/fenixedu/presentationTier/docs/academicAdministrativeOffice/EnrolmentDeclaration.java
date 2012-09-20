@@ -77,13 +77,13 @@ public class EnrolmentDeclaration extends AdministrativeOfficeDocument {
 	    final boolean transition = registration.isTransition(executionYear);
 
 	    if (registration.isFirstTime(executionYear) && !transition) {
-		result.append(", pela 1ª vez");
+		result.append(", pela 1Âª vez");
 	    } else {
 		final Registration registrationToInspect = transition ? registration.getSourceRegistration() : registration;
 		if (registrationToInspect.hasApprovement(executionYear.getPreviousExecutionYear())) {
 		    result.append(" e teve aproveitamento no ano lectivo " + executionYear.getPreviousExecutionYear().getYear());
 		} else {
-		    result.append(" e não teve aproveitamento no ano lectivo "
+		    result.append(" e nÃ£o teve aproveitamento no ano lectivo "
 			    + executionYear.getPreviousExecutionYear().getYear());
 		}
 	    }

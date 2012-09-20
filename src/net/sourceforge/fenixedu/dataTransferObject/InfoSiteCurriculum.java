@@ -6,7 +6,7 @@
 package net.sourceforge.fenixedu.dataTransferObject;
 
 /**
- * @author Jo„o Mota
+ * @author Jo√£o Mota
  * 
  *         29/Jul/2003 fenix-head DataBeans
  * 

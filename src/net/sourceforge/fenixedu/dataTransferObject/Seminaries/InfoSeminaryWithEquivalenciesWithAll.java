@@ -7,7 +7,7 @@ import net.sourceforge.fenixedu.domain.Seminaries.CourseEquivalency;
 import net.sourceforge.fenixedu.domain.Seminaries.Seminary;
 
 /**
- * @author Fernanda Quitério
+ * @author Fernanda QuitÃ©rio
  * 
  * 
  *         Created at 25/Jun/2004

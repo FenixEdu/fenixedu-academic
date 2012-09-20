@@ -55,7 +55,7 @@
 	</logic:notEmpty>
 	
 	<logic:equal name="teacherBean" property="hasAnyYearWithCorrections" value="true">
-		<p><span class="tderror1">(**) </span>Correcções efectuadas no ano lectivo indicado</p>
+		<p><span class="tderror1">(**) </span>CorrecÃ§Ãµes efectuadas no ano lectivo indicado</p>
 	</logic:equal>
 	
 	<p><strong><bean:message key="label.credits.legenda" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/>:</strong><br/>

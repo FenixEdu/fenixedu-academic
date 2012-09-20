@@ -69,7 +69,7 @@ public class ExecutionCourseAnnouncementBoard extends ExecutionCourseAnnouncemen
     public String getFullName() {
 	final StringBuilder result = new StringBuilder(20);
 	result.append(getExecutionCourse().getNome()).append(" ");
-	result.append(getExecutionCourse().getExecutionPeriod().getSemester()).append("ºSem. ");
+	result.append(getExecutionCourse().getExecutionPeriod().getSemester()).append("ÂºSem. ");
 	result.append(getExecutionCourse().getExecutionPeriod().getExecutionYear().getYear());
 	return result.toString();
     }
@@ -78,7 +78,7 @@ public class ExecutionCourseAnnouncementBoard extends ExecutionCourseAnnouncemen
     public String getQualifiedName() {
 	final StringBuilder result = new StringBuilder(20);
 	result.append(getExecutionCourse().getNome()).append(" ");
-	result.append(getExecutionCourse().getExecutionPeriod().getSemester()).append("ºSem. ");
+	result.append(getExecutionCourse().getExecutionPeriod().getSemester()).append("ÂºSem. ");
 	result.append(getExecutionCourse().getExecutionPeriod().getExecutionYear().getYear()).append(" ");
 	final Iterator<Degree> degrees = getExecutionCourse().getDegreesSortedByDegreeName().iterator();
 	while (degrees.hasNext()) {

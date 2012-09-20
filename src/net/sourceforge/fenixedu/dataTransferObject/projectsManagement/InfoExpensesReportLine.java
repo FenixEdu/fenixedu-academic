@@ -250,7 +250,7 @@ public class InfoExpensesReportLine extends InfoReportLine {
 	    cell.setCellStyle(excelStyle.getHeaderStyle());
 	    cell = row.createCell((short) column++);
 	}
-	cell.setCellValue("Rúbrica");
+	cell.setCellValue("RÃºbrica");
 	cell.setCellStyle(excelStyle.getHeaderStyle());
 	cell = row.createCell((short) column++);
 	cell.setCellValue("Tipo");
@@ -259,7 +259,7 @@ public class InfoExpensesReportLine extends InfoReportLine {
 	cell.setCellValue("Data");
 	cell.setCellStyle(excelStyle.getHeaderStyle());
 	cell = row.createCell((short) column++);
-	cell.setCellValue("Descrição");
+	cell.setCellValue("DescriÃ§Ã£o");
 	cell.setCellStyle(excelStyle.getHeaderStyle());
 	cell = row.createCell((short) column++);
 	if (reportType.equals(ReportType.COMPLETE_EXPENSES)) {

@@ -68,7 +68,7 @@ public class ExecutionCourseTimeTableLessonContentRenderer implements LessonSlot
 	    }
 	    strBuffer.append(" - ");
 	    strBuffer.append(infoExam.getSeason().getSeason());
-	    strBuffer.append("ª época");
+	    strBuffer.append("Âª Ã©poca");
 
 	} else if (showOccupation instanceof InfoWrittenTest) {
 	    InfoWrittenTest infoWrittenTest = (InfoWrittenTest) showOccupation;

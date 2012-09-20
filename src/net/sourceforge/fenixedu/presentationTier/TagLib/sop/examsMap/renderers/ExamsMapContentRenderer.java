@@ -88,7 +88,7 @@ public class ExamsMapContentRenderer implements ExamsMapSlotContentRenderer {
 		    boolean isAtValidHour = atValidHour(infoExam);
 		    String hoursText = infoExam.getBeginning().get(Calendar.HOUR_OF_DAY) + "H";
 
-		    strBuffer.append(" às ");
+		    strBuffer.append(" Ã s ");
 		    if (isAtValidHour || !typeUser.equals("sop")) {
 			strBuffer.append(hoursText);
 		    } else {
@@ -136,7 +136,7 @@ public class ExamsMapContentRenderer implements ExamsMapSlotContentRenderer {
 	case Calendar.FEBRUARY:
 	    return "Fevereiro";
 	case Calendar.MARCH:
-	    return "Março";
+	    return "MarÃ§o";
 	case Calendar.APRIL:
 	    return "Abril";
 	case Calendar.MAY:
@@ -176,7 +176,7 @@ public class ExamsMapContentRenderer implements ExamsMapSlotContentRenderer {
 	    if (infoExam.getBeginning() != null) {
 		String hoursText = infoExam.getBeginning().get(Calendar.HOUR_OF_DAY) + "H";
 
-		strBuffer.append(" às ");
+		strBuffer.append(" Ã s ");
 		strBuffer.append(hoursText);
 	    }
 

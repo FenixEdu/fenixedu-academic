@@ -177,7 +177,7 @@ public class InfoProject extends DataTranferObject {
 	cell.setCellValue(bundle.getString("label.date") + ":");
 	cell.setCellStyle(excelStyle.getLabelStyle());
 	cell = row.createCell((short) 1);
-	SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy 'às' HH:mm");
+	SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy 'Ã s' HH:mm");
 	cell.setCellValue(formatter.format(new Date()));
 	cell.setCellStyle(excelStyle.getValueStyle());
 	return sheet;

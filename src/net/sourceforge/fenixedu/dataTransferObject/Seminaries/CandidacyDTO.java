@@ -7,7 +7,7 @@ package net.sourceforge.fenixedu.dataTransferObject.Seminaries;
 import net.sourceforge.fenixedu.dataTransferObject.DataTranferObject;
 
 /**
- * @author Jo„o Mota
+ * @author Jo√£o Mota
  * 
  */
 public class CandidacyDTO extends DataTranferObject {

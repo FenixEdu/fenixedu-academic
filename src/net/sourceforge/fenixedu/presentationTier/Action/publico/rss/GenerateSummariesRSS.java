@@ -12,7 +12,7 @@ public class GenerateSummariesRSS extends GenerateExecutionCourseRSS {
 
     @Override
     public String getDescriptionPrefix() {
-	return "Sum·rios";
+	return "Sum√°rios";
     }
 
     @Override

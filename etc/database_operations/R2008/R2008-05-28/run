@@ -31,4 +31,4 @@ function executeWithTempFile() {
 execute "Change from CurricularPeriodType to AcademicPeriod" changeCurricularPeriodTypeToAcademicPeriod.sql
 execute "Alter table JustificationMotive" AlterTableJustificationMotive.sql
 
-execute "Criar funcionalidades no portal de relações publicas." createPublicRelationsFeatures.sql
+execute "Criar funcionalidades no portal de relaÃ§Ãµes publicas." createPublicRelationsFeatures.sql

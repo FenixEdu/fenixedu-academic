@@ -91,7 +91,7 @@ public class StudentListByCurricularCourseAuthorizationFilter extends Filtro {
 	    }
 	    // IMPORTANT: It's assumed that the coordinator for a Degree is
 	    // ALWAYS the same
-	    // modified by T‚nia Pous„o
+	    // modified by T√¢nia Pous√£o
 	    List<Coordinator> coodinatorsList = ((ExecutionDegree) executionDegrees.get(0)).getCoordinatorsList();
 	    if (coodinatorsList == null) {
 		return false;

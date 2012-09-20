@@ -132,8 +132,8 @@ public class InquiryResult extends InquiryResult_Base {
 		String[] columns = row.split("\t");
 		//TODO rever indices das colunas
 		//columns[columns.length - 1] = columns[columns.length - 1].split("\r")[0];
-		//meter aqui algumas validaÁıes
-		//se vier com valor + classificaÁ„o d· erro
+		//meter aqui algumas valida√ß√µes
+		//se vier com valor + classifica√ß√£o d√° erro
 
 		InquiryResult inquiryResult = new InquiryResult();
 		inquiryResult.setResultDate(resultDate);
@@ -256,7 +256,7 @@ public class InquiryResult extends InquiryResult_Base {
 		.equals(inquiryResult.getResultClassification()))) {
 	    InquiryQuestion inquiryQuestion = AbstractDomainObject.fromExternalId(inquiryQuestionOID);
 	    if (inquiryQuestion == null) {
-		throw new DomainException("n„o tem question: " + getPrintableColumns(columns));
+		throw new DomainException("n√£o tem question: " + getPrintableColumns(columns));
 	    }
 	    inquiryResult.setInquiryQuestion(inquiryQuestion);
 	}
@@ -324,8 +324,8 @@ public class InquiryResult extends InquiryResult_Base {
 
 	    //TODO rever indices das colunas
 	    //columns[columns.length - 1] = columns[columns.length - 1].split("\r")[0];
-	    //meter aqui algumas validaÁıes
-	    //se vier com valor + classificaÁ„o d· erro
+	    //meter aqui algumas valida√ß√µes
+	    //se vier com valor + classifica√ß√£o d√° erro
 	    String executionDegreeOID = row[0];
 	    ExecutionDegree executionDegree = !StringUtils.isEmpty(executionDegreeOID) ? (ExecutionDegree) AbstractDomainObject
 		    .fromExternalId(executionDegreeOID) : null;
@@ -370,7 +370,7 @@ public class InquiryResult extends InquiryResult_Base {
 	    if (!(StringUtils.isEmpty(inquiryQuestionOID) && ResultClassification.GREY.equals(getResultClassification()))) {
 		InquiryQuestion inquiryQuestion = AbstractDomainObject.fromExternalId(inquiryQuestionOID);
 		if (inquiryQuestion == null) {
-		    throw new DomainException("n„o tem question: " + getPrintableColumns(row));
+		    throw new DomainException("n√£o tem question: " + getPrintableColumns(row));
 		}
 		setInquiryQuestion(inquiryQuestion);
 	    }

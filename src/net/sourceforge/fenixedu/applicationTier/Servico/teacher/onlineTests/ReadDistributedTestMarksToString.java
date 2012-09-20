@@ -38,7 +38,7 @@ public class ReadDistributedTestMarksToString extends FenixService {
 	    throw new InvalidArgumentsServiceException();
 	}
 	StringBuilder result = new StringBuilder();
-	result.append("Número\tNome\t");
+	result.append("NÃºmero\tNome\t");
 	for (int i = 1; i <= distributedTest.getNumberOfQuestions().intValue(); i++) {
 	    result.append("P").append(i).append("\t");
 	}
@@ -83,7 +83,7 @@ public class ReadDistributedTestMarksToString extends FenixService {
 
     public String run(Integer executionCourseId, String[] distributedTestCodes) throws FenixServiceException {
 	StringBuilder result = new StringBuilder();
-	result.append("Número\tNome\t");
+	result.append("NÃºmero\tNome\t");
 
 	ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(executionCourseId);
 	List<Registration> studentsFromAttendsList = (List) CollectionUtils.collect(executionCourse.getAttends(),

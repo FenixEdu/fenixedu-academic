@@ -31,7 +31,7 @@ import pt.ist.fenixWebFramework.security.UserView;
 
 /*
  * 
- * @author Fernanda Quitério 17/Fev/2004
+ * @author Fernanda QuitÃ©rio 17/Fev/2004
  *  
  */
 public class MarksManagementDispatchAction extends FenixDispatchAction {

@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="ISO-8859-1" ?>
+<?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE tiles-definitions PUBLIC "-//Apache Software Foundation//DTD Tiles Configuration 1.1//EN"
 	"http://jakarta.apache.org/struts/dtds/tiles-config_1_1.dtd">
 <!-- Tiles definitions -->
@@ -6,9 +6,9 @@
 	<definition name="definition.publico.executionCourseSitePage" 
 		controllerClass="net.sourceforge.fenixedu.presentationTier.tiles.controller.PublicTilesComponentController" 
 		extends="definition.public.mainPage" >
-		<put name="title" value=".Instituto Superior Técnico" />	
+		<put name="title" value=".Instituto Superior TÃ©cnico" />	
 	 	<put name="rss" value="/commons/blank.jsp"/>
-	  	<put name="serviceName" value="Instituto Superior Técnico" />
+	  	<put name="serviceName" value="Instituto Superior TÃ©cnico" />
 		<put name="profile_navigation" value="/publico/degreeSite/profileNavigation.jsp" />
 		<put name="symbols_row" value="/publico/degreeSite/symbolsRow.jsp" />
 		<put name="lateral_nav" value="/publico/executionCourseLateralNav.jsp"/>
@@ -19,10 +19,10 @@
 		<put name="footer" value="/publico/degreeSite/footer.jsp" />
 	</definition>
 	<definition name="definition.publico.executionCourseSitePage.without.stupid.controller" extends="definition.public.mainPage" >
-		<put name="title" value=".Instituto Superior Técnico" />	
+		<put name="title" value=".Instituto Superior TÃ©cnico" />	
 	 	<put name="rss" value="/messaging/announcements/rssHeader.jsp"/>
 	 	<put name="keywords" value="/messaging/announcements/keywordsHeader.jsp"/>	 	
-	  	<put name="serviceName" value="Instituto Superior Técnico" />
+	  	<put name="serviceName" value="Instituto Superior TÃ©cnico" />
 		<put name="profile_navigation" value="/publico/degreeSite/profileNavigation.jsp" />
 		<put name="symbols_row" value="/publico/degreeSite/symbolsRow.jsp" />
 		<put name="lateral_nav" value="/publico/executionCourseLateralNav.jsp"/>
@@ -45,8 +45,8 @@
 	<definition name="definition.publico.executionCourseSitePage1" 
 		controllerClass="net.sourceforge.fenixedu.presentationTier.tiles.controller.PublicTilesComponentController" 
 		extends="definition.public.mainPageIST" >
-			<put name="title" value=".Instituto Superior Técnico" />	
-            <put name="serviceName" value="Instituto Superior Técnico" /> 
+			<put name="title" value=".Instituto Superior TÃ©cnico" />	
+            <put name="serviceName" value="Instituto Superior TÃ©cnico" /> 
             <put name="executionCourseName" value="/publico/executionCourseName.jsp"  />
             <put name="degrees" value="/publico/associatedDegrees.jsp" />		
             <put name="profile_navigation" value="/publico/degreeSite/profileNavigation.jsp" />
@@ -55,22 +55,22 @@
   		<put name="footer" value="/publico/degreeSite/footer.jsp" />
 	</definition>
 	<definition name="definition.public.mainPage" page="/layout/publicGesDisLayout_2col.jsp" >
-  		<put name="title" value=".Instituto Superior Técnico" /> 
-		<put name="serviceName" value="Instituto Superior Técnico" />
+  		<put name="title" value=".Instituto Superior TÃ©cnico" /> 
+		<put name="serviceName" value="Instituto Superior TÃ©cnico" />
 	    <put name="navGeral" value="/commons/blank.jsp" />
 		<put name="body" value="/commons/blank.jsp" />
   		<put name="footer" value="/commons/blank.jsp" />
 	</definition>	
 	<definition name="definition.public.mainPageWithPeriodSelection" extends="definition.public.mainPage" >
-  	<put name="title" value=".Instituto Superior Técnico" /> 
-		<put name="serviceName" value="Instituto Superior Técnico" />
+  	<put name="title" value=".Instituto Superior TÃ©cnico" /> 
+		<put name="serviceName" value="Instituto Superior TÃ©cnico" />
 	   <put name="navGeral" value="/commons/blank.jsp" />
 		<put name="navbarGeral" value="/publico/commonNavLocalPubWithExecutionPeriodSelection.jsp" />
 		<put name="body" value="/commons/blank.jsp" />
   	<put name="footer" value="/commons/blank.jsp" />
 	</definition>	
 	<definition name="definition.public.mainPageIST" page="/layout/istLayout.jsp" >
-            <put name="title" value="Instituto Superior Técnico" /> 
+            <put name="title" value="Instituto Superior TÃ©cnico" /> 
 			<put name="symbols_row" value="/publico/degreeSite/symbolsRow.jsp" />
             <put name="profile_navigation" value="/publico/degreeSite/profileNavigation.jsp" />
 			<put name="main_navigation" value="/publico/degreeSite/degreeSiteMainNavigation.jsp" />
@@ -80,7 +80,7 @@
 	<definition name="definition.public.secondaryMainPageIST" page="/layout/secondaryIstLayout.jsp" />
 	<definition name="definition.public.degree.site" 
 		extends="definition.public.mainPageIST" >
-            <put name="title" value="Instituto Superior Técnico" /> 
+            <put name="title" value="Instituto Superior TÃ©cnico" /> 
 			<put name="symbols_row" value="/publico/degreeSite/symbolsRow.jsp" />
             <put name="profile_navigation" value="/publico/degreeSite/profileNavigation.jsp" />
 			<put name="main_navigation" value="/publico/degreeSite/degreeSiteMainNavigation.jsp" />
@@ -88,7 +88,7 @@
   		<put name="footer" value="/publico/degreeSite/footer.jsp" />
 	</definition>				
 	<definition name="definition.public.mainPageISTWithtOutLayout" extends="definition.public.mainPage" >
-            <put name="title" value="Instituto Superior Técnico" /> 
+            <put name="title" value="Instituto Superior TÃ©cnico" /> 
 			<put name="symbols_row" value="/publico/degreeSite/symbolsRow.jsp" />
             <put name="profile_navigation" value="/publico/degreeSite/profileNavigation.jsp" />
 			<put name="main_navigation" value="/publico/degreeSite/degreeSiteMainNavigation.jsp" />
@@ -97,7 +97,7 @@
   		<put name="footer" value="/publico/degreeSite/footer.jsp" />
 	</definition>	
 	<definition name="definition.public.homepage" extends="definition.public.mainPageIST">
-		<put name="title" value="Instituto Superior Técnico" /> 
+		<put name="title" value="Instituto Superior TÃ©cnico" /> 
 		<put name="symbols_row" value="/publico/homepage/symbolsRow.jsp" />
 		<put name="profile_navigation" value="/publico/homepage/profileNavigation.jsp" />
 		<put name="main_navigation" value="/publico/homepage/mainNavigation.jsp" />
@@ -106,7 +106,7 @@
 		<put name="footer" value="/publico/homepage/footer.jsp" />
 	</definition>
 	<definition name="definition.public.departments" extends="definition.public.mainPageIST">
-		<put name="title" value="Instituto Superior Técnico" />
+		<put name="title" value="Instituto Superior TÃ©cnico" />
 		<put name="symbols_row" value="/publico/homepage/symbolsRow.jsp" />
 		<put name="profile_navigation" value="/publico/homepage/profileNavigation.jsp" />
 		<put name="main_navigation" value="/publico/commonNavLocalPub.jsp" />
@@ -115,7 +115,7 @@
 	</definition>	
 	<definition name="definition.public.noPaddingLayout" page="/layout/unitSiteLayout.jsp">
 			<put name="useFlags" value="true"/>
-			<put name="title" value="Instituto Superior Técnico" />
+			<put name="title" value="Instituto Superior TÃ©cnico" />
 			<put name="page-context" value="/publico/customized/pageContext.jsp"/>
 			<put name="symbols_row" value="/publico/customized/symbolsRow.jsp" />
 			<put name="main_navigation" value="/commons/blank.jsp"/>
@@ -125,7 +125,7 @@
 			<put name="analytics" value="/publico/unitSite/analytics.jsp" />
 	</definition>
     <definition name="definition.public.paddingLayout" extends="definition.public.mainPageIST">
-           <put name="title" value="Instituto Superior Técnico" />
+           <put name="title" value="Instituto Superior TÃ©cnico" />
             <put name="symbols_row" value="/publico/customized/symbolsRow.jsp" />
             <put name="main_navigation" value="/customized/mainNavigation.jsp" />
             <put name="body" value="/commons/blank.jsp" />
@@ -187,8 +187,8 @@
     </definition>
        
     <definition name="definition.public.findSpaces" extends="definition.public.mainPageIST" >
-		<put name="title" value=".Instituto Superior Técnico" />	
-        <put name="serviceName" value="Instituto Superior Técnico" />                 	
+		<put name="title" value=".Instituto Superior TÃ©cnico" />	
+        <put name="serviceName" value="Instituto Superior TÃ©cnico" />                 	
         <put name="profile_navigation" value="/publico/degreeSite/profileNavigation.jsp" />
         <put name="main_navigation" value="/publico/commonNavLocalPub.jsp" />
         <put name="symbols_row" value="/publico/degreeSite/symbolsRow.jsp" />	
@@ -198,7 +198,7 @@
        
     <definition name="definition.public.alumni" extends="definition.public.mainPageIST" >
 		<put name="title" value="Alumni | IST" />	
-        <put name="serviceName" value="Instituto Superior Técnico" />                 	
+        <put name="serviceName" value="Instituto Superior TÃ©cnico" />                 	
         <put name="profile_navigation" value="/publico/degreeSite/profileNavigation.jsp" />
         <put name="main_navigation" value="/publico/commonNavLocalPub.jsp" />
         <put name="symbols_row" value="/publico/degreeSite/symbolsRow.jsp" />	
@@ -230,8 +230,8 @@
 
 <!-- 
 	<definition name="definition.public.internship" extends="definition.public.mainPageIST">
-		<put name="title" value="Candidaturas a Estágios | IST" />
-		<put name="serviceName" value="Instituto Superior Técnico" />
+		<put name="title" value="Candidaturas a EstÃ¡gios | IST" />
+		<put name="serviceName" value="Instituto Superior TÃ©cnico" />
 		<put name="profile_navigation" value="/publico/degreeSite/profileNavigation.jsp" />
 		<put name="main_navigation" value="/publico/commonNavLocalPub.jsp" />
 		<put name="symbols_row" value="/publico/degreeSite/symbolsRow.jsp" />
@@ -258,7 +258,7 @@
 
     <definition name="definition.candidacy.process" extends="definition.public.mainPageIST" >
 		<put name="title" value="Candidaturas | IST" />	
-        <put name="serviceName" value="Instituto Superior Técnico" />                 	
+        <put name="serviceName" value="Instituto Superior TÃ©cnico" />                 	
         <put name="profile_navigation" value="/publico/degreeSite/profileNavigation.jsp" />
         <put name="main_navigation" value="/publico/commonNavLocalPub.jsp" />
         <put name="symbols_row" value="/publico/degreeSite/symbolsRow.jsp" />	
@@ -269,7 +269,7 @@
 	
 	 <definition name="definition.phd.external.access" extends="definition.public.mainPageIST" >
 		<put name="title" value="Doutoramentos | IST" />	
-        <put name="serviceName" value="Instituto Superior Técnico" />                 	
+        <put name="serviceName" value="Instituto Superior TÃ©cnico" />                 	
         <put name="profile_navigation" value="/publico/degreeSite/profileNavigation.jsp" />
         <put name="main_navigation" value="/publico/commonNavLocalPub.jsp" />
         <put name="symbols_row" value="/publico/degreeSite/symbolsRow.jsp" />	

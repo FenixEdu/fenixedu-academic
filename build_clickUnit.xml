@@ -1,7 +1,7 @@
-<?xml version="1.0" encoding="ISO-8859-1"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <project basedir="." default="do-roleback" name="Build file for running ClickUnit tests">
 
-	<property name="encoding" value="ISO-8859-1"/>	
+	<property name="encoding" value="UTF-8"/>	
 
 	<property file="build.properties"/>
 

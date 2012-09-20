@@ -5,7 +5,7 @@ import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 /**
- * @author Fernanda Quitério
+ * @author Fernanda QuitÃ©rio
  */
 public class EditEvaluation extends FenixService {
 

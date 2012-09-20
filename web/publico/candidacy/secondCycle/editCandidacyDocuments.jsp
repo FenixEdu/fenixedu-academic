@@ -92,4 +92,4 @@
 </table>
 </logic:notEmpty>
 
-<p><a href='<%= fullPath + "?method=backToViewCandidacy&individualCandidacyProcess=" + individualCandidacyProcessOID %>'>« <bean:message key="label.back" bundle="CANDIDATE_RESOURCES"/></a></p>
+<p><a href='<%= fullPath + "?method=backToViewCandidacy&individualCandidacyProcess=" + individualCandidacyProcessOID %>'>Â« <bean:message key="label.back" bundle="CANDIDATE_RESOURCES"/></a></p>

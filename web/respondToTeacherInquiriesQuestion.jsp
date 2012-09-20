@@ -25,13 +25,13 @@
 					<p>
 						Caro(a) aluno(a)
 						<br/><br/>
-						Est· a decorrer a fase de recolha dos InquÈritos aos Alunos relativa aos QUC  do 2∫ semestre de 2010/2011. Muitos alunos j· procederam ao seu preenchimento. No entanto, devido a um erro tÈcnico, verificou-se uma falha na informaÁ„o recolhida. Torna-se pois necess·rio proceder ‡ repetiÁ„o da recolha de alguns dos inquÈritos.
+						Est√° a decorrer a fase de recolha dos Inqu√©ritos aos Alunos relativa aos QUC  do 2¬∫ semestre de 2010/2011. Muitos alunos j√° procederam ao seu preenchimento. No entanto, devido a um erro t√©cnico, verificou-se uma falha na informa√ß√£o recolhida. Torna-se pois necess√°rio proceder √† repeti√ß√£o da recolha de alguns dos inqu√©ritos.
 						<br/><br/>
-						Ciente do incÛmodo causado, venho por este meio apelar para o preenchimento dos inquÈritos, mesmo naqueles casos em que j· ter„o sido preenchidos anteriormente. Dado que as respostas s„o anÛnimas, como È garantido no regulamento dos QUC, n„o È possÌvel a correcÁ„o individual do inquÈrito a preencher.
+						Ciente do inc√≥modo causado, venho por este meio apelar para o preenchimento dos inqu√©ritos, mesmo naqueles casos em que j√° ter√£o sido preenchidos anteriormente. Dado que as respostas s√£o an√≥nimas, como √© garantido no regulamento dos QUC, n√£o √© poss√≠vel a correc√ß√£o individual do inqu√©rito a preencher.
 						<br/><br/>
-						Com as melhores saudaÁıes acadÈmicas,
+						Com as melhores sauda√ß√µes acad√©micas,
 						<br/><br/>
-						Conselho PedagÛgico	
+						Conselho Pedag√≥gico	
 					</p>
 				</div>
 			</div>

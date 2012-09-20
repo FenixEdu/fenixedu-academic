@@ -189,7 +189,7 @@ public class ExamsMapContentRenderer implements ExamsMapSlotContentRenderer {
 	    return "February";
 	case Calendar.MARCH:
 	    if (locale.getLanguage().equals("pt"))
-		return "Março";
+		return "MarÃ§o";
 	    return "March";
 	case Calendar.APRIL:
 	    if (locale.getLanguage().equals("pt"))

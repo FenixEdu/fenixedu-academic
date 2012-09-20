@@ -56,7 +56,7 @@ public class WriteCandidateEnrolmentsAuhorizationFilter extends Filtro {
 		return false;
 	    }
 
-	    // modified by T‚nia Pous„o
+	    // modified by T√¢nia Pous√£o
 	    Coordinator coordinator = masterDegreeCandidate.getExecutionDegree().getCoordinatorByTeacher(person);
 
 	    if (coordinator == null) {
@@ -65,7 +65,7 @@ public class WriteCandidateEnrolmentsAuhorizationFilter extends Filtro {
 
 	    for (Integer selectedCurricularCourse : selection) {
 
-		// Modified by Fernanda QuitÈrio
+		// Modified by Fernanda Quit√©rio
 
 		CurricularCourse curricularCourse = (CurricularCourse) rootDomainObject
 			.readDegreeModuleByOID(selectedCurricularCourse);

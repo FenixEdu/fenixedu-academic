@@ -18,7 +18,7 @@
 
 <%--  ###  Return Links / Steps Information(for multistep forms)  ### --%>
 <html:link action="/phdIndividualProgramProcess.do?method=manageProcesses">
-	« <bean:message bundle="PHD_RESOURCES" key="label.back"/>
+	Â« <bean:message bundle="PHD_RESOURCES" key="label.back"/>
 </html:link>
 
 <br/><br/>

@@ -74,7 +74,7 @@ public class ParseSubQuestion extends DefaultHandler {
 	return question;
     }
 
-    // para o preview - só tem 1 item
+    // para o preview - sÃƒÂ³ tem 1 item
     public SubQuestion parseSubQuestion(String fileString, String path) throws ParseQuestionException {
 	try {
 	    parseFile(fileString, path);
@@ -336,8 +336,8 @@ public class ParseSubQuestion extends DefaultHandler {
 		    questionElement.setResponseId(atts.getValue("ident"));
 		    // questions++;
 		    // if (questions > 1)
-		    // throw new ParseQuestionException("O sistema ainda não
-		    // suporta perguntas com alíneas.");
+		    // throw new ParseQuestionException("O sistema ainda nÃƒÂ£o
+		    // suporta perguntas com alÃƒÂ­neas.");
 
 		    subQuestion.setQuestionType(new QuestionType(tag));
 
@@ -417,7 +417,7 @@ public class ParseSubQuestion extends DefaultHandler {
 		try {
 		    value = df.parse(element.getValue().replace(',', '.')).doubleValue();
 		} catch (ParseException e) {
-		    throw new ParseQuestionException("Erro na cotação da pergunta", e);
+		    throw new ParseQuestionException("Erro na cotaÃ§Ã£o da pergunta", e);
 		}
 		responseProcessing.setResponseValue(value);
 		if (responseProcessing.getAction().intValue() == ResponseProcessing.SET
@@ -449,7 +449,7 @@ public class ParseSubQuestion extends DefaultHandler {
 		if (tag.equals("varequal") || tag.equals("varlt") || tag.equals("varlte") || tag.equals("vargt")
 			|| tag.equals("vargte") || tag.equals("varsubstring")) {
 		    if (!atts.getValue("respident").equals(questionElement.getResponseId()))
-			throw new ParseQuestionException("Exercício Inválido (identificadores inválidos)");
+			throw new ParseQuestionException("ExercÃƒÂ­cio InvÃƒÂ¡lido (identificadores invÃƒÂ¡lidos)");
 		    if (or == 0 && and == 0) {
 			String tagName = tag;
 			if (not)
@@ -462,7 +462,7 @@ public class ParseSubQuestion extends DefaultHandler {
 				&& subQuestion.getQuestionType().getCardinalityType().getType().intValue() == CardinalityType.SINGLE)
 			    if (getNumberOfVarEquals(responseProcessing.getResponseConditions()) > 0) {
 				throw new ParseQuestionException(
-					"Uma das soluções indicadas no ficheiro tem mais do que uma resposta, e uma pergunta de escolha simples apenas admite uma resposta.");
+					"Uma das soluÃƒÂ§ÃƒÂµes indicadas no ficheiro tem mais do que uma resposta, e uma pergunta de escolha simples apenas admite uma resposta.");
 			    }
 			responseProcessing.getResponseConditions().add(
 				new ResponseCondition(tagName, element.getValue(), atts.getValue("respident")));
@@ -840,7 +840,7 @@ public class ParseSubQuestion extends DefaultHandler {
 		if (tag.equals("varequal") || tag.equals("varlt") || tag.equals("varlte") || tag.equals("vargt")
 			|| tag.equals("vargte") || tag.equals("varsubstring")) {
 		    if (!atts.getValue("respident").equals(questionElement.getResponseId()))
-			throw new ParseQuestionException("Exercício Inválido (identificadores inválidos)");
+			throw new ParseQuestionException("ExercÃƒÂ­cio InvÃƒÂ¡lido (identificadores invÃƒÂ¡lidos)");
 		    String tagName = tag;
 		    if (not)
 			tagName = "not".concat(tagName);
@@ -902,7 +902,7 @@ public class ParseSubQuestion extends DefaultHandler {
 		if (tag.equals("varequal") || tag.equals("varlt") || tag.equals("varlte") || tag.equals("vargt")
 			|| tag.equals("vargte") || tag.equals("varsubstring")) {
 		    if (!atts.getValue("respident").equals(questionElement.getResponseId()))
-			throw new ParseQuestionException("Exercício Inválido (identificadores inválidos)");
+			throw new ParseQuestionException("ExercÃƒÂ­cio InvÃƒÂ¡lido (identificadores invÃƒÂ¡lidos)");
 		    String tagName = tag;
 		    if (not)
 			tagName = "not".concat(tagName);

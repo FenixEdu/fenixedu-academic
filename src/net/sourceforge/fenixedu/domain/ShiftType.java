@@ -54,27 +54,27 @@ public enum ShiftType {
     public String getFullNameTipoAula() {
 	String value = this.name();
 	if (value == ShiftType.TEORICA.name())
-	    return "TeÛrica";
+	    return "Te√≥rica";
 	if (value == ShiftType.PRATICA.name())
-	    return "Pr·tica";
+	    return "Pr√°tica";
 	if (value == ShiftType.TEORICO_PRATICA.name())
-	    return "TeoricoPr·tica";
+	    return "TeoricoPr√°tica";
 	if (value == ShiftType.LABORATORIAL.name())
 	    return "Laboratorial";
 	if (value == ShiftType.DUVIDAS.name())
-	    return "D˙vidas";
+	    return "D√∫vidas";
 	if (value == ShiftType.RESERVA.name())
 	    return "Reserva";
 	if (value == ShiftType.SEMINARY.name())
-	    return "Semin·rio";
+	    return "Semin√°rio";
 	if (value == ShiftType.PROBLEMS.name())
 	    return "Problemas";
 	if (value == ShiftType.FIELD_WORK.name())
 	    return "Trabalho de Campo";
 	if (value == ShiftType.TRAINING_PERIOD.name())
-	    return "Est·gio";
+	    return "Est√°gio";
 	if (value == ShiftType.TUTORIAL_ORIENTATION.name())
-	    return "OrientaÁ„o Tutorial";
+	    return "Orienta√ß√£o Tutorial";
 	return "Error: Invalid lesson type";
     }
 

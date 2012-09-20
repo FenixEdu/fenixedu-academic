@@ -73,14 +73,4 @@
 		<html:link page="/searchResearchers.do?method=search"><bean:message key="researcher.experts" bundle="RESEARCHER_RESOURCES"/></html:link>
 	</li>
 	--%>
-
-<logic:present role="MANAGER">
-		<li>
-			<html:link page="/profileReport.do?method=viewReports">
-				Estatísticas (ainda só disponivel para o manager)
-			</html:link>
-		</li>
-</logic:present>
 </ul>
-
-

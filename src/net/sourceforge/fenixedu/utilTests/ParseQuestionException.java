@@ -27,11 +27,11 @@ public class ParseQuestionException extends Exception {
     }
 
     public ParseQuestionException(String element, boolean isElement) {
-	super("O elemento <" + element + "> ainda n„o È suportado pelo sistema.");
+	super("O elemento <" + element + "> ainda n√£o √© suportado pelo sistema.");
     }
 
     public ParseQuestionException(String element, String attribute) {
-	super("O atributo \"" + attribute + "\" do elemento <" + element + "> ainda n„o È suportado pelo sistema.");
+	super("O atributo \"" + attribute + "\" do elemento <" + element + "> ainda n√£o √© suportado pelo sistema.");
     }
 
     public String toString() {

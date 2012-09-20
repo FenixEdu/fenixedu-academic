@@ -66,7 +66,7 @@ public class InquiryGroupQuestionBean implements Serializable {
 	setConditionValues(getInquiryGroupQuestion().getConditionValues(studentInquiryRegistry));
     }
 
-    //TODO validação para parte curricular do aluno, qd depender de resultados de respostas tem q se adaptar isto
+    //TODO validaÃ§Ã£o para parte curricular do aluno, qd depender de resultados de respostas tem q se adaptar isto
     public String validate(Set<InquiryBlockDTO> inquiryBlocks) {
 	if (isVisible()) {
 	    Set<InquiryQuestionDTO> questions = getInquiryQuestions();

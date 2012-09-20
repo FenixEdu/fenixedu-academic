@@ -7,7 +7,7 @@
 <logic:present role="MANAGER">
 
 
-	<h2>Referências criadas</h2>
+	<h2>ReferÃªncias criadas</h2>
 	
 	<fr:view name="newPaymentCodes">
 	

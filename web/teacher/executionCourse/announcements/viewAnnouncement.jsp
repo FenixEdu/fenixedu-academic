@@ -43,7 +43,7 @@
 		</span>
 	</p>
 					
-<%-- T�tulo --%>
+<%-- Tï¿½tulo --%>
 	<h3 class="mvert025">
 		<b><fr:view name="announcement" property="subject" type="pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString"/></b>
 	</h3>
@@ -114,7 +114,7 @@
 			 - 
 		 </logic:equal>
 
-<%-- Data de Cria��o --%>
+<%-- Data de Criação --%>
 	<bean:define id="idInternal" name="announcement" property="idInternal" type="java.lang.Integer"/> 
 	<html:link linkName="<%= idInternal.toString() %>"/>
 		<bean:message key="label.creationDate" bundle="MESSAGING_RESOURCES" />: 

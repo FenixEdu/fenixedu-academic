@@ -24,7 +24,7 @@
 	<input type="hidden" id="removeIndexId" name="removeIndex" value=""/>
 	<input type="hidden" id="skipValidationId" name="skipValidation" value="false"/>	
 	
-	<a href="#" onclick="javascript:document.getElementById('skipValidationId').value='true';javascript:document.getElementById('methodId').value='backToViewCandidacy';document.getElementById('editQualificationForm').submit();">« <bean:message bundle="PHD_RESOURCES" key="label.back"/></a>
+	<a href="#" onclick="javascript:document.getElementById('skipValidationId').value='true';javascript:document.getElementById('methodId').value='backToViewCandidacy';document.getElementById('editQualificationForm').submit();">Â« <bean:message bundle="PHD_RESOURCES" key="label.back"/></a>
 	<br/>
 	<h2 style="margin-top: 1em;"><bean:message key="title.public.phd.qualifications" bundle="PHD_RESOURCES" /></h2>
 

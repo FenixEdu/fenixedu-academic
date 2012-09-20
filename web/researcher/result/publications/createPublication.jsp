@@ -16,7 +16,7 @@
 <logic:equal name="publicationBean" property="createJournal" value="false">
 	<logic:equal name="publicationBean" property="createEvent" value="false">
 
-		<p>Escolha o tipo de publicação e insira os dados.</p>
+		<p>Escolha o tipo de publicaÃ§Ã£o e insira os dados.</p>
 	
 		<fr:form action="/resultPublications/create.do">
 		

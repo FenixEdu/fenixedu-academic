@@ -148,7 +148,7 @@ public class PredicateRenderer extends OutputRenderer {
 	    NotPredicate notPredicate = (NotPredicate) object;
 	    HtmlInlineContainer container = new HtmlInlineContainer();
 
-	    container.addChild(new HtmlText("n„o"));
+	    container.addChild(new HtmlText("n√£o"));
 	    container.addChild(renderValue(notPredicate.getPredicates().get(0), null, "values"));
 
 	    return container;

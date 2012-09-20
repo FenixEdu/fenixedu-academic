@@ -3,7 +3,7 @@ package net.sourceforge.fenixedu.dataTransferObject;
 import java.util.List;
 
 /**
- * @author Fernanda Quitério 25/06/2003
+ * @author Fernanda QuitÃ©rio 25/06/2003
  * 
  */
 public class InfoSiteEvaluation extends DataTranferObject implements ISiteComponent {

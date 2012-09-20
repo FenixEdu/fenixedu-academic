@@ -63,7 +63,7 @@
 		if (!failed.isEmpty()) {
 		    %>
 				<h3>
-					Não foi possível entregar o e-mail aos seguintes destinatários:
+					NÃ£o foi possÃ­vel entregar o e-mail aos seguintes destinatÃ¡rios:
 				</h3>
 		    	<ul>
 		    <%

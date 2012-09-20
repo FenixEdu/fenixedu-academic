@@ -24,7 +24,7 @@
 					<fr:view name="announcement" property="publicationBegin" layout="no-time"/>
 				<logic:equal name="announcement" property="announcementBoard.currentUserWriter" value="true">
 					<logic:notEmpty name="announcement" property="publicationEnd">
-					 	até
+					 	atÃ©
 						<fr:view name="announcement" property="publicationEnd" layout="no-time"/>
 					</logic:notEmpty>
 				</logic:equal>
@@ -37,7 +37,7 @@
 		</span>
 	</p>
 			
-<%-- Título --%>
+<%-- TÃ­tulo --%>
 	<h3 class="mvert025">
 		<b><fr:view name="announcement" property="subject" type="pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString"/></b>
 	</h3>
@@ -112,7 +112,7 @@ Canal: <bean:write name="announcement" property="announcementBoard.name"/> -
 		 - 
 	</logic:equal>
 	
-<%-- Data de Criação --%>
+<%-- Data de CriaÃ§Ã£o --%>
 	<html:link linkName="<%= "ID_" + announcement.getIdInternal().toString()%>"/>
 		<bean:message key="label.creationDate" bundle="MESSAGING_RESOURCES"/>: 
 		<fr:view name="announcement" property="creationDate" type="org.joda.time.DateTime" layout="no-time"/>

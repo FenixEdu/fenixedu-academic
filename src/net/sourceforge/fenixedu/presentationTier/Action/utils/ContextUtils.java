@@ -494,22 +494,22 @@ public class ContextUtils {
     public static List getLabelListOfCurricularYears() {
 	List labelListOfCurricularYears = new ArrayList();
 	labelListOfCurricularYears.add(new LabelValueBean("escolher", ""));
-	labelListOfCurricularYears.add(new LabelValueBean("1 บ", "1"));
-	labelListOfCurricularYears.add(new LabelValueBean("2 บ", "2"));
-	labelListOfCurricularYears.add(new LabelValueBean("3 บ", "3"));
-	labelListOfCurricularYears.add(new LabelValueBean("4 บ", "4"));
-	labelListOfCurricularYears.add(new LabelValueBean("5 บ", "5"));
+	labelListOfCurricularYears.add(new LabelValueBean("1 ยบ", "1"));
+	labelListOfCurricularYears.add(new LabelValueBean("2 ยบ", "2"));
+	labelListOfCurricularYears.add(new LabelValueBean("3 ยบ", "3"));
+	labelListOfCurricularYears.add(new LabelValueBean("4 ยบ", "4"));
+	labelListOfCurricularYears.add(new LabelValueBean("5 ยบ", "5"));
 	return labelListOfCurricularYears;
     }
 
     public static List getLabelListOfOptionalCurricularYears() {
 	List labelListOfCurricularYears = new ArrayList();
 	labelListOfCurricularYears.add(new LabelValueBean("todos", ""));
-	labelListOfCurricularYears.add(new LabelValueBean("1 บ", "1"));
-	labelListOfCurricularYears.add(new LabelValueBean("2 บ", "2"));
-	labelListOfCurricularYears.add(new LabelValueBean("3 บ", "3"));
-	labelListOfCurricularYears.add(new LabelValueBean("4 บ", "4"));
-	labelListOfCurricularYears.add(new LabelValueBean("5 บ", "5"));
+	labelListOfCurricularYears.add(new LabelValueBean("1 ยบ", "1"));
+	labelListOfCurricularYears.add(new LabelValueBean("2 ยบ", "2"));
+	labelListOfCurricularYears.add(new LabelValueBean("3 ยบ", "3"));
+	labelListOfCurricularYears.add(new LabelValueBean("4 ยบ", "4"));
+	labelListOfCurricularYears.add(new LabelValueBean("5 ยบ", "5"));
 	return labelListOfCurricularYears;
     }
 
@@ -547,11 +547,11 @@ public class ContextUtils {
     public static List createCurricularYearList() {
 	List anosCurriculares = new ArrayList();
 
-	anosCurriculares.add(new LabelValueBean("1 บ", "1"));
-	anosCurriculares.add(new LabelValueBean("2 บ", "2"));
-	anosCurriculares.add(new LabelValueBean("3 บ", "3"));
-	anosCurriculares.add(new LabelValueBean("4 บ", "4"));
-	anosCurriculares.add(new LabelValueBean("5 บ", "5"));
+	anosCurriculares.add(new LabelValueBean("1 ยบ", "1"));
+	anosCurriculares.add(new LabelValueBean("2 ยบ", "2"));
+	anosCurriculares.add(new LabelValueBean("3 ยบ", "3"));
+	anosCurriculares.add(new LabelValueBean("4 ยบ", "4"));
+	anosCurriculares.add(new LabelValueBean("5 ยบ", "5"));
 
 	return anosCurriculares;
     }

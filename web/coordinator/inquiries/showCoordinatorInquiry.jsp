@@ -71,7 +71,7 @@ padding: 5px;
 
 	<p>
 		<em style="float: left;">
-			<bean:write name="executionPeriod" property="semester"/>บ Semestre - <bean:write name="executionPeriod" property="executionYear.year"/>
+			<bean:write name="executionPeriod" property="semester"/>ยบ Semestre - <bean:write name="executionPeriod" property="executionYear.year"/>
 		</em>
 	</p>
 	
@@ -84,7 +84,7 @@ padding: 5px;
 			<bean:write name="person" property="name"/> - 
 		</logic:notEmpty> 
 		<bean:write name="executionDegree" property="degree.name"/> - <bean:write name="executionDegree" property="degree.sigla"/>  
-		(<bean:write name="executionPeriod" property="semester"/>บ Semestre <bean:write name="executionPeriod" property="executionYear.year"/>)
+		(<bean:write name="executionPeriod" property="semester"/>ยบ Semestre <bean:write name="executionPeriod" property="executionYear.year"/>)
 	</p>
 	
 	<!-- Coordinator Inquiry -->	

@@ -6,7 +6,7 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.exceptions;
 
 /**
- * @author Jo„o Mota
+ * @author Jo√£o Mota
  */
 public class InvalidArgumentsServiceException extends FenixServiceException {
 

@@ -9,7 +9,7 @@ import org.apache.struts.action.ActionMapping;
 
 /**
  * 
- * @author Fernanda Quitério & Tania Pousao
+ * @author Fernanda QuitÃ©rio & Tania Pousao
  */
 public final class AlterarPasswordForm extends ActionForm {
     // private String _username = null;

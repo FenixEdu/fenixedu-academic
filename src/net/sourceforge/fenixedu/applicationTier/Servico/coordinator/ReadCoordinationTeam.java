@@ -16,7 +16,7 @@ import net.sourceforge.fenixedu.domain.ExecutionDegree;
 
 /**
  * 
- * @author Jo„o Mota 17/Set/2003
+ * @author Jo√£o Mota 17/Set/2003
  * 
  */
 public class ReadCoordinationTeam extends FenixService {

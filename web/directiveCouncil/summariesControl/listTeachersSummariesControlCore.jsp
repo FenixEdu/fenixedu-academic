@@ -32,7 +32,7 @@
 				<fr:schema bundle="PEDAGOGICAL_COUNCIL" type="net.sourceforge.fenixedu.dataTransferObject.directiveCouncil.DepartmentSummaryElement">
 					<fr:slot name="executionSemester" layout="menu-select-postback" key="label.curricular.course.semester" bundle="APPLICATION_RESOURCES">
 						<fr:property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.NotClosedExecutionPeriodsProvider"/>
-						<fr:property name="format" value="${executionYear.year} - ${semester}บ Semestre" />
+						<fr:property name="format" value="${executionYear.year} - ${semester}ยบ Semestre" />
 					</fr:slot>										
 				</fr:schema>
 			</fr:edit>											
@@ -70,7 +70,7 @@
 				<fr:schema bundle="PEDAGOGICAL_COUNCIL" type="net.sourceforge.fenixedu.dataTransferObject.directiveCouncil.DepartmentSummaryElement">
 					<fr:slot name="executionSemester" layout="menu-select-postback" key="label.curricular.course.semester" bundle="APPLICATION_RESOURCES">
 						<fr:property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.NotClosedExecutionPeriodsProvider"/>
-						<fr:property name="format" value="${executionYear.year} - ${semester}บ Semestre" />
+						<fr:property name="format" value="${executionYear.year} - ${semester}ยบ Semestre" />
 					</fr:slot>									
 				</fr:schema>
 			</fr:edit>
@@ -242,7 +242,7 @@ padding-right: 3px;
 		<h3 class="mtop1 mbottom1">				 
 			<fr:view name="executionCourse" property="executionPeriod">
 				<fr:layout>
-					<fr:property name="format" value="${executionYear.year} - ${semester}บ Sem" />
+					<fr:property name="format" value="${executionYear.year} - ${semester}ยบ Sem" />
 				</fr:layout>
 			</fr:view> - 
 			<fr:view name="executionCourse" property="nome"/>
@@ -298,7 +298,7 @@ padding-right: 3px;
 			<p class="mtop15 mbottom05">				 
 				<fr:view name="executionSemester">
 					<fr:layout>
-						<fr:property name="format" value="${executionYear.year} - ${semester}บ Sem" />
+						<fr:property name="format" value="${executionYear.year} - ${semester}ยบ Sem" />
 					</fr:layout>
 				</fr:view>
 			</p>

@@ -27,7 +27,7 @@
 					</logic:equal>				
 				</p>
 			  
-				<table width="100%"  border="0" cellspacing="0" summary="Esta tabela contém links para as licenciaturas, mestrados, doutoramentos e pós-graduações existentes no IST">
+				<table width="100%"  border="0" cellspacing="0" summary="Esta tabela contÃ©m links para as licenciaturas, mestrados, doutoramentos e pÃ³s-graduaÃ§Ãµes existentes no IST">
 				  <tr>
 				    <td colspan="2" class="bottom_border">
 						<h2>

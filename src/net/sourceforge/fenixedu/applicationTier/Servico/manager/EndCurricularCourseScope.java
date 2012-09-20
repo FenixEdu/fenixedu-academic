@@ -10,7 +10,7 @@ import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.ist.fenixWebFramework.services.Service;
 
 /**
- * @author Fernanda Quitério 28/10/2003
+ * @author Fernanda QuitÃ©rio 28/10/2003
  * 
  */
 public class EndCurricularCourseScope extends FenixService {

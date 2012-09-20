@@ -21,7 +21,7 @@
 </p>
 <p>
 	<html:link page="<%= "/curriculumValidation.do?method=prepareStudentEnrolment&amp;studentCurricularPlanId=" + studentCurricularPlanId  + "&amp;executionSemesterId=" + executionSemesterId %>">
-		« <bean:message key="label.curriculum.validation.student.enrolment.without.rules" bundle="ACADEMIC_OFFICE_RESOURCES" />
+		Â« <bean:message key="label.curriculum.validation.student.enrolment.without.rules" bundle="ACADEMIC_OFFICE_RESOURCES" />
 	</html:link>
 </p>
 

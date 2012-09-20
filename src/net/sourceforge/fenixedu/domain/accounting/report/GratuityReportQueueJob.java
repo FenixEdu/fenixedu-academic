@@ -95,10 +95,10 @@ public class GratuityReportQueueJob extends GratuityReportQueueJob_Base {
     private Spreadsheet buildReport() {
 	final Spreadsheet spreadsheet = new Spreadsheet(getFilename());
 
-	spreadsheet.setHeaders(new String[] { "Aluno", "Nome", "Nº Contribuinte", "Ano", "Curso", "Tipo de Curso",
-		"Valor Em Dívida", "Valor Total", "Valor Pago", "Valor Reembolsável", "Tipo de Isenção", "Valor de Isenção",
-		"Percentagem de Isenção", "Motivo", "Data de criação", "Data de entrada do pagamento", "Montante inicial",
-		"Montante ajustado", "Modo de pagamento", "Data de entrada do ajuste", "Montante do ajuste", "Justificação" });
+	spreadsheet.setHeaders(new String[] { "Aluno", "Nome", "NÂº Contribuinte", "Ano", "Curso", "Tipo de Curso",
+		"Valor Em DÃ­vida", "Valor Total", "Valor Pago", "Valor ReembolsÃ¡vel", "Tipo de IsenÃ§Ã£o", "Valor de IsenÃ§Ã£o",
+		"Percentagem de IsenÃ§Ã£o", "Motivo", "Data de criaÃ§Ã£o", "Data de entrada do pagamento", "Montante inicial",
+		"Montante ajustado", "Modo de pagamento", "Data de entrada do ajuste", "Montante do ajuste", "JustificaÃ§Ã£o" });
 
 	int i = 0;
 	for (final GratuityEvent gratuityEvent : getGratuityEvents()) {

@@ -68,7 +68,7 @@ public class NavigationBarTag extends TagSupport {
 	StringBuilder navigationBar = new StringBuilder("");
 
 	if (numberOfSpans > 1) {
-	    navigationBar.append("<table class=\"navigation-bar\"><tr><td>Páginas:&nbsp;&nbsp; ");
+	    navigationBar.append("<table class=\"navigation-bar\"><tr><td>PÃ¡ginas:&nbsp;&nbsp; ");
 	    for (int i = 0; i < numberOfSpans; i++) {
 		if (i == span)
 		    navigationBar.append(i + 1);

@@ -107,9 +107,9 @@ padding-right: 8px;
 
 <fmt:setBundle basename="resources.InquiriesResources" var="INQUIRIES_RESOURCES"/>
 
-<p class="mtop0" style="float: right;"><em>Informação do sistema, recolhida a <c:out value="${inquiryResult.resultsDate}" /></em></p>
+<p class="mtop0" style="float: right;"><em>InformaÃ§Ã£o do sistema, recolhida a <c:out value="${inquiryResult.resultsDate}" /></em></p>
 
-<h2>QUC - Garantia da Qualidade das UC - Resultados dos inquéritos aos alunos</h2>
+<h2>QUC - Garantia da Qualidade das UC - Resultados dos inquÃ©ritos aos alunos</h2>
 
 <div class="infoop2" style="font-size: 1.4em; padding: 0.5em 1em; margin: 1em 0;">
 	<p style="margin: 0.75em 0;">Semestre: 
@@ -124,30 +124,30 @@ padding-right: 8px;
 <bean:define id="result" name="inquiryResult" type="net.sourceforge.fenixedu.domain.oldInquiries.StudentInquiriesCourseResult" />
 <table class="tstyle1 thlight thleft td50px thbgnone tdright">
 	<tr class="top">
-		<th>Nº de inscritos</th>
+		<th>NÂº de inscritos</th>
 		<td><c:out value="${inquiryResult.valuesMap['N_inscritos']}" /></td>
 	</tr>
 	<tr>
-		<th>Avaliados <a href="#" class="help">[?] <span>Nº avaliados / Nº inscritos. Não são contabilizados resultados de épocas especiais e/ou melhorias.</span></a></th>
+		<th>Avaliados <a href="#" class="help">[?] <span>NÂº avaliados / NÂº inscritos. NÃ£o sÃ£o contabilizados resultados de Ã©pocas especiais e/ou melhorias.</span></a></th>
 		<td><c:out value="${inquiryResult.valuesMap['perc_Avaliados']}" /></td>
 	</tr>
 	<tr>
-		<th>Aprovados <a href="#" class="help">[?] <span>Nº aprovados / Nº avaliados . Não são contabilizados resultados de épocas especiais e/ou melhorias.</span></a></th>
+		<th>Aprovados <a href="#" class="help">[?] <span>NÂº aprovados / NÂº avaliados . NÃ£o sÃ£o contabilizados resultados de Ã©pocas especiais e/ou melhorias.</span></a></th>
 		<td><c:out value="${inquiryResult.valuesMap['perc_Aprovados']}" /></td>
 	</tr>
 	<tr>
-		<th>Média notas <a href="#" class="help">[?] <span>Não são contabilizados resultados de épocas especiais e/ou melhorias.</span></a></th>
+		<th>MÃ©dia notas <a href="#" class="help">[?] <span>NÃ£o sÃ£o contabilizados resultados de Ã©pocas especiais e/ou melhorias.</span></a></th>
 		<td><c:out value="${inquiryResult.valuesMap['Media_Notas']}" /></td>
 	</tr>
 	<tr>
-		<th>Sujeita a inquérito <a href="#" class="help">[?] <span>Algumas UC não foram sujeitas a inquérito, para mais informações ver regulamento QUC e FAQ's em http://quc.ist.utl.pt</span></a></th>
+		<th>Sujeita a inquÃ©rito <a href="#" class="help">[?] <span>Algumas UC nÃ£o foram sujeitas a inquÃ©rito, para mais informaÃ§Ãµes ver regulamento QUC e FAQ's em http://quc.ist.utl.pt</span></a></th>
 		<td><bean:message key="<%= "label." + result.getExecutionCourse().getAvailableForInquiries().toString() %>" bundle="INQUIRIES_RESOURCES"/></td>
 	</tr>
 </table>
-<em>(informação do sistema)</em>
+<em>(informaÃ§Ã£o do sistema)</em>
 
 <logic:equal name="inquiryResult" property="executionCourse.availableForInquiries" value="true">
-	<h3 class="mtop15 mbottom0"><strong>Estatística de preenchimento e representatividade</strong></h3>
+	<h3 class="mtop15 mbottom0"><strong>EstatÃ­stica de preenchimento e representatividade</strong></h3>
 	
 	<table class="tstyle1 thlight thleft td50px tdright">
 		<tr class="top">
@@ -161,17 +161,17 @@ padding-right: 8px;
 			<td><c:out value="${inquiryResult.valuesMap['perc_respQI']}" /></td>
 		</tr>
 		<tr>
-			<th>Inquéritos submetidos à UC</th>
+			<th>InquÃ©ritos submetidos Ã  UC</th>
 			<td><c:out value="${inquiryResult.valuesMap['N_Inq_sub_UC']}" /></td>
 			<td><c:out value="${inquiryResult.valuesMap['perc_inq_sub_UC']}" /></td>
 		</tr>
 		<tr>
-			<th>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Não respostas à UC</th>
+			<th>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;NÃ£o respostas Ã  UC</th>
 			<td><c:out value="${inquiryResult.valuesMap['N_NaoRespostasUC']}" /></td>
 			<td><c:out value="${inquiryResult.valuesMap['perc_NaoRespostasUC']}" /></td>
 		</tr>
 		<tr>
-			<th>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Respostas válidas à UC</th>
+			<th>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Respostas vÃ¡lidas Ã  UC</th>
 			<td><c:out value="${inquiryResult.valuesMap['N_Inq_aval_UC']}" /></td>
 			<td><c:out value="${inquiryResult.valuesMap['perc_Inq_aval_UC']}" /></td>
 		</tr>
@@ -181,11 +181,11 @@ padding-right: 8px;
 	<table class="tstyle1 thlight thleft tdcenter">
 		<tr class="top">
 			<th></th>
-			<th class="aright">Responsáveis pela gestão académica <a href="#" class="helpleft">[?] <span>Representatividade - nº de inscritos superior a 10, nº de respostas superior a 5 e a 10% do nº inscritos. - conforme revisão do regulamento aprovada em 15 Maio 2009, ver http://quc.ist.utl.pt/_docs_/SSGQUC.pdf</span></a></th>
-			<th class="aright">Comunidade académica IST <a href="#" class="helpleft">[?] <span>Representatividade - nº de inscritos superior a 10, nº de respostas superior a 5 e a 50% do nº inscritos. - conforme revisão do regulamento aprovada em 15 Maio 2009, ver http://quc.ist.utl.pt/_docs_/SSGQUC.pdf</span></a></th>
+			<th class="aright">ResponsÃ¡veis pela gestÃ£o acadÃ©mica <a href="#" class="helpleft">[?] <span>Representatividade - nÂº de inscritos superior a 10, nÂº de respostas superior a 5 e a 10% do nÂº inscritos. - conforme revisÃ£o do regulamento aprovada em 15 Maio 2009, ver http://quc.ist.utl.pt/_docs_/SSGQUC.pdf</span></a></th>
+			<th class="aright">Comunidade acadÃ©mica IST <a href="#" class="helpleft">[?] <span>Representatividade - nÂº de inscritos superior a 10, nÂº de respostas superior a 5 e a 50% do nÂº inscritos. - conforme revisÃ£o do regulamento aprovada em 15 Maio 2009, ver http://quc.ist.utl.pt/_docs_/SSGQUC.pdf</span></a></th>
 		</tr>
 		<tr>
-			<th>Representatividade para divulgação</th>
+			<th>Representatividade para divulgaÃ§Ã£o</th>
 			<td><fmt:message bundle="${INQUIRIES_RESOURCES}" key="label.colored.boolean.${inquiryResult.valuesMap['Repres_div_interna']}" /></td>
             <td><fmt:message bundle="${INQUIRIES_RESOURCES}" key="label.colored.boolean.${inquiryResult.valuesMap['Repres_div_publica']}" /></td>
 		</tr>
@@ -195,9 +195,9 @@ padding-right: 8px;
 	<table class="tstyle1 thlight thleft tdcenter">
 		<tr class="top">
 			<th></th>
-			<th class="aright">Organização da UC <a href="#" class="helpleft">[?] <span>Representatividade - nº de inscritos superior a 10, nº de respostas superior a 5 e a 50% do nº inscritos. - conforme revisão do regulamento aprovada em 15 Maio 2009, ver http://quc.ist.utl.pt/_docs_/SSGQUC.pdf</span></a></th>
-			<th class="aright">Avaliação da UC <a href="#" class="helpleft">[?] <span>Resultados a melhorar se mais 25% alunos (no mínimo de 10 respostas) classifica como abaixo ou igual a 3 (Discordo) a questão e/ou taxa de avaliação <50% e/ou taxa de aprovação <50%. - conforme revisão do regulamento aprovada em 15 Maio 2009, ver http://quc.ist.utl.pt/_docs_/SSGQUC.pdf</span></a></th>
-			<th class="aright">Passível de Auditoria <a href="#" class="helpleft">[?] <span>Passível de auditoria se organização e avaliação da UC com resultados a melhorar e, pelo menos, metade do corpo docente com resultados a melhorar no mínimo de dois grupos.</span></a></th>
+			<th class="aright">OrganizaÃ§Ã£o da UC <a href="#" class="helpleft">[?] <span>Representatividade - nÂº de inscritos superior a 10, nÂº de respostas superior a 5 e a 50% do nÂº inscritos. - conforme revisÃ£o do regulamento aprovada em 15 Maio 2009, ver http://quc.ist.utl.pt/_docs_/SSGQUC.pdf</span></a></th>
+			<th class="aright">AvaliaÃ§Ã£o da UC <a href="#" class="helpleft">[?] <span>Resultados a melhorar se mais 25% alunos (no mÃ­nimo de 10 respostas) classifica como abaixo ou igual a 3 (Discordo) a questÃ£o e/ou taxa de avaliaÃ§Ã£o <50% e/ou taxa de aprovaÃ§Ã£o <50%. - conforme revisÃ£o do regulamento aprovada em 15 Maio 2009, ver http://quc.ist.utl.pt/_docs_/SSGQUC.pdf</span></a></th>
+			<th class="aright">PassÃ­vel de Auditoria <a href="#" class="helpleft">[?] <span>PassÃ­vel de auditoria se organizaÃ§Ã£o e avaliaÃ§Ã£o da UC com resultados a melhorar e, pelo menos, metade do corpo docente com resultados a melhorar no mÃ­nimo de dois grupos.</span></a></th>
 		</tr>
 		<tr>
 			<th>Resultados a melhorar</th>
@@ -219,39 +219,39 @@ padding-right: 8px;
 	
 	<table class="tstyle1 thlight thleft td50px">
 		<tr class="top">
-			<th>Carga Horária da UC</th>
+			<th>Carga HorÃ¡ria da UC</th>
 			<td><c:out value="${inquiryResult.valuesMap['CargaHoraria']}" /></td>
 		</tr>
 		<tr>
-			<th>Nº ECTS da UC</th>
+			<th>NÂº ECTS da UC</th>
 			<td><c:out value="${inquiryResult.valuesMap['ECTS']}" /></td>
 		</tr>
 	</table>
-	<em>(informação do sistema)</em>
+	<em>(informaÃ§Ã£o do sistema)</em>
 	
-	<h3 class="mtop15 mbottom0"><strong>Auto-avaliação dos alunos</strong></h3>
+	<h3 class="mtop15 mbottom0"><strong>Auto-avaliaÃ§Ã£o dos alunos</strong></h3>
 	
 	<table class="tstyle1 thlight thleft tdright td50px">
 		<tr class="top">
 			<th></th>
 			<th class="aright">N</th>
-			<th class="aright">Média</th>
-			<th class="aright">Desvio padrão</th>
+			<th class="aright">MÃ©dia</th>
+			<th class="aright">Desvio padrÃ£o</th>
 		</tr>
 		<tr>
-			<th>Nº médio de horas de trabalho autónomo por semana com a UC</th>
+			<th>NÂº mÃ©dio de horas de trabalho autÃ³nomo por semana com a UC</th>
 			<td><c:out value="${inquiryResult.valuesMap['N_NHTA']}" /></td>
 			<td><c:out value="${inquiryResult.valuesMap['M_NHTA_']}" /></td>
 			<td><c:out value="${inquiryResult.valuesMap['dp_NHTA_']}" /></td>
 		</tr>
 		<tr>
-			<th>Nº de dias de estudo da UC na época de exames</th>
+			<th>NÂº de dias de estudo da UC na Ã©poca de exames</th>
             <td><c:out value="${inquiryResult.valuesMap['N_NDE']}" /></td>
             <td><c:out value="${inquiryResult.valuesMap['M_NDE_']}" /></td>
             <td><c:out value="${inquiryResult.valuesMap['dp_NDE_']}" /></td>
 		</tr>
 		<tr>
-			<th>Nº médio ECTS estimado <a href="#" class="helpleft">[?] <span>ECTS ESTIMADO = ((Nº de horas de trabalho autónomo por semana com a UC + Carga Horária da UC)* 14+ Nº de dias de estudo da UC na época de exames * 8)/28.</span></a></th>
+			<th>NÂº mÃ©dio ECTS estimado <a href="#" class="helpleft">[?] <span>ECTS ESTIMADO = ((NÂº de horas de trabalho autÃ³nomo por semana com a UC + Carga HorÃ¡ria da UC)* 14+ NÂº de dias de estudo da UC na Ã©poca de exames * 8)/28.</span></a></th>
             <td><c:out value="${inquiryResult.valuesMap['N_ECTS_estimados']}" /></td>
             <td><c:out value="${inquiryResult.valuesMap['M_ECTSEstimados']}" /></td>
             <td><c:out value="${inquiryResult.valuesMap['dp_ECTSestimados']}" /></td>
@@ -269,10 +269,10 @@ padding-right: 8px;
 			<th class="aright">[17; 18]</th>
 			<th class="aright">[19; 20]</th>
 			<th class="aright">Reprovado</th>
-			<th class="aright">Não avaliado</th>
+			<th class="aright">NÃ£o avaliado</th>
 		</tr>
 		<tr>
-			<th>Gama de valores da classificação dos alunos</th>
+			<th>Gama de valores da classificaÃ§Ã£o dos alunos</th>
 			<td><c:out value="${inquiryResult.valuesMap['N_P1_1']}" /></td>
 			<td><c:out value="${inquiryResult.valuesMap['Perc_10_12']}" /></td>
 			<td><c:out value="${inquiryResult.valuesMap['Perc_13_14']}" /></td>
@@ -305,17 +305,17 @@ padding-right: 8px;
 			<td><c:out value="${inquiryResult.valuesMap['perc_P1_2_b']}" /></td>
 		</tr>
 		<tr>
-			<th>Trabalhos/projectos em número elevado</th>
+			<th>Trabalhos/projectos em nÃºmero elevado</th>
 			<td><c:out value="${inquiryResult.valuesMap['N_P1_2_c']}" /></td>
 			<td><c:out value="${inquiryResult.valuesMap['perc_P1_2_c']}" /></td>
 		</tr>
 		<tr>
-			<th>Falta de preparação anterior exigindo mais trabalho/estudo</th>
+			<th>Falta de preparaÃ§Ã£o anterior exigindo mais trabalho/estudo</th>
 			<td><c:out value="${inquiryResult.valuesMap['N_P1_2_d']}" /></td>
 			<td><c:out value="${inquiryResult.valuesMap['perc_P1_2_d']}" /></td>
 		</tr>
 		<tr>
-			<th>Extensão do programa face ao nº de aulas previstas</th>
+			<th>ExtensÃ£o do programa face ao nÂº de aulas previstas</th>
 			<td><c:out value="${inquiryResult.valuesMap['N_P1_2_e']}" /></td>
 			<td><c:out value="${inquiryResult.valuesMap['perc_P1_2_e']}" /></td>
 		</tr>
@@ -325,7 +325,7 @@ padding-right: 8px;
 			<td><c:out value="${inquiryResult.valuesMap['perc_P1_2_f']}" /></td>
 		</tr>
         <tr>
-            <th>Problemas na organização administrativa da UC</th>
+            <th>Problemas na organizaÃ§Ã£o administrativa da UC</th>
             <td><c:out value="${inquiryResult.valuesMap['N_P_1_2_g']}" /></td>
             <td><c:out value="${inquiryResult.valuesMap['perc_P1_2_g']}" /></td>
         </tr>
@@ -335,7 +335,7 @@ padding-right: 8px;
             <td><c:out value="${inquiryResult.valuesMap['perc_P1_2_h']}" /></td>
         </tr>
 		<tr>
-			<th>Outras razões</th>
+			<th>Outras razÃµes</th>
 			<td><c:out value="${inquiryResult.valuesMap['N_P1_2_i']}" /></td>
 			<td><c:out value="${inquiryResult.valuesMap['perc_P1_2_i']}" /></td>
 		</tr>
@@ -345,13 +345,13 @@ padding-right: 8px;
 		<tr class="top">
 			<th></th>
 			<th class="aright">N</th>
-			<th class="aright">Média</th>
-			<th class="aright separatorright">Desvio padrão</th>
+			<th class="aright">MÃ©dia</th>
+			<th class="aright separatorright">Desvio padrÃ£o</th>
 			<th class="aright">Discordo totalmente<br/><b>1</b></th>
 			<th class="aright"><b>2</b></th>
 			<th class="aright">Discordo<br/><b>3</b></th>
 			<th class="aright"><b>4</b></th>
-			<th class="aright">Não concordo nem discordo<br/><b>5</b></th>
+			<th class="aright">NÃ£o concordo nem discordo<br/><b>5</b></th>
 			<th class="aright"><b>6</b></th>
 			<th class="aright">Concordo<br/><b>7</b></th>
 			<th class="aright"><b>8</b></th>
@@ -378,14 +378,14 @@ padding-right: 8px;
 		<tr class="top">
 			<th></th>
 			<th class="aright">N</th>
-			<th class="aright">Média</th>
-			<th class="aright separatorright">Desvio padrão</th>
+			<th class="aright">MÃ©dia</th>
+			<th class="aright separatorright">Desvio padrÃ£o</th>
 			<th class="aright">Passiva<br/><b>1</b></th>
 			<th class="aright">Activa quando solicitada<br/><b>2</b></th>
-			<th class="aright">Activa por iniciativa própria<br/><b>3</b></th>
+			<th class="aright">Activa por iniciativa prÃ³pria<br/><b>3</b></th>
 		</tr>
 		<tr>
-			<th>Participação dos alunos na UC</th>
+			<th>ParticipaÃ§Ã£o dos alunos na UC</th>
 			<td><c:out value="${inquiryResult.valuesMap['N_P1_4']}" /></td>
 			<td><c:out value="${inquiryResult.valuesMap['M_P1_4']}" /></td>
 			<td class="separatorright"><c:out value="${inquiryResult.valuesMap['dp_P1_4']}" /></td>
@@ -397,12 +397,12 @@ padding-right: 8px;
     
     <table class="tstyle1 thlight thleft tdright td50px">
         <tr class="top">
-            <th>Caracterização dos meios e métodos de estudo mais usados</th>
+            <th>CaracterizaÃ§Ã£o dos meios e mÃ©todos de estudo mais usados</th>
             <th class="aright">N</th>
             <th class="aright">%</th>
         </tr>
         <tr>
-            <th>Assistir às aulas</th>
+            <th>Assistir Ã s aulas</th>
             <td><c:out value="${inquiryResult.valuesMap['N_P1_5_a']}" /></td>
             <td><c:out value="${inquiryResult.valuesMap['perc_P1_5_a']}" /></td>
         </tr>
@@ -430,29 +430,29 @@ padding-right: 8px;
     
                             
 	
-	<p class="mtop15 mbottom0"><strong>A UC contribuiu para a aquisição e/ou desenvolvimento das seguintes competências</strong></p>
+	<p class="mtop15 mbottom0"><strong>A UC contribuiu para a aquisiÃ§Ã£o e/ou desenvolvimento das seguintes competÃªncias</strong></p>
 	
 	<table class="tstyle1 thlight thleft tdright td50px">
 		<tr class="top">
-			<th>A frequência desta UC contribuiu para:</th>
-            <th class="aright">Não sabe/Não se aplica</th>
+			<th>A frequÃªncia desta UC contribuiu para:</th>
+            <th class="aright">NÃ£o sabe/NÃ£o se aplica</th>
 			<th class="aright separatorright">N</th>
-			<th class="aright">Média</th>
-			<th class="aright separatorright">Desvio padrão</th>
-			<th class="aright">Não sabe</th>
-            <th class="aright">Não se aplica</th>
+			<th class="aright">MÃ©dia</th>
+			<th class="aright separatorright">Desvio padrÃ£o</th>
+			<th class="aright">NÃ£o sabe</th>
+            <th class="aright">NÃ£o se aplica</th>
             <th class="aright">Discordo totalmente<br/><b>1</b></th>
             <th class="aright"><b>2</b></th>
             <th class="aright">Discordo<br/><b>3</b></th>
             <th class="aright"><b>4</b></th>
-            <th class="aright">Não concordo nem discordo<br/><b>5</b></th>
+            <th class="aright">NÃ£o concordo nem discordo<br/><b>5</b></th>
             <th class="aright"><b>6</b></th>
             <th class="aright">Concordo<br/><b>7</b></th>
             <th class="aright"><b>8</b></th>
             <th class="aright">Concordo totalmente<br/><b>9</b></th>            
 		</tr>
 		<tr>
-			<th>Desenvolver o conhecimento e compreensão do tema</th>
+			<th>Desenvolver o conhecimento e compreensÃ£o do tema</th>
             <td><c:out value="${inquiryResult.valuesMap['N_P2_1_ns']}" /></td>
             <td><c:out value="${inquiryResult.valuesMap['N_P2_1_comp']}" /></td>
             <td><c:out value="${inquiryResult.valuesMap['M_P2_1']}" /></td>
@@ -488,7 +488,7 @@ padding-right: 8px;
             <td><c:out value="${inquiryResult.valuesMap['Perc_P2_2_9']}" /></td>
         </tr>
         <tr>
-            <th>Desenvolver o sentido crítico e a capacidade de reflexão sobre o tema</th>
+            <th>Desenvolver o sentido crÃ­tico e a capacidade de reflexÃ£o sobre o tema</th>
             <td><c:out value="${inquiryResult.valuesMap['N_P2_3_ns']}" /></td>
             <td><c:out value="${inquiryResult.valuesMap['N_P2_3_comp']}" /></td>
             <td><c:out value="${inquiryResult.valuesMap['M_P2_3']}" /></td>
@@ -506,7 +506,7 @@ padding-right: 8px;
             <td><c:out value="${inquiryResult.valuesMap['Perc_P2_3_9']}" /></td>
         </tr>
         <tr>
-            <th>Promover a capacidade de cooperação e comunicação</th>
+            <th>Promover a capacidade de cooperaÃ§Ã£o e comunicaÃ§Ã£o</th>
             <td><c:out value="${inquiryResult.valuesMap['N_P2_4_ns']}" /></td>
             <td><c:out value="${inquiryResult.valuesMap['N_P2_4_comp']}" /></td>
             <td><c:out value="${inquiryResult.valuesMap['M_P2_4']}" /></td>
@@ -524,7 +524,7 @@ padding-right: 8px;
             <td><c:out value="${inquiryResult.valuesMap['Perc_P2_4_9']}" /></td>
         </tr>
         <tr>
-            <th>Aumentar a capacidade de aprendizagem autónoma</th>
+            <th>Aumentar a capacidade de aprendizagem autÃ³noma</th>
             <td><c:out value="${inquiryResult.valuesMap['N_P2_5_ns']}" /></td>
             <td><c:out value="${inquiryResult.valuesMap['N_P2_5_comp']}" /></td>
             <td><c:out value="${inquiryResult.valuesMap['M_P2_5']}" /></td>
@@ -542,7 +542,7 @@ padding-right: 8px;
             <td><c:out value="${inquiryResult.valuesMap['Perc_P2_5_9']}" /></td>
         </tr>
         <tr>
-            <th>Aprofundar a capacidade de análise sobre as implicações do tema no contexto social e profissional</th>
+            <th>Aprofundar a capacidade de anÃ¡lise sobre as implicaÃ§Ãµes do tema no contexto social e profissional</th>
             <td><c:out value="${inquiryResult.valuesMap['N_P2_6_ns']}" /></td>
             <td><c:out value="${inquiryResult.valuesMap['N_P2_6_comp']}" /></td>
             <td><c:out value="${inquiryResult.valuesMap['M_P2_6']}" /></td>
@@ -561,19 +561,19 @@ padding-right: 8px;
         </tr>
 	</table>
 	
-	<p class="mtop15 mbottom0"><strong>Organização da UC</strong></p>
+	<p class="mtop15 mbottom0"><strong>OrganizaÃ§Ã£o da UC</strong></p>
 	
 	<table class="tstyle1 thlight thleft tdright td50px">
 		<tr class="top">
 			<th></th>
 			<th class="aright">N</th>
-			<th class="aright">Média</th>
-			<th class="aright separatorright">Desvio padrão</th>
+			<th class="aright">MÃ©dia</th>
+			<th class="aright separatorright">Desvio padrÃ£o</th>
 			<th class="aright">Discordo totalmente<br/><b>1</b></th>
 			<th class="aright"><b>2</b></th>
 			<th class="aright">Discordo<br/><b>3</b></th>
 			<th class="aright"><b>4</b></th>
-			<th class="aright">Não concordo nem discordo<br/><b>5</b></th>
+			<th class="aright">NÃ£o concordo nem discordo<br/><b>5</b></th>
 			<th class="aright"><b>6</b></th>
 			<th class="aright">Concordo<br/><b>7</b></th>
 			<th class="aright"><b>8</b></th>
@@ -642,26 +642,26 @@ padding-right: 8px;
 	</table>
 	
 	
-	<p class="mtop15 mbottom0"><strong>Método de avaliação da UC</strong></p>
+	<p class="mtop15 mbottom0"><strong>MÃ©todo de avaliaÃ§Ã£o da UC</strong></p>
 	
 	<table class="tstyle1 thlight thleft tdright td50px">
 		<tr class="top">
 			<th></th>
 			<th class="aright">N</th>
-			<th class="aright">Média</th>
-			<th class="aright separatorright">Desvio padrão</th>
+			<th class="aright">MÃ©dia</th>
+			<th class="aright separatorright">Desvio padrÃ£o</th>
 			<th class="aright">Discordo totalmente<br/><b>1</b></th>
 			<th class="aright"><b>2</b></th>
 			<th class="aright">Discordo<br/><b>3</b></th>
 			<th class="aright"><b>4</b></th>
-			<th class="aright">Não concordo nem discordo<br/><b>5</b></th>
+			<th class="aright">NÃ£o concordo nem discordo<br/><b>5</b></th>
 			<th class="aright"><b>6</b></th>
 			<th class="aright">Concordo<br/><b>7</b></th>
 			<th class="aright"><b>8</b></th>
 			<th class="aright">Concordo totalmente<br/><b>9</b></th>
 		</tr>
 		<tr>
-			<th>Os métodos de avaliação foram justos e apropriados</th>
+			<th>Os mÃ©todos de avaliaÃ§Ã£o foram justos e apropriados</th>
             <td><c:out value="${inquiryResult.valuesMap['N_P4']}" /></td>
             <td><c:out value="${inquiryResult.valuesMap['M_P4']}" /></td>
             <td><c:out value="${inquiryResult.valuesMap['dp_P4']}" /></td>
@@ -678,14 +678,14 @@ padding-right: 8px;
 	</table>
 	
 	
-	<p class="mtop15 mbottom0"><strong>Avaliação global da UC</strong></p>
+	<p class="mtop15 mbottom0"><strong>AvaliaÃ§Ã£o global da UC</strong></p>
 	
 	<table class="tstyle1 thlight thleft tdright td50px">
 		<tr class="top">
 			<th></th>
 			<th class="aright">N</th>
-			<th class="aright">Média</th>
-			<th class="aright separatorright">Desvio padrão</th>
+			<th class="aright">MÃ©dia</th>
+			<th class="aright separatorright">Desvio padrÃ£o</th>
             <th class="aright">Muito mau<br/><b>1</b></th>
             <th class="aright"><b>2</b></th>
             <th class="aright">Mau<br/><b>3</b></th>
@@ -697,7 +697,7 @@ padding-right: 8px;
             <th class="aright">Muito bom<br/><b>9</b></th>            
 		</tr>
 		<tr>
-			<th>Avaliação do funcionamento da UC</th>
+			<th>AvaliaÃ§Ã£o do funcionamento da UC</th>
             <td><c:out value="${inquiryResult.valuesMap['N_P5']}" /></td>
             <td><c:out value="${inquiryResult.valuesMap['M_P5']}" /></td>
             <td><c:out value="${inquiryResult.valuesMap['dp_P5']}" /></td>

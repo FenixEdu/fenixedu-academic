@@ -118,7 +118,7 @@
 							</html:link>
 							<bean:message bundle="MESSAGING_RESOURCES" key="label.messaging.symbol.less" /> 
 
-							<%-- Página da Cadeira --%>
+							<%-- PÃ¡gina da Cadeira --%>
 							<logic:notEmpty name="announcement" property="announcementBoard">
 								<logic:equal name="announcement" property="announcementBoard.class.name" value="net.sourceforge.fenixedu.domain.messaging.ExecutionCourseAnnouncementBoard">
 									<logic:notEmpty name="announcement" property="announcementBoard.executionCourse">

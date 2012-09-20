@@ -35,7 +35,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 /**
  * @author lmac1
- * @author Fernanda Quitério 17/Dez/2003
+ * @author Fernanda QuitÃ©rio 17/Dez/2003
  */
 @Mapping(module = "manager", path = "/readExecutionPeriods", input = "mainPageInput.do", scope = "request")
 @Forwards(value = { @Forward(name = "readExecutionPeriods", path = "/manager/readExecutionPeriods_bd.jsp", tileProperties = @Tile(navLocal = "/manager/executionCourseManagement/mainMenu.jsp")) })

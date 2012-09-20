@@ -12,15 +12,15 @@
 <h2><bean:message key="link.yearDelegateInquiries" bundle="DELEGATES_RESOURCES"/></h2>
 
 <p>
-Bem vindo ‡ nova interface dos QUC para os Delegados!
+Bem vindo √† nova interface dos QUC para os Delegados!
 Aqui tens acesso ao quadro com o resumo dos QUC de todas as unidades curriculares do teu ano. Se os alunos de uma determinada unidade curricular  indicaram algum problema, deves explicar o motivo que causou o baixo resultado, de forma a que o corpo docente possa corrigir o que correu mal.
-O n˙mero de perguntas que necessita de coment·rios teus est· indicada entre parÍntesis. Para alÈm de essas perguntas, podes sempre para cada unidade curricular preencher coment·rios opcionais. O que escreves deve ser a opini„o geral dos teus colegas de ano e n„o apenas a tua opini„o. Fala com os teus colegas!
+O n√∫mero de perguntas que necessita de coment√°rios teus est√° indicada entre par√™ntesis. Para al√©m de essas perguntas, podes sempre para cada unidade curricular preencher coment√°rios opcionais. O que escreves deve ser a opini√£o geral dos teus colegas de ano e n√£o apenas a tua opini√£o. Fala com os teus colegas!
 <br/>
-Caso o problema n„o seja resolvido pelo corpo docente, os teu coment·rios s„o muito importantes para que o Coordenador de Curso, o Departamento e o Conselho PedagÛgico analisem o problema.
+Caso o problema n√£o seja resolvido pelo corpo docente, os teu coment√°rios s√£o muito importantes para que o Coordenador de Curso, o Departamento e o Conselho Pedag√≥gico analisem o problema.
 Participa!
 </p>
 
-<h3 class="mtop15"><bean:write name="executionDegree" property="degree.sigla"/> (<bean:write name="executionPeriod" property="semester"/>∫ Semestre <bean:write name="executionPeriod" property="executionYear.year"/>)</h3>
+<h3 class="mtop15"><bean:write name="executionDegree" property="degree.sigla"/> (<bean:write name="executionPeriod" property="semester"/>¬∫ Semestre <bean:write name="executionPeriod" property="executionYear.year"/>)</h3>
 
 <fr:view name="coursesResultResume">
 	<fr:layout name="delegate-inquiry-resume">

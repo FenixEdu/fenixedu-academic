@@ -21,6 +21,6 @@ INSERT INTO `ACCESSIBLE_ITEM` (`UUID`, `OJB_CONCRETE_CLASS`, `KEY_ROOT_DOMAIN_OB
 -- 
 
 --  ID: 133472 UUID: '8d123cd3-b4ce-4152-9860-ab3b1b8ab900'
-UPDATE `ACCESSIBLE_ITEM` AS own SET own.`NAME` = 'en20:Unit Site Managementpt26:Gest„o de Sites de Unidade', own.`TITLE` = NULL, own.`PATH` = '/unitSiteManagement.do?method=prepare' WHERE own.`UUID` = '8d123cd3-b4ce-4152-9860-ab3b1b8ab900';
+UPDATE `ACCESSIBLE_ITEM` AS own SET own.`NAME` = 'en20:Unit Site Managementpt26:Gest√£o de Sites de Unidade', own.`TITLE` = NULL, own.`PATH` = '/unitSiteManagement.do?method=prepare' WHERE own.`UUID` = '8d123cd3-b4ce-4152-9860-ab3b1b8ab900';
 
 COMMIT;

@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="ISO-8859-1"  ?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with iReport - A designer for JasperReports -->
 <!DOCTYPE jasperReport PUBLIC "//JasperReports//DTD Report Design//EN" "http://jasperreports.sourceforge.net/dtds/jasperreport.dtd">
 <jasperReport
@@ -18,7 +18,7 @@
 		 isTitleNewPage="false"
 		 isSummaryNewPage="false">
 	<property name="ireport.scriptlethandling" value="0" />
-	<property name="ireport.encoding" value="ISO-8859-1" />
+	<property name="ireport.encoding" value="UTF-8" />
 	<import value="java.util.*" />
 	<import value="net.sf.jasperreports.engine.*" />
 	<import value="net.sf.jasperreports.engine.data.*" />
@@ -225,7 +225,7 @@
 					<textElement textAlignment="Center" lineSpacing="Single">
 						<font fontName="Quadraat-Italic" pdfFontName="QUAD____.ttf" size="9" isBold="false" isItalic="false" isPdfEmbedded ="true"/>
 					</textElement>
-				<text><![CDATA[e submeteu para discussão uma dissertação com o título]]></text>
+				<text><![CDATA[e submeteu para discussÃ£o uma dissertaÃ§Ã£o com o tÃ­tulo]]></text>
 				</staticText>
 				<textField isStretchWithOverflow="true" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
@@ -297,7 +297,7 @@
 					<textElement textAlignment="Center" lineSpacing="Single">
 						<font fontName="Quadraat-Italic" pdfFontName="QUAD____.ttf" size="9" isBold="false" isItalic="false" isPdfEmbedded ="true"/>
 					</textElement>
-				<text><![CDATA[Tendo certificado de que, após a conclusão das provas em]]></text>
+				<text><![CDATA[Tendo certificado de que, apÃ³s a conclusÃ£o das provas em]]></text>
 				</staticText>
 				<textField isStretchWithOverflow="true" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
@@ -333,7 +333,7 @@
 					<textElement textAlignment="Center" verticalAlignment="Middle" lineSpacing="Single">
 						<font fontName="Quadraat-Italic" pdfFontName="QUAD____.ttf" size="9" isBold="false" isItalic="false" isPdfEmbedded ="true"/>
 					</textElement>
-				<text><![CDATA[Tendo ainda verificado que foram cumpridos no processo todos os preceitos das leis vigentes da República Portuguesa,]]></text>
+				<text><![CDATA[Tendo ainda verificado que foram cumpridos no processo todos os preceitos das leis vigentes da RepÃºblica Portuguesa,]]></text>
 				</staticText>
 				<textField isStretchWithOverflow="true" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
@@ -404,7 +404,7 @@
 					<textElement textAlignment="Center" lineSpacing="Single">
 						<font fontName="Quadraat-Italic" pdfFontName="QUAD____.ttf" size="9" isBold="false" isItalic="false" isPdfEmbedded ="true"/>
 					</textElement>
-				<text><![CDATA[O júri considerou o candidato]]></text>
+				<text><![CDATA[O jÃºri considerou o candidato]]></text>
 				</staticText>
 				<staticText>
 					<reportElement
@@ -421,7 +421,7 @@
 					<textElement textAlignment="Center" lineSpacing="Single">
 						<font fontName="Quadraat-Italic" pdfFontName="QUAD____.ttf" size="9" isBold="false" isItalic="false" isPdfEmbedded ="true" pdfEncoding ="Cp1252"/>
 					</textElement>
-				<text><![CDATA[Apresentou o seu pedido de admissão às provas de doutoramento no]]></text>
+				<text><![CDATA[Apresentou o seu pedido de admissÃ£o Ã s provas de doutoramento no]]></text>
 				</staticText>
 				<textField isStretchWithOverflow="true" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
@@ -439,7 +439,7 @@
 					<textElement textAlignment="Center" lineSpacing="Single">
 						<font fontName="Quadraat-Italic" pdfFontName="QUAD____.ttf" size="9" isBold="false" isItalic="false" isPdfEmbedded ="true" pdfEncoding ="Cp1252"/>
 					</textElement>
-				<textFieldExpression   class="java.lang.String"><![CDATA["pela " + $P{universityName} + ", pelo que, em conformidade com as disposições legais em vigor,"
+				<textFieldExpression   class="java.lang.String"><![CDATA["pela " + $P{universityName} + ", pelo que, em conformidade com as disposiÃ§Ãµes legais em vigor,"
 + "\nlhe manda passar a presente Carta Doutoral."]]></textFieldExpression>
 				</textField>
 				<staticText>
@@ -458,7 +458,7 @@
 					<textElement textAlignment="Center" verticalAlignment="Middle" lineSpacing="Single">
 						<font fontName="Quadraat-Italic" pdfFontName="QUAD____.ttf" size="9" isBold="false" isItalic="false" isPdfEmbedded ="true"/>
 					</textElement>
-				<text><![CDATA[decido outorgar-lhe todos os direitos académicos inerentes ao grau de]]></text>
+				<text><![CDATA[decido outorgar-lhe todos os direitos acadÃ©micos inerentes ao grau de]]></text>
 				</staticText>
 				<line direction="TopDown">
 					<reportElement
@@ -500,7 +500,7 @@
 					<textElement textAlignment="Left" verticalAlignment="Top" lineSpacing="Single">
 						<font fontName="Quadraat-Regular" pdfFontName="QUAD____.ttf" size="8" isBold="false" isItalic="false" isPdfEmbedded ="true"/>
 					</textElement>
-				<text><![CDATA[O Presidente do Instituto Superior Técnico]]></text>
+				<text><![CDATA[O Presidente do Instituto Superior TÃ©cnico]]></text>
 				</staticText>
 				<break>
 					<reportElement
@@ -551,7 +551,7 @@
 					<textElement textAlignment="Left">
 						<font/>
 					</textElement>
-				<textFieldExpression   class="java.lang.String"><![CDATA["número de registo: " + $P{registryCode}]]></textFieldExpression>
+				<textFieldExpression   class="java.lang.String"><![CDATA["nÃºmero de registo: " + $P{registryCode}]]></textFieldExpression>
 				</textField>
 			</band>
 		</lastPageFooter>

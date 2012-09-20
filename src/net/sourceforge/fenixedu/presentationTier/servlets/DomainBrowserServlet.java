@@ -25,7 +25,7 @@
  *  Initial developer(s):               The Fenix Team
  *                               http://fenix-ashes.ist.utl.pt/
  *
- *  Contributor(s): José Pedro Pereira - Educare S.A. - http://www.linkare.com
+ *  Contributor(s): JosÃ© Pedro Pereira - Educare S.A. - http://www.linkare.com
  * 
  * ################################################################
  */

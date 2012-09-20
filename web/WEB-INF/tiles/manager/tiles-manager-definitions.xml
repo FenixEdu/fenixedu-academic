@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="ISO-8859-1" ?>
+<?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE tiles-definitions PUBLIC "-//Apache Software Foundation//DTD Tiles Configuration 1.1//EN"
 	"http://jakarta.apache.org/struts/dtds/tiles-config_1_1.dtd">
 <!-- Tiles definitions -->
@@ -11,8 +11,8 @@
 
 
 	<definition name="definition.manager.masterPage.old" extends="df.layout.two-column">
-	  <put name="title" value="Portal de Gerência" />
-	  <put name="serviceName" value="Portal de Gerência" />
+	  <put name="title" value="Portal de GerÃªncia" />
+	  <put name="serviceName" value="Portal de GerÃªncia" />
 	  <put name="navLocal" value="/manager/commons/commonNavLocalManager.jsp" />
 	  <put name="navGeral" value="/commons/functionalities/top-menu.jsp" />
 	  <put name="body-context" value="/commons/functionalities/breadCrumbs.jsp"/>

@@ -34,15 +34,15 @@ ul.material li.feedback { background: url(<%= request.getContextPath() %>/images
 
 
 <p>
-	Bem-vindo ‡ comunidade Alumni do IST. Todos temos de regressar ‡ Escola, por isto ou por aquilo. Esta forma de regressar ser·, com certeza e mais uma vez, bem sucedida.
-	Este serviÁo est· no inÌcio. O IST espera a contribuiÁ„o dos Alumni quer pela sua utilizaÁ„o intensiva, quer pelos coment·rios, crÌticas e sugestıes que s„o encorajados a fazer.
-	O desenvolvimento do serviÁo depende, em grande medida, desses dois factores.
+	Bem-vindo √† comunidade Alumni do IST. Todos temos de regressar √† Escola, por isto ou por aquilo. Esta forma de regressar ser√°, com certeza e mais uma vez, bem sucedida.
+	Este servi√ßo est√° no in√≠cio. O IST espera a contribui√ß√£o dos Alumni quer pela sua utiliza√ß√£o intensiva, quer pelos coment√°rios, cr√≠ticas e sugest√µes que s√£o encorajados a fazer.
+	O desenvolvimento do servi√ßo depende, em grande medida, desses dois factores.
 </p>
 
 <logic:present name="displayWarning">
 
 	<!--
-	<h3>InformaÁ„o Pessoal</h3>
+	<h3>Informa√ß√£o Pessoal</h3>
 	-->
 	<h3 class="mbottom075"><bean:message key="title.information.status" bundle="ALUMNI_RESOURCES"/></h3>
 	<div class="infoop2 mbottom2">
@@ -189,54 +189,55 @@ ul.material li.feedback { background: url(<%= request.getContextPath() %>/images
 
 <h3>Vantagens</h3>
 <div style="background: #f5f5f5; border: 1px solid #ddd; padding: 0.75em 0.5em;">
-	<p class="indent1 mtop025 mbottom05">AlÈm das opÁıes visÌveis nos menus, lembramos que o leque de vantagens j· disponÌveis inclui:</p>
+	<p class="indent1 mtop025 mbottom05">Al√©m das op√ß√µes vis√≠veis nos menus, lembramos que o leque de vantagens j√° dispon√≠veis inclui:</p>
 	<ul class="material">
-		<li class="mailfwd">endereÁo de <html:link target="_blank" href="https://ciist.ist.utl.pt/servicos/mail.php">mail personalizado</html:link> e, se necess·rio, com <em>forward</em> autom·tico (se j· possui mail, efectue a sua <html:link target="_blank" href="https://ciist.ist.utl.pt/servicos/self_service">activaÁ„o</html:link>)</li>
-		<li class="homepage">alojamento de p·gina web institucional (cf. ·rea Pessoal)</li>
-		<li class="library">acesso ‡ <a target="_blank" href="http://bist.ist.utl.pt">Biblioteca do IST</a> (cart„o de utilizador + recursos electrÛnicos)</li>
+		<li class="mailfwd">endere√ßo de <html:link target="_blank" href="https://ciist.ist.utl.pt/servicos/mail.php">mail personalizado</html:link> e, se necess√°rio, com <em>forward</em> autom√°tico (se j√° possui mail, efectue a sua <html:link target="_blank" href="https://ciist.ist.utl.pt/servicos/self_service">activa√ß√£o</html:link>)</li>
+		<li class="homepage">alojamento de p√°gina web institucional (cf. √°rea Pessoal)</li>
+		<li class="library">acesso √† <a target="_blank" href="http://bist.ist.utl.pt">Biblioteca do IST</a> (cart√£o de utilizador + recursos electr√≥nicos)</li>
 	</ul>
 </div>
 
-<p>Recordamos, ainda, que os serviÁos a seguir listados, est„o ‡ vossa disposiÁ„o, prontos a corresponder ‡s solicitaÁıes que lhes forem dirigidas:</p>
+<p>Recordamos, ainda, que os servi√ßos a seguir listados, est√£o √† vossa disposi√ß√£o, prontos a corresponder √†s solicita√ß√µes que lhes forem dirigidas:</p>
 
 <h3>Descontos especiais</h3>
 <ul>
-	<li>na aquisiÁ„o de publicaÁıes da <a target="_blank" href="http://www.istpress.ist.utl.pt/">IST Press</a>;</li>
-	<li>na aquisiÁ„o de produtos de <a target="_blank" href="http://gcrp.ist.utl.pt/html/relacoespublicas/produtos.shtml">merchandising</a>;</li>
-	<li>na utilizaÁ„o de espaÁos do <a target="_blank" href="http://centrocongressos.ist.utl.pt/">Centro de Congressos do IST</a>.</li>
+	<li>na aquisi√ß√£o de publica√ß√µes da <a target="_blank" href="http://www.istpress.ist.utl.pt/">IST Press</a>;</li>
+	<li>na aquisi√ß√£o de produtos de <a target="_blank" href="http://gcrp.ist.utl.pt/html/relacoespublicas/produtos.shtml">merchandising</a>;</li>
+	<li>na utiliza√ß√£o de espa√ßos do <a target="_blank" href="http://centrocongressos.ist.utl.pt/">Centro de Congressos do IST</a>.</li>
 </ul>
 
 <h3>Oportunidades, aconselhamento e apoio informativo</h3>
 <ul>
-	<li><a target="_blank" href="http://www.ist.utl.pt/html/ensino/">Ensino, PÛs-graduaÁıes e FormaÁ„o</a></li>
+	<li><a target="_blank" href="http://www.ist.utl.pt/html/ensino/">Ensino, P√≥s-gradua√ß√µes e Forma√ß√£o</a></li>
 	<li><a target="_blank" href="http://galtec.ist.utl.pt/">Licenciamento de Tecnologia</a></li>
-	<li><a target="_blank" href="http://www.istpress.ist.utl.pt/">Oportunidades de publicaÁ„o de livros</a></li>
+	<li><a target="_blank" href="http://www.istpress.ist.utl.pt/">Oportunidades de publica√ß√£o de livros</a></li>
 	<li><a href="mailto:empreendedorismo@ist.utl.pt">Empreendedorismo</a></li>
 	<li><a target="_blank" href="http://gep.ist.utl.pt/html/oe">Empregabilidade</a></li>
-	<li><a target="_blank" href="http://gep.ist.utl.pt/">Estudos, Projectos e EstatÌsticas do IST</a></li>
-	<li><a target="_blank" href="http://namp.ist.utl.pt/">Apoio MÈdico e PsicolÛgico</a></li>
+	<li><a target="_blank" href="http://gep.ist.utl.pt/">Estudos, Projectos e Estat√≠sticas do IST</a></li>
+	<li><a target="_blank" href="http://namp.ist.utl.pt/">Apoio M√©dico e Psicol√≥gico</a></li>
 	<li><a target="_blank" href="http://nape.ist.utl.pt">Cultura e Desporto</a></li>
 </ul>
 
-<h3>Links ⁄teis</h3>
+<h3>Links √öteis</h3>
 <ul>
-	<li><a target="_blank" href="http://aaa.ist.utl.pt" title="Uma ponte entre o TÈcnico e os seus Antigos Alunos">AssociaÁ„o dos Antigos Alunos do <%=net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionName()%> (AAAIST)</a></li>
+	<li><a target="_blank" href="http://aaa.ist.utl.pt" title="Uma ponte entre o T√©cnico e os seus Antigos Alunos">Associa√ß√£o dos Antigos Alunos do <%=net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionName()%> (AAAIST)</a></li>
 	<li><a target="_blank" href="http://www.ordemengenheiros.pt">Ordem dos Engenheiros</a></li>
 	<li><a target="_blank" href="http://www.academia-engenharia.org">Academia da Engenharia</a></li>
-	<li><a target="_blank" href="http://www.apengsaude.org">AssociaÁ„o Portuguesa de Engenharia da Sa˙de</a></li>
-	<li><a target="_blank" href="http://www.dec.uc.pt/aciv/index.php?section=18">AssociaÁ„o para o Desenvolvimento da Engenharia Civil</a></li>
-	<li><a target="_blank" href="http://www.apea.pt">AssociaÁ„o Portuguesa de Engenharia do Ambiente</a></li>
+	<li><a target="_blank" href="http://www.apengsaude.org">Associa√ß√£o Portuguesa de Engenharia da Sa√∫de</a></li>
+	<li><a target="_blank" href="http://www.dec.uc.pt/aciv/index.php?section=18">Associa√ß√£o para o Desenvolvimento da Engenharia Civil</a></li>
+	<li><a target="_blank" href="http://www.apea.pt">Associa√ß√£o Portuguesa de Engenharia do Ambiente</a></li>
 </ul>
 
 <h3>Dados Pessoais</h3>
 <ul>
-	N„o se esqueÁa de activar, no seu Perfil Pessoal, as autorizaÁıes relativas aos dados pessoais disponibilizados.
+	N√£o se esque√ßa de activar, no seu Perfil Pessoal, as autoriza√ß√µes relativas aos dados pessoais disponibilizados.
 </ul>
 
 
-<h3>Coment·rios ou sugestıes</h3>
+<h3>Coment√°rios ou sugest√µes</h3>
 <ul class="material">
-	<li class="feedback">A sua opini„o È importante. Se tem alguma sugest„o, critÌca ou coment·rio <a href="mailto:alumni@ist.utl.pt?subject=Alumni_feedback">escreva-nos um e-mail</a>. NÛs prometemos uma resposta!</li>
+	<li class="feedback">A sua opini√£o √© importante. Se tem alguma sugest√£o, crit√≠ca ou coment√°rio <a href="mailto:alumni@ist.utl.pt?subject=Alumni_feedback">escreva-nos um e-mail</a>. N√≥s prometemos uma resposta!</li>
 </ul>
 
-<p><em>O IST, hoje como ontem, continua ao seu serviÁo.</em></p>
+<p><em>O IST, ontem como hoje , continua ao seu servi√ßo.</em></p>
+

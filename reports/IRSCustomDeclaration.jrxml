@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="ISO-8859-1"  ?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with iReport - A designer for JasperReports -->
 <!DOCTYPE jasperReport PUBLIC "//JasperReports//DTD Report Design//EN" "http://jasperreports.sourceforge.net/dtds/jasperreport.dtd">
 <jasperReport
@@ -18,7 +18,7 @@
 		 isTitleNewPage="false"
 		 isSummaryNewPage="false">
 	<property name="ireport.scriptlethandling" value="0" />
-	<property name="ireport.encoding" value="ISO-8859-1" />
+	<property name="ireport.encoding" value="UTF-8" />
 	<import value="java.util.*" />
 	<import value="net.sf.jasperreports.engine.*" />
 	<import value="net.sf.jasperreports.engine.data.*" />
@@ -231,7 +231,7 @@
 					<textElement lineSpacing="1_1_2">
 						<font pdfFontName="Times-Italic" size="13" isItalic="true"/>
 					</textElement>
-				<textFieldExpression   class="java.lang.String"><![CDATA["O Instituto Superior Técnico, Contribuinte Nº 501507930, declara que recebeu de " + $P{personName} + ($P{studentNumber} != null ? " aluno Nº " + $P{studentNumber} + " deste Instituto" : "") + ", portador do " + $P{idDocumentType} +" Nº " + $P{documentIdNumber}+ ", no ano de " + $P{civilYear} + " as quantias abaixo indicadas."]]></textFieldExpression>
+				<textFieldExpression   class="java.lang.String"><![CDATA["O Instituto Superior TÃ©cnico, Contribuinte NÂº 501507930, declara que recebeu de " + $P{personName} + ($P{studentNumber} != null ? " aluno NÂº " + $P{studentNumber} + " deste Instituto" : "") + ", portador do " + $P{idDocumentType} +" NÂº " + $P{documentIdNumber}+ ", no ano de " + $P{civilYear} + " as quantias abaixo indicadas."]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="true" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
@@ -249,7 +249,7 @@
 					<textElement textAlignment="Left" lineSpacing="1_1_2">
 						<font fontName="Courier" pdfFontName="Courier" size="12" isBold="false" isItalic="false"/>
 					</textElement>
-				<textFieldExpression   class="java.lang.String"><![CDATA["- Outras despesas de educação"]]></textFieldExpression>
+				<textFieldExpression   class="java.lang.String"><![CDATA["- Outras despesas de educaÃ§Ã£o"]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="true" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
@@ -293,7 +293,7 @@
 					<textElement textAlignment="Center" lineSpacing="Double">
 						<font pdfFontName="Times-BoldItalic" size="9" isBold="true" isItalic="true"/>
 					</textElement>
-				<textFieldExpression   class="java.lang.String"><![CDATA["Documento Processado por Computador no Instituto Superior Técnico em " + $P{date}]]></textFieldExpression>
+				<textFieldExpression   class="java.lang.String"><![CDATA["Documento Processado por Computador no Instituto Superior TÃ©cnico em " + $P{date}]]></textFieldExpression>
 				</textField>
 			</band>
 		</pageFooter>
@@ -315,7 +315,7 @@
 					<textElement textAlignment="Right" lineSpacing="1_1_2">
 						<font pdfFontName="Courier-Oblique" size="12" isItalic="true"/>
 					</textElement>
-				<text><![CDATA[                          Coordenador(a) do Núcleo]]></text>
+				<text><![CDATA[                          Coordenador(a) do NÃºcleo]]></text>
 				</staticText>
 				<image  onErrorType="Blank" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement

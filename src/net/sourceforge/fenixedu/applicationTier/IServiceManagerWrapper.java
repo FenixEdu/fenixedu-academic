@@ -11,7 +11,7 @@ import net.sourceforge.fenixedu.applicationTier.logging.SystemInfo;
  * The business interface for the service manager seassion bean. *
  * 
  * @author Luis Cruz
- * @author José Pedro Pereira
+ * @author JosÃ© Pedro Pereira
  * @version
  */
 public interface IServiceManagerWrapper {

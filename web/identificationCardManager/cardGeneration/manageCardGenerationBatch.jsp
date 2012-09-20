@@ -5,10 +5,10 @@
 <%@ taglib uri="/WEB-INF/taglibs-datetime.tld" prefix="dt"%>
 <html:xhtml/>
 
-<em>Cartões de Identificação</em>
+<em>CartÃµes de IdentificaÃ§Ã£o</em>
 <h2><bean:message key="link.manage.card.generation" /></h2>
 
-<p><html:link page="/manageCardGeneration.do?method=firstPage">« Voltar</html:link></p>
+<p><html:link page="/manageCardGeneration.do?method=firstPage">Â« Voltar</html:link></p>
 
 <div class="mtop15 mbottom05">
 	<bean:define id="urlDownloadBatchFile" type="java.lang.String">/manageCardGeneration.do?method=downloadCardGenerationBatch&amp;cardGenerationBatchID=<bean:write name="cardGenerationBatch" property="idInternal"/></bean:define>

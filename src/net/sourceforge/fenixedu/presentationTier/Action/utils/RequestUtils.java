@@ -99,11 +99,11 @@ public class RequestUtils {
     public static final List buildCurricularYearLabelValueBean() {
 	final List curricularYears = new ArrayList();
 	curricularYears.add(new LabelValueBean("escolher", ""));
-	curricularYears.add(new LabelValueBean("1 บ", "1"));
-	curricularYears.add(new LabelValueBean("2 บ", "2"));
-	curricularYears.add(new LabelValueBean("3 บ", "3"));
-	curricularYears.add(new LabelValueBean("4 บ", "4"));
-	curricularYears.add(new LabelValueBean("5 บ", "5"));
+	curricularYears.add(new LabelValueBean("1 ยบ", "1"));
+	curricularYears.add(new LabelValueBean("2 ยบ", "2"));
+	curricularYears.add(new LabelValueBean("3 ยบ", "3"));
+	curricularYears.add(new LabelValueBean("4 ยบ", "4"));
+	curricularYears.add(new LabelValueBean("5 ยบ", "5"));
 	return curricularYears;
     }
 

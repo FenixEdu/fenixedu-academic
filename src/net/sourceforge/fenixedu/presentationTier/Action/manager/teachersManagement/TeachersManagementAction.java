@@ -10,7 +10,7 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
 /**
- * @author Fernanda Quitério 4/Dez/2003
+ * @author Fernanda QuitÃ©rio 4/Dez/2003
  * 
  */
 public class TeachersManagementAction extends FenixDispatchAction {

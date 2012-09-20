@@ -2,7 +2,7 @@
 
 <center>	
 	<h2>Exemplo de Perguntas</h2>
-	<b>Esta página apresenta exemplos de perguntas geradas segundo a especificação IMS. O sistema de respostas é meramente indicativo.</b>
+	<b>Esta pÃ¡gina apresenta exemplos de perguntas geradas segundo a especificaÃ§Ã£o IMS. O sistema de respostas Ã© meramente indicativo.</b>
 </center>
 <span class="error"></span>
 <br>
@@ -10,17 +10,17 @@
 <table width="100%" border="0" cellpadding="0" cellspacing="10">
 	<tbody><tr><td><hr></td></tr>
 	<tr><td><b>Pergunta:</b>&nbsp;1</td></tr>
-	<tr><td><b>Cotação:</b>&nbsp;3</td></tr>
+	<tr><td><b>CotaÃ§Ã£o:</b>&nbsp;3</td></tr>
 	<tr><td>
 	</td></tr><tr><td>
 	</td></tr><tr><td>
-		O pêndulo de um relógio move-se descrevendo o movimento
+		O pÃªndulo de um relÃ³gio move-se descrevendo o movimento
 	</td></tr><tr><td>
 		<img src="<%= request.getContextPath()%>/images/imsExample/studentTests_013.gif" align="middle">
 	</td></tr><tr><td>
-		No instante t (em segundos), a distância ao centro (em cm) é  dada por
+		No instante t (em segundos), a distÃ¢ncia ao centro (em cm) Ã©  dada por
 		<img src="<%= request.getContextPath()%>/images/imsExample/studentTests_011.gif" align="middle">
-		Qual a maior distância a que o pêndulo se encontra do centro?
+		Qual a maior distÃ¢ncia a que o pÃªndulo se encontra do centro?
 	<table><tbody><tr><td>
 	</td></tr><tr><td>
 		<input type="radio" name="question[0].response" value="1">
@@ -38,30 +38,30 @@
 	</td></tr><tr><td>
 	</td></tr><tr><td><hr></td></tr>
 	<tr><td><b>Pergunta:</b>&nbsp;2</td></tr>
-	<tr><td><b>Cotação:</b>&nbsp;4</td></tr>
+	<tr><td><b>CotaÃ§Ã£o:</b>&nbsp;4</td></tr>
 	<tr><td></td></tr><tr><td>
 	</td></tr><tr><td>
 		Seja
 		<img src="<%= request.getContextPath()%>/images/imsExample/studentTests_008.gif" align="middle">
-		uma função tal que:
+		uma funÃ§Ã£o tal que:
 	</td></tr><tr><td>
-		i)  as rectas que passam pelo ponto (1,1), excluindo esse ponto, são as curvas de nível da função
+		i)  as rectas que passam pelo ponto (1,1), excluindo esse ponto, sÃ£o as curvas de nÃ­vel da funÃ§Ã£o
 		<img src="<%= request.getContextPath()%>/images/imsExample/studentTests_014.gif" align="middle">
 		;
 	</td></tr><tr><td>
-		ii)   a rectas diferentes correspondem valores diferentes da função
+		ii)   a rectas diferentes correspondem valores diferentes da funÃ§Ã£o
 		<img src="<%= request.getContextPath()%>/images/imsExample/studentTests_002.gif" align="middle">
 		.
 	</td></tr><tr><td>
-		Considere as seguintes afirmações:
+		Considere as seguintes afirmaÃ§Ãµes:
 	</td></tr><tr><td>
-		Diga qual a lista completa de afirmações correctas que podem ser deduzidas do enunciado.
+		Diga qual a lista completa de afirmaÃ§Ãµes correctas que podem ser deduzidas do enunciado.
 	<table><tbody><tr><td>
 	</td></tr><tr><td>
 		<input type="checkbox" name="question[1].response" value="1">
-		não existe o limite segundo a recta
+		nÃ£o existe o limite segundo a recta
 		<img src="<%= request.getContextPath()%>/images/imsExample/studentTests_006.gif" align="middle">
-		da função
+		da funÃ§Ã£o
 		<img src="<%= request.getContextPath()%>/images/imsExample/studentTests_003.gif" align="middle">
 		no ponto (1,1)
 	</td></tr><tr><td>
@@ -70,16 +70,16 @@
 		<img src="<%= request.getContextPath()%>/images/imsExample/studentTests_010.gif" align="middle">
 		em ordem a
 		<img src="<%= request.getContextPath()%>/images/imsExample/studentTests_009.gif" align="middle">
-		, no ponto (0,1), é igual a zero
+		, no ponto (0,1), Ã© igual a zero
 	</td></tr><tr><td>
 		<input type="checkbox" name="question[1].response" value="3">
 		todos os limites direccionais de
 		<img src="<%= request.getContextPath()%>/images/imsExample/studentTests.gif" align="middle">
-		em (1,1) são diferentes
+		em (1,1) sÃ£o diferentes
 	</td></tr><tr><td>
 		<input type="checkbox" name="question[1].response" value="4">
 		<img src="<%= request.getContextPath()%>/images/imsExample/studentTests_004.gif" align="middle">
-		tem as mesmas linhas de nível que a função
+		tem as mesmas linhas de nÃ­vel que a funÃ§Ã£o
 		<img src="<%= request.getContextPath()%>/images/imsExample/studentTests_016.gif" align="middle">
 	</td></tr><tr><td>
 		<input type="checkbox" name="question[1].response" value="5">
@@ -88,31 +88,31 @@
 	</td></tr><tr><td>
 	</td></tr><tr><td><hr></td></tr>
 	<tr><td><b>Pergunta:</b>&nbsp;3</td></tr>
-	<tr><td><b>Cotação:</b>&nbsp;4</td></tr>
+	<tr><td><b>CotaÃ§Ã£o:</b>&nbsp;4</td></tr>
 	<tr><td>
 	</td></tr><tr><td>
-		Qual o valor de PI com três casas decimais?
+		Qual o valor de PI com trÃªs casas decimais?
 		<input type="text" name="question[2].response" maxlength="6" size="6" value="">
 	</td></tr><tr><td>
 	</td></tr><tr><td>
 	</td></tr><tr><td><hr></td></tr>
 	<tr><td><b>Pergunta:</b>&nbsp;4</td></tr>
-	<tr><td><b>Cotação:</b>&nbsp;1</td></tr>
+	<tr><td><b>CotaÃ§Ã£o:</b>&nbsp;1</td></tr>
 	<tr><td>
 	</td></tr><tr><td>
-		Complete a sequência:
+		Complete a sequÃªncia:
 		</td></tr><tr><td>
-		Inverno, Primavera, Verão,
+		Inverno, Primavera, VerÃ£o,
 		<input type="text" name="question[3].response" maxlength="6" size="6" value="">
 		.
 	</td></tr><tr><td>
 	</td></tr><tr><td>
 	</td></tr><tr><td><hr></td></tr>
 	<tr><td><b>Pergunta:</b>&nbsp;5</td></tr>
-	<tr><td><b>Cotação:</b>&nbsp;0</td></tr>
+	<tr><td><b>CotaÃ§Ã£o:</b>&nbsp;0</td></tr>
 	<tr><td>
 	</td></tr><tr><td>
-		Utilize o espaço seguinte para fazer qualquer comentário.
+		Utilize o espaÃ§o seguinte para fazer qualquer comentÃ¡rio.
 	</td></tr><tr><td>
 		<textarea name="question[4].response" cols="80" rows="20"></textarea>
 	</td></tr><tr><td>

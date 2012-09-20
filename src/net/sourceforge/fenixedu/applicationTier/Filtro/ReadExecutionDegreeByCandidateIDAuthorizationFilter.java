@@ -72,7 +72,7 @@ public class ReadExecutionDegreeByCandidateIDAuthorizationFilter extends Filtro 
 		return false;
 	    }
 
-	    // modified by T‚nia Pous„o
+	    // modified by T√¢nia Pous√£o
 	    Coordinator coordinator = masterDegreeCandidate.getExecutionDegree().getCoordinatorByTeacher(person);
 
 	    if (coordinator != null) {

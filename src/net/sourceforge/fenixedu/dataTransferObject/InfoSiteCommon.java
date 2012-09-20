@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.ListIterator;
 
 /**
- * @author Jo„o Mota
+ * @author Jo√£o Mota
  * 
  * 
  */

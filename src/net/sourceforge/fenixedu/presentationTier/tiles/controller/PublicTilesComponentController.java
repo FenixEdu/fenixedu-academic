@@ -27,7 +27,7 @@ import org.apache.struts.tiles.ControllerSupport;
 
 /**
  * 
- * @author Jo„o Mota
+ * @author Jo√£o Mota
  * 
  * 
  */

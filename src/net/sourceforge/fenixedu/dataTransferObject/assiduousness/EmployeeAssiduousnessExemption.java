@@ -62,7 +62,7 @@ public class EmployeeAssiduousnessExemption implements Serializable {
 
 	    if (hasAnyAssiduousnessStatusHistoryBefore(assiduousnessStatusHistories, beginDate.minusMonths(6))) {
 		setEfectiveWorkYear(year - 1);
-		// contracto h· + de 6 meses
+		// contracto h√° + de 6 meses
 		for (AssiduousnessStatusHistory assiduousnessStatusHistory : assiduousnessStatusHistories) {
 		    efectiveWorkDays = efectiveWorkDays
 			    + calculateEfectiveWorkDays(pastYearBeginDate, pastYearEndDate, assiduousnessStatusHistory);

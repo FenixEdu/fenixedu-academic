@@ -13,7 +13,7 @@ import pt.ist.fenixWebFramework.services.Service;
 
 /*
  * 
- * @author Fernanda Quitério 29/Dez/2003
+ * @author Fernanda QuitÃ©rio 29/Dez/2003
  */
 public class AssociateCurricularCoursesToExecutionCourse extends FenixService {
 

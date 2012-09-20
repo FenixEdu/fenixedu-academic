@@ -3,7 +3,7 @@ package net.sourceforge.fenixedu.dataTransferObject;
 import net.sourceforge.fenixedu.domain.DegreeInfo;
 
 /**
- * @author Fernanda Quitério Created on 27/Jul/2004
+ * @author Fernanda QuitÃ©rio Created on 27/Jul/2004
  * 
  */
 public class InfoDegreeInfoWithDegree extends InfoDegreeInfo {

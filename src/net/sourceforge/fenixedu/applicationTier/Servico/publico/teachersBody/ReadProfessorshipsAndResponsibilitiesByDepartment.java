@@ -28,7 +28,7 @@ import org.apache.commons.collections.Transformer;
 import pt.ist.fenixWebFramework.services.Service;
 
 /**
- * @author <a href="mailto:joao.mota@ist.utl.pt">Jo„o Mota </a> 19/Dez/2003
+ * @author <a href="mailto:joao.mota@ist.utl.pt">Jo√£o Mota </a> 19/Dez/2003
  * 
  */
 public class ReadProfessorshipsAndResponsibilitiesByDepartment extends FenixService {

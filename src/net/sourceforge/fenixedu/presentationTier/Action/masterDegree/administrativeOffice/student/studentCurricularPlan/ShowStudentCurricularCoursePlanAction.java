@@ -25,7 +25,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 /**
- * @author T‚nia Pous„o Created on 6/Out/2003
+ * @author T√¢nia Pous√£o Created on 6/Out/2003
  */
 @Mapping(module = "masterDegreeAdministrativeOffice", path = "/showStudentCurricularCoursePlan", scope = "request")
 @Forwards(value = { @Forward(name = "ShowStudentCurricularCoursePlan", path = "df.page.showStudentCurricularCoursePlan") })

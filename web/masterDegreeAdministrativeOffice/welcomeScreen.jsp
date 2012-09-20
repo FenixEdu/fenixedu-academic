@@ -1,2 +1,2 @@
-<h2>Secretaria de Pós-Graduação</h2>
-<p>Bem-vindo à Secretaria de Pós-Graduação.</p>
+<h2>Secretaria de PÃ³s-GraduaÃ§Ã£o</h2>
+<p>Bem-vindo Ã  Secretaria de PÃ³s-GraduaÃ§Ã£o.</p>

@@ -9,7 +9,7 @@
 
 <logic:present role="OPERATOR">
 
-		<h3 class="mtop2 mbottom05">Informação do Pedido</h3>
+		<h3 class="mtop2 mbottom05">InformaÃ§Ã£o do Pedido</h3>
 		<fr:view name="physicalAddressValidation" schema="contacts.PhysicalAddressValidation.view">			
 			<fr:layout name="tabular">
 				<fr:property name="classes" value="tstyle1 thlight thleft thmiddle"/>
@@ -111,7 +111,7 @@
 			</fr:layout>
 		</fr:view>
 		
-		<h3 class="mtop2 mbottom05">Validação</h3>
+		<h3 class="mtop2 mbottom05">ValidaÃ§Ã£o</h3>
 		<fr:form id="physicalAddressValidation" action="/validate.do?method=validate">
 			<fr:edit id="physicalAddressValidation" name="physicalAddressValidation">
 				<fr:schema bundle="ACADEMIC_OFFICE_RESOURCES" type="net.sourceforge.fenixedu.domain.contacts.PhysicalAddressValidation">

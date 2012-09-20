@@ -146,7 +146,7 @@ public class ExamSearchByDate extends FenixContextDispatchAction {
 
 	// String examStartTimeString = "";
 	if (examStartTime != null) {
-	    examDateString += " a começar às " + new Integer(examStartTime.get(Calendar.HOUR_OF_DAY)) + ":"
+	    examDateString += " a comeÃ§ar Ã s " + new Integer(examStartTime.get(Calendar.HOUR_OF_DAY)) + ":"
 		    + new Integer(examStartTime.get(Calendar.MINUTE));
 	}
 	// String examEndTimeString = "";
@@ -154,7 +154,7 @@ public class ExamSearchByDate extends FenixContextDispatchAction {
 	    examDateString += " e";
 	}
 	if (examEndTime != null) {
-	    examDateString += " a terminar às " + new Integer(examEndTime.get(Calendar.HOUR_OF_DAY)) + ":"
+	    examDateString += " a terminar Ã s " + new Integer(examEndTime.get(Calendar.HOUR_OF_DAY)) + ":"
 		    + new Integer(examEndTime.get(Calendar.MINUTE));
 	}
 

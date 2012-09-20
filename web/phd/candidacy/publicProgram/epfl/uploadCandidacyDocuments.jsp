@@ -34,7 +34,7 @@
 	<input type="hidden" id="methodForm" name="method" value="uploadDocuments" />
 	<input type="hidden" id="skipValidationId" name="skipValidation" value="false"/>	
 	
-	<p><a href="#" onclick="javascript:clearFileInputs();javascript:document.getElementById('skipValidationId').value='true';javascript:document.getElementById('methodForm').value='backToViewCandidacy';javascript:document.getElementById('uploadDocumentForm').submit();">« <bean:message bundle="PHD_RESOURCES" key="label.back"/></a></p>
+	<p><a href="#" onclick="javascript:clearFileInputs();javascript:document.getElementById('skipValidationId').value='true';javascript:document.getElementById('methodForm').value='backToViewCandidacy';javascript:document.getElementById('uploadDocumentForm').submit();">Â« <bean:message bundle="PHD_RESOURCES" key="label.back"/></a></p>
 <%--  ### Return Links / Steps Information (for multistep forms)  ### --%>
 
 <logic:equal name="canEditCandidacy" value="true">

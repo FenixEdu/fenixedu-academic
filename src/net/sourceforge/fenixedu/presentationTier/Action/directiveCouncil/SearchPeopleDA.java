@@ -61,7 +61,7 @@ public class SearchPeopleDA extends FenixDispatchAction {
     }
 
     private void downloadActiveStudentList(final Spreadsheet spreadsheet) {
-	spreadsheet.setHeader("Número Aluno");
+	spreadsheet.setHeader("NÃºmero Aluno");
 	spreadsheet.setHeader("Nome Aluno");
 	spreadsheet.setHeader("Tipo Curso");
 	spreadsheet.setHeader("Nome Curso");

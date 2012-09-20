@@ -5,7 +5,7 @@
 <html:xhtml/>
 
 <em><bean:message key="label.candidacies" bundle="APPLICATION_RESOURCES"/></em>
-<h2>Modificar estado como n„o colocado</h2>
+<h2>Modificar estado como n√£o colocado</h2>
 
 <html:messages id="message" message="true" bundle="APPLICATION_RESOURCES">
 	<span class="error0"> <bean:write name="message" /> </span>

@@ -39,7 +39,7 @@ import org.apache.struts.action.DynaActionForm;
 import org.joda.time.DateTime;
 
 /**
- * @author Jo„o Mota
+ * @author Jo√£o Mota
  * 
  *         23/Jul/2003 fenix-head presentationTier.Action.scientificCouncil
  * 

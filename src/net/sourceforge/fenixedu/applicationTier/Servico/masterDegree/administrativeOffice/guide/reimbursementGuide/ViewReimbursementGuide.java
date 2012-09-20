@@ -13,7 +13,7 @@ import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.ist.fenixWebFramework.services.Service;
 
 /**
- * @author <a href="mailto:joao.mota@ist.utl.pt">Jo„o Mota </a>
+ * @author <a href="mailto:joao.mota@ist.utl.pt">Jo√£o Mota </a>
  * 
  */
 public class ViewReimbursementGuide extends FenixService {

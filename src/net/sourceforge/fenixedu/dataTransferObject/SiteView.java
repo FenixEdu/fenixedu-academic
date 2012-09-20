@@ -6,8 +6,8 @@
 package net.sourceforge.fenixedu.dataTransferObject;
 
 /**
- * @author Jo„o Mota
- * @author Fernanda QuitÈrio
+ * @author Jo√£o Mota
+ * @author Fernanda Quit√©rio
  * 
  */
 public class SiteView extends DataTranferObject {

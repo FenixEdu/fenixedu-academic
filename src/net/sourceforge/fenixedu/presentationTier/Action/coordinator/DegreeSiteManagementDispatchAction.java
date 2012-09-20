@@ -31,7 +31,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 
 /**
- * @author T‚nia Pous„o Created on 31/Out/2003
+ * @author T√¢nia Pous√£o Created on 31/Out/2003
  */
 @Mapping(module = "coordinator", path = "/degreeSiteManagement", input = "/degreeSiteManagement.do?method=subMenu&page=0", attribute = "degreeInfoForm", formBean = "degreeInfoForm", scope = "request", parameter = "method")
 @Forwards(value = {

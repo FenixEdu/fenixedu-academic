@@ -7,7 +7,7 @@ package net.sourceforge.fenixedu.dataTransferObject;
 import net.sourceforge.fenixedu.domain.Curriculum;
 
 /**
- * @author T‚nia Pous„o
+ * @author T√¢nia Pous√£o
  * 
  */
 public class InfoCurriculumWithInfoCurricularCourseAndInfoDegree extends InfoCurriculum {

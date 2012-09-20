@@ -36,7 +36,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 
 /**
  * @author - Shezad Anavarali (shezad@ist.utl.pt)
- * @author - Ângela Almeida (argelina@ist.utl.pt)
+ * @author - Ã‚ngela Almeida (argelina@ist.utl.pt)
  * 
  */
 @Mapping(path = "/createStudent", module = "academicAdminOffice")

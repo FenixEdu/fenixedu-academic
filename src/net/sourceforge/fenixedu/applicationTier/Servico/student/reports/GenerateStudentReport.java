@@ -106,21 +106,21 @@ public class GenerateStudentReport implements Serializable {
     }
 
     private static void addHeaders(final Spreadsheet spreadsheet) {
-	spreadsheet.setHeader("Número");
+	spreadsheet.setHeader("NÃºmero");
 	spreadsheet.setHeader("Nome");
 	spreadsheet.setHeader("Curso");
 	spreadsheet.setHeader("Ramo");
 	spreadsheet.setHeader("Ano Curricular");
-	spreadsheet.setHeader("Média");
-	spreadsheet.setHeader("Ano Léctivo de Conclusão");
+	spreadsheet.setHeader("MÃ©dia");
+	spreadsheet.setHeader("Ano LÃ©ctivo de ConclusÃ£o");
 	spreadsheet.setHeader("Morada");
 	spreadsheet.setHeader("Localidade");
-	spreadsheet.setHeader("Código Postal");
-	spreadsheet.setHeader("Localidade do Código Postal");
+	spreadsheet.setHeader("CÃ³digo Postal");
+	spreadsheet.setHeader("Localidade do CÃ³digo Postal");
 	spreadsheet.setHeader("Telefone");
 	spreadsheet.setHeader("Telemovel");
 	spreadsheet.setHeader("E-mail");
-	spreadsheet.setHeader("Autorização");
+	spreadsheet.setHeader("AutorizaÃ§Ã£o");
     }
 
     private static void processDegree(final Spreadsheet spreadsheet, final StudentReportPredicate studentReportPredicate,

@@ -9,7 +9,7 @@
 <br />
 
 <strong>Nota:</strong>
-As operações disponíveis nesta página envolvem a manipulação
+As operaÃ§Ãµes disponÃ­veis nesta pÃ¡gina envolvem a manipulaÃ§Ã£o
 de uma elevada quantidade de dados pelo que demoram alguns minutos a
 processar.
 <br />
@@ -20,7 +20,7 @@ processar.
 	scope="request">
 	<%--
 	<html:form action="/createExecutionPeriodForm">
-		Criar Periodo Execução: 
+		Criar Periodo ExecuÃ§Ã£o: 
 		<span class="error"><!-- Error messages go here --><html:errors /></span>
 		<br />
 		<table>

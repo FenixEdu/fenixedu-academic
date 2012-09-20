@@ -21,7 +21,7 @@ public class CreateUnitSite extends FenixService {
 
     private static void createBoards(Unit unit) throws FenixServiceException {
 	CreateUnitAnnouncementBoard service = new CreateUnitAnnouncementBoard();
-	createBoard(service, unit, "Anúncios");
+	createBoard(service, unit, "AnÃºncios");
 	createBoard(service, unit, "Eventos");
     }
 

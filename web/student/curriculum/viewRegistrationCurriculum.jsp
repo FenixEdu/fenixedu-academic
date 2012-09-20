@@ -225,7 +225,7 @@
 			</logic:iterate>				
 			<tr class="scplanenrollment">
 				<td colspan="3" style="text-align: right;">
-					Somatórios
+					SomatÃ³rios
 				</td>
 				<td class=" scplancolweight">
 					<bean:write name="sumPi"/>

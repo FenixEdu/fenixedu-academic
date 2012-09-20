@@ -6,7 +6,7 @@ import java.util.List;
 import net.sourceforge.fenixedu.domain.PaymentPhase;
 
 /**
- * @author Fernanda Quitério 10/Jan/2004
+ * @author Fernanda QuitÃ©rio 10/Jan/2004
  * 
  */
 public class InfoPaymentPhase extends InfoObject {

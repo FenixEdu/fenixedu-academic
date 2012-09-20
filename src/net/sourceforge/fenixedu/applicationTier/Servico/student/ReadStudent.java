@@ -25,9 +25,9 @@ public class ReadStudent extends FenixService {
 
 	// //////////////////////////////////////////////////////////////////////
 	// //////////////////////////////////
-	// Isto n„o È para ficar assim. Est· assim temporariamente atÈ se
-	// saber como È feita de facto a distinÁ„o
-	// dos aluno, referente ao tipo, a partir da p·gina de login.
+	// Isto n√£o √© para ficar assim. Est√° assim temporariamente at√© se
+	// saber como √© feita de facto a distin√ß√£o
+	// dos aluno, referente ao tipo, a partir da p√°gina de login.
 	// //////////////////////////////////////////////////////////////////////
 	// //////////////////////////////////
 	Registration registration = Registration.readStudentByNumberAndDegreeType(number, DegreeType.DEGREE);

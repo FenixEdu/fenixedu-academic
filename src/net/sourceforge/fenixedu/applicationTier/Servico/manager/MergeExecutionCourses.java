@@ -61,7 +61,7 @@ import net.sourceforge.fenixedu.util.BundleUtil;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 /**
- * @author <a href="mailto:joao.mota@ist.utl.pt"> Jo„o Mota </a> 29/Nov/2003
+ * @author <a href="mailto:joao.mota@ist.utl.pt"> Jo√£o Mota </a> 29/Nov/2003
  * 
  */
 public class MergeExecutionCourses extends FenixService {

@@ -76,7 +76,7 @@ public class ExportParkingDataToAccessDatabaseDA extends FenixDispatchAction {
 	    final HSSFWorkbook workbook = new HSSFWorkbook();
 	    final ExcelStyle excelStyle = new ExcelStyle(workbook);
 
-	    final Spreadsheet parkingBDSpreadsheet = new Spreadsheet("BD Fénix Parque");
+	    final Spreadsheet parkingBDSpreadsheet = new Spreadsheet("BD FÃ©nix Parque");
 	    setHeaders(parkingBDSpreadsheet);
 
 	    for (Map<String, Object> row = table.getNextRow(); row != null; row = table.getNextRow()) {
@@ -362,7 +362,7 @@ public class ExportParkingDataToAccessDatabaseDA extends FenixDispatchAction {
 	    database.close();
 
 	    response.setContentType("application/vnd.ms-access");
-	    response.setHeader("Content-disposition", "attachment; filename=Cartões_XML.mdb");
+	    response.setHeader("Content-disposition", "attachment; filename=CartÃµes_XML.mdb");
 	    final ServletOutputStream writer = response.getOutputStream();
 	    writer.write(pt.utl.ist.fenix.tools.file.utils.FileUtils.readByteArray(temp));
 	    writer.flush();
@@ -390,7 +390,7 @@ public class ExportParkingDataToAccessDatabaseDA extends FenixDispatchAction {
 	    }
 
 	    response.setContentType("application/vnd.ms-access");
-	    response.setHeader("Content-disposition", "attachment; filename=Cartões_XML.mdb");
+	    response.setHeader("Content-disposition", "attachment; filename=CartÃµes_XML.mdb");
 	    final ServletOutputStream writer = response.getOutputStream();
 	    writer.write(pt.utl.ist.fenix.tools.file.utils.FileUtils.readByteArray(temp));
 	    writer.flush();
@@ -509,7 +509,7 @@ public class ExportParkingDataToAccessDatabaseDA extends FenixDispatchAction {
     private String convertParkingGroupToAccessDB(ParkingGroup parkingGroup) throws FenixServiceException {
 	if (parkingGroup.getGroupName().equalsIgnoreCase("Docentes")) {
 	    return "1";
-	} else if (parkingGroup.getGroupName().equalsIgnoreCase("Não Docentes")) {
+	} else if (parkingGroup.getGroupName().equalsIgnoreCase("NÃ£o Docentes")) {
 	    return "2";
 	} else if (parkingGroup.getGroupName().equalsIgnoreCase("Especiais")) {
 	    return "3";
@@ -517,9 +517,9 @@ public class ExportParkingDataToAccessDatabaseDA extends FenixDispatchAction {
 	    return "4";
 	} else if (parkingGroup.getGroupName().equalsIgnoreCase("Investigadores")) {
 	    return "5";
-	} else if (parkingGroup.getGroupName().equalsIgnoreCase("3º ciclo")) {
+	} else if (parkingGroup.getGroupName().equalsIgnoreCase("3Âº ciclo")) {
 	    return "6";
-	} else if (parkingGroup.getGroupName().equalsIgnoreCase("2º ciclo")) {
+	} else if (parkingGroup.getGroupName().equalsIgnoreCase("2Âº ciclo")) {
 	    return "7";
 	} else if (parkingGroup.getGroupName().equalsIgnoreCase("IPSFL")) {
 	    return "8";

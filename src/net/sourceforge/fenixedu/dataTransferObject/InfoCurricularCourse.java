@@ -57,7 +57,7 @@ public class InfoCurricularCourse extends InfoObject implements Comparable, ISit
     }
 
     public String getOwnershipType() {
-	return getBasic() == null ? "" : getBasic().booleanValue() ? "Básica" : "Não Básica";
+	return getBasic() == null ? "" : getBasic().booleanValue() ? "BÃ¡sica" : "NÃ£o BÃ¡sica";
     }
 
     public boolean equals(Object obj) {

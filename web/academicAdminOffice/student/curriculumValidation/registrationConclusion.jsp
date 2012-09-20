@@ -81,7 +81,7 @@
 		<h3 class="mtop1 mbottom05"><bean:message key="label.summary" bundle="ACADEMIC_OFFICE_RESOURCES"/></h3>
 		<logic:iterate id="curriculumGroup" name="registrationConclusionBean" property="curriculumGroupsNotVerifyingStructure">
 			<p>
-				<span class="error0">O grupo <bean:write name="curriculumGroup" property="fullPath"/> tem <bean:write name="curriculumGroup" property="aprovedEctsCredits"/> crÈditos ECTS quando deveria ter <bean:write name="curriculumGroup" property="creditsConcluded"/> crÈditos ECTS</span>
+				<span class="error0">O grupo <bean:write name="curriculumGroup" property="fullPath"/> tem <bean:write name="curriculumGroup" property="aprovedEctsCredits"/> cr√©ditos ECTS quando deveria ter <bean:write name="curriculumGroup" property="creditsConcluded"/> cr√©ditos ECTS</span>
 			</p>
 		</logic:iterate>
 			
@@ -152,7 +152,7 @@
 			<logic:equal name="registrationConclusionBean" property="conclusionProcessed" value="false">
 				<logic:iterate id="curriculumModule" name="registrationConclusionBean" property="curriculumModulesWithNoConlusionDate">
 					<p>
-						<span class="error0"><bean:write name="curriculumModule" property="fullPath"/> n„o tem data de conclus„o, assegure-se que est· concluÌdo e todas as datas de avaliaÁ„o est„o inseridas no sistema.</span>
+						<span class="error0"><bean:write name="curriculumModule" property="fullPath"/> n√£o tem data de conclus√£o, assegure-se que est√° conclu√≠do e todas as datas de avalia√ß√£o est√£o inseridas no sistema.</span>
 					</p>
 				</logic:iterate>
 				
@@ -255,7 +255,7 @@
 					</logic:iterate>				
 					<tr class="scplanenrollment">
 						<td colspan="3" style="text-align: right;">
-							SomatÛrios
+							Somat√≥rios
 						</td>
 						<td class=" scplancolweight">
 							<bean:write name="registrationConclusionBean" property="curriculumForConclusion.sumPi"/>

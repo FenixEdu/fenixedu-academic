@@ -45,7 +45,7 @@ public class PhdGratuityExternalScholarshipExemption extends PhdGratuityExternal
     @Override
     public LabelFormatter getDescription() {
 	PhdGratuityEvent event = (PhdGratuityEvent) getEvent();
-	return new LabelFormatter().appendLabel("Bolsa de entidade externa ("  + getParty().getName() + ") aplicada à Propina do Programa de Doutoramento de ").appendLabel(event.getPhdProgram().getName().getContent()).appendLabel(" referente a " +  event.getYear());
+	return new LabelFormatter().appendLabel("Bolsa de entidade externa ("  + getParty().getName() + ") aplicada Ã  Propina do Programa de Doutoramento de ").appendLabel(event.getPhdProgram().getName().getContent()).appendLabel(" referente a " +  event.getYear());
     }
    
     public void doDelete(){

@@ -207,7 +207,7 @@ public class LibraryCardDTO implements Serializable {
 	    return "Lic. Bolonha";
 	}
 	if (getPartyClassification().equals(PartyClassification.BOLONHA_SPECIALIZATION_DEGREE)) {
-	    return "Curso Especialização";
+	    return "Curso EspecializaÃ§Ã£o";
 	}
 	if (getPartyClassification().equals(PartyClassification.PERSON)) {
 	    return "Externa";

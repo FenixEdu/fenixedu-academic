@@ -20,7 +20,7 @@
 	<fr:edit id="secondCycleIndividualCandidacyResultBean" name="secondCycleIndividualCandidacyResultBean" visible="false" />
 
 	<logic:notEmpty name="secondCycleIndividualCandidacyResultBean" property="candidacyProcess">
-		<h3 class="mtop15 mbottom025">Resultados de Seriação</h3>
+		<h3 class="mtop15 mbottom025">Resultados de SeriaÃ§Ã£o</h3>
 		<fr:edit id="secondCycleIndividualCandidacyResultBean.manage"
 			name="secondCycleIndividualCandidacyResultBean"
 			schema="SecondCycleIndividualCandidacyResultBean.introduce.result.coordinator">

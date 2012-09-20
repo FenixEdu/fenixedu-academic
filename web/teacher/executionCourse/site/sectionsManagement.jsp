@@ -180,7 +180,7 @@
 				<app:defineContentPath id="url" name="functionality"/>
 					<bean:define id="url" name="url" type="java.lang.String"/>
 					<%= pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX %><a  target="_blank" href="<%= request.getContextPath() + url %>">
-					<bean:message key="link.view" bundle="SITE_RESOURCES"/> »
+					<bean:message key="link.view" bundle="SITE_RESOURCES"/> Â»
 					</a>
 				</p>
 			 </div>

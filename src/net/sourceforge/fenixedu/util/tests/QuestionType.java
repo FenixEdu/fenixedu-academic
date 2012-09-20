@@ -29,11 +29,11 @@ public class QuestionType extends FenixUtil {
 
     public static final String NUM_ID_STRING = "response_num";
 
-    public static final String LID_STRING = "Identificadores Lógicos";
+    public static final String LID_STRING = "Identificadores LÃ³gicos";
 
     public static final String STR_STRING = "Perguntas de Texto";
 
-    public static final String NUM_STRING = "Perguntas Numéricas";
+    public static final String NUM_STRING = "Perguntas NumÃ©ricas";
 
     // if questionType == 2 tipo de resposa = String
     // if questionType == 3 tipo de resposa = Integer | Decimal

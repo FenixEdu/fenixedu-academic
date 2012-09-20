@@ -38,7 +38,7 @@ public class PersistentCompleteExpensesReport extends PersistentReport implement
 
 	    StringBuilder stringBuffer = new StringBuilder();
 	    stringBuffer
-		    .append("select \"id Mov.\", \"Membro Cons.\", \"Fornecedor\", \"desc Fornecedor\", \"Tipo Doc.\", \"Nº Doc.\",\"Fonte Financ.\", \"Rubrica\", \"Tipo Mov.\", \"Data Doc\", \"Descrição\", \"pct Iva\",\"Valor\", \"IVA\", \"Total\", \"pct imput.\" from ");
+		    .append("select \"id Mov.\", \"Membro Cons.\", \"Fornecedor\", \"desc Fornecedor\", \"Tipo Doc.\", \"NÂº Doc.\",\"Fonte Financ.\", \"Rubrica\", \"Tipo Mov.\", \"Data Doc\", \"DescriÃ§Ã£o\", \"pct Iva\",\"Valor\", \"IVA\", \"Total\", \"pct imput.\" from ");
 	    stringBuffer.append(tableOrView);
 	    stringBuffer.append(" where PROJECTCODE='");
 	    stringBuffer.append(projectCode);
@@ -55,14 +55,14 @@ public class PersistentCompleteExpensesReport extends PersistentReport implement
 		report.setSupplier(rs.getString("Fornecedor"));
 		report.setSupplierDescription(rs.getString("desc Fornecedor"));
 		report.setDocumentType(rs.getString("Tipo Doc."));
-		report.setDocumentNumber(rs.getString("Nº Doc."));
+		report.setDocumentNumber(rs.getString("NÂº Doc."));
 		report.setFinancingSource(rs.getString("Fonte Financ."));
 		report.setRubric(new Integer(rs.getInt("Rubrica")));
 		report.setMovementType(rs.getString("Tipo Mov."));
 		SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
 		Date date = rs.getDate("Data Doc");
 		report.setDate(formatter.format(date));
-		report.setDescription(rs.getString("Descrição"));
+		report.setDescription(rs.getString("DescriÃ§Ã£o"));
 		report.setIvaPercentage(new Double(rs.getDouble("pct Iva")));
 		report.setValue(new Double(rs.getDouble("Valor")));
 		report.setTax(new Double(rs.getDouble("IVA")));
@@ -90,7 +90,7 @@ public class PersistentCompleteExpensesReport extends PersistentReport implement
 	    String tableOrView = getTableOrViewName(p, reportType);
 	    StringBuilder stringBuffer = new StringBuilder();
 	    stringBuffer
-		    .append("select \"id Mov.\", \"Membro Cons.\", \"Fornecedor\", \"desc Fornecedor\", \"Tipo Doc.\", \"Nº Doc.\",\"Fonte Financ.\", \"Rubrica\", \"Tipo Mov.\", \"Data Doc\", \"Descrição\", \"pct Iva\",\"Valor\", \"IVA\", \"Total\", \"pct imput.\" from ");
+		    .append("select \"id Mov.\", \"Membro Cons.\", \"Fornecedor\", \"desc Fornecedor\", \"Tipo Doc.\", \"NÂº Doc.\",\"Fonte Financ.\", \"Rubrica\", \"Tipo Mov.\", \"Data Doc\", \"DescriÃ§Ã£o\", \"pct Iva\",\"Valor\", \"IVA\", \"Total\", \"pct imput.\" from ");
 	    stringBuffer.append(tableOrView);
 	    stringBuffer.append(" where PROJECTCODE='");
 	    stringBuffer.append(projectCode);
@@ -109,14 +109,14 @@ public class PersistentCompleteExpensesReport extends PersistentReport implement
 		report.setSupplier(rs.getString("Fornecedor"));
 		report.setSupplierDescription(rs.getString("desc Fornecedor"));
 		report.setDocumentType(rs.getString("Tipo Doc."));
-		report.setDocumentNumber(rs.getString("Nº Doc."));
+		report.setDocumentNumber(rs.getString("NÂº Doc."));
 		report.setFinancingSource(rs.getString("Fonte Financ."));
 		report.setRubric(new Integer(rs.getInt("Rubrica")));
 		report.setMovementType(rs.getString("Tipo Mov."));
 		SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
 		Date date = rs.getDate("Data Doc");
 		report.setDate(formatter.format(date));
-		report.setDescription(rs.getString("Descrição"));
+		report.setDescription(rs.getString("DescriÃ§Ã£o"));
 		report.setIvaPercentage(new Double(rs.getDouble("pct Iva")));
 		report.setValue(new Double(rs.getDouble("Valor")));
 		report.setTax(new Double(rs.getDouble("IVA")));

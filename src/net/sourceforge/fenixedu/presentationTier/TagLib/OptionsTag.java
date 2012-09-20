@@ -20,7 +20,7 @@ import org.apache.struts.util.RequestUtils;
 import org.apache.struts.util.ResponseUtils;
 
 /**
- * @author Fernanda QuitÈrio & Tania Pous„o
+ * @author Fernanda Quit√©rio & Tania Pous√£o
  */
 public class OptionsTag extends TagSupport {
 
@@ -123,7 +123,7 @@ public class OptionsTag extends TagSupport {
 	this.styleClass = styleClass;
     }
 
-    /* Acrescentado por Fernanda QuitÈrio & Tania Pous„o */
+    /* Acrescentado por Fernanda Quit√©rio & Tania Pous√£o */
     /**
      * The servlet context attribute key for our resources.
      */
@@ -150,7 +150,7 @@ public class OptionsTag extends TagSupport {
 	this.localeKey = localeKey;
     }
 
-    /* atÈ aqui */
+    /* at√© aqui */
 
     /**
      * Process the start of this tag.

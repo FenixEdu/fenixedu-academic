@@ -56,7 +56,7 @@ div.progress-container > div {
 			<jsp:include page="viewInquiryResultsResume.jsp"/>
 		</logic:notEmpty>
 		<logic:empty name="coursesResultResumeMap">
-			N„o existem dados para o semestre escolhido
+			N√£o existem dados para o semestre escolhido
 		</logic:empty>
 	</logic:present>
 	
@@ -65,16 +65,16 @@ div.progress-container > div {
 		    <div class="mtop1">
 		        <bean:write name="executionSemester" property="coordinatorReportResponsePeriod.introduction" filter="false"/>
 		        
-		        <p>De seguida apresenta-se informaÁ„o sobre os resultados dos InquÈritos aos alunos, dos RelatÛrios de DocÍncia, preenchidos por cada elemento do Corpo Docente e pelo Respons·vel por UC, e dos RelatÛrios de DiscÍncia, preenchidos pelos Delegados de Curso, para cada UC do curso.</p> 
+		        <p>De seguida apresenta-se informa√ß√£o sobre os resultados dos Inqu√©ritos aos alunos, dos Relat√≥rios de Doc√™ncia, preenchidos por cada elemento do Corpo Docente e pelo Respons√°vel por UC, e dos Relat√≥rios de Disc√™ncia, preenchidos pelos Delegados de Curso, para cada UC do curso.</p> 
 		        
-		        <p>No primeiro grupo de UC estar„o aquelas onde foram identificados resultados a melhorar, sendo que algumas apresentam resultados a melhorar em mais do que um grupo de questıes e para mais de metade dos pares Docente/tipo de aulas que leccionaram (passÌveis de auditoria). Nos segundo e terceiro grupos est„o, respectivamente, as UC cujos docentes tiveram resultados excelentes e as restantes UC.</p>
+		        <p>No primeiro grupo de UC estar√£o aquelas onde foram identificados resultados a melhorar, sendo que algumas apresentam resultados a melhorar em mais do que um grupo de quest√µes e para mais de metade dos pares Docente/tipo de aulas que leccionaram (pass√≠veis de auditoria). Nos segundo e terceiro grupos est√£o, respectivamente, as UC cujos docentes tiveram resultados excelentes e as restantes UC.</p>
 		        
-		        <p>Para cada UC È possÌvel introduzir um <strong>coment·rio individual</strong> aos resultados; para as <strong>UC em condiÁıes de serem auditadas È obrigatÛrio o registo de medidas correctivas a serem adoptadas,</strong> incluindo a respectiva calendarizaÁ„o.</p>
+		        <p>Para cada UC √© poss√≠vel introduzir um <strong>coment√°rio individual</strong> aos resultados; para as <strong>UC em condi√ß√µes de serem auditadas √© obrigat√≥rio o registo de medidas correctivas a serem adoptadas,</strong> incluindo a respectiva calendariza√ß√£o.</p>
 		        
-		        <p>No final desta p·gina È solicitado o registo dos seguintes pontos que compıem o RSCC:<br/>
-		        &nbsp;&nbsp;&nbsp;&nbsp;- Coment·rio Global ao funcionamento e aos resultados das UC do curso;<br/>
-		        &nbsp;&nbsp;&nbsp;&nbsp;- SÌntese das medidas correctivas a serem adoptadas na sequÍncia de resultados insatisfatÛrios;<br/>
-		        &nbsp;&nbsp;&nbsp;&nbsp;- A identificaÁ„o de boas pr·ticas de ensino e aprendizagem desenvolvidas pelos Docentes, com vista a uma sistematizaÁ„o e disseminaÁ„o das mesmas.</p>
+		        <p>No final desta p√°gina √© solicitado o registo dos seguintes pontos que comp√µem o RSCC:<br/>
+		        &nbsp;&nbsp;&nbsp;&nbsp;- Coment√°rio Global ao funcionamento e aos resultados das UC do curso;<br/>
+		        &nbsp;&nbsp;&nbsp;&nbsp;- S√≠ntese das medidas correctivas a serem adoptadas na sequ√™ncia de resultados insatisfat√≥rios;<br/>
+		        &nbsp;&nbsp;&nbsp;&nbsp;- A identifica√ß√£o de boas pr√°ticas de ensino e aprendizagem desenvolvidas pelos Docentes, com vista a uma sistematiza√ß√£o e dissemina√ß√£o das mesmas.</p>
 		    </div>
 		</c:if>
 		

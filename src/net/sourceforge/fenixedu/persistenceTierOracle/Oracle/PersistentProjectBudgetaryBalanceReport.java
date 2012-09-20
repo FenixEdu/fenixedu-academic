@@ -31,7 +31,7 @@ public class PersistentProjectBudgetaryBalanceReport extends PersistentReport {
 	    String tableOrView = getTableOrViewName(p, reportType);
 
 	    StringBuilder stringBuffer = new StringBuilder();
-	    stringBuffer.append("select \"RUBRICA\", \"DESCRICAORUBRICA\", \"ORÇAMENTADO\", \"EXECUTADO\", \"SALDO\"from ");
+	    stringBuffer.append("select \"RUBRICA\", \"DESCRICAORUBRICA\", \"ORÃ‡AMENTADO\", \"EXECUTADO\", \"SALDO\"from ");
 	    stringBuffer.append(tableOrView);
 	    stringBuffer.append(" where PROJECTO='");
 	    stringBuffer.append(projectCode);
@@ -44,7 +44,7 @@ public class PersistentProjectBudgetaryBalanceReport extends PersistentReport {
 		IProjectBudgetaryBalanceReportLine report = new ProjectBudgetaryBalanceReportLine();
 		report.setRubric(new Integer(rs.getInt("RUBRICA")));
 		report.setRubricDescription(rs.getString("DESCRICAORUBRICA"));
-		report.setBudget(new Double(rs.getDouble("ORÇAMENTADO")));
+		report.setBudget(new Double(rs.getDouble("ORÃ‡AMENTADO")));
 		report.setExecuted(new Double(rs.getDouble("EXECUTADO")));
 		report.setBalance(new Double(rs.getDouble("SALDO")));
 		result.add(report);

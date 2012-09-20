@@ -65,7 +65,7 @@ public class SearchTeachersDA extends FenixDispatchAction {
 	final ResourceBundle enumResourceBundle = ResourceBundle.getBundle("resources.ApplicationResources", new Locale("pt",
 		"PT"));
 	final Spreadsheet spreadsheet = new Spreadsheet("Teachers");
-	spreadsheet.setHeader("Identificação");
+	spreadsheet.setHeader("IdentificaÃ§Ã£o");
 	spreadsheet.setHeader(enumResourceBundle.getString("label.person.name"));
 	spreadsheet.setHeader(enumResourceBundle.getString("label.person.email"));
 	return spreadsheet;

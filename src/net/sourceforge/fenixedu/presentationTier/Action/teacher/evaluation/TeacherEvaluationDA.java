@@ -369,7 +369,7 @@ public class TeacherEvaluationDA extends FenixDispatchAction {
 	    }
 	    zip.close();
 	    response.setContentType("application/zip");
-	    response.addHeader("Content-Disposition", "attachment; filename=autoAvaliação.zip");
+	    response.addHeader("Content-Disposition", "attachment; filename=autoAvaliaÃ§Ã£o.zip");
 	    ServletOutputStream writer = response.getOutputStream();
 	    writer.write(bout.toByteArray());
 	    writer.flush();
@@ -415,7 +415,7 @@ public class TeacherEvaluationDA extends FenixDispatchAction {
 	    }
 	    zip.close();
 	    response.setContentType("application/zip");
-	    response.addHeader("Content-Disposition", "attachment; filename=avaliação.zip");
+	    response.addHeader("Content-Disposition", "attachment; filename=avaliaÃ§Ã£o.zip");
 	    ServletOutputStream writer = response.getOutputStream();
 	    writer.write(bout.toByteArray());
 	    writer.flush();

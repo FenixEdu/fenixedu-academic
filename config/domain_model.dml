@@ -7034,11 +7034,6 @@ class log.requests.ExceptionType extends DomainObject {
     String type;
 }
 
-class log.profiling.ProfileReport extends DomainObject {
-    LocalDate date;
-    String report;
-}
-
 class caseHandling.Process extends DomainObject {
     
 }
@@ -19524,12 +19519,6 @@ relation UnitUnitBasedSender {
     }
 }
 
-relation RootDomainObjectProfilingLogs {
-    RootDomainObject playsRole rootDomainObject;
-    log.profiling.ProfileReport playsRole profilingLogs {
-        multiplicity *;
-    }
-}
 
 relation RootDomainObjectInternshipCandidacySession {
     RootDomainObject playsRole rootDomainObject;

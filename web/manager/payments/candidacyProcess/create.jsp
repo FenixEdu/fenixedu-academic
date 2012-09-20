@@ -9,7 +9,7 @@
 	<bean:define id="bean" name="bean" />
 	<bean:define id="type" name="bean" property="type" />
 	
-	<h2>Criar referências SIBS para <bean:write name="bean" property="type.localizedName" /> </h2>
+	<h2>Criar referÃªncias SIBS para <bean:write name="bean" property="type.localizedName" /> </h2>
 	
 	<fr:form action="/candidacyPaymentCodes.do?method=createPaymentCodes">
 		<fr:edit id="bean" name="bean" visible="false" />

@@ -19,7 +19,7 @@ public class Data extends FenixUtil {
 
     public static String FEBRUARY_STRING = "Fevereiro";
 
-    public static String MARCH_STRING = "Março";
+    public static String MARCH_STRING = "MarÃ§o";
 
     public static String APRIL_STRING = "Abril";
 

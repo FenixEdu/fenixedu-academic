@@ -17,14 +17,14 @@
 	<bean:define id="processId" name="process" property="externalId" />
 	<p>
 		<html:link action="<%= "/phdIndividualProgramProcess.do?method=viewProcess&amp;processId=" + processId %>">
-			« <bean:message key="label.back" bundle="PHD_RESOURCES" />
+			Â« <bean:message key="label.back" bundle="PHD_RESOURCES" />
 		</html:link>
 	</p>
 </logic:present>
 <logic:notPresent name="process">
 	<p>
 		<html:link action="/phdIndividualProgramProcess.do?method=viewMigratedProcesses">
-			« <bean:message key="label.back" bundle="PHD_RESOURCES" />
+			Â« <bean:message key="label.back" bundle="PHD_RESOURCES" />
 		</html:link>	
 	</p>
 </logic:notPresent>

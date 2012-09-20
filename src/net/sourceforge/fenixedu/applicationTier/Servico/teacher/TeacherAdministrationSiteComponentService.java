@@ -9,7 +9,7 @@ import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionCourseSite;
 
 /**
- * @author Fernanda Quitério
+ * @author Fernanda QuitÃ©rio
  * 
  * 
  */

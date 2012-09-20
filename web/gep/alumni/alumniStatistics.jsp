@@ -46,7 +46,7 @@
 	        },
 	        
 	        title: {
-	            text: 'nº registos / dia'
+	            text: 'nÂº registos / dia'
 	        },
 	        
 	        xAxis: {
@@ -55,12 +55,12 @@
 	        
 	        yAxis: {
 	            title: {
-	                text: 'Nº de Alumni'
+	                text: 'NÂº de Alumni'
 	            }
 	        },
 	        
 	        series: [{
-	            name: 'Nº de Alumni',
+	            name: 'NÂº de Alumni',
 	            data: chartData
 	        }]
 	    });
@@ -154,14 +154,14 @@
 		<html:link page="/alumni.do?method=generateRegisteredAlumniPartialReport">
 			<bean:message key="link.alumni.partial.reports" bundle="GEP_RESOURCES"/>
 		</html:link>
-		<br/> Lista de alumni que (pelo menos) concluiram o passo inicial do processo público de registo.
+		<br/> Lista de alumni que (pelo menos) concluiram o passo inicial do processo pÃºblico de registo.
 	</li>
 	
 	<li class="mtop1">
 		<html:link page="/alumni.do?method=generateRegisteredAlumniFullReport">
 			<bean:message key="link.alumni.full.reports" bundle="GEP_RESOURCES"/>
 		</html:link>
-		<br/>Lista de todos os alumni que na parte pública ou privada iniciaram a actualização da informação pessoal e/ou informação profissional e/ou formação pós-graduada.
+		<br/>Lista de todos os alumni que na parte pÃºblica ou privada iniciaram a actualizaÃ§Ã£o da informaÃ§Ã£o pessoal e/ou informaÃ§Ã£o profissional e/ou formaÃ§Ã£o pÃ³s-graduada.
 	</li>
 
 	<li class="mtop1">

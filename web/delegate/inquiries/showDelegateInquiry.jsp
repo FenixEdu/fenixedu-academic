@@ -48,7 +48,7 @@ border: none;
 	<fmt:setBundle basename="resources.InquiriesResources" var="INQUIRIES_RESOURCES"/>
 	
 	<p><em style="float: left;">
-		<bean:write name="executionPeriod" property="semester"/>บ Semestre - <bean:write name="executionPeriod" property="executionYear.year"/>
+		<bean:write name="executionPeriod" property="semester"/>ยบ Semestre - <bean:write name="executionPeriod" property="executionYear.year"/>
 	</em></p>
 	<div style="clear: both;"></div>
 	
@@ -57,7 +57,7 @@ border: none;
 	<bean:define id="degreeSigla" name="executionDegree" property="degree.sigla" type="java.lang.String"/>
 	
 	<p><span class="highlight1"><bean:write name="executionCourse" property="name"/> (<bean:write name="executionCourse" property="sigla"/>)</span> -  
-	<bean:write name="degreeSigla"/> (<bean:write name="executionPeriod" property="semester"/>บ Semestre <bean:write name="executionPeriod" property="executionYear.year"/>)</p>
+	<bean:write name="degreeSigla"/> (<bean:write name="executionPeriod" property="semester"/>ยบ Semestre <bean:write name="executionPeriod" property="executionYear.year"/>)</p>
 	
 	<p>
 	<logic:notEmpty name="year">

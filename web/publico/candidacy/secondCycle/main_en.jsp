@@ -192,7 +192,7 @@
 </table>
 
 <h2 id="praz">Deadlines</h2>
-<table class="tab_simpler" summary="Prazos para candidatos em mudança ou transfer�ncia de curso" cellspacing="0">
+<table class="tab_simpler" summary="Prazos para candidatos em mudanÃ§a ou transferência de curso" cellspacing="0">
 	<tr>
 		<td class="align_r"><span class="marker">4 of May to 15 of June of 2009</span></td>
 		<td><a href="<%= fullPath + "?method=preparePreCreationOfCandidacy" %>">Submission period</a></td>

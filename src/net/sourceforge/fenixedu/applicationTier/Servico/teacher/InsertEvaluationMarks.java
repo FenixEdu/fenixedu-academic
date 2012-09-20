@@ -30,7 +30,7 @@ import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.student.Registration;
 
 /**
- * @author Fernanda Quitério
+ * @author Fernanda QuitÃ©rio
  * 
  */
 public class InsertEvaluationMarks extends FenixService {

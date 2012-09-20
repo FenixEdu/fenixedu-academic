@@ -11,7 +11,7 @@
 		<ul class="expmenu">
 			<li><html:link page="<%= "/showDegrees.do?method=nonMaster" %>" ><bean:message key="link.degree.nonMaster"/></html:link></li>
 			<bean:define id="institutionUrlPostGraduation" type="java.lang.String"><bean:message key="institution.url" bundle="GLOBAL_RESOURCES"/>html/ensino/pos_grad.html</bean:define>
-			<li><a href="<%= institutionUrlPostGraduation %>">Pós-graduações</a></li>
+			<li><a href="<%= institutionUrlPostGraduation %>">PÃ³s-graduaÃ§Ãµes</a></li>
 			<li><html:link page="<%= "/showDegrees.do?method=master&executionPeriodOID=" + request.getAttribute(PresentationConstants.EXECUTION_PERIOD_OID) %>" ><bean:message key="link.degree.master"/></html:link></li>
 			<bean:define id="institutionUrlPhd" type="java.lang.String"><bean:message key="institution.url" bundle="GLOBAL_RESOURCES"/>html/ensino/doutoramentos.html</bean:define>
 			<li><a href="<%= institutionUrlPhd %>">Doutoramentos</a></li>

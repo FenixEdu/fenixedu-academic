@@ -32,13 +32,13 @@ public class TutorshipProgramReportFile extends TutorshipProgramReportFile_Base 
 
     @Override
     public void renderReport(final Spreadsheet spreadsheet) throws Exception {
-	spreadsheet.setHeader("Número");
+	spreadsheet.setHeader("NÃºmero");
 	spreadsheet.setHeader("Sexo");
-	spreadsheet.setHeader("Média");
-	spreadsheet.setHeader("Média Anual");
-	spreadsheet.setHeader("Número Inscrições");
-	spreadsheet.setHeader("Número Aprovações");
-	spreadsheet.setHeader("Nota de Seriação");
+	spreadsheet.setHeader("MÃ©dia");
+	spreadsheet.setHeader("MÃ©dia Anual");
+	spreadsheet.setHeader("NÃºmero InscriÃ§Ãµes");
+	spreadsheet.setHeader("NÃºmero AprovaÃ§Ãµes");
+	spreadsheet.setHeader("Nota de SeriaÃ§Ã£o");
 	spreadsheet.setHeader("Local de Origem");
 
 	final ExecutionYear executionYear = getExecutionYear();
@@ -98,7 +98,7 @@ public class TutorshipProgramReportFile extends TutorshipProgramReportFile_Base 
 			    }
 
 			    final String dislocatedString = dislocated == null ? "" : (dislocated.booleanValue() ? "Deslocado"
-				    : "Não Deslocado");
+				    : "NÃ£o Deslocado");
 			    row.setCell(dislocatedString);
 			}
 		    }

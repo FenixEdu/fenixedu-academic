@@ -30,17 +30,17 @@ public class WrittenEvaluationReportFile extends WrittenEvaluationReportFile_Bas
     public void renderReport(final Spreadsheet spreadsheet) throws Exception {
 	spreadsheet.setHeader("Ano Lectivo");
 	spreadsheet.setHeader("Semestre");
-	spreadsheet.setHeader("OID da Execução da Disciplina");
+	spreadsheet.setHeader("OID da ExecuÃ§Ã£o da Disciplina");
 	spreadsheet.setHeader("Nome da Disciplina");
-	spreadsheet.setHeader("OID Avaliação");
-	spreadsheet.setHeader("Tipo de Avaliação");
-	spreadsheet.setHeader("Data Avaliação");
-	spreadsheet.setHeader("Hora de Início");
+	spreadsheet.setHeader("OID AvaliaÃ§Ã£o");
+	spreadsheet.setHeader("Tipo de AvaliaÃ§Ã£o");
+	spreadsheet.setHeader("Data AvaliaÃ§Ã£o");
+	spreadsheet.setHeader("Hora de InÃ­cio");
 	spreadsheet.setHeader("Hora de Fim");
 	spreadsheet.setHeader("Salas");
 	spreadsheet.setHeader("Capacidade Exame");
 	spreadsheet.setHeader("Capacidade Normal");
-	spreadsheet.setHeader("Número de Inscritos");
+	spreadsheet.setHeader("NÃºmero de Inscritos");
 
 	for (final ExecutionSemester executionSemester : getExecutionYear().getExecutionPeriodsSet()) {
 	    for (final ExecutionCourse executionCourse : executionSemester.getAssociatedExecutionCoursesSet()) {

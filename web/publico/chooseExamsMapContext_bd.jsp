@@ -15,12 +15,12 @@
 
 <%--
 	<p style="font-size:12px">
-		<b style="color: #f00">Nota:</b> Para os exames das <b>Licenciaturas LERCI, LESIM e LEGI</b> <u>onde se lï¿? 9:00 dever-se-ï¿? ler 10:00</u>, com excepï¿?ï¿?o de <b>PE</b>
-		 e <b>CG</b> que se mantï¿?m ï¿?s 9:00.
+		<b style="color: #f00">Nota:</b> Para os exames das <b>Licenciaturas LERCI, LESIM e LEGI</b> <u>onde se lÃ¯Â¿? 9:00 dever-se-Ã¯Â¿? ler 10:00</u>, com excepÃ¯Â¿?Ã¯Â¿?o de <b>PE</b>
+		 e <b>CG</b> que se mantÃ¯Â¿?m Ã¯Â¿?s 9:00.
 	</p>
 	<br/>
 --%>
-	<p><strong><font color="#FF0000">Atenï¿?ï¿?o&nbsp;-&nbsp;</font>Se pretende consultar informação relativa a disciplinas de 4ï¿? ou 5ï¿? em 2003/2004 ou 5ï¿? em 2004/2005 do curso de Informï¿?tica - Alameda, deve seleccionar o plano curricular "Licenciatura em Engenharia Informï¿?tica e de Computadores - LEIC - Currï¿?culo Antigo"</strong></p>
+	<p><strong><font color="#FF0000">AtenÃ¯Â¿?Ã¯Â¿?o&nbsp;-&nbsp;</font>Se pretende consultar informaÃ§Ã£o relativa a disciplinas de 4Ã¯Â¿? ou 5Ã¯Â¿? em 2003/2004 ou 5Ã¯Â¿? em 2004/2005 do curso de InformÃ¯Â¿?tica - Alameda, deve seleccionar o plano curricular "Licenciatura em Engenharia InformÃ¯Â¿?tica e de Computadores - LEIC - CurrÃ¯Â¿?culo Antigo"</strong></p>
 
 	<p class="infoop">
 		<bean:message key="message.public.degree.choose"/>

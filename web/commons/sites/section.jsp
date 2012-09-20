@@ -217,7 +217,7 @@
 		<app:defineContentPath id="url" name="section"/>
 		<bean:define id="url" name="url" type="java.lang.String"/>
 		<%= pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX %><a  target="_blank" href="<%= request.getContextPath() + url %>">
-			<bean:message key="link.view" bundle="SITE_RESOURCES"/> »
+			<bean:message key="link.view" bundle="SITE_RESOURCES"/> Â»
 		</a>
         
     </p>
@@ -352,7 +352,7 @@
 							
 			|
 	        		<span>
-		               <app:contentLink name="item"><bean:message key="link.view" bundle="SITE_RESOURCES"/> »</app:contentLink>
+		               <app:contentLink name="item"><bean:message key="link.view" bundle="SITE_RESOURCES"/> Â»</app:contentLink>
 	               </span>
 				
        		        
@@ -513,7 +513,7 @@
 				<app:defineContentPath id="url" name="functionality"/>
 					<bean:define id="url" name="url" type="java.lang.String"/>
 					<%= pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX %><a  target="_blank" href="<%= request.getContextPath() + url %>">
-					<bean:message key="link.view" bundle="SITE_RESOURCES"/> »
+					<bean:message key="link.view" bundle="SITE_RESOURCES"/> Â»
 					</a>
 				</p>
 			 </div>

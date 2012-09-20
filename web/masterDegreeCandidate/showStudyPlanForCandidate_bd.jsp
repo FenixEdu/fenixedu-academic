@@ -27,7 +27,7 @@
 				<bean:write name="masterDegreeCandidate" property="givenCredits"/>
 			</logic:notEmpty>
 			<logic:empty name="masterDegreeCandidate" property="givenCredits">
-				<em>N„o existem crÈditos atrÌbuidos.</em>
+				<em>N√£o existem cr√©ditos atr√≠buidos.</em>
 			</logic:empty>
 		</td>
 	</tr>
@@ -59,7 +59,7 @@
 				<logic:notPresent name="candidateStudyPlan">
 					<tr>
 						<td>
-							<em>O candidato n„o tem definido qualquer plano de estudos.</em>
+							<em>O candidato n√£o tem definido qualquer plano de estudos.</em>
 						</td>
 					</tr>			
 				</logic:notPresent>
@@ -98,7 +98,7 @@
 				<html:checkbox bundle="HTMLALT_RESOURCES" altKey="checkbox.courseAssistant" disabled="true" name="masterDegreeCandidate" property="courseAssistant"/>
     		</logic:equal>
     		<logic:equal name="masterDegreeCandidate" property="courseAssistant" value="false">
-    			<em>O candidato n„o pretende dar apoio ao ensino.</em>
+    			<em>O candidato n√£o pretende dar apoio ao ensino.</em>
     		</logic:equal>
 			<br/><br/>
 		</td>

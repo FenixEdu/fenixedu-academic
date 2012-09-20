@@ -11,7 +11,7 @@
 <!-- START MAIN PAGE CONTENTS HERE -->
 
 <%-- <div class="col_right_alumni"><img src="alumni_reg_01.gif" alt="[Image] Alumni" /></div> --%>
-<h1>Inscrição Alumni</h1>
+<h1>InscriÃ§Ã£o Alumni</h1>
 
 <div class="alumnilogo">
 

@@ -5,7 +5,7 @@ import net.sourceforge.fenixedu.domain.Item;
 import net.sourceforge.fenixedu.domain.Site;
 
 /**
- * @author Fernanda Quitério
+ * @author Fernanda QuitÃ©rio
  * 
  */
 public class DeleteItem extends FenixService {

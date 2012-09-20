@@ -18,9 +18,9 @@ public class TestQuestionChangesType extends FenixUtil {
 
     public static final int CHANGE_EXERCISE = 2;
 
-    public static final String CHANGE_VARIATION_STRING = "Outra variação do mesmo exercício";
+    public static final String CHANGE_VARIATION_STRING = "Outra variaÃ§Ã£o do mesmo exercÃ­cio";
 
-    public static final String CHANGE_EXERCISE_STRING = "Outro exercício";
+    public static final String CHANGE_EXERCISE_STRING = "Outro exercÃ­cio";
 
     private Integer type;
 

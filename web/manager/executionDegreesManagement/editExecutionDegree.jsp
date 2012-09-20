@@ -44,19 +44,19 @@
 			<td><html:checkbox bundle="HTMLALT_RESOURCES" altKey="checkbox.temporaryExamMap" name="executionDegree" property="temporaryExamMap" value="true" /></td>
 		</tr>
 		<tr>
-			<th><bean:message bundle="MANAGER_RESOURCES" key="label.manager.lessons"/> 1บ <bean:message bundle="MANAGER_RESOURCES" key="label.manager.semester"/></th>
+			<th><bean:message bundle="MANAGER_RESOURCES" key="label.manager.lessons"/> 1ยบ <bean:message bundle="MANAGER_RESOURCES" key="label.manager.semester"/></th>
 			<td><html:text bundle="HTMLALT_RESOURCES" altKey="text.periodLessonsFirstSemesterBegin" maxlength="10" size="10" property="periodLessonsFirstSemesterBegin"/>&nbsp;<bean:message bundle="MANAGER_RESOURCES" key="label.manager.to" />&nbsp;<html:text bundle="HTMLALT_RESOURCES" altKey="text.periodLessonsFirstSemesterEnd" maxlength="10" size="10" property="periodLessonsFirstSemesterEnd"/>&nbsp;(dd/mm/yyyy)</td>
 		</tr>
 		<tr>
-			<th><bean:message bundle="MANAGER_RESOURCES" key="label.manager.exams"/> 1บ <bean:message bundle="MANAGER_RESOURCES" key="label.manager.semester"/></th>
+			<th><bean:message bundle="MANAGER_RESOURCES" key="label.manager.exams"/> 1ยบ <bean:message bundle="MANAGER_RESOURCES" key="label.manager.semester"/></th>
 			<td><html:text bundle="HTMLALT_RESOURCES" altKey="text.periodExamsFirstSemesterBegin" maxlength="10" size="10" property="periodExamsFirstSemesterBegin"/>&nbsp;<bean:message bundle="MANAGER_RESOURCES" key="label.manager.to" />&nbsp;<html:text bundle="HTMLALT_RESOURCES" altKey="text.periodExamsFirstSemesterEnd" maxlength="10" size="10" property="periodExamsFirstSemesterEnd"/>&nbsp;(dd/mm/yyyy)</td>
 		</tr>
 		<tr>
-			<th><bean:message bundle="MANAGER_RESOURCES" key="label.manager.lessons"/> 2บ <bean:message bundle="MANAGER_RESOURCES" key="label.manager.semester"/></th>
+			<th><bean:message bundle="MANAGER_RESOURCES" key="label.manager.lessons"/> 2ยบ <bean:message bundle="MANAGER_RESOURCES" key="label.manager.semester"/></th>
 			<td><html:text bundle="HTMLALT_RESOURCES" altKey="text.periodLessonsSecondSemesterBegin" maxlength="10" size="10" property="periodLessonsSecondSemesterBegin"/>&nbsp;<bean:message bundle="MANAGER_RESOURCES" key="label.manager.to" />&nbsp;<html:text bundle="HTMLALT_RESOURCES" altKey="text.periodLessonsSecondSemesterEnd" maxlength="10" size="10" property="periodLessonsSecondSemesterEnd"/>&nbsp;(dd/mm/yyyy)</td>
 		</tr>
 		<tr>
-			<th><bean:message bundle="MANAGER_RESOURCES" key="label.manager.exams"/> 2บ <bean:message bundle="MANAGER_RESOURCES" key="label.manager.semester"/></th>
+			<th><bean:message bundle="MANAGER_RESOURCES" key="label.manager.exams"/> 2ยบ <bean:message bundle="MANAGER_RESOURCES" key="label.manager.semester"/></th>
 			<td><html:text bundle="HTMLALT_RESOURCES" altKey="text.periodExamsSecondSemesterBegin" maxlength="10" size="10" property="periodExamsSecondSemesterBegin"/>&nbsp;<bean:message bundle="MANAGER_RESOURCES" key="label.manager.to" />&nbsp;<html:text bundle="HTMLALT_RESOURCES" altKey="text.periodExamsSecondSemesterEnd" maxlength="10" size="10" property="periodExamsSecondSemesterEnd"/>&nbsp;(dd/mm/yyyy)</td>
 		</tr>
 		<tr>

@@ -49,7 +49,7 @@
 				<fr:layout>
 					<fr:property name="classes" value="tstyle1 thlight tdcenter mtop05 mbottom05"/>
 					<fr:property name="columnClasses" value=",width250px aleft nowrap,,,"/>
-					<fr:property name="suffixes" value=",บ ano,บ sem"/>
+					<fr:property name="suffixes" value=",ยบ ano,ยบ sem"/>
 					<fr:property name="checkable" value="true" />
 					<fr:property name="checkboxName" value="selectedCurricularCourses" />
 					<fr:property name="checkboxValue" value="curricularCourse.idInternal" />

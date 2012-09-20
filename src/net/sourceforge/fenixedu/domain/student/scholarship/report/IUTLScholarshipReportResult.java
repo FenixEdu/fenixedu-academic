@@ -11,7 +11,7 @@ public interface IUTLScholarshipReportResult {
 
     static final String INSTITUTION_CODE = "807";
     static final String INTEGRATED_MASTER_DESIGNATION = "Mestrado Integrado";
-    static final String BOLONHA_DEGREE_DESIGNATION = "Licenciatura 1บ Ciclo";
+    static final String BOLONHA_DEGREE_DESIGNATION = "Licenciatura 1ยบ Ciclo";
 
     static final List<Integer> STUDENTS_WITH_CET = Arrays.asList(new Integer[] { 70855, 70696, 70757, 70786, 55647,
 	    59218, 70749, 70856, 70678, 70681, 70712, 70737, 70837, 70793, 10425, 38565, 70783, 70664, 70859, 70766, 70844,

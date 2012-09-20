@@ -12,7 +12,7 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoGuideWithPersonAndExecuti
 import net.sourceforge.fenixedu.domain.Guide;
 
 /**
- * @author <a href="mailto:joao.mota@ist.utl.pt">Jo„o Mota </a>
+ * @author <a href="mailto:joao.mota@ist.utl.pt">Jo√£o Mota </a>
  */
 public class ReadGuide extends FenixService {
 

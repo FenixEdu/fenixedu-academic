@@ -57,7 +57,7 @@ public class PrintCertificateDispatchAction extends FenixDispatchAction {
 
 	    throw new RuntimeException("Error", e);
 	}
-	if ((certificate.equals("MatrÌcula")) || (certificate.equals("MatrÌcula e InscriÁ„o"))
+	if ((certificate.equals("Matr√≠cula")) || (certificate.equals("Matr√≠cula e Inscri√ß√£o"))
 		|| (certificate.equals(CertificateList.DURACAO_CURSO_STRING))) {
 
 	    List enrolmentList = GetEnrolmentList.run(infoStudentCurricularPlan.getIdInternal());
@@ -65,18 +65,18 @@ public class PrintCertificateDispatchAction extends FenixDispatchAction {
 		anoLectivo = infoExecutionYear.getYear();
 	    else
 		anoLectivo = ((InfoEnrolment) enrolmentList.get(0)).getInfoExecutionPeriod().getInfoExecutionYear().getYear();
-	    if (certificate.equals("MatrÌcula"))
+	    if (certificate.equals("Matr√≠cula"))
 		request.setAttribute(PresentationConstants.MATRICULA, certificate.toUpperCase());
-	    if (certificate.equals("MatrÌcula e InscriÁ„o"))
+	    if (certificate.equals("Matr√≠cula e Inscri√ß√£o"))
 		request.setAttribute(PresentationConstants.MATRICULA_ENROLMENT, certificate.toUpperCase());
 	    if (certificate.equals(CertificateList.DURACAO_CURSO_STRING)) {
 
 		if (infoStudentCurricularPlan.getSpecialization().equals(Specialization.STUDENT_CURRICULAR_PLAN_MASTER_DEGREE)) {
-		    certificate = "MatrÌcula";
+		    certificate = "Matr√≠cula";
 		    request.setAttribute(PresentationConstants.DURATION_DEGREE, certificate.toUpperCase());
 		} else {
 		    ActionErrors errors = new ActionErrors();
-		    errors.add("AlunoN„oExiste", new ActionError("error.invalidStudentType"));
+		    errors.add("AlunoN√£oExiste", new ActionError("error.invalidStudentType"));
 		    saveErrors(request, errors);
 		    return new ActionForward(mapping.getInput());
 		}
@@ -84,13 +84,13 @@ public class PrintCertificateDispatchAction extends FenixDispatchAction {
 	} else {
 	    // get informations
 	    List enrolmentList = null;
-	    if (certificate.equals("InscriÁ„o")) {
+	    if (certificate.equals("Inscri√ß√£o")) {
 		// , EnrolmentState.ENROLED
 
 		enrolmentList = GetEnrolmentList.run(infoStudentCurricularPlan.getIdInternal());
 		if (enrolmentList.size() == 0) {
 		    ActionErrors errors = new ActionErrors();
-		    errors.add("AlunoN„oExiste", new ActionError("error.enrolment.notExist"));
+		    errors.add("AlunoN√£oExiste", new ActionError("error.enrolment.notExist"));
 		    saveErrors(request, errors);
 		    return new ActionForward(mapping.getInput());
 		}
@@ -126,7 +126,7 @@ public class PrintCertificateDispatchAction extends FenixDispatchAction {
 			    Boolean.TRUE, Boolean.TRUE);
 		    if (enrolmentList.size() == 0) {
 			ActionErrors errors = new ActionErrors();
-			errors.add("AlunoN„oExiste", new ActionError("error.enrolment.notExist"));
+			errors.add("AlunoN√£oExiste", new ActionError("error.enrolment.notExist"));
 			saveErrors(request, errors);
 			return new ActionForward(mapping.getInput());
 		    }
@@ -155,7 +155,7 @@ public class PrintCertificateDispatchAction extends FenixDispatchAction {
 		    if (certificate.equals("Aproveitamento")) {
 			if (normalEnrolment.size() == 0) {
 			    ActionErrors errors = new ActionErrors();
-			    errors.add("AlunoN„oExiste", new ActionError("error.enrolment.notExist"));
+			    errors.add("AlunoN√£oExiste", new ActionError("error.enrolment.notExist"));
 			    saveErrors(request, errors);
 			    return new ActionForward(mapping.getInput());
 			}
@@ -163,7 +163,7 @@ public class PrintCertificateDispatchAction extends FenixDispatchAction {
 		    } else if (certificate.equals("Aproveitamento de Disciplinas Extra Curricular")) {
 			if (extraEnrolment.size() == 0) {
 			    ActionErrors errors = new ActionErrors();
-			    errors.add("AlunoN„oExiste", new ActionError("error.enrolment.notExist"));
+			    errors.add("AlunoN√£oExiste", new ActionError("error.enrolment.notExist"));
 			    saveErrors(request, errors);
 			    return new ActionForward(mapping.getInput());
 			}
@@ -173,10 +173,10 @@ public class PrintCertificateDispatchAction extends FenixDispatchAction {
 		    if (infoStudentCurricularPlan.getSpecialization()
 			    .equals(Specialization.STUDENT_CURRICULAR_PLAN_MASTER_DEGREE)) {
 			if ((certificate.equals("Fim parte escolar simples"))
-				|| (certificate.equals("Fim parte escolar discriminada sem mÈdia"))
-				|| (certificate.equals("Fim parte escolar discriminada com mÈdia"))
+				|| (certificate.equals("Fim parte escolar discriminada sem m√©dia"))
+				|| (certificate.equals("Fim parte escolar discriminada com m√©dia"))
 				|| (certificate.equals("Diploma"))
-				|| (certificate.equals("Fim de curso de Mestrado discriminada com mÈdia"))
+				|| (certificate.equals("Fim de curso de Mestrado discriminada com m√©dia"))
 				|| (certificate.equals("Carta de Curso"))) {
 			    InfoFinalResult infoFinalResult = null;
 			    try {
@@ -199,7 +199,7 @@ public class PrintCertificateDispatchAction extends FenixDispatchAction {
 				    EnrollmentState.APROVED);
 			    // if (enrolmentList.size() == 0) {
 			    // ActionErrors errors = new ActionErrors();
-			    // errors.add("AlunoN„oExiste", new ActionError(
+			    // errors.add("AlunoN√£oExiste", new ActionError(
 			    // "error.enrolment.notExist"));
 			    // saveErrors(request, errors);
 			    // return new ActionForward(mapping.getInput());
@@ -239,14 +239,14 @@ public class PrintCertificateDispatchAction extends FenixDispatchAction {
 			    //  							
 			    if (certificate.equals("Fim parte escolar simples"))
 				request.setAttribute(PresentationConstants.FINAL_RESULT_SIMPLE, certificate.toUpperCase());
-			    if (certificate.equals("Fim parte escolar discriminada sem mÈdia"))
+			    if (certificate.equals("Fim parte escolar discriminada sem m√©dia"))
 				request.setAttribute(PresentationConstants.DISCRIMINATED_WITHOUT_AVERAGE, certificate
 					.toUpperCase());
-			    if (certificate.equals("Fim parte escolar discriminada com mÈdia"))
+			    if (certificate.equals("Fim parte escolar discriminada com m√©dia"))
 				request.setAttribute(PresentationConstants.DISCRIMINATED_WITH_AVERAGE, certificate.toUpperCase());
 			    if (certificate.equals("Diploma"))
 				request.setAttribute(PresentationConstants.DIPLOMA, certificate.toUpperCase());
-			    if (certificate.equals("Fim de curso de Mestrado discriminada com mÈdia")
+			    if (certificate.equals("Fim de curso de Mestrado discriminada com m√©dia")
 				    || certificate.equals("Carta de Curso"))
 
 			    {
@@ -256,7 +256,7 @@ public class PrintCertificateDispatchAction extends FenixDispatchAction {
 					String notString = " ";
 					if (infoMasterDegreeProofVersion.getFinalResult().equals(
 						MasterDegreeClassification.NOT_APPROVED)) {
-					    notString = " n„o ";
+					    notString = " n√£o ";
 					}
 					request.setAttribute("notString", notString);
 
@@ -268,13 +268,13 @@ public class PrintCertificateDispatchAction extends FenixDispatchAction {
 						.getFinalResult().name());
 				    } else {
 					ActionErrors errors = new ActionErrors();
-					errors.add("AlunoN„oExiste", new ActionError("error.invalidStudentType"));
+					errors.add("AlunoN√£oExiste", new ActionError("error.invalidStudentType"));
 					saveErrors(request, errors);
 					return new ActionForward(mapping.getInput());
 				    }
 				}
 			    }
-			    if (certificate.equals("Fim de curso de Mestrado discriminada com mÈdia")) {
+			    if (certificate.equals("Fim de curso de Mestrado discriminada com m√©dia")) {
 				request.setAttribute(PresentationConstants.FINAL_DEGREE_DISCRIMINATED_WITH_AVERAGE, certificate
 					.toUpperCase());
 			    }
@@ -297,7 +297,7 @@ public class PrintCertificateDispatchAction extends FenixDispatchAction {
 				    String notString = " ";
 				    if (infoMasterDegreeProofVersion.getFinalResult().equals(
 					    MasterDegreeClassification.NOT_APPROVED)) {
-					notString = " n„o ";
+					notString = " n√£o ";
 				    }
 
 				    request.setAttribute("notString", notString);
@@ -307,7 +307,7 @@ public class PrintCertificateDispatchAction extends FenixDispatchAction {
 					    infoMasterDegreeThesisDataVersion);
 				} else {
 				    ActionErrors errors = new ActionErrors();
-				    errors.add("AlunoN„oExiste", new ActionError("error.invalidStudentConclusion"));
+				    errors.add("AlunoN√£oExiste", new ActionError("error.invalidStudentConclusion"));
 				    saveErrors(request, errors);
 				    return new ActionForward(mapping.getInput());
 				}
@@ -315,7 +315,7 @@ public class PrintCertificateDispatchAction extends FenixDispatchAction {
 			}
 		    } else {
 			ActionErrors errors = new ActionErrors();
-			errors.add("AlunoN„oExiste", new ActionError("error.invalidStudentType"));
+			errors.add("AlunoN√£oExiste", new ActionError("error.invalidStudentType"));
 			saveErrors(request, errors);
 			return new ActionForward(mapping.getInput());
 		    }

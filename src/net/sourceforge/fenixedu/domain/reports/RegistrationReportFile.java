@@ -17,7 +17,7 @@ public class RegistrationReportFile extends RegistrationReportFile_Base {
 
     @Override
     public String getJobName() {
-	return "Listagem de matrí­culas";
+	return "Listagem de matrÃ­Â­culas";
     }
 
     @Override
@@ -27,14 +27,14 @@ public class RegistrationReportFile extends RegistrationReportFile_Base {
 
     @Override
     public void renderReport(Spreadsheet spreadsheet) throws Exception {
-	spreadsheet.setHeader("número aluno");
+	spreadsheet.setHeader("nÃºmero aluno");
 	setDegreeHeaders(spreadsheet);
-	spreadsheet.setHeader("código regime de ingresso na matrícula");
-	spreadsheet.setHeader("regime de ingresso na matrícula");
-	spreadsheet.setHeader("ano léctivo de início da matrícula");
-	spreadsheet.setHeader("código regime de ingresso na escola");
+	spreadsheet.setHeader("cÃ³digo regime de ingresso na matrÃ­cula");
+	spreadsheet.setHeader("regime de ingresso na matrÃ­cula");
+	spreadsheet.setHeader("ano lÃ©ctivo de inÃ­cio da matrÃ­cula");
+	spreadsheet.setHeader("cÃ³digo regime de ingresso na escola");
 	spreadsheet.setHeader("regime de ingresso na escola");
-	spreadsheet.setHeader("ano léctivo de ingresso na escola");
+	spreadsheet.setHeader("ano lÃ©ctivo de ingresso na escola");
 	spreadsheet.setHeader("tipo de aluno");
 	spreadsheet.setHeader("ano curricular");
 

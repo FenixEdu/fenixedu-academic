@@ -41,7 +41,7 @@
 	    			"oLanguage" : {
 	    				"sProcessing": "A processar...",
 	    				"sLengthMenu": "Mostrar _MENU_ registos",
-	    				"sZeroRecords": "Não foram encontrados registos",
+	    				"sZeroRecords": "NÃ£o foram encontrados registos",
 	    				"sInfo": "_START_ - _END_ de _TOTAL_",
 	    				"sInfoEmpty": "0 - 0 de 0",
 	    				"sInfoFiltered": "(filtrado de _MAX_ total de registos)",
@@ -50,7 +50,7 @@
 	    				"sFirst": "Primeiro",
 	    				"sPrevious": "Anterior",
 	    				"sNext": "Seguinte",
-	    				"sLast": "Último"
+	    				"sLast": "Ãšltimo"
 	    			},
 	    			"aaSorting": [[ 0, "asc" ], [ 1, "asc" ] ]
 	    		}

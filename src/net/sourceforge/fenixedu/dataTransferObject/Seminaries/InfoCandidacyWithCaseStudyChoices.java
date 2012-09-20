@@ -9,7 +9,7 @@ import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
 
 /**
- * @author Fernanda Quitério
+ * @author Fernanda QuitÃ©rio
  * 
  * 
  *         Created at 24/Jun/2004

@@ -9,7 +9,7 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoRoom;
 import net.sourceforge.fenixedu.domain.space.AllocatableSpace;
 
 /**
- * @author Jo„o Fialho & Rita Ferreira
+ * @author Jo√£o Fialho & Rita Ferreira
  * 
  */
 public class InfoRoomWithInfoInquiriesRoom extends InfoRoom {

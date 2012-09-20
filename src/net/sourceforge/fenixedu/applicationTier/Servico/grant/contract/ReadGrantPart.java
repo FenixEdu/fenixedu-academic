@@ -11,7 +11,7 @@ import net.sourceforge.fenixedu.domain.DomainObject;
 import net.sourceforge.fenixedu.domain.grant.contract.GrantPart;
 
 /**
- * Jo„o Simas Nuno Barbosa
+ * Jo√£o Simas Nuno Barbosa
  */
 public class ReadGrantPart extends ReadDomainObjectService {
 

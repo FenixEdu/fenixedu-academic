@@ -270,47 +270,47 @@ public class ListTeachersPersonalExpectationsDA extends FenixDispatchAction {
 	List<Object> headers = new ArrayList<Object>();
 
 	headers.add("Nome");
-	headers.add("Identificação");
+	headers.add("IdentificaÃ§Ã£o");
 	headers.add("Categoria");
 
-	headers.add("Graduações");
-	headers.add("Descrição (Graduações)");
-	headers.add("Pós-Graduações Científicas");
-	headers.add("Descrição (Pós-Graduações Científicas)");
-	headers.add("Pós-Graduações Profissionais");
-	headers.add("Descrição (Pós-Graduações Profissionais)");
-	headers.add("Seminários");
-	headers.add("Descrição (Seminários)");
+	headers.add("GraduaÃ§Ãµes");
+	headers.add("DescriÃ§Ã£o (GraduaÃ§Ãµes)");
+	headers.add("PÃ³s-GraduaÃ§Ãµes CientÃ­ficas");
+	headers.add("DescriÃ§Ã£o (PÃ³s-GraduaÃ§Ãµes CientÃ­ficas)");
+	headers.add("PÃ³s-GraduaÃ§Ãµes Profissionais");
+	headers.add("DescriÃ§Ã£o (PÃ³s-GraduaÃ§Ãµes Profissionais)");
+	headers.add("SeminÃ¡rios");
+	headers.add("DescriÃ§Ã£o (SeminÃ¡rios)");
 	headers.add("Foco Principal(Ensino)");
 
 	headers.add("Projectos de I&D");
 	headers.add("Publ. de Artigos de Jornal");
 	headers.add("Publ. Livros");
-	headers.add("Publ. Conferências");
-	headers.add("Publ. Relatórios Técnicos");
+	headers.add("Publ. ConferÃªncias");
+	headers.add("Publ. RelatÃ³rios TÃ©cnicos");
 	headers.add("Publ. Patentes");
 	headers.add("Outras Publ.");
-	headers.add("Descrição (Outras Publicações)");
-	headers.add("Foco Principal(Publicações e Projectos)");
+	headers.add("DescriÃ§Ã£o (Outras PublicaÃ§Ãµes)");
+	headers.add("Foco Principal(PublicaÃ§Ãµes e Projectos)");
 
-	headers.add("Orientações de Doutoramento");
-	headers.add("Orientações de Mestrado");
-	headers.add("Orientações de Trabalhos Finais de Curso");
-	headers.add("Foco Principal(Orientações)");
+	headers.add("OrientaÃ§Ãµes de Doutoramento");
+	headers.add("OrientaÃ§Ãµes de Mestrado");
+	headers.add("OrientaÃ§Ãµes de Trabalhos Finais de Curso");
+	headers.add("Foco Principal(OrientaÃ§Ãµes)");
 
-	headers.add("Órgãos do Departamento");
-	headers.add("Órgãos do IST");
-	headers.add("Órgãos da Universidade Técnica");
-	headers.add("Foco Principal (Serviço à Universidade)");
+	headers.add("Ã“rgÃ£os do Departamento");
+	headers.add("Ã“rgÃ£os do IST");
+	headers.add("Ã“rgÃ£os da Universidade TÃ©cnica");
+	headers.add("Foco Principal (ServiÃ§o Ã  Universidade)");
 
-	headers.add("Serviços à Comunidade Científica");
-	headers.add("Serviços à Sociedade");
+	headers.add("ServiÃ§os Ã  Comunidade CientÃ­fica");
+	headers.add("ServiÃ§os Ã  Sociedade");
 	headers.add("Consultadoria");
-	headers.add("Órgãos Sociais de Empresas");
+	headers.add("Ã“rgÃ£os Sociais de Empresas");
 	headers.add("Cargos em Empresas");
 	headers.add("Foco Principal (Actividades Profissionais)");
 
-	headers.add("Auto-Avaliação");
+	headers.add("Auto-AvaliaÃ§Ã£o");
 
 	return headers;
     }

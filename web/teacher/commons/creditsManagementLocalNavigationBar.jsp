@@ -4,5 +4,5 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <bean:define id="executionCourseIdInternal" name="<%= PresentationConstants.INFO_SITE %>" property="infoExecutionCourse.idInternal" />
 <ul>
-  <li><html:link page='<%= "/executionCourseShiftsPercentageManager.do?method=show&amp;executionCourseInternalCode=" + executionCourseIdInternal.toString() %>'>Administração de créditos</html:link></li>
+  <li><html:link page='<%= "/executionCourseShiftsPercentageManager.do?method=show&amp;executionCourseInternalCode=" + executionCourseIdInternal.toString() %>'>AdministraÃ§Ã£o de crÃ©ditos</html:link></li>
 </ul>

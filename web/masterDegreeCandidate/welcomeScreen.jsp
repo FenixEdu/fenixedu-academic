@@ -1,2 +1,2 @@
-Bem vindo ao Portal de Candidatos a Pós-Graduações<br/>
-Aqui poderá alterar a sua informação pessoal e manter-se a par do estado da sua candidatura.
+Bem vindo ao Portal de Candidatos a PÃ³s-GraduaÃ§Ãµes<br/>
+Aqui poderÃ¡ alterar a sua informaÃ§Ã£o pessoal e manter-se a par do estado da sua candidatura.

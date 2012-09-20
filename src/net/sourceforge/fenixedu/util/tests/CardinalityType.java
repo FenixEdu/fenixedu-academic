@@ -31,7 +31,7 @@ public class CardinalityType extends FenixUtil {
 
     public static final String SINGLE_STRING = "Resposta Simples";
 
-    public static final String MULTIPLE_STRING = "Resposta Múltipla";
+    public static final String MULTIPLE_STRING = "Resposta MÃºltipla";
 
     private Integer type;
 

@@ -12,7 +12,7 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoObject;
 import net.sourceforge.fenixedu.domain.oldInquiries.OldInquiriesCoursesRes;
 
 /**
- * @author Jo„o Fialho & Rita Ferreira
+ * @author Jo√£o Fialho & Rita Ferreira
  * 
  */
 public class InfoOldInquiriesCoursesRes extends InfoObject implements Comparable {

@@ -15,7 +15,7 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoGratuitySituation;
 import net.sourceforge.fenixedu.presentationTier.Action.masterDegree.utils.PresentationConstants;
 
 /**
- * @author Tânia Pousão
+ * @author TÃ¢nia PousÃ£o
  * 
  */
 public class GratuityFileLetters extends GratuityFile {
@@ -41,7 +41,7 @@ public class GratuityFileLetters extends GratuityFile {
 	    file = new File(System.getProperty("java.io.tmpdir") + File.separator + fileName);
 	    writer = new BufferedWriter(new FileWriter(file));
 
-	    // errors if student hasn´t address or nothing to pay
+	    // errors if student hasnÂ´t address or nothing to pay
 	    fileNameErrors = "erros_" + nameFile((InfoGratuitySituation) infoGratuitySituations.get(0));
 	    fileErrors = new File(System.getProperty("java.io.tmpdir") + File.separator + fileNameErrors);
 	    writerErrors = new BufferedWriter(new FileWriter(fileErrors));
@@ -97,7 +97,7 @@ public class GratuityFileLetters extends GratuityFile {
 	header.append(SEPARATOR);
 	header.append("LOCALIDADE_CODIGO_POSTAL");
 	header.append(SEPARATOR);
-	header.append("REFERÊNCIA_PAGAMENTO");
+	header.append("REFERÃŠNCIA_PAGAMENTO");
 	header.append(SEPARATOR);
 	header.append("MESTRADO");
 	header.append(SEPARATOR);
@@ -119,10 +119,10 @@ public class GratuityFileLetters extends GratuityFile {
      */
     private static void writeLine(BufferedWriter writer, InfoGratuitySituation infoGratuitySituation) throws IOException {
 	StringBuilder line = new StringBuilder();
-	// student´s name
+	// studentÂ´s name
 	line.append(infoGratuitySituation.getInfoStudentCurricularPlan().getInfoStudent().getInfoPerson().getNome());
 	line.append("\t");
-	// student´s address
+	// studentÂ´s address
 	line.append(infoGratuitySituation.getInfoStudentCurricularPlan().getInfoStudent().getInfoPerson().getMorada());
 	line.append("\t");
 	// address's area

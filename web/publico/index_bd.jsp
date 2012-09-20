@@ -19,12 +19,12 @@
 <bean:message key="message.public.index.degree.consult"/>
 </p>
 <br />--%>
-	<p><strong><font color="#FF0000">Aten鐃?鐃?o&nbsp;-&nbsp;</font>Se pretende consultar informa艫o relativa a disciplinas de 4鐃? ou 5鐃? em 2003/2004 ou 5鐃? em 2004/2005 do curso de Inform鐃?tica - Alameda, deve seleccionar o plano curricular "Licenciatura em Engenharia Inform鐃?tica e de Computadores - LEIC - Curr鐃?culo Antigo"</strong></p>
-	<p>	<strong><font color="#FF0000">Aten鐃?鐃?o&nbsp;-&nbsp;</font>Devido 鐃? altera鐃?鐃?o do calend鐃?rio das Licenciaturas em Engenharia Civil, em Engenharia do Territ鐃?rio, e em Arquitectura (despacho do Conselho Directivo do passado dia 29 de Julho), as salas de aula dessas tr鐃?s Licenciaturas foram alteradas</strong></p>
+	<p><strong><font color="#FF0000">Aten誰多?誰多?o&nbsp;-&nbsp;</font>Se pretende consultar informa巽達o relativa a disciplinas de 4誰多? ou 5誰多? em 2003/2004 ou 5誰多? em 2004/2005 do curso de Inform誰多?tica - Alameda, deve seleccionar o plano curricular "Licenciatura em Engenharia Inform誰多?tica e de Computadores - LEIC - Curr誰多?culo Antigo"</strong></p>
+	<p>	<strong><font color="#FF0000">Aten誰多?誰多?o&nbsp;-&nbsp;</font>Devido 誰多? altera誰多?誰多?o do calend誰多?rio das Licenciaturas em Engenharia Civil, em Engenharia do Territ誰多?rio, e em Arquitectura (despacho do Conselho Directivo do passado dia 29 de Julho), as salas de aula dessas tr誰多?s Licenciaturas foram alteradas</strong></p>
 	
 <%--	<strong><font color="#FF0000">Aviso:</font></strong>
 	<br />
-	<strong>J鐃? est鐃?o dispon鐃?veis os <font color="#FF0000">hor鐃?rios provis鐃?rios</font> para o 1鐃? semestre de 2004/2005 </strong>
+	<strong>J誰多? est誰多?o dispon誰多?veis os <font color="#FF0000">hor誰多?rios provis誰多?rios</font> para o 1誰多? semestre de 2004/2005 </strong>
 	<br />
 --%>	
 	<br />

@@ -68,7 +68,7 @@ UPDATE `FUNCTIONALITY` AS own SET own.`ORDER_IN_MODULE` = 11 WHERE own.`UUID` = 
 UPDATE `FUNCTIONALITY` AS own SET own.`ORDER_IN_MODULE` = 12 WHERE own.`UUID` = '4d6686aa-9e47-4a47-a08a-a37d69f94eb5';
 
 --  ID: 48 UUID: 'a219a6ee-798a-43ed-928f-d071c419a6a6'
-UPDATE `FUNCTIONALITY` AS own SET own.`NAME` = 'pt31:Edição de Informação Curricularen30:Editing Curricular Information' WHERE own.`UUID` = 'a219a6ee-798a-43ed-928f-d071c419a6a6';
+UPDATE `FUNCTIONALITY` AS own SET own.`NAME` = 'pt31:EdiÃ§Ã£o de InformaÃ§Ã£o Curricularen30:Editing Curricular Information' WHERE own.`UUID` = 'a219a6ee-798a-43ed-928f-d071c419a6a6';
 
 --  ID: 216 UUID: '9ba1269a-0b8f-4daa-bde2-abbd0132327b'
 UPDATE `FUNCTIONALITY` AS own SET own.`ORDER_IN_MODULE` = 13 WHERE own.`UUID` = '9ba1269a-0b8f-4daa-bde2-abbd0132327b';
@@ -138,6 +138,6 @@ UPDATE `FUNCTIONALITY` AS own SET own.`ORDER_IN_MODULE` = 33 WHERE own.`UUID` = 
 -- 
 
 --  ID: 252 UUID: '9cf56518-f706-4854-b28e-2108ba374c43'
-INSERT INTO `FUNCTIONALITY` (`UUID`, `OJB_CONCRETE_CLASS`, `KEY_ROOT_DOMAIN_OBJECT`, `KEY_PARENT`, `KEY_MODULE`, `KEY_AVAILABILITY_POLICY`, `NAME`, `TITLE`, `DESCRIPTION`, `PATH`, `PREFIX`, `RELATIVE`, `ENABLED`, `PARAMETERS`, `ORDER_IN_MODULE`, `VISIBLE`, `MAXIMIZED`, `PRINCIPAL`) SELECT '9cf56518-f706-4854-b28e-2108ba374c43', 'net.sourceforge.fenixedu.domain.functionalities.Module', 1, NULL, NULL, NULL, 'pt11:Comunicaçãoen9:Messaging', NULL, NULL, '/messaging/index.do', '/messaging', 1, 1, NULL, 0, 1, 0, 1;
+INSERT INTO `FUNCTIONALITY` (`UUID`, `OJB_CONCRETE_CLASS`, `KEY_ROOT_DOMAIN_OBJECT`, `KEY_PARENT`, `KEY_MODULE`, `KEY_AVAILABILITY_POLICY`, `NAME`, `TITLE`, `DESCRIPTION`, `PATH`, `PREFIX`, `RELATIVE`, `ENABLED`, `PARAMETERS`, `ORDER_IN_MODULE`, `VISIBLE`, `MAXIMIZED`, `PRINCIPAL`) SELECT '9cf56518-f706-4854-b28e-2108ba374c43', 'net.sourceforge.fenixedu.domain.functionalities.Module', 1, NULL, NULL, NULL, 'pt11:ComunicaÃ§Ã£oen9:Messaging', NULL, NULL, '/messaging/index.do', '/messaging', 1, 1, NULL, 0, 1, 0, 1;
 
 COMMIT;

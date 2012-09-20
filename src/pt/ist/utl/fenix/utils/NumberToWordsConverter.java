@@ -6,15 +6,15 @@ import org.apache.commons.lang.StringUtils;
 
 public class NumberToWordsConverter {
 
-    static private final String[] ONES = { "zero", "um", "dois", "trÍs", "quatro", "cinco", "seis", "sete", "oito", "nove",
+    static private final String[] ONES = { "zero", "um", "dois", "tr√™s", "quatro", "cinco", "seis", "sete", "oito", "nove",
 	    "dez", "onze", "doze", "treze", "catorze", "quinze", "dezasseis", "dezassete", "dezoito", "dezanove" };
     static private final String[] TENS = { "", "", "vinte", "trinta", "quarenta", "cinquenta", "sessenta", "setenta", "oitenta",
 	    "noventa", "cem" };
     static private final String[] HUNDREDS = { "", "cento", "duzentos", "trezentos", "quatrocentos", "quinhentos", "seiscentos",
 	    "setecentos", "oitocentos", "novecentos", };
 
-    static private final String[] THOUSAND_SINGLE = { "", "mil", "milh„o", "bili„o" };
-    static private final String[] THOUSAND_PLURAL = { "", "mil", "milhıes", "biliıes" };
+    static private final String[] THOUSAND_SINGLE = { "", "mil", "milh√£o", "bili√£o" };
+    static private final String[] THOUSAND_PLURAL = { "", "mil", "milh√µes", "bili√µes" };
 
     static private final String ZERO = ONES[0];
     static private final String SEPARATOR = " e ";

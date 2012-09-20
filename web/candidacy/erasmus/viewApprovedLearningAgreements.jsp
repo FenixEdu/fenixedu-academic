@@ -22,7 +22,7 @@
 
 <p>
 	<html:link action='<%= f("/caseHandlingMobilityIndividualApplicationProcess.do?method=listProcessAllowedActivities&amp;processId=%s", processId.toString()) %>'>
-		« <bean:message key="label.back" bundle="APPLICATION_RESOURCES"/>	
+		Â« <bean:message key="label.back" bundle="APPLICATION_RESOURCES"/>	
 	</html:link>
 </p>
 

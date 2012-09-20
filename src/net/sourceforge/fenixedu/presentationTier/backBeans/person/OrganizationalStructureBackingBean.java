@@ -480,10 +480,10 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
 	List<SelectItem> list = new ArrayList<SelectItem>();
 
 	SelectItem selectItem = new SelectItem();
-	selectItem.setLabel("Funcion·rios");
+	selectItem.setLabel("Funcion√°rios");
 	selectItem.setValue("0");
 	SelectItem selectItem2 = new SelectItem();
-	selectItem2.setLabel("Cargos de Gest„o");
+	selectItem2.setLabel("Cargos de Gest√£o");
 	selectItem2.setValue("1");
 
 	list.add(selectItem);

@@ -21,7 +21,7 @@
 		<h:inputHidden value="#{createExecutionDegrees.chosenDegreeType}" />
 		<fc:viewState binding="#{createExecutionDegrees.viewState}"/>
 						
-		<h:outputText value="<strong>Planos Curriculares Pré-Bolonha:</strong>" escape="false" />
+		<h:outputText value="<strong>Planos Curriculares PrÃ©-Bolonha:</strong>" escape="false" />
 
 		<h:panelGroup rendered="#{!empty createExecutionDegrees.degreeCurricularPlansSelectItems.value}">
 			<h:selectManyCheckbox value="#{createExecutionDegrees.choosenDegreeCurricularPlansIDs}" layout="pageDirection" >
@@ -29,7 +29,7 @@
 			</h:selectManyCheckbox>
 		</h:panelGroup>		
 		<h:panelGroup rendered="#{empty createExecutionDegrees.degreeCurricularPlansSelectItems.value}">
-			<h:outputText value="<p><em>Não existem planos curriculares activos</em></p>" escape="false" />
+			<h:outputText value="<p><em>NÃ£o existem planos curriculares activos</em></p>" escape="false" />
 		</h:panelGroup>
 
 		<br/>
@@ -41,7 +41,7 @@
 			</h:selectManyCheckbox>
 		</h:panelGroup>
 		<h:panelGroup rendered="#{empty createExecutionDegrees.bolonhaDegreeCurricularPlansSelectItems.value}">
-			<h:outputText value="<p><em>Não existem planos curriculares activos e aprovados ou publicados</em></p>" escape="false" />
+			<h:outputText value="<p><em>NÃ£o existem planos curriculares activos e aprovados ou publicados</em></p>" escape="false" />
 		</h:panelGroup>
 
 		<br/>
@@ -50,7 +50,7 @@
 			<h:outputText value="<fieldset class='lfloat3'>" escape="false"/>
 
 				<h:outputText value="<div class='simpleblock4'>" escape="false"/>
-				<h:outputText value="<p><label>Ano de execução:</label>" escape="false"/>
+				<h:outputText value="<p><label>Ano de execuÃ§Ã£o:</label>" escape="false"/>
 					<h:selectOneMenu value="#{createExecutionDegrees.choosenExecutionYearID}" onchange="this.form.submit();" valueChangeListener="#{createExecutionDegrees.onChoosenExecutionYearChanged}">
 						<f:selectItems value="#{createExecutionDegrees.executionYears}" />
 					</h:selectOneMenu>
@@ -61,13 +61,13 @@
 						<f:selectItems value="#{createExecutionDegrees.allCampus}" />
 					</h:selectOneMenu>
 				<h:outputText value="</p>" escape="false"/>
-				<h:outputText value="<p><label>Mapa de exames temporário:</label>" escape="false"/>
+				<h:outputText value="<p><label>Mapa de exames temporÃ¡rio:</label>" escape="false"/>
 					<h:selectBooleanCheckbox value="#{createExecutionDegrees.temporaryExamMap}" />		
 				<h:outputText value="</p>" escape="false"/>
 				<h:outputText value="</div>" escape="false"/>
 
 				<h:outputText value="<div class='simpleblock4'>" escape="false"/>
-				<h:outputText value="<p><label><strong>1º Semestre</strong></label></p><br/>" escape="false"/>
+				<h:outputText value="<p><label><strong>1Âº Semestre</strong></label></p><br/>" escape="false"/>
 				<h:outputText value="<p><label>Aulas</label>" escape="false"/>
 					<h:selectOneMenu value="#{createExecutionDegrees.lessonSeason1BeginDay}">
 						<f:selectItems value="#{createExecutionDegrees.days}" />
@@ -112,7 +112,7 @@
 					<h:outputText value=" / " />
 					<h:outputText value="#{createExecutionDegrees.examsSeason1EndYear}"/>
 				<h:outputText value="</p>" escape="false"/>
-				<h:outputText value="<p><label>Prazo Lançamento Notas</label>" escape="false"/>
+				<h:outputText value="<p><label>Prazo LanÃ§amento Notas</label>" escape="false"/>
 					<h:selectOneMenu value="#{createExecutionDegrees.gradeSubmissionNormalSeason1EndDay}">
 						<f:selectItems value="#{createExecutionDegrees.days}" />
 					</h:selectOneMenu>
@@ -127,7 +127,7 @@
 				<h:outputText value="</div>" escape="false"/>
 					
 				<h:outputText value="<div class='simpleblock4'>" escape="false"/>
-				<h:outputText value="<p><label><strong>2º Semestre</strong></label></p><br/>" escape="false"/>
+				<h:outputText value="<p><label><strong>2Âº Semestre</strong></label></p><br/>" escape="false"/>
 				<h:outputText value="<p><label>Aulas (parte 1)</label>" escape="false"/>
 					<h:selectOneMenu value="#{createExecutionDegrees.lessonSeason2BeginDay}">
 						<f:selectItems value="#{createExecutionDegrees.days}" />
@@ -191,7 +191,7 @@
 					<h:outputText value=" / " />
 					<h:outputText value="#{createExecutionDegrees.examsSeason2EndYear}"/>
 				<h:outputText value="</p>" escape="false"/>
-				<h:outputText value="<p><label>Prazo Lançamento Notas</label>" escape="false"/>
+				<h:outputText value="<p><label>Prazo LanÃ§amento Notas</label>" escape="false"/>
 					<h:selectOneMenu value="#{createExecutionDegrees.gradeSubmissionNormalSeason2EndDay}">
 						<f:selectItems value="#{createExecutionDegrees.days}" />
 					</h:selectOneMenu>
@@ -205,7 +205,7 @@
 				<h:outputText value="</div>" escape="false"/>
 
 				<h:outputText value="<div class='simpleblock4'>" escape="false"/>
-				<h:outputText value="<p><label><strong>Época Especial</strong></label></p><br/>" escape="false"/>
+				<h:outputText value="<p><label><strong>Ã‰poca Especial</strong></label></p><br/>" escape="false"/>
 				<h:outputText value="<p><label>Exames</label>" escape="false"/>
 					<h:selectOneMenu value="#{createExecutionDegrees.examsSpecialSeasonBeginDay}">
 						<f:selectItems value="#{createExecutionDegrees.days}" />
@@ -227,7 +227,7 @@
 					<h:outputText value=" / " />
 					<h:outputText value="#{createExecutionDegrees.examsSpecialSeasonEndYear}"/>					
 				<h:outputText value="</p>" escape="false"/>
-				<h:outputText value="<p><label>Prazo Lançamento Notas</label>" escape="false"/>
+				<h:outputText value="<p><label>Prazo LanÃ§amento Notas</label>" escape="false"/>
 					<h:selectOneMenu value="#{createExecutionDegrees.gradeSubmissionSpecialSeasonEndDay}">
 						<f:selectItems value="#{createExecutionDegrees.days}" />
 					</h:selectOneMenu>

@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="ISO-8859-1"  ?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with iReport - A designer for JasperReports -->
 <!DOCTYPE jasperReport PUBLIC "//JasperReports//DTD Report Design//EN" "http://jasperreports.sourceforge.net/dtds/jasperreport.dtd">
 <jasperReport
@@ -18,7 +18,7 @@
 		 isTitleNewPage="false"
 		 isSummaryNewPage="false">
 	<property name="ireport.scriptlethandling" value="0" />
-	<property name="ireport.encoding" value="ISO-8859-1" />
+	<property name="ireport.encoding" value="UTF-8" />
 	<import value="java.util.*" />
 	<import value="net.sf.jasperreports.engine.*" />
 	<import value="net.sf.jasperreports.engine.data.*" />
@@ -183,7 +183,7 @@
 					<textElement>
 						<font size="8" isBold="true"/>
 					</textElement>
-				<text><![CDATA[T - Teóricas]]></text>
+				<text><![CDATA[T - TeÃ³ricas]]></text>
 				</staticText>
 				<staticText>
 					<reportElement
@@ -198,7 +198,7 @@
 					<textElement>
 						<font size="8" isBold="true"/>
 					</textElement>
-				<text><![CDATA[P - Práticas]]></text>
+				<text><![CDATA[P - PrÃ¡ticas]]></text>
 				</staticText>
 				<staticText>
 					<reportElement
@@ -213,7 +213,7 @@
 					<textElement>
 						<font size="8" isBold="true"/>
 					</textElement>
-				<text><![CDATA[TP - Teórico-Práticas]]></text>
+				<text><![CDATA[TP - TeÃ³rico-PrÃ¡ticas]]></text>
 				</staticText>
 				<staticText>
 					<reportElement
@@ -271,7 +271,7 @@
 					<textElement textAlignment="Justified" markup="styled" lineSpacing="1_1_2">
 						<font pdfFontName="Times-Roman" size="11" isBold="false" isItalic="false"/>
 					</textElement>
-				<textFieldExpression   class="java.lang.String"><![CDATA[$P{administrativeOfficeCoordinatorName} + ", " + $P{coordinatorWithoutArticle} + " DO " + $P{institutionName}.toUpperCase() + ", " + $P{universityName}.toUpperCase() + ", certifica que no processo individual do aluno <style pdfFontName=\"Times-Bold\"> " + $P{name} + "</style>, com o número <style pdfFontName=\"Times-Bold\">" + $P{studentNumber} + "</style>, do <style pdfFontName=\"Times-Bold\">" + $P{degreeDescription} + "</style>, consta a seguinte carga horária semanal (em horas):"]]></textFieldExpression>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$P{administrativeOfficeCoordinatorName} + ", " + $P{coordinatorWithoutArticle} + " DO " + $P{institutionName}.toUpperCase() + ", " + $P{universityName}.toUpperCase() + ", certifica que no processo individual do aluno <style pdfFontName=\"Times-Bold\"> " + $P{name} + "</style>, com o nÃºmero <style pdfFontName=\"Times-Bold\">" + $P{studentNumber} + "</style>, do <style pdfFontName=\"Times-Bold\">" + $P{degreeDescription} + "</style>, consta a seguinte carga horÃ¡ria semanal (em horas):"]]></textFieldExpression>
 				</textField>
 			</band>
 		</title>
@@ -347,7 +347,7 @@
 					<textElement textAlignment="Center" verticalAlignment="Middle">
 						<font pdfFontName="Courier-Oblique" size="8" isItalic="true"/>
 					</textElement>
-				<text><![CDATA[Pág.]]></text>
+				<text><![CDATA[PÃ¡g.]]></text>
 				</staticText>
 				<staticText>
 					<reportElement
@@ -423,7 +423,7 @@
 					<textElement textAlignment="Center" verticalAlignment="Middle">
 						<font pdfFontName="Courier-Oblique" size="8" isItalic="true"/>
 					</textElement>
-				<text><![CDATA[Pág.]]></text>
+				<text><![CDATA[PÃ¡g.]]></text>
 				</staticText>
 				<staticText>
 					<reportElement

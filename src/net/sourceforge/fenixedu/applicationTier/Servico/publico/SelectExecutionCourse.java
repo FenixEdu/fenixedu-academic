@@ -13,7 +13,7 @@ import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import pt.ist.fenixWebFramework.services.Service;
 
 /**
- * @author Jo„o Mota
+ * @author Jo√£o Mota
  */
 public class SelectExecutionCourse extends FenixService {
 

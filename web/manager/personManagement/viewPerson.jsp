@@ -99,7 +99,7 @@
             <fr:property name="columnClasses" value=""/>
         </fr:layout>
 	</fr:view>
-	<html:link page="/partyContacts.do?method=resetValidationRequests" paramId="personID" paramName="personID">Fazer reset ao n�mero de valida��es</html:link>
+	<html:link page="/partyContacts.do?method=resetValidationRequests" paramId="personID" paramName="personID">Fazer reset ao número de validações</html:link>
 	</logic:equal>
 	
 
@@ -585,7 +585,7 @@
 
 
 
-	<!-- Informa��o de Utilizador -->
+	<!-- Informaï¿½ï¿½o de Utilizador -->
 	<table class="mtop15" width="98%" cellpadding="0" cellspacing="0">
 		<tr>
 			<td class="infoop" width="25"><span class="emphasis-box">4</span></td>
@@ -627,7 +627,7 @@
 
 
 
-	<!-- Filia��o -->
+	<!-- Filiaï¿½ï¿½o -->
 	<table class="mtop15" width="98%" cellpadding="0" cellspacing="0">
 		<tr>
 			<td class="infoop" width="25"><span class="emphasis-box">5</span></td>
@@ -665,7 +665,7 @@
 
 	</logic:notPresent>
 
-	<!-- Resid�ncia -->
+	<!-- Residï¿½ncia -->
 	<table class="mtop15" width="98%" cellpadding="0" cellspacing="0">
 		<tr>
 			<td class="infoop" width="25"><span class="emphasis-box">6</span></td>

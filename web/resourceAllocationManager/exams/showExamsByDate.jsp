@@ -29,10 +29,10 @@
 		<tr>
 			<th class="listClasses-header">Disciplina</th>
 			<th class="listClasses-header">Curso</th>		
-			<th class="listClasses-header">�poca</th>
+			<th class="listClasses-header">Época</th>
 			<th class="listClasses-header">Hora</th>
 			<th class="listClasses-header">Salas</th>
-			<th class="listClasses-header">N� Alunos</th>	
+			<th class="listClasses-header">Nï¿½ Alunos</th>	
 			<th class="listClasses-header">Faltam X Lugares</th>	
 		</tr>
 		<logic:iterate id="infoViewExam" indexId="index" name="<%= PresentationConstants.LIST_EXAMSANDINFO %>" scope="request">

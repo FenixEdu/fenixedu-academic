@@ -37,7 +37,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 /**
- * @author Fernanda Quitério Created on 31/Aug/2004
+ * @author Fernanda QuitÃ©rio Created on 31/Aug/2004
  * 
  */
 @Mapping(module = "masterDegreeAdministrativeOffice", path = "/manageExemptionGratuityLA", input = "/manageExemptionGratuity.do?method=readExemptionGratuity&page=0", attribute = "exemptionGratuityForm", formBean = "exemptionGratuityForm", scope = "request", parameter = "method")

@@ -11,7 +11,7 @@
 		</html:link>
 	</li>
 		
-	<li class="navheader">Gestão de Docentes</li>
+	<li class="navheader">GestÃ£o de Docentes</li>
 		<li>
 			<html:link page="/teacherCategoriesManagement.do?method=prepareEdit">
 				<bean:message key="edit.categories" bundle="MANAGER_RESOURCES" />

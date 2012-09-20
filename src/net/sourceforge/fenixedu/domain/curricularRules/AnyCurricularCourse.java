@@ -158,14 +158,14 @@ public class AnyCurricularCourse extends AnyCurricularCourse_Base {
 	    labelList.add(new GenericPair<Object, Boolean>("label.in", true));
 	    labelList.add(new GenericPair<Object, Boolean>(" ", false));
 	    labelList.add(new GenericPair<Object, Boolean>(getCurricularPeriodOrder(), false));
-	    labelList.add(new GenericPair<Object, Boolean>("บ ", false));
+	    labelList.add(new GenericPair<Object, Boolean>("ยบ ", false));
 	    labelList.add(new GenericPair<Object, Boolean>("SEMESTER", true));
 	}
 	if (hasYearsLimit()) {
 	    if (getMinimumYear().compareTo(getMaximumYear()) == 0) {
 		labelList.add(new GenericPair<Object, Boolean>(", ", false));
 		labelList.add(new GenericPair<Object, Boolean>("label.of", true));
-		labelList.add(new GenericPair<Object, Boolean>("บ ", false));
+		labelList.add(new GenericPair<Object, Boolean>("ยบ ", false));
 		labelList.add(new GenericPair<Object, Boolean>(getMinimumYear(), false));
 		labelList.add(new GenericPair<Object, Boolean>(" ", false));
 		labelList.add(new GenericPair<Object, Boolean>("label.year", true));
@@ -174,11 +174,11 @@ public class AnyCurricularCourse extends AnyCurricularCourse_Base {
 		labelList.add(new GenericPair<Object, Boolean>("label.of", true));
 		labelList.add(new GenericPair<Object, Boolean>(" ", false));
 		labelList.add(new GenericPair<Object, Boolean>(getMinimumYear(), false));
-		labelList.add(new GenericPair<Object, Boolean>("บ ", false));
+		labelList.add(new GenericPair<Object, Boolean>("ยบ ", false));
 		labelList.add(new GenericPair<Object, Boolean>("label.to1", true));
 		labelList.add(new GenericPair<Object, Boolean>(" ", false));
 		labelList.add(new GenericPair<Object, Boolean>(getMaximumYear(), false));
-		labelList.add(new GenericPair<Object, Boolean>("บ ", false));
+		labelList.add(new GenericPair<Object, Boolean>("ยบ ", false));
 		labelList.add(new GenericPair<Object, Boolean>("label.year", true));
 	    }
 	}

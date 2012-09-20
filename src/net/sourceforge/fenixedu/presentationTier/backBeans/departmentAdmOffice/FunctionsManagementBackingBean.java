@@ -433,7 +433,7 @@ public class FunctionsManagementBackingBean extends FenixBackingBean {
 	for (ExecutionSemester executionSemester : executionYear.getExecutionPeriods()) {
 	    SelectItem selectItem = new SelectItem();
 	    selectItem.setValue(executionSemester.getIdInternal());
-	    selectItem.setLabel(executionYear.getYear() + " - " + executionSemester.getSemester() + "บ Semestre");
+	    selectItem.setLabel(executionYear.getYear() + " - " + executionSemester.getSemester() + "ยบ Semestre");
 	    list.add(selectItem);
 	}
     }

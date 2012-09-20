@@ -28,7 +28,7 @@ import pt.ist.fenixWebFramework.security.UserView;
 import pt.utl.ist.fenix.tools.util.CollectionPager;
 
 /**
- * @author T‚nia Pous„o
+ * @author T√¢nia Pous√£o
  * 
  */
 public class FindPersonAction extends FenixDispatchAction {

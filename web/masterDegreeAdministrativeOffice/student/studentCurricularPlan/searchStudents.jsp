@@ -13,9 +13,9 @@
 			<span class="emphasis-box">info</span>
 		</td>
 		<td class="infoop">
-			<strong>Nota:</strong> Na indicaçãodo nome pode ser fornecido apenas parte do nome do aluno.<br/>
-			Exemplo 1: Para selecionar todos os alunos que começam com a letra "A" escreva <strong>A%</strong><br/>
-			Exemplo 2: Para selecionar todos os alunos que começam com a letra "A" e que tenham um segundo nome que começa com a letra "M" escreva <strong>A% M%</strong>
+			<strong>Nota:</strong> Na indicaÃ§Ã£odo nome pode ser fornecido apenas parte do nome do aluno.<br/>
+			Exemplo 1: Para selecionar todos os alunos que comeÃ§am com a letra "A" escreva <strong>A%</strong><br/>
+			Exemplo 2: Para selecionar todos os alunos que comeÃ§am com a letra "A" e que tenham um segundo nome que comeÃ§a com a letra "M" escreva <strong>A% M%</strong>
 		</td>
 	</tr>
 </table>

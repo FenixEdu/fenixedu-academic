@@ -9,7 +9,7 @@
 <br/>
 <bean:define id="link"><%= request.getContextPath() %>/dotIstPortal.do?prefix=/student&amp;page=/index.do</bean:define>
 <html:link href='<%= link %>'><b>
-		Sair do processo de inscriÁ„o
+		Sair do processo de inscri√ß√£o
 	</b>
 </html:link>
 <br/>
@@ -19,24 +19,24 @@
 <br />	
 	<table width="70%" align="center">
 		<tr>
-			<td colspan="3"><h2 class="redtxt">InformaÁıes de utilizaÁ„o:</h2><p>Na lista abaixo est„o as turmas que dispıem de vagas nas disciplinas a que pretende frequentar. Para facilitar a escolha, encontram-se ordenadas, por ordem decrescente, de n˙mero de disciplinas que se pretende frequentar. Seleccione, por favor, a turma desejada.</p><h2>Turmas</h2></td>
+			<td colspan="3"><h2 class="redtxt">Informa√ß√µes de utiliza√ß√£o:</h2><p>Na lista abaixo est√£o as turmas que disp√µem de vagas nas disciplinas a que pretende frequentar. Para facilitar a escolha, encontram-se ordenadas, por ordem decrescente, de n√∫mero de disciplinas que se pretende frequentar. Seleccione, por favor, a turma desejada.</p><h2>Turmas</h2></td>
 		</tr>
 		<tr>
 			<th class="listClasses-header">Ano</th>
 			<th class="listClasses-header">Turma</th>
-			<th class="listClasses-header">Hor·rio</th>
+			<th class="listClasses-header">Hor√°rio</th>
 		</tr>
 		<logic:iterate id="infoClass" name="infoStudentShiftEnrolment" property="allowedClasses" >
 			<bean:define id="curricularYear" name="infoClass" property="anoCurricular"/>
 			<tr>
-				<td class="listClasses"><bean:write name="curricularYear"/>1∫ Ano</td>
+				<td class="listClasses"><bean:write name="curricularYear"/>1¬∫ Ano</td>
 				<td class="listClasses">
 					<html:link page="/studentShiftEnrolmentManager.do?method=showAvailableShifts" paramId="class" paramName="infoClass" paramProperty="nome" transaction="true">
 					<bean:write name="infoClass" property="nome"/>
 					</html:link>
 				</td>
 				<td class="listClasses">
-					<html:link page="/studentShiftEnrolmentManager.do?method=viewClassTimeTable" paramId="classId" paramName="infoClass" paramProperty="idInternal" target="_blank" >Ver Hor·rio</html:link>
+					<html:link page="/studentShiftEnrolmentManager.do?method=viewClassTimeTable" paramId="classId" paramName="infoClass" paramProperty="idInternal" target="_blank" >Ver Hor√°rio</html:link>
 				</td>
 				<%--<td>
 					<html:link page="/studentShiftEnrolmentManager.do?method=showAvailableShifts" paramId="class" paramName="infoClass" paramProperty="nome" transaction="true">
@@ -61,11 +61,11 @@
 	</tr>
 </table>
 <br />
-	<logic:notPresent name="infoStudentShiftEnrolment" property="lessons">N„o est· inscrito em nenhum turno...</logic:notPresent>
+	<logic:notPresent name="infoStudentShiftEnrolment" property="lessons">N√£o est√° inscrito em nenhum turno...</logic:notPresent>
 	<logic:present name="infoStudentShiftEnrolment" property="lessons">
 <table width="70%" align="center">
 	<tr>
-		<td colspan="3"><h2>Turnos em que est· inscrito:</h2></td>
+		<td colspan="3"><h2>Turnos em que est√° inscrito:</h2></td>
 	</tr>
 		<logic:iterate name="infoStudentShiftEnrolment"  id="enroledShift" property="currentEnrolment"  type="net.sourceforge.fenixedu.dataTransferObject.InfoShift">
 	<tr>
@@ -79,7 +79,7 @@
 								<dt:format pattern="HH:mm">
 									<bean:write name="lesson" property="inicio.time.time"/>
 								</dt:format>
-								‡s
+								√†s
 								<dt:format pattern="HH:mm">
 									<bean:write name="lesson" property="fim.time.time"/>
 								</dt:format>
@@ -95,11 +95,11 @@
 </table>
 <br />
 <bean:define id="infoLessons" name="infoStudentShiftEnrolment" property="lessons" />
-<div align="center"><h2>O Meu Hor·rio</h2></div>
+<div align="center"><h2>O Meu Hor√°rio</h2></div>
 <div align="center"><app:gerarHorario name="infoLessons" type="<%= TimeTableType.CLASS_TIMETABLE_WITHOUT_LINKS %>"/></div><br />
 </logic:present>
 <logic:notPresent name="infoStudentShiftEnrolment" property="allowedClasses">
-<div class="error" align="center">N„o existem turmas disponÌveis.</div>
+<div class="error" align="center">N√£o existem turmas dispon√≠veis.</div>
 </logic:notPresent>
 <br />
 

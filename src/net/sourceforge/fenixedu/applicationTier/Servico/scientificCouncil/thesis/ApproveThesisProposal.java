@@ -31,7 +31,7 @@ public class ApproveThesisProposal extends ThesisServiceWithMailNotification {
     private static final String BODY_KEY = "thesis.proposal.jury.approve.body";
     private static final String COORDINATOR_BODY_KEY = "thesis.proposal.jury.approve.body.coordinator";
 
-    private static final String DEGREE_ANNOUNCEMENTS_BOARD_NAME = "Anúncios";
+    private static final String DEGREE_ANNOUNCEMENTS_BOARD_NAME = "AnÃºncios";
 
     @Override
     void process(Thesis thesis) {

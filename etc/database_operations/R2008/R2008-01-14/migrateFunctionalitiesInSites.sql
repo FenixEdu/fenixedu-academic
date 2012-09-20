@@ -1,6 +1,6 @@
 -- Migration of homepage functionalities
 
--- Prémios 9e0b010c-48bc-480f-9530-c7b83a4c37e0
+-- PrÃ©mios 9e0b010c-48bc-480f-9530-c7b83a4c37e0
 select @Functionality:=C.ID_INTERNAL from CONTENT C WHERE CONTENT_ID='9e0b010c-48bc-480f-9530-c7b83a4c37e0';
 
 CREATE TEMPORARY TABLE ADD_FUNCTIONALITY(PARENT INTEGER, CHILD INTEGER);

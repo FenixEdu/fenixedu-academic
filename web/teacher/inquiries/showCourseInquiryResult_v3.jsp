@@ -171,7 +171,7 @@ jQuery(document).ready(function() {
 				<bean:define id="questionValue" name="questionResult" property="presentationValue"/>
 				<bean:define id="espectedValue" value="0"/>
 				<logic:equal name="iter" value="2">
-					{ name: 'Trabalho Autónomo', data: [ <bean:write name="autonumousWorkEcts"/>, 0 ]},
+					{ name: 'Trabalho AutÃ³nomo', data: [ <bean:write name="autonumousWorkEcts"/>, 0 ]},
 					<bean:define id="espectedValue"><bean:write name="contactLoadEcts"/></bean:define>
 				</logic:equal>  
 	            <%= "{ name: '" + questionLabel.toString() + "', data: [" + espectedValue + "," + (questionValue.equals("") ? "0" : questionValue) + "]},"%>
@@ -279,17 +279,17 @@ jQuery(document).ready(function() {
 <fmt:setBundle basename="resources.InquiriesResources" var="INQUIRIES_RESOURCES"/>
 
 <p>
-	<em style="float: left;"><bean:write name="executionPeriod" property="semester"/>º <bean:message key="label.inquiries.semester" bundle="INQUIRIES_RESOURCES"/>
+	<em style="float: left;"><bean:write name="executionPeriod" property="semester"/>Âº <bean:message key="label.inquiries.semester" bundle="INQUIRIES_RESOURCES"/>
 		 - <bean:write name="executionPeriod" property="executionYear.year"/></em>
-	<em style="float: right;">Data de produção dos resultados: <fr:view name="resultsDate" layout="no-time"/></em>
+	<em style="float: right;">Data de produÃ§Ã£o dos resultados: <fr:view name="resultsDate" layout="no-time"/></em>
 </p>
 
 <div style="clear: both;"></div>
-<h1>QUC - Resultados dos Inquéritos aos Alunos: <bean:write name="executionCourse" property="name"/></h1>
+<h1>QUC - Resultados dos InquÃ©ritos aos Alunos: <bean:write name="executionCourse" property="name"/></h1>
 
 <p><bean:write name="executionDegree" property="degreeName"/></p>
 
-<h2>Resultados gerais da UC e estatísticas de preenchimento</h2>
+<h2>Resultados gerais da UC e estatÃ­sticas de preenchimento</h2>
 <table class="structural"> 
 	<tr> 
 		<td style="width: 400px; padding-right: 30px;"> 
@@ -355,7 +355,7 @@ jQuery(document).ready(function() {
 				p.inquiry-available { margin-top: 0; }			
 			</style>
 			<p class="nonresponses">
-				<span>Opção "Não responder":</span>
+				<span>OpÃ§Ã£o "NÃ£o responder":</span>
 				<bean:size id="size" name="nonAnswersResultsSummaryBean" property="questionsResults"/>
 				<logic:iterate indexId="index" length="length" id="questionResult" name="nonAnswersResultsSummaryBean" property="questionsResults">
 					<bean:define id="questionLabel" name="questionResult" property="inquiryQuestion.label"/>				
@@ -373,12 +373,12 @@ jQuery(document).ready(function() {
 			</p>
 			<p class="inquiry-available">
 				<span>
-					Disponível para inquérito: 
+					DisponÃ­vel para inquÃ©rito: 
 					<logic:equal value="true" name="executionCourse" property="availableForInquiries">
 						Sim
 					</logic:equal>
 					<logic:notEqual value="true" name="executionCourse" property="availableForInquiries">
-						Não
+						NÃ£o
 					</logic:notEqual>
 				</span>
 			</p>
@@ -431,8 +431,8 @@ jQuery(document).ready(function() {
 			<logic:equal value="0" name="iter">
 				<a href="#" class="helpleft">[?]
 					<span> 
-						<b>ECTS Previsto:</b> carga de trabalho prevista para a UC, nomeadamente, distribuída pelas várias componentes.<br/> 
-						<b>ECTS Estimado:</b> componentes da carga de trabalho média estimada pelos alunos em 1ª inscrição que obtiveram aprovação. 
+						<b>ECTS Previsto:</b> carga de trabalho prevista para a UC, nomeadamente, distribuÃ­da pelas vÃ¡rias componentes.<br/> 
+						<b>ECTS Estimado:</b> componentes da carga de trabalho mÃ©dia estimada pelos alunos em 1Âª inscriÃ§Ã£o que obtiveram aprovaÃ§Ã£o. 
 					</span>
 				</a>
 			</logic:equal>

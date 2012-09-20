@@ -74,7 +74,7 @@ public class ViewCurriculumGraphDispatchAction extends FenixDispatchAction {
 	renderer1.setSeriesPaint(0, new Color(0xA0, 0xCF, 0xEC));
 	renderer1.setSeriesPaint(1, new Color(0xFF, 0xDA, 0xB9));
 
-	final ValueAxis axis2 = new NumberAxis3D("Nบ de Cadeiras");
+	final ValueAxis axis2 = new NumberAxis3D("Nยบ de Cadeiras");
 	plot.setRangeAxis(axis2);
 
 	// change the auto tick unit selection to integer units only.
@@ -103,8 +103,8 @@ public class ViewCurriculumGraphDispatchAction extends FenixDispatchAction {
 	final DefaultCategoryDataset dataset = new DefaultCategoryDataset();
 
 	// row keys...
-	final String series1 = "Nบ de Cadeiras Inscritas";
-	final String series2 = "Nบ de Cadeiras Aprovadas";
+	final String series1 = "Nยบ de Cadeiras Inscritas";
+	final String series2 = "Nยบ de Cadeiras Aprovadas";
 
 	// column keys...
 	String year = new String();
@@ -115,9 +115,9 @@ public class ViewCurriculumGraphDispatchAction extends FenixDispatchAction {
 	    semester = executionPeriodStatisticsBean.getExecutionPeriod().getSemester().toString();
 	    dataset
 		    .addValue(executionPeriodStatisticsBean.getTotalEnrolmentsNumber(), series1, year + " - " + semester
-			    + "บ sem");
+			    + "ยบ sem");
 	    dataset.addValue(executionPeriodStatisticsBean.getApprovedEnrolmentsNumber(), series2, year + " - " + semester
-		    + "บ sem");
+		    + "ยบ sem");
 	}
 	return dataset;
     }

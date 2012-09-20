@@ -153,7 +153,7 @@ public class PrepareCreateGuide extends FenixService {
 	case STUDENT_CURRICULAR_PLAN_INTEGRATED_MASTER_DEGREE:
 	    return "Integrado";
 	case STUDENT_CURRICULAR_PLAN_SPECIALIZATION:
-	    return "Especialização";
+	    return "EspecializaÃ§Ã£o";
 	}
 
 	return null;

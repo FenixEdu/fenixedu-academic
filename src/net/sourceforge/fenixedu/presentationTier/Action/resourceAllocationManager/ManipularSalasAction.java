@@ -20,8 +20,8 @@ import org.apache.struts.config.FormBeanConfig;
 import org.apache.struts.config.ModuleConfig;
 
 /**
- * @author Nuno Ant„o
- * @author Jo„o Pereira
+ * @author Nuno Ant√£o
+ * @author Jo√£o Pereira
  */
 
 public class ManipularSalasAction extends FenixSelectedRoomsContextAction {

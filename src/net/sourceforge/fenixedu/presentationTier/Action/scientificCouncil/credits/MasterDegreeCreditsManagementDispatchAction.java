@@ -458,16 +458,16 @@ public class MasterDegreeCreditsManagementDispatchAction extends FenixDispatchAc
 	final List<Object> headers = new ArrayList<Object>();
 	headers.add("Disciplina");
 	headers.add("Tipo");
-	headers.add("Créditos");
-	headers.add("Nº Alunos Inscritos (Total)");
-	headers.add("Nº Alunos Inscritos (1º vez)");
+	headers.add("CrÃ©ditos");
+	headers.add("NÂº Alunos Inscritos (Total)");
+	headers.add("NÂº Alunos Inscritos (1Âº vez)");
 	headers.add("Semestre");
-	headers.add("Código da Execução");
-	headers.add("Número");
+	headers.add("CÃ³digo da ExecuÃ§Ã£o");
+	headers.add("NÃºmero");
 	headers.add("Docente");
 	headers.add("Departamento");
 	headers.add("Horas Leccionadas");
-	headers.add("Créditos Lectivos");
+	headers.add("CrÃ©ditos Lectivos");
 	headers.add("Cursos");
 	return headers;
     }

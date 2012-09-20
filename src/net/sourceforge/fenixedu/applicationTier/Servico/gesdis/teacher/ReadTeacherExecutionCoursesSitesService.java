@@ -21,7 +21,7 @@ import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.ist.fenixWebFramework.services.Service;
 
 /**
- * @author Jo„o Mota
+ * @author Jo√£o Mota
  * 
  * 
  */

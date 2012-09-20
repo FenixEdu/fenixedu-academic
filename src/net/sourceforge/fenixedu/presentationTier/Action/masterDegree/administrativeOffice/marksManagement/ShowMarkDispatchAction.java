@@ -20,7 +20,7 @@ import org.apache.struts.action.ActionMapping;
 import pt.ist.fenixWebFramework.security.UserView;
 
 /**
- * @author Fernanda Quitério 30/06/2003
+ * @author Fernanda QuitÃ©rio 30/06/2003
  * 
  */
 

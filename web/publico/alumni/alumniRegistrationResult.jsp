@@ -7,7 +7,7 @@
 
 <!-- alumniRegistrationResult.jsp -->
 
-<h1>InscriÁ„o Alumni</h1>
+<h1>Inscri√ß√£o Alumni</h1>
 
 <div class="alumnilogo">
 	
@@ -34,7 +34,7 @@
 			<bean:message key="label.fenix.login" bundle="ALUMNI_RESOURCES" /> <strong><bean:write name="loginAlias" /></strong> 
 		</p>
 		<p>
-			Caso nunca tenha acedido ao sistema dever· <a href="https://id.ist.utl.pt/password/recover.php" target="_blank">obter uma password</a>.
+			Caso nunca tenha acedido ao sistema dever√° <a href="https://id.ist.utl.pt/password/recover.php" target="_blank">obter uma password</a>.
 		</p>		
 	</logic:equal>
 	
@@ -52,7 +52,7 @@
 	<div class="h_box_alt" style="margin-top: 3em;">
 		<ul class="material">
 			<li style="padding-left: 35px;">
-				Participe activamente na melhoria contÌnua do IST. O seu contributo È fundamental.
+				Participe activamente na melhoria cont√≠nua do IST. O seu contributo √© fundamental.
 			</li>
 		</ul>
 	</div>

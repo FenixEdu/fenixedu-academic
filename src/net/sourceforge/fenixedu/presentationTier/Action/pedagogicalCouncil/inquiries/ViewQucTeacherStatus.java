@@ -108,11 +108,11 @@ public class ViewQucTeacherStatus extends FenixDispatchAction {
 	Spreadsheet spreadsheet = new Spreadsheet("Docentes em falta");
 	spreadsheet.setHeader("Departamento");
 	spreadsheet.setHeader("Docente");
-	spreadsheet.setHeader("Nº Mec");
+	spreadsheet.setHeader("NÂº Mec");
 	spreadsheet.setHeader("Telefone");
 	spreadsheet.setHeader("Email");
-	spreadsheet.setHeader("Comentários obrigatórios por fazer");
-	spreadsheet.setHeader("Inquérito por responder");
+	spreadsheet.setHeader("ComentÃ¡rios obrigatÃ³rios por fazer");
+	spreadsheet.setHeader("InquÃ©rito por responder");
 	spreadsheet.setHeader("Disciplinas");
 	spreadsheet.setHeader("Disciplinas sujeitas auditoria");
 
@@ -123,8 +123,8 @@ public class ViewQucTeacherStatus extends FenixDispatchAction {
 	    row.setCell(teacherBean.getTeacher().getUsername());
 	    row.setCell(teacherBean.getTeacher().getDefaultMobilePhoneNumber());
 	    row.setCell(teacherBean.getTeacher().getDefaultEmailAddressValue());
-	    row.setCell(teacherBean.isCommentsToMake() ? "Sim" : "Não");
-	    row.setCell(teacherBean.isInquiryToAnswer() ? "Sim" : "Não");
+	    row.setCell(teacherBean.isCommentsToMake() ? "Sim" : "NÃ£o");
+	    row.setCell(teacherBean.isInquiryToAnswer() ? "Sim" : "NÃ£o");
 	    StringBuilder sb = new StringBuilder();
 	    StringBuilder sbAudit = new StringBuilder();
 	    for (ExecutionCourse executionCourse : teacherBean.getOrderedCoursesToComment()) {

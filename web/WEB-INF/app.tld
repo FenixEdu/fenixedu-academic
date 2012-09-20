@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="ISO-8859-1" ?>
+<?xml version="1.0" encoding="UTF-8"?>
 
 <!DOCTYPE taglib
 
@@ -22,7 +22,7 @@
 
   <info>
 
-    Biblioteca de TAGs da aplicação do IST.
+    Biblioteca de TAGs da aplicaÃ§Ã£o do IST.
 
   </info>
   
@@ -32,7 +32,7 @@
     <tagclass>net.sourceforge.fenixedu.presentationTier.TagLib.sop.v3.RenderTimeTableTag</tagclass>
     <bodycontent>empty</bodycontent>
     <info>
-        Gera a apresentação de um horário.
+        Gera a apresentaÃ§Ã£o de um horÃ¡rio.
     </info>
     <attribute>
       <name>name</name>
@@ -304,7 +304,7 @@
 </attribute>
 </tag>
 
-  <!-- OptionsTag: Tânia & Fernanda da Assiduidade -->
+  <!-- OptionsTag: TÃ¢nia & Fernanda da Assiduidade -->
   <tag>
   
     <name>options</name>
@@ -355,7 +355,7 @@
   
   </tag>
   
-  <!-- MessageTag: Tânia & Fernanda da Assiduidade -->
+  <!-- MessageTag: TÃ¢nia & Fernanda da Assiduidade -->
   <tag>
   
     <name>message</name>
@@ -415,7 +415,7 @@
 
 	
 	
-	<!-- Date Tag: formats a calendar into something of the format DD/mm/yyyy ! João Mota -->
+	<!-- Date Tag: formats a calendar into something of the format DD/mm/yyyy ! JoÃ£o Mota -->
   <tag>
   
     <name>date</name>

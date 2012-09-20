@@ -10,7 +10,7 @@ public class SystemSender extends SystemSender_Base {
 	super();
 	setMembers(new RoleGroup(Role.getRoleByRoleType(RoleType.MANAGER)));
 	setFromAddress("noreply@ist.utl.pt");
-	setFromName("Sistema Fénix");
+	setFromName("Sistema FÃ©nix");
 	setSystemRootDomainObject(getRootDomainObject());
     }
 }

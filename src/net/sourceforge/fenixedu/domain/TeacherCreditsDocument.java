@@ -86,7 +86,7 @@ public class TeacherCreditsDocument extends TeacherCreditsDocument_Base {
 	if (category != null) {
 	    htmlText.append(category);
 	}
-	htmlText.append("</td><td><strong>Secção:</strong>");
+	htmlText.append("</td><td><strong>SecÃ§Ã£o:</strong>");
 	if (lastWorkingUnit != null) {
 	    htmlText.append(lastWorkingUnit.getName());
 	}
@@ -101,31 +101,31 @@ public class TeacherCreditsDocument extends TeacherCreditsDocument_Base {
 	}
 	htmlText.append("</td></tr></table>");
 
-	htmlText.append("<h3>Resumo de créditos</h3>");
+	htmlText.append("<h3>Resumo de crÃ©ditos</h3>");
 	htmlText.append("<ul style=\"list-style: none; font-size: 65%;\"><li><b>")
 		.append(creditLineDTO.getTeachingDegreeCredits())
-		.append("</b> (A) - Créditos provenientes de aulas de licenciatura</li>");
+		.append("</b> (A) - CrÃ©ditos provenientes de aulas de licenciatura</li>");
 	htmlText.append("<li><b>").append(creditLineDTO.getSupportLessonHours())
-		.append("</b> (D) - Horas semanais de aulas de dúvidas</li>");
+		.append("</b> (D) - Horas semanais de aulas de dÃºvidas</li>");
 	htmlText.append("<li><b>").append(creditLineDTO.getMasterDegreeCredits())
-		.append("</b> (M) - Créditos provenientes de aulas de mestrado</li>");
+		.append("</b> (M) - CrÃ©ditos provenientes de aulas de mestrado</li>");
 	htmlText.append("<li><b>").append(creditLineDTO.getTfcAdviseCredits())
-		.append("</b> (TFC) - Créditos provenientes de alunos de trabalho final de curso</li>");
+		.append("</b> (TFC) - CrÃ©ditos provenientes de alunos de trabalho final de curso</li>");
 	htmlText.append("<li><b>").append(creditLineDTO.getThesesCredits())
-		.append("</b> (Diss) - Créditos provenientes de Dissertações</li>");
+		.append("</b> (Diss) - CrÃ©ditos provenientes de DissertaÃ§Ãµes</li>");
 	htmlText.append("<li><b>").append(creditLineDTO.getInstitutionWorkingHours())
-		.append("</b> (P) - Horas semanais de permanência no IST</li>");
+		.append("</b> (P) - Horas semanais de permanÃªncia no IST</li>");
 	htmlText.append("<li><b>").append(creditLineDTO.getOtherCredits())
-		.append("</b> (O) - Créditos enquadrados na categoria outros</li>");
+		.append("</b> (O) - CrÃ©ditos enquadrados na categoria outros</li>");
 	htmlText.append("<li><b>").append(creditLineDTO.getManagementCredits())
-		.append("</b> (CG) - Créditos provenientes de cargos de gestão</li>");
+		.append("</b> (CG) - CrÃ©ditos provenientes de cargos de gestÃ£o</li>");
 	htmlText.append("<li><b>").append(creditLineDTO.getServiceExemptionCredits())
-		.append("</b> (SNE) - Créditos provenientes de situações em não exercício</li></ul>");
+		.append("</b> (SNE) - CrÃ©ditos provenientes de situaÃ§Ãµes em nÃ£o exercÃ­cio</li></ul>");
 
-	htmlText.append("<h3>1) Disciplinas Leccionadas em Graduação</h3>");
+	htmlText.append("<h3>1) Disciplinas Leccionadas em GraduaÃ§Ã£o</h3>");
 	List<Professorship> professorships = teacher.getProfessorships(executionSemester);
 	if (professorships.isEmpty()) {
-	    htmlText.append("<p style=\"font-size: 65%;\">O professor não lecciona nenhuma disciplina neste semestre.</p>");
+	    htmlText.append("<p style=\"font-size: 65%;\">O professor nÃ£o lecciona nenhuma disciplina neste semestre.</p>");
 	} else {
 	    for (Professorship professorship : professorships) {
 		htmlText.append("<p style=\"font-size: 65%;\"><strong>").append(professorship.getExecutionCourse().getName())
@@ -134,7 +134,7 @@ public class TeacherCreditsDocument extends TeacherCreditsDocument_Base {
 		htmlText.append("<p style=\"font-size: 65%;\">Aulas:</p>");
 
 		if (professorship.getDegreeTeachingServicesOrderedByShift().isEmpty()) {
-		    htmlText.append("<p style=\"font-size: 65%;\">Não foram encontrados registos de aulas.</p>");
+		    htmlText.append("<p style=\"font-size: 65%;\">NÃ£o foram encontrados registos de aulas.</p>");
 		} else {
 		    htmlText.append("<table class=\"tb01\"><tr><th>Turno</th><th>Tipo</th><th>Horas</th><th>% que lecciona</th></tr>");
 		    for (DegreeTeachingService degreeTeachingService : professorship.getDegreeTeachingServicesOrderedByShift()) {
@@ -147,13 +147,13 @@ public class TeacherCreditsDocument extends TeacherCreditsDocument_Base {
 		    htmlText.append("</table>");
 		}
 
-		htmlText.append("<p style=\"font-size: 65%;\">Aulas de dúvidas:</p>");
+		htmlText.append("<p style=\"font-size: 65%;\">Aulas de dÃºvidas:</p>");
 
 		if (professorship.getSupportLessonsOrderedByStartTimeAndWeekDay().isEmpty()) {
-		    htmlText.append("<p style=\"font-size: 65%;\">Não foram encontrados registos de aulas de dúvidas.</p>");
+		    htmlText.append("<p style=\"font-size: 65%;\">NÃ£o foram encontrados registos de aulas de dÃºvidas.</p>");
 		} else {
 
-		    htmlText.append("<table class=\"tb01\"><tr><th>Dia da semana</th><th>Início</th><th>Fim</th><th>Local</th></tr>");
+		    htmlText.append("<table class=\"tb01\"><tr><th>Dia da semana</th><th>InÃ­cio</th><th>Fim</th><th>Local</th></tr>");
 		    for (SupportLesson supportLesson : professorship.getSupportLessonsOrderedByStartTimeAndWeekDay()) {
 			htmlText.append("<tr><td>").append(supportLesson.getWeekDay()).append("</td>");
 			htmlText.append("<td>").append(supportLesson.getStartTimeHourMinuteSecond().toString()).append("</td>");
@@ -165,12 +165,12 @@ public class TeacherCreditsDocument extends TeacherCreditsDocument_Base {
 	    }
 	}
 
-	htmlText.append("<h3>2) Disciplinas Leccionadas em Pós-Graduação</h3>");
+	htmlText.append("<h3>2) Disciplinas Leccionadas em PÃ³s-GraduaÃ§Ã£o</h3>");
 
 	if (teacherService == null || teacherService.getMasterDegreeServices().isEmpty()) {
-	    htmlText.append("<p style=\"font-size: 65%;\">Não foram encontrados registos de disciplinas de mestrado.</p>");
+	    htmlText.append("<p style=\"font-size: 65%;\">NÃ£o foram encontrados registos de disciplinas de mestrado.</p>");
 	} else {
-	    htmlText.append("<table class=\"tb01\"><tr><th>Plano(s) curriculare(s)</th><th>Disciplina</th><th>Horas</th><th>Créditos</th></tr>");
+	    htmlText.append("<table class=\"tb01\"><tr><th>Plano(s) curriculare(s)</th><th>Disciplina</th><th>Horas</th><th>CrÃ©ditos</th></tr>");
 	    for (TeacherMasterDegreeService teacherMasterDegreeService : teacherService.getMasterDegreeServices()) {
 		if (teacherMasterDegreeService.getProfessorship() != null) {
 		    htmlText.append("<tr><td>").append(teacherMasterDegreeService.getProfessorship().getDegreePlanNames());
@@ -192,7 +192,7 @@ public class TeacherCreditsDocument extends TeacherCreditsDocument_Base {
 			    .replaceAll("(\r\n)|(\n)", "<br />")).append("</p>");
 	}
 
-	htmlText.append("<h3>3) Trabalhos Finais de Curso (até Ano Lectivo de 2006/2007)</h3>");
+	htmlText.append("<h3>3) Trabalhos Finais de Curso (atÃ© Ano Lectivo de 2006/2007)</h3>");
 	List<TeacherAdviseService> teacherAdviseServices = new ArrayList<TeacherAdviseService>();
 	if (teacherService != null) {
 	    teacherAdviseServices.addAll(teacherService.getTeacherAdviseServices());
@@ -206,11 +206,11 @@ public class TeacherCreditsDocument extends TeacherCreditsDocument_Base {
 		});
 
 	if (teacherAdviseServices.isEmpty() || tfcAdvises.isEmpty()) {
-	    htmlText.append("<p style=\"font-size: 65%;\">Não foram encontrados registos de alunos de trabalho final de curso.</p>");
+	    htmlText.append("<p style=\"font-size: 65%;\">NÃ£o foram encontrados registos de alunos de trabalho final de curso.</p>");
 	} else {
 	    Collections.sort(tfcAdvises, new BeanComparator("advise.student.number"));
 
-	    htmlText.append("<p style=\"font-size: 65%;\"><strong>Alunos:</strong></p><table class=\"tb01\"><tr><th>Número do aluno</th><th>Nome do aluno</th><th>Percentagem</th></tr>");
+	    htmlText.append("<p style=\"font-size: 65%;\"><strong>Alunos:</strong></p><table class=\"tb01\"><tr><th>NÃºmero do aluno</th><th>Nome do aluno</th><th>Percentagem</th></tr>");
 	    for (TeacherAdviseService teacherAdviseService : tfcAdvises) {
 		htmlText.append("<tr><td>").append(teacherAdviseService.getAdvise().getStudent().getNumber()).append("</td>");
 		htmlText.append("<td>").append(teacherAdviseService.getAdvise().getStudent().getPerson().getName())
@@ -220,15 +220,15 @@ public class TeacherCreditsDocument extends TeacherCreditsDocument_Base {
 	    htmlText.append("</table>");
 	}
 
-	htmlText.append("<h3>4) Dissertações de Mestrado</h3>");
+	htmlText.append("<h3>4) DissertaÃ§Ãµes de Mestrado</h3>");
 
 	Collection<ThesisEvaluationParticipant> thesisEvaluationParticipants = teacher.getPerson()
 		.getThesisEvaluationParticipants(executionSemester);
 
 	if (thesisEvaluationParticipants.isEmpty()) {
-	    htmlText.append("<p style=\"font-size: 65%;\">Não foram encontradas Dissertações de Mestrado.</p>");
+	    htmlText.append("<p style=\"font-size: 65%;\">NÃ£o foram encontradas DissertaÃ§Ãµes de Mestrado.</p>");
 	} else {
-	    htmlText.append("<p style=\"font-size: 65%;\"><strong>Alunos:</strong></p><table class=\"tb01\"><tbody><tr><th style=\"width: 5em;\">Número</th><th>Nome</th><th style=\"width: 7em;\">Lecciona (%)</th></tr>");
+	    htmlText.append("<p style=\"font-size: 65%;\"><strong>Alunos:</strong></p><table class=\"tb01\"><tbody><tr><th style=\"width: 5em;\">NÃºmero</th><th>Nome</th><th style=\"width: 7em;\">Lecciona (%)</th></tr>");
 	    for (ThesisEvaluationParticipant participant : thesisEvaluationParticipants) {
 		htmlText.append("<tr><td>").append(participant.getThesis().getStudent().getNumber());
 		htmlText.append("</td><td>").append(participant.getThesis().getStudent().getPerson().getName());
@@ -244,7 +244,7 @@ public class TeacherCreditsDocument extends TeacherCreditsDocument_Base {
 		    .append("</p>");
 	}
 
-	htmlText.append("<h3>5) Permanência no IST</h3>");
+	htmlText.append("<h3>5) PermanÃªncia no IST</h3>");
 	ComparatorChain comparatorChain = new ComparatorChain();
 	BeanComparator weekDayComparator = new BeanComparator("weekDay");
 	BeanComparator startTimeComparator = new BeanComparator("startTime");
@@ -258,7 +258,7 @@ public class TeacherCreditsDocument extends TeacherCreditsDocument_Base {
 	}
 
 	if (!institutionWorkingTimes.isEmpty()) {
-	    htmlText.append("<p style=\"font-size: 65%;\">Não foram encontrados registos.</p>");
+	    htmlText.append("<p style=\"font-size: 65%;\">NÃ£o foram encontrados registos.</p>");
 	} else {
 	    htmlText.append("<table class=\"tb01\"><tr>");
 
@@ -274,7 +274,7 @@ public class TeacherCreditsDocument extends TeacherCreditsDocument_Base {
 		    htmlText.append("<td style=\"text-align: center;\">");
 		    for (InstitutionWorkTime institutionWorkTime : institutionWorkingTimes) {
 			if (institutionWorkTime.getWeekDay().equals(weekDay)) {
-			    htmlText.append(institutionWorkTime.getStartTimeHourMinuteSecond().toString()).append(" às ")
+			    htmlText.append(institutionWorkTime.getStartTimeHourMinuteSecond().toString()).append(" Ã s ")
 				    .append(institutionWorkTime.getEndTimeHourMinuteSecond().toString()).append("<br/>");
 			}
 		    }
@@ -284,21 +284,21 @@ public class TeacherCreditsDocument extends TeacherCreditsDocument_Base {
 	    htmlText.append("</tr></table>");
 	}
 
-	htmlText.append("<h3>6) Acumulação de Funções</h3>");
+	htmlText.append("<h3>6) AcumulaÃ§Ã£o de FunÃ§Ãµes</h3>");
 	if (teacherService != null && teacherService.getTeacherServiceNotes() != null
 		&& !StringUtils.isEmpty(teacherService.getTeacherServiceNotes().getFunctionsAccumulation())) {
 	    htmlText.append("<p style=\"font-size: 65%;\">")
 		    .append(teacherService.getTeacherServiceNotes().getFunctionsAccumulation()
 			    .replaceAll("(\r\n)|(\n)", "<br />")).append("</p>");
 	} else {
-	    htmlText.append("<p style=\"font-size: 65%;\">Não foram encontrados registos de acumulação de funções.</p>");
+	    htmlText.append("<p style=\"font-size: 65%;\">NÃ£o foram encontrados registos de acumulaÃ§Ã£o de funÃ§Ãµes.</p>");
 	}
 
 	htmlText.append("<h3>7) Outros</h3>");
 	if (teacherService == null || teacherService.getOtherServices().isEmpty()) {
-	    htmlText.append("<p style=\"font-size: 65%;\">Não foram encontrados registos da categoria outros neste semestre.</p>");
+	    htmlText.append("<p style=\"font-size: 65%;\">NÃ£o foram encontrados registos da categoria outros neste semestre.</p>");
 	} else {
-	    htmlText.append("<table class=\"tb01\"><tr><th>Razão</th><th>Créditos</th></tr>");
+	    htmlText.append("<table class=\"tb01\"><tr><th>RazÃ£o</th><th>CrÃ©ditos</th></tr>");
 	    for (OtherService otherService : teacherService.getOtherServices()) {
 		htmlText.append("<tr><td>").append(otherService.getReason()).append("</td>");
 		htmlText.append("<td>").append(otherService.getCredits()).append("</td></tr>");
@@ -313,15 +313,15 @@ public class TeacherCreditsDocument extends TeacherCreditsDocument_Base {
 		    .append("</p>");
 	}
 
-	htmlText.append("<h3>8) Cargos de Gestão</h3>");
+	htmlText.append("<h3>8) Cargos de GestÃ£o</h3>");
 	List<PersonFunction> personFuntions = teacher.getPersonFuntions(executionSemester.getBeginDateYearMonthDay(),
 		executionSemester.getEndDateYearMonthDay());
 
 	if (personFuntions.isEmpty()) {
-	    htmlText.append("<p style=\"font-size: 65%;\">Não foram encontrados registos de cargos de gestão.</p>");
+	    htmlText.append("<p style=\"font-size: 65%;\">NÃ£o foram encontrados registos de cargos de gestÃ£o.</p>");
 	} else {
 	    Collections.sort(personFuntions, new BeanComparator("beginDate"));
-	    htmlText.append("<table class=\"tb01\"><tr><th>Cargo</th><th>Unidade</th><th>Créditos</th><th>Início</th><th>Fim</th></tr>");
+	    htmlText.append("<table class=\"tb01\"><tr><th>Cargo</th><th>Unidade</th><th>CrÃ©ditos</th><th>InÃ­cio</th><th>Fim</th></tr>");
 	    for (PersonFunction personFunction : personFuntions) {
 		htmlText.append("<tr><td>").append(personFunction.getFunction().getName());
 		htmlText.append("</td><td>").append(personFunction.getParentParty().getName());
@@ -339,14 +339,14 @@ public class TeacherCreditsDocument extends TeacherCreditsDocument_Base {
 			    .replaceAll("(\r\n)|(\n)", "<br />")).append("</p>");
 	}
 
-	htmlText.append("<h3>9) Situações em Não Exercício</h3>");
+	htmlText.append("<h3>9) SituaÃ§Ãµes em NÃ£o ExercÃ­cio</h3>");
 
 	Set<PersonContractSituation> serviceExemptions = teacher.getValidTeacherServiceExemptions(executionSemester);
 
 	if (serviceExemptions.isEmpty()) {
-	    htmlText.append("<p style=\"font-size: 65%;\">Não foram encontrados registos da categoria situações em não exercício.</p>");
+	    htmlText.append("<p style=\"font-size: 65%;\">NÃ£o foram encontrados registos da categoria situaÃ§Ãµes em nÃ£o exercÃ­cio.</p>");
 	} else {
-	    htmlText.append("<table class=\"tb01\"><tr><th>Situação</th><th>Organização</th><th>Início</th><th>Fim</th></tr>");
+	    htmlText.append("<table class=\"tb01\"><tr><th>SituaÃ§Ã£o</th><th>OrganizaÃ§Ã£o</th><th>InÃ­cio</th><th>Fim</th></tr>");
 	    for (PersonContractSituation teacherServiceExemption : serviceExemptions) {
 		htmlText.append("<tr><td>").append(teacherServiceExemption.getContractSituation().getName().getContent());
 		htmlText.append("</td><td>").append(teacherServiceExemption.getBeginDate());

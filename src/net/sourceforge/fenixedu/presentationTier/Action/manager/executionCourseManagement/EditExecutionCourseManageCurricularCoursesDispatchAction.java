@@ -53,7 +53,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 /*
  * 
- * @author Fernanda Quitério 23/Dez/2003
+ * @author Fernanda QuitÃ©rio 23/Dez/2003
  *  
  */
 @Mapping(module = "manager", path = "/editExecutionCourseManageCurricularCourses", input = "/editExecutionCourse.do?method=prepareEditExecutionCourse&page=0", attribute = "executionCourseForm", formBean = "executionCourseForm", scope = "request", parameter = "method")

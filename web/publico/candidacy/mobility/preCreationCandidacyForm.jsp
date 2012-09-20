@@ -73,7 +73,7 @@
 		<input type="text" name="j_captcha_response" size="30" style="margin-bottom: 1em;"/>
 	</div>
 
-	<p class="mtop1 mbottom0"><html:submit><bean:message key="button.continue" bundle="APPLICATION_RESOURCES" locale="en"/> »</html:submit></p>
+	<p class="mtop1 mbottom0"><html:submit><bean:message key="button.continue" bundle="APPLICATION_RESOURCES" locale="en"/> Â»</html:submit></p>
 
 </fr:form>
 

@@ -32,7 +32,7 @@
 <bean:define id="hash" name="process" property="candidacyHashCode.value" />
 <p>
 	<html:link action="/applications/phd/phdProgramApplicationProcess.do?method=viewApplication" paramId="hash" paramName="hash" >
-		« <bean:message bundle="PHD_RESOURCES" key="label.back"/>
+		Â« <bean:message bundle="PHD_RESOURCES" key="label.back"/>
 	</html:link>
 </p>
 

@@ -4,26 +4,26 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 
-<h2>Prova de Aferi��o de F�sica - 2003/2004</h2>
+<h2>Prova de Aferiï¿½ï¿½o de Fï¿½sica - 2003/2004</h2>
 <table width="90%" border="0" cellpadding="0" cellspacing="0">
 	<tr>
 		<td bgcolor="#FFFFFF" class="infoselected">
 <bean:define id="testslink" type="java.lang.String"><bean:message key="link.gauging.physics.test" bundle="GLOBAL_RESOURCES"/></bean:define>
-Os enunciados e as respectivas chaves de correc��o est�o dispon�veis em <html:link href="<%= testslink %>" target="about_blank"><%= testslink %></html:link>
+Os enunciados e as respectivas chaves de correcï¿½ï¿½o estï¿½o disponíveis em <html:link href="<%= testslink %>" target="about_blank"><%= testslink %></html:link>
 </td></tr>
 </table>
 <br/>
 <logic:notPresent name="gaugingTestResult">
-<span class="error"><!-- Error messages go here -->N�o fez a prova de aferi��o</span> 
+<span class="error"><!-- Error messages go here -->Não fez a prova de aferiï¿½ï¿½o</span> 
 </logic:notPresent>
 <logic:present name="gaugingTestResult">
 <table width="90%">
 <tr>
 <th class="listClasses-header">Enunciado</th>
-<th class="listClasses-header">N�mero de Respostas em branco</th>
-<th class="listClasses-header">N�mero de Respostas correctas</th>
-<th class="listClasses-header">N�mero de Respostas erradas</th>
-<th class="listClasses-header">Classifica��o Final</th>
+<th class="listClasses-header">Número de Respostas em branco</th>
+<th class="listClasses-header">Número de Respostas correctas</th>
+<th class="listClasses-header">Número de Respostas erradas</th>
+<th class="listClasses-header">Classificaï¿½ï¿½o Final</th>
 </tr>
 <tr>
 <td class="listClasses"><bean:write name="gaugingTestResult" property="test"/></td>

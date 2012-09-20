@@ -26,7 +26,7 @@ import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 public abstract class UnitSiteBoardsDA extends AnnouncementManagement {
 
     // TODO: change literal
-    public static final MultiLanguageString ANNOUNCEMENTS = new MultiLanguageString().with(Language.pt, "Anúncios");
+    public static final MultiLanguageString ANNOUNCEMENTS = new MultiLanguageString().with(Language.pt, "AnÃºncios");
     public static final MultiLanguageString EVENTS = new MultiLanguageString().with(Language.pt, "Eventos");
 
     @Override

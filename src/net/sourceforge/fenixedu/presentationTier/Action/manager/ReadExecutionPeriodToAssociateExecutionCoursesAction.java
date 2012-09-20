@@ -95,7 +95,7 @@ public class ReadExecutionPeriodToAssociateExecutionCoursesAction extends FenixA
 
 	    }
 	} catch (FenixServiceException ex) {
-	    throw new FenixActionException("Problemas de comunicação com a base de dados.", ex);
+	    throw new FenixActionException("Problemas de comunicaÃ§Ã£o com a base de dados.", ex);
 	}
 
 	request.setAttribute("name", "associate");

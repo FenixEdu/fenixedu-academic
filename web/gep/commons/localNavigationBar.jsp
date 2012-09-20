@@ -138,6 +138,6 @@
 	
 </ul>
 <%--
-Devido ï¿?s inscriï¿?ï¿?es, as funcionalidades do portal GEP estï¿?o temporariamente desactivadas para não causar sobrecarga no servidor.
-As nossas desculpas pelo incï¿?modo.
+Devido Ã¯Â¿?s inscriÃ¯Â¿?Ã¯Â¿?es, as funcionalidades do portal GEP estÃ¯Â¿?o temporariamente desactivadas para nÃ£o causar sobrecarga no servidor.
+As nossas desculpas pelo incÃ¯Â¿?modo.
 --%>

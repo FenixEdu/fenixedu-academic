@@ -23,7 +23,7 @@ import org.apache.struts.util.MessageResources;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 /**
- * @author T‚nia Pous„o
+ * @author T√¢nia Pous√£o
  * 
  */
 public class ExecutionDegreesFormat extends FenixUtil {

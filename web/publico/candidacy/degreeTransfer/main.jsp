@@ -7,7 +7,7 @@
 
 <!--LANGUAGE SWITCHER -->
 <div id="version">
-	<img class="activeflag" src="Candidato%20%20Licenciatura%20_%20IST_files/icon_pt.gif" alt="Português">
+	<img class="activeflag" src="Candidato%20%20Licenciatura%20_%20IST_files/icon_pt.gif" alt="PortuguÃªs">
 	<a href="http://www.ist.utl.pt/en/htm/profile/pstudent/lic/"><img src="Candidato%20%20Licenciatura%20_%20IST_files/icon_en.gif" alt="English" border="0"></a>
 </div>
 <!--END LANGUAGE SWITCHER -->
@@ -19,14 +19,14 @@
 	<a href="#">Candidato</a> &gt;
 	<a href="#">Candidaturas</a> &gt;
 	<a href='<%= fullPath + "?method=candidacyIntro" %>'>Licenciaturas</a> &gt;
-	Transferências
+	TransferÃªncias
 </div>
 
 
 <div id="contextual_nav">
-<h2 class="brown">Nesta página</h2>
+<h2 class="brown">Nesta pÃ¡gina</h2>
 	<ul>
-    	<li><a href="#1">Critérios de selecção</a></li>
+    	<li><a href="#1">CritÃ©rios de selecÃ§Ã£o</a></li>
     	<li><a href="#2">Vagas</a></li>
     	<li><a href="#3">Propinas</a></li>
     	<li><a href="#4">Prazos</a></li>
@@ -37,18 +37,18 @@
 </div>
 
 
-<h1>Candidatura: Transferências</h1>
+<h1>Candidatura: TransferÃªncias</h1>
 
 
-<p>O regime de ingresso por transferência destina-se aos estudantes que estando ou
-tendo estado inscritos no 1º ciclo de um curso de Licenciatura ou de um Mestrado
-Integrado pretendam inscrever-se no mesmo curso mas numa instituição diferente
-daquela em que praticaram a última inscrição. A última inscrição pode ter ocorrido
+<p>O regime de ingresso por transferÃªncia destina-se aos estudantes que estando ou
+tendo estado inscritos no 1Âº ciclo de um curso de Licenciatura ou de um Mestrado
+Integrado pretendam inscrever-se no mesmo curso mas numa instituiÃ§Ã£o diferente
+daquela em que praticaram a Ãºltima inscriÃ§Ã£o. A Ãºltima inscriÃ§Ã£o pode ter ocorrido
 numa escola nacional ou estrangeira.</p>
 
 
-<h2 id="1">Critérios de selecção</h2>
-<p>Os candidatos a Transferências serão seriados pela coordenação do curso a que se candidatam tendo em conta os seguintes critérios:</p>
+<h2 id="1">CritÃ©rios de selecÃ§Ã£o</h2>
+<p>Os candidatos a TransferÃªncias serÃ£o seriados pela coordenaÃ§Ã£o do curso a que se candidatam tendo em conta os seguintes critÃ©rios:</p>
 <ul>
 	<li>Afinidade entre o curso que possuem e o curso a que se candidatam;</li>
 	<li>Natureza do grau que possuem;</li>
@@ -58,7 +58,7 @@ numa escola nacional ou estrangeira.</p>
 
 <h2 id="2">Vagas</h2>
 
-<table class="tab_lay" width="99%" cellspacing="0" summary="Informações sobre vagas por licenciatura para candidatos titulares de Curso Médio e Superior ">
+<table class="tab_lay" width="99%" cellspacing="0" summary="InformaÃ§Ãµes sobre vagas por licenciatura para candidatos titulares de Curso MÃ©dio e Superior ">
 	<tr>
 		<th>Cursos</th>
 		<th>Campus</th>
@@ -165,37 +165,37 @@ numa escola nacional ou estrangeira.</p>
 
 
 <h2 id="3">Propinas</h2>
-<p>Para o ano lectivo de 2008/2009 a propina para as Licenciaturas de 1º ciclo e 1º ciclo de Mestrados Integrados foi fixada no valor de 972,14 &euro;.</p>
+<p>Para o ano lectivo de 2008/2009 a propina para as Licenciaturas de 1Âº ciclo e 1Âº ciclo de Mestrados Integrados foi fixada no valor de 972,14 &euro;.</p>
 
 
 <h2 id="4">Prazos</h2>
 
-<table class="tab_simpler" summary="Prazos para candidatos em mudanÃ§a ou transferÃªncia de curso" cellspacing="0">
+<table class="tab_simpler" summary="Prazos para candidatos em mudanÃƒÂ§a ou transferÃƒÂªncia de curso" cellspacing="0">
 	<tr>
 		<td class="align_r"><span class="marker">1 a 29 de Agosto de 2008</span></td>
-		<td><a href="#">Apresentação de candidaturas</a></td>
+		<td><a href="#">ApresentaÃ§Ã£o de candidaturas</a></td>
 	</tr>
 	<tr>
 		<td class="align_r"><span class="marker">16 de Setembro de 2008</span></td>
-		<td>Afixação dos editais de colocação</td>
+		<td>AfixaÃ§Ã£o dos editais de colocaÃ§Ã£o</td>
 	</tr>
 
 	<tr>
 		<td class="align_r"><span class="marker">16 a 23 de Setembro de 2008</span></td>
-		<td>Matrícula e inscrição</td>
+		<td>MatrÃ­cula e inscriÃ§Ã£o</td>
 	</tr>
 	<tr>
 		<td class="align_r"><span class="marker">16 a 23 de Setembro de 2008</span></td>
-		<td>Reclamação sobre as colocações</td>
+		<td>ReclamaÃ§Ã£o sobre as colocaÃ§Ãµes</td>
 
 	</tr>
 	<tr>
 		<td class="align_r"><span class="marker">16 de Outubro de 2008</span></td>
-		<td>Decisão sobre as reclamações</td>
+		<td>DecisÃ£o sobre as reclamaÃ§Ãµes</td>
 	</tr>
 	<tr>
 		<td class="align_r"><span class="marker">23 de Outubro de 2008</span></td>
-		<td>Matrícula para reclamações atendidas</td>
+		<td>MatrÃ­cula para reclamaÃ§Ãµes atendidas</td>
 	</tr>
 </table>
 

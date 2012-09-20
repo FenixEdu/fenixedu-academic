@@ -14,7 +14,7 @@ import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.ist.fenixWebFramework.services.Service;
 
 /**
- * @author lmac1 modified by Fernanda Quitério
+ * @author lmac1 modified by Fernanda QuitÃ©rio
  */
 public class InsertExecutionCourseAtExecutionPeriod extends FenixService {
 
@@ -31,8 +31,8 @@ public class InsertExecutionCourseAtExecutionPeriod extends FenixService {
 	final ExecutionCourse existentExecutionCourse = executionSemester.getExecutionCourseByInitials(infoExecutionCourse
 		.getSigla());
 	if (existentExecutionCourse != null) {
-	    throw new ExistingServiceException("A disciplina execução com sigla " + existentExecutionCourse.getSigla()
-		    + " e período execução " + executionSemester.getName() + "-" + executionSemester.getExecutionYear().getYear());
+	    throw new ExistingServiceException("A disciplina execuÃ§Ã£o com sigla " + existentExecutionCourse.getSigla()
+		    + " e perÃ­odo execuÃ§Ã£o " + executionSemester.getName() + "-" + executionSemester.getExecutionYear().getYear());
 	}
 
 	final ExecutionCourse executionCourse = new ExecutionCourse(infoExecutionCourse.getNome(),

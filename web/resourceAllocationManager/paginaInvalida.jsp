@@ -8,11 +8,11 @@
 
 <html:html xhtml="true">
     <head>
-        <title> P·gina Inv·lida </title>
+        <title> P√°gina Inv√°lida </title>
     </head>
     <body>
         <br/>
-        <h3 align="center"> A p·gina anterior expirou e, portanto, n„o pode ser processada. </h3>
+        <h3 align="center"> A p√°gina anterior expirou e, portanto, n√£o pode ser processada. </h3>
         <br/>
         <table align="center">
             <tr align="center">

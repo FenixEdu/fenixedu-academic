@@ -31,25 +31,25 @@ public class PersistentSummaryReport extends PersistentReport {
 	    String tableOrView = getTableOrViewName(p, reportType);
 
 	    String query = new String(
-		    "select \"NºProj\", \"Acrónimo\", \"Unid Expl\", \"Tipo\", \"Orçamento\", \"Máximo Financiável\", \"Receita\", \"Despesa\", \"Adiantamentos por Justificar\" ,\"Saldo Tesouraria\", \"Cabimentos por Executar\", \"Saldo Orçamental\" from "
+		    "select \"NÂºProj\", \"AcrÃ³nimo\", \"Unid Expl\", \"Tipo\", \"OrÃ§amento\", \"MÃ¡ximo FinanciÃ¡vel\", \"Receita\", \"Despesa\", \"Adiantamentos por Justificar\" ,\"Saldo Tesouraria\", \"Cabimentos por Executar\", \"Saldo OrÃ§amental\" from "
 			    + tableOrView + " where IDCOORD='" + coordinatorCode + "'");
 	    PreparedStatement stmt = p.prepareStatement(query);
 	    ResultSet rs = stmt.executeQuery(query);
 	    while (rs.next()) {
 		ISummaryReportLine report = new SummaryReportLine();
 		report.setCoordinatorCode(coordinatorCode);
-		report.setProjectCode(rs.getString("NºProj"));
-		report.setAcronym(rs.getString("Acrónimo"));
+		report.setProjectCode(rs.getString("NÂºProj"));
+		report.setAcronym(rs.getString("AcrÃ³nimo"));
 		report.setExplorationUnit(new Integer(rs.getInt("Unid Expl")));
 		report.setType(rs.getString("Tipo"));
-		report.setBudget(new Double(rs.getDouble("Orçamento")));
-		report.setMaxFinance(new Double(rs.getDouble("Máximo Financiável")));
+		report.setBudget(new Double(rs.getDouble("OrÃ§amento")));
+		report.setMaxFinance(new Double(rs.getDouble("MÃ¡ximo FinanciÃ¡vel")));
 		report.setRevenue(new Double(rs.getDouble("Receita")));
 		report.setExpense(new Double(rs.getDouble("Despesa")));
 		report.setAdiantamentosPorJustificar(new Double(rs.getDouble("Adiantamentos por Justificar")));
 		report.setTreasuryBalance(new Double(rs.getDouble("Saldo Tesouraria")));
 		report.setCabimentoPorExecutar(new Double(rs.getDouble("Cabimentos por Executar")));
-		report.setBudgetBalance(new Double(rs.getDouble("Saldo Orçamental")));
+		report.setBudgetBalance(new Double(rs.getDouble("Saldo OrÃ§amental")));
 
 		result.add(report);
 	    }
@@ -71,10 +71,10 @@ public class PersistentSummaryReport extends PersistentReport {
 	    String tableOrView = getTableOrViewName(p, reportType);
 	    StringBuilder queryBuffer = new StringBuilder();
 	    queryBuffer
-		    .append("select distinct \"NºProj\", \"Acrónimo\", \"Unid Expl\", \"Tipo\", \"Orçamento\", \"Máximo Financiável\", \"Receita\", \"Despesa\", \"Adiantamentos por Justificar\" ,\"Saldo Tesouraria\", \"Cabimentos por Executar\", \"Saldo Orçamental\" from ");
+		    .append("select distinct \"NÂºProj\", \"AcrÃ³nimo\", \"Unid Expl\", \"Tipo\", \"OrÃ§amento\", \"MÃ¡ximo FinanciÃ¡vel\", \"Receita\", \"Despesa\", \"Adiantamentos por Justificar\" ,\"Saldo Tesouraria\", \"Cabimentos por Executar\", \"Saldo OrÃ§amental\" from ");
 	    queryBuffer.append(tableOrView);
 	    if (projectCodes != null && projectCodes.size() != 0) {
-		queryBuffer.append(" where \"NºProj\" IN (");
+		queryBuffer.append(" where \"NÂºProj\" IN (");
 		for (int i = 0; i < projectCodes.size(); i++) {
 		    if (i != 0)
 			queryBuffer.append(", ");
@@ -88,25 +88,25 @@ public class PersistentSummaryReport extends PersistentReport {
 		queryBuffer.append(coordinatorCode);
 		queryBuffer.append("'");
 	    }
-	    queryBuffer.append(" order by \"NºProj\"");
+	    queryBuffer.append(" order by \"NÂºProj\"");
 	    String query = queryBuffer.toString();
 	    PreparedStatement stmt = p.prepareStatement(query);
 	    ResultSet rs = stmt.executeQuery(query);
 	    while (rs.next()) {
 		ISummaryReportLine report = new SummaryReportLine();
 		report.setCoordinatorCode(coordinatorCode);
-		report.setProjectCode(rs.getString("NºProj"));
-		report.setAcronym(rs.getString("Acrónimo"));
+		report.setProjectCode(rs.getString("NÂºProj"));
+		report.setAcronym(rs.getString("AcrÃ³nimo"));
 		report.setExplorationUnit(new Integer(rs.getInt("Unid Expl")));
 		report.setType(rs.getString("Tipo"));
-		report.setBudget(new Double(rs.getDouble("Orçamento")));
-		report.setMaxFinance(new Double(rs.getDouble("Máximo Financiável")));
+		report.setBudget(new Double(rs.getDouble("OrÃ§amento")));
+		report.setMaxFinance(new Double(rs.getDouble("MÃ¡ximo FinanciÃ¡vel")));
 		report.setRevenue(new Double(rs.getDouble("Receita")));
 		report.setExpense(new Double(rs.getDouble("Despesa")));
 		report.setAdiantamentosPorJustificar(new Double(rs.getDouble("Adiantamentos por Justificar")));
 		report.setTreasuryBalance(new Double(rs.getDouble("Saldo Tesouraria")));
 		report.setCabimentoPorExecutar(new Double(rs.getDouble("Cabimentos por Executar")));
-		report.setBudgetBalance(new Double(rs.getDouble("Saldo Orçamental")));
+		report.setBudgetBalance(new Double(rs.getDouble("Saldo OrÃ§amental")));
 
 		result.add(report);
 	    }

@@ -133,7 +133,7 @@ public class ShowTeachersCreditsDepartmentListAction extends FenixAction {
 		    .isBeforeOrEquals(lastExecutionSemester.getExecutionYear())) {
 		LabelValueBean labelValueBean = new LabelValueBean();
 		labelValueBean.setLabel(infoExecutionPeriod.getInfoExecutionYear().getYear() + " - "
-			+ infoExecutionPeriod.getSemester() + "บ Semestre");
+			+ infoExecutionPeriod.getSemester() + "ยบ Semestre");
 		labelValueBean.setValue(infoExecutionPeriod.getIdInternal().toString());
 		executionPeriods.add(labelValueBean);
 	    }

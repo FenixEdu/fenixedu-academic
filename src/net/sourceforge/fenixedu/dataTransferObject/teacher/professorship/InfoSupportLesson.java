@@ -8,7 +8,7 @@ import net.sourceforge.fenixedu.domain.SupportLesson;
 import net.sourceforge.fenixedu.util.DiaSemana;
 
 /**
- * @author Fernanda Quitério 17/10/2003
+ * @author Fernanda QuitÃ©rio 17/10/2003
  * 
  */
 public class InfoSupportLesson extends InfoObject {

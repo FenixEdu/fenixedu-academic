@@ -34,84 +34,84 @@ public class RaidesCommonReportFieldsWrapper {
 
     public static void createHeaders(final Spreadsheet spreadsheet) {
 	spreadsheet.setHeader("ciclo");
-	spreadsheet.setHeader("concluído (ano anterior)?");
-	spreadsheet.setHeader("média do ciclo");
-	spreadsheet.setHeader("Data de conclusão");
-	spreadsheet.setHeader("Data de início");
-	spreadsheet.setHeader("número aluno");
-	spreadsheet.setHeader("tipo identificação");
-	spreadsheet.setHeader("número identificação");
+	spreadsheet.setHeader("concluÃ­do (ano anterior)?");
+	spreadsheet.setHeader("mÃ©dia do ciclo");
+	spreadsheet.setHeader("Data de conclusÃ£o");
+	spreadsheet.setHeader("Data de inÃ­cio");
+	spreadsheet.setHeader("nÃºmero aluno");
+	spreadsheet.setHeader("tipo identificaÃ§Ã£o");
+	spreadsheet.setHeader("nÃºmero identificaÃ§Ã£o");
 	spreadsheet.setHeader("digitos controlo");
-	spreadsheet.setHeader("versão doc identificação");
+	spreadsheet.setHeader("versÃ£o doc identificaÃ§Ã£o");
 	spreadsheet.setHeader("nome");
-	spreadsheet.setHeader("género");
+	spreadsheet.setHeader("gÃ©nero");
 	spreadsheet.setHeader("data nascimento");
-	spreadsheet.setHeader("país nascimento");
-	spreadsheet.setHeader("país nacionalidade");
+	spreadsheet.setHeader("paÃ­s nascimento");
+	spreadsheet.setHeader("paÃ­s nacionalidade");
 	spreadsheet.setHeader("tipo curso");
 	spreadsheet.setHeader("nome curso");
 	spreadsheet.setHeader("sigla curso");
 	spreadsheet.setHeader("ramo");
 	spreadsheet.setHeader("ano curricular");
 	spreadsheet.setHeader("ano ingresso curso actual");
-	spreadsheet.setHeader("nº. anos lectivos inscrição curso actual");
-	spreadsheet.setHeader("Último ano inscrito neste curso");
-	spreadsheet.setHeader("regime frequência curso");
+	spreadsheet.setHeader("nÂº. anos lectivos inscriÃ§Ã£o curso actual");
+	spreadsheet.setHeader("Ãšltimo ano inscrito neste curso");
+	spreadsheet.setHeader("regime frequÃªncia curso");
 	spreadsheet.setHeader("tipo aluno");
-	spreadsheet.setHeader("regime ingresso (código)");
-	spreadsheet.setHeader("regime ingresso (designação)");
-	spreadsheet.setHeader("estabelecimento do grau preced. (qd aplicável)");
-	spreadsheet.setHeader("curso grau preced. (qd aplicável)");
+	spreadsheet.setHeader("regime ingresso (cÃ³digo)");
+	spreadsheet.setHeader("regime ingresso (designaÃ§Ã£o)");
+	spreadsheet.setHeader("estabelecimento do grau preced. (qd aplicÃ¡vel)");
+	spreadsheet.setHeader("curso grau preced. (qd aplicÃ¡vel)");
 	spreadsheet.setHeader("estabelec. curso habl anterior compl");
 	spreadsheet.setHeader("curso habl anterior compl");
-	spreadsheet.setHeader("nº inscrições no curso preced.");
+	spreadsheet.setHeader("nÂº inscriÃ§Ãµes no curso preced.");
 	spreadsheet.setHeader("nota ingresso");
-	spreadsheet.setHeader("opção ingresso");
+	spreadsheet.setHeader("opÃ§Ã£o ingresso");
 	spreadsheet.setHeader("estado civil");
-	spreadsheet.setHeader("país residência permanente");
-	spreadsheet.setHeader("distrito residência permanente");
-	spreadsheet.setHeader("concelho residência permanente");
-	spreadsheet.setHeader("deslocado residência permanente");
-	spreadsheet.setHeader("nível escolaridade pai");
-	spreadsheet.setHeader("nível escolaridade mãe");
-	spreadsheet.setHeader("condição perante profissão pai");
-	spreadsheet.setHeader("condição perante profissão mãe");
-	spreadsheet.setHeader("profissão pai");
-	spreadsheet.setHeader("profissão mãe");
-	spreadsheet.setHeader("profissão aluno");
+	spreadsheet.setHeader("paÃ­s residÃªncia permanente");
+	spreadsheet.setHeader("distrito residÃªncia permanente");
+	spreadsheet.setHeader("concelho residÃªncia permanente");
+	spreadsheet.setHeader("deslocado residÃªncia permanente");
+	spreadsheet.setHeader("nÃ­vel escolaridade pai");
+	spreadsheet.setHeader("nÃ­vel escolaridade mÃ£e");
+	spreadsheet.setHeader("condiÃ§Ã£o perante profissÃ£o pai");
+	spreadsheet.setHeader("condiÃ§Ã£o perante profissÃ£o mÃ£e");
+	spreadsheet.setHeader("profissÃ£o pai");
+	spreadsheet.setHeader("profissÃ£o mÃ£e");
+	spreadsheet.setHeader("profissÃ£o aluno");
 	spreadsheet.setHeader("Data preenchimento dados RAIDES");
 	spreadsheet.setHeader("estatuto trabalhador estudante introduzido (info. RAIDES)");
-	spreadsheet.setHeader("estatuto trabalhador 1º semestre ano (info. oficial)");
-	spreadsheet.setHeader("estatuto trabalhador 2º semestre ano (info. oficial)");
+	spreadsheet.setHeader("estatuto trabalhador 1Âº semestre ano (info. oficial)");
+	spreadsheet.setHeader("estatuto trabalhador 2Âº semestre ano (info. oficial)");
 	spreadsheet.setHeader("bolseiro (info. RAIDES)");
-	spreadsheet.setHeader("instituição que atribuiu a bolsa (qd aplicável)");
+	spreadsheet.setHeader("instituiÃ§Ã£o que atribuiu a bolsa (qd aplicÃ¡vel)");
 	spreadsheet.setHeader("bolseiro (info. oficial)");
 	spreadsheet.setHeader("Grau Precedente");
 	spreadsheet.setHeader("Outro Grau Precedente");
 	spreadsheet.setHeader("grau habl anterior compl");
 	spreadsheet.setHeader("Codigo do grau habl anterior");
 	spreadsheet.setHeader("Outro grau habl anterior compl");
-	spreadsheet.setHeader("país habilitação anterior");
-	spreadsheet.setHeader("ano de conclusão da habilitação anterior");
-	spreadsheet.setHeader("nota da habilitação anterior");
-	spreadsheet.setHeader("Duração programa mobilidade");
-	spreadsheet.setHeader("tipo estabelecimento ensino secundário");
+	spreadsheet.setHeader("paÃ­s habilitaÃ§Ã£o anterior");
+	spreadsheet.setHeader("ano de conclusÃ£o da habilitaÃ§Ã£o anterior");
+	spreadsheet.setHeader("nota da habilitaÃ§Ã£o anterior");
+	spreadsheet.setHeader("DuraÃ§Ã£o programa mobilidade");
+	spreadsheet.setHeader("tipo estabelecimento ensino secundÃ¡rio");
 	spreadsheet.setHeader("total ECTS inscritos no ano");
-	spreadsheet.setHeader("total ECTS concluídos fim ano lectivo anterior");
-	spreadsheet.setHeader("nº. disciplinas inscritas ano lectivo anterior dados");
-	spreadsheet.setHeader("nº. disciplinas aprovadas ano lectivo anterior dados");
-	spreadsheet.setHeader("nº. inscrições externas ano dados");
-	spreadsheet.setHeader("estado matrícula ano anterior dados");
-	spreadsheet.setHeader("estado matrícula ano dados");
-	spreadsheet.setHeader("data do estado de matrícula");
-	spreadsheet.setHeader("nº. ECTS 1º ciclo concluídos fim ano lectivo anterior");
-	spreadsheet.setHeader("nº. ECTS 2º ciclo concluídos fim ano lectivo anterior");
-	spreadsheet.setHeader("nº. ECTS extra 1º ciclo concluídos fim ano lectivo anterior");
-	spreadsheet.setHeader("nº. ECTS extracurriculares concluídos fim ano lectivo anterior");
-	spreadsheet.setHeader("nº. ECTS Propedeuticas concluídos fim ano lectivo anterior");
-	spreadsheet.setHeader("nº. ECTS inscritos em Propedeut e extra-curriculares");
-	spreadsheet.setHeader("nº. ECTS equivalência/substituição/dispensa");
-	spreadsheet.setHeader("Tem situação de propinas no lectivo dos dados?");
+	spreadsheet.setHeader("total ECTS concluÃ­dos fim ano lectivo anterior");
+	spreadsheet.setHeader("nÂº. disciplinas inscritas ano lectivo anterior dados");
+	spreadsheet.setHeader("nÂº. disciplinas aprovadas ano lectivo anterior dados");
+	spreadsheet.setHeader("nÂº. inscriÃ§Ãµes externas ano dados");
+	spreadsheet.setHeader("estado matrÃ­cula ano anterior dados");
+	spreadsheet.setHeader("estado matrÃ­cula ano dados");
+	spreadsheet.setHeader("data do estado de matrÃ­cula");
+	spreadsheet.setHeader("nÂº. ECTS 1Âº ciclo concluÃ­dos fim ano lectivo anterior");
+	spreadsheet.setHeader("nÂº. ECTS 2Âº ciclo concluÃ­dos fim ano lectivo anterior");
+	spreadsheet.setHeader("nÂº. ECTS extra 1Âº ciclo concluÃ­dos fim ano lectivo anterior");
+	spreadsheet.setHeader("nÂº. ECTS extracurriculares concluÃ­dos fim ano lectivo anterior");
+	spreadsheet.setHeader("nÂº. ECTS Propedeuticas concluÃ­dos fim ano lectivo anterior");
+	spreadsheet.setHeader("nÂº. ECTS inscritos em Propedeut e extra-curriculares");
+	spreadsheet.setHeader("nÂº. ECTS equivalÃªncia/substituiÃ§Ã£o/dispensa");
+	spreadsheet.setHeader("Tem situaÃ§Ã£o de propinas no lectivo dos dados?");
     }
 
     public static Row reportRaidesFields(final Spreadsheet sheet, final Registration registration,
@@ -128,10 +128,10 @@ public class RaidesCommonReportFieldsWrapper {
 	// Ciclo
 	row.setCell(cycleType.getDescription());
 
-	// Concluído
+	// ConcluÃ­do
 	row.setCell(String.valueOf(concluded));
 
-	// Média do Ciclo
+	// MÃ©dia do Ciclo
 	if (graduation) {
 	    row.setCell(concluded ? printBigDecimal(average.setScale(0, BigDecimal.ROUND_HALF_EVEN)) : printBigDecimal(average));
 	} else {
@@ -139,25 +139,25 @@ public class RaidesCommonReportFieldsWrapper {
 		    .toPlainString() : "n/a");
 	}
 
-	// Data de Conclusão
+	// Data de ConclusÃ£o
 	row.setCell(conclusionDate != null ? conclusionDate.toString("dd-MM-yyyy") : "");
 
-	// Data de Início
+	// Data de InÃ­cio
 	row.setCell(registration.getStartDate() != null ? registration.getStartDate().toString("dd-MM-yyyy") : "");
 
-	// Nº de aluno
+	// NÂº de aluno
 	row.setCell(registration.getNumber());
 
-	// Tipo Identificação
+	// Tipo IdentificaÃ§Ã£o
 	row.setCell(graduate.getIdDocumentType().getLocalizedName());
 
-	// Nº de Identificação
+	// NÂº de IdentificaÃ§Ã£o
 	row.setCell(graduate.getDocumentIdNumber());
 
-	// Dígitos de Controlo
+	// DÃ­gitos de Controlo
 	row.setCell(graduate.getIdentificationDocumentExtraDigitValue());
 
-	// Versão Doc. Identificação
+	// VersÃ£o Doc. IdentificaÃ§Ã£o
 	row.setCell(graduate.getIdentificationDocumentSeriesNumberValue());
 
 	// Nome
@@ -170,10 +170,10 @@ public class RaidesCommonReportFieldsWrapper {
 	row.setCell(graduate.getDateOfBirthYearMonthDay() != null ? graduate.getDateOfBirthYearMonthDay().toString("dd-MM-yyyy")
 		: "n/a");
 
-	// País de Nascimento
+	// PaÃ­s de Nascimento
 	row.setCell(graduate.getCountryOfBirth() != null ? graduate.getCountryOfBirth().getName() : "n/a");
 
-	// País de Nacionalidade
+	// PaÃ­s de Nacionalidade
 	row.setCell(graduate.getCountry() != null ? graduate.getCountry().getName() : "n/a");
 
 	// Tipo Curso
@@ -186,7 +186,7 @@ public class RaidesCommonReportFieldsWrapper {
 	row.setCell(registration.getDegree().getSigla());
 
 	// Ramo (caso se aplique)
-	row.setCell("não determinável");
+	row.setCell("nÃ£o determinÃ¡vel");
 
 	// Ano Curricular
 	row.setCell(registration.getCurricularYear());
@@ -194,35 +194,35 @@ public class RaidesCommonReportFieldsWrapper {
 	// Ano de Ingresso no Curso Actual
 	row.setCell(sourceRegistration.getStartExecutionYear().getName());
 
-	// Nº de anos lectivos de inscrição no Curso actual
+	// NÂº de anos lectivos de inscriÃ§Ã£o no Curso actual
 	int numberOfEnrolmentYears = 0;
 	for (Registration current : registrationPath) {
 	    numberOfEnrolmentYears += current.getEnrolmentsExecutionYears().size();
 	}
 	row.setCell(numberOfEnrolmentYears);
 
-	// Último ano em que esteve inscrito
+	// Ãšltimo ano em que esteve inscrito
 	row.setCell(registration.getLastEnrolmentExecutionYear() != null ? registration.getLastEnrolmentExecutionYear().getName()
 		: "");
 
-	// Regime de frequência curso: Tempo integral/Tempo Parcial
+	// Regime de frequÃªncia curso: Tempo integral/Tempo Parcial
 	row.setCell(registration.getRegimeType(executionYear) != null ? registration.getRegimeType(executionYear).getName() : "");
 
 	// Tipo de Aluno (AFA, AM, ERASMUS, etc)
 	row.setCell(registration.getRegistrationAgreement() != null ? registration.getRegistrationAgreement().getName() : "");
 
-	// Regime de Ingresso no Curso Actual (código)
+	// Regime de Ingresso no Curso Actual (cÃ³digo)
 	Ingression ingression = sourceRegistration.getIngression();
 	if (ingression == null && sourceRegistration.getStudentCandidacy() != null) {
 	    ingression = sourceRegistration.getStudentCandidacy().getIngression();
 	}
 	row.setCell(ingression != null ? ingression.getName() : "");
 
-	// Regime de Ingresso no Curso Actual (designação)
+	// Regime de Ingresso no Curso Actual (designaÃ§Ã£o)
 	row.setCell(ingression != null ? ingression.getFullDescription() : "");
 
-	// estabelecimento do grau preced.: Instituição onde esteve
-	// inscrito mas não obteve grau, (e.g: transferencias, mudanças de
+	// estabelecimento do grau preced.: InstituiÃ§Ã£o onde esteve
+	// inscrito mas nÃ£o obteve grau, (e.g: transferencias, mudanÃ§as de
 	// curso...)
 	row.setCell(personalInformationBean.getPrecedentInstitution() != null ? personalInformationBean.getPrecedentInstitution()
 		.getName() : "");
@@ -238,7 +238,7 @@ public class RaidesCommonReportFieldsWrapper {
 	// deve ser IST caso o aluno tenha estado matriculado noutro curso do IST)
 	row.setCell(personalInformationBean.getDegreeDesignation());
 
-	// nº inscrições no curso preced. (conta uma por cada ano)
+	// nÂº inscriÃ§Ãµes no curso preced. (conta uma por cada ano)
 	row
 		.setCell(personalInformationBean.getNumberOfPreviousYearEnrolmentsInPrecedentDegree() != null ? personalInformationBean
 			.getNumberOfPreviousYearEnrolmentsInPrecedentDegree().toString()
@@ -252,7 +252,7 @@ public class RaidesCommonReportFieldsWrapper {
 
 	row.setCell(printDouble(entryGrade));
 
-	// Opção de Ingresso
+	// OpÃ§Ã£o de Ingresso
 	Integer placingOption = null;
 	if (registration.hasStudentCandidacy()) {
 	    placingOption = registration.getStudentCandidacy().getPlacingOption();
@@ -264,7 +264,7 @@ public class RaidesCommonReportFieldsWrapper {
 	row.setCell(personalInformationBean.getMaritalStatus() != null ? personalInformationBean.getMaritalStatus().toString()
 		: registration.getPerson().getMaritalStatus().toString());
 
-	// País de Residência Permanente
+	// PaÃ­s de ResidÃªncia Permanente
 	if (personalInformationBean.getCountryOfResidence() != null) {
 	    row.setCell(personalInformationBean.getCountryOfResidence().getName());
 	} else {
@@ -272,42 +272,42 @@ public class RaidesCommonReportFieldsWrapper {
 		    .getPerson().getCountryOfResidence().getName() : "");
 	}
 
-	// Distrito de Residência Permanente
+	// Distrito de ResidÃªncia Permanente
 	if (personalInformationBean.getDistrictSubdivisionOfResidence() != null) {
 	    row.setCell(personalInformationBean.getDistrictSubdivisionOfResidence().getDistrict().getName());
 	} else {
 	    row.setCell(registration.getStudent().getPerson().getDistrictOfResidence());
 	}
 
-	// Concelho de Residência Permanente
+	// Concelho de ResidÃªncia Permanente
 	if (personalInformationBean.getDistrictSubdivisionOfResidence() != null) {
 	    row.setCell(personalInformationBean.getDistrictSubdivisionOfResidence().getName());
 	} else {
 	    row.setCell(registration.getStudent().getPerson().getDistrictSubdivisionOfResidence());
 	}
 
-	// Deslocado da Residência Permanente
+	// Deslocado da ResidÃªncia Permanente
 	if (personalInformationBean.getDislocatedFromPermanentResidence() != null) {
 	    row.setCell(personalInformationBean.getDislocatedFromPermanentResidence().toString());
 	} else {
 	    row.setCell("");
 	}
 
-	// Nível de Escolaridade do Pai
+	// NÃ­vel de Escolaridade do Pai
 	if (personalInformationBean.getFatherSchoolLevel() != null) {
 	    row.setCell(personalInformationBean.getFatherSchoolLevel().getName());
 	} else {
 	    row.setCell("");
 	}
 
-	// Nível de Escolaridade da Mãe
+	// NÃ­vel de Escolaridade da MÃ£e
 	if (personalInformationBean.getMotherSchoolLevel() != null) {
 	    row.setCell(personalInformationBean.getMotherSchoolLevel().getName());
 	} else {
 	    row.setCell("");
 	}
 
-	// Condição perante a situação na profissão/Ocupação do
+	// CondiÃ§Ã£o perante a situaÃ§Ã£o na profissÃ£o/OcupaÃ§Ã£o do
 	// Pai
 	if (personalInformationBean.getFatherProfessionalCondition() != null) {
 	    row.setCell(personalInformationBean.getFatherProfessionalCondition().getName());
@@ -315,29 +315,29 @@ public class RaidesCommonReportFieldsWrapper {
 	    row.setCell("");
 	}
 
-	// Condição perante a situação na profissão/Ocupação da
-	// Mãe
+	// CondiÃ§Ã£o perante a situaÃ§Ã£o na profissÃ£o/OcupaÃ§Ã£o da
+	// MÃ£e
 	if (personalInformationBean.getMotherProfessionalCondition() != null) {
 	    row.setCell(personalInformationBean.getMotherProfessionalCondition().getName());
 	} else {
 	    row.setCell("");
 	}
 
-	// Profissão do Pai
+	// ProfissÃ£o do Pai
 	if (personalInformationBean.getFatherProfessionType() != null) {
 	    row.setCell(personalInformationBean.getFatherProfessionType().getName());
 	} else {
 	    row.setCell("");
 	}
 
-	// Profissão da Mãe
+	// ProfissÃ£o da MÃ£e
 	if (personalInformationBean.getMotherProfessionType() != null) {
 	    row.setCell(personalInformationBean.getMotherProfessionType().getName());
 	} else {
 	    row.setCell("");
 	}
 
-	// Profissão do Aluno
+	// ProfissÃ£o do Aluno
 	if (personalInformationBean.getProfessionType() != null) {
 	    row.setCell(personalInformationBean.getProfessionType().getName());
 	} else {
@@ -359,7 +359,7 @@ public class RaidesCommonReportFieldsWrapper {
 	    row.setCell("");
 	}
 
-	// Estatuto de Trabalhador Estudante 1º semestre do ano a que se
+	// Estatuto de Trabalhador Estudante 1Âº semestre do ano a que se
 	// referem
 	// os dados
 	boolean working1Found = false;
@@ -372,7 +372,7 @@ public class RaidesCommonReportFieldsWrapper {
 	}
 	row.setCell(String.valueOf(working1Found));
 
-	// Estatuto de Trabalhador Estudante 1º semestre do ano a que se
+	// Estatuto de Trabalhador Estudante 1Âº semestre do ano a que se
 	// referem
 	// os dados
 	boolean working2Found = false;
@@ -392,7 +392,7 @@ public class RaidesCommonReportFieldsWrapper {
 	    row.setCell("");
 	}
 
-	// Instituição que atribuiu a bolsa
+	// InstituiÃ§Ã£o que atribuiu a bolsa
 	if (personalInformationBean.getGrantOwnerType() != null
 		&& personalInformationBean.getGrantOwnerType().equals(GrantOwnerType.OTHER_INSTITUTION_GRANT_OWNER)) {
 	    row.setCell(personalInformationBean.getGrantOwnerProviderName());
@@ -429,21 +429,21 @@ public class RaidesCommonReportFieldsWrapper {
 	// Outro grau da habl anterior compl
 	row.setCell(personalInformationBean.getOtherSchoolLevel());
 
-	// País de Habilitação Anterior ao Curso Actual
+	// PaÃ­s de HabilitaÃ§Ã£o Anterior ao Curso Actual
 	row.setCell(personalInformationBean.getCountryWhereFinishedPreviousCompleteDegree() != null ? personalInformationBean
 		.getCountryWhereFinishedPreviousCompleteDegree().getName() : "");
 
-	// Ano de conclusão da habilitação anterior
+	// Ano de conclusÃ£o da habilitaÃ§Ã£o anterior
 	row.setCell(personalInformationBean.getConclusionYear());
 
-	// Nota de conclusão da habilitação anterior
+	// Nota de conclusÃ£o da habilitaÃ§Ã£o anterior
 	row.setCell(personalInformationBean.getConclusionGrade() != null ? personalInformationBean.getConclusionGrade() : "");
 
-	// Duração do programa de mobilidade
+	// DuraÃ§Ã£o do programa de mobilidade
 	row.setCell(personalInformationBean.getMobilityProgramDuration() != null ? BundleUtil.getEnumName(personalInformationBean
 		.getMobilityProgramDuration()) : "");
 
-	// Tipo de Estabelecimento Frequentado no Ensino Secundário
+	// Tipo de Estabelecimento Frequentado no Ensino SecundÃ¡rio
 	if (personalInformationBean.getHighSchoolType() != null) {
 	    row.setCell(personalInformationBean.getHighSchoolType().getName());
 	} else {
@@ -479,9 +479,9 @@ public class RaidesCommonReportFieldsWrapper {
 	}
 	row.setCell(printDouble(totalCreditsEnrolled));
 
-	// Total de ECTS concluídos até ao fim do ano lectivo anterior ao
+	// Total de ECTS concluÃ­dos atÃ© ao fim do ano lectivo anterior ao
 	// que se
-	// referem os dados (neste caso até ao fim de 2007/08) no curso actual
+	// referem os dados (neste caso atÃ© ao fim de 2007/08) no curso actual
 	double totalCreditsDismissed = 0d;
 	for (Credits credits : lastStudentCurricularPlan.getCredits()) {
 	    if (credits.isEquivalence()) {
@@ -490,17 +490,17 @@ public class RaidesCommonReportFieldsWrapper {
 	}
 	row.setCell(printDouble(totalEctsConcludedUntilPreviousYear));
 
-	// Nº de Disciplinas Inscritos no ano lectivo anterior ao que se
+	// NÂº de Disciplinas Inscritos no ano lectivo anterior ao que se
 	// referem
 	// os dados
 	row.setCell(totalEnrolmentsInPreviousYear);
 
-	// Nº de Disciplinas Aprovadas no ano lectivo anterior ao que se
+	// NÂº de Disciplinas Aprovadas no ano lectivo anterior ao que se
 	// referem
 	// os dados
 	row.setCell(totalEnrolmentsApprovedInPreviousYear);
 
-	// Nº de Inscrições Externas no ano a que se referem os dados
+	// NÂº de InscriÃ§Ãµes Externas no ano a que se referem os dados
 	ExtraCurriculumGroup extraCurriculumGroup = lastStudentCurricularPlan.getExtraCurriculumGroup();
 	int extraCurricularEnrolmentsCount = extraCurriculumGroup != null ? extraCurriculumGroup.getEnrolmentsBy(executionYear)
 		.size() : 0;
@@ -516,7 +516,7 @@ public class RaidesCommonReportFieldsWrapper {
 
 	row.setCell(extraCurricularEnrolmentsCount);
 
-	// Estados de matrícula
+	// Estados de matrÃ­cula
 	SortedSet<RegistrationState> states = new TreeSet<RegistrationState>(RegistrationState.DATE_COMPARATOR);
 	for (Registration current : registrationPath) {
 	    states.addAll(current.getRegistrationStates());
@@ -533,24 +533,24 @@ public class RaidesCommonReportFieldsWrapper {
 	    }
 	}
 
-	// Estado da matrícula no ano lectivo anterior ao que se referem os
+	// Estado da matrÃ­cula no ano lectivo anterior ao que se referem os
 	// dados
 	row.setCell(previousYearState != null ? previousYearState.getStateType().getDescription() : "n/a");
 
-	// Estado (da matrícula) no ano a que se referem os dados
+	// Estado (da matrÃ­cula) no ano a que se referem os dados
 	row.setCell(currentYearState != null ? currentYearState.getStateType().getDescription() : "n/a");
 
-	// Data do estado de matrícula
+	// Data do estado de matrÃ­cula
 	row.setCell(currentYearState != null ? currentYearState.getStateDate().toString("dd-MM-yyyy") : "n/a");
 
-	// Nº ECTS do 1º Ciclo concluídos até ao fim do ano lectivo
+	// NÂº ECTS do 1Âº Ciclo concluÃ­dos atÃ© ao fim do ano lectivo
 	// anterior ao que se referem os dados
 	final CycleCurriculumGroup firstCycleCurriculumGroup = lastStudentCurricularPlan.getRoot().getCycleCurriculumGroup(
 		CycleType.FIRST_CYCLE);
 	row.setCell(firstCycleCurriculumGroup != null ? printBigDecimal(firstCycleCurriculumGroup.getCurriculum(executionYear)
 		.getSumEctsCredits()) : "");
 
-	// Nº ECTS do 2º Ciclo concluídos até ao fim do ano lectivo
+	// NÂº ECTS do 2Âº Ciclo concluÃ­dos atÃ© ao fim do ano lectivo
 	// anterior ao que se referem os dados
 	final CycleCurriculumGroup secondCycleCurriculumGroup = lastStudentCurricularPlan.getRoot().getCycleCurriculumGroup(
 		CycleType.SECOND_CYCLE);
@@ -559,7 +559,7 @@ public class RaidesCommonReportFieldsWrapper {
 			.getCurriculum(executionYear).getSumEctsCredits())
 			: "");
 
-	// Nº ECTS do 2º Ciclo Extra primeiro ciclo concluídos até ao fim do ano
+	// NÂº ECTS do 2Âº Ciclo Extra primeiro ciclo concluÃ­dos atÃ© ao fim do ano
 	// lectivo anterior ao que se referem os dados
 	Double extraFirstCycleEcts = 0d;
 	for (final CycleCurriculumGroup cycleCurriculumGroup : lastStudentCurricularPlan.getExternalCurriculumGroups()) {
@@ -571,7 +571,7 @@ public class RaidesCommonReportFieldsWrapper {
 	}
 	row.setCell(printDouble(extraFirstCycleEcts));
 
-	// Nº ECTS Extracurriculares concluídos até ao fim do ano lectivo
+	// NÂº ECTS Extracurriculares concluÃ­dos atÃ© ao fim do ano lectivo
 	// anterior que ao se referem os dados
 	Double extraCurricularEcts = 0d;
 	Double allExtraCurricularEcts = 0d;
@@ -588,7 +588,7 @@ public class RaidesCommonReportFieldsWrapper {
 	}
 	row.setCell(printDouble(extraCurricularEcts));
 
-	// Nº ECTS Propedeutic concluídos até ao fim do ano lectivo
+	// NÂº ECTS Propedeutic concluÃ­dos atÃ© ao fim do ano lectivo
 	// anterior que ao se referem os dados
 	Double propaedeuticEcts = 0d;
 	Double allPropaedeuticEcts = 0d;
@@ -606,14 +606,14 @@ public class RaidesCommonReportFieldsWrapper {
 	}
 	row.setCell(printDouble(propaedeuticEcts));
 
-	// Nº ECTS inscritos em unidades curriculares propedêuticas e em
+	// NÂº ECTS inscritos em unidades curriculares propedÃªuticas e em
 	// extra-curriculares
 	row.setCell(printDouble(allPropaedeuticEcts + allExtraCurricularEcts));
 
-	// Nº ECTS equivalência/substituição/dispensa
+	// NÂº ECTS equivalÃªncia/substituiÃ§Ã£o/dispensa
 	row.setCell(printDouble(totalCreditsDismissed));
 
-	// Tem situação de propinas no lectivo dos dados
+	// Tem situaÃ§Ã£o de propinas no lectivo dos dados
 	row.setCell(String.valueOf(lastStudentCurricularPlan.hasAnyGratuityEventFor(executionYear)));
 
 	return row;

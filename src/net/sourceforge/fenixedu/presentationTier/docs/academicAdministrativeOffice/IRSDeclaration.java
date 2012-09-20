@@ -54,13 +54,13 @@ public class IRSDeclaration extends AdministrativeOfficeDocument {
 
 	final String registrationNumber = registration.getNumber().toString();
 	addParameter("registrationNumber", StringUtils.multipleLineRightPad(registrationNumber, LINE_LENGTH
-		- "aluno deste Instituto com o Número ".length(), END_CHAR));
+		- "aluno deste Instituto com o NÃºmero ".length(), END_CHAR));
 
 	final StringBuilder documentIdType = new StringBuilder();
 	documentIdType.append("portador" + (person.isMale() ? EMPTY_STR : "a"));
 	documentIdType.append(" do ");
 	documentIdType.append(person.getIdDocumentType().getLocalizedName());
-	documentIdType.append(" Nº ");
+	documentIdType.append(" NÂº ");
 	addParameter("documentIdType", documentIdType.toString());
 
 	final String documentIdNumber = person.getDocumentIdNumber();
@@ -80,7 +80,7 @@ public class IRSDeclaration extends AdministrativeOfficeDocument {
 	    payedAmounts.append("*").append(gratuityPayedAmount.toPlainString()).append("Eur").append(LINE_BREAK);
 	}
 	if (!othersPayedAmount.isZero()) {
-	    eventTypes.append("- Outras despesas de educação").append(LINE_BREAK);
+	    eventTypes.append("- Outras despesas de educaÃ§Ã£o").append(LINE_BREAK);
 	    payedAmounts.append("*").append(othersPayedAmount.toPlainString()).append("Eur").append(LINE_BREAK);
 	}
 	addParameter("eventTypes", eventTypes.toString());

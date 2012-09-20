@@ -3,7 +3,7 @@ package net.sourceforge.fenixedu.dataTransferObject;
 import net.sourceforge.fenixedu.domain.space.Campus;
 
 /**
- * @author T‚nia Pous„o Create on 10/Nov/2003
+ * @author T√¢nia Pous√£o Create on 10/Nov/2003
  */
 public class InfoCampus extends InfoObject {
     private String name;

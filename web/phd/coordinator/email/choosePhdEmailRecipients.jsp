@@ -22,7 +22,7 @@
 
 <%--  ###  Return Links / Steps Information(for multistep forms)  ### --%>
 <html:link action="/phdIndividualProgramProcess.do?method=managePhdEmails">
-	« <bean:message bundle="PHD_RESOURCES" key="label.back"/>
+	Â« <bean:message bundle="PHD_RESOURCES" key="label.back"/>
 </html:link>
 
 <p><jsp:include page="createEmailStepsBreadcrumb.jsp?step=1"></jsp:include></p>

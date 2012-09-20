@@ -7,7 +7,7 @@ import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.ist.fenixWebFramework.services.Service;
 
 /**
- * @author T‚nia Pous„o 6/Out/2003
+ * @author T√¢nia Pous√£o 6/Out/2003
  */
 
 public class ReadPosGradStudentCurricularPlanById extends FenixService {

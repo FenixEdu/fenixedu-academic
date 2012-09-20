@@ -7,7 +7,7 @@ import pt.ist.fenixWebFramework.rendererExtensions.util.IPresentableEnum;
 
 /**
  * @author - Shezad Anavarali (shezad@ist.utl.pt)
- * @author - Ângela Almeida (argelina@ist.utl.pt)
+ * @author - Ã‚ngela Almeida (argelina@ist.utl.pt)
  * 
  */
 public enum Ingression implements IPresentableEnum {
@@ -18,13 +18,13 @@ public enum Ingression implements IPresentableEnum {
 
     CEA01("Ad-Hoc"),
 
-    CEA02("Cursos Médios e Superiores"),
+    CEA02("Cursos MÃ©dios e Superiores"),
 
     CEA03("Sistemas de Ensino Superior Estrangeiro"),
 
     CNA01("Contingente Geral"),
 
-    CNA02("Contingente Açores"),
+    CNA02("Contingente AÃ§ores"),
 
     CNA03("Contingente Madeira"),
 
@@ -36,61 +36,61 @@ public enum Ingression implements IPresentableEnum {
 
     CNA07("Contingente Deficientes"),
 
-    CON01("Convénio Universidade dos Açores"),
+    CON01("ConvÃ©nio Universidade dos AÃ§ores"),
 
-    ENC01("Transferências Externas"),
+    ENC01("TransferÃªncias Externas"),
 
-    ENC02("Mudanças de Curso Externas"),
+    ENC02("MudanÃ§as de Curso Externas"),
 
-    REA01("Funcionários portugueses de missão diplomática no estrangeiro e seus familiares que os acompanham"),
+    REA01("FuncionÃ¡rios portugueses de missÃ£o diplomÃ¡tica no estrangeiro e seus familiares que os acompanham"),
 
     REA02(
-	    "Cidadãos portugueses bolseiros no estrangeiro, funcionários públicos em missão oficial no estrangeiro ou funcionários portugueses da CE e seus familiares que os acompanham"),
+	    "CidadÃ£os portugueses bolseiros no estrangeiro, funcionÃ¡rios pÃºblicos em missÃ£o oficial no estrangeiro ou funcionÃ¡rios portugueses da CE e seus familiares que os acompanham"),
 
     REA03(
-	    "Oficiais do quadro permanente das Forças Armadas Portuguesas, no âmbito da satisfação de necessidades específicas de formação das Forças Armadas."),
+	    "Oficiais do quadro permanente das ForÃ§as Armadas Portuguesas, no Ã¢mbito da satisfaÃ§Ã£o de necessidades especÃ­ficas de formaÃ§Ã£o das ForÃ§as Armadas."),
 
     REA04(
-	    "Funcionários estrangeiros de missão diplomática acreditada em Portugal e seus familiares aqui residentes em regime de reciprocidade"),
+	    "FuncionÃ¡rios estrangeiros de missÃ£o diplomÃ¡tica acreditada em Portugal e seus familiares aqui residentes em regime de reciprocidade"),
 
     REA05(
-	    "Estudantes nacionais dos países africanos de expressão portuguesa, bolseiros do Governo Português, da Fundação Calouste Gulbenkian e ao abrigo de convenções com a CE, com frequência de ensino superior"),
+	    "Estudantes nacionais dos paÃ­ses africanos de expressÃ£o portuguesa, bolseiros do Governo PortuguÃªs, da FundaÃ§Ã£o Calouste Gulbenkian e ao abrigo de convenÃ§Ãµes com a CE, com frequÃªncia de ensino superior"),
 
     REA06(
-	    "Estudantes nacionais dos países africanos de expressão portuguesa, bolseiros do Governo Português, da Fundação Calouste Gulbenkian e ao abrigo de convenções com a CE, com o 12º ano de escolaridade português"),
+	    "Estudantes nacionais dos paÃ­ses africanos de expressÃ£o portuguesa, bolseiros do Governo PortuguÃªs, da FundaÃ§Ã£o Calouste Gulbenkian e ao abrigo de convenÃ§Ãµes com a CE, com o 12Âº ano de escolaridade portuguÃªs"),
 
-    REA07("Atletas de Alta Competição"),
+    REA07("Atletas de Alta CompetiÃ§Ã£o"),
 
     REA08(
-	    "Naturais e filhos de naturais de territórios sob administração portuguesa, mas temporariamente ocupados por Forças Armadas e Estados Estrangeiros"),
+	    "Naturais e filhos de naturais de territÃ³rios sob administraÃ§Ã£o portuguesa, mas temporariamente ocupados por ForÃ§as Armadas e Estados Estrangeiros"),
 
     REA09(
-	    "Estudantes nacionais da República de Angola, não bolseiros e que não tenham residido em território português durante a aquisição da habilitação precedente ao 12º ano de escolaridade"),
+	    "Estudantes nacionais da RepÃºblica de Angola, nÃ£o bolseiros e que nÃ£o tenham residido em territÃ³rio portuguÃªs durante a aquisiÃ§Ã£o da habilitaÃ§Ã£o precedente ao 12Âº ano de escolaridade"),
 
     VAG01(
-	    "Vagas Adicionais - Vagas que são necessárias criar por erros de serviços do Ministério da Educação (Direcção Geral de Acesso ao Ensino Superior)"),
+	    "Vagas Adicionais - Vagas que sÃ£o necessÃ¡rias criar por erros de serviÃ§os do MinistÃ©rio da EducaÃ§Ã£o (DirecÃ§Ã£o Geral de Acesso ao Ensino Superior)"),
 
-    CIA2C("Concurso Interno de Acesso ao 2º Ciclo"),
+    CIA2C("Concurso Interno de Acesso ao 2Âº Ciclo"),
 
-    CIA3C("Concurso Interno de Acesso ao 3º Ciclo"),
+    CIA3C("Concurso Interno de Acesso ao 3Âº Ciclo"),
 
     PMT("Permuta"),
 
-    MCI("Mudança de Curso Interna"),
+    MCI("MudanÃ§a de Curso Interna"),
 
-    MCE("Mudança de Curso Externa"),
+    MCE("MudanÃ§a de Curso Externa"),
 
-    RI("Reingresso (de Pré-Bolonha)"),
+    RI("Reingresso (de PrÃ©-Bolonha)"),
 
-    TPB("Transição para Bolonha"),
+    TPB("TransiÃ§Ã£o para Bolonha"),
 
-    DA1C("Acesso directo do 1º Ciclo"),
+    DA1C("Acesso directo do 1Âº Ciclo"),
 
-    AG1C("Atribuição de Grau de 1º Ciclo"),
+    AG1C("AtribuiÃ§Ã£o de Grau de 1Âº Ciclo"),
 
     CM23("Maiores de 23"),
 
-    TRF("Transferência"),
+    TRF("TransferÃªncia"),
 
     STC("Candidatura Unidades Curriculares Isoladas");
 

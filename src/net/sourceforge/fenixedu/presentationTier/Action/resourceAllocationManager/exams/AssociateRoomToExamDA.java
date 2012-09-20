@@ -166,7 +166,7 @@ public class AssociateRoomToExamDA extends FenixDateAndTimeContextDispatchAction
 
 	String endTime = new String((String) examForm.get("endHour") + ":" + (String) examForm.get("endMinute"));
 
-	request.setAttribute(PresentationConstants.EXAM_DATEANDTIME_STR, date + " das " + startTime + " às " + endTime);
+	request.setAttribute(PresentationConstants.EXAM_DATEANDTIME_STR, date + " das " + startTime + " Ã s " + endTime);
 
 	String[] scopeIDArray = (String[]) examForm.get("scopes");
 	request.setAttribute("scopes", scopeIDArray);

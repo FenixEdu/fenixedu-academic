@@ -45,7 +45,7 @@
 		<%}
 		 if(testQuestion.getStudentSubQuestions().size()>1){
 		 	if(itemIndex.equals(new Integer(0))){%>
-		 		<tr><td><span class="error">Esta pergunta é uma pergunta com alíneas. Após responder poderá surgir uma nova alínea para responder.</span></td></tr>
+		 		<tr><td><span class="error">Esta pergunta Ã© uma pergunta com alÃ­neas. ApÃ³s responder poderÃ¡ surgir uma nova alÃ­nea para responder.</span></td></tr>
 		 	<%}%>
 			<tr><td><br/><b><bean:write name="subQuestion" property="title"/></b></td></tr>
 		<%}%>

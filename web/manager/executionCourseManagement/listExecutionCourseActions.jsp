@@ -35,7 +35,7 @@
 		value="&executionCoursesNotLinked=null" />
 
 	<bean:define id="yearTag"
-		value="<%= curricularYear.toString() + "º ano" %>" />
+		value="<%= curricularYear.toString() + "Âº ano" %>" />
 
 	<fr:view name="sessionBean" property="executionDegree.degreeType.localizedName" />
 	<fr:view name="sessionBean" property="executionDegree.degreeName" />
@@ -140,15 +140,15 @@
 </fr:view>
 
 
-<!--<h2>Apagar Anúncios</h2>
+<!--<h2>Apagar AnÃºncios</h2>
 
-<p><strong>Opção Livre 1</strong></p>
+<p><strong>OpÃ§Ã£o Livre 1</strong></p>
 
 <div class="warning1">
-	Deseja apagar todos os anúncios da disciplina Opção Livre 1 - 2009/2010 - 1º Semestre?
+	Deseja apagar todos os anÃºncios da disciplina OpÃ§Ã£o Livre 1 - 2009/2010 - 1Âº Semestre?
 </div>
 
 <p>
-	<input type="button" value="Apagar Anúncios"/>
+	<input type="button" value="Apagar AnÃºncios"/>
 	<input type="button" value="Cancelar"/>
 </p>-->

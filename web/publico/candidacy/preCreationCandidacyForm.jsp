@@ -77,6 +77,6 @@
 	</div>
 
 	
-	<p class="mtop1 mbottom0"><html:submit><bean:message key="button.continue" bundle="APPLICATION_RESOURCES" /> »</html:submit></p>
+	<p class="mtop1 mbottom0"><html:submit><bean:message key="button.continue" bundle="APPLICATION_RESOURCES" /> Â»</html:submit></p>
 </fr:form>
 

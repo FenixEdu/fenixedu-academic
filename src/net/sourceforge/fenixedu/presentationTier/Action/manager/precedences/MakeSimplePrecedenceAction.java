@@ -48,7 +48,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 /**
- * @author T‚nia Pous„o
+ * @author T√¢nia Pous√£o
  * 
  */
 @Mapping(module = "manager", path = "/makeSimplePrecedence", input = "/managePrecedences.do", attribute = "insertRestrictionForm", formBean = "insertRestrictionForm", scope = "request", parameter = "method")

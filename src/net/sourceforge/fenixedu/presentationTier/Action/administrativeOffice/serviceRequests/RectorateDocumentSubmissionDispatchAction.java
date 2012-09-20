@@ -181,7 +181,7 @@ public class RectorateDocumentSubmissionDispatchAction extends FenixDispatchActi
 
 		ResourceBundle enumeration = ResourceBundle.getBundle("resources.EnumerationResources", Language.getLocale());
 		ResourceBundle phdBundle = ResourceBundle.getBundle("resources.PhdResources", Language.getLocale());
-		addCell("Código", document.getRegistryCode().getCode());
+		addCell("CÃ³digo", document.getRegistryCode().getCode());
 		addCell("Tipo de Documento", enumeration.getString(document.getDocumentRequestType().name()));
 		switch (document.getDocumentRequestType()) {
 		case REGISTRY_DIPLOMA_REQUEST:
@@ -204,7 +204,7 @@ public class RectorateDocumentSubmissionDispatchAction extends FenixDispatchActi
 		    addCell("Tipo de Curso", phdBundle.getString("label.php.program"));
 		}
 		
-		addCell("Nº de Aluno", document.getStudent().getNumber());
+		addCell("NÂº de Aluno", document.getStudent().getNumber());
 		addCell("Nome", document.getPerson().getName());
 		if (!document.isDiploma()) {
 		    addCell("Ficheiro", document.getLastGeneratedDocument().getFilename());

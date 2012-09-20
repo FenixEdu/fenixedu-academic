@@ -23,8 +23,8 @@ import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
 
 /**
- * @author Tânia Pousão
- * @author Ângela
+ * @author TÃ¢nia PousÃ£o
+ * @author Ã‚ngela
  * 
  */
 public class ReadCurricularCourseListByExecutionCourseCode extends FenixService {

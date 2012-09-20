@@ -462,7 +462,7 @@ public class ManageSpacesDA extends FenixDispatchAction {
 
     private void exportToXls(Space space, OutputStream outputStream) throws IOException {
 	final List<Object> headers = getHeaders();
-	final Spreadsheet spreadsheet = new Spreadsheet("GestãoDeEspaços", headers);
+	final Spreadsheet spreadsheet = new Spreadsheet("GestÃ£oDeEspaÃ§os", headers);
 	fillSpreadSheet(space, spreadsheet);
 	spreadsheet.exportToXLSSheet(outputStream);
     }
@@ -548,26 +548,26 @@ public class ManageSpacesDA extends FenixDispatchAction {
     private List<Object> getHeaders() {
 	final List<Object> headers = new ArrayList<Object>();
 
-	headers.add("Edifício");
+	headers.add("EdifÃ­cio");
 	headers.add("Piso");
-	headers.add("Espaço");
-	headers.add("Identificação do Espaço");
-	headers.add("Número na Porta");
-	headers.add("Número na Planta");
-	headers.add("Classificação");
-	headers.add("Área");
+	headers.add("EspaÃ§o");
+	headers.add("IdentificaÃ§Ã£o do EspaÃ§o");
+	headers.add("NÃºmero na Porta");
+	headers.add("NÃºmero na Planta");
+	headers.add("ClassificaÃ§Ã£o");
+	headers.add("Ãrea");
 
-	headers.add("Qualid. em Pé Direito");
-	headers.add("Qualid. em Iluminação");
-	headers.add("Qualid. em Dist. às Instalações Sanitárias");
-	headers.add("Qualid. em Segurança");
+	headers.add("Qualid. em PÃ© Direito");
+	headers.add("Qualid. em IluminaÃ§Ã£o");
+	headers.add("Qualid. em Dist. Ã s InstalaÃ§Ãµes SanitÃ¡rias");
+	headers.add("Qualid. em SeguranÃ§a");
 	headers.add("Qualid. em Vetustez");
 
-	headers.add("Unidade(s) responsáveis");
+	headers.add("Unidade(s) responsÃ¡veis");
 	headers.add("Ocupantes (Unidades)");
 	headers.add("Ocupantes (Pessoas)");
 
-	headers.add("Observações");
+	headers.add("ObservaÃ§Ãµes");
 
 	return headers;
     }

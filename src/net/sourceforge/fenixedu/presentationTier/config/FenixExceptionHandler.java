@@ -29,7 +29,7 @@ import org.apache.struts.config.ExceptionConfig;
 import pt.ist.fenixframework.pstm.Transaction;
 
 /**
- * @author Jo„o Mota
+ * @author Jo√£o Mota
  */
 public class FenixExceptionHandler extends ExceptionHandler {
 

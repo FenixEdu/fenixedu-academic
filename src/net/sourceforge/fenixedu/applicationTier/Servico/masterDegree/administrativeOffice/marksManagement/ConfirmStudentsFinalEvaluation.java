@@ -32,7 +32,7 @@ public class ConfirmStudentsFinalEvaluation extends FenixService {
 	    for (final EnrolmentEvaluation enrolmentEvaluation : enrolmentEvaluations) {
 		if (enrolmentEvaluation.hasGrade() && enrolmentEvaluation.isTemporary()
 			&& enrolmentEvaluation.hasExamDateYearMonthDay()) {
-		    enrolmentEvaluation.confirmSubmission(employee, "Lançamento de Notas na Secretaria");
+		    enrolmentEvaluation.confirmSubmission(employee, "LanÃ§amento de Notas na Secretaria");
 		}
 	    }
 	}

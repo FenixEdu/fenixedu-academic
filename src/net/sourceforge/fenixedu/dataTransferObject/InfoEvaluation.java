@@ -13,7 +13,7 @@ import net.sourceforge.fenixedu.util.DiaSemana;
 import net.sourceforge.fenixedu.util.EvaluationType;
 
 /**
- * @author Ângela
+ * @author Ã‚ngela
  * 
  *         25/6/2003
  */

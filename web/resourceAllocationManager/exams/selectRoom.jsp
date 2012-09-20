@@ -69,7 +69,7 @@ function cleanSelect() {
 					<bean:define id="tipo" name="infoRoom" property="tipo"/>
 					<logic:equal name="tipo" value="A">Anfiteatro</logic:equal>
 					<logic:equal name="tipo" value="P">Plana</logic:equal>
-					<logic:equal name="tipo" value="L">Laboratório</logic:equal>
+					<logic:equal name="tipo" value="L">LaboratÃ³rio</logic:equal>
 				</td>
 				<td>
 					<bean:write name="infoRoom" property="edificio"/>
@@ -88,7 +88,7 @@ function cleanSelect() {
 	</table>
 </logic:present>
 <logic:notPresent name="<%=PresentationConstants.ROOMS_LIST%>">
-	Não existem salas com as caracteristicas especificadas.<br/>
+	NÃ£o existem salas com as caracteristicas especificadas.<br/>
 </logic:notPresent>
 <br/>
 	<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton" onclick="cleanSelect()">

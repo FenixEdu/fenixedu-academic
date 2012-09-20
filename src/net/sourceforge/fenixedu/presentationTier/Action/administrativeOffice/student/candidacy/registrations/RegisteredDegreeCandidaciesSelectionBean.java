@@ -155,7 +155,7 @@ public class RegisteredDegreeCandidaciesSelectionBean implements Serializable {
 	spreadsheet.setHeader("Data de Matricula");
 	spreadsheet.setHeader("Tipo Ingresso");
 	spreadsheet.setHeader("Curso");
-	spreadsheet.setHeader("Nº de Aluno");
+	spreadsheet.setHeader("NÂº de Aluno");
 	spreadsheet.setHeader("Nome");
 	spreadsheet.setHeader("B.I");
 

@@ -98,11 +98,11 @@
 		</fr:edit>
 	
 		<p>
-			<strong>Notas - </strong> O sistema irá anexar automaticamente no final da mensagem de mail a seguinte informação:
+			<strong>Notas - </strong> O sistema irÃ¡ anexar automaticamente no final da mensagem de mail a seguinte informaÃ§Ã£o:
 		</p>
 		<ul>
 			<li>Data, hora e local introduzidos</li>
-			<li>Informação de acesso aos pareceres para os elementos do júri</li>
+			<li>InformaÃ§Ã£o de acesso aos pareceres para os elementos do jÃºri</li>
 		</ul>
 	</logic:equal>	
 	

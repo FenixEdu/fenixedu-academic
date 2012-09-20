@@ -50,7 +50,7 @@ public class CandidateApprovalAuthorizationFilter extends Filtro {
 		MasterDegreeCandidate masterDegreeCandidate = rootDomainObject
 			.readMasterDegreeCandidateByOID(new Integer(ids[i]));
 
-		// modified by T‚nia Pous„o
+		// modified by T√¢nia Pous√£o
 		Coordinator coordinator = masterDegreeCandidate.getExecutionDegree().getCoordinatorByTeacher(person);
 
 		if (coordinator == null) {

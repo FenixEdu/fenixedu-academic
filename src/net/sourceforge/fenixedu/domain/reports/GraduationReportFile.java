@@ -35,21 +35,21 @@ public class GraduationReportFile extends GraduationReportFile_Base {
 
     @Override
     public void renderReport(Spreadsheet spreadsheet) {
-	spreadsheet.setHeader("número aluno");
+	spreadsheet.setHeader("nÃºmero aluno");
 	spreadsheet.setHeader("nome");
 	setDegreeHeaders(spreadsheet);
 	spreadsheet.setHeader("ciclo");
-	spreadsheet.setHeader("Nota Conclusão Secundário");
-	spreadsheet.setHeader("Nota Seriação");
+	spreadsheet.setHeader("Nota ConclusÃ£o SecundÃ¡rio");
+	spreadsheet.setHeader("Nota SeriaÃ§Ã£o");
 	spreadsheet.setHeader("ano de ingresso");
-	spreadsheet.setHeader("ano lectivo conclusão");
-	spreadsheet.setHeader("data conclusão");
-	spreadsheet.setHeader("número de anos para conclusão");
-	spreadsheet.setHeader("média final");
+	spreadsheet.setHeader("ano lectivo conclusÃ£o");
+	spreadsheet.setHeader("data conclusÃ£o");
+	spreadsheet.setHeader("nÃºmero de anos para conclusÃ£o");
+	spreadsheet.setHeader("mÃ©dia final");
 	spreadsheet.setHeader("morada");
-	spreadsheet.setHeader("código postal");
+	spreadsheet.setHeader("cÃ³digo postal");
 	spreadsheet.setHeader("cidade");
-	spreadsheet.setHeader("país");
+	spreadsheet.setHeader("paÃ­s");
 	spreadsheet.setHeader("telefone");
 	spreadsheet.setHeader("telemovel");
 	spreadsheet.setHeader("email");

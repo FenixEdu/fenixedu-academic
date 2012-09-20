@@ -555,8 +555,8 @@ padding-right: 8px;
 	<tr>
 		<th><bean:message key="label.teachingInquiries.teachingLanguage" bundle="INQUIRIES_RESOURCES"/></th>
 		<td>
-			<logic:equal name="teachingInquiry" property="teachingLanguage" value="PT">Português</logic:equal>
-			<logic:equal name="teachingInquiry" property="teachingLanguage" value="EN">Inglês</logic:equal>
+			<logic:equal name="teachingInquiry" property="teachingLanguage" value="PT">PortuguÃªs</logic:equal>
+			<logic:equal name="teachingInquiry" property="teachingLanguage" value="EN">InglÃªs</logic:equal>
 			<logic:equal name="teachingInquiry" property="teachingLanguage" value="BOTH">Ambos</logic:equal>
 			<logic:equal name="teachingInquiry" property="teachingLanguage" value="OTHER">Outros</logic:equal>
 		</td>
@@ -666,7 +666,7 @@ padding-right: 8px;
 		<th>
 		</th> 
  		<td> 
- 			Não se aplica
+ 			NÃ£o se aplica
  			<br/> 
  			<br/>
  			<br/> 

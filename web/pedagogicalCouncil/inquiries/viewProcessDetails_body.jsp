@@ -5,7 +5,7 @@
 <html:xhtml />
 
 <bean:define id="executionSemester" name="executionCourseAudit" property="executionCourse.executionPeriod"/>
-<h3><bean:write name="executionSemester" property="semester"/>บ <bean:message key="label.inquiries.semester" bundle="INQUIRIES_RESOURCES"/>
+<h3><bean:write name="executionSemester" property="semester"/>ยบ <bean:message key="label.inquiries.semester" bundle="INQUIRIES_RESOURCES"/>
 	 <bean:write name="executionSemester" property="executionYear.year"/></h3> 
 
 <fr:view name="competenceCoursesToAudit">

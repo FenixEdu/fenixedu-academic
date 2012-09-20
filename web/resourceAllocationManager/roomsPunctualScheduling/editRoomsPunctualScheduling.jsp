@@ -111,7 +111,7 @@
 			
 			<ul class="mtop0 mbottom2">
 				<li>
-					<html:link page="<%= deleteURL %>" onclick="return confirm('Tem a certeza que deseja apagar a marcação?')">		
+					<html:link page="<%= deleteURL %>" onclick="return confirm('Tem a certeza que deseja apagar a marcaÃ§Ã£o?')">		
 						<bean:message bundle="SOP_RESOURCES" key="label.delete.room.punctual.scheduling"/>
 					</html:link>
 				</li>

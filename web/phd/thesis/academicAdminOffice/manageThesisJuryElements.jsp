@@ -105,7 +105,7 @@
 	<br/><br/>
 </logic:notEmpty>
 
-<strong>Presidente:</strong> Presidente do Conselho Científico do IST
+<strong>Presidente:</strong> Presidente do Conselho CientÃ­fico do IST
 <logic:notEmpty name="process" property="presidentJuryElement">
 	<br/>
 	<strong>Presidente nomeado:</strong> <bean:write name="process" property="presidentJuryElement.nameWithTitle" />

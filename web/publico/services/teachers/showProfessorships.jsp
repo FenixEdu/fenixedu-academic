@@ -9,7 +9,7 @@
 
 
 <p>
-	Critério de pesquisa:
+	CritÃ©rio de pesquisa:
 	<logic:notPresent name="executionDegree">
 		<b><%= request.getAttribute("searchTarget").toString() %></b> - 
 	</logic:notPresent>

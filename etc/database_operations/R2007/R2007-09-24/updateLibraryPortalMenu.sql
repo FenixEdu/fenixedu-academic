@@ -12,28 +12,28 @@ START TRANSACTION;
 -- 
 
 --  ID: 189878 UUID: '4caaa9c0-1db1-449b-a91a-487454cc62ec'
-UPDATE `ACCESSIBLE_ITEM` AS own SET own.`NAME` = 'pt6:Inícioen5:Start', own.`TITLE` = 'pt24:Página inicial do portalen19:Portal inicial page' WHERE own.`UUID` = '4caaa9c0-1db1-449b-a91a-487454cc62ec';
+UPDATE `ACCESSIBLE_ITEM` AS own SET own.`NAME` = 'pt6:InÃ­cioen5:Start', own.`TITLE` = 'pt24:PÃ¡gina inicial do portalen19:Portal inicial page' WHERE own.`UUID` = '4caaa9c0-1db1-449b-a91a-487454cc62ec';
 
 --  ID: 189879 UUID: '9dc80775-4df0-4876-b991-cff3bcbd59cb'
-UPDATE `ACCESSIBLE_ITEM` AS own SET own.`NAME` = 'pt12:Dissertaçõesen6:Theses' WHERE own.`UUID` = '9dc80775-4df0-4876-b991-cff3bcbd59cb';
+UPDATE `ACCESSIBLE_ITEM` AS own SET own.`NAME` = 'pt12:DissertaÃ§Ãµesen6:Theses' WHERE own.`UUID` = '9dc80775-4df0-4876-b991-cff3bcbd59cb';
 
 --  ID: 189880 UUID: '6a502dd9-0466-4e58-82e3-05a5b93a8c67'
-UPDATE `ACCESSIBLE_ITEM` AS own SET own.`NAME` = 'pt16:Listar Pendentesen16:List Unconfirmed', own.`TITLE` = 'pt35:Listar dissertações não confirmadasen23:List unconfirmed theses' WHERE own.`UUID` = '6a502dd9-0466-4e58-82e3-05a5b93a8c67';
+UPDATE `ACCESSIBLE_ITEM` AS own SET own.`NAME` = 'pt16:Listar Pendentesen16:List Unconfirmed', own.`TITLE` = 'pt35:Listar dissertaÃ§Ãµes nÃ£o confirmadasen23:List unconfirmed theses' WHERE own.`UUID` = '6a502dd9-0466-4e58-82e3-05a5b93a8c67';
 
 --  ID: 189881 UUID: '11ab0ab3-56a2-4bb8-9256-2bde9d159697'
-UPDATE `ACCESSIBLE_ITEM` AS own SET own.`NAME` = 'pt21:Verificar Dissertaçãoen19:Verify Dissertation', own.`TITLE` = 'pt47:Verificar e corrigir os detalhes da dissertaçãoen33:Verify and correct thesis details' WHERE own.`UUID` = '11ab0ab3-56a2-4bb8-9256-2bde9d159697';
+UPDATE `ACCESSIBLE_ITEM` AS own SET own.`NAME` = 'pt21:Verificar DissertaÃ§Ã£oen19:Verify Dissertation', own.`TITLE` = 'pt47:Verificar e corrigir os detalhes da dissertaÃ§Ã£oen33:Verify and correct thesis details' WHERE own.`UUID` = '11ab0ab3-56a2-4bb8-9256-2bde9d159697';
 
 --  ID: 189882 UUID: '2faa16c6-6696-44a9-9d0c-d6c9d51b42b9'
-UPDATE `ACCESSIBLE_ITEM` AS own SET own.`NAME` = 'pt18:Listar Confirmadasen14:List confirmed', own.`TITLE` = 'pt31:Listar dissertações confirmadasen21:List confirmed theses' WHERE own.`UUID` = '2faa16c6-6696-44a9-9d0c-d6c9d51b42b9';
+UPDATE `ACCESSIBLE_ITEM` AS own SET own.`NAME` = 'pt18:Listar Confirmadasen14:List confirmed', own.`TITLE` = 'pt31:Listar dissertaÃ§Ãµes confirmadasen21:List confirmed theses' WHERE own.`UUID` = '2faa16c6-6696-44a9-9d0c-d6c9d51b42b9';
 
 --  ID: 189883 UUID: '384a11b9-351d-46a1-9bce-0235e0fe31a7'
-UPDATE `ACCESSIBLE_ITEM` AS own SET own.`NAME` = 'pt17:Listar Exportadasen13:List Exported', own.`TITLE` = 'pt30:Listar dissertações exportadasen20:List exported theses' WHERE own.`UUID` = '384a11b9-351d-46a1-9bce-0235e0fe31a7';
+UPDATE `ACCESSIBLE_ITEM` AS own SET own.`NAME` = 'pt17:Listar Exportadasen13:List Exported', own.`TITLE` = 'pt30:Listar dissertaÃ§Ãµes exportadasen20:List exported theses' WHERE own.`UUID` = '384a11b9-351d-46a1-9bce-0235e0fe31a7';
 
 --  ID: 189884 UUID: '81237d1d-e3ef-4252-936f-e9da63667d39'
-UPDATE `ACCESSIBLE_ITEM` AS own SET own.`NAME` = 'pt21:Exportar Dissertaçõesen13:Export Theses', own.`TITLE` = 'pt43:Exportar dissertações selecionadas para XMLen29:Export selected theses to XML' WHERE own.`UUID` = '81237d1d-e3ef-4252-936f-e9da63667d39';
+UPDATE `ACCESSIBLE_ITEM` AS own SET own.`NAME` = 'pt21:Exportar DissertaÃ§Ãµesen13:Export Theses', own.`TITLE` = 'pt43:Exportar dissertaÃ§Ãµes selecionadas para XMLen29:Export selected theses to XML' WHERE own.`UUID` = '81237d1d-e3ef-4252-936f-e9da63667d39';
 
 --  ID: 283322 UUID: '6797c053-576f-4ec4-b50a-489470709106'
-UPDATE `ACCESSIBLE_ITEM` AS own SET own.`NAME` = 'pt22:Gerar cartões em falta' WHERE own.`UUID` = '6797c053-576f-4ec4-b50a-489470709106';
+UPDATE `ACCESSIBLE_ITEM` AS own SET own.`NAME` = 'pt22:Gerar cartÃµes em falta' WHERE own.`UUID` = '6797c053-576f-4ec4-b50a-489470709106';
 
 -- 
 --  Inserting new functionalities

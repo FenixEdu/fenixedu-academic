@@ -33,7 +33,7 @@ public class PersistentRevenueReport extends PersistentReport {
 	    p.startTransaction();
 	    String tableOrView = getTableOrViewName(p, reportType);
 
-	    String query = "select \"idMov\", \"Ent. Financ.\", \"Rubrica\", \"Data\", \"Descrição\", \"Valor\" from "
+	    String query = "select \"idMov\", \"Ent. Financ.\", \"Rubrica\", \"Data\", \"DescriÃ§Ã£o\", \"Valor\" from "
 		    + tableOrView + " where PROJECTCODE='" + projectCode + "' order by \"Data\", \"idMov\"";
 	    PreparedStatement stmt = p.prepareStatement(query);
 	    ResultSet rs = stmt.executeQuery(query);
@@ -46,7 +46,7 @@ public class PersistentRevenueReport extends PersistentReport {
 		SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
 		Date date = rs.getDate("Data");
 		report.setDate(formatter.format(date));
-		report.setDescription(rs.getString("Descrição"));
+		report.setDescription(rs.getString("DescriÃ§Ã£o"));
 		report.setValue(new Double(rs.getDouble("Valor")));
 		result.add(report);
 	    }

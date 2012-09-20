@@ -9,9 +9,9 @@
 	import="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants"%><html:xhtml />
 
 <em><bean:message key="title.resourceAllocationManager.management" /></em>
-<h2>Avaliações Escritas</h2>
+<h2>AvaliaÃ§Ãµes Escritas</h2>
 <p>Seleccione a op&ccedil;&atilde;o pretendida para criar, editar ou visualisar a
-calendariza&ccedil&atilde;o das avaliações escritas. Em baixo pode alterar o período de
+calendariza&ccedil&atilde;o das avaliaÃ§Ãµes escritas. Em baixo pode alterar o perÃ­odo de
 execu&ccedil&atilde;o seleccionado.</p>
 
 <p><span class="error"><!-- Error messages go here --><html:errors /></span></p>

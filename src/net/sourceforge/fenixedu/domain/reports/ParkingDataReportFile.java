@@ -77,12 +77,12 @@ public class ParkingDataReportFile extends ParkingDataReportFile_Base {
     private Map<String, Integer> getParkingGroupCodes() {
 	Map<String, Integer> codes = new HashMap<String, Integer>();
 	codes.put("Docentes", 1);
-	codes.put("Não Docentes", 2);
+	codes.put("NÃ£o Docentes", 2);
 	codes.put("Especiais", 3);
 	codes.put("Bolseiros", 4);
 	codes.put("Investigadores", 5);
-	codes.put("3º ciclo", 6);
-	codes.put("2º ciclo", 7);
+	codes.put("3Âº ciclo", 6);
+	codes.put("2Âº ciclo", 7);
 	codes.put("IPSFL", 8);
 	codes.put("Jubilados", 9);
 	codes.put("Limitados", 10);

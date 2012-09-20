@@ -50,7 +50,7 @@
 		<fr:edit id="dismissalBean" name="dismissalBean" visible="false"/>
 		
 		<p class="mtop15 mbottom05"><strong><bean:message key="label.studentDismissal.equivalents" bundle="ACADEMIC_OFFICE_RESOURCES"/></strong></p>
-		<p><em>(Se o grupo para o qual pretende criar a creditação não existir, deverá efectuar a inscrição no grupo na interface de inscrições)</em></p>
+		<p><em>(Se o grupo para o qual pretende criar a creditaÃ§Ã£o nÃ£o existir, deverÃ¡ efectuar a inscriÃ§Ã£o no grupo na interface de inscriÃ§Ãµes)</em></p>
 		
 		<logic:notEmpty name="dismissalBean" property="dismissals">
 			<fr:hasMessages for="dismissalBean-dismissals">

@@ -8,7 +8,7 @@
 <!-- alumni/inquiries/alumniManageProfessionalInformation.jsp -->
 
 <em><bean:message key="label.portal.alumni" bundle="ALUMNI_RESOURCES" /></em>
-<h2>IV Inquérito ao Percurso Sócio-Profissional dos Diplomados</h2>
+<h2>IV InquÃ©rito ao Percurso SÃ³cio-Profissional dos Diplomados</h2>
 <h3>
 	<bean:message key="label.create.professional.information" bundle="ALUMNI_RESOURCES" />
 </h3>

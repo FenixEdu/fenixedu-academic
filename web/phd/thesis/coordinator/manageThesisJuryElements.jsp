@@ -57,7 +57,7 @@
 <br/>
 <br/>
 
-<strong>Presidente:</strong> Presidente do Conselho Científico do IST
+<strong>Presidente:</strong> Presidente do Conselho CientÃ­fico do IST
 
 <br/>
 <strong><bean:message  key="label.phd.thesis.elements" bundle="PHD_RESOURCES"/>:</strong>

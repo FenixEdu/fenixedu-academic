@@ -12,7 +12,7 @@ import net.sourceforge.fenixedu.domain.Item;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 /**
- * @author Ivo Brand„o
+ * @author Ivo Brand√£o
  */
 public class InfoItem extends InfoObject implements Comparable {
 

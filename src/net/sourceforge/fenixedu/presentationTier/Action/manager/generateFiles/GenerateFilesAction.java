@@ -52,7 +52,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 /**
- * @author T‚nia Pous„o
+ * @author T√¢nia Pous√£o
  * 
  */
 @Mapping(module = "manager", path = "/generateFiles", input = "/generateFiles.do?method=prepareChooseForGenerateFiles&page=0", attribute = "chooseForGenerateFilesForm", formBean = "chooseForGenerateFilesForm", scope = "request", parameter = "method")

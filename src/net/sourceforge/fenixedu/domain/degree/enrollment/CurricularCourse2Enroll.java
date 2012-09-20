@@ -11,7 +11,7 @@ import net.sourceforge.fenixedu.domain.CurricularYear;
 import net.sourceforge.fenixedu.domain.curriculum.CurricularCourseEnrollmentType;
 
 /**
- * @author Jo„o Mota
+ * @author Jo√£o Mota
  */
 
 public class CurricularCourse2Enroll implements Serializable {

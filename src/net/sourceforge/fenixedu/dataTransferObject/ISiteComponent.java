@@ -8,7 +8,7 @@ package net.sourceforge.fenixedu.dataTransferObject;
 import java.io.Serializable;
 
 /**
- * @author Jo„o Mota
+ * @author Jo√£o Mota
  * 
  * 
  */

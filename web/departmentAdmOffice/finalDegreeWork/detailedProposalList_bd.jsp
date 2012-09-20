@@ -212,7 +212,7 @@
 		
 		<tr>
 			<th>
-				Trabalho attribuído a:
+				Trabalho attribuÃ­do a:
 			</th>
 			<td>
 				<logic:present name="finalDegreeWorkProposal" property="groupAttributed">

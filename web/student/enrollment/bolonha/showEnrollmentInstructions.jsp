@@ -10,50 +10,50 @@
 <em><bean:message bundle="STUDENT_RESOURCES"  key="title.student.portalTitle" /></em>
 <h2><bean:message key="label.enrollment.courses.instructions" bundle="STUDENT_RESOURCES"/></h2>
 
-<!--<p class="mtop2 mbottom05">Antes de prosseguir com a inscrição em disciplinas, para facilitar o processo tome conhecimento de:</p>-->
+<!--<p class="mtop2 mbottom05">Antes de prosseguir com a inscriÃ§Ã£o em disciplinas, para facilitar o processo tome conhecimento de:</p>-->
 <!--<ul class="mtop05">-->
-<!--	<li>regulamento oficial de inscrições: <a href="http://www.ist.utl.pt/files/alunos/reg_1e2ciclo_20092010.pdf">Regulamentos dos Cursos de 1º e 2º Ciclo</a> "Regulamento de Matrículas e Inscrições" (pág. 10)</li>-->
-<!--	<li>regras de inscrição do seu curso</li>-->
+<!--	<li>regulamento oficial de inscriÃ§Ãµes: <a href="http://www.ist.utl.pt/files/alunos/reg_1e2ciclo_20092010.pdf">Regulamentos dos Cursos de 1Âº e 2Âº Ciclo</a> "Regulamento de MatrÃ­culas e InscriÃ§Ãµes" (pÃ¡g. 10)</li>-->
+<!--	<li>regras de inscriÃ§Ã£o do seu curso</li>-->
 <!--	<li>disciplinas a que se pretende inscrever</li>-->
 <!--</ul>-->
 
 
-<h3 class="mtop15 separator2">Introdução</h3>
+<h3 class="mtop15 separator2">IntroduÃ§Ã£o</h3>
 
-<p>Na tabela encontra representados os grupos de disciplinas (linhas cinzentas), disciplinas em que não está inscrito (nas linhas a branco), disciplinas com inscrição confirmada (linhas verdes), disciplinas com inscrição provisória (linhas amarelas) e disciplinas com inscrição impossível (linhas vermelhas).  As disciplinas que já concluíu não aparecem, só aparecem as disciplinas e grupos a que se pode inscrever. Os grupos de disciplinas estão hierarquizados de acordo com a estrutura do curso.</p>
+<p>Na tabela encontra representados os grupos de disciplinas (linhas cinzentas), disciplinas em que nÃ£o estÃ¡ inscrito (nas linhas a branco), disciplinas com inscriÃ§Ã£o confirmada (linhas verdes), disciplinas com inscriÃ§Ã£o provisÃ³ria (linhas amarelas) e disciplinas com inscriÃ§Ã£o impossÃ­vel (linhas vermelhas).  As disciplinas que jÃ¡ concluÃ­u nÃ£o aparecem, sÃ³ aparecem as disciplinas e grupos a que se pode inscrever. Os grupos de disciplinas estÃ£o hierarquizados de acordo com a estrutura do curso.</p>
 
 
 <h3 class="mtop15 separator2">Como Proceder</h3>
 
-<p><b>Atenção:</b> As inscrições em grupos e em disciplinas devem ser feitas separadamente. Se seleccionar um grupo e uma disciplina e fizer Guardar vai ocorrer um erro. Deverá escolher apenas disciplinas ou apenas grupos de cada vez que fizer Guardar.</p>
+<p><b>AtenÃ§Ã£o:</b> As inscriÃ§Ãµes em grupos e em disciplinas devem ser feitas separadamente. Se seleccionar um grupo e uma disciplina e fizer Guardar vai ocorrer um erro. DeverÃ¡ escolher apenas disciplinas ou apenas grupos de cada vez que fizer Guardar.</p>
 
 <ul class="list4">
-<li><strong>Inscrever em disciplinas:</strong><br/> Seleccione a(s) "checkbox(es)" e faça Guardar.</li>
-<li><strong>Desinscrever de disciplinas:</strong><br/> Desmarque a(s) "checkbox(es)" e faça Guardar.</li>
-<li><strong>Escolher grupos de disciplinas:</strong><br/> Seleccione a "checkbox" do grupo e faça Guardar. Só depois de Guardar é que aparecem as disciplinas e sub-grupos que o constituem.</li>
-<li><strong>Escolher disciplinas de opção:</strong><br/> Carregar no link "Escolher Opção". Deverá inscrever-se primeiro nas disciplinas e nos grupos do currículo e só no final às disciplinas de opção. <em>Atenção: quando carrega em "Escolher Opção" as alterações que não foram guardadas são perdidas. Antes de carregar em  "Escolher Opção" certifique-se que guardou as alterações.</em></li>
-<li><strong>Terminar o processo de inscrição:</strong><br/> Depois de terminado o processo de inscrição pode consultar o seu Currículo do Aluno para e ver a totalidade das disciplinas em que está inscrito.</li>
+<li><strong>Inscrever em disciplinas:</strong><br/> Seleccione a(s) "checkbox(es)" e faÃ§a Guardar.</li>
+<li><strong>Desinscrever de disciplinas:</strong><br/> Desmarque a(s) "checkbox(es)" e faÃ§a Guardar.</li>
+<li><strong>Escolher grupos de disciplinas:</strong><br/> Seleccione a "checkbox" do grupo e faÃ§a Guardar. SÃ³ depois de Guardar Ã© que aparecem as disciplinas e sub-grupos que o constituem.</li>
+<li><strong>Escolher disciplinas de opÃ§Ã£o:</strong><br/> Carregar no link "Escolher OpÃ§Ã£o". DeverÃ¡ inscrever-se primeiro nas disciplinas e nos grupos do currÃ­culo e sÃ³ no final Ã s disciplinas de opÃ§Ã£o. <em>AtenÃ§Ã£o: quando carrega em "Escolher OpÃ§Ã£o" as alteraÃ§Ãµes que nÃ£o foram guardadas sÃ£o perdidas. Antes de carregar em  "Escolher OpÃ§Ã£o" certifique-se que guardou as alteraÃ§Ãµes.</em></li>
+<li><strong>Terminar o processo de inscriÃ§Ã£o:</strong><br/> Depois de terminado o processo de inscriÃ§Ã£o pode consultar o seu CurrÃ­culo do Aluno para e ver a totalidade das disciplinas em que estÃ¡ inscrito.</li>
 </ul>
 
 
-<h3 class="mtop15 separator2">Tipos de Inscrição</h3>
+<h3 class="mtop15 separator2">Tipos de InscriÃ§Ã£o</h3>
 
 <ul class="list4">
-	<li><strong>Inscrições confirmadas:</strong> <span class="se_enrolled">(linhas verdes)</span></li>
-	<li><strong>Inscrições provisórias:</strong> <span class="se_temporary">(linhas amarelas)</span><br/> São inscrições ainda por confirmar, porque os requisitos mínimos necessários para efectivar a inscrição ainda não estão assegurados. Acontece em casos como:
+	<li><strong>InscriÃ§Ãµes confirmadas:</strong> <span class="se_enrolled">(linhas verdes)</span></li>
+	<li><strong>InscriÃ§Ãµes provisÃ³rias:</strong> <span class="se_temporary">(linhas amarelas)</span><br/> SÃ£o inscriÃ§Ãµes ainda por confirmar, porque os requisitos mÃ­nimos necessÃ¡rios para efectivar a inscriÃ§Ã£o ainda nÃ£o estÃ£o assegurados. Acontece em casos como:
 		<ul>
-			<li>Tem uma inscrição provisória na disciplina A que tem precedência à disciplina B. Ainda não recebeu nota na disciplina B logo a inscrição fica "provisória" até se oficializar a aprovação na disciplina A.</li>
-			<li>Tem uma inscrição provisória na disciplina C que tem exclusividade com a disciplina D. Ainda não recebeu nota na disciplina D logo a inscrição fica "provisória" até se oficializar o resultado na disciplina A.</li>
+			<li>Tem uma inscriÃ§Ã£o provisÃ³ria na disciplina A que tem precedÃªncia Ã  disciplina B. Ainda nÃ£o recebeu nota na disciplina B logo a inscriÃ§Ã£o fica "provisÃ³ria" atÃ© se oficializar a aprovaÃ§Ã£o na disciplina A.</li>
+			<li>Tem uma inscriÃ§Ã£o provisÃ³ria na disciplina C que tem exclusividade com a disciplina D. Ainda nÃ£o recebeu nota na disciplina D logo a inscriÃ§Ã£o fica "provisÃ³ria" atÃ© se oficializar o resultado na disciplina A.</li>
 		</ul>
 	</li>
-	<li><strong>Inscrições impossíveis:</strong> <span class="se_impossible">(linhas vermelhas)</span><br/> Não foram preenchidos os requesitos para confirmar a inscrição. Deverá refazer a inscrição noutra(s) disciplina(s) antes de terminar o prazo.</li>
+	<li><strong>InscriÃ§Ãµes impossÃ­veis:</strong> <span class="se_impossible">(linhas vermelhas)</span><br/> NÃ£o foram preenchidos os requesitos para confirmar a inscriÃ§Ã£o. DeverÃ¡ refazer a inscriÃ§Ã£o noutra(s) disciplina(s) antes de terminar o prazo.</li>
 </ul>
 
 
-<h3 class="mtop15 separator2">Inscrições em 2º e 3º Ciclo</h3>
+<h3 class="mtop15 separator2">InscriÃ§Ãµes em 2Âº e 3Âº Ciclo</h3>
 
-<p class="mbottom05">Para efectuar inscrições no 2º e 3º ciclos deverá inscrever-se no grupo a que corresponde o ciclo. A seguir é direccionado para uma página onde serão listadas opções onde terá que escolher o curso desejado. Depois de escolhido o curso, voltará à página de inscrições onde poderá proceder com as inscrições em disciplinas no novo ciclo.</p>
-<p class="mtop05">Se desejar mudar o curso do novo ciclo terá de se desinscrever a todas as disciplinas do novo ciclo e depois poderá escolher um novo.</p>
+<p class="mbottom05">Para efectuar inscriÃ§Ãµes no 2Âº e 3Âº ciclos deverÃ¡ inscrever-se no grupo a que corresponde o ciclo. A seguir Ã© direccionado para uma pÃ¡gina onde serÃ£o listadas opÃ§Ãµes onde terÃ¡ que escolher o curso desejado. Depois de escolhido o curso, voltarÃ¡ Ã  pÃ¡gina de inscriÃ§Ãµes onde poderÃ¡ proceder com as inscriÃ§Ãµes em disciplinas no novo ciclo.</p>
+<p class="mtop05">Se desejar mudar o curso do novo ciclo terÃ¡ de se desinscrever a todas as disciplinas do novo ciclo e depois poderÃ¡ escolher um novo.</p>
 
 </logic:present>
 

@@ -16,8 +16,8 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
 /**
- * @author Tânia Pousão
- * @author Ângela
+ * @author TÃ¢nia PousÃ£o
+ * @author Ã‚ngela
  * 
  */
 public class ReadCurricularCourseListAction extends FenixDispatchAction {

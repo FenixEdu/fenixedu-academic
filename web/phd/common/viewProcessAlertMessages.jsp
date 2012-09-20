@@ -12,7 +12,7 @@
 
 <%--  ###  Return Links / Steps Information(for multistep forms)  ### --%>
 <html:link action="/phdIndividualProgramProcess.do?method=viewProcess" paramId="processId" paramName="process" paramProperty="externalId" >
-	« <bean:message bundle="PHD_RESOURCES" key="label.back.to.process"/>
+	Â« <bean:message bundle="PHD_RESOURCES" key="label.back.to.process"/>
 </html:link>
 <br/><br/>
 <%--  ### Return Links / Steps Information (for multistep forms)  ### --%>

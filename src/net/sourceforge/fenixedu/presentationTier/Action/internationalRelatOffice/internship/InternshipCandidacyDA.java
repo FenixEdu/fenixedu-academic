@@ -49,17 +49,17 @@ public class InternshipCandidacyDA extends FenixDispatchAction {
     private static final ResourceBundle ENUMERATION_RESOURCES = ResourceBundle.getBundle("resources/EnumerationResources",
 	    new Locale("pt"));
 
-    private static final String[] HEADERS = new String[] { "Nº Candidatura", "Universidade", "Nº Aluno", "Ano", "Curso", "Ramo",
-	    "Nome", "Sexo", "Data Nascimento", "Naturalidade", "Nacionalidade", "B.I. (ou Cartão do Cidadão)", "Arquivo",
-	    "Emissão", "Validade", "Passaporte", "Arquivo", "Emissão", "Validade", "Morada", "Cod. Postal", "Localidade",
-	    "Telefone", "Telemóvel", "e-mail", "1º Preferência", "2º Preferência", "3º Preferência", "Inglês", "Francês",
-	    "Espanhol", "Alemão", "Candidatura Prévia" };
+    private static final String[] HEADERS = new String[] { "NÂº Candidatura", "Universidade", "NÂº Aluno", "Ano", "Curso", "Ramo",
+	    "Nome", "Sexo", "Data Nascimento", "Naturalidade", "Nacionalidade", "B.I. (ou CartÃ£o do CidadÃ£o)", "Arquivo",
+	    "EmissÃ£o", "Validade", "Passaporte", "Arquivo", "EmissÃ£o", "Validade", "Morada", "Cod. Postal", "Localidade",
+	    "Telefone", "TelemÃ³vel", "e-mail", "1Âº PreferÃªncia", "2Âº PreferÃªncia", "3Âº PreferÃªncia", "InglÃªs", "FrancÃªs",
+	    "Espanhol", "AlemÃ£o", "Candidatura PrÃ©via" };
 
-    private static final String[] HEADERS_NO_UNIV = new String[] { "Nº Candidatura", "Nº Aluno", "Ano", "Curso", "Ramo", "Nome",
-	    "Sexo", "Data Nascimento", "Naturalidade", "Nacionalidade", "B.I. (ou Cartão do Cidadão)", "Arquivo", "Emissão",
-	    "Validade", "Passaporte", "Arquivo", "Emissão", "Validade", "Morada", "Cod. Postal", "Localidade", "Telefone",
-	    "Telemóvel", "e-mail", "1º Preferência", "2º Preferência", "3º Preferência", "Inglês", "Francês", "Espanhol",
-	    "Alemão", "Candidatura Prévia" };
+    private static final String[] HEADERS_NO_UNIV = new String[] { "NÂº Candidatura", "NÂº Aluno", "Ano", "Curso", "Ramo", "Nome",
+	    "Sexo", "Data Nascimento", "Naturalidade", "Nacionalidade", "B.I. (ou CartÃ£o do CidadÃ£o)", "Arquivo", "EmissÃ£o",
+	    "Validade", "Passaporte", "Arquivo", "EmissÃ£o", "Validade", "Morada", "Cod. Postal", "Localidade", "Telefone",
+	    "TelemÃ³vel", "e-mail", "1Âº PreferÃªncia", "2Âº PreferÃªncia", "3Âº PreferÃªncia", "InglÃªs", "FrancÃªs", "Espanhol",
+	    "AlemÃ£o", "Candidatura PrÃ©via" };
 
     public ActionForward prepareCandidates(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) {
@@ -201,7 +201,7 @@ public class InternshipCandidacyDA extends FenixDispatchAction {
 	    row.setCell(ENUMERATION_RESOURCES.getString(bean.getFrench().getQualifiedKey()));
 	    row.setCell(ENUMERATION_RESOURCES.getString(bean.getSpanish().getQualifiedKey()));
 	    row.setCell(ENUMERATION_RESOURCES.getString(bean.getGerman().getQualifiedKey()));
-	    row.setCell(bean.getPreviousCandidacy() ? "Sim" : "Não");
+	    row.setCell(bean.getPreviousCandidacy() ? "Sim" : "NÃ£o");
 	}
 
 	response.setContentType("application/vnd.ms-excel");

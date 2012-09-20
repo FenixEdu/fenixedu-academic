@@ -25,7 +25,7 @@
 	<logic:present name="bean" property="scientificJournal">
 		<p class="mvert15 breadcumbs">
 			<span><strong><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.activity.step"/> 1 : </strong>	Escolher Revista</span>	 > 
-			<span class="actual"><strong><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.activity.step"/> 2 : </strong> Escolher Volume/Número e Adicionar Participação</span>
+			<span class="actual"><strong><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.activity.step"/> 2 : </strong> Escolher Volume/NÃºmero e Adicionar ParticipaÃ§Ã£o</span>
 		</p>
 		<bean:define id="schema" value="journalIssueCreation.journalSelected" type="java.lang.String"/>
 	</logic:present>

@@ -6,7 +6,7 @@
 
 
 <em><bean:message key="label.person.main.title" /></em>
- <h2>ValidaÁ„o de Contactos</h2>
+ <h2>Valida√ß√£o de Contactos</h2>
 <p><html:link page="/student.do?method=prepareEditPersonalData" paramId="studentID" paramName="student" paramProperty="idInternal"><bean:message bundle="APPLICATION_RESOURCES" key="label.return"/></html:link></p>
 
-O utilizador <bean:write name="student" property="person.presentationName"/> ter· que validar o contacto para este ser considerado v·lido.
+O utilizador <bean:write name="student" property="person.presentationName"/> ter√° que validar o contacto para este ser considerado v√°lido.

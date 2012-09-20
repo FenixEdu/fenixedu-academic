@@ -114,21 +114,21 @@ public class SituationName extends FenixUtil {
 
     public static final String SUPLENTE_STRING = "Suplente";
 
-    public static final String NAO_ACEITE_STRING = "N„o Admitido";
+    public static final String NAO_ACEITE_STRING = "N√£o Admitido";
 
     public static final String DESISTIU_STRING = "Desistiu";
 
-    public static final String SUPRA_NUMERARIO_STRING = "Supra Numer·rio";
+    public static final String SUPRA_NUMERARIO_STRING = "Supra Numer√°rio";
 
-    public static final String EXTRAORDINARIO_STRING = "Extraordin·rio";
+    public static final String EXTRAORDINARIO_STRING = "Extraordin√°rio";
 
     public static final String DOCENTE_ENSINO_SUPERIOR_STRING = "Docente do Ensino Superior";
 
-    public static final String PRE_CANDIDATO_STRING = "PrÈ-Candidato";
+    public static final String PRE_CANDIDATO_STRING = "Pr√©-Candidato";
 
     public static final String FALTA_CERTIFICADO_STRING = "Falta Certificado";
 
-    public static final String DEFAULT = "[Escolha uma SituaÁ„o]";
+    public static final String DEFAULT = "[Escolha uma Situa√ß√£o]";
 
     public static final String PENDENTE_COM_DADOS_STRING = "Pendente com dados preenchidos";
 
@@ -136,15 +136,15 @@ public class SituationName extends FenixUtil {
 
     public static final String ANNULLED_STRING = "Anulada";
 
-    public static final String ADMITED_CONDICIONAL_CURRICULAR_STRING = "Admitido Condicional - ApreciaÁ„o Curricular";
+    public static final String ADMITED_CONDICIONAL_CURRICULAR_STRING = "Admitido Condicional - Aprecia√ß√£o Curricular";
 
-    public static final String ADMITED_SPECIALIZATION_STRING = "Admitido Para EspecializaÁ„o";
+    public static final String ADMITED_SPECIALIZATION_STRING = "Admitido Para Especializa√ß√£o";
 
     public static final String ADMITED_CONDICIONAL_FINALIST_STRING = "Admitido Condicional - Finalista";
 
     public static final String ADMITED_CONDICIONAL_OTHER_STRING = "Admitido Condicional - Outro";
 
-    public static final String SUBSTITUTE_CONDICIONAL_CURRICULAR_STRING = "Suplente Condicional - ApreciaÁ„o Curricular";
+    public static final String SUBSTITUTE_CONDICIONAL_CURRICULAR_STRING = "Suplente Condicional - Aprecia√ß√£o Curricular";
 
     public static final String SUBSTITUTE_CONDICIONAL_FINALIST_STRING = "Suplente Condicional - Finalista";
 
@@ -152,7 +152,7 @@ public class SituationName extends FenixUtil {
 
     public static final String ENROLLED_STRING = "Inscrito";
 
-    public static final String PENDENT_CONDICIONAL_CURRICULAR_STRING = "Pendente Condicional - ApreciaÁ„o Curricular";
+    public static final String PENDENT_CONDICIONAL_CURRICULAR_STRING = "Pendente Condicional - Aprecia√ß√£o Curricular";
 
     private final Integer situationName;
 

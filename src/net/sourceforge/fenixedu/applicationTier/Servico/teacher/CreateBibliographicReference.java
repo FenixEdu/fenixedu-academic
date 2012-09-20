@@ -6,7 +6,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgume
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 
 /**
- * @author Fernanda Quitério
+ * @author Fernanda QuitÃ©rio
  */
 public class CreateBibliographicReference extends FenixService {
 

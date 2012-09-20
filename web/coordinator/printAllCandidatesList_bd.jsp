@@ -10,7 +10,7 @@
 <h2>Imprimir Lista de Candidatos</h2>
 
 
-<p class="mvert15">Esta opção permite-lhe imprimir uma lista de todos os candidatos associados ao plano curricular escolhido</p>
+<p class="mvert15">Esta opÃ§Ã£o permite-lhe imprimir uma lista de todos os candidatos associados ao plano curricular escolhido</p>
 
 <!-- first option-->
 <logic:notPresent name="filterNextSelectOptions">

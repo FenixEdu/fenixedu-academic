@@ -14,7 +14,7 @@
 
 <p>
 	<html:link action='<%= "/caseHandlingMobilityApplicationProcess.do?method=listProcesses&amp;parentProcessId=" + parentProcessId.toString() %>'>
-		« <bean:message key="label.back" bundle="APPLICATION_RESOURCES"/>	
+		Â« <bean:message key="label.back" bundle="APPLICATION_RESOURCES"/>	
 	</html:link>
 </p>
 

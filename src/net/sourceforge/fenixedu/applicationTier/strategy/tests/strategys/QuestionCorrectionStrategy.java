@@ -149,7 +149,7 @@ public abstract class QuestionCorrectionStrategy implements IQuestionCorrectionS
 		    new Double(((ResponseNUM) newResponse).getResponse());
 		}
 	    } catch (NumberFormatException ex) {
-		return "Pergunta " + studentTestQuestion.getTestQuestionOrder().toString() + ": Formato de resposta inv·lido";
+		return "Pergunta " + studentTestQuestion.getTestQuestionOrder().toString() + ": Formato de resposta inv√°lido";
 	    }
 	} else if (studentTestQuestion.getSubQuestionByItem().getQuestionType().getRender() instanceof RenderChoise) {
 	    if (studentTestQuestion.getSubQuestionByItem().getQuestionType().getCardinalityType().getType()
@@ -158,7 +158,7 @@ public abstract class QuestionCorrectionStrategy implements IQuestionCorrectionS
 		if (emptyOptionIndex != -1) {
 		    if (responseIsEmptyAndOther(((ResponseLID) newResponse).getResponse(), emptyOptionIndex))
 			return "Pergunta " + studentTestQuestion.getTestQuestionOrder().toString()
-				+ ": N„o pode responder \"Nenhuma\" e uma opÁ„o em simult‚neo";
+				+ ": N√£o pode responder \"Nenhuma\" e uma op√ß√£o em simult√¢neo";
 		}
 
 	    }

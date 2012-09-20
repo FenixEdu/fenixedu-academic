@@ -8,13 +8,13 @@
 
 
 <em><bean:message key="scientificCouncil" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/></em>
-<h2>Apagar publicação oficial</h2>
+<h2>Apagar publicaÃ§Ã£o oficial</h2>
 
 <bean:define id="degreeOfficialPublicationName" name="publication" property="officialReference" />
 <bean:define id="officialPubId" name="publication" property="externalId" />
 <bean:define id="degreeId" name="degreeId" />
 
-<p> Deseja apagar esta publicação? </p>
+<p> Deseja apagar esta publicaÃ§Ã£o? </p>
 
 <fr:form action="<%= String.format("/curricularPlans/editOfficialPublication.do?method=deleteDegreeOfficialPublication&degreeId=%s&officialPubId=%s", degreeId, officialPubId) %>">
 
@@ -23,6 +23,6 @@
 	</fr:edit>
 	<p>
 		<html:submit>Sim</html:submit>
-		<html:cancel>Não</html:cancel>
+		<html:cancel>NÃ£o</html:cancel>
 	</p>
 </fr:form>

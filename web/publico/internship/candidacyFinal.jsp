@@ -10,12 +10,12 @@
 
 <h2><bean:message key="label.internationalrelations.internship.candidacy.title" bundle="INTERNATIONAL_RELATIONS_OFFICE" /></h2>
 
-	<p><strong>Processo concluído com sucesso.</strong></p>
+	<p><strong>Processo concluÃ­do com sucesso.</strong></p>
 
 	<p>Caro(a) <bean:write name="candidacy" property="name" />,</p>
 
-	<p>a sua candidatura foi submetida com sucesso. Foi-lhe atribuído o código de inscrição nº <strong
-		class="highlight1"><bean:write name="candidacyNumber" /></strong>, que deverá utilizar em
-	contactos futuros. Uma cópia desta mensagem foi-lhe enviada para o email submetido na canditarura.</p>
+	<p>a sua candidatura foi submetida com sucesso. Foi-lhe atribuÃ­do o cÃ³digo de inscriÃ§Ã£o nÂº <strong
+		class="highlight1"><bean:write name="candidacyNumber" /></strong>, que deverÃ¡ utilizar em
+	contactos futuros. Uma cÃ³pia desta mensagem foi-lhe enviada para o email submetido na canditarura.</p>
 
 </logic:present>

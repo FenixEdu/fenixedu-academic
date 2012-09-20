@@ -14,10 +14,10 @@
 <%@page import="net.sourceforge.fenixedu.domain.cardGeneration.CardGenerationBatch"%>
 <%@page import="net.sourceforge.fenixedu.domain.RootDomainObject"%><html:xhtml/>
 
-<em>Cartões de Identificação</em>
+<em>CartÃµes de IdentificaÃ§Ã£o</em>
 <h2><bean:message key="link.card.generation.search.people" /></h2>
 
-<p><html:link page="/searchPeople.do?method=search">« Voltar</html:link></p>
+<p><html:link page="/searchPeople.do?method=search">Â« Voltar</html:link></p>
 
 <logic:present name="person">
 	<bean:define id="person" name="person" type="net.sourceforge.fenixedu.domain.Person"/>

@@ -176,10 +176,10 @@ public class CourseGroupReportBackingBean extends FenixBackingBean {
 	if (rootWasClicked && !this.getCourseGroup().getSortedChildContextsWithCourseGroups().isEmpty()) {
 	    headers.add("Grupo");
 	}
-	headers.add("Área Científica");
+	headers.add("Ãrea CientÃ­fica");
 	headers.add("Sigla");
-	headers.add("Créditos Obrigatórios");
-	headers.add("Créditos Optativos");
+	headers.add("CrÃ©ditos ObrigatÃ³rios");
+	headers.add("CrÃ©ditos Optativos");
 	return headers;
     }
 
@@ -211,12 +211,12 @@ public class CourseGroupReportBackingBean extends FenixBackingBean {
 	final List<Object> headers = new ArrayList<Object>();
 	headers.add("Unidade Curricular");
 	headers.add("Grupo");
-	headers.add("Área Científica");
+	headers.add("Ãrea CientÃ­fica");
 	headers.add("Sigla");
 	headers.add("Tipo");
 	headers.add("Ano");
 	headers.add("Semestre");
-	headers.add("Créditos");
+	headers.add("CrÃ©ditos");
 	headers.add("T");
 	headers.add("TP");
 	headers.add("PL");
@@ -225,7 +225,7 @@ public class CourseGroupReportBackingBean extends FenixBackingBean {
 	headers.add("E");
 	headers.add("OT");
 	headers.add("TA");
-	headers.add("Observações");
+	headers.add("ObservaÃ§Ãµes");
 	return headers;
     }
 

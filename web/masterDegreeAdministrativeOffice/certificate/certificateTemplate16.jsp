@@ -8,8 +8,8 @@
 <bean:define id="infoFinalResult" name="<%= PresentationConstants.INFO_FINAL_RESULT %>" />
 <bean:define id="conclusiondate" name="<%= PresentationConstants.CONCLUSION_DATE %>" />
 <p>
-concluíu a parte curricular do Programa de Mestrado em 
+concluÃ­u a parte curricular do Programa de Mestrado em 
 <bean:write name="infoStudentCurricularPlan"  property="infoDegreeCurricularPlan.infoDegree.nome"/>
 ( MBA em  <bean:write name="infoStudentCurricularPlan"  property="infoDegreeCurricularPlan.infoDegree.nome"/> ), em  
-<bean:write name="conclusiondate" />, com a média de <bean:write name="infoFinalResult" property="finalAverage" /> valores.
+<bean:write name="conclusiondate" />, com a mÃ©dia de <bean:write name="infoFinalResult" property="finalAverage" /> valores.
 </p>

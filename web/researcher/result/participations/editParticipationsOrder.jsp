@@ -30,7 +30,7 @@
 </fr:form>
 
 
-<p><span class="warning0">Faça <em>drag & drop</em> dos items para reordenar a lista.</span></p> <!-- tobundle -->
+<p><span class="warning0">FaÃ§a <em>drag & drop</em> dos items para reordenar a lista.</span></p> <!-- tobundle -->
 
 
 <fr:view name="participations" layout="tree">

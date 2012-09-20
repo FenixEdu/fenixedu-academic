@@ -24,7 +24,7 @@
 
 <p>
 	<html:link action="<%= "/phdIndividualProgramProcess.do?method=preparePhdEmailsManagement&amp;processId=" + processId.toString() %>">
-		« <bean:message key="label.back" bundle="PHD_RESOURCES" />
+		Â« <bean:message key="label.back" bundle="PHD_RESOURCES" />
 	</html:link>
 </p>
 
@@ -91,7 +91,7 @@ div.compose-email table .col2 { width: 700px; }
 <div class="compose-email">
 	<table class="tstyle5 thlight thright mtop05 mbottom0 ulnomargin ">
 		<tr>
-			<th class="col1">Destinatários (grupos):</th>
+			<th class="col1">DestinatÃ¡rios (grupos):</th>
 			<td class="col2 recipients">
 			
 				

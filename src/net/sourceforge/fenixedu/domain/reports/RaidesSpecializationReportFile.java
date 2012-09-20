@@ -26,7 +26,7 @@ public class RaidesSpecializationReportFile extends RaidesSpecializationReportFi
 
     @Override
     public String getJobName() {
-	return "Listagem RAIDES - EspecializaÁ„o";
+	return "Listagem RAIDES - Especializa√ß√£o";
     }
 
     @Override
@@ -99,7 +99,7 @@ public class RaidesSpecializationReportFile extends RaidesSpecializationReportFi
 
     private void createHeaders(Spreadsheet spreadsheet) {
 	RaidesCommonReportFieldsWrapper.createHeaders(spreadsheet);
-	spreadsheet.setHeader("Total ECTS necess·rios para a conclus„o");
+	spreadsheet.setHeader("Total ECTS necess√°rios para a conclus√£o");
     }
 
     private void reportRaides(final Spreadsheet sheet, final Registration registration, List<Registration> registrationPath,
@@ -108,7 +108,7 @@ public class RaidesSpecializationReportFile extends RaidesSpecializationReportFi
 	final Row row = RaidesCommonReportFieldsWrapper.reportRaidesFields(sheet, registration, registrationPath, executionYear,
 		cycleType, concluded, conclusionDate, null, false);
 
-	// Total de ECTS concluÌdos atÈ ao fim do ano lectivo anterior ao que se referem os dados  no curso actual
+	// Total de ECTS conclu√≠dos at√© ao fim do ano lectivo anterior ao que se referem os dados  no curso actual
 	double totalEctsConcludedUntilPreviousYear = 0d;
 	for (final CycleCurriculumGroup cycleCurriculumGroup : registration.getLastStudentCurricularPlan()
 		.getInternalCycleCurriculumGrops()) {
@@ -116,7 +116,7 @@ public class RaidesSpecializationReportFile extends RaidesSpecializationReportFi
 		    .getPreviousExecutionYear());
 	}
 
-	// Total de ECTS necess·rios para a conclus„o
+	// Total de ECTS necess√°rios para a conclus√£o
 	if (concluded) {
 	    row.setCell(0);
 	} else {

@@ -34,7 +34,7 @@ import org.apache.struts.action.DynaActionForm;
 import pt.ist.fenixWebFramework.security.UserView;
 
 /**
- * @author T‚nia Pous„o
+ * @author T√¢nia Pous√£o
  * 
  */
 public class ManageCoordinatorsAction extends FenixDispatchAction {

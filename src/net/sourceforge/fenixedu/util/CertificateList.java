@@ -68,13 +68,13 @@ public class CertificateList extends FenixUtil {
 
     public static final CertificateList CARTA_DE_CURSO_TYPE = new CertificateList(CARTA_DE_CURSO);
 
-    public static final String MATRICULA_STRING = "Matrícula";
+    public static final String MATRICULA_STRING = "MatrÃ­cula";
 
-    public static final String MATRICULA_INSCRICAO_STRING = "Matrícula e Inscrição";
+    public static final String MATRICULA_INSCRICAO_STRING = "MatrÃ­cula e InscriÃ§Ã£o";
 
-    public static final String DURACAO_CURSO_STRING = "Duração do Curso";
+    public static final String DURACAO_CURSO_STRING = "DuraÃ§Ã£o do Curso";
 
-    public static final String INSCRICAO_STRING = "Inscrição";
+    public static final String INSCRICAO_STRING = "InscriÃ§Ã£o";
 
     public static final String APROVEITAMENTO_STRING = "Aproveitamento";
 
@@ -82,15 +82,15 @@ public class CertificateList extends FenixUtil {
 
     public static final String FIM_PARTE_ESCOLAR_SIMPLES_STRING = "Fim parte escolar simples";
 
-    public static final String FIM_PARTE_ESCOLAR_DISCRIMINADA_SEM_MEDIA_STRING = "Fim parte escolar discriminada sem média";
+    public static final String FIM_PARTE_ESCOLAR_DISCRIMINADA_SEM_MEDIA_STRING = "Fim parte escolar discriminada sem mÃ©dia";
 
-    public static final String FIM_PARTE_ESCOLAR_DISCRIMINADA_COM_MEDIA_STRING = "Fim parte escolar discriminada com média";
+    public static final String FIM_PARTE_ESCOLAR_DISCRIMINADA_COM_MEDIA_STRING = "Fim parte escolar discriminada com mÃ©dia";
 
     public static final String DIPLOMA_STRING = "Diploma";
 
     public static final String FIM_CURSO_SIMPLES_STRING = "Fim de curso de Mestrado simples";
 
-    public static final String FIM_CURSO_DISCRIMINADA_COM_MEDIA_STRING = "Fim de curso de Mestrado discriminada com média";
+    public static final String FIM_CURSO_DISCRIMINADA_COM_MEDIA_STRING = "Fim de curso de Mestrado discriminada com mÃ©dia";
 
     public static final String CARTA_DE_CURSO_STRING = "Carta de Curso";
 

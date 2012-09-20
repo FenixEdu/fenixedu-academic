@@ -130,7 +130,7 @@
 </table>
 <br />
 <table width="98%" cellpadding="0" cellspacing="0">
-   <!-- Filiação -->
+   <!-- FiliaÃ§Ã£o -->
   	<tr>
 	   <td class="infoop" width="25"><span class="emphasis-box">2</span></td>
   	   <td class="infoop"><strong><bean:message key="label.person.title.filiation" /></strong></td>

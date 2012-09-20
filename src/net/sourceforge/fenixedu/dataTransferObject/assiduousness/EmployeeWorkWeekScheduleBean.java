@@ -488,7 +488,7 @@ public class EmployeeWorkWeekScheduleBean implements Serializable {
 	time = new TimeOfDay(workScheduleType.getMeal().getMandatoryMealDiscount().getMillis(), chronology);
 	String mandatory = fmt.print(time);
 	StringBuilder result = new StringBuilder();
-	result.append("Mín.: ").append(minimum).append("<br/>Obr.: ").append(mandatory);
+	result.append("MÃ­n.: ").append(minimum).append("<br/>Obr.: ").append(mandatory);
 	return result.toString();
     }
 

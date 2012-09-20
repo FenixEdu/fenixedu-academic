@@ -5,7 +5,7 @@
 package net.sourceforge.fenixedu.util;
 
 /**
- * @author Jo„o Mota
+ * @author Jo√£o Mota
  * 
  */
 public class AgreementType extends FenixUtil {

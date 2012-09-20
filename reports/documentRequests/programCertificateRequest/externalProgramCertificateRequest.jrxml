@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="ISO-8859-1"  ?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with iReport - A designer for JasperReports -->
 <!DOCTYPE jasperReport PUBLIC "//JasperReports//DTD Report Design//EN" "http://jasperreports.sourceforge.net/dtds/jasperreport.dtd">
 <jasperReport
@@ -18,7 +18,7 @@
 		 isTitleNewPage="false"
 		 isSummaryNewPage="false">
 	<property name="ireport.scriptlethandling" value="0" />
-	<property name="ireport.encoding" value="ISO-8859-1" />
+	<property name="ireport.encoding" value="UTF-8" />
 	<import value="java.util.*" />
 	<import value="net.sf.jasperreports.engine.*" />
 	<import value="net.sf.jasperreports.engine.data.*" />
@@ -89,7 +89,7 @@
 					<textElement textAlignment="Center">
 						<font pdfFontName="Times-Roman" size="11"/>
 					</textElement>
-				<text><![CDATA[A Técnica Superior]]></text>
+				<text><![CDATA[A TÃ©cnica Superior]]></text>
 				</staticText>
 				<line direction="TopDown">
 					<reportElement
@@ -192,7 +192,7 @@
 					<textElement textAlignment="Justified" markup="styled" lineSpacing="1_1_2">
 						<font pdfFontName="Times-Roman" size="11" isBold="false" isItalic="false"/>
 					</textElement>
-				<textFieldExpression   class="java.lang.String"><![CDATA["A Técnica Superior da Secção de Graduação do " + $P{institutionName} + ", " + $P{universityName} + ", em cumprimento do despacho exarado em requerimento que fica arquivado nesta Secretaria, certifica que foi fornecido ao aluno <style pdfFontName=\"Times-Bold\"> " + $P{name} + "</style>, com o número <style pdfFontName=\"Times-Bold\">" + $P{studentNumber} + "</style>, do <style pdfFontName=\"Times-Bold\">" + $P{degreeDescription} + "</style>, as fotocópias de <style pdfFontName=\"Times-Bold\">" + $P{numberOfPrograms} + "</style> programa(s) da(s) disciplina(s) concluída(s) na <style pdfFontName=\"Times-Bold\">" + $P{externalInstitutionName} + "</style>, que foram entregues nesta secretaria  e que fazem parte integrante desta certidão e que vão devidamente rubricadas e autênticadas com o carimbo a óleo em uso nesta secretaria."]]></textFieldExpression>
+				<textFieldExpression   class="java.lang.String"><![CDATA["A TÃ©cnica Superior da SecÃ§Ã£o de GraduaÃ§Ã£o do " + $P{institutionName} + ", " + $P{universityName} + ", em cumprimento do despacho exarado em requerimento que fica arquivado nesta Secretaria, certifica que foi fornecido ao aluno <style pdfFontName=\"Times-Bold\"> " + $P{name} + "</style>, com o nÃºmero <style pdfFontName=\"Times-Bold\">" + $P{studentNumber} + "</style>, do <style pdfFontName=\"Times-Bold\">" + $P{degreeDescription} + "</style>, as fotocÃ³pias de <style pdfFontName=\"Times-Bold\">" + $P{numberOfPrograms} + "</style> programa(s) da(s) disciplina(s) concluÃ­da(s) na <style pdfFontName=\"Times-Bold\">" + $P{externalInstitutionName} + "</style>, que foram entregues nesta secretaria  e que fazem parte integrante desta certidÃ£o e que vÃ£o devidamente rubricadas e autÃªnticadas com o carimbo a Ã³leo em uso nesta secretaria."]]></textFieldExpression>
 				</textField>
 				<staticText>
 					<reportElement

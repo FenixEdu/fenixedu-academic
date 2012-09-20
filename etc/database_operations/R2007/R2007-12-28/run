@@ -27,4 +27,4 @@ function executeWithTempFile() {
 	echo
 }
 
-execute "Após correr em produção remover" deleteConversationMessageByTeacherRequest.sql
+execute "ApÃ³s correr em produÃ§Ã£o remover" deleteConversationMessageByTeacherRequest.sql

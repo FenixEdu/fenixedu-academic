@@ -126,7 +126,7 @@ public class LibraryOperatorDispatchAction extends FenixDispatchAction {
 	int occupation = library.currentAttendaceCount();
 
 	final DefaultCategoryDataset dataset = new DefaultCategoryDataset();
-	dataset.addValue(occupation, "Alunos", "Ocupação");
+	dataset.addValue(occupation, "Alunos", "OcupaÃ§Ã£o");
 
 	final JFreeChart chart = ChartFactory.createBarChart3D(null, null, "Value", dataset, PlotOrientation.HORIZONTAL, false,
 		false, false);

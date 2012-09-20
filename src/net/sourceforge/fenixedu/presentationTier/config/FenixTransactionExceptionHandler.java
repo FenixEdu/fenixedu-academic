@@ -22,7 +22,7 @@ import org.apache.struts.config.ExceptionConfig;
  * This handler requires that mapping receive should have a forward name
  * 'beginTransaction'
  * 
- * @author Jo„o Luz
+ * @author Jo√£o Luz
  */
 public class FenixTransactionExceptionHandler extends FenixExceptionHandler {
 

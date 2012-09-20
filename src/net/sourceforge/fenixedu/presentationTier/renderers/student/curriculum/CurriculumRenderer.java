@@ -246,7 +246,7 @@ public class CurriculumRenderer extends InputRenderer {
 		    ICurriculumEntry.COMPARATOR_BY_EXECUTION_PERIOD_AND_NAME_AND_ID);
 	    sortedIAverageEntries.addAll(this.curriculum.getEnrolmentRelatedEntries());
 	    if (!sortedIAverageEntries.isEmpty()) {
-		generateGroupRowWithText(mainTable, "Inscrições", true, 0);
+		generateGroupRowWithText(mainTable, "InscriÃ§Ãµes", true, 0);
 		generateRows(mainTable, sortedIAverageEntries, 0);
 	    }
 
@@ -263,12 +263,12 @@ public class CurriculumRenderer extends InputRenderer {
 	    }
 
 	    if (!sortedSubstitutionsEntries.isEmpty()) {
-		generateGroupRowWithText(mainTable, "Substituições", true, 0);
+		generateGroupRowWithText(mainTable, "SubstituiÃ§Ãµes", true, 0);
 		generateRows(mainTable, sortedSubstitutionsEntries, 0);
 	    }
 
 	    if (!sortedEquivalenceEntries.isEmpty()) {
-		generateGroupRowWithText(mainTable, "Equivalências", true, 0);
+		generateGroupRowWithText(mainTable, "EquivalÃªncias", true, 0);
 		generateRows(mainTable, sortedEquivalenceEntries, 0);
 	    }
 	}
@@ -285,7 +285,7 @@ public class CurriculumRenderer extends InputRenderer {
 	    textCell.setColspan(MAX_COL_SPAN_FOR_TEXT_ON_CURRICULUM_LINES);
 
 	    final HtmlTableCell averageCell = groupRow.createCell();
-	    averageCell.setText("Média de Curso");
+	    averageCell.setText("MÃ©dia de Curso");
 	    averageCell.setClasses(getGradeCellClass());
 	    averageCell.setColspan(3);
 
@@ -299,7 +299,7 @@ public class CurriculumRenderer extends InputRenderer {
 	    groupSubRow.setClasses(getHeaderRowClass());
 	    generateCellWithText(groupSubRow, applicationResources.getString("label.grade"), getGradeCellClass());
 	    generateCellWithText(groupSubRow, applicationResources.getString("label.weight"), getEctsCreditsCellClass());
-	    generateCellWithText(groupSubRow, "Peso x Classificação", getEctsCreditsCellClass());
+	    generateCellWithText(groupSubRow, "Peso x ClassificaÃ§Ã£o", getEctsCreditsCellClass());
 	}
 
 	private void generateCellsWithText(final HtmlTableRow row, final int numberOfCells, final String text,
@@ -427,7 +427,7 @@ public class CurriculumRenderer extends InputRenderer {
 	    row.setClasses(getHeaderRowClass());
 
 	    final HtmlTableCell sumsCell = row.createCell();
-	    sumsCell.setText("Somatórios");
+	    sumsCell.setText("SomatÃ³rios");
 	    sumsCell.setStyle("text-align: right;");
 	    sumsCell.setColspan(15);
 
@@ -506,7 +506,7 @@ public class CurriculumRenderer extends InputRenderer {
 	    row.setClasses(getHeaderRowClass());
 
 	    final HtmlTableCell sumsCell = row.createCell();
-	    sumsCell.setText("Somatórios");
+	    sumsCell.setText("SomatÃ³rios");
 	    sumsCell.setStyle("text-align: right;");
 	    sumsCell.setColspan(14);
 

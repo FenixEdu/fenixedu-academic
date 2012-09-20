@@ -7,7 +7,7 @@ import net.sourceforge.fenixedu.domain.MasterDegreeCandidate;
 import net.sourceforge.fenixedu.util.State;
 
 /**
- * @author Fernanda Quitério Created on 1/Jul/2004
+ * @author Fernanda QuitÃ©rio Created on 1/Jul/2004
  * 
  */
 public class InfoMasterDegreeCandidateWithInfoPerson extends InfoMasterDegreeCandidate {

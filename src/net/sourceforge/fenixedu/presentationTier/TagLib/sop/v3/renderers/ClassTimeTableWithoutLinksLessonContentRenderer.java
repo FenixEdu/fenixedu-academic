@@ -100,7 +100,7 @@ public class ClassTimeTableWithoutLinksLessonContentRenderer implements LessonSl
 	    }
 	    strBuffer.append(" - ");
 	    strBuffer.append(infoExam.getSeason().getSeason());
-	    strBuffer.append("ª época");
+	    strBuffer.append("Âª Ã©poca");
 
 	} else if (showOccupation instanceof InfoWrittenTest) {
 

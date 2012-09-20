@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="ISO-8859-1"  ?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with iReport - A designer for JasperReports -->
 <!DOCTYPE jasperReport PUBLIC "//JasperReports//DTD Report Design//EN" "http://jasperreports.sourceforge.net/dtds/jasperreport.dtd">
 <jasperReport
@@ -18,7 +18,7 @@
 		 isTitleNewPage="false"
 		 isSummaryNewPage="false">
 	<property name="ireport.scriptlethandling" value="0" />
-	<property name="ireport.encoding" value="ISO-8859-1" />
+	<property name="ireport.encoding" value="UTF-8" />
 	<import value="java.util.*" />
 	<import value="net.sf.jasperreports.engine.*" />
 	<import value="net.sf.jasperreports.engine.data.*" />
@@ -156,7 +156,7 @@
 					<textElement textAlignment="Left">
 						<font pdfFontName="Helvetica-BoldOblique" size="16" isBold="true" isItalic="true"/>
 					</textElement>
-				<text><![CDATA[DECLARAÇÃO]]></text>
+				<text><![CDATA[DECLARAÃ‡ÃƒO]]></text>
 				</staticText>
 				<staticText>
 					<reportElement
@@ -173,7 +173,7 @@
 					<textElement lineSpacing="1_1_2">
 						<font/>
 					</textElement>
-				<text><![CDATA[SUPERVISÃO DOS SERVIÇOS ACADÉMICOS]]></text>
+				<text><![CDATA[SUPERVISÃƒO DOS SERVIÃ‡OS ACADÃ‰MICOS]]></text>
 				</staticText>
 				<line direction="TopDown">
 					<reportElement
@@ -246,7 +246,7 @@
 					<textElement lineSpacing="1_1_2">
 						<font pdfFontName="Courier-Oblique" size="12" isItalic="true"/>
 					</textElement>
-				<textFieldExpression   class="java.lang.String"><![CDATA["    DECLARA, a pedido do interessado, que " + ($P{registration}.getPerson().isMale() ? "o" : "a") + " alun" + ($P{registration}.getPerson().isMale() ? "o" : "a") + " Nº " + $P{documentRequest}.getRegistration().getNumber()]]></textFieldExpression>
+				<textFieldExpression   class="java.lang.String"><![CDATA["    DECLARA, a pedido do interessado, que " + ($P{registration}.getPerson().isMale() ? "o" : "a") + " alun" + ($P{registration}.getPerson().isMale() ? "o" : "a") + " NÂº " + $P{documentRequest}.getRegistration().getNumber()]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="true" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
@@ -379,7 +379,7 @@
 					<textElement>
 						<font pdfFontName="Courier-Oblique" size="8" isItalic="true"/>
 					</textElement>
-				<textFieldExpression   class="java.lang.String"><![CDATA["Registo Nº " + $P{documentRequest}.getServiceRequestNumber().toString().trim()]]></textFieldExpression>
+				<textFieldExpression   class="java.lang.String"><![CDATA["Registo NÂº " + $P{documentRequest}.getServiceRequestNumber().toString().trim()]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
@@ -397,7 +397,7 @@
 					<textElement lineSpacing="Double">
 						<font pdfFontName="Courier-Oblique" size="8" isItalic="true"/>
 					</textElement>
-				<textFieldExpression   class="java.lang.String"><![CDATA["Alun" + ($P{registration}.getPerson().isMale() ? "o" : "a") + " Nº " + $P{registration}.getNumber()]]></textFieldExpression>
+				<textFieldExpression   class="java.lang.String"><![CDATA["Alun" + ($P{registration}.getPerson().isMale() ? "o" : "a") + " NÂº " + $P{registration}.getNumber()]]></textFieldExpression>
 				</textField>
 				<staticText>
 					<reportElement
@@ -415,7 +415,7 @@
 					<textElement textAlignment="Center" verticalAlignment="Middle">
 						<font pdfFontName="Courier-Oblique" size="8" isItalic="true"/>
 					</textElement>
-				<text><![CDATA[Pág.]]></text>
+				<text><![CDATA[PÃ¡g.]]></text>
 				</staticText>
 				<staticText>
 					<reportElement

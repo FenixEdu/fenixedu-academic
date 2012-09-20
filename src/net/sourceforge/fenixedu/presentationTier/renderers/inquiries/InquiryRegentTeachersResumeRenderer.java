@@ -43,7 +43,7 @@ public class InquiryRegentTeachersResumeRenderer extends InquiryTeacherShiftType
 	teacherLink.setModule("/publico");
 	teacherLink.setUrl("/viewQUCInquiryAnswers.do?method=showTeacherInquiry&" + teacherParameters);
 	teacherLink.setTarget("_blank");
-	teacherLink.setText("Relatório de Docência");
+	teacherLink.setText("RelatÃ³rio de DocÃªncia");
 	container.addChild(teacherLink);
 
 	HtmlText teacherInquiry = new HtmlText(")");

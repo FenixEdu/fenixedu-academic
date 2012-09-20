@@ -41,7 +41,7 @@ WHERE C_P.OJB_CONCRETE_CLASS = 'net.sourceforge.fenixedu.domain.functionalities.
 
 
 
--- importar FunctionalitySection, ou seja, criar node que liga pai da FunctionalitySection à Functionality
+-- importar FunctionalitySection, ou seja, criar node que liga pai da FunctionalitySection Ã  Functionality
 insert into NODE(KEY_PARENT,KEY_CHILD,NODE_ORDER,ASCENDING,OJB_CONCRETE_CLASS) 
 select C2.ID_INTERNAL, C.ID_INTERNAL,AI1.SECTION_ORDER,'1','net.sourceforge.fenixedu.domain.contents.ExplicitOrderNode' 
 FROM ACCESSIBLE_ITEM AI1, ACCESSIBLE_ITEM AI2, CONTENT C, CONTENT C2 

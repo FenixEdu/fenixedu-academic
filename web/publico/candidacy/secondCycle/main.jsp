@@ -18,14 +18,14 @@
 
 
 <div id="contextual_nav">
-<h2 class="brown">Nesta página</h2>
+<h2 class="brown">Nesta pÃ¡gina</h2>
 	<ul>
-    	<li><%= pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX %><a href="#desc">Descrição</a></li>
+    	<li><%= pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX %><a href="#desc">DescriÃ§Ã£o</a></li>
     	<li><%= pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX %><a href="#vag">Vagas</a></li>
     	<li><%= pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX %><a href="#prop">Propinas</a></li>
     	<li><%= pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX %><a href="#praz">Prazos</a></li>
-    	<li><%= pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX %><a href="#critsel">Critérios de selecção</a></li>
-    	<li><%= pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX %><a href="#docnec">Documentos necessários</a></li>
+    	<li><%= pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX %><a href="#critsel">CritÃ©rios de selecÃ§Ã£o</a></li>
+    	<li><%= pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX %><a href="#docnec">Documentos necessÃ¡rios</a></li>
     	<li><%= pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX %><a href="#emol">Emolumentos de candidatura</a></li>
     	<li><%= pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX %><a href="#faq">FAQs</a></li>
     	<li><a href="<%= fullPath + "?method=preparePreCreationOfCandidacy" %>"><b>Submeter Candidatura</b></a></li>
@@ -36,23 +36,23 @@
 <h1><bean:message key="title.application.name.secondCycle" bundle="CANDIDATE_RESOURCES"/></h1>
 
 
-<h2 id="desc">Descrição</h2>
+<h2 id="desc">DescriÃ§Ã£o</h2>
 
-<p>Podem candidatar-se a um Mestrado de 2º ciclo do IST, ou a um 2º ciclo de um Mestrado Integrado do IST, os estudantes que estejam nas seguintes condições:</p>
+<p>Podem candidatar-se a um Mestrado de 2Âº ciclo do IST, ou a um 2Âº ciclo de um Mestrado Integrado do IST, os estudantes que estejam nas seguintes condiÃ§Ãµes:</p>
 
 <ul>
-	<li>tenham terminado no IST uma Licenciatura de 1º ciclo, ou o 1º ciclo de um Mestrado Integrado, sem <a href="http://www.ist.utl.pt/files/ensino/coerencias_cientificas_0910.pdf">coerência científica</a> com o curso de 2º ciclo a que se candidatam;</li>
-	<li>sejam titulares de uma formação de 1º ciclo na área de Ciências e Tecnologia (exceptua-se o caso do 2º ciclo em Arquitectura que pressupõe uma formação de 1º ciclo em Arquitectura);</li>
-	<li>sejam detentores de um currículo escolar, científico ou profissional, que ateste a sua capacidade para realização do Mestrado a que se candidatam.</li>
+	<li>tenham terminado no IST uma Licenciatura de 1Âº ciclo, ou o 1Âº ciclo de um Mestrado Integrado, sem <a href="http://www.ist.utl.pt/files/ensino/coerencias_cientificas_0910.pdf">coerÃªncia cientÃ­fica</a> com o curso de 2Âº ciclo a que se candidatam;</li>
+	<li>sejam titulares de uma formaÃ§Ã£o de 1Âº ciclo na Ã¡rea de CiÃªncias e Tecnologia (exceptua-se o caso do 2Âº ciclo em Arquitectura que pressupÃµe uma formaÃ§Ã£o de 1Âº ciclo em Arquitectura);</li>
+	<li>sejam detentores de um currÃ­culo escolar, cientÃ­fico ou profissional, que ateste a sua capacidade para realizaÃ§Ã£o do Mestrado a que se candidatam.</li>
 </ul>
 
-<p>Os candidatos que se encontrem a terminar uma Licenciatura de 1º ciclo, ou o 1º ciclo de um Mestrado Integrado, poderão submeter a sua candidatura nos prazos estipulados para o efeito, ficando esta condicionada ao término do referido ciclo até ao dia 30 de Setembro de 2009.</p>
+<p>Os candidatos que se encontrem a terminar uma Licenciatura de 1Âº ciclo, ou o 1Âº ciclo de um Mestrado Integrado, poderÃ£o submeter a sua candidatura nos prazos estipulados para o efeito, ficando esta condicionada ao tÃ©rmino do referido ciclo atÃ© ao dia 30 de Setembro de 2009.</p>
 
-<p><a href="http://www.ist.utl.pt/files/ensino/coerencias_cientificas_0910.pdf">Tabela de Coerência Científica entre cursos do IST</a></p>
+<p><a href="http://www.ist.utl.pt/files/ensino/coerencias_cientificas_0910.pdf">Tabela de CoerÃªncia CientÃ­fica entre cursos do IST</a></p>
 
-<h2 id="vag">Vagas 2º ciclo</h2>
+<h2 id="vag">Vagas 2Âº ciclo</h2>
 
-	<table class="tab_lay" width="70%" cellspacing="0" summary="Informações sobre os mestrados (2º ciclo), no âmbito de Bolonha, disponíveis no IST">
+	<table class="tab_lay" width="70%" cellspacing="0" summary="InformaÃ§Ãµes sobre os mestrados (2Âº ciclo), no Ã¢mbito de Bolonha, disponÃ­veis no IST">
 	<tr>	
 		<th>Curso</th>
 
@@ -92,13 +92,13 @@
 		<td>15</td>
 	</tr>
 	<tr class="bluecell">
-		<td><a href="http://fenix.ist.utl.pt/mebiol?locale=pt">Mestrado em Engenharia Biológica</a></td>
+		<td><a href="http://fenix.ist.utl.pt/mebiol?locale=pt">Mestrado em Engenharia BiolÃ³gica</a></td>
 
 		<td>Alameda</td>
 		<td>20</td>
 	</tr>
 	<tr>
-		<td><a href="http://fenix.ist.utl.pt/mebiom?locale=pt">Mestrado em Engenharia Biomédica</a></td>
+		<td><a href="http://fenix.ist.utl.pt/mebiom?locale=pt">Mestrado em Engenharia BiomÃ©dica</a></td>
 		<td>Alameda</td>
 		<td>15</td>
 
@@ -109,12 +109,12 @@
 		<td>20</td>
 	</tr>
 	<tr>
-		<td><a href="http://fenix.ist.utl.pt/mee?locale=pt">Mestrado em Engenharia Electrónica</a></td>
+		<td><a href="http://fenix.ist.utl.pt/mee?locale=pt">Mestrado em Engenharia ElectrÃ³nica</a></td>
 		<td>Taguspark</td>
 		<td>15</td>
 	</tr>
 	<tr class="bluecell">
-		<td><a href="http://fenix.ist.utl.pt/meec?locale=pt">Mestrado em Engenharia Electrotécnica e de Computadores</a></td>
+		<td><a href="http://fenix.ist.utl.pt/meec?locale=pt">Mestrado em Engenharia ElectrotÃ©cnica e de Computadores</a></td>
 		<td>Alameda</td>
 		<td>90</td>
 	</tr>
@@ -124,29 +124,29 @@
 		<td>20</td>
 	</tr>
 	<tr class="bluecell">
-		<td><a href="http://fenix.ist.utl.pt/meft?locale=pt">Mestrado em Engenharia Física Tecnológica</a></td>
+		<td><a href="http://fenix.ist.utl.pt/meft?locale=pt">Mestrado em Engenharia FÃ­sica TecnolÃ³gica</a></td>
 		<td>Alameda</td>
 		<td>30</td>
 	</tr>
 	<tr>
 
-		<td><a href="http://fenix.ist.utl.pt/megm?locale=pt">Mestrado em Engenharia Geológica e de Minas</a></td>
+		<td><a href="http://fenix.ist.utl.pt/megm?locale=pt">Mestrado em Engenharia GeolÃ³gica e de Minas</a></td>
 		<td>Alameda</td>
 		<td>15</td>
 	</tr>
 	<tr class="bluecell">
-		<td><a href="http://fenix.ist.utl.pt/megi?locale=pt">Mestrado em Engenharia e Gestão Industrial</a></td>
+		<td><a href="http://fenix.ist.utl.pt/megi?locale=pt">Mestrado em Engenharia e GestÃ£o Industrial</a></td>
 		<td>Taguskpark</td>
 		<td>30</td>
 	</tr>
 	<tr>
-		<td><a href="http://fenix.ist.utl.pt/meic-a?locale=pt">Mestrado em Engenharia Informática e de Computadores</a></td>
+		<td><a href="http://fenix.ist.utl.pt/meic-a?locale=pt">Mestrado em Engenharia InformÃ¡tica e de Computadores</a></td>
 		<td>Alameda</td>
 		<td>30</td>
 	</tr>
 
 	<tr class="bluecell">
-		<td><a href="http://fenix.ist.utl.pt/meic-t?locale=pt">Mestrado em Engenharia Informática e de Computadores</a></td>
+		<td><a href="http://fenix.ist.utl.pt/meic-t?locale=pt">Mestrado em Engenharia InformÃ¡tica e de Computadores</a></td>
 		<td>Taguspark</td>
 		<td>20</td>
 	</tr>
@@ -188,7 +188,7 @@
 		<td>20</td>
 	</tr>
 	<tr class="bluecell">
-		<td><a href="http://www.civil.ist.utl.pt/?locale=pt">Mestrado em Urbanismo e Ordenamento do Território</a></td>
+		<td><a href="http://www.civil.ist.utl.pt/?locale=pt">Mestrado em Urbanismo e Ordenamento do TerritÃ³rio</a></td>
 		<td>Alameda</td>
 		<td>25</td>
 	</tr>
@@ -196,61 +196,61 @@
 
 <h2 id="prop">Propinas</h2>
 
-<p>Para o ano lectivo de 2009/2010 a propina para os Mestrados de 2º ciclo e 2º ciclo de Mestrados Integrados é de <b>996,85 Euros</b>, com excepção do curso "Mestrado em Engenharia Farmacêutica" em que a propina está fixada no valor de <b>5000 Euros</b>. Relativamente ao "Mestrado em Sistemas Complexos de Infra-estruturas de Transportes" é favor consultar o <a href="http://www.civil.ist.utl.pt/nispt/mit/ctis/">site próprio</a>.</p>
+<p>Para o ano lectivo de 2009/2010 a propina para os Mestrados de 2Âº ciclo e 2Âº ciclo de Mestrados Integrados Ã© de <b>996,85 Euros</b>, com excepÃ§Ã£o do curso "Mestrado em Engenharia FarmacÃªutica" em que a propina estÃ¡ fixada no valor de <b>5000 Euros</b>. Relativamente ao "Mestrado em Sistemas Complexos de Infra-estruturas de Transportes" Ã© favor consultar o <a href="http://www.civil.ist.utl.pt/nispt/mit/ctis/">site prÃ³prio</a>.</p>
 
 
 <h2 id="praz">Prazos</h2>
-<table class="tab_simpler" summary="Prazos para candidatos do 2º ciclo" cellspacing="0">
+<table class="tab_simpler" summary="Prazos para candidatos do 2Âº ciclo" cellspacing="0">
 	<tr>
 		<td class="align_r"><span class="marker">4 de Maio a 15 de Junho de 2009</span></td>
-		<td><a href="<%= fullPath + "?method=preparePreCreationOfCandidacy" %>">Apresentação de candidaturas</a></td>
+		<td><a href="<%= fullPath + "?method=preparePreCreationOfCandidacy" %>">ApresentaÃ§Ã£o de candidaturas</a></td>
 	</tr>
 	<tr>
 		<td class="align_r"><span class="marker">29 de Junho de 2009</span></td>
 
-		<td>Afixação dos editais de colocação</td>
+		<td>AfixaÃ§Ã£o dos editais de colocaÃ§Ã£o</td>
 	</tr>
 	<tr>
 		<td class="align_r"><span class="marker">29 a 3 de Julho de 2009</span></td>
-		<td>Matrícula e inscrição</td>
+		<td>MatrÃ­cula e inscriÃ§Ã£o</td>
 
 	</tr>
 	<tr>
 		<td class="align_r"><span class="marker">29 a 3 de Julho de 2009</span></td>
-		<td>Reclamação sobre as colocações </td>
+		<td>ReclamaÃ§Ã£o sobre as colocaÃ§Ãµes </td>
 	</tr>
 	<tr>
 		<td class="align_r"><span class="marker">17 de Julho de 2009</span></td>
-		<td>Decisão sobre as reclamações</td>
+		<td>DecisÃ£o sobre as reclamaÃ§Ãµes</td>
 	</tr>
 	<tr>
 		<td class="align_r"><span class="marker">17 a 21 de Julho de 2009</span></td>
-		<td>Matrícula para reclamações atendidas</td>
+		<td>MatrÃ­cula para reclamaÃ§Ãµes atendidas</td>
 	</tr>
 </table> 
 
-<h2 id="critsel">Critérios de Selecção</h2>
+<h2 id="critsel">CritÃ©rios de SelecÃ§Ã£o</h2>
 
-<p>Os candidatos a um Mestrado de 2º ciclo do IST, ou a um 2º ciclo de um Mestrado Integrado do IST, serão seriados pela coordenação do curso a que se candidatam tendo em conta os seguintes critérios:</p>
+<p>Os candidatos a um Mestrado de 2Âº ciclo do IST, ou a um 2Âº ciclo de um Mestrado Integrado do IST, serÃ£o seriados pela coordenaÃ§Ã£o do curso a que se candidatam tendo em conta os seguintes critÃ©rios:</p>
 <ol>
 	<li>Afinidade entre o curso que possuem e o curso a que se candidatam;</li>
 	<li>Natureza do grau que possuem;</li>
 
 	<li>Sucesso escolar no curso que frequentam.</li>
 </ol>
-<p>Nos casos dos candidatos em que se considere que a formação de 1º ciclo não corresponde às competências necessárias para a formação a que se candidatam, poderá o júri de selecção excluir o candidato ou propor a admissão condicionada à frequência e aprovação num conjunto de unidades curriculares propedêuticas.</p>
-<p>O conjunto de unidades curriculares propedêuticas nunca poderá exceder os 30 ECTS e a aprovação nas mesmas condicionará a conclusão do curso. As classificações obtidas nestas unidades curriculares não serão contabilizadas para a classificação final do curso.</p>
+<p>Nos casos dos candidatos em que se considere que a formaÃ§Ã£o de 1Âº ciclo nÃ£o corresponde Ã s competÃªncias necessÃ¡rias para a formaÃ§Ã£o a que se candidatam, poderÃ¡ o jÃºri de selecÃ§Ã£o excluir o candidato ou propor a admissÃ£o condicionada Ã  frequÃªncia e aprovaÃ§Ã£o num conjunto de unidades curriculares propedÃªuticas.</p>
+<p>O conjunto de unidades curriculares propedÃªuticas nunca poderÃ¡ exceder os 30 ECTS e a aprovaÃ§Ã£o nas mesmas condicionarÃ¡ a conclusÃ£o do curso. As classificaÃ§Ãµes obtidas nestas unidades curriculares nÃ£o serÃ£o contabilizadas para a classificaÃ§Ã£o final do curso.</p>
 
 
-<h2 id="docnec">Documentos necessários</h2>
-<p>Para completar o processo de candidatura é necessário submeter os seguintes documentos digitalizados:</p>
+<h2 id="docnec">Documentos necessÃ¡rios</h2>
+<p>Para completar o processo de candidatura Ã© necessÃ¡rio submeter os seguintes documentos digitalizados:</p>
 
 <ul>
 	<li>Foto actual</li>
 	<li>Curriculum vitae</li>
-	<li>Certificados de habilitações discriminado com média</li>
-	<li>Documento de identificação</li>
-	<li>Cartão de contribuinte</li>
+	<li>Certificados de habilitaÃ§Ãµes discriminado com mÃ©dia</li>
+	<li>Documento de identificaÃ§Ã£o</li>
+	<li>CartÃ£o de contribuinte</li>
 	<li>Comprovativo de pagamento dos emolumentos de candidatura</li>
 </ul>
 
@@ -269,15 +269,15 @@
 
 <h2 id="faq">FAQ</h2>
 
-<h3>Q1: Sou finalista do 1º ciclo de um curso de Licenciatura (ou Mestrado Integrado) no IST. Terei que fazer alguma coisa para prosseguir os estudos no 2º ciclo do mesmo curso?</h3>
-<p>A1: Não, nestes casos a transição para o 2º ciclo é automática.</p>
+<h3>Q1: Sou finalista do 1Âº ciclo de um curso de Licenciatura (ou Mestrado Integrado) no IST. Terei que fazer alguma coisa para prosseguir os estudos no 2Âº ciclo do mesmo curso?</h3>
+<p>A1: NÃ£o, nestes casos a transiÃ§Ã£o para o 2Âº ciclo Ã© automÃ¡tica.</p>
 
-<h3>Q2: Sou finalista do 1º ciclo de um curso de Licenciatura (ou Mestrado Integrado) no IST. Em que condições a mudança para outro 2º ciclo diferente é automática?</h3>
-<p>A2: É sempre possível mudar de curso e prosseguir estudos noutra área após completar o 1º ciclo desde que esteja garantida a coerência científica entre os dois cursos do IST. Esta coerência verifica-se sempre que as competências de formação do 1º ciclo respeitem as necessidades de formação para ingresso no 2º ciclo. A <a href="http://www.ist.utl.pt/files/ensino/coerencias_cientificas_0910.pdf">Tabela de Coerência Científica entre cursos do IST</a> mostra-te em que situações a mudança para um 2º ciclo diferente é automática.</p>
+<h3>Q2: Sou finalista do 1Âº ciclo de um curso de Licenciatura (ou Mestrado Integrado) no IST. Em que condiÃ§Ãµes a mudanÃ§a para outro 2Âº ciclo diferente Ã© automÃ¡tica?</h3>
+<p>A2: Ã‰ sempre possÃ­vel mudar de curso e prosseguir estudos noutra Ã¡rea apÃ³s completar o 1Âº ciclo desde que esteja garantida a coerÃªncia cientÃ­fica entre os dois cursos do IST. Esta coerÃªncia verifica-se sempre que as competÃªncias de formaÃ§Ã£o do 1Âº ciclo respeitem as necessidades de formaÃ§Ã£o para ingresso no 2Âº ciclo. A <a href="http://www.ist.utl.pt/files/ensino/coerencias_cientificas_0910.pdf">Tabela de CoerÃªncia CientÃ­fica entre cursos do IST</a> mostra-te em que situaÃ§Ãµes a mudanÃ§a para um 2Âº ciclo diferente Ã© automÃ¡tica.</p>
 
-<h3>Q3: Sou finalista do 1º ciclo de um curso de Licenciatura (ou Mestrado Integrado) no IST. O que devo fazer se pretender prosseguir os estudos num 2º ciclo do IST sem coerência científica com o curso de 1º ciclo?</h3>
-<p>A3: Deves submeter um processo de candidatura ao 2º ciclo de acordo com os prazos e regulamento em vigor, sendo o processo analisado juntamente com as candidaturas de alunos externos que pretendem ingressar num curso de 2º ciclo do IST.</p>
+<h3>Q3: Sou finalista do 1Âº ciclo de um curso de Licenciatura (ou Mestrado Integrado) no IST. O que devo fazer se pretender prosseguir os estudos num 2Âº ciclo do IST sem coerÃªncia cientÃ­fica com o curso de 1Âº ciclo?</h3>
+<p>A3: Deves submeter um processo de candidatura ao 2Âº ciclo de acordo com os prazos e regulamento em vigor, sendo o processo analisado juntamente com as candidaturas de alunos externos que pretendem ingressar num curso de 2Âº ciclo do IST.</p>
 
-<h3>Q4: Sou titular de uma licenciatura pré-bolonha do IST. Posso candidatar-me a um mestrado de 2º ciclo, na mesma área de formação?</h3>
+<h3>Q4: Sou titular de uma licenciatura prÃ©-bolonha do IST. Posso candidatar-me a um mestrado de 2Âº ciclo, na mesma Ã¡rea de formaÃ§Ã£o?</h3>
 <p>A4: Sim. </p>
 

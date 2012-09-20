@@ -51,5 +51,5 @@
     <html:errors/>
  </logic:notEmpty>
  <logic:empty name="equivalencies">
- 	<span class="error"><!-- Error messages go here -->N�o existem op��es dispon�veis para a sua licenciatura neste ciclo de semin�rios.</span>
+ 	<span class="error"><!-- Error messages go here -->Não existem opï¿½ï¿½es disponíveis para a sua licenciatura neste ciclo de seminários.</span>
  </logic:empty>

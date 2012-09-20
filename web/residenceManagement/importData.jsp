@@ -42,7 +42,7 @@
 
 	<div class="infoop2">
 		<bean:message key="label.information.xls.format" bundle="RESIDENCE_MANAGEMENT_RESOURCES"/>
-		<p>Nº do Quarto <span class="colorbbb">|</span> ISTxxxx <span class="colorbbb">|</span> NIF <span class="colorbbb">|</span> Nome <span class="colorbbb">|</span> Valor do Quarto</p>
+		<p>NÂº do Quarto <span class="colorbbb">|</span> ISTxxxx <span class="colorbbb">|</span> NIF <span class="colorbbb">|</span> Nome <span class="colorbbb">|</span> Valor do Quarto</p>
 	</div>
 
 

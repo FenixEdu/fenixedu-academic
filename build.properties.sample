@@ -364,7 +364,7 @@ character.dollar=$
 
 ## Complex constructions that contain characters that's can't
 ## be used directly in ant build files
-allowed-roles.build.file.constructor.header=<?xml version="1.0" encoding="ISO-8859-15"?>\n \
+allowed-roles.build.file.constructor.header=<?xml version="1.0" encoding="UTF-8"?>\n \
 		\t<project default="generate-properties-file" name="Auto-Generated-Build-File">\n \
 			\t\t<property file="build.properties"/>\n \
 			\t\t<target name="generate-properties-file"> \n\n

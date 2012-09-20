@@ -7,7 +7,7 @@
 
 <!-- alumniPublicAccessMessage.jsp -->
 
-<h1>Inscrição Alumni</h1>
+<h1>InscriÃ§Ã£o Alumni</h1>
 
 <div class="alumnilogo">
 

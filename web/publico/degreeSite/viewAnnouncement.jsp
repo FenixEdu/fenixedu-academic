@@ -77,7 +77,7 @@
                 if (announcement.getAnnouncementBoard().hasWriter(person)) {
                 %>
                     <logic:notEmpty name="announcement" property="publicationEnd">
-                        atï¿? 
+                        atÃ¯Â¿? 
                         <fr:view name="announcement" property="publicationEnd" layout="no-time"/>
                     </logic:notEmpty>
                 <%
@@ -92,7 +92,7 @@
         </span>
     </p>
                 
-<%-- Tï¿?tulo --%>
+<%-- TÃ¯Â¿?tulo --%>
     <h3 class="mvert025">
         <b><fr:view name="announcement" property="subject" type="pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString"/></b>
     </h3>
@@ -165,9 +165,9 @@
     }
     %>
 
-<%-- Data de Criação --%>
+<%-- Data de CriaÃ§Ã£o --%>
     <html:link linkName="<%=announcement.getIdInternal().toString()%>"/>
-        Data de criação: 
+        Data de criaÃ§Ã£o: 
         <fr:view name="announcement" property="creationDate" type="org.joda.time.DateTime" layout="no-time"/>
     </em>
 </p>

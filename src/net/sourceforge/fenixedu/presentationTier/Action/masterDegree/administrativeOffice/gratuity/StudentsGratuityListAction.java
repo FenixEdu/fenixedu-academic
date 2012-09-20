@@ -46,7 +46,7 @@ import org.apache.struts.util.MessageResources;
 import pt.ist.fenixWebFramework.security.UserView;
 
 /**
- * @author T‚nia Pous„o
+ * @author T√¢nia Pous√£o
  * 
  */
 public class StudentsGratuityListAction extends FenixDispatchAction {

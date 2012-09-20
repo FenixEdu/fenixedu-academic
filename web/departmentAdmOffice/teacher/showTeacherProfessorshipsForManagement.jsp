@@ -11,7 +11,7 @@
 			<bean:write name="teacherDepartment" property="name"/> 
 		</logic:present>
 		<logic:notPresent name="teacherDepartment">
-			Esta pessoa n„o È docente
+			Esta pessoa n√£o √© docente
 		</logic:notPresent>
 </p>
 

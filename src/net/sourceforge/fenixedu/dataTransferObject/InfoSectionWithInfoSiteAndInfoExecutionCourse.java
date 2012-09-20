@@ -8,7 +8,7 @@ import net.sourceforge.fenixedu.domain.ExecutionCourseSite;
 import net.sourceforge.fenixedu.domain.Section;
 
 /**
- * @author T‚nia Pous„o
+ * @author T√¢nia Pous√£o
  * 
  */
 public class InfoSectionWithInfoSiteAndInfoExecutionCourse extends InfoSection {

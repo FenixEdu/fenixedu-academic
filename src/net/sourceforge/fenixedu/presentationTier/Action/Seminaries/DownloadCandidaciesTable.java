@@ -47,7 +47,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Tile;
  */
 @Mapping(module = "teacher", path = "/getTabSeparatedCandidacies", scope = "request")
 public class DownloadCandidaciesTable extends FenixAction {
-    static final String COLUMNS_HEADERS = "Nº\tNome\tMédia\tCadeiras Feitas\tAprovado\tE-Mail\tSeminário\tCurso\tDisciplina\tModalidade\tTema\tMotivação\tCaso1\tCaso2\tCaso3\tCaso4\tCaso5";
+    static final String COLUMNS_HEADERS = "NÂº\tNome\tMÃ©dia\tCadeiras Feitas\tAprovado\tE-Mail\tSeminÃ¡rio\tCurso\tDisciplina\tModalidade\tTema\tMotivaÃ§Ã£o\tCaso1\tCaso2\tCaso3\tCaso4\tCaso5";
 
     Object[] getReadCandidaciesArgs(HttpServletRequest request) {
 	Integer modalityID;
@@ -167,7 +167,7 @@ public class DownloadCandidaciesTable extends FenixAction {
 		if ((candidacy.getApproved() != null) && (candidacy.getApproved().booleanValue()))
 		    friendlyBoolean = "Sim";
 		else
-		    friendlyBoolean = "Não";
+		    friendlyBoolean = "NÃ£o";
 		document += "\"" + friendlyBoolean + "\"" + "\t";
 		document += "\"" + candidacy.getStudent().getInfoPerson().getEmail() + "\"" + "\t";
 		document += "\"" + candidacy.getSeminary().getName() + "\"" + "\t";

@@ -56,7 +56,7 @@ public class RegisteredDegreeCandidaciesWithApplyForResidence {
     private void addHeaders(Spreadsheet spreadsheet) {
 	spreadsheet.setHeader("Data de Matricula");
 	spreadsheet.setHeader("Curso");
-	spreadsheet.setHeader("Nº de Aluno");
+	spreadsheet.setHeader("NÂº de Aluno");
 	spreadsheet.setHeader("Nome");
 	spreadsheet.setHeader("Nota de Seriacao");
 	spreadsheet.setHeader("Localidade");

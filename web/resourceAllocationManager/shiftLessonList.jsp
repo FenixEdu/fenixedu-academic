@@ -6,7 +6,7 @@
 <%@ page import="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants" %>
 <html:xhtml/>
 
-<p class="mtop2 mbottom05"><strong>Aulas j· atribuidas ao turno:</strong></p>
+<p class="mtop2 mbottom05"><strong>Aulas j√° atribuidas ao turno:</strong></p>
 
 <logic:present name="shift" property="infoLessons">
   <html:form action="/manageShiftMultipleItems">

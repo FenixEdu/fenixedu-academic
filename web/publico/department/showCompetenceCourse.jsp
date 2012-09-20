@@ -93,7 +93,7 @@
 	<!-- LESSON HOURS -->
 	<h:outputText value="<h2 class='arrow_bullet'>#{bolonhaBundle['lessonHours']}</h2>" escape="false"/>
 	<fc:dataRepeater value="#{CompetenceCourseManagement.sortedCompetenceCourseLoads}" var="competenceCourseLoad" rowCountVar="numberOfElements">
-		<h:outputText value="<p style='margin-top: 30px; margin-left: 0px;'><strong><em>#{competenceCourseLoad.order}บ #{bolonhaBundle['semester']}</em></strong></p>" escape="false"
+		<h:outputText value="<p style='margin-top: 30px; margin-left: 0px;'><strong><em>#{competenceCourseLoad.order}ยบ #{bolonhaBundle['semester']}</em></strong></p>" escape="false"
 			rendered="#{CompetenceCourseManagement.competenceCourse.regime.name == 'ANUAL' && numberOfElements == 2}"/>
 		
 		<h:outputText value="<p style='margin-left: 0px;'>#{bolonhaBundle['theoreticalLesson']}: " escape="false"/>

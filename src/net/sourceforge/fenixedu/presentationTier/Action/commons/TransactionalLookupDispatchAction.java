@@ -21,7 +21,7 @@ import pt.ist.fenixWebFramework.security.UserView;
 /**
  * Contains util functions for struts transaction management.
  * 
- * @author T‚nia Pous„o 12/Fev/2004
+ * @author T√¢nia Pous√£o 12/Fev/2004
  */
 
 public abstract class TransactionalLookupDispatchAction extends LookupDispatchAction {

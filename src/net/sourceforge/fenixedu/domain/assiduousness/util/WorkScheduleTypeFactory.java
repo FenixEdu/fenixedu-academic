@@ -664,7 +664,7 @@ public abstract class WorkScheduleTypeFactory implements Serializable, FactoryEx
 			    }
 			}
 			if (scheduleToChangeDate.isEmpty()) {
-			    // ninguÈm usa antes deste do firstday... basta
+			    // ningu√©m usa antes deste do firstday... basta
 			    // alterar
 			    editWorkScheduleType();
 			} else {
@@ -703,11 +703,11 @@ public abstract class WorkScheduleTypeFactory implements Serializable, FactoryEx
 			    }
 			}
 		    } else {
-			// ninguÈm usa alterar hor·rio ou foi criado depois do
+			// ningu√©m usa alterar hor√°rio ou foi criado depois do
 			// firstday(basta alterar
 			// este)
-			// mas deviamos fazer validaÁıes, que n„o estamos a
-			// fazer pq.... (n∫ de horas dos hor·rios continuos,
+			// mas deviamos fazer valida√ß√µes, que n√£o estamos a
+			// fazer pq.... (n¬∫ de horas dos hor√°rios continuos,
 			// etc...)
 			editWorkScheduleType();
 		    }
@@ -717,7 +717,7 @@ public abstract class WorkScheduleTypeFactory implements Serializable, FactoryEx
 		    return new ActionMessage("error.existingEquivalentSchedule", equivalentWorkScheduleType.getAcronym());
 		}
 	    } else if (changeDatesOrAcronym) {
-		// sÛ alterou as datas de validade e/ou acrÛnimo e j· vi em cima
+		// s√≥ alterou as datas de validade e/ou acr√≥nimo e j√° vi em cima
 		// que pode mudar
 		editWorkScheduleType();
 	    }

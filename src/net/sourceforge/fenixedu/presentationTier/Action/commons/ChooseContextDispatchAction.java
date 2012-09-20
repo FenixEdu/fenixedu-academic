@@ -77,18 +77,18 @@ public class ChooseContextDispatchAction extends FenixDateAndTimeDispatchAction 
 	/* Criar o bean de semestres */
 	List semestres = new ArrayList();
 	semestres.add(new LabelValueBean("escolher", ""));
-	semestres.add(new LabelValueBean("1 บ", "1"));
-	semestres.add(new LabelValueBean("2 บ", "2"));
+	semestres.add(new LabelValueBean("1 ยบ", "1"));
+	semestres.add(new LabelValueBean("2 ยบ", "2"));
 	request.setAttribute("semestres", semestres);
 
 	/* Criar o bean de anos curricutares */
 	List anosCurriculares = new ArrayList();
 	anosCurriculares.add(new LabelValueBean("escolher", ""));
-	anosCurriculares.add(new LabelValueBean("1 บ", "1"));
-	anosCurriculares.add(new LabelValueBean("2 บ", "2"));
-	anosCurriculares.add(new LabelValueBean("3 บ", "3"));
-	anosCurriculares.add(new LabelValueBean("4 บ", "4"));
-	anosCurriculares.add(new LabelValueBean("5 บ", "5"));
+	anosCurriculares.add(new LabelValueBean("1 ยบ", "1"));
+	anosCurriculares.add(new LabelValueBean("2 ยบ", "2"));
+	anosCurriculares.add(new LabelValueBean("3 ยบ", "3"));
+	anosCurriculares.add(new LabelValueBean("4 ยบ", "4"));
+	anosCurriculares.add(new LabelValueBean("5 ยบ", "5"));
 	request.setAttribute(PresentationConstants.CURRICULAR_YEAR_LIST_KEY, anosCurriculares);
 
 	/* Cria o form bean com as licenciaturas em execucao. */
@@ -140,18 +140,18 @@ public class ChooseContextDispatchAction extends FenixDateAndTimeDispatchAction 
 	/* Criar o bean de semestres */
 	List semestres = new ArrayList();
 	semestres.add(new LabelValueBean("escolher", ""));
-	semestres.add(new LabelValueBean("1 บ", "1"));
-	semestres.add(new LabelValueBean("2 บ", "2"));
+	semestres.add(new LabelValueBean("1 ยบ", "1"));
+	semestres.add(new LabelValueBean("2 ยบ", "2"));
 	request.setAttribute("semestres", semestres);
 
 	/* Criar o bean de anos curricutares */
 	List anosCurriculares = new ArrayList();
 	anosCurriculares.add(new LabelValueBean("escolher", ""));
-	anosCurriculares.add(new LabelValueBean("1 บ", "1"));
-	anosCurriculares.add(new LabelValueBean("2 บ", "2"));
-	anosCurriculares.add(new LabelValueBean("3 บ", "3"));
-	anosCurriculares.add(new LabelValueBean("4 บ", "4"));
-	anosCurriculares.add(new LabelValueBean("5 บ", "5"));
+	anosCurriculares.add(new LabelValueBean("1 ยบ", "1"));
+	anosCurriculares.add(new LabelValueBean("2 ยบ", "2"));
+	anosCurriculares.add(new LabelValueBean("3 ยบ", "3"));
+	anosCurriculares.add(new LabelValueBean("4 ยบ", "4"));
+	anosCurriculares.add(new LabelValueBean("5 ยบ", "5"));
 	request.setAttribute("curricularYearList", anosCurriculares);
 
 	/* Cria o form bean com as licenciaturas em execucao. */

@@ -24,14 +24,14 @@
 
 	
 		<p><strong><html:link page="<%= "/ICalTimeTable.do?method=generateKey&registrationId=" + String.valueOf(registrationId) %>" bundle="MESSAGING_RESOURCES"  titleKey="label.key.new"><bean:message key="label.key.new" bundle="MESSAGING_RESOURCES"/></html:link></strong></p>
-	A sua chave È v·lida atÈ <b><bean:write name="expirationDate" /></b>
+	A sua chave √© v√°lida at√© <b><bean:write name="expirationDate" /></b>
 	<logic:equal name="stillValid" value="false">
 		<p class="mbottom05"><em class="highlight5">A chave perdeu a
 		validade. Para actualizar os links gere uma nova chave.</em></p>
 	</logic:equal>
 	<logic:equal name="stillValid" value="true">
 		<p>
-		<form name="embedForm1">Calend·rio de aulas: <input
+		<form name="embedForm1">Calend√°rio de aulas: <input
 			id="embed_code" style="width: 600px;" type="text" readonly="readonly"
 			onclick="javascript:document.embedForm1.embed_code.focus();document.embedForm1.embed_code.select();"
 			value="<%= classURL.toString() %>">	
@@ -39,7 +39,7 @@
 		</p>
 
 		<p>
-		<form name="embedForm2">Calend·rio de testes: <input
+		<form name="embedForm2">Calend√°rio de testes: <input
 			id="embed_code" style="width: 600px;" type="text" readonly="readonly"
 			onclick="javascript:document.embedForm2.embed_code.focus();document.embedForm2.embed_code.select();"
 			value="<%= examsURL.toString() %>""></form>

@@ -35,7 +35,7 @@ import org.apache.struts.upload.FormFile;
 import pt.ist.fenixWebFramework.security.UserView;
 
 /**
- * @author T‚nia Pous„o
+ * @author T√¢nia Pous√£o
  * 
  */
 public class WriteMarksAction extends FenixDispatchAction {

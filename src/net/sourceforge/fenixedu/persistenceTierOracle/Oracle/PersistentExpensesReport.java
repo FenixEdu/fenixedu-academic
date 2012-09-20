@@ -39,7 +39,7 @@ public class PersistentExpensesReport extends PersistentReport implements IPersi
 
 	    StringBuilder query = new StringBuilder();
 	    query
-		    .append("select \"idMov\", \"Membro\", \"Rubrica\", \"Tipo\", \"data\", \"Descrição\", \"Valor\", \"Iva\", \"Total\" from ");
+		    .append("select \"idMov\", \"Membro\", \"Rubrica\", \"Tipo\", \"data\", \"DescriÃ§Ã£o\", \"Valor\", \"Iva\", \"Total\" from ");
 	    query.append(tableOrView);
 	    query.append(" where PROJECTCODE='");
 	    query.append(projectCode);
@@ -56,7 +56,7 @@ public class PersistentExpensesReport extends PersistentReport implements IPersi
 		SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
 		Date date = rs.getDate("data");
 		report.setDate(formatter.format(date));
-		report.setDescription(rs.getString("Descrição"));
+		report.setDescription(rs.getString("DescriÃ§Ã£o"));
 		report.setValue(new Double(rs.getDouble("Valor")));
 		report.setTax(new Double(rs.getDouble("Iva")));
 		report.setTotal(new Double(rs.getDouble("Total")));
@@ -83,7 +83,7 @@ public class PersistentExpensesReport extends PersistentReport implements IPersi
 
 	    StringBuilder query = new StringBuilder();
 	    query
-		    .append("select \"idMov\", \"Membro\", \"Rubrica\", \"Tipo\", \"data\", \"Descrição\", \"Valor\", \"Iva\", \"Total\" from ");
+		    .append("select \"idMov\", \"Membro\", \"Rubrica\", \"Tipo\", \"data\", \"DescriÃ§Ã£o\", \"Valor\", \"Iva\", \"Total\" from ");
 	    query.append(tableOrView);
 	    query.append(" where PROJECTCODE='");
 	    query.append(projectCode);
@@ -102,7 +102,7 @@ public class PersistentExpensesReport extends PersistentReport implements IPersi
 		SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
 		Date date = rs.getDate("data");
 		report.setDate(formatter.format(date));
-		report.setDescription(rs.getString("Descrição"));
+		report.setDescription(rs.getString("DescriÃ§Ã£o"));
 		report.setValue(new Double(rs.getDouble("Valor")));
 		report.setTax(new Double(rs.getDouble("Iva")));
 		report.setTotal(new Double(rs.getDouble("Total")));

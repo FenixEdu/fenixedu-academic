@@ -14,7 +14,7 @@
 th { width: 150px; }
 </style>
 
-<div class="infoop2">Consulte o Centro de Inscrição da sua instituição de ensino para mais informações.</div>
+<div class="infoop2">Consulte o Centro de InscriÃ§Ã£o da sua instituiÃ§Ã£o de ensino para mais informaÃ§Ãµes.</div>
 <fr:form action="/internship.do?method=submitCandidacy">
 
     <p class="mtop2 mbottom025"><strong>
@@ -115,5 +115,5 @@ th { width: 150px; }
 </logic:present>
 
 <logic:notPresent name="candidacy">
-	<h3>As candidaturas a estágios internacionais estão fechadas</h3>
+	<h3>As candidaturas a estÃ¡gios internacionais estÃ£o fechadas</h3>
 </logic:notPresent>

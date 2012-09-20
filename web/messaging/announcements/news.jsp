@@ -63,7 +63,7 @@
 	<e:labelValues id="values" bundle="ENUMERATION_RESOURCES" enumeration="net.sourceforge.fenixedu.presentationTier.Action.messaging.RecentBoardsTimeSpanSelection" /> 
 	<table class="tstyle5 mvert05">
 		<tr>
-			<td>Mostrar canais criados nos últimos:</td>
+			<td>Mostrar canais criados nos Ãºltimos:</td>
 			<td>
 			    <html:select property="recentBoardsTimeSpanSelection" onchange="this.form.submit();">
 	        		<html:options collection="values" property="value" labelProperty="label" />

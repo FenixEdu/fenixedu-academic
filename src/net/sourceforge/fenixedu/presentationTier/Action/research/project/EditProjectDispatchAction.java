@@ -122,7 +122,7 @@ public class EditProjectDispatchAction extends FenixDispatchAction {
 		.getMetaObject().getObject();
 
 	if (simpleBean.getPerson() != null) {
-	    // Criar a participação efectivamente quando já existe a pessoa
+	    // Criar a participaÃ§Ã£o efectivamente quando jÃ¡ existe a pessoa
 	    // escolhida
 	    Integer oid = Integer.parseInt(request.getParameter("projectId"));
 	    CreateProjectParticipant.run(simpleBean, oid);
@@ -147,14 +147,14 @@ public class EditProjectDispatchAction extends FenixDispatchAction {
 		    .getMetaObject().getObject();
 
 	    if (simpleBean.getPerson() != null) {
-		// Criação de uma participação com uma pessoa externa já
+		// CriaÃ§Ã£o de uma participaÃ§Ã£o com uma pessoa externa jÃ¡
 		// existente
 		CreateProjectParticipant.run(simpleBean, oid);
 	    } else {
-		// Caso em que foi inserido o nome de uma pessoa externa não
+		// Caso em que foi inserido o nome de uma pessoa externa nÃ£o
 		// existente
-		// Passa-se ao modo de criação completa onde é também pedida a
-		// organização da pessoa
+		// Passa-se ao modo de criaÃ§Ã£o completa onde Ã© tambÃ©m pedida a
+		// organizaÃ§Ã£o da pessoa
 		ProjectParticipantFullCreationBean fullBean = new ProjectParticipantFullCreationBean();
 		fullBean.setPersonName(simpleBean.getPersonName());
 		fullBean.setRole(simpleBean.getRole());
@@ -165,8 +165,8 @@ public class EditProjectDispatchAction extends FenixDispatchAction {
 		return prepareEditParticipants(mapping, form, request, response);
 	    }
 	} else if (RenderUtils.getViewState().getMetaObject().getObject() instanceof ProjectParticipantFullCreationBean) {
-	    // Criação de uma participação com o nome de uma pessoa não
-	    // existente ainda no sistema e a sua organização
+	    // CriaÃ§Ã£o de uma participaÃ§Ã£o com o nome de uma pessoa nÃ£o
+	    // existente ainda no sistema e a sua organizaÃ§Ã£o
 	    ProjectParticipantFullCreationBean fullBean = (ProjectParticipantFullCreationBean) RenderUtils.getViewState()
 		    .getMetaObject().getObject();
 	    CreateProjectParticipant.run(fullBean, oid);
@@ -225,13 +225,13 @@ public class EditProjectDispatchAction extends FenixDispatchAction {
 	    ProjectEventAssociationSimpleCreationBean simpleBean = (ProjectEventAssociationSimpleCreationBean) RenderUtils
 		    .getViewState().getMetaObject().getObject();
 	    if (simpleBean.getEvent() != null) {
-		// Criar a associaï¿½ï¿½o efectivamente quando jï¿½ existe o
+		// Criar a associaÃ¯Â¿Â½Ã¯Â¿Â½o efectivamente quando jÃ¯Â¿Â½ existe o
 		// evento escolhido
 		Integer oid = Integer.parseInt(request.getParameter("projectId"));
 		CreateProjectEventAssociation.run(simpleBean, oid);
 		return prepareEditEventAssociations(mapping, form, request, response);
 	    } else {
-		// Permitir a criaï¿½ï¿½o de um novo evento on-the-fly
+		// Permitir a criaÃ¯Â¿Â½Ã¯Â¿Â½o de um novo evento on-the-fly
 		ProjectEventAssociationFullCreationBean fullBean = new ProjectEventAssociationFullCreationBean();
 		fullBean.setEventName(simpleBean.getEventName());
 		fullBean.setRole(simpleBean.getRole());

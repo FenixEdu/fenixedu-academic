@@ -57,7 +57,7 @@
 		%>
 		<bean:size id="searchedParkingPartiesSize" name="parkingCardSearchBean" property="searchedParkingParties"/>
 		<p>		
-			Foram encontrados <strong><bean:write name="searchedParkingPartiesSize"/></strong> utentes de acordo com os critérios especificiados.<br/>
+			Foram encontrados <strong><bean:write name="searchedParkingPartiesSize"/></strong> utentes de acordo com os critÃ©rios especificiados.<br/>
 		</p>
 		<fr:view name="parkingCardSearchBean" property="searchedParkingParties" schema="show.searchedParkingCards">
 			<fr:layout name="tabular-sortable">
@@ -77,6 +77,6 @@
 		<p><html:submit property="prepareRenewal"><bean:message key="button.renewCards" bundle="PARKING_RESOURCES"/></html:submit></p>
 	</logic:notEmpty>
 	<logic:empty name="parkingCardSearchBean" property="searchedParkingParties">
-		<p>Não foram encontrados utentes com os critérios definidos.</p>
+		<p>NÃ£o foram encontrados utentes com os critÃ©rios definidos.</p>
 	</logic:empty>
 </fr:form>	

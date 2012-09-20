@@ -77,10 +77,10 @@
 		<table class="tstyle1 mvert05">
 			<tr>
 				<th><bean:message bundle="STUDENT_RESOURCES" key="label.curricular.course.name"/></th>
-				<th style="width: 5%;" title="Te髍ica"><bean:message bundle="STUDENT_RESOURCES" key="label.shiftType.theoric"/></th>
-				<th style="width: 5%;" title="Pr醫ica"><bean:message bundle="STUDENT_RESOURCES" key="label.shiftType.pratic"/></th>
-				<th style="width: 5%;" title="Laborat髍io"><bean:message bundle="STUDENT_RESOURCES" key="label.shiftType.laboratory"/></th>
-				<th style="width: 5%;" title="Te髍ico-pr醫ica"><bean:message bundle="STUDENT_RESOURCES" key="label.shiftType.theoricoPratic"/></th>
+				<th style="width: 5%;" title="Te贸rica"><bean:message bundle="STUDENT_RESOURCES" key="label.shiftType.theoric"/></th>
+				<th style="width: 5%;" title="Pr谩tica"><bean:message bundle="STUDENT_RESOURCES" key="label.shiftType.pratic"/></th>
+				<th style="width: 5%;" title="Laborat贸rio"><bean:message bundle="STUDENT_RESOURCES" key="label.shiftType.laboratory"/></th>
+				<th style="width: 5%;" title="Te贸rico-pr谩tica"><bean:message bundle="STUDENT_RESOURCES" key="label.shiftType.theoricoPratic"/></th>
 				<th style="width: 5%;" title="<bean:message bundle="STUDENT_RESOURCES" key="label.shiftType.description.fieldWork"/>"><bean:message bundle="STUDENT_RESOURCES" key="label.shiftType.fieldWork"/></th>
 				<th style="width: 5%;" title="<bean:message bundle="STUDENT_RESOURCES" key="label.shiftType.description.problems"/>"><bean:message bundle="STUDENT_RESOURCES" key="label.shiftType.problems"/></th>
 				<th style="width: 5%;" title="<bean:message bundle="STUDENT_RESOURCES" key="label.shiftType.description.seminary"/>"><bean:message bundle="STUDENT_RESOURCES" key="label.shiftType.seminary"/></th>
@@ -231,10 +231,10 @@
 		<table class="tstyle1 mvert05">
 			<tr>
 				<th><bean:message bundle="STUDENT_RESOURCES" key="label.curricular.course.name"/></h>
-				<th style="width: 5%;" title="Te髍ica"><bean:message bundle="STUDENT_RESOURCES" key="label.shiftType.theoric"/></th>
-				<th style="width: 5%;" title="Pr醫ica"><bean:message bundle="STUDENT_RESOURCES" key="label.shiftType.pratic"/></th>
-				<th style="width: 5%;" title="Laborat髍io"><bean:message bundle="STUDENT_RESOURCES" key="label.shiftType.laboratory"/></th>
-				<th style="width: 5%;" title="Te髍ico-pr醫ica"><bean:message bundle="STUDENT_RESOURCES" key="label.shiftType.theoricoPratic"/></th>
+				<th style="width: 5%;" title="Te贸rica"><bean:message bundle="STUDENT_RESOURCES" key="label.shiftType.theoric"/></th>
+				<th style="width: 5%;" title="Pr谩tica"><bean:message bundle="STUDENT_RESOURCES" key="label.shiftType.pratic"/></th>
+				<th style="width: 5%;" title="Laborat贸rio"><bean:message bundle="STUDENT_RESOURCES" key="label.shiftType.laboratory"/></th>
+				<th style="width: 5%;" title="Te贸rico-pr谩tica"><bean:message bundle="STUDENT_RESOURCES" key="label.shiftType.theoricoPratic"/></th>
 				<th style="width: 5%;" title="<bean:message bundle="STUDENT_RESOURCES" key="label.shiftType.description.fieldWork"/>"><bean:message bundle="STUDENT_RESOURCES" key="label.shiftType.fieldWork"/></th>
 				<th style="width: 5%;" title="<bean:message bundle="STUDENT_RESOURCES" key="label.shiftType.description.problems"/>"><bean:message bundle="STUDENT_RESOURCES" key="label.shiftType.problems"/></th>
 				<th style="width: 5%;" title="<bean:message bundle="STUDENT_RESOURCES" key="label.shiftType.description.seminary"/>"><bean:message bundle="STUDENT_RESOURCES" key="label.shiftType.seminary"/></th>

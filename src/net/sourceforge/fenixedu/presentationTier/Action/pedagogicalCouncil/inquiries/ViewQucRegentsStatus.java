@@ -114,11 +114,11 @@ public class ViewQucRegentsStatus extends FenixDispatchAction {
 	Spreadsheet spreadsheet = new Spreadsheet("Regentes em falta");
 	spreadsheet.setHeader("Departamento");
 	spreadsheet.setHeader("Regente");
-	spreadsheet.setHeader("Nº Mec");
+	spreadsheet.setHeader("NÂº Mec");
 	spreadsheet.setHeader("Telefone");
 	spreadsheet.setHeader("Email");
-	spreadsheet.setHeader("Comentários por fazer");
-	spreadsheet.setHeader("Inquérito por responder");
+	spreadsheet.setHeader("ComentÃ¡rios por fazer");
+	spreadsheet.setHeader("InquÃ©rito por responder");
 	spreadsheet.setHeader("Disciplinas");
 
 	for (RegentBean regentBean : regentsList) {
@@ -129,8 +129,8 @@ public class ViewQucRegentsStatus extends FenixDispatchAction {
 		    .toString() : regentBean.getRegent().getUsername());
 	    row.setCell(regentBean.getRegent().getDefaultMobilePhoneNumber());
 	    row.setCell(regentBean.getRegent().getDefaultEmailAddressValue());
-	    row.setCell(regentBean.isCommentsToMake() ? "Sim" : "Não");
-	    row.setCell(regentBean.isInquiryToAnswer() ? "Sim" : "Não");
+	    row.setCell(regentBean.isCommentsToMake() ? "Sim" : "NÃ£o");
+	    row.setCell(regentBean.isInquiryToAnswer() ? "Sim" : "NÃ£o");
 	    StringBuilder sb = new StringBuilder();
 	    for (ExecutionCourse executionCourse : regentBean.getOrderedCoursesToComment()) {
 		sb.append(executionCourse.getName()).append(", ");

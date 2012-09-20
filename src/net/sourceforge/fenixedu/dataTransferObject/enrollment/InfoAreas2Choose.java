@@ -10,7 +10,7 @@ import java.util.List;
 import net.sourceforge.fenixedu.dataTransferObject.DataTranferObject;
 
 /**
- * @author Jo„o Mota
+ * @author Jo√£o Mota
  * 
  */
 public class InfoAreas2Choose extends DataTranferObject implements Serializable {

@@ -62,7 +62,7 @@
 			<fr:layout name="tabular">
 				<fr:property name="classes" value="tstyle2 thlight tdcenter mtop05"/>
 				<fr:property name="columnClasses" value="width250px aleft nowrap,,,"/>
-				<fr:property name="suffixes" value=",บ ano,บ sem"/>
+				<fr:property name="suffixes" value=",ยบ ano,ยบ sem"/>
 			</fr:layout>
 		</fr:view>
 	</logic:notEmpty>

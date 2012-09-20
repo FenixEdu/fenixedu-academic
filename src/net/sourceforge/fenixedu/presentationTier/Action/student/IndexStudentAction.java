@@ -25,7 +25,7 @@ import org.apache.struts.action.ActionMapping;
 import pt.ist.fenixWebFramework.security.UserView;
 
 /**
- * @author Jo„o Fialho & Rita Ferreira
+ * @author Jo√£o Fialho & Rita Ferreira
  * 
  * 
  */

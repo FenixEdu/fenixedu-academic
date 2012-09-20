@@ -4,7 +4,7 @@ import java.sql.Timestamp;
 
 /**
  * 
- * @author Fernanda QuitÈrio e Tania Pous„o
+ * @author Fernanda Quit√©rio e Tania Pous√£o
  */
 public class Regime {
     private int _codigoInterno;

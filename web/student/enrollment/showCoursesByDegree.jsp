@@ -30,12 +30,12 @@
 	</logic:messagesPresent>
 	
 
-	<p>Aqui pode, <strong>a título condicional</strong>, escolher disciplinas em que não se encontra inscrito curricularmente  mas nas quais pretende efectuar reserva de turma/turnos. Por exemplo, sobre as seguintes condições:</p>
+	<p>Aqui pode, <strong>a tÃ­tulo condicional</strong>, escolher disciplinas em que nÃ£o se encontra inscrito curricularmente  mas nas quais pretende efectuar reserva de turma/turnos. Por exemplo, sobre as seguintes condiÃ§Ãµes:</p>
 	
 	<ul style="margin-left: 4em">
 		<li>Alunos Externos</li>
 		<li>Melhorias de Nota</li>
-		<li>Alunos com processos de Equivalência em curso</li>
+		<li>Alunos com processos de EquivalÃªncia em curso</li>
 	</ul>
 
 	<ul>

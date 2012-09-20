@@ -6,7 +6,7 @@ import net.sourceforge.fenixedu.domain.person.RoleType;
 
 /*
  * 
- * @author Fernanda Quitério 23/Abr/2004
+ * @author Fernanda QuitÃ©rio 23/Abr/2004
  *  
  */
 public class WebSiteManagerAuthorizationFilter extends AuthorizationByRoleFilter {

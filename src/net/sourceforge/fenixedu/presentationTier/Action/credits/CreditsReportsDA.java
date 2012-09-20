@@ -54,7 +54,7 @@ public class CreditsReportsDA extends FenixDispatchAction {
 	    spreadsheet.addHeader("Disciplina", 5000);
 	    spreadsheet.addHeader("Cursos");
 	    spreadsheet.addHeader("Tipo");
-	    spreadsheet.addHeader("Tem Hor·rio");
+	    spreadsheet.addHeader("Tem Hor√°rio");
 	    for (CompetenceCourse competenceCourse : department.getDepartmentUnit().getCompetenceCourses()) {
 		for (ExecutionCourse executionCourse : competenceCourse
 			.getExecutionCoursesByExecutionPeriod(departmentCreditsBean.getExecutionSemester())) {

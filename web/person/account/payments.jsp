@@ -21,9 +21,9 @@
 	<bean:define id="affiliation" name="affiliation" type="net.sourceforge.fenixedu.domain.accounting.events.InstitutionAffiliationEvent"/>
 	<% if (affiliation.acceptedTermsAndConditions()) { %>
 
-			TODO : Acrescentar aqui tambÈm informaÁ„o sobre como pode ser usado o saldo... com o cart„o do ist ou cart„o do cidad„o
-			       possivelmente dar a opÁ„o ‡ pessoa de activar/desactivar cartıes...
-			       Pensar tambÈm em indicar os locais onde pode ser usado.
+			TODO : Acrescentar aqui tamb√©m informa√ß√£o sobre como pode ser usado o saldo... com o cart√£o do ist ou cart√£o do cidad√£o
+			       possivelmente dar a op√ß√£o √† pessoa de activar/desactivar cart√µes...
+			       Pensar tamb√©m em indicar os locais onde pode ser usado.
 
 			<bean:define id="person" name="affiliation" property="person" type="net.sourceforge.fenixedu.domain.Person"/>
 

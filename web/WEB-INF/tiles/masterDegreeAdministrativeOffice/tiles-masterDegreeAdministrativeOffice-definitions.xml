@@ -1,10 +1,10 @@
-<?xml version="1.0" encoding="ISO-8859-1"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE tiles-definitions PUBLIC "-//Apache Software Foundation//DTD Tiles Configuration 1.1//EN" "http://jakarta.apache.org/struts/dtds/tiles-config_1_1.dtd">
 <!-- Tiles definitions -->
 <tiles-definitions>
 	<definition name="definition.masterDegreeAdministrativeOffice.masterPage" extends="df.layout.two-column.posGrad">
-		<put name="title" value="Secretaria de Pós-Graduação"/>
-		<put name="serviceName" value="Secretaria de Pós-Graduação"/>
+		<put name="title" value="Secretaria de PÃ³s-GraduaÃ§Ã£o"/>
+		<put name="serviceName" value="Secretaria de PÃ³s-GraduaÃ§Ã£o"/>
 		<put name="navGeral" value="/masterDegreeAdministrativeOffice/commonNavGeralPosGraduacao.jsp"/>
 		<put name="navLocal" value="/masterDegreeAdministrativeOffice/pgMainMenu.jsp"/>
 		<put name="body-context" value="/commons/blank.jsp"/>

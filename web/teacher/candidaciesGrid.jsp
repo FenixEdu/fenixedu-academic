@@ -230,13 +230,13 @@
 										Detalhes
 									</th>
 									<th>
-										Nº
+										NÂº
 									</th>
 									<th>
 										Nome
 									</th>
 									<th>
-										Média
+										MÃ©dia
 									</th>
 									<th>
 										Cadeiras Feitas
@@ -248,7 +248,7 @@
 										E-Mail
 									</th>
 									<th>
-										Seminário
+										SeminÃ¡rio
 									</th>
 									<th>
 										Curso
@@ -263,7 +263,7 @@
 										Tema
 									</th>
 									<th>
-										Motivação
+										MotivaÃ§Ã£o
 									</th>
 									<th>
 										Caso 1
@@ -327,7 +327,7 @@
 											Sim
 										</logic:equal>
 										<logic:notEqual name="candidacy" property="approved" value="true">
-											Não
+											NÃ£o
 										</logic:notEqual>
 									</td>
 									<td>

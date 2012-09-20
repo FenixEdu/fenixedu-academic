@@ -89,7 +89,7 @@
             </td>
             <td nowrap class="formTD" align="left">
             	<html:select bundle="HTMLALT_RESOURCES" altKey="select.month" property="month">
-		            <option value="" selected="selected">[M�s]</option>
+		            <option value="" selected="selected">[Mï¿½s]</option>
 		            <html:options collection="<%= PresentationConstants.LABLELIST_MONTHSOFYEAR %>" property="value" labelProperty="label"/>
 	            </html:select>
             </td>
@@ -120,7 +120,7 @@
             </td>
             <td nowrap="nowrap" align="left">
             	<html:select bundle="HTMLALT_RESOURCES" altKey="select.season" property="season">
-                  	<option value="" selected="selected">[�poca]</option>           
+                  	<option value="" selected="selected">[Época]</option>           
 		            <html:options collection="<%= PresentationConstants.LABLELIST_SEASONS %>" property="value" labelProperty="label"/>                  	             
                 </html:select>
             </td>

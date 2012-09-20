@@ -126,7 +126,7 @@
     &lt;slot name=&quot;name&quot;&gt;
         &lt;validator class=&quot;pt.ist.fenixWebFramework.renderers.validators.RegexpValidator&quot;&gt;
             &lt;property name=&quot;regexp&quot; value=&quot;\p{Space}*[^ ]+\p{Space}+[^ ]+.*&quot;/&gt;
-            &lt;property name=&quot;message&quot; value=&quot;Escreva pelo menos o primeiro e último nome&quot;/&gt;
+            &lt;property name=&quot;message&quot; value=&quot;Escreva pelo menos o primeiro e Ãºltimo nome&quot;/&gt;
             &lt;property name=&quot;key&quot; value=&quot;false&quot;/&gt;
         &lt;/validator&gt;
         &lt;property name=&quot;size&quot; value=&quot;50&quot;/&gt;
@@ -252,7 +252,7 @@ public class RegexpValidator extends HtmlValidator {
     &lt;slot name=&quot;name&quot;&gt;
         &lt;validator class=&quot;pt.ist.fenixWebFramework.renderers.validators.RegexpValidator&quot;&gt;
             &lt;property name=&quot;regexp&quot; value=&quot;\p{Space}*[^ ]+\p{Space}+[^ ]+.*&quot;/&gt;
-            &lt;property name=&quot;message&quot; value=&quot;Escreva pelo menos o primeiro e último nome&quot;/&gt;
+            &lt;property name=&quot;message&quot; value=&quot;Escreva pelo menos o primeiro e Ãºltimo nome&quot;/&gt;
             &lt;property name=&quot;key&quot; value=&quot;false&quot;/&gt;
         &lt;/validator&gt;
         &lt;property name=&quot;size&quot; value=&quot;50&quot;/&gt;

@@ -20,7 +20,7 @@
 	<em><bean:message key="title.masterDegree.administrativeOffice"/></em>
 	<h2><bean:message name="title"/></h2>
 	
-    	<p class="mtop15"><b>Critérios de procura:</b>
+    	<p class="mtop15"><b>CritÃ©rios de procura:</b>
     	<p><bean:write name="findQuery" filter="false"/></p>
 
     	<p class="mtop2 mbottom05">

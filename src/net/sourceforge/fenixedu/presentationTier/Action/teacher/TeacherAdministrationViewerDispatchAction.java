@@ -96,7 +96,7 @@ import pt.ist.fenixWebFramework.renderers.components.state.IViewState;
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 
 /**
- * @author Fernanda Quit�rio
+ * @author Fernanda Quitï¿½rio
  * @deprecated
  */
 @Deprecated
@@ -1327,7 +1327,7 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
 	enrolmentPolicyValues.add(new Integer(2));
 
 	List enrolmentPolicyNames = new ArrayList();
-	enrolmentPolicyNames.add("At�mica");
+	enrolmentPolicyNames.add("Atómica");
 	enrolmentPolicyNames.add("Individual");
 
 	enrolmentPolicyValues.remove(enrolmentPolicy.intValue() - 1);

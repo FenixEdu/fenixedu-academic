@@ -6,7 +6,7 @@
 <link href="<%= request.getContextPath() %>/CSS/quc_resume_boards.css" rel="stylesheet" type="text/css" />
 
 <bean:define id="executionDegree" name="executionDegree" type="net.sourceforge.fenixedu.domain.ExecutionDegree"/>
-<h3><bean:write name="executionDegree" property="degree.sigla"/> (<bean:write name="executionPeriod" property="semester"/>บ Semestre <bean:write name="executionPeriod" property="executionYear.year"/>)</h3>
+<h3><bean:write name="executionDegree" property="degree.sigla"/> (<bean:write name="executionPeriod" property="semester"/>ยบ Semestre <bean:write name="executionPeriod" property="executionYear.year"/>)</h3>
 
 <p><bean:message key="message.coordinator.resume.inquiry.begin" bundle="INQUIRIES_RESOURCES"/></p>
 
@@ -55,7 +55,7 @@
  --%>
  
 <logic:iterate id="entrySet" name="coursesResultResumeMap">
-	<p class="mtop15"><strong><bean:write name="entrySet" property="key"/>บ Ano</strong></p>
+	<p class="mtop15"><strong><bean:write name="entrySet" property="key"/>ยบ Ano</strong></p>
 	<fr:view name="entrySet" property="value">
 		<fr:layout name="coordinator-inquiry-resume">
 			<fr:property name="classes" value="coordinator-resume"/>

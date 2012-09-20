@@ -1,2 +1,2 @@
 <h2>Conselho Directivo</h2>
-<p>Bem vindo à área Conselho Directivo</p>
+<p>Bem vindo Ã  Ã¡rea Conselho Directivo</p>

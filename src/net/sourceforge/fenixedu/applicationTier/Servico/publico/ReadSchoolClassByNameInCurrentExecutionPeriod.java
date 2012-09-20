@@ -18,7 +18,7 @@ import org.apache.commons.collections.Predicate;
 import pt.ist.fenixWebFramework.services.Service;
 
 /**
- * @author Jo„o Mota
+ * @author Jo√£o Mota
  * 
  */
 public class ReadSchoolClassByNameInCurrentExecutionPeriod extends FenixService {

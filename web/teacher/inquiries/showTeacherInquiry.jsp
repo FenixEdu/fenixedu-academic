@@ -71,7 +71,7 @@ padding: 5px;
 
 	<p>
 		<em style="float: left;">
-			<bean:write name="executionPeriod" property="semester"/>บ Semestre - <bean:write name="executionPeriod" property="executionYear.year"/>
+			<bean:write name="executionPeriod" property="semester"/>ยบ Semestre - <bean:write name="executionPeriod" property="executionYear.year"/>
 		</em>
 	</p>
 	
@@ -80,7 +80,7 @@ padding: 5px;
 	<h1><bean:message key="title.inquiry.quc.teacher" bundle="INQUIRIES_RESOURCES"/></h1>
 	
 	<p><bean:write name="person" property="name"/> - <bean:write name="executionCourse" property="name"/> - <bean:write name="executionCourse" property="sigla"/>  
-	 (<bean:write name="executionPeriod" property="semester"/>บ Semestre <bean:write name="executionPeriod" property="executionYear.year"/>)</p>
+	 (<bean:write name="executionPeriod" property="semester"/>ยบ Semestre <bean:write name="executionPeriod" property="executionYear.year"/>)</p>
 	
 	<!-- Teacher Inquiry -->	
 	<logic:iterate id="inquiryBlockDTO" name="teacherInquiryBlocks">

@@ -41,7 +41,7 @@ public class InquiryCourseAnswer extends InquiryCourseAnswer_Base {
 	courseAnswer.setResponseDateTime(new DateTime());
 
 	courseAnswer.setNumberOfEnrolments(getNumberOfEnrolments(inquiryRegistry));
-	courseAnswer.setCommittedFraud(Boolean.FALSE);//TODO actualmente n„o existe registo desta info no fenix
+	courseAnswer.setCommittedFraud(Boolean.FALSE);//TODO actualmente n√£o existe registo desta info no fenix
 	courseAnswer.setStudentType(inquiryRegistry.getRegistration().getRegistrationAgreement());
 	courseAnswer.setEntryGrade(InquiryGradesInterval.getInterval(inquiryRegistry.getRegistration().getEntryGrade()));
 	courseAnswer.setGrade(inquiryRegistry.getLastGradeInterval());

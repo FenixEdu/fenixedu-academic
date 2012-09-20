@@ -47,7 +47,7 @@
 				</fr:layout>
 			</fr:view>
 			<em><bean:message key="message.check.personal.information.in.intranet" bundle="PHD_RESOURCES" /></em>
-			<a href="#" onclick="javascript:document.getElementById('skipValidationId').value='true';javascript:document.getElementById('methodForm').value='backToViewCandidacy';document.getElementById('editPersonalInformationForm').submit();">« <bean:message bundle="PHD_RESOURCES" key="label.back"/></a>
+			<a href="#" onclick="javascript:document.getElementById('skipValidationId').value='true';javascript:document.getElementById('methodForm').value='backToViewCandidacy';document.getElementById('editPersonalInformationForm').submit();">Â« <bean:message bundle="PHD_RESOURCES" key="label.back"/></a>
 		</logic:equal>
 	
 		<logic:equal name="canEditPersonalInformation" value="true">

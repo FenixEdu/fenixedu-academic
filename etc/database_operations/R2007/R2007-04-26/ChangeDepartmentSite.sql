@@ -45,7 +45,7 @@ UPDATE `ACCESSIBLE_ITEM` AS AI, `ACCESSIBLE_ITEM` AS F SET AI.`SECTION_ORDER` = 
 WHERE AI.`KEY_FUNCTIONALITY` = F.`ID_INTERNAL` AND F.`UUID` = '85372e2e-ffe0-48ff-a758-1017a11c797f';
 
 -- 
---  Change availability of "Anúncios" e "Eventos"
+--  Change availability of "AnÃºncios" e "Eventos"
 -- 
 
 --  ID: 26327 UUID: 'c113952d-6c49-44c0-b30b-d56ab1d2d047'

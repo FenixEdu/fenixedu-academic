@@ -36,7 +36,7 @@ public interface Rule {
 
     /**
      * Creates a new resource to be retrieved. This allows the rule to transform
-     * a url to match a local path and then scheduçe the retrieval of a resource
+     * a url to match a local path and then scheduÃ§e the retrieval of a resource
      * to that local path.
      * 
      * @param url

@@ -42,7 +42,7 @@
 										</logic:notEqual>
 										<bean:write name="executionDegree" property="degree.sigla"/>
 									</logic:iterate>)
-									»
+									Â»
 								</strong>
 							</html:link>
 						</p>

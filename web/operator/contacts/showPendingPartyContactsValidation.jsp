@@ -26,7 +26,7 @@
 	</logic:notEmpty>
 	
 	<logic:empty name="partyContacts">
-		Não existem pedidos pendentes de validação de moradas.
+		NÃ£o existem pedidos pendentes de validaÃ§Ã£o de moradas.
 	</logic:empty>
 	
 </logic:present>

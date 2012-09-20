@@ -45,7 +45,7 @@
 
 
 
-<p class="mtop2 mbottom1 bold">1) Informação Geral</p>
+<p class="mtop2 mbottom1 bold">1) InformaÃ§Ã£o Geral</p>
 
 <div class="dinline forminline">
 
@@ -97,7 +97,7 @@
 					</fr:layout>
 				</fr:edit>
 		
-				<p class="mtop2 mbottom1 bold">3) Objectivos, Programa e Metodologia de Avaliação em <b>Inglês</b></p>
+				<p class="mtop2 mbottom1 bold">3) Objectivos, Programa e Metodologia de AvaliaÃ§Ã£o em <b>InglÃªs</b></p>
 				<fr:edit id="en-part" name="bean"
 					schema="editCompetenceCourseInformation.en">
 					<fr:layout name="tabular">
@@ -107,7 +107,7 @@
 				</fr:edit>
 		
 		
-				<p class="mtop2 mbottom1 bold">4) Carga Horária</p>
+				<p class="mtop2 mbottom1 bold">4) Carga HorÃ¡ria</p>
 				<fr:edit id="editVersionLoad" name="beanLoad" visible="false" />
 				<fr:edit id="versionLoad" name="beanLoad" schema="<%= loadSchema  %>">
 					<fr:layout name="tabular">
@@ -145,7 +145,7 @@
 		<logic:equal name="proposal" value="true">
 			<logic:equal name="bean" property="competenceCourseDefinedForExecutionPeriod" value="true">
 				
-				<p class="mtop2 mbottom1 bold">2) Objectivos, Programa e Metodologia de Avaliação em <b>Português</b></p>
+				<p class="mtop2 mbottom1 bold">2) Objectivos, Programa e Metodologia de AvaliaÃ§Ã£o em <b>PortuguÃªs</b></p>
 	
 				<fr:edit id="pt-part" name="bean"
 					schema="editCompetenceCourseInformation.pt">
@@ -156,7 +156,7 @@
 				</fr:edit>
 	
 	
-				<p class="mtop2 mbottom1 bold">3) Objectivos, Programa e Metodologia de Avaliação em <b>Inglês</b></p>
+				<p class="mtop2 mbottom1 bold">3) Objectivos, Programa e Metodologia de AvaliaÃ§Ã£o em <b>InglÃªs</b></p>
 				<fr:edit id="en-part" name="bean"
 					schema="editCompetenceCourseInformation.en">
 					<fr:layout name="tabular">
@@ -166,7 +166,7 @@
 				</fr:edit>
 	
 	
-				<p class="mtop2 mbottom1 bold bold">4) Carga Horária</p>
+				<p class="mtop2 mbottom1 bold bold">4) Carga HorÃ¡ria</p>
 				<fr:edit id="editVersionLoad" name="beanLoad" visible="false" />
 				<fr:edit id="versionLoad" name="beanLoad" schema="<%= loadSchema  %>">
 					<fr:layout name="tabular">
@@ -200,7 +200,7 @@
 			</logic:equal>
 			<logic:equal name="bean" property="requestDraftAvailable" value="true">
 				
-				<p class="mtop2 mbottom1 bold">2) Objectivos, Programa e Metodologia de Avaliação em <b>Português</b></p>
+				<p class="mtop2 mbottom1 bold">2) Objectivos, Programa e Metodologia de AvaliaÃ§Ã£o em <b>PortuguÃªs</b></p>
 	
 				<fr:edit id="pt-part" name="bean"
 					schema="editCompetenceCourseInformation.pt">
@@ -211,7 +211,7 @@
 				</fr:edit>
 	
 	
-				<p class="mtop2 mbottom1 bold">3) Objectivos, Programa e Metodologia de Avaliação em <b>Inglês</b></p>
+				<p class="mtop2 mbottom1 bold">3) Objectivos, Programa e Metodologia de AvaliaÃ§Ã£o em <b>InglÃªs</b></p>
 				<fr:edit id="en-part" name="bean"
 					schema="editCompetenceCourseInformation.en">
 					<fr:layout name="tabular">
@@ -221,7 +221,7 @@
 				</fr:edit>
 	
 	
-				<p class="mtop2 mbottom1 bold bold">4) Carga Horária</p>
+				<p class="mtop2 mbottom1 bold bold">4) Carga HorÃ¡ria</p>
 				<fr:edit id="editVersionLoad" name="beanLoad" visible="false" />
 				<fr:edit id="versionLoad" name="beanLoad" schema="<%= loadSchema  %>">
 					<fr:layout name="tabular">

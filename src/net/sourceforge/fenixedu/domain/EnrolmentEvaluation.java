@@ -82,7 +82,7 @@ public class EnrolmentEvaluation extends EnrolmentEvaluation_Base implements Com
 	}
     };
 
-    private static final String RECTIFICATION = "RECTIFICA«√O";
+    private static final String RECTIFICATION = "RECTIFICA√á√ÉO";
 
     private static final String RECTIFIED = "RECTIFICADO";
 

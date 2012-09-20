@@ -88,10 +88,10 @@
 						<td><bean:write name="shift" property="shiftTypesCodePrettyPrint"/></td>
 						
 						<logic:notPresent role="SCIENTIFIC_COUNCIL">
-						<td colspan="6"> Não tem aulas </td>
+						<td colspan="6"> NÃ£o tem aulas </td>
 						</logic:notPresent>
 						<logic:present role="SCIENTIFIC_COUNCIL">
-							<td colspan="4"> Não tem aulas </td>
+							<td colspan="4"> NÃ£o tem aulas </td>
 							<td>
 								<logic:greaterThan name="availablePercentage" value="0">
 										<bean:define id="propertyName">

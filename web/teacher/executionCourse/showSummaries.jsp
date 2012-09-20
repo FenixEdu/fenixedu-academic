@@ -178,7 +178,7 @@
 					<bean:message key="button.edit" /> 
 				</html:link>				 
 				<img src="<%= request.getContextPath() %>/images/dotist_post.gif" alt="<bean:message key="dotist_post" bundle="IMAGE_RESOURCES" />" />
-				<html:link page="<%= deleteSummaryLink %>" onclick="return confirm('Tem a certeza que deseja apagar este sumário?')">
+				<html:link page="<%= deleteSummaryLink %>" onclick="return confirm('Tem a certeza que deseja apagar este sumÃ¡rio?')">
 					<bean:message key="button.delete" />
 				</html:link>
 			</div>

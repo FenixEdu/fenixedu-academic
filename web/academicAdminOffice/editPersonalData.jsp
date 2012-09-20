@@ -50,10 +50,10 @@
 	</p>
 	
 	<div class="infoop2 mtop2">
-		<p>A introduÁ„o de contactos no sistema FÈnix utiliza um mecanismo de validaÁ„o autom·tica.</p>
-		<p>A secretaria acadÈmica ao introduzir uma morada esta ficar· autom·ticamente validada no sistema.</p>
-		</p>Qualquer outro contacto (excepto homepages) necessitar· de validaÁ„o por parte do utilizador em quest„o.</p>
-		<p>O mesmo deve fazer login no sistema FÈnix e proceder ‡ sua validaÁ„o.</p> 
+		<p>A introdu√ß√£o de contactos no sistema F√©nix utiliza um mecanismo de valida√ß√£o autom√°tica.</p>
+		<p>A secretaria acad√©mica ao introduzir uma morada esta ficar√° autom√°ticamente validada no sistema.</p>
+		</p>Qualquer outro contacto (excepto homepages) necessitar√° de valida√ß√£o por parte do utilizador em quest√£o.</p>
+		<p>O mesmo deve fazer login no sistema F√©nix e proceder √† sua valida√ß√£o.</p> 
 	</p>	
 </div>
 	

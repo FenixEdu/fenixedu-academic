@@ -263,7 +263,7 @@
 		</li>
 		<li>
 			<html:link page="/teacherAuthorization.do?method=list">
-				Autorizações
+				AutorizaÃ§Ãµes
 			</html:link>		
 		</li>
 	</ul> 

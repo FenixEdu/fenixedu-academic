@@ -3,7 +3,7 @@ package net.sourceforge.fenixedu.dataTransferObject.credits;
 import net.sourceforge.fenixedu.dataTransferObject.DataTranferObject;
 
 /**
- * @author T‚nia Pous„o
+ * @author T√¢nia Pous√£o
  * 
  */
 public class InfoCredits extends DataTranferObject {

@@ -31,7 +31,7 @@
 				<% for(int i=1; i<=new Integer(questionNumber).intValue();i++ ){ 
 					out.write(new String("<th class='listClasses-header'><b>P"+i+"</b></th>"));				
 				} %>
-				<th class="listClasses-header"><b>Código Validação</b></th>
+				<th class="listClasses-header"><b>CÃ³digo ValidaÃ§Ã£o</b></th>
 			</tr>
 			</logic:equal>
 			<tr>

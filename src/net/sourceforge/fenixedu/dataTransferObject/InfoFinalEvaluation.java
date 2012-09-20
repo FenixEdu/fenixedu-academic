@@ -4,7 +4,7 @@ import net.sourceforge.fenixedu.domain.FinalEvaluation;
 import net.sourceforge.fenixedu.util.EvaluationType;
 
 /**
- * @author T‚nia Pous„o
+ * @author T√¢nia Pous√£o
  * 
  */
 public class InfoFinalEvaluation extends InfoEvaluation implements ISiteComponent {

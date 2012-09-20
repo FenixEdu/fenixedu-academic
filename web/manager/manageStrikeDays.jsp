@@ -23,7 +23,7 @@
 
 
 <html:link action="/manageStrikeDays.do?method=reportNow">
-	Gerar Estatísticas Agora!
+	Gerar EstatÃ­sticas Agora!
 </html:link>
 
 <br/>

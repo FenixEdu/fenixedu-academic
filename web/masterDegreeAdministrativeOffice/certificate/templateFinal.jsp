@@ -7,6 +7,6 @@
 <br />
 <br />
 <div align="right" style="margin-right: 100px; color: #000;">Dr. Nuno Riscado</div>
-<div align="right" style="margin-right: 100px; color: #000;">(Coordenador do Núcleo de Pós-Graduação e Formação Contínua)</div>
+<div align="right" style="margin-right: 100px; color: #000;">(Coordenador do NÃºcleo de PÃ³s-GraduaÃ§Ã£o e FormaÃ§Ã£o ContÃ­nua)</div>
 <br />
 <p><bean:write name="<%= PresentationConstants.DATE %>" /></p>

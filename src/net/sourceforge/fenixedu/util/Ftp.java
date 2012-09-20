@@ -13,7 +13,7 @@ import org.apache.commons.net.ftp.FTPClient;
 import org.apache.commons.net.ftp.FTPReply;
 
 /**
- * @author Fernanda Quitério 06/Out/2003
+ * @author Fernanda QuitÃ©rio 06/Out/2003
  */
 public class Ftp extends FenixUtil {
 

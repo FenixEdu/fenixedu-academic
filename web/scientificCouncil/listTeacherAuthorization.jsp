@@ -43,7 +43,7 @@
 	<bean:write name="auth" property="teacher.person.name"/>
 </td>
 <td>
-	<bean:write name="auth" property="executionSemester.executionYear.year"/> - <bean:write name="auth" property="executionSemester.semester"/>º semestre 
+	<bean:write name="auth" property="executionSemester.executionYear.year"/> - <bean:write name="auth" property="executionSemester.semester"/>Âº semestre 
 </td>
 <td>
 <logic:equal name="auth" property="active" value="true">
@@ -69,7 +69,7 @@
 		Sim
 	</logic:equal>
 	<logic:equal name="auth" property="canPark" value="false">
-		Não
+		NÃ£o
 	</logic:equal>
 	
 </td>

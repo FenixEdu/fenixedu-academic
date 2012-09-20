@@ -23,10 +23,10 @@
 					<span class="emphasis-box">info</span>
 				</td>
 				<td class="infoop">
-					<strong>Nota: 鐃? normal a exist鐃?ncia de dois planos curriculares para o mesmo curso.</strong><br/>
-					O plano curricular com a data mais antiga (ano da sua entrada no IST), contem o seu curr鐃?culo tal e qual como o pode visionar no ponto habitual acedido atrav鐃?s da p鐃?gina do IST.<br/>
-					O plano curricular com a data mais recente (este ano lectivo), contem o seu curr鐃?culo como se o tivesse iniciado este ano, ou seja, apenas com as disciplinas em que se encontra inscrito a partir deste ano lectivo.<br/>
-					A raz鐃?o desta separa鐃?鐃?o 鐃? dar a hip鐃?tese de verificar a correc鐃?鐃?o do seu curr鐃?culo passado para, mais tarde (e depois de ter a certeza de que est鐃? tudo em ordem), juntar toda a informa艫o num s鐃? plano curricular.
+					<strong>Nota: 誰多? normal a exist誰多?ncia de dois planos curriculares para o mesmo curso.</strong><br/>
+					O plano curricular com a data mais antiga (ano da sua entrada no IST), contem o seu curr誰多?culo tal e qual como o pode visionar no ponto habitual acedido atrav誰多?s da p誰多?gina do IST.<br/>
+					O plano curricular com a data mais recente (este ano lectivo), contem o seu curr誰多?culo como se o tivesse iniciado este ano, ou seja, apenas com as disciplinas em que se encontra inscrito a partir deste ano lectivo.<br/>
+					A raz誰多?o desta separa誰多?誰多?o 誰多? dar a hip誰多?tese de verificar a correc誰多?誰多?o do seu curr誰多?culo passado para, mais tarde (e depois de ter a certeza de que est誰多? tudo em ordem), juntar toda a informa巽達o num s誰多? plano curricular.
 				</td>
 			</tr>
 		</table>

@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * @author Jo„o Mota
+ * @author Jo√£o Mota
  */
 public class InfoAttendsSummary extends InfoObject implements Serializable {
 

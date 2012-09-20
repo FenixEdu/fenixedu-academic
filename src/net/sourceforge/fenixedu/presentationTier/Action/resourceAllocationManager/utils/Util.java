@@ -62,11 +62,11 @@ public class Util {
     public static List<LabelValueBean> getDaysOfWeek() {
 	List<LabelValueBean> weekDays = new ArrayList<LabelValueBean>();
 	weekDays.add(new LabelValueBean("segunda", (new Integer(DiaSemana.SEGUNDA_FEIRA)).toString()));
-	weekDays.add(new LabelValueBean("terÁa", (new Integer(DiaSemana.TERCA_FEIRA)).toString()));
+	weekDays.add(new LabelValueBean("ter√ßa", (new Integer(DiaSemana.TERCA_FEIRA)).toString()));
 	weekDays.add(new LabelValueBean("quarta", (new Integer(DiaSemana.QUARTA_FEIRA)).toString()));
 	weekDays.add(new LabelValueBean("quinta", (new Integer(DiaSemana.QUINTA_FEIRA)).toString()));
 	weekDays.add(new LabelValueBean("sexta", (new Integer(DiaSemana.SEXTA_FEIRA)).toString()));
-	weekDays.add(new LabelValueBean("s·bado", (new Integer(DiaSemana.SABADO)).toString()));
+	weekDays.add(new LabelValueBean("s√°bado", (new Integer(DiaSemana.SABADO)).toString()));
 
 	return weekDays;
     }
@@ -99,7 +99,7 @@ public class Util {
 
 	monthsOfYearList.add(new LabelValueBean("Janeiro", "" + Calendar.JANUARY));
 	monthsOfYearList.add(new LabelValueBean("Fevereiro", "" + Calendar.FEBRUARY));
-	monthsOfYearList.add(new LabelValueBean("MarÁo", "" + Calendar.MARCH));
+	monthsOfYearList.add(new LabelValueBean("Mar√ßo", "" + Calendar.MARCH));
 	monthsOfYearList.add(new LabelValueBean("Abril", "" + Calendar.APRIL));
 	monthsOfYearList.add(new LabelValueBean("Maio", "" + Calendar.MAY));
 	monthsOfYearList.add(new LabelValueBean("Junho", "" + Calendar.JUNE));

@@ -12,7 +12,7 @@ import net.sourceforge.fenixedu.domain.Exam;
 import net.sourceforge.fenixedu.domain.space.WrittenEvaluationSpaceOccupation;
 
 /**
- * @author T‚nia Pous„o
+ * @author T√¢nia Pous√£o
  * 
  */
 public class InfoExamWithRoomOccupations extends InfoExam {

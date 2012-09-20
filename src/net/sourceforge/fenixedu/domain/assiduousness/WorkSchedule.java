@@ -120,7 +120,7 @@ public class WorkSchedule extends WorkSchedule_Base {
 				lunch = lunch.plus(new TimeInterval(wsType.getMeal().getEndOfMealBreakMinusMealDiscount(),
 					lastClockingDate, false).getDuration());
 			    } else {
-				// j· fez mais de 1 hora
+				// j√° fez mais de 1 hora
 				lunch = Duration.ZERO;
 			    }
 

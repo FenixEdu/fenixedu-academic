@@ -6,7 +6,7 @@
 package net.sourceforge.fenixedu.presentationTier.Action.exceptions;
 
 /**
- * @author Jo„o Mota
+ * @author Jo√£o Mota
  */
 public class InvalidSessionActionException extends FenixActionException {
     public static String key = "error.invalid.session";

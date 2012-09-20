@@ -36,7 +36,7 @@ import org.apache.struts.util.LabelValueBean;
 import org.apache.struts.validator.DynaValidatorForm;
 
 /**
- * @author Fernanda Quitério 17/Dez/2003
+ * @author Fernanda QuitÃ©rio 17/Dez/2003
  * 
  */
 public class InsertExecutionCourseDispatchAction extends FenixDispatchAction {

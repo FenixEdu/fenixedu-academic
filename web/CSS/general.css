@@ -1,4 +1,4 @@
-/* general.css - 01.2006 by Jo�o Alfaiate @ Fenix */
+/* general.css - 01.2006 by João Alfaiate @ Fenix */
 
 /* File sections: Headings, Anchors, Show Info, Info Blocks, Lists, Tables, Tree, Feedback, Forms, Misc Classes, Specific, To Replace, To Organize, Old (general properties waiting to be merged) */
 
@@ -397,7 +397,7 @@ table.ulnomargin tr td ul li { margin: 0; padding: 0; }
 
 table.mtop05 { margin-top: 0.5em; }
 table.smallmargin td { padding: 0.25em; }
-	/* n�o funcionava com indent ou padding normal? testar*/
+	/* nï¿½o funcionava com indent ou padding normal? testar*/
 td.pleft1 { padding-left: 1em; }
 td.pleft2 { padding-left: 2em; }
 td.pleft3 { padding-left: 3em; }
@@ -1070,7 +1070,7 @@ border-width: 1px;
 border-color: #CCCCCC;
 }
 
-/* Vigil�ncia */
+/* Vigilï¿½ncia */
 .mvert15 { margin-top: 1.5em; margin-bottom: 1.5em; }
 .greytxt1 { color: #777; }
 .greytxt2 { color: #777; }
@@ -2305,7 +2305,7 @@ padding: 0 !important;
 width: 1%;
 }
 
-/* 01 C�digo e Disciplina */
+/* 01 Cï¿½digo e Disciplina */
 td.scplancolcurricularcourse {
 text-align: left !important;
 font-size: 1em !important;
@@ -2333,7 +2333,7 @@ td.scplancolweight { color: #888; }
 /* 08 ECTS */
 td.scplancolects { color: #888; }
 
-/* 09 �poca */
+/* 09 ï¿½poca */
 td.scplancolenrolmentevaluationtype { }
 td.scplancolenrolmentevaluationtype span { border-bottom: 1px dotted #777; }
 
@@ -2347,7 +2347,7 @@ td.scplancolsemester { white-space: nowrap; }
 td.scplancolexamdate { }
 td.scplancolexamdate span { border-bottom: 1px dotted #777; }
 
-/* 13 Pessoa Respons�vel Nota */
+/* 13 Pessoa Responsï¿½vel Nota */
 td.scplancolgraderesponsible { }
 td.scplancolgraderesponsible span { border-bottom: 1px dotted #777; }
 

@@ -25,7 +25,7 @@ public abstract class DgesBaseProcess extends DgesBaseProcess_Base {
     static {
 	// Contingente Geral
 	CONTINGENT_TO_INGRESSION_CONVERSION.put("1", Ingression.CNA01);
-	// Contingente Açores
+	// Contingente AÃ§ores
 	CONTINGENT_TO_INGRESSION_CONVERSION.put("2", Ingression.CNA02);
 	// Contingente Madeira
 	CONTINGENT_TO_INGRESSION_CONVERSION.put("3", Ingression.CNA03);

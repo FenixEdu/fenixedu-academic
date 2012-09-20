@@ -79,7 +79,7 @@ Calendar._SMN = new Array
 
 // tooltips
 Calendar._TT = {};
-Calendar._TT["INFO"] = "Acerca do calend·rio";
+Calendar._TT["INFO"] = "Acerca do calend√°rio";
 
 Calendar._TT["ABOUT"] =
 "DHTML Date/Time Selector\n" +

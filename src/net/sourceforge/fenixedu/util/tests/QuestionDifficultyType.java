@@ -26,7 +26,7 @@ public class QuestionDifficultyType extends FenixUtil {
 
     public static final int VERY_DIFFICULT = 5;
 
-    public static final String NOT_DEFINED_STRING = "Não definido";
+    public static final String NOT_DEFINED_STRING = "NÃ£o definido";
 
     public static final String VERY_EASY_STRING = "very easy";
 

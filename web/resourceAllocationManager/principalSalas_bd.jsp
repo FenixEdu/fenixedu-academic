@@ -7,7 +7,7 @@
 
 <h2><bean:message key="link.title.manage.rooms"/></h2>
 
-<p><bean:message key="link.message.manage.rooms.select.menu.option"/>Seleccione a opção pretendida no menu lateral para criar ou editar as características de uma sala.</p>
+<p><bean:message key="link.message.manage.rooms.select.menu.option"/>Seleccione a opÃ§Ã£o pretendida no menu lateral para criar ou editar as caracterÃ­sticas de uma sala.</p>
 <br/>
 
 <bean:define id="url" type="java.lang.String">/dumpRoomAllocation.do?method=firstPage</bean:define>

@@ -5,12 +5,12 @@
 
 <html:html xhtml="true">
     <head>
-        <title> Gestão Turmas </title>
+        <title> GestÃ£o Turmas </title>
     </head>
     <body>
         <jsp:include page="context.jsp"/><br/>
         <br/>
-        <center><font color='#034D7A' size='5'> <b> Gestão Turmas </b> </font></center>
+        <center><font color='#034D7A' size='5'> <b> GestÃ£o Turmas </b> </font></center>
         <br/>
         <br/>
         <table align="center" border="5" cellpadding='20' cellspacing='10''>

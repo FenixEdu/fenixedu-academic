@@ -37,7 +37,7 @@ overflow: hidden;
 <!-- START HEADER -->
     <div id="logoist">
         <h1><%= pt.ist.fenixWebFramework.servlets.filters.contentRewrite.RequestRewriter.HAS_CONTEXT_PREFIX %><a href="#">IAESTE</a></h1>
-        <!-- <img alt="[Logo] Instituto Superior Técnico" height="51" src="http://www.ist.utl.pt/img/wwwist.gif" width="234" /> -->
+        <!-- <img alt="[Logo] Instituto Superior TÃ©cnico" height="51" src="http://www.ist.utl.pt/img/wwwist.gif" width="234" /> -->
     </div>
 <!-- END HEADER -->
 <!--START MAIN CONTENT -->

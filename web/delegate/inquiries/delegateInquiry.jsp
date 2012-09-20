@@ -50,11 +50,11 @@ margin-top: 0;
 <h2><bean:message key="link.yearDelegateInquiries" bundle="DELEGATES_RESOURCES"/></h2>
 <h3 class="mtop15">
 <span class="highlight1"><bean:write name="delegateInquiryBean" property="executionCourse.name"/></span> - 
-<bean:write name="delegateInquiryBean" property="executionDegree.degree.sigla"/> (<bean:write name="executionPeriod" property="semester"/>º Semestre <bean:write name="executionPeriod" property="executionYear.year"/>)
+<bean:write name="delegateInquiryBean" property="executionDegree.degree.sigla"/> (<bean:write name="executionPeriod" property="semester"/>Âº Semestre <bean:write name="executionPeriod" property="executionYear.year"/>)
 </h3>
 <p>
-Por baixo de cada pergunta que teve um resultado "Inadequado" ou "a melhorar" está um espaço para colocares o motivo que te levou e aos teus colegas a assinalar o problema. 
-Sê o mais objectivo possível. O teu contributo é indispensável para os problemas serem resolvidos!
+Por baixo de cada pergunta que teve um resultado "Inadequado" ou "a melhorar" estÃ¡ um espaÃ§o para colocares o motivo que te levou e aos teus colegas a assinalar o problema. 
+SÃª o mais objectivo possÃ­vel. O teu contributo Ã© indispensÃ¡vel para os problemas serem resolvidos!
 </p>
 <div id="report">
 <fr:form action="/delegateInquiry.do?method=saveChanges">

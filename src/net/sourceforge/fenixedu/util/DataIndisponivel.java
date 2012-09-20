@@ -6,7 +6,7 @@ import java.util.Calendar;
 /**
  * Implementa um NullObject para representar uma data nao disponivel
  * 
- * @author Ivo Brand„o
+ * @author Ivo Brand√£o
  */
 public class DataIndisponivel extends java.util.Date implements Serializable {
 
@@ -26,7 +26,7 @@ public class DataIndisponivel extends java.util.Date implements Serializable {
     }
 
     /** mensagem a imprimir */
-    private static String mensagem = "Data IndisponÌvel";
+    private static String mensagem = "Data Indispon√≠vel";
 
     /** Creates a new instance of DataIndisponivel */
     public DataIndisponivel() {

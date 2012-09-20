@@ -7,7 +7,7 @@
 <%@ page import="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants" %>
 
 <em><bean:message key="title.resourceAllocationManager.management"/></em>
-<h2>Listagem de Hor·rios por Salas</h2>
+<h2>Listagem de Hor√°rios por Salas</h2>
 
 <p>
 	<span class="error"><!-- Error messages go here --><html:errors /></span>

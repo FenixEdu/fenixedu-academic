@@ -121,42 +121,42 @@ public class RaidesPhdReportFile extends RaidesPhdReportFile_Base {
     private void fillSpreadsheet(Spreadsheet spreadsheet) {
 	spreadsheet.setHeader("Matriculado de acordo com o plano de estudos?");
 	spreadsheet.setHeader("ciclo");
-	spreadsheet.setHeader("concluído (ano anterior)?");
-	spreadsheet.setHeader("média do ciclo");
-	spreadsheet.setHeader("Data de conclusão");
-	spreadsheet.setHeader("Data de Início");
-	spreadsheet.setHeader("número aluno");
-	spreadsheet.setHeader("tipo identificação");
-	spreadsheet.setHeader("número identificação");
+	spreadsheet.setHeader("concluÃ­do (ano anterior)?");
+	spreadsheet.setHeader("mÃ©dia do ciclo");
+	spreadsheet.setHeader("Data de conclusÃ£o");
+	spreadsheet.setHeader("Data de InÃ­cio");
+	spreadsheet.setHeader("nÃºmero aluno");
+	spreadsheet.setHeader("tipo identificaÃ§Ã£o");
+	spreadsheet.setHeader("nÃºmero identificaÃ§Ã£o");
 	spreadsheet.setHeader("digitos controlo");
-	spreadsheet.setHeader("versão doc identificação");
+	spreadsheet.setHeader("versÃ£o doc identificaÃ§Ã£o");
 	spreadsheet.setHeader("nome");
-	spreadsheet.setHeader("género");
+	spreadsheet.setHeader("gÃ©nero");
 	spreadsheet.setHeader("data nascimento");
-	spreadsheet.setHeader("país nascimento");
-	spreadsheet.setHeader("país nacionalidade");
+	spreadsheet.setHeader("paÃ­s nascimento");
+	spreadsheet.setHeader("paÃ­s nacionalidade");
 	spreadsheet.setHeader("sigla programa doutoral");
 	spreadsheet.setHeader("programa doutoral");
 	spreadsheet.setHeader("tipo curso");
 	spreadsheet.setHeader("nome curso");
 	spreadsheet.setHeader("sigla curso");
 	spreadsheet.setHeader("ramo");
-	spreadsheet.setHeader("nº. anos lectivos inscrição curso actual");
-	spreadsheet.setHeader("Último ano inscrito neste curso");
+	spreadsheet.setHeader("nÂº. anos lectivos inscriÃ§Ã£o curso actual");
+	spreadsheet.setHeader("Ãšltimo ano inscrito neste curso");
 	spreadsheet.setHeader("estabelecimento habl anterior compl");
 	spreadsheet.setHeader("curso habl anterior compl");
 	spreadsheet.setHeader("estado civil");
-	spreadsheet.setHeader("país residência permanente");
-	spreadsheet.setHeader("distrito residência permanente");
-	spreadsheet.setHeader("concelho residência permanente");
-	spreadsheet.setHeader("deslocado residência permanente");
-	spreadsheet.setHeader("nível escolaridade pai");
-	spreadsheet.setHeader("nível escolaridade mãe");
-	spreadsheet.setHeader("condição perante profissão pai");
-	spreadsheet.setHeader("condição perante profissão mãe");
-	spreadsheet.setHeader("profissão pai");
-	spreadsheet.setHeader("profissão mãe");
-	spreadsheet.setHeader("profissão aluno");
+	spreadsheet.setHeader("paÃ­s residÃªncia permanente");
+	spreadsheet.setHeader("distrito residÃªncia permanente");
+	spreadsheet.setHeader("concelho residÃªncia permanente");
+	spreadsheet.setHeader("deslocado residÃªncia permanente");
+	spreadsheet.setHeader("nÃ­vel escolaridade pai");
+	spreadsheet.setHeader("nÃ­vel escolaridade mÃ£e");
+	spreadsheet.setHeader("condiÃ§Ã£o perante profissÃ£o pai");
+	spreadsheet.setHeader("condiÃ§Ã£o perante profissÃ£o mÃ£e");
+	spreadsheet.setHeader("profissÃ£o pai");
+	spreadsheet.setHeader("profissÃ£o mÃ£e");
+	spreadsheet.setHeader("profissÃ£o aluno");
 	spreadsheet.setHeader("Data preenchimento dados RAIDES");
 	spreadsheet.setHeader("estatuto trabalhador estudante introduzido (info. RAIDES)");
 	spreadsheet.setHeader("bolseiro (info. RAIDES)");
@@ -164,23 +164,23 @@ public class RaidesPhdReportFile extends RaidesPhdReportFile_Base {
 	spreadsheet.setHeader("Grau Precedente");
 	spreadsheet.setHeader("grau habl anterior compl");
 	spreadsheet.setHeader("outro grau habl anterior compl");
-	spreadsheet.setHeader("país habilitação anterior");
-	spreadsheet.setHeader("ano de conclusão da habilitação anterior");
-	spreadsheet.setHeader("nota da habilitação anterior");
-	spreadsheet.setHeader("Nº inscrições no curso preced.");
-	spreadsheet.setHeader("Duração programa mobilidade");
-	spreadsheet.setHeader("tipo estabelecimento ensino secundário");
+	spreadsheet.setHeader("paÃ­s habilitaÃ§Ã£o anterior");
+	spreadsheet.setHeader("ano de conclusÃ£o da habilitaÃ§Ã£o anterior");
+	spreadsheet.setHeader("nota da habilitaÃ§Ã£o anterior");
+	spreadsheet.setHeader("NÂº inscriÃ§Ãµes no curso preced.");
+	spreadsheet.setHeader("DuraÃ§Ã£o programa mobilidade");
+	spreadsheet.setHeader("tipo estabelecimento ensino secundÃ¡rio");
 	spreadsheet.setHeader("total ECTS inscritos no ano");
-	spreadsheet.setHeader("total ECTS concluídos fim ano lectivo anterior (1º Semestre do ano lectivo actual)");
-	spreadsheet.setHeader("total ECTS equivalência/substituição/dispensa");
-	spreadsheet.setHeader("total ECTS necessários para a conclusão");
+	spreadsheet.setHeader("total ECTS concluÃ­dos fim ano lectivo anterior (1Âº Semestre do ano lectivo actual)");
+	spreadsheet.setHeader("total ECTS equivalÃªncia/substituiÃ§Ã£o/dispensa");
+	spreadsheet.setHeader("total ECTS necessÃ¡rios para a conclusÃ£o");
 	spreadsheet.setHeader("doutoramento: inscrito parte curricular");
-	spreadsheet.setHeader("nº doutoramento");
+	spreadsheet.setHeader("nÂº doutoramento");
 	spreadsheet.setHeader("istId orientadores");
 	spreadsheet.setHeader("estado processo doutoramento");
 	spreadsheet.setHeader("Ambito");
 	spreadsheet.setHeader("data de candidatura");
-	spreadsheet.setHeader("data de homologação");
+	spreadsheet.setHeader("data de homologaÃ§Ã£o");
 	spreadsheet.setHeader("data de inicio dos estudos");
 	spreadsheet.setHeader("data e hora da prova");
 	spreadsheet.setHeader("tipo de acordo");
@@ -211,10 +211,10 @@ public class RaidesPhdReportFile extends RaidesPhdReportFile_Base {
 	// Ciclo
 	row.setCell(CycleType.THIRD_CYCLE.getDescription());
 
-	// Concluído
+	// ConcluÃ­do
 	row.setCell(String.valueOf(process.isConcluded()));
 
-	// Média do Ciclo
+	// MÃ©dia do Ciclo
 	String grade = concluded ? process.getFinalGrade().getLocalizedName() : "n/a";
 	if (concluded && registration != null && registration.isConcluded()) {
 	    grade += " "
@@ -223,25 +223,25 @@ public class RaidesPhdReportFile extends RaidesPhdReportFile_Base {
 	}
 	row.setCell(grade);
 
-	// Data de conclusão
+	// Data de conclusÃ£o
 	row.setCell(conclusionDate != null ? conclusionDate.toString("dd-MM-yyyy") : "");
 
-	// Data de Início
+	// Data de InÃ­cio
 	row.setCell(process.getCandidacyDate().toString("dd-MM-yyyy"));
 
-	// Nº de aluno
+	// NÂº de aluno
 	row.setCell(process.getStudent().getNumber());
 
-	// Tipo Identificação
+	// Tipo IdentificaÃ§Ã£o
 	row.setCell(graduate.getIdDocumentType().getLocalizedName());
 
-	// Nº de Identificação
+	// NÂº de IdentificaÃ§Ã£o
 	row.setCell(graduate.getDocumentIdNumber());
 
-	// Dígitos de Controlo
+	// DÃ­gitos de Controlo
 	row.setCell(graduate.getIdentificationDocumentExtraDigitValue());
 
-	// Versão Doc. Identificação
+	// VersÃ£o Doc. IdentificaÃ§Ã£o
 	row.setCell(graduate.getIdentificationDocumentSeriesNumberValue());
 
 	// Nome
@@ -254,10 +254,10 @@ public class RaidesPhdReportFile extends RaidesPhdReportFile_Base {
 	row.setCell(graduate.getDateOfBirthYearMonthDay() != null ? graduate.getDateOfBirthYearMonthDay().toString("dd-MM-yyyy")
 		: "n/a");
 
-	// País de Nascimento
+	// PaÃ­s de Nascimento
 	row.setCell(graduate.getCountryOfBirth() != null ? graduate.getCountryOfBirth().getName() : "n/a");
 
-	// País de Nacionalidade
+	// PaÃ­s de Nacionalidade
 	row.setCell(graduate.getCountry() != null ? graduate.getCountry().getName() : "n/a");
 
 	// Sigla programa doutoral
@@ -276,13 +276,13 @@ public class RaidesPhdReportFile extends RaidesPhdReportFile_Base {
 	row.setCell(registration != null ? registration.getDegree().getSigla() : "n/a");
 
 	// Ramo (caso se aplique)
-	row.setCell("não determinável");
+	row.setCell("nÃ£o determinÃ¡vel");
 
 	if (registration != null) {
-	    // Nº de anos lectivos de inscrição no Curso actual
+	    // NÂº de anos lectivos de inscriÃ§Ã£o no Curso actual
 	    row.setCell(calculateNumberOfEnrolmentYears(registration));
 
-	    // Último ano em que esteve inscrito
+	    // Ãšltimo ano em que esteve inscrito
 	    row.setCell(registration.getLastEnrolmentExecutionYear() != null ? registration.getLastEnrolmentExecutionYear()
 		    .getName() : "");
 	} else {
@@ -302,7 +302,7 @@ public class RaidesPhdReportFile extends RaidesPhdReportFile_Base {
 	row.setCell(personalInformationBean.getMaritalStatus() != null ? personalInformationBean.getMaritalStatus().toString()
 		: process.getPerson().getMaritalStatus().toString());
 
-	// País de Residência Permanente
+	// PaÃ­s de ResidÃªncia Permanente
 	if (personalInformationBean.getCountryOfResidence() != null) {
 	    row.setCell(personalInformationBean.getCountryOfResidence().getName());
 	} else {
@@ -310,70 +310,70 @@ public class RaidesPhdReportFile extends RaidesPhdReportFile_Base {
 		    .getCountryOfResidence().getName() : "");
 	}
 
-	// Distrito de Residência Permanente
+	// Distrito de ResidÃªncia Permanente
 	if (personalInformationBean.getDistrictSubdivisionOfResidence() != null) {
 	    row.setCell(personalInformationBean.getDistrictSubdivisionOfResidence().getDistrict().getName());
 	} else {
 	    row.setCell(process.getStudent().getPerson().getDistrictOfResidence());
 	}
 
-	// Concelho de Residência Permanente
+	// Concelho de ResidÃªncia Permanente
 	if (personalInformationBean.getDistrictSubdivisionOfResidence() != null) {
 	    row.setCell(personalInformationBean.getDistrictSubdivisionOfResidence().getName());
 	} else {
 	    row.setCell(process.getStudent().getPerson().getDistrictSubdivisionOfResidence());
 	}
 
-	// Deslocado da Residência Permanente
+	// Deslocado da ResidÃªncia Permanente
 	if (personalInformationBean.getDislocatedFromPermanentResidence() != null) {
 	    row.setCell(personalInformationBean.getDislocatedFromPermanentResidence().toString());
 	} else {
 	    row.setCell("");
 	}
 
-	// Nível de Escolaridade do Pai
+	// NÃ­vel de Escolaridade do Pai
 	if (personalInformationBean.getFatherSchoolLevel() != null) {
 	    row.setCell(personalInformationBean.getFatherSchoolLevel().getName());
 	} else {
 	    row.setCell("");
 	}
 
-	// Nível de Escolaridade da Mãe
+	// NÃ­vel de Escolaridade da MÃ£e
 	if (personalInformationBean.getMotherSchoolLevel() != null) {
 	    row.setCell(personalInformationBean.getMotherSchoolLevel().getName());
 	} else {
 	    row.setCell("");
 	}
 
-	// Condição perante a situação na profissão/Ocupação do Pai
+	// CondiÃ§Ã£o perante a situaÃ§Ã£o na profissÃ£o/OcupaÃ§Ã£o do Pai
 	if (personalInformationBean.getFatherProfessionalCondition() != null) {
 	    row.setCell(personalInformationBean.getFatherProfessionalCondition().getName());
 	} else {
 	    row.setCell("");
 	}
 
-	// Condição perante a situação na profissão/Ocupação da Mãe
+	// CondiÃ§Ã£o perante a situaÃ§Ã£o na profissÃ£o/OcupaÃ§Ã£o da MÃ£e
 	if (personalInformationBean.getMotherProfessionalCondition() != null) {
 	    row.setCell(personalInformationBean.getMotherProfessionalCondition().getName());
 	} else {
 	    row.setCell("");
 	}
 
-	// Profissão do Pai
+	// ProfissÃ£o do Pai
 	if (personalInformationBean.getFatherProfessionType() != null) {
 	    row.setCell(personalInformationBean.getFatherProfessionType().getName());
 	} else {
 	    row.setCell("");
 	}
 
-	// Profissão da Mãe
+	// ProfissÃ£o da MÃ£e
 	if (personalInformationBean.getMotherProfessionType() != null) {
 	    row.setCell(personalInformationBean.getMotherProfessionType().getName());
 	} else {
 	    row.setCell("");
 	}
 
-	// Profissão do Aluno
+	// ProfissÃ£o do Aluno
 	if (personalInformationBean.getProfessionType() != null) {
 	    row.setCell(personalInformationBean.getProfessionType().getName());
 	} else {
@@ -423,25 +423,25 @@ public class RaidesPhdReportFile extends RaidesPhdReportFile_Base {
 	// outro grau habl anterior compl
 	row.setCell(personalInformationBean.getOtherSchoolLevel() != null ? personalInformationBean.getOtherSchoolLevel() : "");
 
-	// País de Habilitação Anterior Completa
+	// PaÃ­s de HabilitaÃ§Ã£o Anterior Completa
 	row.setCell(personalInformationBean.getCountryWhereFinishedPreviousCompleteDegree() != null ? personalInformationBean
 		.getCountryWhereFinishedPreviousCompleteDegree().getName() : "");
 
-	// Ano de conclusão da habilitação anterior completa
+	// Ano de conclusÃ£o da habilitaÃ§Ã£o anterior completa
 	row.setCell(personalInformationBean.getConclusionYear());
 
-	// Nota de conclusão da habilitação anterior completa
+	// Nota de conclusÃ£o da habilitaÃ§Ã£o anterior completa
 	row.setCell(personalInformationBean.getConclusionGrade() != null ? personalInformationBean.getConclusionGrade() : "");
 
-	// Nº inscrições no curso preced. (conta uma por cada ano)
+	// NÂº inscriÃ§Ãµes no curso preced. (conta uma por cada ano)
 	row.setCell(personalInformationBean.getNumberOfPreviousYearEnrolmentsInPrecedentDegree() != null ? personalInformationBean
 		.getNumberOfPreviousYearEnrolmentsInPrecedentDegree().toString() : "");
 
-	// Duração do programa de mobilidade
+	// DuraÃ§Ã£o do programa de mobilidade
 	row.setCell(personalInformationBean.getMobilityProgramDuration() != null ? BundleUtil.getEnumName(personalInformationBean
 		.getMobilityProgramDuration()) : "");
 
-	// Tipo de Estabelecimento Frequentado no Ensino Secundário
+	// Tipo de Estabelecimento Frequentado no Ensino SecundÃ¡rio
 	if (personalInformationBean.getHighSchoolType() != null) {
 	    row.setCell(personalInformationBean.getHighSchoolType().getName());
 	} else {
@@ -458,9 +458,9 @@ public class RaidesPhdReportFile extends RaidesPhdReportFile_Base {
 	    }
 	    row.setCell(totalCreditsEnrolled);
 
-	    // Total de ECTS concluídos até ao fim do ano lectivo anterior (1º
+	    // Total de ECTS concluÃ­dos atÃ© ao fim do ano lectivo anterior (1Âº
 	    // Semestre do ano lectivo actual) ao que se
-	    // referem os dados (neste caso até ao fim de 2008) no curso actual
+	    // referem os dados (neste caso atÃ© ao fim de 2008) no curso actual
 	    for (final CycleCurriculumGroup cycleCurriculumGroup : registration.getLastStudentCurricularPlan()
 		    .getInternalCycleCurriculumGrops()) {
 
@@ -470,7 +470,7 @@ public class RaidesPhdReportFile extends RaidesPhdReportFile_Base {
 	    }
 	    row.setCell(totalEctsConcludedUntilPreviousYear);
 
-	    // Nº ECTS equivalência/substituição/dispensa
+	    // NÂº ECTS equivalÃªncia/substituiÃ§Ã£o/dispensa
 	    double totalCreditsDismissed = 0d;
 	    for (Credits credits : registration.getLastStudentCurricularPlan().getCredits()) {
 		if (credits.isEquivalence()) {
@@ -486,7 +486,7 @@ public class RaidesPhdReportFile extends RaidesPhdReportFile_Base {
 	}
 
 	if (registration != null) {
-	    // Total de ECTS necessários para a conclusão
+	    // Total de ECTS necessÃ¡rios para a conclusÃ£o
 	    if (concluded) {
 		row.setCell(0);
 	    } else {

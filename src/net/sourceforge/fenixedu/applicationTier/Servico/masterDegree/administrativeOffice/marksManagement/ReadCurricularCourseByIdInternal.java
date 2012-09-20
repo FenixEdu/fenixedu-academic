@@ -7,7 +7,7 @@ import net.sourceforge.fenixedu.domain.CurricularCourse;
 import pt.ist.fenixWebFramework.services.Service;
 
 /**
- * @author Fernanda Quitério 01/07/2003
+ * @author Fernanda QuitÃ©rio 01/07/2003
  * 
  */
 public class ReadCurricularCourseByIdInternal extends FenixService {

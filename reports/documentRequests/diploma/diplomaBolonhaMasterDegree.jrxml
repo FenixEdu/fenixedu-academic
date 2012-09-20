@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="ISO-8859-1"  ?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with iReport - A designer for JasperReports -->
 <!DOCTYPE jasperReport PUBLIC "//JasperReports//DTD Report Design//EN" "http://jasperreports.sourceforge.net/dtds/jasperreport.dtd">
 <jasperReport
@@ -18,7 +18,7 @@
 		 isTitleNewPage="false"
 		 isSummaryNewPage="false">
 	<property name="ireport.scriptlethandling" value="0" />
-	<property name="ireport.encoding" value="ISO-8859-1" />
+	<property name="ireport.encoding" value="UTF-8" />
 	<import value="java.util.*" />
 	<import value="net.sf.jasperreports.engine.*" />
 	<import value="net.sf.jasperreports.engine.data.*" />
@@ -233,7 +233,7 @@
 					<textElement textAlignment="Center" lineSpacing="Single">
 						<font fontName="Quadraat-Italic" pdfFontName="QUAD____.ttf" size="9" isBold="false" isItalic="false" isPdfEmbedded ="true"/>
 					</textElement>
-				<text><![CDATA[e submetido para discussão a dissertação com o título]]></text>
+				<text><![CDATA[e submetido para discussÃ£o a dissertaÃ§Ã£o com o tÃ­tulo]]></text>
 				</staticText>
 				<textField isStretchWithOverflow="true" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
@@ -341,7 +341,7 @@
 					<textElement textAlignment="Center" lineSpacing="Single">
 						<font fontName="Quadraat-Italic" pdfFontName="QUAD____.ttf" size="9" isBold="false" isItalic="false" isPdfEmbedded ="true"/>
 					</textElement>
-				<text><![CDATA[pelo que, em conformidade com as disposições legais em vigor,
+				<text><![CDATA[pelo que, em conformidade com as disposiÃ§Ãµes legais em vigor,
 lhe manda passar a presente carta de curso.]]></text>
 				</staticText>
 				<textField isStretchWithOverflow="true" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
@@ -438,7 +438,7 @@ lhe manda passar a presente carta de curso.]]></text>
 					<textElement textAlignment="Left" verticalAlignment="Top" lineSpacing="Single">
 						<font fontName="Quadraat-Regular" pdfFontName="QUAD____.ttf" size="8" isBold="false" isItalic="false" isPdfEmbedded ="true"/>
 					</textElement>
-				<text><![CDATA[O Presidente do Instituto Superior Técnico]]></text>
+				<text><![CDATA[O Presidente do Instituto Superior TÃ©cnico]]></text>
 				</staticText>
 				<staticText>
 					<reportElement
@@ -456,7 +456,7 @@ lhe manda passar a presente carta de curso.]]></text>
 					<textElement textAlignment="Center" lineSpacing="Single">
 						<font fontName="Quadraat-Italic" pdfFontName="QUAD____.ttf" size="9" isBold="false" isItalic="false" isPdfEmbedded ="true"/>
 					</textElement>
-				<text><![CDATA[com a qualificação de]]></text>
+				<text><![CDATA[com a qualificaÃ§Ã£o de]]></text>
 				</staticText>
 				<textField isStretchWithOverflow="true" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
@@ -524,7 +524,7 @@ lhe manda passar a presente carta de curso.]]></text>
 					<textElement textAlignment="Left">
 						<font/>
 					</textElement>
-				<textFieldExpression   class="java.lang.String"><![CDATA["número de registo: " + $P{registryCode}]]></textFieldExpression>
+				<textFieldExpression   class="java.lang.String"><![CDATA["nÃºmero de registo: " + $P{registryCode}]]></textFieldExpression>
 				</textField>
 			</band>
 		</lastPageFooter>

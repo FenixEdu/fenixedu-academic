@@ -70,7 +70,7 @@
 <p>
 	<bean:message key="message.phd.institution.application.unable.to.pay.with.sibs" bundle="PHD_RESOURCES" />:
 	<ul>
-		<li><bean:message key="message.phd.institution.application.unable.to.pay.with.sibs.bank.transfer.bankName" bundle="PHD_RESOURCES" />: CAIXA GERAL DE DEPÓSITOS</li>
+		<li><bean:message key="message.phd.institution.application.unable.to.pay.with.sibs.bank.transfer.bankName" bundle="PHD_RESOURCES" />: CAIXA GERAL DE DEPÃ“SITOS</li>
 		<li><bean:message key="message.phd.institution.application.unable.to.pay.with.sibs.bank.transfer.swift" bundle="PHD_RESOURCES" />: CGDIPTPL</li>
 		<li><bean:message key="message.phd.institution.application.unable.to.pay.with.sibs.bank.transfer.nib" bundle="PHD_RESOURCES" />: 003503730000914273075</li>
 		<li><bean:message key="message.phd.institution.application.unable.to.pay.with.sibs.bank.transfer.iban" bundle="PHD_RESOURCES" />: PT50003503730000914273075</li>

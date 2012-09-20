@@ -1,10 +1,10 @@
-<?xml version="1.0" encoding="ISO-8859-1"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <project basedir="." default="check-duplicate-code" name="Code Analysis Tools">
 
 	<taskdef resource="simiantask.properties" classpath="simian.jar"/>
 
     <property environment="env"/>
-	<property name="encoding" value="ISO-8859-1"/>	
+	<property name="encoding" value="UTF-8"/>	
 
     <property name="src" location="src"/>
     <property name="src_tools" location="src_tools"/>

@@ -75,7 +75,7 @@
 	
 
 	<p><b>Deve optar por:</b></p>
-	<p  class="mbottom05">a) Filtrar as listas por "Data Início/Fim"</p>
+	<p  class="mbottom05">a) Filtrar as listas por "Data InÃ­cio/Fim"</p>
 
 	<table class="tstyle5 thlight thright thmiddle mtop05">
 		<tr>

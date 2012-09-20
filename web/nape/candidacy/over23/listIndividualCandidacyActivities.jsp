@@ -13,7 +13,7 @@
 </logic:notEmpty>
 
 <html:link action='<%= "/caseHandling" + processName.toString() + ".do?method=listProcesses&amp;parentProcessId=" + parentProcessId.toString() %>'>
-	« <bean:message key="label.back" bundle="APPLICATION_RESOURCES"/>	
+	Â« <bean:message key="label.back" bundle="APPLICATION_RESOURCES"/>	
 </html:link>
 <br/>
 

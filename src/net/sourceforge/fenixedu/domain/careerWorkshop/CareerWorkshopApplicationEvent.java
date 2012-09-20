@@ -103,9 +103,9 @@ public class CareerWorkshopApplicationEvent extends CareerWorkshopApplicationEve
 		int[] themePreferences = item.getThemePreferences();
 		CareerWorkshopThemes[] themesList = CareerWorkshopThemes.values();
 
-		addCell("Data de inscrição", timestamp.toString("dd-MM-yyyy"));
-		addCell("Hora de inscrição", timestamp.toString("HH:mm"));
-		addCell("Número aluno", item.getStudent().getNumber());
+		addCell("Data de inscriÃ§Ã£o", timestamp.toString("dd-MM-yyyy"));
+		addCell("Hora de inscriÃ§Ã£o", timestamp.toString("HH:mm"));
+		addCell("NÃºmero aluno", item.getStudent().getNumber());
 		addCell("Nome", item.getStudent().getName());
 		addCell("Email", item.getStudent().getPerson().getDefaultEmailAddressValue());
 		addCell("Curso", reg.getDegree().getSigla());
@@ -116,7 +116,7 @@ public class CareerWorkshopApplicationEvent extends CareerWorkshopApplicationEve
 		} else {
 		    addCell("Ano Curricular", "--");
 		}
-		addCell("Número de inscrições", registrationLength);
+		addCell("NÃºmero de inscriÃ§Ãµes", registrationLength);
 		for (int i = 0; i < sessionPreferences.length; i++) {
 		    addCell(sessionsList[i].getDescription(), sessionPreferences[i] + 1);
 		}

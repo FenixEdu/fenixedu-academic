@@ -274,7 +274,7 @@
 		
 
 		<p class="mtop2">
-			<html:submit><bean:message key="button.continue" bundle="APPLICATION_RESOURCES" /> »</html:submit>
+			<html:submit><bean:message key="button.continue" bundle="APPLICATION_RESOURCES" /> Â»</html:submit>
 			<%--
 			<html:cancel><bean:message key="button.cancel" bundle="APPLICATION_RESOURCES" /></html:cancel>
 			--%>

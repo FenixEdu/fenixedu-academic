@@ -67,7 +67,7 @@
 
 	<h:outputText value="<p>" escape="false"/>
 		<h:outputLink value="#{displayEvaluationsToEnrol.contextPath}/messaging/organizationalStructure/structurePage.faces">
-			<h:outputText value="« #{messagingResources['messaging.back.label']}" escape="false"/>
+			<h:outputText value="Â« #{messagingResources['messaging.back.label']}" escape="false"/>
 		</h:outputLink>
 	<h:outputText value="</p>" escape="false"/>
 

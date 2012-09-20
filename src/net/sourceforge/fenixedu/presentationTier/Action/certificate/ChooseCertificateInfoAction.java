@@ -104,7 +104,7 @@ public class ChooseCertificateInfoAction extends FenixDispatchAction {
 	InfoExecutionYear infoExecutionYear = null;
 
 	try {
-	    if (certificateString.equals("Fim de curso de Mestrado discriminada com média")
+	    if (certificateString.equals("Fim de curso de Mestrado discriminada com mÃ©dia")
 		    || certificateString.equals("Fim de curso de Mestrado simples") || certificateString.equals("Carta de Curso")) {
 
 		try {

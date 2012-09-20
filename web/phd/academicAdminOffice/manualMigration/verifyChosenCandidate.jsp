@@ -19,7 +19,7 @@
 
 <p>
 	<html:link action="<%= "/phdIndividualProgramProcess.do?method=prepareManualMigration&migrationProcessId=" + processNumber %>">
-		« <bean:message key="label.back" bundle="PHD_RESOURCES" />
+		Â« <bean:message key="label.back" bundle="PHD_RESOURCES" />
 	</html:link>	
 </p>
 

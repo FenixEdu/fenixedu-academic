@@ -15,8 +15,8 @@
 
 <logic:notEmpty name="listSeminaries" >
 	<span class="error"><!-- Error messages go here --><html:errors /></span>
-	<p class="redtxt">Informações de utilização:</p>
-	<p>Existem várias modalidades de inscrição. Para mais informações consultar regulamento do seminário.</p>
+	<p class="redtxt">InformaÃ§Ãµes de utilizaÃ§Ã£o:</p>
+	<p>Existem vÃ¡rias modalidades de inscriÃ§Ã£o. Para mais informaÃ§Ãµes consultar regulamento do seminÃ¡rio.</p>
 	<p><bean:message key="label.seminariesToEnroll"/></p>
 	<table width="90%" align="center">
 	<tr>

@@ -7,7 +7,7 @@ update DEGREE set DEGREE.CODE = '9037' where DEGREE.TIPO_CURSO = 'BOLONHA_DEGREE
 update DEGREE set DEGREE.CODE = '9037' where DEGREE.TIPO_CURSO = 'BOLONHA_DEGREE' and DEGREE.NOME like '%Inform%tica e de Computadores - Taguspark';
 update DEGREE set DEGREE.CODE = '9345' where DEGREE.TIPO_CURSO = 'BOLONHA_DEGREE' and DEGREE.NOME like '%Matem%tica Aplicada e Computa%o';
 update DEGREE set DEGREE.CODE = '9223' where DEGREE.TIPO_CURSO = 'BOLONHA_DEGREE' and DEGREE.NOME like '%Qu%mica';
-update DEGREE set DEGREE.CODE = '9030' where DEGREE.TIPO_CURSO = 'BOLONHA_DEGREE' and DEGREE.NOME like '%Engenharia de Redes de Comunicações';
+update DEGREE set DEGREE.CODE = '9030' where DEGREE.TIPO_CURSO = 'BOLONHA_DEGREE' and DEGREE.NOME like '%Engenharia de Redes de ComunicaÃ§Ãµes';
 update DEGREE set DEGREE.CODE = '9352' where DEGREE.TIPO_CURSO = 'BOLONHA_DEGREE' and DEGREE.NOME like '%Engenharia e Gest%o Industrial';
 update DEGREE set DEGREE.CODE = '9034' where DEGREE.TIPO_CURSO = 'BOLONHA_DEGREE' and DEGREE.NOME like '%Engenharia Electr%nica';
 

@@ -134,11 +134,11 @@ public class ChooseDegreeAndYearContextDA extends FenixContextDispatchAction {
 	List anosCurriculares = new ArrayList();
 
 	anosCurriculares.add(new LabelValueBean("", ""));
-	anosCurriculares.add(new LabelValueBean("1 บ", "1"));
-	anosCurriculares.add(new LabelValueBean("2 บ", "2"));
-	anosCurriculares.add(new LabelValueBean("3 บ", "3"));
-	anosCurriculares.add(new LabelValueBean("4 บ", "4"));
-	anosCurriculares.add(new LabelValueBean("5 บ", "5"));
+	anosCurriculares.add(new LabelValueBean("1 ยบ", "1"));
+	anosCurriculares.add(new LabelValueBean("2 ยบ", "2"));
+	anosCurriculares.add(new LabelValueBean("3 ยบ", "3"));
+	anosCurriculares.add(new LabelValueBean("4 ยบ", "4"));
+	anosCurriculares.add(new LabelValueBean("5 ยบ", "5"));
 
 	return anosCurriculares;
     }

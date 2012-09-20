@@ -58,7 +58,7 @@ public class CreateMasterDegreeCandidate extends FenixService {
 	MasterDegreeCandidate masterDegreeCandidate = new MasterDegreeCandidate();
 
 	// Set the Candidate's Situation
-	new CandidateSituation(Calendar.getInstance().getTime(), "Pré-Candidatura. Pagamento da candidatura por efectuar.",
+	new CandidateSituation(Calendar.getInstance().getTime(), "PrÃ©-Candidatura. Pagamento da candidatura por efectuar.",
 		new State(State.ACTIVE), masterDegreeCandidate,
 		new SituationName(SituationName.PRE_CANDIDATO));
 

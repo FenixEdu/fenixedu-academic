@@ -20,10 +20,10 @@
 				<br/>
 				<bean:write name="weekDay" scope="request"/>,
 				das <bean:write name="intervalStart" scope="request"/>
-				às <bean:write name="intervalEnd" scope="request"/>
+				Ã s <bean:write name="intervalEnd" scope="request"/>
 				<br/>
 				<logic:notEmpty name="minimumCapacity">
-					Capacidade normal mínima de <bean:write name="minimumCapacity" scope="request"/> lugares.
+					Capacidade normal mÃ­nima de <bean:write name="minimumCapacity" scope="request"/> lugares.
 				</logic:notEmpty>
 			</strong>
 		</td>

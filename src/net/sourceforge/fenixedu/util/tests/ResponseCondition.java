@@ -108,9 +108,9 @@ public class ResponseCondition extends FenixUtil {
 
     public static final String NOTVAREQUAL_STRING = "Diferente";
 
-    public static final String VARSUBSTRING_STRING = "Contém ";
+    public static final String VARSUBSTRING_STRING = "ContÃ©m ";
 
-    public static final String NOTVARSUBSTRING_STRING = "Não contém";
+    public static final String NOTVARSUBSTRING_STRING = "NÃ£o contÃ©m";
 
     private Integer condition;
 

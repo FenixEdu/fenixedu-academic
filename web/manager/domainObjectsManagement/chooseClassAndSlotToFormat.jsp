@@ -2,7 +2,7 @@
 <html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
-<h2>Formatação de Propriedades</h2>
+<h2>FormataÃ§Ã£o de Propriedades</h2>
 <br />
 <html:messages id="message" message="true" bundle="MANAGER_RESOURCES">
 	<span class="error"><!-- Error messages go here --><bean:write name="message"/></span>

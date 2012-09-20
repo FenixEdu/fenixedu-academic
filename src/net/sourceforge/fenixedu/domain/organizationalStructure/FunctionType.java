@@ -13,14 +13,14 @@ public enum FunctionType {
 
     DELEGATE_OF_YEAR, // Delegado de Ano
     DELEGATE_OF_DEGREE, // Delegado de Licenciatura (escolhido entre delegado de
-    // ano do 1บ, 2บ ou 3บ ano)
-    DELEGATE_OF_MASTER_DEGREE, // Delegado de Mestrado (delegado de ano do 1บ ou
-    // 2บ ano do Mestrado | delegado de ano do 4บ ou
-    // 5บ ano do Mestrado Integrado)
+    // ano do 1ยบ, 2ยบ ou 3ยบ ano)
+    DELEGATE_OF_MASTER_DEGREE, // Delegado de Mestrado (delegado de ano do 1ยบ ou
+    // 2ยบ ano do Mestrado | delegado de ano do 4ยบ ou
+    // 5ยบ ano do Mestrado Integrado)
     DELEGATE_OF_INTEGRATED_MASTER_DEGREE, // Delegado de Mestrado Integrado
-    // (delegado de ano do 4บ ou 5บ ano do
+    // (delegado de ano do 4ยบ ou 5ยบ ano do
     // Mestrado Integrado)
-    DELEGATE_OF_GGAE, // Delegado de um Grupo de Grandes มreas de Estudo
+    DELEGATE_OF_GGAE, // Delegado de um Grupo de Grandes รreas de Estudo
     // (delegado de Licenciatura, Mestrado ou Mestrado
     // Integrado )
 

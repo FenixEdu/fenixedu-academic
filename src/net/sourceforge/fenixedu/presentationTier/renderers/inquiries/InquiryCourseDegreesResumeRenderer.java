@@ -35,7 +35,7 @@ public class InquiryCourseDegreesResumeRenderer extends InquiryBlocksResumeRende
 	delegateLink.setModule("/publico");
 	delegateLink.setUrl("/viewQUCInquiryAnswers.do?method=showDelegateInquiry" + delegateParameters);
 	delegateLink.setTarget("_blank");
-	delegateLink.setText("Relatório do Delegado");
+	delegateLink.setText("RelatÃ³rio do Delegado");
 
 	container.addChild(resultsLink);
 	container.addChild(new HtmlText("&nbsp;|&nbsp;", false));

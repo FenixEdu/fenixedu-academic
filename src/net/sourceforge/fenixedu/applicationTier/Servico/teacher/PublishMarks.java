@@ -14,7 +14,7 @@ import net.sourceforge.fenixedu.domain.messaging.Announcement;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 /**
- * @author Fernanda Quitério
+ * @author Fernanda QuitÃ©rio
  */
 public class PublishMarks extends FenixService {
 

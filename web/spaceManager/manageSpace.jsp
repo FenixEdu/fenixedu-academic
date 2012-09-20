@@ -123,7 +123,7 @@
 			if(Space.personIsSpacesAdministrator(person)){
 		%>
 		|
-		<html:link page="/manageSpaces.do?method=deleteSpaceInformation" paramId="spaceInformationID" paramName="selectedSpaceInformation" paramProperty="idInternal" onclick="return confirm('Tem a certeza que deseja apagar a versão?')">
+		<html:link page="/manageSpaces.do?method=deleteSpaceInformation" paramId="spaceInformationID" paramName="selectedSpaceInformation" paramProperty="idInternal" onclick="return confirm('Tem a certeza que deseja apagar a versÃ£o?')">
 			<bean:message bundle="SPACE_RESOURCES" key="label.delete"/>
 		</html:link> | 
 		<html:link page="/manageSpaces.do?method=prepareCreateSpaceInformation" paramId="spaceInformationID" paramName="selectedSpaceInformation" paramProperty="idInternal">
@@ -148,7 +148,7 @@
 		<html:link page="/manageSpaces.do?method=prepareMoveSpace" paramId="spaceInformationID" paramName="selectedSpaceInformation" paramProperty="idInternal">
 			<bean:message bundle="SPACE_RESOURCES" key="label.move"/>
 		</html:link> | 
-		<html:link page="/manageSpaces.do?method=deleteSpace" paramId="spaceID" paramName="selectedSpaceInformation" paramProperty="space.idInternal" onclick="return confirm('Tem a certeza que deseja apagar o espaço?')">
+		<html:link page="/manageSpaces.do?method=deleteSpace" paramId="spaceID" paramName="selectedSpaceInformation" paramProperty="space.idInternal" onclick="return confirm('Tem a certeza que deseja apagar o espaÃ§o?')">
 			<bean:message bundle="SPACE_RESOURCES" key="label.delete"/>
 		</html:link>
 		

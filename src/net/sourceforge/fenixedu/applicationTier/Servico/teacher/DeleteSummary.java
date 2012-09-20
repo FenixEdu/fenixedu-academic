@@ -13,7 +13,7 @@ import net.sourceforge.fenixedu.domain.Professorship;
 import net.sourceforge.fenixedu.domain.Summary;
 
 /**
- * @author Jo„o Mota
+ * @author Jo√£o Mota
  * @author Susana Fernandes
  * 
  *         21/Jul/2003 fenix-head ServidorAplicacao.Servico.teacher

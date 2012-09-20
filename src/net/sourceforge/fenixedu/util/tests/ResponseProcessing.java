@@ -265,7 +265,7 @@ public class ResponseProcessing extends FenixUtil {
 	    allConditions.add("Outras Respostas");
 	}
 	if (isUnansweredResponseProcessing()) {
-	    allConditions.add("Não respondido");
+	    allConditions.add("NÃ£o respondido");
 	}
 	return StringUtils.join(allConditions, " ou ");
     }

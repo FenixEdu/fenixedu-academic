@@ -38,7 +38,7 @@
 			<fr:schema bundle="INQUIRIES_RESOURCES" type="net.sourceforge.fenixedu.dataTransferObject.inquiries.DepartmentExecutionSemester">
 				<fr:slot name="executionSemester" key="label.inquiries.semester" layout="menu-select-postback">
 					<fr:property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.Action.departmentMember.ViewQUCResultsDA$ExecutionSemesterQucProvider" />
-					<fr:property name="format" value="${executionYear.year} - ${semester}บ Semestre" />
+					<fr:property name="format" value="${executionYear.year} - ${semester}ยบ Semestre" />
 					<fr:property name="nullOptionHidden" value="true"/>
 					<fr:property name="destination" value="resumePostBack"/>
 				</fr:slot>

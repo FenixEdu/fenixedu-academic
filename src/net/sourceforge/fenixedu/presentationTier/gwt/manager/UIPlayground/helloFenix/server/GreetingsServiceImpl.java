@@ -25,9 +25,9 @@ public class GreetingsServiceImpl extends RemoteServiceServlet implements Greeti
     private static int iter = 0;
     
     static {
-	greetings.put(0,"Ol· Luis. :)");
-	greetings.put(1,"Manda um abraÁo meu ao Paulo. :P");
-	greetings.put(2,"V·, v·, n„o te comeces j· a babar... Calma rapaz„o! :D");
+	greetings.put(0,"Ol√° Luis. :)");
+	greetings.put(1,"Manda um abra√ßo meu ao Paulo. :P");
+	greetings.put(2,"V√°, v√°, n√£o te comeces j√° a babar... Calma rapaz√£o! :D");
     }
 
 }

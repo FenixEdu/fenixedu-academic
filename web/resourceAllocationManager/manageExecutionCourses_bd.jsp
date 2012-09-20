@@ -10,18 +10,18 @@
 <%@ page import="java.util.List"%>
 
 <em><bean:message key="label.manager.executionCourses" /></em>
-<h2>Gest„o de Disciplinas</h2>
+<h2>Gest√£o de Disciplinas</h2>
 
 <p><span class="error"><!-- Error messages go here --><html:errors /></span></p>
 
 <fr:form action="/manageExecutionCourses.do?method=search">
 	<div class="infoop3">
-	<p class="mvert025">Nota: Na indicaÁ„odo nome pode ser fornecido apenas parte do nome da
+	<p class="mvert025">Nota: Na indica√ß√£odo nome pode ser fornecido apenas parte do nome da
 	disciplina.</p>
-	<p class="mvert025">Exemplo 1: Para selecionar todas as disciplinas que comeÁam com a letra "A"
+	<p class="mvert025">Exemplo 1: Para selecionar todas as disciplinas que come√ßam com a letra "A"
 	escreva <strong>A%</strong></p>
-	<p class="mvert025">Exemplo 2: Para selecionar todas as disciplinas que comeÁam com a letra "A"
-	e que tenham um segundo nome que comeÁa com a letra "M" escreva <strong>A% M%</strong></p>
+	<p class="mvert025">Exemplo 2: Para selecionar todas as disciplinas que come√ßam com a letra "A"
+	e que tenham um segundo nome que come√ßa com a letra "M" escreva <strong>A% M%</strong></p>
 	</div>
 
 	<fr:edit name="<%=PresentationConstants.CONTEXT_SELECTION_BEAN%>" schema="executionCourseContext.choose">

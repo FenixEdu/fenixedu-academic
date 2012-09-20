@@ -9,11 +9,11 @@
 <h2>QUC - Garantia da Qualidade das UC</h2>
 
 <br/>
-<h4>Lista de Docentes com coment·rios e/ou questıes obrigatÛrias por responder:</h4>
+<h4>Lista de Docentes com coment√°rios e/ou quest√µes obrigat√≥rias por responder:</h4>
 <logic:present name="teacherInquiryOID">	
 	<p><html:link action="qucTeachersStatus.do?method=dowloadReport" paramId="teacherInquiryOID" paramName="teacherInquiryOID">Ver ficheiro</html:link></p>
 </logic:present>
 
 <logic:notPresent name="teacherInquiryOID">
-	<p>O inquÈrito ao Docente encontra-se fechado.</p>
+	<p>O inqu√©rito ao Docente encontra-se fechado.</p>
 </logic:notPresent>

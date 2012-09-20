@@ -4,7 +4,7 @@
 --%>
 <tiles:insert definition="df.layout.print.alternative" beanName="" flush="true">
   <tiles:put name="title" value="SOP" />
-  <tiles:put name="serviceName" value="Serviço de Organização Pedagógica" />
+  <tiles:put name="serviceName" value="ServiÃ§o de OrganizaÃ§Ã£o PedagÃ³gica" />
   <tiles:put name="navGeral" value="/commons/commonGeneralNavigationBar.jsp" />
   <tiles:put name="body-context" value="/commons/blank.jsp"/>  
   <tiles:put name="body" value="/resourceAllocationManager/viewAllClassesSchedules_bd.jsp" />

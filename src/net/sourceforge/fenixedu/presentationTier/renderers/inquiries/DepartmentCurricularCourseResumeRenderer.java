@@ -42,14 +42,14 @@ public class DepartmentCurricularCourseResumeRenderer extends InquiryCoordinator
 	    CompetenceCourseResultsResume competenceCourseResultsResume = competenceCourseResultsResumeList.get(0);
 
 	    final HtmlTableCell firstHeaderCell = headerRow.createCell(CellType.HEADER);
-	    firstHeaderCell.setBody(new HtmlText("Competência"));
+	    firstHeaderCell.setBody(new HtmlText("CompetÃªncia"));
 	    firstHeaderCell.setClasses("col-first");
 
 	    super.createHeader(competenceCourseResultsResume.getCurricularCourseResumeResults(), headerRow);
 	}
     }
 
-    //    @Override Mostrar sempre os links, pois só assim se conseguem ver os comentários feitos às perguntas das disciplinas que não foram para auditoria
+    //    @Override Mostrar sempre os links, pois sÃ³ assim se conseguem ver os comentÃ¡rios feitos Ã s perguntas das disciplinas que nÃ£o foram para auditoria
     //    protected void createCommentLink(CurricularCourseResumeResult courseResumeResult, HtmlInlineContainer container,
     //	    ResultClassification forAudit) {
     //	if (forAudit != null) {

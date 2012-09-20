@@ -141,7 +141,7 @@ abstract public class FenixReport implements Serializable {
     }
 
     protected String verboseDate(LocalDate date) {
-	return "dia " + DateI18NUtil.verboseNumber(date.getDayOfMonth(), getEnumerationBundle()) + " do mês de "
+	return "dia " + DateI18NUtil.verboseNumber(date.getDayOfMonth(), getEnumerationBundle()) + " do mÃªs de "
 		+ date.toString("MMMM", new Locale("pt")) + " de "
 		+ DateI18NUtil.verboseNumber(date.getYear(), getEnumerationBundle());
     }

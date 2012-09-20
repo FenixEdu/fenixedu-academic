@@ -12,7 +12,7 @@
 </p>
 
 <bean:define id="executionSemester" name="executionCourseAudit" property="executionCourse.executionPeriod"/>
-<h3><bean:write name="executionSemester" property="semester"/>∫ <bean:message key="label.inquiries.semester" bundle="INQUIRIES_RESOURCES"/>
+<h3><bean:write name="executionSemester" property="semester"/>¬∫ <bean:message key="label.inquiries.semester" bundle="INQUIRIES_RESOURCES"/>
 	 <bean:write name="executionSemester" property="executionYear.year"/></h3> 
 
 <fr:view name="competenceCoursesToAudit">
@@ -71,15 +71,15 @@
 <bean:define id="approvedBySelf" name="approvedBySelf" type="java.lang.String"/>
 <logic:equal name="executionCourseAudit" property="<%= approvedBySelf %>" value="true">
 	<logic:notEqual name="executionCourseAudit" property="<%= approvedByOther %>" value="true">
-		<p>Nem os coment·rios nem os ficheiros podem ser alterados porque lacrou o processo. Se desejar alterar o conte˙do dos coment·rios ter· que deslacrar o processo.</p>
+		<p>Nem os coment√°rios nem os ficheiros podem ser alterados porque lacrou o processo. Se desejar alterar o conte√∫do dos coment√°rios ter√° que deslacrar o processo.</p>
 	</logic:notEqual>
 	<logic:equal name="executionCourseAudit" property="<%= approvedByOther %>" value="true">
-		<p>N„o È possÌvel modificar os dados do processo visto que este se encontra lacrado por ambos os auditores.</p>
+		<p>N√£o √© poss√≠vel modificar os dados do processo visto que este se encontra lacrado por ambos os auditores.</p>
 	</logic:equal>
 </logic:equal>
 <logic:notEqual name="executionCourseAudit" property="<%= approvedBySelf %>" value="true">
 	<logic:equal name="executionCourseAudit" property="<%= approvedByOther %>" value="true">
-		<p>Nem os coment·rios nem os ficheiros podem ser alterados porque o processo se encontra lacrado pelo outro auditor. Se desejar alterar o conte˙do dos coment·rios ter· que pedir ao outro auditor para deslacrar.</p>
+		<p>Nem os coment√°rios nem os ficheiros podem ser alterados porque o processo se encontra lacrado pelo outro auditor. Se desejar alterar o conte√∫do dos coment√°rios ter√° que pedir ao outro auditor para deslacrar.</p>
 	</logic:equal>
 </logic:notEqual>
 

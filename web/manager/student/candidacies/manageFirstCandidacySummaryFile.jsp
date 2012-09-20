@@ -8,7 +8,7 @@
 
 
 <logic:present role="MANAGER">
-	<h2>Gerir Ficheiro de Sum·rio</h2>
+	<h2>Gerir Ficheiro de Sum√°rio</h2>
 
 	<fr:hasMessages for="student-number-bean" type="conversion">
 		<ul class="nobullet list6">
@@ -42,12 +42,12 @@
 		
 		<br/><br/>
 		<html:link	module="/candidate" action="<%= "/degreeCandidacyManagement.do?method=generateSummaryFile&amp;candidacyID=" + candidacyID%>">
-			Gerar PDF de Sum·rio
+			Gerar PDF de Sum√°rio
 		</html:link>
 		<br/>
 		<logic:present name="hasPDF">
 			<html:link	module="/candidate" action="<%= "/degreeCandidacyManagement.do?method=showSummaryFile&amp;candidacyID=" + candidacyID%>">
-				Mostrar PDF de Sum·rio
+				Mostrar PDF de Sum√°rio
 			</html:link>
 		</logic:present>
 	</logic:present>

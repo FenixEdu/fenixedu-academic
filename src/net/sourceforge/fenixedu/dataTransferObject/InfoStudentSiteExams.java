@@ -8,7 +8,7 @@ package net.sourceforge.fenixedu.dataTransferObject;
 import java.util.List;
 
 /**
- * @author Jo„o Mota
+ * @author Jo√£o Mota
  * 
  */
 public class InfoStudentSiteExams extends DataTranferObject implements ISiteComponent {

@@ -28,17 +28,17 @@ public class RootCourseGroup extends RootCourseGroup_Base {
 	if (courseGroupType.isBolonhaType()) {
 	    ExecutionSemester executionSemester = ExecutionSemester.readActualExecutionSemester();
 	    if (courseGroupType.isFirstCycle()) {
-		new CycleCourseGroup(this, "1º Ciclo", "First Cycle", CycleType.FIRST_CYCLE, executionSemester, null);
+		new CycleCourseGroup(this, "1Âº Ciclo", "First Cycle", CycleType.FIRST_CYCLE, executionSemester, null);
 	    }
 	    if (courseGroupType.isSecondCycle()) {
-		new CycleCourseGroup(this, "2º Ciclo", "Second Cycle", CycleType.SECOND_CYCLE, executionSemester, null);
+		new CycleCourseGroup(this, "2Âº Ciclo", "Second Cycle", CycleType.SECOND_CYCLE, executionSemester, null);
 	    }
 	    if (courseGroupType.isThirdCycle()) {
-		new CycleCourseGroup(this, "3º Ciclo", "Third Cycle", CycleType.THIRD_CYCLE, executionSemester, null);
+		new CycleCourseGroup(this, "3Âº Ciclo", "Third Cycle", CycleType.THIRD_CYCLE, executionSemester, null);
 	    }
 
 	    if (courseGroupType.isSpecializationCycle()) {
-		new CycleCourseGroup(this, "Especialização", "Specialization", CycleType.SPECIALIZATION_CYCLE, executionSemester,
+		new CycleCourseGroup(this, "EspecializaÃ§Ã£o", "Specialization", CycleType.SPECIALIZATION_CYCLE, executionSemester,
 			null);
 	    }
 	}

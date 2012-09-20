@@ -14,7 +14,7 @@ import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import pt.ist.fenixWebFramework.services.Service;
 
 /**
- * @author Jo„o Mota
+ * @author Jo√£o Mota
  * 
  * 
  */

@@ -20,7 +20,7 @@ import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
 
 /**
  * @author - Shezad Anavarali (shezad@ist.utl.pt)
- * @author - Ângela Almeida (argelina@ist.utl.pt)
+ * @author - Ã‚ngela Almeida (argelina@ist.utl.pt)
  * 
  */
 

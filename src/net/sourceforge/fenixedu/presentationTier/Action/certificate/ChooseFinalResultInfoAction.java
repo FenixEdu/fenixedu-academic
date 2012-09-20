@@ -87,7 +87,7 @@ public class ChooseFinalResultInfoAction extends FenixDispatchAction {
 	enrolmentList = GetEnrolmentList.run(infoStudentCurricularPlan.getIdInternal(), EnrollmentState.APROVED);
 
 	if (enrolmentList.size() == 0) {
-	    throw new NonExistingActionException("Inscrição em Disciplinas");
+	    throw new NonExistingActionException("InscriÃ§Ã£o em Disciplinas");
 	}
 
 	String conclusionDate = null;
@@ -114,7 +114,7 @@ public class ChooseFinalResultInfoAction extends FenixDispatchAction {
 	if ((infoStudentCurricularPlan.getGivenCredits() != null)
 		&& !infoStudentCurricularPlan.getGivenCredits().equals(new Double(0))) {
 	    sum = sum + Double.parseDouble(String.valueOf(infoStudentCurricularPlan.getGivenCredits()));
-	    request.setAttribute("givenCredits", "POR ATRIBUIÇÃO DE CRÉDITOS");
+	    request.setAttribute("givenCredits", "POR ATRIBUIÃ‡ÃƒO DE CRÃ‰DITOS");
 	}
 
 	BigDecimal roundedSum = new BigDecimal(sum);

@@ -89,7 +89,7 @@ public class UICourseGroup extends UIDegreeModule {
 	    writer.startElement("a", this);
 	    this.encodeLinkHref(module + "/curricularPlans/courseGroupReport.faces", "&courseGroupID="
 		    + this.courseGroup.getIdInternal(), true);
-	    writer.write("Relatórios de Plano Curricular");
+	    writer.write("RelatÃ³rios de Plano Curricular");
 	    writer.endElement("a");
 	    writer.endElement("p");
 	}

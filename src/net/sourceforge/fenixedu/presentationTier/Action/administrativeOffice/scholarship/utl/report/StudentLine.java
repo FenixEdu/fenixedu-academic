@@ -162,7 +162,7 @@ public class StudentLine implements IFileLine, java.io.Serializable {
     }
 
     private static final String INTEGRATED_MASTER_DESIGNATION = "Mestrado Integrado";
-    private static final String BOLONHA_DEGREE_DESIGNATION = "Licenciatura 1º Ciclo";
+    private static final String BOLONHA_DEGREE_DESIGNATION = "Licenciatura 1Âº Ciclo";
 
     public DegreeType readDegreeType() {
 	if (this.degreeTypeName.equals(INTEGRATED_MASTER_DESIGNATION)) {
@@ -817,7 +817,7 @@ public class StudentLine implements IFileLine, java.io.Serializable {
 
     protected void appendPersonNotFound(StringBuilder observationsBuilder) {
 	observationsBuilder.append(String
-		.format("O aluno não foi encontrado com o numero de aluno nem com o nº de identificação. "));
+		.format("O aluno nÃ£o foi encontrado com o numero de aluno nem com o nÂº de identificaÃ§Ã£o. "));
     }
 
     public String getInstitutionCode() {
@@ -825,7 +825,7 @@ public class StudentLine implements IFileLine, java.io.Serializable {
     }
 
     public String getInstitutionName() {
-	return "Universidade Técnica de Lisboa - Instituto Superior Técnico";
+	return "Universidade TÃ©cnica de Lisboa - Instituto Superior TÃ©cnico";
     }
 
     public String getCandidacyNumber() {
@@ -879,7 +879,7 @@ public class StudentLine implements IFileLine, java.io.Serializable {
     }
 
     public String getRegimeCode() {
-	return "Não especificado";
+	return "NÃ£o especificado";
     }
 
     public String getLastEnrolledExecutionYear() {

@@ -822,7 +822,7 @@ public enum DegreeType {
     }
 
     final public String getCreditsDescription() {
-	return this == DegreeType.MASTER_DEGREE ? " Créd." : " ECTS";
+	return this == DegreeType.MASTER_DEGREE ? " CrÃ©d." : " ECTS";
     }
 
     public String getPrefix() {

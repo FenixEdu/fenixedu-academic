@@ -37,4 +37,4 @@ public class SubtitleEntry implements Comparable {
 
 }
 
-// Created by Nuno Antão
+// Created by Nuno AntÃ£o

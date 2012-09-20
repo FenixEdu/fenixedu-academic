@@ -19,13 +19,13 @@ public class CorrectionFormula extends FenixUtil {
 
     public static final int IMS = 2;
 
-    public static final String FENIX_STRING = "Utilizar fórmula do sistema.";
+    public static final String FENIX_STRING = "Utilizar fÃ³rmula do sistema.";
 
-    public static final String LID_MULTIPLE_FORMULA = "<br/>cotação * 2*(num de respostas certas escolhidas + num de respostas erradas escolhidas)/num de opções -1";
+    public static final String LID_MULTIPLE_FORMULA = "<br/>cotaÃ§Ã£o * 2*(num de respostas certas escolhidas + num de respostas erradas escolhidas)/num de opÃ§Ãµes -1";
 
-    public static final String LID_SIMPLE_FORMULA = "<br/>cotação * 1 / (num de opções -1)";
+    public static final String LID_SIMPLE_FORMULA = "<br/>cotaÃ§Ã£o * 1 / (num de opÃ§Ãµes -1)";
 
-    public static final String IMS_STRING = "Utilizar cotações indicadas no ficheiro.";
+    public static final String IMS_STRING = "Utilizar cotaÃ§Ãµes indicadas no ficheiro.";
 
     private final Integer formula;
 

@@ -1,7 +1,7 @@
-<?xml version="1.0" encoding="ISO-8859-1"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <project basedir="/home/pcma/workspace/Fenix"  default="run-tests" name="Tests">
 
-        <property name="encoding" value="ISO-8859-1"/>
+        <property name="encoding" value="UTF-8"/>
 
     <property name="src_tests" location="src_testNG"/>
 

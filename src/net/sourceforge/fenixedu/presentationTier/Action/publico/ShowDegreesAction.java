@@ -25,7 +25,7 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
 /**
- * @author T‚nia Pous„o Created on 9/Out/2003
+ * @author T√¢nia Pous√£o Created on 9/Out/2003
  */
 public class ShowDegreesAction extends FenixContextDispatchAction {
 

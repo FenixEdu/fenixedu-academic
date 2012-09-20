@@ -113,7 +113,7 @@ public class StudentGuideDispatchAction extends FenixDispatchAction {
 	if ((specializationGratuityAmountString != null) && (specializationGratuityAmountString.length() != 0)
 		&& (specializationGratuityQuantityString != null) && (specializationGratuityQuantityString.length() != 0)) {
 	    InfoGuideEntry infoGuideEntry = new InfoGuideEntry();
-	    infoGuideEntry.setDescription("Pagamento para Especialização");
+	    infoGuideEntry.setDescription("Pagamento para EspecializaÃ§Ã£o");
 	    infoGuideEntry.setGraduationType(GraduationType.MASTER_DEGREE);
 	    infoGuideEntry.setDocumentType(DocumentType.GRATUITY);
 	    infoGuideEntry.setPrice(new Double(specializationGratuityAmountString));

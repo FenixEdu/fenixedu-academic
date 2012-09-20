@@ -9,7 +9,7 @@
 	<html:form action="/searchProfessorships">
 		<div class="form1">
 			<fieldset>
-				<legend>Opções</legend>
+				<legend>OpÃ§Ãµes</legend>
 				<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="prepareForm"/>
 				<p>
 					Ano Lectivo: 		
@@ -74,7 +74,7 @@
 				</html:select>
 			</p>
 			<p style="margin-bottom: 0;">
-				<html:submit>Consultar »</html:submit>
+				<html:submit>Consultar Â»</html:submit>
 			</p>
 		</fieldset>
 	</div>
@@ -100,7 +100,7 @@
 				</html:select>
 			</p>
 			<p style="margin-bottom: 0;">
-				<html:submit>Consultar »</html:submit>
+				<html:submit>Consultar Â»</html:submit>
 			</p>
 		</fieldset>
 	</div>

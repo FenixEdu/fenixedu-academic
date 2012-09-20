@@ -5,7 +5,7 @@
 
 	<property file="development.properties"/>
 
-	<property name="encoding" value="ISO-8859-1"/>
+	<property name="encoding" value="UTF-8"/>
 	<property name="lib" location="lib"/>
 	<property name="src" location="src"/>
 	<property name="src_gen" location="src_gen"/>

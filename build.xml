@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="ISO-8859-1"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <project basedir="." default="compile" name="Fenix Build File">
 <property environment="env"/>
 <property name="findbugs.home" value="${env.FINDBUGS_HOME}" />

@@ -63,9 +63,9 @@
 		<br />
 		<div class="infoop">
 			<span class="error"><!-- Error messages go here --><strong>Nota:</strong></span>
-			<br />&nbsp;&nbsp;&nbsp;&nbsp;Caso este Aluno tenha um número de Pós-Graduação que lhe foi atribuido antes do ano lectivo de <strong>2002/2003</strong> introduza-o aqui. 
-			<br />&nbsp;&nbsp;&nbsp;&nbsp;Caso este Aluno  ainda não tenha um número atribuido ou que essa atribuição tenha sido feita no decorrer do ano lectivo de <strong>2002/2003</strong> 
-			<br />&nbsp;&nbsp;&nbsp;&nbsp;deixe este campo vazio que o programa atribuirá um novo número ou associará o aluno ao seu respectivo número.
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;Caso este Aluno tenha um nÃºmero de PÃ³s-GraduaÃ§Ã£o que lhe foi atribuido antes do ano lectivo de <strong>2002/2003</strong> introduza-o aqui. 
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;Caso este Aluno  ainda nÃ£o tenha um nÃºmero atribuido ou que essa atribuiÃ§Ã£o tenha sido feita no decorrer do ano lectivo de <strong>2002/2003</strong> 
+			<br />&nbsp;&nbsp;&nbsp;&nbsp;deixe este campo vazio que o programa atribuirÃ¡ um novo nÃºmero ou associarÃ¡ o aluno ao seu respectivo nÃºmero.
 			
 		</div>
 		<br />

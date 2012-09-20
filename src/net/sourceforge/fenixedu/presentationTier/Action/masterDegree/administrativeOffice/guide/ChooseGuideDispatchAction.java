@@ -92,7 +92,7 @@ public class ChooseGuideDispatchAction extends FenixDispatchAction {
 	    Object args[] = { guideNumber, guideYear, guideVersion };
 	    infoGuide = (InfoGuide) ServiceManagerServiceFactory.executeService("ChooseGuide", args);
 	} catch (NonExistingServiceException e) {
-	    throw new NonExistingActionException("A Vers„o da Guia", e);
+	    throw new NonExistingActionException("A Vers√£o da Guia", e);
 	}
 
 	List guideList = null;

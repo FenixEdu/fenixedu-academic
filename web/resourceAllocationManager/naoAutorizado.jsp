@@ -3,10 +3,10 @@
 
 <html>
   <head>
-    <title>SOP - Excep��o</title>
+    <title>SOP - Excepï¿½ï¿½o</title>
   </head>
   <body>
     <html:errors/>
-    N�o Autorizado
+    Não Autorizado
   </body>
 </html>

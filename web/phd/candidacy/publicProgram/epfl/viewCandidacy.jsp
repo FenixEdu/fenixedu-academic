@@ -64,7 +64,7 @@ padding: 0.5em 1em;
 </logic:messagesPresent>
 <logic:messagesNotPresent message="true" property="validation">
 	<logic:equal name="canEditCandidacy" value="true">
-		<div class="warning0 mvert1"><p class="mvert05">All required information was added. The application is now ready to be validated. To proceed press to following link: <strong><a href="#" onclick="javascript:document.getElementById('methodForm').value='prepareValidateCandidacy';document.getElementById('editCandidacyForm').submit();"><bean:message key="label.phd.public.candidacy.validate" bundle="PHD_RESOURCES"/> »</a></strong></p></div>
+		<div class="warning0 mvert1"><p class="mvert05">All required information was added. The application is now ready to be validated. To proceed press to following link: <strong><a href="#" onclick="javascript:document.getElementById('methodForm').value='prepareValidateCandidacy';document.getElementById('editCandidacyForm').submit();"><bean:message key="label.phd.public.candidacy.validate" bundle="PHD_RESOURCES"/> Â»</a></strong></p></div>
 	</logic:equal>
 	<logic:equal name="canEditCandidacy" value="false">
 		<div class="warning0 mvert1"><p class="mvert05"><b>Thank you!</b> Your application was submitted successfuly.</p></div>

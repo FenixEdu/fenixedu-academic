@@ -26,7 +26,7 @@
 	   	</tr>
 	</table>
 	<br />
-	<h2>Hor·rio da Turma</h2>
+	<h2>Hor√°rio da Turma</h2>
 	<div align="center">
 		<app:gerarHorario name="<%= PresentationConstants.LESSON_LIST_ATT %>"
 						  type="<%= TimeTableType.SOP_CLASS_TIMETABLE %>"/>

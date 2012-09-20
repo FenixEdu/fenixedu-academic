@@ -109,9 +109,9 @@ padding-right: 8px;
 
 <bean:define id="inquiryResult" name="inquiryResult" type="net.sourceforge.fenixedu.domain.oldInquiries.StudentInquiriesTeachingResult"></bean:define>
 
-<p class="mtop0" style="float: right;"><em>InformaÁ„o do sistema, recolhida a <c:out value="${inquiryResult.resultsDate}" /></em></p>
+<p class="mtop0" style="float: right;"><em>Informa√ß√£o do sistema, recolhida a <c:out value="${inquiryResult.resultsDate}" /></em></p>
 
-<h2>QUC - Garantia da Qualidade das UC - Resultados dos inquÈritos aos alunos</h2>
+<h2>QUC - Garantia da Qualidade das UC - Resultados dos inqu√©ritos aos alunos</h2>
 
 <div class="infoop2" style="font-size: 1.3em; padding: 0.5em 1em; margin: 1em 0;">
 	<p style="margin: 0.75em 0;">Semestre: 
@@ -143,11 +143,11 @@ padding-right: 8px;
 <table class="tstyle1 thlight thleft tdcenter">
 	<tr class="top">
 		<th></th>
-		<th class="aright">Respons·veis pela gest„o acadÈmica <a href="#" class="helpleft">[?] <span>Representatividade - n∫ de respostas v·lidas superior a 5 e a 10% do n∫ estimado de inscritos para o par Docente/Tipo de Aula.</span></a></th>
-		<th class="aright">Comunidade acadÈmica IST <a href="#" class="helpleft">[?] <span>Representatividade - n∫ de respostas v·lidas superior a 5 e a 50% do n∫ estimado de inscritos para o par Docente/Tipo de Aula.</span></a></th>
+		<th class="aright">Respons√°veis pela gest√£o acad√©mica <a href="#" class="helpleft">[?] <span>Representatividade - n¬∫ de respostas v√°lidas superior a 5 e a 10% do n¬∫ estimado de inscritos para o par Docente/Tipo de Aula.</span></a></th>
+		<th class="aright">Comunidade acad√©mica IST <a href="#" class="helpleft">[?] <span>Representatividade - n¬∫ de respostas v√°lidas superior a 5 e a 50% do n¬∫ estimado de inscritos para o par Docente/Tipo de Aula.</span></a></th>
 	</tr>
 	<tr>
-		<th>Representatividade para divulgaÁ„o</th>
+		<th>Representatividade para divulga√ß√£o</th>
         <td><fmt:message bundle="${INQUIRIES_RESOURCES}" key="label.colored.boolean.${inquiryResult.valuesMap['Repres_doc_curso_UC_interna']}" /></td>
         <td><fmt:message bundle="${INQUIRIES_RESOURCES}" key="label.colored.boolean.${inquiryResult.valuesMap['Repres_doc_curso_UC_publica']}" /></td>
 	</tr>
@@ -158,9 +158,9 @@ padding-right: 8px;
 	<tr class="top">
 		<th></th>
 		<th class="aright">Assiduidade dos alunos <a href="#" class="helpleft">[?] <span>Resultados a melhorar se mais 25% alunos classifica como abaixo ou igual a 3 (De vez em quando).</span></a></th>
-		<th class="aright">Proveito da aprendizagem presencial <a href="#" class="helpleft">[?] <span>Resultados a melhorar se, entre os alunos que frequentaram as aulas (alunos que responderam igual so superior a 3 na pergunta da assiduidade ‡s aulas, no mÌnimo de 10), mais 25% classifica como abaixo ou igual a 3 (Discordo) 2 das 3 questıes do grupo. - conforme revis„o do regulamento aprovada em 15 Maio 2009, ver http://quc.ist.utl.pt/_docs_/SSGQUC.pdf</span></a></th>
-		<th class="aright">Capacidade pedagÛgica <a href="#" class="helpleft">[?] <span>Resultados a melhorar se, entre os alunos que frequentaram as aulas, mais 25% classifica como abaixo ou igual a 3 (Discordo) 2 das 4 questıes do grupo.</span></a></th>
-		<th class="aright">InteracÁ„o com os alunos <a href="#" class="helpleft">[?] <span>Resultados a melhorar se, entre os alunos que frequentaram as aulas, mais 25% classifica como abaixo ou igual a 3 (Discordo) as 2 questıes do grupo.</span></a></th>
+		<th class="aright">Proveito da aprendizagem presencial <a href="#" class="helpleft">[?] <span>Resultados a melhorar se, entre os alunos que frequentaram as aulas (alunos que responderam igual so superior a 3 na pergunta da assiduidade √†s aulas, no m√≠nimo de 10), mais 25% classifica como abaixo ou igual a 3 (Discordo) 2 das 3 quest√µes do grupo. - conforme revis√£o do regulamento aprovada em 15 Maio 2009, ver http://quc.ist.utl.pt/_docs_/SSGQUC.pdf</span></a></th>
+		<th class="aright">Capacidade pedag√≥gica <a href="#" class="helpleft">[?] <span>Resultados a melhorar se, entre os alunos que frequentaram as aulas, mais 25% classifica como abaixo ou igual a 3 (Discordo) 2 das 4 quest√µes do grupo.</span></a></th>
+		<th class="aright">Interac√ß√£o com os alunos <a href="#" class="helpleft">[?] <span>Resultados a melhorar se, entre os alunos que frequentaram as aulas, mais 25% classifica como abaixo ou igual a 3 (Discordo) as 2 quest√µes do grupo.</span></a></th>
 	</tr>
 	<tr>
 		<th>Resultados a melhorar</th>
@@ -175,9 +175,9 @@ padding-right: 8px;
     <tr class="top">
         <th></th>
         <th class="aright">Assiduidade dos alunos <a href="#" class="helpleft">[?] <span>Resultados excelentes se mais se 75% dos alunos classifica como acima ou igual a 3 (de vez em quando).</span></a></th>
-        <th class="aright">Proveito da aprendizagem presencial <a href="#" class="helpleft">[?] <span>Resultados excelentes se, entre os alunos que frequentaram as aulas (alunos que responderam igual so superior a 3 na pergunta da assiduidade ‡s aulas, no mÌnimo de 10), mais de 75% classifica como acima ou igual a 7 (Concordo) todas as questıes do grupo (excepto a quest„o da assiduidade) e a mÈdia de respostas nos outros grupos (Capacidade PedagÛgica e InteracÁ„o com os alunos) superior a 7 (Concordo). - conforme revis„o do regulamento aprovada em 15 Maio 2009, ver http://quc.ist.utl.pt/_docs_/SSGQUC.pdf</span></a></th>
-        <th class="aright">Capacidade pedagÛgica <a href="#" class="helpleft">[?] <span>Resultados excelentes se, entre os alunos que frequentaram as aulas, mais de 75% classifica como acima ou igual a 7 (Concordo) todas as questıes do grupo e a mÈdia de respostas nos outros grupos (Proveito da aprendizagem presencial (excepto a quest„o da assiduidade dos alunos) e InteracÁ„o com os alunos) superior a 7 (Concordo). - conforme revis„o do regulamento aprovada em 15 Maio 2009, ver http://quc.ist.utl.pt/_docs_/SSGQUC.pdf</span></a></th>
-        <th class="aright">InteracÁ„o com os alunos <a href="#" class="helpleft">[?] <span>Resultados excelentes se, entre os alunos que frequentaram as aulas, mais de 75% classifica como acima ou igual a 7 (Concordo) todas as questıes do grupo e a mÈdia de respostas nos outros grupos (Proveito da aprendizagem presencial (excepto a quest„o da assiduidade dos alunos) e Capacidade pedagÛgica) superior a 7 (Concordo). - conforme revis„o do regulamento aprovada em 15 Maio 2009, ver http://quc.ist.utl.pt/_docs_/SSGQUC.pdf</span></a></th>
+        <th class="aright">Proveito da aprendizagem presencial <a href="#" class="helpleft">[?] <span>Resultados excelentes se, entre os alunos que frequentaram as aulas (alunos que responderam igual so superior a 3 na pergunta da assiduidade √†s aulas, no m√≠nimo de 10), mais de 75% classifica como acima ou igual a 7 (Concordo) todas as quest√µes do grupo (excepto a quest√£o da assiduidade) e a m√©dia de respostas nos outros grupos (Capacidade Pedag√≥gica e Interac√ß√£o com os alunos) superior a 7 (Concordo). - conforme revis√£o do regulamento aprovada em 15 Maio 2009, ver http://quc.ist.utl.pt/_docs_/SSGQUC.pdf</span></a></th>
+        <th class="aright">Capacidade pedag√≥gica <a href="#" class="helpleft">[?] <span>Resultados excelentes se, entre os alunos que frequentaram as aulas, mais de 75% classifica como acima ou igual a 7 (Concordo) todas as quest√µes do grupo e a m√©dia de respostas nos outros grupos (Proveito da aprendizagem presencial (excepto a quest√£o da assiduidade dos alunos) e Interac√ß√£o com os alunos) superior a 7 (Concordo). - conforme revis√£o do regulamento aprovada em 15 Maio 2009, ver http://quc.ist.utl.pt/_docs_/SSGQUC.pdf</span></a></th>
+        <th class="aright">Interac√ß√£o com os alunos <a href="#" class="helpleft">[?] <span>Resultados excelentes se, entre os alunos que frequentaram as aulas, mais de 75% classifica como acima ou igual a 7 (Concordo) todas as quest√µes do grupo e a m√©dia de respostas nos outros grupos (Proveito da aprendizagem presencial (excepto a quest√£o da assiduidade dos alunos) e Capacidade pedag√≥gica) superior a 7 (Concordo). - conforme revis√£o do regulamento aprovada em 15 Maio 2009, ver http://quc.ist.utl.pt/_docs_/SSGQUC.pdf</span></a></th>
     </tr>
     <tr>
         <th>Resultados excelentes</th>
@@ -197,8 +197,8 @@ padding-right: 8px;
     <tr class="top">
         <th></th>
         <th class="aright">N</th>
-        <th class="aright">MÈdia</th>
-        <th class="aright separatorright">Desvio padr„o</th>
+        <th class="aright">M√©dia</th>
+        <th class="aright separatorright">Desvio padr√£o</th>
         <th class="aright">Nunca<br/><b>1</b></th>
         <th class="aright"><b>2</b></th>
         <th class="aright">De vez em quando<br/><b>3</b></th>
@@ -227,15 +227,15 @@ padding-right: 8px;
 <table class="tstyle1 thlight thleft tdright td50px">
     <tr class="top">
         <th colspan="2"></th>
-        <th class="aright">Hor·rio</th>
+        <th class="aright">Hor√°rio</th>
         <th class="aright">Docente</th>
-        <th class="aright">Conte˙dos</th>
+        <th class="aright">Conte√∫dos</th>
 
         <th class="aright">Repetente</th>
         <th class="aright">Outro</th>
     </tr>
     <tr>
-        <th rowspan="2" class="vamiddle">A fraca assiduidade ‡s aulas deveu-se a:</th>
+        <th rowspan="2" class="vamiddle">A fraca assiduidade √†s aulas deveu-se a:</th>
         <td style="background: #f8f8f8;">N</td>
         <td><c:out value="${inquiryResult.valuesMap['P6_1_1_a']}" /></td>
         <td><c:out value="${inquiryResult.valuesMap['P6_1_1_b']}" /></td>
@@ -257,13 +257,13 @@ padding-right: 8px;
     <tr class="top">
         <th></th>
         <th class="aright">N</th>
-        <th class="aright">MÈdia</th>
-        <th class="aright separatorright">Desvio padr„o</th>
+        <th class="aright">M√©dia</th>
+        <th class="aright separatorright">Desvio padr√£o</th>
         <th class="aright">Discordo totalmente<br/><b>1</b></th>
         <th class="aright"><b>2</b></th>
         <th class="aright">Discordo<br/><b>3</b></th>
         <th class="aright"><b>4</b></th>
-        <th class="aright">N„o concordo nem discordo<br/><b>5</b></th>
+        <th class="aright">N√£o concordo nem discordo<br/><b>5</b></th>
         <th class="aright"><b>6</b></th>
         <th class="aright">Concordo<br/><b>7</b></th>
         <th class="aright"><b>8</b></th>
@@ -271,7 +271,7 @@ padding-right: 8px;
     </tr>
     <tr>
 
-        <th>O docente cumpriu regularmente o hor·rio das aulas e outras actividades programadas</th>
+        <th>O docente cumpriu regularmente o hor√°rio das aulas e outras actividades programadas</th>
         <td><c:out value="${inquiryResult.valuesMap['N_P6_2']}" /></td>
         <td><c:out value="${inquiryResult.valuesMap['M_P6_2']}" /></td>
         <td><c:out value="${inquiryResult.valuesMap['dp_P6_2']}" /></td>
@@ -303,19 +303,19 @@ padding-right: 8px;
 </table>
 
 
-<p class="mtop15 mbottom0"><strong>Capacidade pedagÛgica</strong></p>
+<p class="mtop15 mbottom0"><strong>Capacidade pedag√≥gica</strong></p>
 
 <table class="tstyle1 thlight thleft tdright td50px">
     <tr class="top">
         <th></th>
         <th class="aright">N</th>
-        <th class="aright">MÈdia</th>
-        <th class="aright separatorright">Desvio padr„o</th>
+        <th class="aright">M√©dia</th>
+        <th class="aright separatorright">Desvio padr√£o</th>
         <th class="aright">Discordo totalmente<br/><b>1</b></th>
         <th class="aright"><b>2</b></th>
         <th class="aright">Discordo<br/><b>3</b></th>
         <th class="aright"><b>4</b></th>
-        <th class="aright">N„o concordo nem discordo<br/><b>5</b></th>
+        <th class="aright">N√£o concordo nem discordo<br/><b>5</b></th>
         <th class="aright"><b>6</b></th>
         <th class="aright">Concordo<br/><b>7</b></th>
         <th class="aright"><b>8</b></th>
@@ -337,7 +337,7 @@ padding-right: 8px;
         <td><c:out value="${inquiryResult.valuesMap['perc_P7_1_9']}" /></td>
     </tr>
     <tr>
-        <th>O docente expÙs os conte˙dos de forma atractiva</th>
+        <th>O docente exp√¥s os conte√∫dos de forma atractiva</th>
         <td><c:out value="${inquiryResult.valuesMap['N_P7_2']}" /></td>
         <td><c:out value="${inquiryResult.valuesMap['M_P7_2']}" /></td>
         <td><c:out value="${inquiryResult.valuesMap['dp_P7_2']}" /></td>
@@ -352,7 +352,7 @@ padding-right: 8px;
         <td><c:out value="${inquiryResult.valuesMap['perc_P7_2_9']}" /></td>
     </tr>
     <tr>
-        <th>O docente demonstrou seguranÁa na exposiÁ„o</th>
+        <th>O docente demonstrou seguran√ßa na exposi√ß√£o</th>
         <td><c:out value="${inquiryResult.valuesMap['N_P7_3']}" /></td>
         <td><c:out value="${inquiryResult.valuesMap['M_P7_3']}" /></td>
         <td><c:out value="${inquiryResult.valuesMap['dp_P7_3']}" /></td>
@@ -367,7 +367,7 @@ padding-right: 8px;
         <td><c:out value="${inquiryResult.valuesMap['perc_P7_3_9']}" /></td>
     </tr>
     <tr>
-        <th>O docente expÙs os conte˙dos com clareza</th>
+        <th>O docente exp√¥s os conte√∫dos com clareza</th>
         <td><c:out value="${inquiryResult.valuesMap['N_P7_4']}" /></td>
         <td><c:out value="${inquiryResult.valuesMap['M_ P7_4']}" /></td>
         <td><c:out value="${inquiryResult.valuesMap['dp_ P7_4']}" /></td>
@@ -384,20 +384,20 @@ padding-right: 8px;
 </table>
 
 
-<p class="mtop15 mbottom0"><strong>InteracÁ„o com os alunos</strong></p>
+<p class="mtop15 mbottom0"><strong>Interac√ß√£o com os alunos</strong></p>
 
 <table class="tstyle1 thlight thleft tdright td50px">
     <tr class="top">
         <th></th>
         <th class="aright">N</th>
-        <th class="aright">MÈdia</th>
+        <th class="aright">M√©dia</th>
 
-        <th class="aright separatorright">Desvio padr„o</th>
+        <th class="aright separatorright">Desvio padr√£o</th>
         <th class="aright">Discordo totalmente<br/><b>1</b></th>
         <th class="aright"><b>2</b></th>
         <th class="aright">Discordo<br/><b>3</b></th>
         <th class="aright"><b>4</b></th>
-        <th class="aright">N„o concordo nem discordo<br/><b>5</b></th>
+        <th class="aright">N√£o concordo nem discordo<br/><b>5</b></th>
         <th class="aright"><b>6</b></th>
         <th class="aright">Concordo<br/><b>7</b></th>
         <th class="aright"><b>8</b></th>
@@ -405,7 +405,7 @@ padding-right: 8px;
 
     </tr>
     <tr>
-        <th>O docente estimulou a participaÁ„o e discuss„o</th>
+        <th>O docente estimulou a participa√ß√£o e discuss√£o</th>
         <td><c:out value="${inquiryResult.valuesMap['N_P8_1']}" /></td>
         <td><c:out value="${inquiryResult.valuesMap['M_ P8_1']}" /></td>
         <td><c:out value="${inquiryResult.valuesMap['dp_ P8_1']}" /></td>
@@ -420,7 +420,7 @@ padding-right: 8px;
         <td><c:out value="${inquiryResult.valuesMap['perc_P8_1_9']}" /></td>
     </tr>
     <tr>
-        <th>O docente mostrou abertura para o esclarecimento de d˙vidas, dentro e fora das aulas</th>
+        <th>O docente mostrou abertura para o esclarecimento de d√∫vidas, dentro e fora das aulas</th>
         <td><c:out value="${inquiryResult.valuesMap['N_P8_2']}" /></td>
         <td><c:out value="${inquiryResult.valuesMap['M_ P8_2']}" /></td>
         <td><c:out value="${inquiryResult.valuesMap['dp_ P8_2']}" /></td>
@@ -441,8 +441,8 @@ padding-right: 8px;
     <tr class="top">
         <th></th>
         <th class="aright">N</th>
-        <th class="aright">MÈdia</th>
-        <th class="aright separatorright">Desvio padr„o</th>
+        <th class="aright">M√©dia</th>
+        <th class="aright separatorright">Desvio padr√£o</th>
         <th class="aright">Muito mau<br/><b>1</b></th>
         <th class="aright"><b>2</b></th>
         <th class="aright">Mau<br/><b>3</b></th>
@@ -455,7 +455,7 @@ padding-right: 8px;
     </tr>
     
     <tr>
-        <th>AvaliaÁ„o global do desempenho do docente</th>
+        <th>Avalia√ß√£o global do desempenho do docente</th>
         <td><c:out value="${inquiryResult.valuesMap['N_P9']}" /></td>
         <td><c:out value="${inquiryResult.valuesMap['M_ P9']}" /></td>
         <td><c:out value="${inquiryResult.valuesMap['dp_P9']}" /></td>

@@ -17,18 +17,18 @@
 <logic:equal name="global" value="true">
 	<logic:equal name="unread" value="true">
 		<html:link action="/phdIndividualProgramProcess.do?method=viewUnreadAlertMessages">
-			« <bean:message bundle="PHD_RESOURCES" key="label.back"/>
+			Â« <bean:message bundle="PHD_RESOURCES" key="label.back"/>
 		</html:link>
 	</logic:equal>
 	<logic:equal name="unread" value="false">
 		<logic:equal name="archive" value="true">
 			<html:link action="<%= "/phdIndividualProgramProcess.do?method=viewAlertMessageArchive&year=" + year + "&month=" + month %>">
-				« <bean:message bundle="PHD_RESOURCES" key="label.back"/>
+				Â« <bean:message bundle="PHD_RESOURCES" key="label.back"/>
 			</html:link>
 		</logic:equal>
 		<logic:equal name="archive" value="false">
 			<html:link action="/phdIndividualProgramProcess.do?method=viewAlertMessages">
-				« <bean:message bundle="PHD_RESOURCES" key="label.back"/>
+				Â« <bean:message bundle="PHD_RESOURCES" key="label.back"/>
 			</html:link>
 		</logic:equal>
 	</logic:equal>
@@ -37,18 +37,18 @@
 <logic:equal name="global" value="false">
 	<logic:equal name="unread" value="true">
 		<html:link action="<%="/phdIndividualProgramProcess.do?method=viewUnreadProcessAlertMessages&processId=" + ((DomainObject) process).getExternalId()%>">
-			« <bean:message bundle="PHD_RESOURCES" key="label.back"/>
+			Â« <bean:message bundle="PHD_RESOURCES" key="label.back"/>
 		</html:link>
 	</logic:equal>
 	<logic:equal name="unread" value="false">
 		<logic:equal name="archive" value="true">
 			<html:link action="<%="/phdIndividualProgramProcess.do?method=viewProcessAlertMessageArchive&year=" + year + "&month=" + month + "&processId=" + ((DomainObject) process).getExternalId()%>">
-				« <bean:message bundle="PHD_RESOURCES" key="label.back"/>
+				Â« <bean:message bundle="PHD_RESOURCES" key="label.back"/>
 			</html:link>
 		</logic:equal>
 		<logic:equal name="archive" value="false">
 			<html:link action="<%="/phdIndividualProgramProcess.do?method=viewProcessAlertMessages&processId=" + ((DomainObject) process).getExternalId()%>">
-				« <bean:message bundle="PHD_RESOURCES" key="label.back"/>
+				Â« <bean:message bundle="PHD_RESOURCES" key="label.back"/>
 			</html:link>
 		</logic:equal>
 	</logic:equal>

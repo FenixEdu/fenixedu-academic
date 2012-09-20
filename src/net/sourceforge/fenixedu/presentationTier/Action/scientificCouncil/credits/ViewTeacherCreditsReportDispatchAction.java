@@ -299,7 +299,7 @@ public class ViewTeacherCreditsReportDispatchAction extends FenixDispatchAction 
 		}
 		if (lastExecutionYear != null) {
 		    PeriodCreditsReportDTO periodCreditsReportDTO = departmentPeriodTotalCredits.get(lastExecutionYear);
-		    addCell("Nº Docentes " + lastExecutionYear.getYear(), (short) 3, "Docentes Carreira", (short) 1,
+		    addCell("NÂº Docentes " + lastExecutionYear.getYear(), (short) 3, "Docentes Carreira", (short) 1,
 			    periodCreditsReportDTO == null ? null : periodCreditsReportDTO.getCareerTeachersSize(), (short) 1,
 			    Formula.SUM_FOOTER, (short) 1);
 		    addCell("Restantes Categorias",
@@ -420,7 +420,7 @@ public class ViewTeacherCreditsReportDispatchAction extends FenixDispatchAction 
     private void exportToXls(Map<Department, Map<Unit, List>> teachersCreditsByDepartment, ServletOutputStream outputStream)
 	    throws IOException {
 
-	final Spreadsheet spreadsheet = new Spreadsheet("Relatório de Créditos");
+	final Spreadsheet spreadsheet = new Spreadsheet("RelatÃ³rio de CrÃ©ditos");
 
 	final HSSFWorkbook workbook = new HSSFWorkbook();
 	final ExcelStyle excelStyle = new ExcelStyle(workbook);
@@ -489,15 +489,15 @@ public class ViewTeacherCreditsReportDispatchAction extends FenixDispatchAction 
 
     private void setHeaders(Set<ExecutionSemester> executionSemesters, Spreadsheet spreadsheet) {
 	final Row row = spreadsheet.addRow();
-	row.setCell("Número");
+	row.setCell("NÃºmero");
 	row.setCell("Nome");
-	row.setCell("Saldo até " + executionSemesters.iterator().next().getPreviousExecutionPeriod().getExecutionYear().getYear());
+	row.setCell("Saldo atÃ© " + executionSemesters.iterator().next().getPreviousExecutionPeriod().getExecutionYear().getYear());
 	for (ExecutionSemester executionSemester : executionSemesters) {
 	    String semester = null;
 	    if (executionSemester.getName().equalsIgnoreCase("1 Semestre")) {
-		semester = "1º Sem - ";
+		semester = "1Âº Sem - ";
 	    } else {
-		semester = "2º Sem - ";
+		semester = "2Âº Sem - ";
 	    }
 	    StringBuilder stringBuilder = new StringBuilder(semester);
 	    stringBuilder.append(executionSemester.getExecutionYear().getYear());

@@ -21,7 +21,7 @@ import org.apache.struts.action.ExceptionHandler;
 import org.apache.struts.config.ExceptionConfig;
 
 /**
- * @author Jo„o Mota
+ * @author Jo√£o Mota
  */
 public class FenixErrorExceptionHandler extends ExceptionHandler {
 

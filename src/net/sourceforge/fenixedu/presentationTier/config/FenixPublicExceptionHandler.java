@@ -22,7 +22,7 @@ import org.apache.struts.action.ActionMapping;
 import org.apache.struts.config.ExceptionConfig;
 
 /**
- * @author Jo„o Mota
+ * @author Jo√£o Mota
  */
 public class FenixPublicExceptionHandler extends FenixExceptionHandler {
 

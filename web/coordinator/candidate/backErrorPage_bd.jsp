@@ -4,7 +4,7 @@
   <font color="#023264" size="-1">
 
     <h2>
-		Neste ecr„ n„o poder· voltar atr·s. Ter· de recomeÁar o processo.
+		Neste ecr√£ n√£o poder√° voltar atr√°s. Ter√° de recome√ßar o processo.
     </h2>
 
   </font>

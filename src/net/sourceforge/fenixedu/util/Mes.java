@@ -74,7 +74,7 @@ public class Mes extends FenixUtil {
 	case FEVEREIRO:
 	    return "Fevereiro";
 	case MARCO:
-	    return "Março";
+	    return "MarÃ§o";
 	case ABRIL:
 	    return "Abril";
 	case MAIO:

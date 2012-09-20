@@ -92,7 +92,7 @@
 		<html:form action="/displayCourseListToStudyPlan?method=chooseCurricularCourses">
 	   	  	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="1"/> 
 	   	  	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.candidateID" property="candidateID"/> 
-	   	  	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.executionYear" property="executionYear"/>ï¿?
+	   	  	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.executionYear" property="executionYear"/>Ã¯Â¿?
 	   	  	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.degreeCurricularPlanID" property="degreeCurricularPlanID"/>
 
 			<!-- CurricularCourse -->
@@ -135,8 +135,8 @@
 			
 			<div class="infoop">
 				<span class="error"><!-- Error messages go here --><strong>Nota:</strong></span>
-				<br />&nbsp;&nbsp;&nbsp;&nbsp;O nome das ï¿?reas Cientï¿?ficas aparecem por baixo do nome da disciplina e ligeiramente mais ï¿? frente. Nesse caso a opï¿?ï¿?o ï¿? feita no quadrado ï¿? frente da ï¿?rea cientï¿?fica.
-				<br />&nbsp;&nbsp;&nbsp;&nbsp;Caso a disciplina não pertenï¿?a a nenhuma ï¿?rea Cientï¿?fica, a opï¿?ï¿?o para a sua selecï¿?ï¿?o aparecerï¿? imediatamente antes do seu nome. 
+				<br />&nbsp;&nbsp;&nbsp;&nbsp;O nome das Ã¯Â¿?reas CientÃ¯Â¿?ficas aparecem por baixo do nome da disciplina e ligeiramente mais Ã¯Â¿? frente. Nesse caso a opÃ¯Â¿?Ã¯Â¿?o Ã¯Â¿? feita no quadrado Ã¯Â¿? frente da Ã¯Â¿?rea cientÃ¯Â¿?fica.
+				<br />&nbsp;&nbsp;&nbsp;&nbsp;Caso a disciplina nÃ£o pertenÃ¯Â¿?a a nenhuma Ã¯Â¿?rea CientÃ¯Â¿?fica, a opÃ¯Â¿?Ã¯Â¿?o para a sua selecÃ¯Â¿?Ã¯Â¿?o aparecerÃ¯Â¿? imediatamente antes do seu nome. 
 			</div>
 	
 			<br />

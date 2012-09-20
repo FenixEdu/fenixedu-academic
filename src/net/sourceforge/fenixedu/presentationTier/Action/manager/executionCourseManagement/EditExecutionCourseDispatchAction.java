@@ -49,7 +49,7 @@ import org.apache.struts.validator.DynaValidatorForm;
 import pt.ist.fenixWebFramework.security.UserView;
 
 /**
- * @author Fernanda Quitério 19/Dez/2003
+ * @author Fernanda QuitÃ©rio 19/Dez/2003
  * 
  */
 public class EditExecutionCourseDispatchAction extends FenixDispatchAction {

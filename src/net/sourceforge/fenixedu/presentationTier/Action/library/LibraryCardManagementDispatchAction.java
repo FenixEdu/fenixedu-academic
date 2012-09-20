@@ -649,16 +649,16 @@ public class LibraryCardManagementDispatchAction extends FenixDispatchAction {
 	libraryCardSearch.doSearch();
 	Spreadsheet spreadsheet = new Spreadsheet("Utilizadores_Biblioteca");
 	spreadsheet.setHeader("Categoria");
-	spreadsheet.setHeader("Número");
+	spreadsheet.setHeader("NÃºmero");
 	spreadsheet.setHeader("Nome");
 	spreadsheet.setHeader("Unidade");
 	spreadsheet.setHeader("Telefone");
-	spreadsheet.setHeader("Telemóvel");
+	spreadsheet.setHeader("TelemÃ³vel");
 	spreadsheet.setHeader("Email");
 	spreadsheet.setHeader("Pin");
 	spreadsheet.setHeader("Morada");
 	spreadsheet.setHeader("Localidade");
-	spreadsheet.setHeader("Código Postal");
+	spreadsheet.setHeader("CÃ³digo Postal");
 	spreadsheet.setHeader("Validade");
 
 	for (LibraryCardDTO libraryCardDTO : libraryCardSearch.getSearchResult()) {

@@ -23,8 +23,8 @@ import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 
 /**
- * @author Nuno Ant„o
- * @author Jo„o Pereira
+ * @author Nuno Ant√£o
+ * @author Jo√£o Pereira
  */
 
 public class EditarSalaAction extends FenixSelectedRoomsAndSelectedRoomIndexContextAction {

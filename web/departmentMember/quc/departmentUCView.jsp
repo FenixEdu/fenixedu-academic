@@ -25,7 +25,7 @@ font-weight: normal;
 <h2><bean:message key="title.inquiry.quc.department" bundle="INQUIRIES_RESOURCES"/></h2>
 
 <h3><bean:write name="executionCourse" property="name"/> - <bean:write name="executionCourse" property="sigla"/> 
-	(<bean:write name="executionPeriod" property="semester"/>º <bean:message key="label.inquiries.semester" bundle="INQUIRIES_RESOURCES"/> 
+	(<bean:write name="executionPeriod" property="semester"/>Âº <bean:message key="label.inquiries.semester" bundle="INQUIRIES_RESOURCES"/> 
 		<bean:write name="executionPeriod" property="executionYear.year"/>)</h3>
 
 <div id="report">
@@ -36,7 +36,7 @@ font-weight: normal;
 		
 		<h3 class="separator2 mtop15">
 			<span style="font-weight: normal;">
-				Medidas a aplicar em relação à UC
+				Medidas a aplicar em relaÃ§Ã£o Ã  UC
 			</span>
 		</h3>
 		<fr:edit name="departmentUCResultsBean">
@@ -62,7 +62,7 @@ font-weight: normal;
 	<logic:notEmpty name="departmentUCResultsBean" property="allCourseComments">
 		<h3 class="separator2 mtop15">
 			<span style="font-weight: normal;">
-				Comentários
+				ComentÃ¡rios
 			</span>
 		</h3>
 		<div class="mtop15 mbottom25">

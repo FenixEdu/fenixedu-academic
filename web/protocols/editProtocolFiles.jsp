@@ -32,7 +32,7 @@
 				<bean:message key="button.delete" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/>
 			</html:link>,
 			<html:link page="/editProtocol.do?method=changeProtocolFilePermission" paramId="fileID" paramName="file" paramProperty="idInternal">
-			Alterar permissões
+			Alterar permissÃµes
 			</html:link>
 		</td>				
 						

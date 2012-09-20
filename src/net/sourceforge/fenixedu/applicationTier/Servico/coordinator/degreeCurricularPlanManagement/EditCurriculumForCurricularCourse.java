@@ -12,7 +12,7 @@ import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
 
 /**
- * @author Fernanda Quitério 21/Nov/2003
+ * @author Fernanda QuitÃ©rio 21/Nov/2003
  * 
  */
 public class EditCurriculumForCurricularCourse extends FenixService {

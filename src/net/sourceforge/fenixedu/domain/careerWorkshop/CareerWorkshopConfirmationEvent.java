@@ -95,22 +95,22 @@ public class CareerWorkshopConfirmationEvent extends CareerWorkshopConfirmationE
 	    protected void makeLine(CareerWorkshopConfirmation item) {
 		DateTime timestamp = item.getSealStamp();
 
-		addCell("Data de confirmação", (timestamp == null ? "" : timestamp.toString("dd-MM-yyyy")));
-		addCell("Hora de confirmação", (timestamp == null ? "" : timestamp.toString("HH:mm")));
+		addCell("Data de confirmaÃ§Ã£o", (timestamp == null ? "" : timestamp.toString("dd-MM-yyyy")));
+		addCell("Hora de confirmaÃ§Ã£o", (timestamp == null ? "" : timestamp.toString("HH:mm")));
 		addCell("Confirmou?", getConfirmationStatus(item));
-		addCell("Número aluno", item.getStudent().getNumber());
+		addCell("NÃºmero aluno", item.getStudent().getNumber());
 		addCell("Nome", item.getStudent().getName());
 		addCell("Email", item.getStudent().getPerson().getDefaultEmailAddressValue());
-		addCell("Código", item.getConfirmationCode());
+		addCell("CÃ³digo", item.getConfirmationCode());
 
 	    }
 
 	    protected String getConfirmationStatus(CareerWorkshopConfirmation item) {
 		if (item.getConfirmation() == null) {
-		    return "Não";
+		    return "NÃ£o";
 		}
 		if (!item.getConfirmation()) {
-		    return "Não";
+		    return "NÃ£o";
 		}
 		return "SIM";
 	    }

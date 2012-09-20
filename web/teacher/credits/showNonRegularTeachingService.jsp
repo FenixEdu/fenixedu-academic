@@ -17,12 +17,12 @@
 </logic:present>
 
 <logic:notPresent name="professorships">
-	N„o est· a leccionar nenhuma aula
+	N√£o est√° a leccionar nenhuma aula
 </logic:notPresent>
 
 <logic:present name="professorships">
 	<logic:empty name="professorships">
-			N„o est· a leccionar nenhuma aula
+			N√£o est√° a leccionar nenhuma aula
 	</logic:empty>
 	<logic:iterate id="professorship" name="professorships">
 		<strong><bean:write name="professorship" property="executionCourse.nome"/>				
@@ -44,7 +44,7 @@
 			</fr:view>
 		</logic:notEmpty>
 		<logic:empty name="professorship" property="nonRegularTeachingServices">
-			N„o foram encontrados registos de aulas.
+			N√£o foram encontrados registos de aulas.
 		</logic:empty>
 		
 		 <logic:present name="canEdit">

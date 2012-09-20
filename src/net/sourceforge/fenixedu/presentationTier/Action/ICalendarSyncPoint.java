@@ -57,8 +57,8 @@ public class ICalendarSyncPoint extends FenixDispatchAction {
 	}
 	String url = scheme + "://" + serverName + ((serverPort == 80 || serverPort == 443) ? "" : ":" + serverPort) + "/privado";
 	EventBean event = new EventBean("Renovar a chave do calendario.", validity.minusMinutes(30), validity.plusMinutes(30),
-		false, "Portal Fénix", url,
-		"A sua chave de sincronização do calendario vai expirar. Diriga-se ao Portal Fénix para gerar nova chave");
+		false, "Portal FÃ©nix", url,
+		"A sua chave de sincronizaÃ§Ã£o do calendario vai expirar. Diriga-se ao Portal FÃ©nix para gerar nova chave");
 
 	allEvents.add(event);
 
@@ -98,8 +98,8 @@ public class ICalendarSyncPoint extends FenixDispatchAction {
 
 	String url = scheme + "://" + serverName + ((serverPort == 80 || serverPort == 443) ? "" : ":" + serverPort) + "/privado";
 	EventBean event = new EventBean("Renovar a chave do calendario.", validity.minusMinutes(30), validity.plusMinutes(30),
-		false, "Portal Fénix", url,
-		"A sua chave de sincronização do calendario vai expirar. Diriga-se ao Portal Fénix para gerar nova chave");
+		false, "Portal FÃ©nix", url,
+		"A sua chave de sincronizaÃ§Ã£o do calendario vai expirar. Diriga-se ao Portal FÃ©nix para gerar nova chave");
 
 	allEvents.add(event);
 

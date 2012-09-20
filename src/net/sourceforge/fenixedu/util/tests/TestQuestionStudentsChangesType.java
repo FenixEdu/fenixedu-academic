@@ -25,11 +25,11 @@ public class TestQuestionStudentsChangesType extends FenixUtil {
 
     public static final String THIS_STUDENT_STRING = "Apenas neste aluno";
 
-    public static final String STUDENTS_FROM_TEST_VARIATION_STRING = "Todos os alunos desta ficha distribuída que tenham esta variação";
+    public static final String STUDENTS_FROM_TEST_VARIATION_STRING = "Todos os alunos desta ficha distribuÃ­da que tenham esta variaÃ§Ã£o";
 
-    public static final String STUDENTS_FROM_TEST_STRING = "Todos os alunos desta ficha distribuída";
+    public static final String STUDENTS_FROM_TEST_STRING = "Todos os alunos desta ficha distribuÃ­da";
 
-    public static final String ALL_STUDENTS_STRING = "Todos os alunos que tenham esta variação";
+    public static final String ALL_STUDENTS_STRING = "Todos os alunos que tenham esta variaÃ§Ã£o";
 
     private Integer type;
 

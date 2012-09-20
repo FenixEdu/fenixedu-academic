@@ -16,7 +16,7 @@
 <%--  ###  Return Links / Steps Information(for multistep forms)  ### --%>
 <p>
 	<html:link action="/phdIndividualProgramProcess.do?method=managePhdEmails">
-		« <bean:message key="label.back" bundle="PHD_RESOURCES" />
+		Â« <bean:message key="label.back" bundle="PHD_RESOURCES" />
 	</html:link>
 </p>
 

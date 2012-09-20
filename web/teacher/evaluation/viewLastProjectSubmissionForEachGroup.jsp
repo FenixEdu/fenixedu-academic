@@ -63,7 +63,7 @@
 <logic:notEmpty name="deletedStudentGroupProjectSubmissions">
 
 
-<p class="mtop15 mbottom05"><b>Existem grupos apagados com submissıes de projectos:</b></p>
+<p class="mtop15 mbottom05"><b>Existem grupos apagados com submiss√µes de projectos:</b></p>
 
 	<fr:view name="deletedStudentGroupProjectSubmissions" schema="deletedProjectSubmission.view-full">
 		<fr:layout name="tabular">

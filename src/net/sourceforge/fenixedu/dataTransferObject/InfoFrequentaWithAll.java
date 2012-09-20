@@ -7,7 +7,7 @@ package net.sourceforge.fenixedu.dataTransferObject;
 import net.sourceforge.fenixedu.domain.Attends;
 
 /**
- * @author T‚nia Pous„o 18/Jun/2004
+ * @author T√¢nia Pous√£o 18/Jun/2004
  */
 public class InfoFrequentaWithAll extends InfoFrequenta {
 

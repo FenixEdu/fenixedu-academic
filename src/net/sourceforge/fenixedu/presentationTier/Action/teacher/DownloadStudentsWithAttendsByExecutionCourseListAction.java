@@ -46,15 +46,15 @@ public class DownloadStudentsWithAttendsByExecutionCourseListAction extends Feni
 
     private static final String NOT_AVAILABLE = "N/A";
 
-    private static final String STUDENT_NUMBER = "Número";
+    private static final String STUDENT_NUMBER = "NÃºmero";
 
-    private static final String NUMBER_OF_ENROLLMENTS = "Número total de Inscrições";
+    private static final String NUMBER_OF_ENROLLMENTS = "NÃºmero total de InscriÃ§Ãµes";
 
-    private static final String ATTENDACY_TYPE = "Tipo de Inscrição";
+    private static final String ATTENDACY_TYPE = "Tipo de InscriÃ§Ã£o";
 
     private static final String ATTENDACY_TYPE_NORMAL = "Normal";
 
-    private static final String ATTENDACY_TYPE_NOT_ENROLLED = "Não Inscrito";
+    private static final String ATTENDACY_TYPE_NOT_ENROLLED = "NÃ£o Inscrito";
 
     private static final String ATTENDACY_TYPE_IMPROVEMENT = "Melhoria";
 
@@ -68,19 +68,19 @@ public class DownloadStudentsWithAttendsByExecutionCourseListAction extends Feni
 
     private static final String SHIFT = "Turno ";
 
-    private static final String THEORETICAL = "Teórico";
+    private static final String THEORETICAL = "TeÃ³rico";
 
     private static final String LABORATORIAL = "Laboratorial";
 
-    private static final String PRACTICAL = "Prático";
+    private static final String PRACTICAL = "PrÃ¡tico";
 
-    private static final String THEO_PRACTICAL = "Teórico-Prático";
+    private static final String THEO_PRACTICAL = "TeÃ³rico-PrÃ¡tico";
 
     private static final String SUMMARY = "Resumo:";
 
-    private static final String NUMBER_ENROLLMENTS = "Número de inscrições";
+    private static final String NUMBER_ENROLLMENTS = "NÃºmero de inscriÃ§Ãµes";
 
-    private static final String NUMBER_STUDENTS = "Número de alunos";
+    private static final String NUMBER_STUDENTS = "NÃºmero de alunos";
 
     private final ResourceBundle enumerationResources = ResourceBundle.getBundle("resources.EnumerationResources", Language
 	    .getLocale());

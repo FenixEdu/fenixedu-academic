@@ -51,7 +51,7 @@
 				<em><bean:message key="message.check.personal.information.in.intranet" bundle="PHD_RESOURCES" /></em>
 				<p class="mtop15">
 					<html:link action="/applications/phd/phdProgramApplicationProcess.do?method=viewApplication" paramId="hash" paramName="hash">
-						« <bean:message bundle="PHD_RESOURCES" key="label.back"/>
+						Â« <bean:message bundle="PHD_RESOURCES" key="label.back"/>
 					</html:link>
 				</p>
 			</logic:equal>

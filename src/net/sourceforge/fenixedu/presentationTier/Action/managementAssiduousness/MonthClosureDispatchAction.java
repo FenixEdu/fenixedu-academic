@@ -170,9 +170,9 @@ public class MonthClosureDispatchAction extends FenixDispatchAction {
     }
 
     private StyledExcelSpreadsheet getSpreadSheet(ClosedMonth closedMonth) {
-	StyledExcelSpreadsheet spreadsheet = new StyledExcelSpreadsheet("Listagem Fecho Mês");
+	StyledExcelSpreadsheet spreadsheet = new StyledExcelSpreadsheet("Listagem Fecho MÃªs");
 	spreadsheet.newHeaderRow();
-	spreadsheet.addHeader("Nº Mec");
+	spreadsheet.addHeader("NÂº Mec");
 	spreadsheet.addHeader("Nome", 10000);
 	int firstColumnNumber = 2, columnNumber = 2;
 	Map<JustificationMotive, Integer> justifications = new HashMap<JustificationMotive, Integer>();
@@ -216,7 +216,7 @@ public class MonthClosureDispatchAction extends FenixDispatchAction {
 	spreadsheet.addHeader("Saldo Injustificado");
 	spreadsheet.addHeader("Faltas Injustificadas em dias completos");
 	spreadsheet.addHeader("Faltas Injustificadas por tempo em falta");
-	spreadsheet.addHeader("Faltas por conta do periodo de férias");
+	spreadsheet.addHeader("Faltas por conta do periodo de fÃ©rias");
 
 	spreadsheet.mergeCells(0, 1, 0, 0);
 	spreadsheet.mergeCells(0, 1, 1, 1);
@@ -241,9 +241,9 @@ public class MonthClosureDispatchAction extends FenixDispatchAction {
 	}
 	spreadsheet.setRegionBorder(0, spreadsheet.getRow().getRowNum() + 1, 0, spreadsheet.getMaxiumColumnNumber() - 1);
 
-	spreadsheet.getSheet("Listagem Fecho Mês Agrupada");
+	spreadsheet.getSheet("Listagem Fecho MÃªs Agrupada");
 	spreadsheet.newHeaderRow();
-	spreadsheet.addHeader("Nº Mec");
+	spreadsheet.addHeader("NÂº Mec");
 	spreadsheet.addHeader("Nome", 10000);
 	columnNumber = 2;
 	Map<String, Integer> justificationsByGroups = new HashMap<String, Integer>();
@@ -270,7 +270,7 @@ public class MonthClosureDispatchAction extends FenixDispatchAction {
 	spreadsheet.addHeader("Saldo Injustificado");
 	spreadsheet.addHeader("Faltas Injustificadas em dias completos");
 	spreadsheet.addHeader("Faltas Injustificadas por tempo em falta");
-	spreadsheet.addHeader("Faltas por conta do periodo de férias");
+	spreadsheet.addHeader("Faltas por conta do periodo de fÃ©rias");
 
 	for (AssiduousnessClosedMonth assiduousnessClosedMonth : closedMonth.getAssiduousnessClosedMonths()) {
 	    Map<JustificationGroup, Double> justificationsValues = new HashMap<JustificationGroup, Double>();
@@ -565,7 +565,7 @@ public class MonthClosureDispatchAction extends FenixDispatchAction {
 	    HttpServletResponse response) throws Exception {
 	YearMonth yearMonth = getRenderedObject("yearMonth");
 	ClosedMonth closedMonth = ClosedMonth.getClosedMonth(yearMonth);
-	StyledExcelSpreadsheet spreadsheet = new StyledExcelSpreadsheet("Correções");
+	StyledExcelSpreadsheet spreadsheet = new StyledExcelSpreadsheet("CorreÃ§Ãµes");
 	ResourceBundle bundleAssiduousness = ResourceBundle.getBundle("resources.AssiduousnessResources", Language.getLocale());
 	spreadsheet.newHeaderRow();
 	spreadsheet.addHeader(bundleAssiduousness.getString("label.number"));

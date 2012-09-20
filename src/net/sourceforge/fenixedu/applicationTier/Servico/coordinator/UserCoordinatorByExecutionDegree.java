@@ -7,7 +7,7 @@ import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.Person;
 
 /**
- * @author T‚nia Pous„o Create on 04/Fev/2003
+ * @author T√¢nia Pous√£o Create on 04/Fev/2003
  */
 public class UserCoordinatorByExecutionDegree extends FenixService {
 

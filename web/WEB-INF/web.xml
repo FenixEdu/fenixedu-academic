@@ -1,4 +1,4 @@
-<?xml version='1.0' encoding='ISO-8859-1'?>
+<?xml version='1.0' encoding='UTF-8'?>
 
 <web-app xmlns="http://java.sun.com/xml/ns/j2ee"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -460,7 +460,8 @@
 	      <description>All JSPs</description>
 	      <url-pattern>*.jsp</url-pattern>
 	      <el-ignored>true</el-ignored>
-	      <page-encoding>ISO-8859-1</page-encoding>
+	      <!--<page-encoding>UTF-8</page-encoding>-->
+	      <page-encoding>UTF-8</page-encoding>
 	    </jsp-property-group>
     </jsp-config>
     

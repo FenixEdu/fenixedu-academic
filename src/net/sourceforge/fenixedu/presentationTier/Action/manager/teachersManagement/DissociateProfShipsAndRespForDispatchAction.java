@@ -25,7 +25,7 @@ import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 
 /**
- * @author Fernanda Quitério 16/Dez/2003
+ * @author Fernanda QuitÃ©rio 16/Dez/2003
  * 
  */
 public class DissociateProfShipsAndRespForDispatchAction extends FenixDispatchAction {

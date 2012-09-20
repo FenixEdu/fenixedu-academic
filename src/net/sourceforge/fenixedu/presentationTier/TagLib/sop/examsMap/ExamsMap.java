@@ -133,7 +133,7 @@ public class ExamsMap {
 
     // --------------------------------------------------------------------------
     // ----------------
-    // --- Utils Para Manupulação de Datas
+    // --- Utils Para ManupulaÃ§Ã£o de Datas
     // ------------------------------------------------------
 
     private Calendar makeFirstDayOfYear(Calendar someDayOfSameYear) {

@@ -15,10 +15,10 @@ public class PrintAllCandidatesFilterType extends FenixUtil {
     // filtros iniciais
     private static Object[] filters = {
 	    new LabelValueBean("Mostrar todos os registos", PrintAllCandidatesFilter.INVALID_FILTER.getName()),
-	    new LabelValueBean("Especialização", PrintAllCandidatesFilter.FILTERBY_SPECIALIZATION_VALUE.getName()),
-	    new LabelValueBean("Situação", PrintAllCandidatesFilter.FILTERBY_SITUATION_VALUE.getName()),
+	    new LabelValueBean("EspecializaÃ§Ã£o", PrintAllCandidatesFilter.FILTERBY_SPECIALIZATION_VALUE.getName()),
+	    new LabelValueBean("SituaÃ§Ã£o", PrintAllCandidatesFilter.FILTERBY_SITUATION_VALUE.getName()),
 	    new LabelValueBean("Prentende dar aulas", PrintAllCandidatesFilter.FILTERBY_GIVESCLASSES_VALUE.getName()),
-	    new LabelValueBean("Não prentende dar aulas", PrintAllCandidatesFilter.FILTERBY_DOESNTGIVESCLASSES_VALUE.getName()) };
+	    new LabelValueBean("NÃ£o prentende dar aulas", PrintAllCandidatesFilter.FILTERBY_DOESNTGIVESCLASSES_VALUE.getName()) };
 
     // filtros a aplicar de especializacao
     private static Object[] specializationFilters = {
@@ -47,11 +47,11 @@ public class PrintAllCandidatesFilterType extends FenixUtil {
     public static String getFilterNameByValue(PrintAllCandidatesFilter filterBy) {
 	switch (filterBy) {
 	case FILTERBY_SPECIALIZATION_VALUE:
-	    return "Especialização";
+	    return "EspecializaÃ§Ã£o";
 	case FILTERBY_SITUATION_VALUE:
-	    return "Situação";
+	    return "SituaÃ§Ã£o";
 	case FILTERBY_DOESNTGIVESCLASSES_VALUE:
-	    return "Não pretende dar aulas";
+	    return "NÃ£o pretende dar aulas";
 	case FILTERBY_GIVESCLASSES_VALUE:
 	    return "Pretende dar aulas";
 	}

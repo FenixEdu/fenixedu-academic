@@ -46,7 +46,7 @@ import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 /**
  * @author Nuno Nunes (nmsn@rnl.ist.utl.pt) Joana Mota (jccm@rnl.ist.utl.pt)
  * @author David Santos
- * @author AndrÈ Fernandes / Jo„o Brito
+ * @author Andr√© Fernandes / Jo√£o Brito
  */
 
 public class CurriculumDispatchAction extends FenixDispatchAction {

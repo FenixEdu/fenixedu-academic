@@ -19,7 +19,7 @@
 	<logic:notEmpty name="parkingCardSearchBean" property="selectedParkingParties">
 		<bean:size id="selectedParkingPartiesSize" name="parkingCardSearchBean" property="selectedParkingParties"/>
 		<p>
-			Foram selecionados <strong><bean:write name="selectedParkingPartiesSize"/></strong> utentes para renovação.<br/>
+			Foram selecionados <strong><bean:write name="selectedParkingPartiesSize"/></strong> utentes para renovaÃ§Ã£o.<br/>
 		</p>
 		<fr:view name="parkingCardSearchBean" property="selectedParkingParties" schema="show.selectedParkingCards">
 			<fr:layout name="tabular">
@@ -33,6 +33,6 @@
 		<html:submit property="remove"><bean:message key="button.remove" bundle="PARKING_RESOURCES"/></html:submit>
 	</logic:notEmpty>
 	<logic:empty name="parkingCardSearchBean" property="selectedParkingParties">
-		<p>Não foram selecionados utentes para renovação.</p>
+		<p>NÃ£o foram selecionados utentes para renovaÃ§Ã£o.</p>
 	</logic:empty>
 </fr:form>

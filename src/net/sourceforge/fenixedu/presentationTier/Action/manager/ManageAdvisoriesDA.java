@@ -32,7 +32,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 /**
  * @author Luis Cruz
- * @author Gonçalo Luiz
+ * @author GonÃ§alo Luiz
  */
 @Mapping(module = "manager", path = "/manageAdvisories", input = "/manageAdvisories.do?method=prepare&page=0", attribute = "advisoryForm", formBean = "advisoryForm", scope = "request", parameter = "method")
 @Forwards(value = {

@@ -7,7 +7,7 @@ import net.sourceforge.fenixedu._development.LogLevel;
 import org.apache.log4j.Logger;
 
 /**
- * @author T‚nia Pous„o
+ * @author T√¢nia Pous√£o
  * 
  * 
  */

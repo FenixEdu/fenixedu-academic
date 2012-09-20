@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="ISO-8859-1"  ?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with iReport - A designer for JasperReports -->
 <!DOCTYPE jasperReport PUBLIC "//JasperReports//DTD Report Design//EN" "http://jasperreports.sourceforge.net/dtds/jasperreport.dtd">
 <jasperReport
@@ -18,7 +18,7 @@
 		 isTitleNewPage="false"
 		 isSummaryNewPage="false">
 	<property name="ireport.scriptlethandling" value="0" />
-	<property name="ireport.encoding" value="ISO-8859-1" />
+	<property name="ireport.encoding" value="UTF-8" />
 	<import value="java.util.*" />
 	<import value="net.sf.jasperreports.engine.*" />
 	<import value="net.sf.jasperreports.engine.data.*" />
@@ -105,7 +105,7 @@
 					<textElement textAlignment="Justified" markup="styled" lineSpacing="1_1_2">
 						<font pdfFontName="Times-Roman" size="12" isBold="false" isItalic="false"/>
 					</textElement>
-				<textFieldExpression   class="java.lang.String"><![CDATA["A Técnica Superior da Secção de Graduação do Instituto Superior Técnico da Universidade Técnica de Lisboa, certifica que <style pdfFontName=\"Times-Bold\"> " + $P{name} + ",</style> aluno com o número <style pdfFontName=\"Times-Bold\"> " + $P{studentNumber} + "</style>, do <style pdfFontName=\"Times-Bold\"> " + $P{degreeDescription} + "</style>, consta o(s) seguinte(s) registo(s) de teste(s) na(s) disciplina(s) abaixo discriminada(s):"]]></textFieldExpression>
+				<textFieldExpression   class="java.lang.String"><![CDATA["A TÃ©cnica Superior da SecÃ§Ã£o de GraduaÃ§Ã£o do Instituto Superior TÃ©cnico da Universidade TÃ©cnica de Lisboa, certifica que <style pdfFontName=\"Times-Bold\"> " + $P{name} + ",</style> aluno com o nÃºmero <style pdfFontName=\"Times-Bold\"> " + $P{studentNumber} + "</style>, do <style pdfFontName=\"Times-Bold\"> " + $P{degreeDescription} + "</style>, consta o(s) seguinte(s) registo(s) de teste(s) na(s) disciplina(s) abaixo discriminada(s):"]]></textFieldExpression>
 				</textField>
 			</band>
 		</title>
@@ -147,7 +147,7 @@
 					<textElement textAlignment="Center" verticalAlignment="Middle">
 						<font pdfFontName="Times-Bold" size="12" isBold="true"/>
 					</textElement>
-				<text><![CDATA[1º Época]]></text>
+				<text><![CDATA[1Âº Ã‰poca]]></text>
 				</staticText>
 				<staticText>
 					<reportElement
@@ -181,7 +181,7 @@
 					<textElement textAlignment="Center" verticalAlignment="Middle">
 						<font pdfFontName="Times-Bold" size="12" isBold="true"/>
 					</textElement>
-				<text><![CDATA[2º Época]]></text>
+				<text><![CDATA[2Âº Ã‰poca]]></text>
 				</staticText>
 				<staticText>
 					<reportElement
@@ -215,7 +215,7 @@
 					<textElement textAlignment="Center" verticalAlignment="Middle">
 						<font pdfFontName="Times-Bold" size="12" isBold="true"/>
 					</textElement>
-				<text><![CDATA[Época
+				<text><![CDATA[Ã‰poca
 Especial]]></text>
 				</staticText>
 				<staticText>
@@ -389,7 +389,7 @@ Especial]]></text>
 					<textElement textAlignment="Center" verticalAlignment="Middle">
 						<font pdfFontName="Courier-Oblique" size="8" isItalic="true"/>
 					</textElement>
-				<text><![CDATA[Pág.]]></text>
+				<text><![CDATA[PÃ¡g.]]></text>
 				</staticText>
 				<staticText>
 					<reportElement
@@ -465,7 +465,7 @@ Especial]]></text>
 					<textElement textAlignment="Center" verticalAlignment="Middle">
 						<font pdfFontName="Courier-Oblique" size="8" isItalic="true"/>
 					</textElement>
-				<text><![CDATA[Pág.]]></text>
+				<text><![CDATA[PÃ¡g.]]></text>
 				</staticText>
 				<staticText>
 					<reportElement
@@ -540,7 +540,7 @@ Especial]]></text>
 					<textElement textAlignment="Center">
 						<font pdfFontName="Times-Roman" size="12"/>
 					</textElement>
-				<text><![CDATA[A Técnica Superior]]></text>
+				<text><![CDATA[A TÃ©cnica Superior]]></text>
 				</staticText>
 				<line direction="TopDown">
 					<reportElement
@@ -583,7 +583,7 @@ Especial]]></text>
 					<textElement textAlignment="Justified" markup="styled" lineSpacing="1_1_2">
 						<font pdfFontName="Times-Roman" size="12" isBold="false" isItalic="false"/>
 					</textElement>
-				<textFieldExpression   class="java.lang.String"><![CDATA["Secretaria dos Serviços Académicos do Instituto Superior Técnico,\n" + $P{day}]]></textFieldExpression>
+				<textFieldExpression   class="java.lang.String"><![CDATA["Secretaria dos ServiÃ§os AcadÃ©micos do Instituto Superior TÃ©cnico,\n" + $P{day}]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement

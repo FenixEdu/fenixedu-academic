@@ -26,7 +26,7 @@ import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.ist.fenixWebFramework.services.Service;
 
 /**
- * @author Fernanda Quitério 17/Nov/2003
+ * @author Fernanda QuitÃ©rio 17/Nov/2003
  */
 public class ReadCurriculumHistoryByCurricularCourseCodeAndExecutionYearName extends FenixService {
 

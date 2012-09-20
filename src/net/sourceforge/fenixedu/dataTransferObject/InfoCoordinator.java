@@ -9,7 +9,7 @@ import net.sourceforge.fenixedu.domain.Coordinator;
 /**
  * fenix-head Dominio
  * 
- * @author Jo„o Mota 27/Out/2003
+ * @author Jo√£o Mota 27/Out/2003
  * 
  */
 public class InfoCoordinator extends InfoObject {

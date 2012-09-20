@@ -9,11 +9,11 @@
 <h2>QUC - Garantia da Qualidade das UC</h2>
 
 <br/>
-<h4>Lista de Regentes com comentários e/ou questões obrigatórias por responder:</h4>
+<h4>Lista de Regentes com comentÃ¡rios e/ou questÃµes obrigatÃ³rias por responder:</h4>
 <logic:present name="regentInquiryOID">	
 	<p><html:link action="qucRegentsStatus.do?method=dowloadReport" paramId="regentInquiryOID" paramName="regentInquiryOID">Ver ficheiro</html:link></p>
 </logic:present>
 
 <logic:notPresent name="regentInquiryOID">
-	<p>O inquérito ao Regente encontra-se fechado.</p>
+	<p>O inquÃ©rito ao Regente encontra-se fechado.</p>
 </logic:notPresent>

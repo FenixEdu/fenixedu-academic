@@ -79,9 +79,9 @@ width: 1%;
 
 <div id="content">
 	
-	<h2 style="text-align: center;">REFERÊNCIAS MULTIBANCO PARA PAGAMENTO DAS PROPINAS</h2>
+	<h2 style="text-align: center;">REFERÃŠNCIAS MULTIBANCO PARA PAGAMENTO DAS PROPINAS</h2>
 	
-	<p style="margin-top: 20px;">A data limite da primeira prestação e a totalidade da propina são de 10 dias a partir da data de inicio da matricula. Após a data limite é cobrado 1% sobre a propina da 1º prestação. Deve optar entre o pagamento da propina na totalidade ou pagamento em três prestações.</p>
+	<p style="margin-top: 20px;">A data limite da primeira prestaÃ§Ã£o e a totalidade da propina sÃ£o de 10 dias a partir da data de inicio da matricula. ApÃ³s a data limite Ã© cobrado 1% sobre a propina da 1Âº prestaÃ§Ã£o. Deve optar entre o pagamento da propina na totalidade ou pagamento em trÃªs prestaÃ§Ãµes.</p>
 	
 	<p style="margin-top: 20px;">Taxa de secretaria/Seguro Escolar</p>
 	
@@ -89,7 +89,7 @@ width: 1%;
 		<logic:present name="administrativeOfficeFeeAndInsurancePaymentCode">
 			<bean:define id="administrativeOfficeFeeAndInsurancePaymentCode" name="administrativeOfficeFeeAndInsurancePaymentCode" />
 			<p style="margin: 0.15em 0; width: auto;"><span class="label">Entidade: </span> <span class="data"><bean:write name="sibsEntityCode" /></span></p>
-			<p style="margin: 0.15em 0; width: auto;"><span class="label">Referência: </span> <span class="data"><bean:write name="administrativeOfficeFeeAndInsurancePaymentCode" property="code" /></span></p>
+			<p style="margin: 0.15em 0; width: auto;"><span class="label">ReferÃªncia: </span> <span class="data"><bean:write name="administrativeOfficeFeeAndInsurancePaymentCode" property="code" /></span></p>
 			<p style="margin: 0.15em 0; width: auto;"><span class="label">Data limite:</span> <span class="data"> <bean:write name="administrativeOfficeFeeAndInsurancePaymentCode" property="endDate" /></span></p>
 			<p style="margin: 0.15em 0; width: auto;"><span class="label">Valor:</span> <span class="data"><bean:write name="administrativeOfficeFeeAndInsurancePaymentCode" property="minAmount" /></span></p>
 		</logic:present>
@@ -107,22 +107,22 @@ width: 1%;
 		<logic:present name="totalGratuityPaymentCode">
 			<bean:define id="totalGratuityPaymentCode" name="totalGratuityPaymentCode" />
 			<p style="margin: 0.15em 0; width: auto;"><span class="label">Entidade: </span> <span class="data"><bean:write name="sibsEntityCode" /></span></p>
-			<p style="margin: 0.15em 0; width: auto;"><span class="label">Referência: </span> <span class="data"><bean:write name="totalGratuityPaymentCode" property="code" /></span></p>
+			<p style="margin: 0.15em 0; width: auto;"><span class="label">ReferÃªncia: </span> <span class="data"><bean:write name="totalGratuityPaymentCode" property="code" /></span></p>
 			<p style="margin: 0.15em 0; width: auto;"><span class="label">Data limite:</span> <span class="data"> <bean:write name="firstInstallmentEndDate" /></span></p>
 			<p style="margin: 0.15em 0; width: auto;"><span class="label">Valor:</span> <span class="data"><bean:write name="totalGratuityPaymentCode" property="minAmount" /></span></p>
 		</logic:present>
 	</div>
 
-	<p style="margin-top: 20px;">Propina em prestações</p>
+	<p style="margin-top: 20px;">Propina em prestaÃ§Ãµes</p>
 	<div class="box">
 		<table>
 			<tr>
 		<logic:iterate id="paymentCode" name="installmentPaymentCodes" indexId="i" type="net.sourceforge.fenixedu.domain.accounting.PaymentCode">
 			<% final String style = i > 0 ? "padding-left: 20px; border-left-color: black; border-left-width: thin; border-left-style: solid;" : ""; %>
 				<td style="<%= style %>">
-			<p style="margin: 0.15em 0; width: auto;"><span class="label"><%= (i + 1)  + "º prestação" %></span></p>
+			<p style="margin: 0.15em 0; width: auto;"><span class="label"><%= (i + 1)  + "Âº prestaÃ§Ã£o" %></span></p>
 			<p style="margin: 0.15em 0; width: auto;"><span class="label">Entidade: </span> <span class="data"><bean:write name="sibsEntityCode" /></span></p>
-			<p style="margin: 0.15em 0; width: auto;"><span class="label">Referência: </span> <span class="data"><bean:write name="paymentCode" property="code" /></span></p>
+			<p style="margin: 0.15em 0; width: auto;"><span class="label">ReferÃªncia: </span> <span class="data"><bean:write name="paymentCode" property="code" /></span></p>
 			
 			<logic:equal name="i" value="0">
 			<p style="margin: 0.15em 0; width: auto;"><span class="label">Data limite:</span> <span class="data"> <bean:write name="firstInstallmentEndDate" /></span></p>

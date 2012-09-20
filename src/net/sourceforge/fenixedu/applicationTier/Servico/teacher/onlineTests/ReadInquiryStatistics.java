@@ -85,7 +85,7 @@ public class ReadInquiryStatistics extends FenixService {
 		    }
 		}
 	    }
-	    statistics.add(new LabelValueBean("Número de alunos que responderam", Integer.toString(numOfStudentResponses)));
+	    statistics.add(new LabelValueBean("NÃºmero de alunos que responderam", Integer.toString(numOfStudentResponses)));
 	    infoInquiryStatistics.setInfoStudentTestQuestion(studentTestQuestion);
 	    infoInquiryStatistics.setOptionStatistics(statistics);
 	    infoInquiryStatisticsList.add(infoInquiryStatistics);

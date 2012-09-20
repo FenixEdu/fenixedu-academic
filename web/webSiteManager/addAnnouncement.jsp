@@ -8,7 +8,7 @@
 <%@page import="net.sourceforge.fenixedu.presentationTier.servlets.filters.ContentInjectionRewriter"%>
 
 
-<em>Gest�o de Canais</em>
+<em>Gestão de Canais</em>
 <h2><bean:message bundle="MESSAGING_RESOURCES" key="messaging.annoucenment.add.label"/></h2>
 
 <jsp:include flush="true" page="/messaging/context.jsp"/>
@@ -39,7 +39,7 @@
 
 <table class="tstyle5 thlight thtop thright mtop025">
 
-<%-- T�tulo --%>
+<%-- Tï¿½tulo --%>
 	<tr>
 		<th style="width: 125px;">
 			<span class="required">*</span> <bean:message bundle="MESSAGING_RESOURCES" key="net.sourceforge.fenixedu.domain.messaging.Announcement.title.label"/>:
@@ -169,7 +169,7 @@
 		</td>
 	</tr>
 
-<%-- In�cio do Evento --%>
+<%-- Inï¿½cio do Evento --%>
 	<tr>
 		<th>
 			<bean:message bundle="MESSAGING_RESOURCES" key="net.sourceforge.fenixedu.domain.messaging.Announcement.referedSubjectBegin.label"/>:
@@ -207,7 +207,7 @@
 
 
 
-<%-- An�ncio disponivel apartir... --%>
+<%-- Anï¿½ncio disponivel apartir... --%>
 	<tr>
 		<th>
 			<bean:message bundle="MESSAGING_RESOURCES" key="net.sourceforge.fenixedu.domain.messaging.Announcement.publicationBegin.label"/>:

@@ -5,7 +5,7 @@ import org.apache.struts.action.ActionForward;
 
 /**
  * 
- * @author Luis Cruz & Nuno Nunes & Jo„o Mota
+ * @author Luis Cruz & Nuno Nunes & Jo√£o Mota
  */
 
 // Note: When upgrading to struts 1.1 rc1 or above change

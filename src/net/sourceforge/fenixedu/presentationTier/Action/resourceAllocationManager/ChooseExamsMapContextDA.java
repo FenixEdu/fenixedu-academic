@@ -47,8 +47,8 @@ public class ChooseExamsMapContextDA extends FenixContextDispatchAction {
 	/* Criar o bean de semestres */
 	List semestres = new ArrayList();
 	semestres.add(new LabelValueBean("escolher", ""));
-	semestres.add(new LabelValueBean("1 บ", "1"));
-	semestres.add(new LabelValueBean("2 บ", "2"));
+	semestres.add(new LabelValueBean("1 ยบ", "1"));
+	semestres.add(new LabelValueBean("2 ยบ", "2"));
 	request.setAttribute("semestres", semestres);
 
 	List curricularYearsList = new ArrayList();

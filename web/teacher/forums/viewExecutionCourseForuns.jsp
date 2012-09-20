@@ -21,7 +21,7 @@
 				<html:link action="<%="/executionCourseForumManagement.do?method=viewForum&executionCourseID=" + executionCourseId%>" paramId="forumId" paramName="executionCourseForum" paramProperty="idInternal">
 					<bean:write name="executionCourseForum" property="name"/>
 				</html:link>
-				<span class="color888"> (<bean:write name="threadsCount"/> tópicos)</span>
+				<span class="color888"> (<bean:write name="threadsCount"/> tÃ³picos)</span>
 			</p>
 		</logic:iterate>
 	</logic:notEmpty>

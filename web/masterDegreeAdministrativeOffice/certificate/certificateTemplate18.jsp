@@ -12,9 +12,9 @@ tendo concluido a parte curricular do Programa de Mestrado em
 <b><bean:write name="infoMasterDegreeThesisDataVersion"  property="infoMasterDegreeThesis.infoStudentCurricularPlan.infoDegreeCurricularPlan.infoDegree.nome"/> 
 ( MBA em <bean:write name="infoMasterDegreeThesisDataVersion"  property="infoMasterDegreeThesis.infoStudentCurricularPlan.infoDegreeCurricularPlan.infoDegree.nome"/> )</b> 
 em <bean:write name="conclusiondate" />,
- com a defesa da dissertação intitulada "
+ com a defesa da dissertaÃ§Ã£o intitulada "
 <b><bean:write name="infoMasterDegreeThesisDataVersion" property="dissertationTitle" />"</b>.
 </p>
 <p>
-A parte escolar do curso é constituida pelas seguintes disciplinas, na qual obteve a média de <bean:write name="infoFinalResult" property="finalAverage"/> valores.
+A parte escolar do curso Ã© constituida pelas seguintes disciplinas, na qual obteve a mÃ©dia de <bean:write name="infoFinalResult" property="finalAverage"/> valores.
 </p>

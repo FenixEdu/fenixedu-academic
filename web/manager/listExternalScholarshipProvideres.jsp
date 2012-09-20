@@ -20,7 +20,7 @@
       NIF
     </th>
     <th>
-      Acções
+      AcÃ§Ãµes
     </th>
   </tr>
 <logic:iterate id="provider" name="externalScholarshipProviders">

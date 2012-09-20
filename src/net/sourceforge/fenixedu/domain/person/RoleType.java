@@ -111,7 +111,7 @@ public enum RoleType implements IPresentableEnum {
 
     INTERNATIONAL_RELATION_OFFICE("International Relation Office"),
 
-    IDENTIFICATION_CARD_MANAGER("Gest„o de Cartıes"),
+    IDENTIFICATION_CARD_MANAGER("Gest√£o de Cart√µes"),
 
     TUTORSHIP("Tutorship"),
 

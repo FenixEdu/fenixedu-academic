@@ -110,9 +110,9 @@
 		<h:outputText value="<table class='tstyle5 thlight thright'>"
 			escape="false" />
 			<h:outputText value="<tr>" escape="false" />
-			<h:outputText value="<th> Publicação Oficial</th>" escape="false" />
-			<h:outputText value="<th> Data de Publicação</th>" escape="false" />
-			<h:outputText value="<th> Area de Especialização</th>" escape="false" />
+			<h:outputText value="<th> PublicaÃ§Ã£o Oficial</th>" escape="false" />
+			<h:outputText value="<th> Data de PublicaÃ§Ã£o</th>" escape="false" />
+			<h:outputText value="<th> Area de EspecializaÃ§Ã£o</th>" escape="false" />
 			<h:outputText value="</tr>" escape="false" />
 			
 		<fc:dataRepeater value="#{DegreeManagement.officialPublicationsBeanPrettyPrints}"

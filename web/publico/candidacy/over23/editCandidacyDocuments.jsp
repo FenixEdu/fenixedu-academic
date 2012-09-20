@@ -34,7 +34,7 @@
 </html:messages>
 
 <p><em><bean:message key="message.max.file.size" bundle="CANDIDATE_RESOURCES"/></em></p>
-<p><em>Os documentos submetidos deverão ser do formato PDF.</em></emn></p>
+<p><em>Os documentos submetidos deverÃ£o ser do formato PDF.</em></emn></p>
 
 
 
@@ -72,4 +72,4 @@
 </table>
 </logic:notEmpty>
 
-<p><a href='<%= fullPath + "?method=backToViewCandidacy&individualCandidacyProcess=" + individualCandidacyProcessOID %>'>« <bean:message key="button.back" bundle="CANDIDATE_RESOURCES"/></a></p>
+<p><a href='<%= fullPath + "?method=backToViewCandidacy&individualCandidacyProcess=" + individualCandidacyProcessOID %>'>Â« <bean:message key="button.back" bundle="CANDIDATE_RESOURCES"/></a></p>

@@ -16,7 +16,7 @@
 
 <logic:notPresent role="COORDINATOR"> 
 <html:link action='<%= "/caseHandling" + processName.toString() + ".do?method=listProcesses&amp;parentProcessId=" + parentProcessId.toString() %>'>
-	« <bean:message key="label.back" bundle="APPLICATION_RESOURCES"/>	
+	Â« <bean:message key="label.back" bundle="APPLICATION_RESOURCES"/>	
 </html:link>
 <br/>
 </logic:notPresent>
@@ -24,7 +24,7 @@
 <logic:present role="COORDINATOR">
 <bean:define id="degreeCurricularPlanID" name="degreeCurricularPlanID"/>
 <html:link href='<%= request.getContextPath() + "/coordinator/caseHandling" + processName.toString() + ".do?method=listProcesses&parentProcessId=" + parentProcessId.toString() + "&degreeCurricularPlanID=" + degreeCurricularPlanID.toString() %>'>
-	« <bean:message key="label.back" bundle="APPLICATION_RESOURCES"/>	
+	Â« <bean:message key="label.back" bundle="APPLICATION_RESOURCES"/>	
 </html:link>
 </logic:present>
 
@@ -84,7 +84,7 @@
 	</fr:view>
 	
 	<br />
-	<strong>Informação de seriação:</strong>
+	<strong>InformaÃ§Ã£o de seriaÃ§Ã£o:</strong>
 	<fr:view name="seriesGrade" >
 		<fr:schema bundle="APPLICATION_RESOURCES" type="net.sourceforge.fenixedu.domain.candidacyProcess.secondCycle.SecondCycleIndividualCandidacySeriesGrade">
 			<fr:slot name="degree.name" key="label.candidacy.degree">

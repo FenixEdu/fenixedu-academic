@@ -10,7 +10,7 @@ import java.util.List;
 import org.apache.commons.collections.Predicate;
 
 /**
- * @author Jo„o Mota
+ * @author Jo√£o Mota
  * 
  */
 public class ExamsNotEnrolledPredicate implements Predicate {

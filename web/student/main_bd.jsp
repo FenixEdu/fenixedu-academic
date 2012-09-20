@@ -107,13 +107,13 @@ background: #e5e5e5;
 			</tr>
 			<logic:notEmpty name="executionCoursesAnnouncement" property="evaluationAnnouncements">
 				<logic:iterate id="evaluationAnnouncement" name="executionCoursesAnnouncement" property="evaluationAnnouncements">
-					<!-- Várias condições para:
-							Testes/Exames: 	disabled, se já foram realizados
-											warning, se está a decorrer o seu prazo de inscrição
-											normal, se ainda estão para decorrer
+					<!-- VÃ¡rias condiÃ§Ãµes para:
+							Testes/Exames: 	disabled, se jÃ¡ foram realizados
+											warning, se estÃ¡ a decorrer o seu prazo de inscriÃ§Ã£o
+											normal, se ainda estÃ£o para decorrer
 											
-							Agrupamentos:	normal, se está inscrito
-											disabled, se não está inscrito e o periodo de inscrição expirou
+							Agrupamentos:	normal, se estÃ¡ inscrito
+											disabled, se nÃ£o estÃ¡ inscrito e o periodo de inscriÃ§Ã£o expirou
 					 -->
 					 
 				<tr class="<bean:write name="evaluationAnnouncement" property="status"/>">

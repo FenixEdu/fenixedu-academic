@@ -2,4 +2,4 @@
 <html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 
-<h2>Gestão de <bean:message bundle="MANAGER_RESOURCES" key="label.manager.executionDegreeManagement"/></h2>
+<h2>GestÃ£o de <bean:message bundle="MANAGER_RESOURCES" key="label.manager.executionDegreeManagement"/></h2>

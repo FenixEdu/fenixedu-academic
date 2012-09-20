@@ -70,33 +70,33 @@
 		<tr>
 			<td>
 			<fr:view name="createSummaryBean" property="problemsR1" layout="boolean-icon" /></td>
-			<td>Hor·rios/InscriÁıes</td>
+			<td>Hor√°rios/Inscri√ß√µes</td>
 			<td><fr:view name="createSummaryBean" property="problemsR2" layout="boolean-icon" /></td>
-			<td>MÈtodos de Estudo</td>
+			<td>M√©todos de Estudo</td>
 			<td><fr:view name="createSummaryBean" property="problemsR3" layout="boolean-icon" /></td>
-			<td>Gest„o de Tempo/Volume de Trabalho</td>
+			<td>Gest√£o de Tempo/Volume de Trabalho</td>
 		</tr>
 		<tr>
 			<td><fr:view name="createSummaryBean" property="problemsR4" layout="boolean-icon" /></td>
-			<td>Acesso a InformaÁ„o (ex.:aspectos administrativos; ERASMUS; etc.)</td>
+			<td>Acesso a Informa√ß√£o (ex.:aspectos administrativos; ERASMUS; etc.)</td>
 			<td><fr:view name="createSummaryBean" property="problemsR5" layout="boolean-icon" /></td>
-			<td>TransiÁ„o Ensino Secund·rio/Ensino Superior</td>
+			<td>Transi√ß√£o Ensino Secund√°rio/Ensino Superior</td>
 			<td><fr:view name="createSummaryBean" property="problemsR6" layout="boolean-icon" /></td>
 			<td>Problemas Vocacionais</td>
 		</tr>
 		<tr>
 			<td><fr:view name="createSummaryBean" property="problemsR7" layout="boolean-icon" /></td>
-			<td>RelaÁ„o Professor - Aluno</td>
+			<td>Rela√ß√£o Professor - Aluno</td>
 			<td><fr:view name="createSummaryBean" property="problemsR8" layout="boolean-icon" /></td>
-			<td>Desempenho AcadÈmico (ex.: taxas de aprovaÁ„o)</td>
+			<td>Desempenho Acad√©mico (ex.: taxas de aprova√ß√£o)</td>
 			<td></td>
 			<td></td>
 		</tr>
 		<tr>
 			<td><fr:view name="createSummaryBean" property="problemsR9" layout="boolean-icon" /></td>
-			<td>AvaliaÁ„o (ex.: metodologia, datas de exames; etc.)</td>
+			<td>Avalia√ß√£o (ex.: metodologia, datas de exames; etc.)</td>
 			<td><fr:view name="createSummaryBean" property="problemsR10" layout="boolean-icon" /></td>
-			<td>AdaptaÁ„o ao IST</td>
+			<td>Adapta√ß√£o ao IST</td>
 			<td></td>
 			<td></td>
 		</tr>
@@ -117,33 +117,33 @@
 	<table class="tstyle1 printborder tpadding1">
 		<tr>
 			<td><fr:view name="createSummaryBean" property="gainsR1" layout="boolean-icon" /></td>
-			<td>Maior responsabilizaÁ„o/autonomizaÁ„o do Aluno</td>
+			<td>Maior responsabiliza√ß√£o/autonomiza√ß√£o do Aluno</td>
 			<td><fr:view name="createSummaryBean" property="gainsR2" layout="boolean-icon" /></td>
-			<td>AlteraÁ„o dos mÈtodos de estudo</td>
+			<td>Altera√ß√£o dos m√©todos de estudo</td>
 			<td><fr:view name="createSummaryBean" property="gainsR3" layout="boolean-icon" /></td>
-			<td>Planeamento do semestre/AvaliaÁ„o</td>
+			<td>Planeamento do semestre/Avalia√ß√£o</td>
 		</tr>
 		<tr>
 			<td><fr:view name="createSummaryBean" property="gainsR4" layout="boolean-icon" /></td>
 			<td>Acompanhamento mais individualizado</td>
 			<td><fr:view name="createSummaryBean" property="gainsR5" layout="boolean-icon" /></td>
-			<td>Maior motivaÁ„o para o curso</td>
+			<td>Maior motiva√ß√£o para o curso</td>
 			<td><fr:view name="createSummaryBean" property="gainsR6" layout="boolean-icon" /></td>
-			<td>Melhor desempenho acadÈmico</td>
+			<td>Melhor desempenho acad√©mico</td>
 		</tr>
 		<tr>
 			<td><fr:view name="createSummaryBean" property="gainsR7" layout="boolean-icon" /></td>
 			<td>Maior proximidade Professor-Aluno</td>
 			<td><fr:view name="createSummaryBean" property="gainsR8" layout="boolean-icon" /></td>
-			<td>TransiÁ„o do Ensino Secund·rio para o Ensino Superior mais f·cil</td>
+			<td>Transi√ß√£o do Ensino Secund√°rio para o Ensino Superior mais f√°cil</td>
 			<td></td>
 			<td></td>
 		</tr>
 		<tr>
 			<td><fr:view name="createSummaryBean" property="gainsR9" layout="boolean-icon" /></td>
-			<td>Melhor adaptaÁ„o ao IST</td>
+			<td>Melhor adapta√ß√£o ao IST</td>
 			<td><fr:view name="createSummaryBean" property="gainsR10" layout="boolean-icon" /></td>
-			<td>Apoio na tomada de decisıes/ResoluÁ„o de problemas</td>
+			<td>Apoio na tomada de decis√µes/Resolu√ß√£o de problemas</td>
 			<td></td>
 			<td></td>
 		</tr>
@@ -169,7 +169,7 @@
 
 	<table class="tstyle1 thlight mtop0 mbottom15 tdleft">
 		<tr>
-			<td>ApreciaÁ„o Global do Programa:</td>
+			<td>Aprecia√ß√£o Global do Programa:</td>
 			<td><fr:view name="createSummaryBean" property="tutorshipSummaryProgramAssessment" type="net.sourceforge.fenixedu.domain.TutorshipSummaryProgramAssessment" /></td>
 		</tr>
 	</table>
@@ -201,7 +201,7 @@
 
 	<table class="tstyle1 thlight mtop0 mbottom15 tdleft">
 		<tr>
-			<td>Sugestıes</td>
+			<td>Sugest√µes</td>
 			<td>
 				<fr:view name="createSummaryBean" property="suggestions">
 					<fr:layout name="longText">

@@ -38,7 +38,7 @@ background: #eee url(../images/grad01.gif) top left repeat-x;
 background: transparent url(menuarrow.gif) no-repeat 100% 100%;
 }
 
-/* 1ª LINHA */
+/* 1Âª LINHA */
 
 .calendar thead .title { /* This holds the current "month, year" */
 font-weight: bold;      /* Pressing it will take you to the current date */
@@ -48,7 +48,7 @@ padding: 2px;
 }
 
 
-/* 2ª LINHA */
+/* 2Âª LINHA */
 
 .calendar thead .headrow { /* Row <TR> containing navigation buttons */
 background: #888;
@@ -65,12 +65,12 @@ border: none;
 
 
 
-/* 3ª LINHA */
+/* 3Âª LINHA */
 
 .calendar thead .daynames { /* Row <TR> containing the day names */
 }
 
-/* 3ª LINHA - DAY NAMES */
+/* 3Âª LINHA - DAY NAMES */
 
 .calendar thead .name { /* Cells <TD> containing the day names */
 padding: 6px 2px;
@@ -78,7 +78,7 @@ text-align: center;
 color: #000;
 }
 
-/* 3ª LINHA - WEEKEND NAMES */
+/* 3Âª LINHA - WEEKEND NAMES */
 
 .calendar thead .weekend { /* How a weekend day name shows in header */
 }

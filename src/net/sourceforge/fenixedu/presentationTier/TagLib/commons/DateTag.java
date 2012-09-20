@@ -14,7 +14,7 @@ import org.apache.struts.util.MessageResources;
 import org.apache.struts.util.ResponseUtils;
 
 /**
- * @author Jo„o Mota
+ * @author Jo√£o Mota
  * 
  */
 public class DateTag extends TagSupport {

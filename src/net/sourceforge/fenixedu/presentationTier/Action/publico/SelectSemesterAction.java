@@ -25,8 +25,8 @@ public class SelectSemesterAction extends FenixAction {
 	// TODO: No futuro, os tipos de salas devem ser lidos da BD
 	ArrayList types = new ArrayList();
 	types.add(new LabelValueBean("Escolher", null));
-	types.add(new LabelValueBean("1บ semestre", "1"));
-	types.add(new LabelValueBean("2บ semestre", "2"));
+	types.add(new LabelValueBean("1ยบ semestre", "1"));
+	types.add(new LabelValueBean("2ยบ semestre", "2"));
 	request.setAttribute("publico.semester", types);
 
 	return mapping.findForward("Sucess");

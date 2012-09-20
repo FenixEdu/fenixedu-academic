@@ -10,7 +10,7 @@
 <em><bean:message key="operator.module.title" bundle="MANAGER_RESOURCES" /></em>
 <h2><bean:message key="label.operator.photo.title" bundle="MANAGER_RESOURCES" /></h2>
 
-<p><strong>Fotografias pendentes para aprovação</strong></p>
+<p><strong>Fotografias pendentes para aprovaÃ§Ã£o</strong></p>
 
 <logic:empty name="pending">
     <p><em><bean:message key="label.operator.photo.no.pending" bundle="MANAGER_RESOURCES"/>.</em></p>

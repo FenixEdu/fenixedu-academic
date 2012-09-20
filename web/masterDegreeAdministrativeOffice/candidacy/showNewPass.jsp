@@ -31,7 +31,7 @@
                 <table border="0" width="100%" height="100%">
                   <tr valign="top" align="left"> 
                     <td>&nbsp;<b><bean:message bundle="GLOBAL_RESOURCES" key="institution.nameUpperCase" /></b><br/>
-                      &nbsp;<b>Secretaria da Pós-Graduação</b><br/>
+                      &nbsp;<b>Secretaria da PÃ³s-GraduaÃ§Ã£o</b><br/>
                       <hr size="1">
                     </td>
                   </tr>

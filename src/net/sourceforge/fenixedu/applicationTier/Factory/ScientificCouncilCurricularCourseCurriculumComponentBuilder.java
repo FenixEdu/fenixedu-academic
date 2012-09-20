@@ -16,7 +16,7 @@ import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 /**
- * @author Jo„o Mota
+ * @author Jo√£o Mota
  * 
  *         23/Jul/2003 fenix-head ServidorAplicacao.Factory
  * 

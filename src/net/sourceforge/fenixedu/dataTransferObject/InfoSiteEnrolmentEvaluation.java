@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.ListIterator;
 
 /**
- * @author T‚nia Pous„o
+ * @author T√¢nia Pous√£o
  * 
  * 
  */

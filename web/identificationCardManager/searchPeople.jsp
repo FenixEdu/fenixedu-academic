@@ -6,8 +6,8 @@
 <%@ taglib uri="/WEB-INF/collectionPager.tld" prefix="cp" %>
 <html:xhtml/>
 
-<em>Cartıes de IdentificaÁ„o</em>
-<h2><bean:message key="link.card.generation.search.people" /> Cartıes</h2>
+<em>Cart√µes de Identifica√ß√£o</em>
+<h2><bean:message key="link.card.generation.search.people" /> Cart√µes</h2>
 
 <bean:define id="url" type="java.lang.String">/searchPeople.do?method=search</bean:define>
 

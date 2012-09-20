@@ -50,7 +50,7 @@ font-size: 11px;
 	<p>
 	<label for="executionSemesterID">Semestre e Ano:</label><br/>
 		<html:select property="executionSemesterID" onchange="this.form.method.value='selectExecutionSemester';this.form.submit();">
-			<html:option value="">Escolha uma opção</html:option>
+			<html:option value="">Escolha uma opÃ§Ã£o</html:option>
 	 		<html:options collection="executionSemesters" property="oid" labelProperty="qualifiedName"/>
 		</html:select>
 	</p><br/>
@@ -58,7 +58,7 @@ font-size: 11px;
 	<p>
 		<label for="executionDegreeID">Curso:</label><br/>
 		<html:select property="executionDegreeID" onchange="this.form.method.value='selectExecutionDegree';this.form.submit();">
-			<html:option value="">Escolha uma opção</html:option>
+			<html:option value="">Escolha uma opÃ§Ã£o</html:option>
 	 		<html:options collection="executionDegrees" property="oid" labelProperty="presentationName"/>
 		</html:select>
 	</p><br/>
@@ -66,7 +66,7 @@ font-size: 11px;
 	<p>
 		<label for="executionCourseID">Unidade Curricular:</label><br/>
 		<html:select property="executionCourseID" onchange="this.form.method.value='selectExecutionCourse';this.form.submit();">
-			<html:option value="">Escolha uma opção</html:option>
+			<html:option value="">Escolha uma opÃ§Ã£o</html:option>
 	 		<html:options collection="executionCourses" property="oid" labelProperty="nome"/>
 		</html:select>
 	</p><br/>

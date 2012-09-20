@@ -36,11 +36,11 @@ public class EstadoCivil extends FenixUtil {
 
     public static final String DIVORCIADO_STRING = "Divorciado";
 
-    public static final String VIUVO_STRING = "Viúvo";
+    public static final String VIUVO_STRING = "ViÃºvo";
 
     public static final String SEPARADO_STRING = "Separado";
 
-    public static final String UNIAO_DE_FACTO_STRING = "União de Facto";
+    public static final String UNIAO_DE_FACTO_STRING = "UniÃ£o de Facto";
 
     public static final String DESCONHECIDO_STRING = "Desconhecido";
 

@@ -24,7 +24,7 @@
 
 <%--  ###  Return Links / Steps Information(for multistep forms)  ### --%>
 <html:link action="<%= "/phdIndividualProgramProcess.do?method=viewProcess&processId=" + individualProcessId.toString() %>">
-	« <bean:message bundle="PHD_RESOURCES" key="label.back"/>
+	Â« <bean:message bundle="PHD_RESOURCES" key="label.back"/>
 </html:link>
 <br>
 

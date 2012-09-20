@@ -152,7 +152,7 @@ public class ShiftDistributionFirstYearDA extends FenixDispatchAction {
 
 	    final List<SchoolClassDistributionInformation> schoolClassDistributions = processedInformation.get(entry.getKey());
 	    if (schoolClassDistributions == null) {
-		warningLog.add(new StringBuilder("N„o foi encontrada nenhuma informaÁ„o para a distribuiÁ„o de '").append(
+		warningLog.add(new StringBuilder("N√£o foi encontrada nenhuma informa√ß√£o para a distribui√ß√£o de '").append(
 			entry.getKey().getName()).append("'").toString());
 		continue;
 	    }
@@ -173,7 +173,7 @@ public class ShiftDistributionFirstYearDA extends FenixDispatchAction {
 		schoolClassDistribution = getSchoolClassDistributionWithCapacity(schoolClassDistributions);
 		if (schoolClassDistribution == null) {
 		    //Not enough space in schoolClass to distribute students for 
-		    //		    errorLog.add(new StringBuilder("N„o h· espaÁo suficiente na aula para distribuir os alunos de '").append(
+		    //		    errorLog.add(new StringBuilder("N√£o h√° espa√ßo suficiente na aula para distribuir os alunos de '").append(
 		    //			    entry.getKey().getName()).append("'.").toString());
 		    warningLog.add(new StringBuilder("\tInscritos ").append(numberOfEnroled).append(" alunos de '").append(
 			    entry.getKey().getName()).append("' de ").append(entry.getValue().size()).append(" (teoricamente)")
@@ -237,7 +237,7 @@ public class ShiftDistributionFirstYearDA extends FenixDispatchAction {
 	    final DegreeCurricularPlan mostRecentDegreeCurricularPlan = degree.getMostRecentDegreeCurricularPlan();
 	    if (mostRecentDegreeCurricularPlan == null) {
 		//Found NULL most recentDegreeCurricularPlan for
-		errorLog.add(new StringBuilder("** O plano curricular do curso mais recente est· a null para ").append(
+		errorLog.add(new StringBuilder("** O plano curricular do curso mais recente est√° a null para ").append(
 			degree.getSigla()).toString());
 		continue;
 	    }
@@ -269,14 +269,14 @@ public class ShiftDistributionFirstYearDA extends FenixDispatchAction {
 	    if (degreeCurricularPlan == null) {
 		//Error reading degree with name
 		errorLog.add(new StringBuilder("Erro ao ler o curso com o nome: '").append(
-			shiftDistributionDTO.getDegreeCurricularPlanName()).append("' ignorando informaÁ„o.").toString());
+			shiftDistributionDTO.getDegreeCurricularPlanName()).append("' ignorando informa√ß√£o.").toString());
 		continue;
 	    }
 
 	    final SchoolClass schoolClass = readSchoolClassFrom(degreeCurricularPlan, shiftDistributionDTO.getSchoolClassName());
 	    if (schoolClass == null) {
 		errorLog.add(new StringBuilder("Erro ao ler aula com o nome: '")
-			.append(shiftDistributionDTO.getSchoolClassName()).append("' ignorando informaÁ„o.").toString());
+			.append(shiftDistributionDTO.getSchoolClassName()).append("' ignorando informa√ß√£o.").toString());
 		continue;
 	    }
 
@@ -299,11 +299,11 @@ public class ShiftDistributionFirstYearDA extends FenixDispatchAction {
 	for (final String shiftName : shiftNames) {
 	    Shift shift = readShiftFrom(schoolClass, shiftName);
 	    if (shift == null) {
-		errorLog.add(new StringBuilder("N„o existe nenhum turno: '").append(shiftName).append("' associado ‡ aula: '")
+		errorLog.add(new StringBuilder("N√£o existe nenhum turno: '").append(shiftName).append("' associado √† aula: '")
 			.append(schoolClass.getNome()).append("'.").toString());
 		shift = readShiftByName(shiftName);
 		if (shift == null) {
-		    errorLog.add(new StringBuilder("N„o existe o turno com o nome: '").append(shiftName).append(
+		    errorLog.add(new StringBuilder("N√£o existe o turno com o nome: '").append(shiftName).append(
 			    "' na base de dados.").toString());
 		    continue;
 		}

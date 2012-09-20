@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="ISO-8859-1"  ?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with iReport - A designer for JasperReports -->
 <!DOCTYPE jasperReport PUBLIC "//JasperReports//DTD Report Design//EN" "http://jasperreports.sourceforge.net/dtds/jasperreport.dtd">
 <jasperReport
@@ -18,7 +18,7 @@
 		 isTitleNewPage="false"
 		 isSummaryNewPage="false">
 	<property name="ireport.scriptlethandling" value="0" />
-	<property name="ireport.encoding" value="ISO-8859-1" />
+	<property name="ireport.encoding" value="UTF-8" />
 	<import value="java.util.*" />
 	<import value="net.sf.jasperreports.engine.*" />
 	<import value="net.sf.jasperreports.engine.data.*" />
@@ -126,7 +126,7 @@
 
 +"\n\nAs to the academic path that you will pursue at IST, <style isUnderline=\"true\">we would like to suggest that you get all the information on the IST PhD Programmes General Regulations</style>, as well as to alert you to the obligation of every PhD student to present a Thesis Proposal Seminar within the Department. This should be done is the first 24 months of your PhD.<style isUnderline=\"true\"> We also call your attention for the need to comply with the timely payment of the annual tuition fees.</style>"
 
-+"\n\nFinally, we point out that you must submit the first draft of your thesis in our services, within the minimum stated period of 2 years and maximum of 5 years from the date of your registration, as established in artº 10 of the IST PhD Programmes General Regulations."]]></textFieldExpression>
++"\n\nFinally, we point out that you must submit the first draft of your thesis in our services, within the minimum stated period of 2 years and maximum of 5 years from the date of your registration, as established in artÂº 10 of the IST PhD Programmes General Regulations."]]></textFieldExpression>
 				</textField>
 			</band>
 		</detail>

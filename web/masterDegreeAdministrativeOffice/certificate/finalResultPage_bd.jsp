@@ -18,13 +18,13 @@
 	<tr>
 	<logic:present name="<%= PresentationConstants.INFO_BRANCH %>" >
 		<bean:define id="infoBranch" name="<%= PresentationConstants.INFO_BRANCH %>" />
-	 		<td>Area de especialização em <b><bean:write name="infoBranch" /></b>   			
+	 		<td>Area de especializaÃ§Ã£o em <b><bean:write name="infoBranch" /></b>   			
 			</td>	
 		<tr>
 	</logic:present>
- 		<td><p>O Aluno nº <bean:write name="infoStudentCurricularPlan" property="infoStudent.number"/> - <b><bean:write name="infoStudentCurricularPlan" property="infoStudent.infoPerson.nome"/></b><p/></td>
+ 		<td><p>O Aluno nÂº <bean:write name="infoStudentCurricularPlan" property="infoStudent.number"/> - <b><bean:write name="infoStudentCurricularPlan" property="infoStudent.infoPerson.nome"/></b><p/></td>
     <tr>
- 		<td>concluiu a parte escolar do curso de <bean:message name="infoStudentCurricularPlan" property="specialization.name" bundle="ENUMERATION_RESOURCES"/> acima indicado, constituída pelas seguintes disciplinas e classificações:<br /><br /></td>
+ 		<td>concluiu a parte escolar do curso de <bean:message name="infoStudentCurricularPlan" property="specialization.name" bundle="ENUMERATION_RESOURCES"/> acima indicado, constituÃ­da pelas seguintes disciplinas e classificaÃ§Ãµes:<br /><br /></td>
  	</tr> 
  </table>	
  <table width="90%" cellspacing="0">
@@ -47,11 +47,11 @@
      	<td class="cell-last"><bean:write name="infoStudentCurricularPlan" property="givenCredits" /></td>  	
      </logic:present>
 	<tr>
-		<td class="results" align="right"><b>Total de créditos:</b></td>
+		<td class="results" align="right"><b>Total de crÃ©ditos:</b></td>
 		<td class="results">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
 		<td class="results" align="center"><b><bean:write name="total"/></b></td>
 	</tr>
 	</table>
-	<%-- BRUNO ESTA PARTE DEVERÁ SER IMPRESSA NO VERSO DA ÚLTIMA PAGINA --%> 		
+	<%-- BRUNO ESTA PARTE DEVERÃ SER IMPRESSA NO VERSO DA ÃšLTIMA PAGINA --%> 		
 	<%--The Final Result --%>
 	<jsp:include page="./finalResultTemplate1.jsp" flush="true" />

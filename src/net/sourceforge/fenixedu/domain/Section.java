@@ -26,7 +26,7 @@ import org.joda.time.YearMonthDay;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 /**
- * @author Ivo Brand„o
+ * @author Ivo Brand√£o
  */
 public class Section extends Section_Base {
 

@@ -5,13 +5,13 @@
 
 <html:html xhtml="true">
     <head>
-        <title> Editar Hor·rio </title>
+        <title> Editar Hor√°rio </title>
     </head>
     <body>
        <jsp:include page="context.jsp"/><br/>
        
         <br/>
-        <center><font color='#034D7A' size='5'> <b> Editar Hor·rio </b> </font></center>
+        <center><font color='#034D7A' size='5'> <b> Editar Hor√°rio </b> </font></center>
         <br/>
         <br/>
         <html:errors/>
@@ -39,7 +39,7 @@
                 <table align="center" border=1 cellpadding='5'>
                     <tr align="center">
                         <td width='200'>
-                            <font color='red'> N„o existem turnos </font>
+                            <font color='red'> N√£o existem turnos </font>
                         </td>
                     </tr>
                 </table>

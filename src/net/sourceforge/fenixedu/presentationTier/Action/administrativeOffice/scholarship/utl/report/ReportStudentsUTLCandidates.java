@@ -134,7 +134,7 @@ public class ReportStudentsUTLCandidates implements java.io.Serializable {
 		addCellValue(row, onNullEmptyString(regime), 14);
 		addCellValue(
 			row,
- "", // VALUE(IF(ISNA(VLOOKUP(O4,$Regime.A2:B6,2,FALSE()));\"Regime n„o tipificado\";VLOOKUP(O4,$Regime.A2:B6,2,FALSE())))",
+ "", // VALUE(IF(ISNA(VLOOKUP(O4,$Regime.A2:B6,2,FALSE()));\"Regime n√£o tipificado\";VLOOKUP(O4,$Regime.A2:B6,2,FALSE())))",
 			15);
 		addCellValue(row, onNullEmptyString(firstRegistrationExecutionYear), 16);
 		addCellValue(row, onNullEmptyString(countNumberOfEnrolmentsYearsSinceRegistrationStart), 17);
@@ -142,17 +142,17 @@ public class ReportStudentsUTLCandidates implements java.io.Serializable {
 		addCellValue(row, onNullEmptyString(curricularYearOneYearAgo), 19);
 		addCellValue(row, onNullEmptyString(numberOfEnrolledEctsOneYearAgo), 20);
 		addCellValue(row, onNullEmptyString(numberOfApprovedEctsOneYearAgo), 21);
-		addCellValue(row, "", 22); // "=IF(V5/U5<50%,\"N„o\",\"Sim\")",
+		addCellValue(row, "", 22); // "=IF(V5/U5<50%,\"N√£o\",\"Sim\")",
 					   // 22);
 		addCellValue(row, onNullEmptyString(curricularYearInCurrentYear), 23);
 		addCellValue(row, onNullEmptyString(numberOfEnrolledECTS), 24);
 		addCellValue(
 			row,
- "", // "IF(P3=4;\"N„o Aplic·vel\";IF(P3=3;IF(S3<=3;IF((2*S3+2)>=R3+(S3-X3);\"SIM\";\"N√O\");IF((2*S3+3)>=R3+(S3-X3);\"SIM\";\"N√O\"));IF(OR(P3=2;L3>0);IF(S3<=3;IF((S3+2)>=R3+(S3-X3);\"SIM\";\"N√O\");IF(S3>3;IF((S3+3)>=R3+(S3-X3);\"SIM\";\"N√O\")));IF(AND(L3=0;P3=1);IF(S3<=3;IF(S3+1>=R3+(S3-X3);\"SIM\";\"N√O\");IF(S3>3;IF(S3+2>=R3+(S3-X3);\"SIM\";\"N√O\")))))))",
+ "", // "IF(P3=4;\"N√£o Aplic√°vel\";IF(P3=3;IF(S3<=3;IF((2*S3+2)>=R3+(S3-X3);\"SIM\";\"N√ÉO\");IF((2*S3+3)>=R3+(S3-X3);\"SIM\";\"N√ÉO\"));IF(OR(P3=2;L3>0);IF(S3<=3;IF((S3+2)>=R3+(S3-X3);\"SIM\";\"N√ÉO\");IF(S3>3;IF((S3+3)>=R3+(S3-X3);\"SIM\";\"N√ÉO\")));IF(AND(L3=0;P3=1);IF(S3<=3;IF(S3+1>=R3+(S3-X3);\"SIM\";\"N√ÉO\");IF(S3>3;IF(S3+2>=R3+(S3-X3);\"SIM\";\"N√ÉO\")))))))",
 			25);
 		addCellValue(
 			row,
- "", // "IF(P3=4;IF(W3=\"Sim\";\"Deferido\";\"Indeferido\");IF(Y3>=30;IF(OR(W3=\"N√O\";Z3=\"N√O\";AI3=\"Sim\");\"Indeferido\";\"Deferido\");\"Indeferido\"))",
+ "", // "IF(P3=4;IF(W3=\"Sim\";\"Deferido\";\"Indeferido\");IF(Y3>=30;IF(OR(W3=\"N√ÉO\";Z3=\"N√ÉO\";AI3=\"Sim\");\"Indeferido\";\"Deferido\");\"Indeferido\"))",
 			26);
 		addCellValue(row, onNullEmptyString(gratuityAmount), 27);
 		addCellValue(row, onNullEmptyString(numberOfMonthsExecutionYear), 28);

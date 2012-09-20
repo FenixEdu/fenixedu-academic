@@ -13,7 +13,7 @@ import net.sourceforge.fenixedu.domain.curriculum.CurricularCourseEnrollmentType
 import net.sourceforge.fenixedu.domain.degree.enrollment.CurricularCourse2Enroll;
 
 /**
- * @author Jo„o Mota
+ * @author Jo√£o Mota
  * 
  */
 public class InfoCurricularCourse2Enroll extends DataTranferObject implements Serializable {

@@ -3053,7 +3053,7 @@
 					<textElement>
 						<font size="10"/>
 					</textElement>
-				<text><![CDATA[Número:]]></text>
+				<text><![CDATA[NÃºmero:]]></text>
 				</staticText>
 				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
@@ -3359,7 +3359,7 @@
 					<textElement textAlignment="Left">
 						<font fontName="Verdana" size="9"/>
 					</textElement>
-				<text><![CDATA[Atestado médico (total)]]></text>
+				<text><![CDATA[Atestado mÃ©dico (total)]]></text>
 				</staticText>
 				<staticText>
 					<reportElement
@@ -3376,7 +3376,7 @@
 					<textElement>
 						<font fontName="Verdana" size="9"/>
 					</textElement>
-				<text><![CDATA[Atestado médico (filho)]]></text>
+				<text><![CDATA[Atestado mÃ©dico (filho)]]></text>
 				</staticText>
 				<staticText>
 					<reportElement
@@ -3393,7 +3393,7 @@
 					<textElement>
 						<font fontName="Verdana" size="9"/>
 					</textElement>
-				<text><![CDATA[Atestado médico (familiar)]]></text>
+				<text><![CDATA[Atestado mÃ©dico (familiar)]]></text>
 				</staticText>
 				<staticText>
 					<reportElement
@@ -3410,7 +3410,7 @@
 					<textElement>
 						<font fontName="Verdana" size="9"/>
 					</textElement>
-				<text><![CDATA[Atestado por deficiência]]></text>
+				<text><![CDATA[Atestado por deficiÃªncia]]></text>
 				</staticText>
 				<staticText>
 					<reportElement
@@ -3427,7 +3427,7 @@
 					<textElement>
 						<font fontName="Verdana" size="9"/>
 					</textElement>
-				<text><![CDATA[Atestado médico internamento]]></text>
+				<text><![CDATA[Atestado mÃ©dico internamento]]></text>
 				</staticText>
 				<staticText>
 					<reportElement
@@ -3495,7 +3495,7 @@
 					<textElement>
 						<font fontName="Verdana" size="9"/>
 					</textElement>
-				<text><![CDATA[Licença para casamento]]></text>
+				<text><![CDATA[LicenÃ§a para casamento]]></text>
 				</staticText>
 				<staticText>
 					<reportElement
@@ -3512,7 +3512,7 @@
 					<textElement>
 						<font fontName="Verdana" size="9"/>
 					</textElement>
-				<text><![CDATA[Licença de parto]]></text>
+				<text><![CDATA[LicenÃ§a de parto]]></text>
 				</staticText>
 				<staticText>
 					<reportElement
@@ -3529,7 +3529,7 @@
 					<textElement>
 						<font fontName="Verdana" size="9"/>
 					</textElement>
-				<text><![CDATA[Licença sem vencimento]]></text>
+				<text><![CDATA[LicenÃ§a sem vencimento]]></text>
 				</staticText>
 				<staticText>
 					<reportElement
@@ -3546,7 +3546,7 @@
 					<textElement>
 						<font fontName="Verdana" size="9"/>
 					</textElement>
-				<text><![CDATA[Tolerância de ponto]]></text>
+				<text><![CDATA[TolerÃ¢ncia de ponto]]></text>
 				</staticText>
 				<staticText>
 					<reportElement
@@ -3580,7 +3580,7 @@
 					<textElement>
 						<font fontName="Verdana" size="9"/>
 					</textElement>
-				<text><![CDATA[Férias adquir. p/horas extras]]></text>
+				<text><![CDATA[FÃ©rias adquir. p/horas extras]]></text>
 				</staticText>
 				<staticText>
 					<reportElement
@@ -3597,7 +3597,7 @@
 					<textElement>
 						<font fontName="Verdana" size="9"/>
 					</textElement>
-				<text><![CDATA[Férias gozadas p/horas extras]]></text>
+				<text><![CDATA[FÃ©rias gozadas p/horas extras]]></text>
 				</staticText>
 				<staticText>
 					<reportElement
@@ -3648,7 +3648,7 @@
 					<textElement>
 						<font fontName="Verdana" size="9"/>
 					</textElement>
-				<text><![CDATA[Férias em dias úteis]]></text>
+				<text><![CDATA[FÃ©rias em dias Ãºteis]]></text>
 				</staticText>
 				<staticText>
 					<reportElement
@@ -3665,7 +3665,7 @@
 					<textElement>
 						<font fontName="Verdana" size="9"/>
 					</textElement>
-				<text><![CDATA[Atest. médico em dias úteis]]></text>
+				<text><![CDATA[Atest. mÃ©dico em dias Ãºteis]]></text>
 				</staticText>
 				<staticText>
 					<reportElement
@@ -3682,7 +3682,7 @@
 					<textElement>
 						<font fontName="Verdana" size="9"/>
 					</textElement>
-				<text><![CDATA[Nojo em dias úteis]]></text>
+				<text><![CDATA[Nojo em dias Ãºteis]]></text>
 				</staticText>
 				<staticText>
 					<reportElement
@@ -3699,7 +3699,7 @@
 					<textElement>
 						<font fontName="Verdana" size="9"/>
 					</textElement>
-				<text><![CDATA[Parto em dias úteis]]></text>
+				<text><![CDATA[Parto em dias Ãºteis]]></text>
 				</staticText>
 				<staticText>
 					<reportElement
@@ -3716,7 +3716,7 @@
 					<textElement>
 						<font fontName="Verdana" size="9"/>
 					</textElement>
-				<text><![CDATA[Licença s/venc em dias úteis]]></text>
+				<text><![CDATA[LicenÃ§a s/venc em dias Ãºteis]]></text>
 				</staticText>
 				<staticText>
 					<reportElement
@@ -3767,7 +3767,7 @@
 					<textElement>
 						<font fontName="Verdana" size="9"/>
 					</textElement>
-				<text><![CDATA[Junta médica]]></text>
+				<text><![CDATA[Junta mÃ©dica]]></text>
 				</staticText>
 				<staticText>
 					<reportElement
@@ -3818,7 +3818,7 @@
 					<textElement>
 						<font fontName="Verdana" size="9"/>
 					</textElement>
-				<text><![CDATA[Acidente em serviço in local]]></text>
+				<text><![CDATA[Acidente em serviÃ§o in local]]></text>
 				</staticText>
 				<staticText>
 					<reportElement
@@ -3852,7 +3852,7 @@
 					<textElement>
 						<font fontName="Verdana" size="9"/>
 					</textElement>
-				<text><![CDATA[Doação de sangue]]></text>
+				<text><![CDATA[DoaÃ§Ã£o de sangue]]></text>
 				</staticText>
 				<staticText>
 					<reportElement
@@ -3920,7 +3920,7 @@
 					<textElement>
 						<font fontName="Verdana" size="9"/>
 					</textElement>
-				<text><![CDATA[Form./Cursos (não autoriz.CD)]]></text>
+				<text><![CDATA[Form./Cursos (nÃ£o autoriz.CD)]]></text>
 				</staticText>
 				<staticText>
 					<reportElement
@@ -3937,7 +3937,7 @@
 					<textElement>
 						<font fontName="Verdana" size="9"/>
 					</textElement>
-				<text><![CDATA[Formação/Cursos (autoriz.CD)]]></text>
+				<text><![CDATA[FormaÃ§Ã£o/Cursos (autoriz.CD)]]></text>
 				</staticText>
 				<staticText>
 					<reportElement
@@ -3954,7 +3954,7 @@
 					<textElement>
 						<font fontName="Verdana" size="9"/>
 					</textElement>
-				<text><![CDATA[Prisão]]></text>
+				<text><![CDATA[PrisÃ£o]]></text>
 				</staticText>
 				<staticText>
 					<reportElement
@@ -3971,7 +3971,7 @@
 					<textElement>
 						<font fontName="Verdana" size="9"/>
 					</textElement>
-				<text><![CDATA[Faltas p/ cumprim.obrigações]]></text>
+				<text><![CDATA[Faltas p/ cumprim.obrigaÃ§Ãµes]]></text>
 				</staticText>
 				<staticText>
 					<reportElement
@@ -13526,7 +13526,7 @@
 					<textElement>
 						<font fontName="Verdana" size="9"/>
 					</textElement>
-				<text><![CDATA[Casamento em dias úteis]]></text>
+				<text><![CDATA[Casamento em dias Ãºteis]]></text>
 				</staticText>
 				<textField isStretchWithOverflow="false" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
@@ -13770,7 +13770,7 @@
 					<textElement>
 						<font/>
 					</textElement>
-				<textFieldExpression   class="java.lang.String"><![CDATA[$F{totalVacations}==null?"":"Férias a que tem direito no corrente ano: ".concat($F{totalVacations}.toString()).concat(" dias (inclui: transferidas, frias, p/antiguidade, p/idade)")]]></textFieldExpression>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$F{totalVacations}==null?"":"FÃ©rias a que tem direito no corrente ano: ".concat($F{totalVacations}.toString()).concat(" dias (inclui: transferidas, frias, p/antiguidade, p/idade)")]]></textFieldExpression>
 				</textField>
 				<staticText>
 					<reportElement
@@ -14030,7 +14030,7 @@
 					<textElement>
 						<font fontName="Verdana" size="9"/>
 					</textElement>
-				<text><![CDATA[Férias gozadas]]></text>
+				<text><![CDATA[FÃ©rias gozadas]]></text>
 				</staticText>
 				<staticText>
 					<reportElement
@@ -14047,7 +14047,7 @@
 					<textElement>
 						<font fontName="Verdana" size="9"/>
 					</textElement>
-				<text><![CDATA[Férias Transferidas gozadas]]></text>
+				<text><![CDATA[FÃ©rias Transferidas gozadas]]></text>
 				</staticText>
 				<staticText>
 					<reportElement
@@ -14064,7 +14064,7 @@
 					<textElement>
 						<font fontName="Verdana" size="9"/>
 					</textElement>
-				<text><![CDATA[Férias gozadas  por horas Ano Anterior]]></text>
+				<text><![CDATA[FÃ©rias gozadas  por horas Ano Anterior]]></text>
 				</staticText>
 				<staticText>
 					<reportElement
@@ -14081,7 +14081,7 @@
 					<textElement>
 						<font fontName="Verdana" size="9"/>
 					</textElement>
-				<text><![CDATA[Férias gozadas A17 ano anterior]]></text>
+				<text><![CDATA[FÃ©rias gozadas A17 ano anterior]]></text>
 				</staticText>
 				<staticText>
 					<reportElement
@@ -14098,7 +14098,7 @@
 					<textElement>
 						<font fontName="Verdana" size="9"/>
 					</textElement>
-				<text><![CDATA[Férias Época Baixa]]></text>
+				<text><![CDATA[FÃ©rias Ãpoca Baixa]]></text>
 				</staticText>
 				<textField isStretchWithOverflow="false" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
@@ -15245,7 +15245,7 @@
 					<textElement>
 						<font fontName="Verdana" size="9"/>
 					</textElement>
-				<text><![CDATA[Meios Dias de Férias gozados]]></text>
+				<text><![CDATA[Meios Dias de FÃ©rias gozados]]></text>
 				</staticText>
 				<textField isStretchWithOverflow="false" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement

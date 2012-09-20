@@ -23,7 +23,7 @@ public abstract class PresentationConstants {
 
     public static final String EXTERNAL_PERSON = "external_person";
 
-    public static final String REGISTRATION_PAYMENT = "No acto da inscrição";
+    public static final String REGISTRATION_PAYMENT = "No acto da inscriÃ§Ã£o";
 
     public static final String REGISTRATION_PAYMENT_KEY = "label.masterDegree.gratuity.registrationPayment";
 

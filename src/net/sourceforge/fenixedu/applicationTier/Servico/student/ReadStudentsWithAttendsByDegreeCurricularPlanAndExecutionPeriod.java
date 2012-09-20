@@ -16,7 +16,7 @@ import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.student.Student;
 
 /**
- * @author Jo„o Fialho & Rita Ferreira
+ * @author Jo√£o Fialho & Rita Ferreira
  * 
  */
 public class ReadStudentsWithAttendsByDegreeCurricularPlanAndExecutionPeriod extends FenixService {

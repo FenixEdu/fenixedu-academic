@@ -2,13 +2,13 @@ package net.sourceforge.fenixedu.dataTransferObject;
 
 public class InfoFinalResult extends InfoObject {
 
-    // Média ponderada
+    // MÃ©dia ponderada
     private String averageWeighted;
 
-    // Média simples
+    // MÃ©dia simples
     private String averageSimple;
 
-    // Média final
+    // MÃ©dia final
     private String finalAverage;
 
     //        

@@ -15,7 +15,7 @@
 </logic:notEmpty>
 
 <html:link action='<%= "/caseHandling" + processName.toString() + ".do?method=listProcesses&amp;parentProcessId=" + parentProcessId.toString() + "&amp;degreeCurricularPlanID=" + degreeCurricularPlanID.toString() %>'>
-	« <bean:message key="label.back" bundle="APPLICATION_RESOURCES"/>	
+	Â« <bean:message key="label.back" bundle="APPLICATION_RESOURCES"/>	
 </html:link>
 <br/>
 
@@ -90,7 +90,7 @@
 	</logic:notEmpty>
 	
 	<br />
-	<strong>Informação de seriação:</strong>
+	<strong>InformaÃ§Ã£o de seriaÃ§Ã£o:</strong>
 	<fr:view name="seriesGrade" >
 		<fr:schema bundle="APPLICATION_RESOURCES" type="net.sourceforge.fenixedu.domain.candidacyProcess.degreeTransfer.DegreeTransferIndividualCandidacyResultBean">
 			<fr:slot name="degree.name" key="label.candidacy.degree">

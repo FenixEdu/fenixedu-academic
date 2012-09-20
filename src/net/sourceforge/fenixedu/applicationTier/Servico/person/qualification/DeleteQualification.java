@@ -10,7 +10,7 @@ import net.sourceforge.fenixedu.domain.Qualification;
 import pt.ist.fenixWebFramework.services.Service;
 
 /**
- * @author Jo„o Fialho & Rita Ferreira
+ * @author Jo√£o Fialho & Rita Ferreira
  * 
  */
 public class DeleteQualification extends FenixService {

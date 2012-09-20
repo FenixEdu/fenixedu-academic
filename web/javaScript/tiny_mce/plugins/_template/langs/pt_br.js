@@ -8,6 +8,6 @@
  * TinyMCE Version : 2.0RC4
  */
 tinyMCE.addToLang('',{
-template_title : 'Este é só um modêlo de popup',
-template_desc : 'Este é só um modêlo de botão'
+template_title : 'Este Ã© sÃ³ um modÃªlo de popup',
+template_desc : 'Este Ã© sÃ³ um modÃªlo de botÃ£o'
 });

@@ -1,11 +1,11 @@
-<?xml version="1.0" encoding="ISO-8859-1" ?>
+<?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE tiles-definitions PUBLIC "-//Apache Software Foundation//DTD Tiles Configuration 1.1//EN"
 	"http://jakarta.apache.org/struts/dtds/tiles-config_1_1.dtd">
 <!-- Tiles definitions -->
 <tiles-definitions>
 	<definition name="definition.employee.two-column" extends="df.layout.two-column">
-		<put name="title" value="Área de Funcionário" />
-		<put name="serviceName" value="Portal de Funcionário" />
+		<put name="title" value="Ãrea de FuncionÃ¡rio" />
+		<put name="serviceName" value="Portal de FuncionÃ¡rio" />
 	  	<put name="navGeral" value="/commons/commonGeneralNavigationBar.jsp" />
 	  	<put name="navLocal" value="/employee/mainMenu.jsp" />
 	    <put name="footer" value="/copyright.jsp" />

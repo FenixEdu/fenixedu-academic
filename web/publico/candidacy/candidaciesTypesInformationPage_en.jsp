@@ -102,12 +102,12 @@
 <p class="greytxt">This page is aimed at providing complete application information for students interested in attending IST courses.</p>
 <h2>With the IST, come into the best European higher education</h2>
 
-<p>The Instituto Superior Técnico (IST), a recognized school for excellence in Engineering, Science and Technology, implemented the Bologna Process reform in the 2006/2007 academic year.</p>
+<p>The Instituto Superior TÃ©cnico (IST), a recognized school for excellence in Engineering, Science and Technology, implemented the Bologna Process reform in the 2006/2007 academic year.</p>
 <p>This reform aims at:</p>
 <ul>
-	<li>Increasing students´ mobility at national and international level;</li>
+	<li>Increasing studentsÂ´ mobility at national and international level;</li>
 	<li>Adopting a new education/learning model;</li>
-	<li>Complementing students´ training in cross-cutting areas.</li>
+	<li>Complementing studentsÂ´ training in cross-cutting areas.</li>
 </ul>
 <p>The former 5-year undergraduate programmes (licenciaturas) have been transformed into 5-year Integrated MSc courses or into courses organized in two consecutive cycles, respectively leading to the Graduate and Master degree (3+2).</p>
 

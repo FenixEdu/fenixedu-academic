@@ -78,7 +78,7 @@
 	<%--
 	<b>
 		<%= pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX %>
-		<a href="<%= f("%s/candidacies/erasmus/nationalCardSubmission", request.getContextPath()) %>">Fill the application form »</a>
+		<a href="<%= f("%s/candidacies/erasmus/nationalCardSubmission", request.getContextPath()) %>">Fill the application form Â»</a>
 	</b>
 	--%>
 

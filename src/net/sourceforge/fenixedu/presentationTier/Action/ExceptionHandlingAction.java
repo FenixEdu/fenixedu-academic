@@ -34,7 +34,7 @@ import pt.utl.ist.fenix.tools.util.EMail;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 /**
- * @author Jo„o Mota
+ * @author Jo√£o Mota
  */
 public class ExceptionHandlingAction extends FenixDispatchAction {
 

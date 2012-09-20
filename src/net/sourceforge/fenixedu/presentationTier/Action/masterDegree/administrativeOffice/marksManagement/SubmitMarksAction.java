@@ -39,7 +39,7 @@ import org.joda.time.YearMonthDay;
 import pt.ist.fenixWebFramework.security.UserView;
 
 /**
- * @author Fernanda Quitério 01/07/2003
+ * @author Fernanda QuitÃ©rio 01/07/2003
  * 
  */
 public class SubmitMarksAction extends FenixDispatchAction {

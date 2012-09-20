@@ -14,20 +14,20 @@
 
 
 <p>
-	Há mais de 15 anos que o IST acompanha com regularidade o percurso sócio-profissional dos seus diplomados no âmbito dos processos de avaliação e acreditação de cada um dos seus cursos. Desde 1998, que este acompanhamento foi sistematizado a todos os cursos, estando neste momento a decorrer a IV edição do inquérito, lançado pelo Observatório de Empregabilidade do IST (OEIST) em estreita colaboração com o projecto Alumni.
+	HÃ¡ mais de 15 anos que o IST acompanha com regularidade o percurso sÃ³cio-profissional dos seus diplomados no Ã¢mbito dos processos de avaliaÃ§Ã£o e acreditaÃ§Ã£o de cada um dos seus cursos. Desde 1998, que este acompanhamento foi sistematizado a todos os cursos, estando neste momento a decorrer a IV ediÃ§Ã£o do inquÃ©rito, lanÃ§ado pelo ObservatÃ³rio de Empregabilidade do IST (OEIST) em estreita colaboraÃ§Ã£o com o projecto Alumni.
 </p>
 <p>
-	A sua colaboração é fundamental para a instituição, dado que os requisitos de Bolonha atribuiram à empregabilidade um lugar de destaque e de grande relevo na avaliação dos cursos. Por conseguinte, é muito importante para o IST compreender o percurso dos seus diplomados, de forma não só a responder a estes requisitos mas também de modo a aproximar a escola do mercado de trabalho.
+	A sua colaboraÃ§Ã£o Ã© fundamental para a instituiÃ§Ã£o, dado que os requisitos de Bolonha atribuiram Ã  empregabilidade um lugar de destaque e de grande relevo na avaliaÃ§Ã£o dos cursos. Por conseguinte, Ã© muito importante para o IST compreender o percurso dos seus diplomados, de forma nÃ£o sÃ³ a responder a estes requisitos mas tambÃ©m de modo a aproximar a escola do mercado de trabalho.
 </p>
 <p>
-	Dada a relação entre o projecto Alumni e o OEIST, fica feito o convite ao preenchimento do inquérito (no link que se segue).
+	Dada a relaÃ§Ã£o entre o projecto Alumni e o OEIST, fica feito o convite ao preenchimento do inquÃ©rito (no link que se segue).
 </p>
 
 
 <p>
 	<strong>
 		<html:link page="/alumniInquiries.do?method=initInquiry">
-			Preencher o inquérito »
+			Preencher o inquÃ©rito Â»
 		</html:link>
 	</strong>
 </p>

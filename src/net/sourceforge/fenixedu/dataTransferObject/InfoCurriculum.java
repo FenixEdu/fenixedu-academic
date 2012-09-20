@@ -13,7 +13,7 @@ import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 
 /**
- * @author Jo„o Mota
+ * @author Jo√£o Mota
  */
 public class InfoCurriculum extends InfoObject implements ISiteComponent {
 

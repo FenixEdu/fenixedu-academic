@@ -7,8 +7,8 @@ import net.sourceforge.fenixedu.domain.ExecutionCourseSite;
  * objects.
  * 
  * @author Joao Pereira
- * @author Jo„o Mota
- * @author Ivo Brand„o
+ * @author Jo√£o Mota
+ * @author Ivo Brand√£o
  */
 
 public class InfoSite extends InfoObject implements ISiteComponent {

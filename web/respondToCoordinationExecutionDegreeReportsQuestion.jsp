@@ -36,7 +36,7 @@
                             <html:link page="<%="/coordinator/viewInquiriesResults.do?method=prepare&" + net.sourceforge.fenixedu.presentationTier.servlets.filters.ContentInjectionRewriter.buildContextAttribute("/coordinator")%>" paramId="degreeCurricularPlanID" paramName="executionDegree" paramProperty="degreeCurricularPlan.idInternal">
                                 <strong>
                                     <bean:write name="executionDegree" property="degree.sigla" /> - <bean:write name="executionDegree" property="degree.name" />
-                                    »
+                                    Â»
                                 </strong>
                             </html:link>                            
 						</p>

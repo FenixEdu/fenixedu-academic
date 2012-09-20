@@ -30,7 +30,7 @@ public class RaidesGraduationReportFile extends RaidesGraduationReportFile_Base 
 
     @Override
     public String getJobName() {
-	return "Listagem RAIDES - Graduação";
+	return "Listagem RAIDES - GraduaÃ§Ã£o";
     }
 
     @Override

@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.ListIterator;
 
 /**
- * @author Fernanda & Tânia Pousão e Ângela
+ * @author Fernanda & TÃ¢nia PousÃ£o e Ã‚ngela
  * 
  * 
  */

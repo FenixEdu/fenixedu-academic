@@ -4,7 +4,7 @@ START TRANSACTION;
 
 INSERT INTO EXECUTION_PATH (EXECUTION_PATH,CONTENT_ID,KEY_FUNCTIONALITY,KEY_ROOT_DOMAIN_OBJECT) VALUES ('/payments.do?method=prepareViewPaymentCodeMappings','c89663b4-cd0e-444b-87b6-ce83a58e17ae',1,1)  ;
 
-INSERT INTO CONTENT (EXECUTION_PATH,VISIBLE,KEY_EXECUTION_PATH_VALUE,CONTENT_ID,CREATION_DATE,NAME,TITLE,BODY,DESCRIPTION,NORMALIZED_NAME,KEY_PORTAL,KEY_AVAILABILITY_POLICY,KEY_ROOT_DOMAIN_OBJECT,KEY_CREATOR,OJB_CONCRETE_CLASS) VALUES ('/payments.do?method=prepareViewPaymentCodeMappings',null,2,'a3a26de8-c57e-4975-9dbe-9d348ae3b525','2008-11-18 18:43:33','en13:Payment Codespt7:Códigos','en13:Payment Codespt7:Códigos',null,null,'en13:payment-codespt7:codigos',null,null,1,null,'net.sourceforge.fenixedu.domain.functionalities.Functionality')  ;
+INSERT INTO CONTENT (EXECUTION_PATH,VISIBLE,KEY_EXECUTION_PATH_VALUE,CONTENT_ID,CREATION_DATE,NAME,TITLE,BODY,DESCRIPTION,NORMALIZED_NAME,KEY_PORTAL,KEY_AVAILABILITY_POLICY,KEY_ROOT_DOMAIN_OBJECT,KEY_CREATOR,OJB_CONCRETE_CLASS) VALUES ('/payments.do?method=prepareViewPaymentCodeMappings',null,2,'a3a26de8-c57e-4975-9dbe-9d348ae3b525','2008-11-18 18:43:33','en13:Payment Codespt7:CÃ³digos','en13:Payment Codespt7:CÃ³digos',null,null,'en13:payment-codespt7:codigos',null,null,1,null,'net.sourceforge.fenixedu.domain.functionalities.Functionality')  ;
 
 INSERT INTO NODE (NODE_ORDER,ASCENDING,VISIBLE,CONTENT_ID,KEY_CHILD,KEY_PARENT,KEY_ROOT_DOMAIN_OBJECT,OJB_CONCRETE_CLASS) VALUES (3,1,1,'eed02d28-7445-4263-ade3-523af17545b3:a3a26de8-c57e-4975-9dbe-9d348ae3b525',3,4,1,'net.sourceforge.fenixedu.domain.contents.ExplicitOrderNode')  ;
 

@@ -44,11 +44,11 @@ public class PrintAllCandidatesListDispatchAction extends FenixDispatchAction {
 
     // CSV
     public final String HEADER_H1 = "\t\t\t\t\t\tListagem de candidatos\t\t";
-    public final String HEADER_H2 = "Numero de candidatura\tNome do candidato\tEscola de candidatura\tLicenciatura\tEspecialização\tSituação\tPretende dar aulas\tTelefone\tE-Mail";
+    public final String HEADER_H2 = "Numero de candidatura\tNome do candidato\tEscola de candidatura\tLicenciatura\tEspecializaÃ§Ã£o\tSituaÃ§Ã£o\tPretende dar aulas\tTelefone\tE-Mail";
 
     private static final Object STR_ISCOURSEASSISTANT = "Sim";
-    private static final Object STR_ISNTCOURSEASSISTANT = "Não";
-    private static final Object STR_NOREMARKS = "Não tem";
+    private static final Object STR_ISNTCOURSEASSISTANT = "NÃ£o";
+    private static final Object STR_NOREMARKS = "NÃ£o tem";
 
     private boolean reqExportToExcel = false;
 

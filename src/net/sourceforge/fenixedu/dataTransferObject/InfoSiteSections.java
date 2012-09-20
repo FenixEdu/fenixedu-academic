@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.ListIterator;
 
 /**
- * @author Fernanda Quitério
+ * @author Fernanda QuitÃ©rio
  * 
  */
 public class InfoSiteSections extends DataTranferObject implements ISiteComponent {

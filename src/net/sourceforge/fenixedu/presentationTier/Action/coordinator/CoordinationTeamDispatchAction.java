@@ -30,7 +30,7 @@ import pt.ist.fenixWebFramework.security.UserView;
 
 /**
  * 
- * @author Jo„o Mota
+ * @author Jo√£o Mota
  * 
  */
 public class CoordinationTeamDispatchAction extends FenixDispatchAction {

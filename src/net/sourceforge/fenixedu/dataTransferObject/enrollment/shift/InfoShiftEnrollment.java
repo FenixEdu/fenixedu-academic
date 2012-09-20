@@ -13,7 +13,7 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoStudent;
 /**
  * This class keeps all information usefull for shift enrollment use case
  * 
- * @author T‚nia Pous„o
+ * @author T√¢nia Pous√£o
  */
 public class InfoShiftEnrollment extends DataTranferObject {
 

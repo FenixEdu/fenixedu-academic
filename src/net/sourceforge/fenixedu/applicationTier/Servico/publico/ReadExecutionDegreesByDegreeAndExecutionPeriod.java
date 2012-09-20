@@ -14,7 +14,7 @@ import net.sourceforge.fenixedu.domain.ExecutionYear;
 import pt.ist.fenixWebFramework.services.Service;
 
 /**
- * @author T‚nia Pous„o Create on 13/Nov/2003
+ * @author T√¢nia Pous√£o Create on 13/Nov/2003
  */
 public class ReadExecutionDegreesByDegreeAndExecutionPeriod extends FenixService {
 

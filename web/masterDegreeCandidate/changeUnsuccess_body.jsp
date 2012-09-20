@@ -10,7 +10,7 @@
 
     <div align="center">
       <font color="#023264" size="-1">
-        <h2>          A sua situaï¿?ï¿?o actual não lhe permite alterar a informação da sua candidatura !         </h2>
+        <h2>          A sua situaÃ¯Â¿?Ã¯Â¿?o actual nÃ£o lhe permite alterar a informaÃ§Ã£o da sua candidatura !         </h2>
       </font>
       <hr/>
     </div>  

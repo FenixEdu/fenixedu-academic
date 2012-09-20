@@ -150,7 +150,7 @@ public class DelegateElectionPeriodLinkRenderer extends OutputRenderer {
 
     /**
      * This property allows you to specify the voting period pre label. (Ex.:
-     * Período de votação:)
+     * PerÃ­odo de votaÃ§Ã£o:)
      * 
      * @property
      */
@@ -171,7 +171,7 @@ public class DelegateElectionPeriodLinkRenderer extends OutputRenderer {
     }
 
     /**
-     * This property allows you to specify a past period label. (Ex.: Período
+     * This property allows you to specify a past period label. (Ex.: PerÃ­odo
      * terminado:)
      * 
      * @property
@@ -194,7 +194,7 @@ public class DelegateElectionPeriodLinkRenderer extends OutputRenderer {
 
     /**
      * This property allows you to specify a period create link label. (Ex.:
-     * Definir período)
+     * Definir perÃ­odo)
      * 
      * @property
      */
@@ -216,7 +216,7 @@ public class DelegateElectionPeriodLinkRenderer extends OutputRenderer {
 
     /**
      * This property allows you to specify the past period create link label.
-     * (Ex.: Definir outro período)
+     * (Ex.: Definir outro perÃ­odo)
      * 
      * @property
      */

@@ -12,6 +12,6 @@ START TRANSACTION;
 -- 
 
 --  ID: 11 UUID: '36496cce-ebc4-4a27-b16e-a408672f0bf6'
-UPDATE `ACCESSIBLE_ITEM` AS own SET own.`NAME` = 'pt15:¡rea de Pessoal' WHERE own.`UUID` = '36496cce-ebc4-4a27-b16e-a408672f0bf6';
+UPDATE `ACCESSIBLE_ITEM` AS own SET own.`NAME` = 'pt15:√Årea de Pessoal' WHERE own.`UUID` = '36496cce-ebc4-4a27-b16e-a408672f0bf6';
 
 COMMIT;

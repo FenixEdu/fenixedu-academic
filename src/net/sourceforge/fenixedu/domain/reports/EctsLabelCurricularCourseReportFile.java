@@ -64,24 +64,24 @@ public class EctsLabelCurricularCourseReportFile extends EctsLabelCurricularCour
 	spreadsheet.setHeader("Nome Curso");
 	spreadsheet.setHeader("Sigla Curso");
 	spreadsheet.setHeader("Nome Disciplina");
-	spreadsheet.setHeader("Nome Disciplina (inglês)");
-	spreadsheet.setHeader("Código Disciplina");
+	spreadsheet.setHeader("Nome Disciplina (inglÃªs)");
+	spreadsheet.setHeader("CÃ³digo Disciplina");
 	spreadsheet.setHeader("Ano curricular");
 	spreadsheet.setHeader("Semestre");
-	spreadsheet.setHeader("Duração");
+	spreadsheet.setHeader("DuraÃ§Ã£o");
 	spreadsheet.setHeader("Tipo");
-	spreadsheet.setHeader("Créditos ECTS");
+	spreadsheet.setHeader("CrÃ©ditos ECTS");
 	spreadsheet.setHeader("Idioma");
 	spreadsheet.setHeader("Docentes");
 	spreadsheet.setHeader("Horas de contacto");
 	spreadsheet.setHeader("Objectivos");
-	spreadsheet.setHeader("Objectivos (inglês)");
+	spreadsheet.setHeader("Objectivos (inglÃªs)");
 	spreadsheet.setHeader("Programa");
-	spreadsheet.setHeader("Programa (inglês)");
+	spreadsheet.setHeader("Programa (inglÃªs)");
 	spreadsheet.setHeader("Bibliografia Principal");
-	spreadsheet.setHeader("Bibliografia Secundária (inglês)");
-	spreadsheet.setHeader("Avaliação");
-	spreadsheet.setHeader("Avaliação (inglês)");
+	spreadsheet.setHeader("Bibliografia SecundÃ¡ria (inglÃªs)");
+	spreadsheet.setHeader("AvaliaÃ§Ã£o");
+	spreadsheet.setHeader("AvaliaÃ§Ã£o (inglÃªs)");
 	spreadsheet.setHeader("Estimativa total de trabalho");
     }
 
@@ -135,9 +135,9 @@ public class EctsLabelCurricularCourseReportFile extends EctsLabelCurricularCour
     private String getLanguage(final CurricularCourse curricularCourse) {
 	final DegreeType degreeType = curricularCourse.getDegreeType();
 	if (degreeType.hasExactlyOneCycleType() && degreeType.getCycleType() == CycleType.FIRST_CYCLE) {
-	    return "Português";
+	    return "PortuguÃªs";
 	} else {
-	    return "Português/Inglês";
+	    return "PortuguÃªs/InglÃªs";
 	}
     }
 

@@ -5,7 +5,7 @@ import net.sourceforge.fenixedu.domain.person.RoleType;
 /**
  * 
  * @author - Shezad Anavarali (shezad@ist.utl.pt)
- * @author - Ângela Almeida (argelina@ist.utl.pt)
+ * @author - Ã‚ngela Almeida (argelina@ist.utl.pt)
  * 
  */
 public class AcademicAdministrativeOfficeAuthorizationFilter extends AuthorizationByRoleFilter {

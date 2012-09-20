@@ -15,6 +15,6 @@ START TRANSACTION;
 UPDATE `ACCESSIBLE_ITEM` AS own SET own.`NAME` = 'pt8:Docentesen7:Faculty' WHERE own.`UUID` = '173e00ae-66ff-408b-a8ce-d4a4011fe3f5';
 
 --  ID: 26329 UUID: '3bd0759b-edca-4ff7-87d6-6e03b6be1b3c'
-UPDATE `ACCESSIBLE_ITEM` AS own SET own.`NAME` = 'pt12:Funcion·riosen5:Staff' WHERE own.`UUID` = '3bd0759b-edca-4ff7-87d6-6e03b6be1b3c';
+UPDATE `ACCESSIBLE_ITEM` AS own SET own.`NAME` = 'pt12:Funcion√°riosen5:Staff' WHERE own.`UUID` = '3bd0759b-edca-4ff7-87d6-6e03b6be1b3c';
 
 COMMIT;

@@ -35,7 +35,7 @@ public class SummaryOccupancyReportFile extends SummaryOccupancyReportFile_Base 
     public void renderReport(final Spreadsheet spreadsheet) throws Exception {
 	spreadsheet.setHeader("Ano Lectivo");
 	spreadsheet.setHeader("Semestre");
-	spreadsheet.setHeader("OID da Execução da Disciplina");
+	spreadsheet.setHeader("OID da ExecuÃ§Ã£o da Disciplina");
 	spreadsheet.setHeader("Nome da Disciplina");
 	spreadsheet.setHeader("Tipo do Turno");
 	spreadsheet.setHeader("Turno");

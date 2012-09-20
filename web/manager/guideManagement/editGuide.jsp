@@ -26,13 +26,13 @@
 			</td>
 		</tr>
 		<tr>
-			<td><b>N�mero:</b> <bean:write name="guide" property="number" /></td>
+			<td><b>Número:</b> <bean:write name="guide" property="number" /></td>
 		</tr>
 		<tr>
 			<td><b>Ano:</b> <bean:write name="guide" property="year" /></td>
 		</tr>
 		<tr>
-			<td><b>Vers�o:</b> <bean:write name="guide" property="version" /></td>
+			<td><b>Versï¿½o:</b> <bean:write name="guide" property="version" /></td>
 		</tr>		
 		<tr>
 			<td colspan="5">
@@ -65,7 +65,7 @@
 				<bean:define id="behavior" >
 					this.form.method.value='deleteGuide';				
 				</bean:define>
-				<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" value="Apagar Vers�o" onclick="<%= behavior %>" />
+				<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" value="Apagar Versï¿½o" onclick="<%= behavior %>" />
 				
 				<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" value="Submeter"
 				onclick="this.form.method.value='editExecutionDegree'" />
@@ -82,7 +82,7 @@
 			<td>&nbsp;</td>
 		</tr>
 	<tr>
-		<td><b>Tipo</b></td><td><b>Descri��o</b></td><td><b>Quantidade</b></td><td><b>Pre�o</b></td>
+		<td><b>Tipo</b></td><td><b>Descrição</b></td><td><b>Quantidade</b></td><td><b>Preço</b></td>
 	</tr>
 		
 			<logic:iterate id="guideEntry" name="guide"
@@ -103,14 +103,14 @@
 				<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" value="Apagar Entrada" onclick="<%= behavior %>" />					
 												
 				<% if (paymentTransactions.get(index.intValue()) != null){ %>
-					Tem Transa��o
+					Tem Transaï¿½ï¿½o
 				<% }else{ %>
 					<bean:define id="behavior" >
 						this.form.method.value='createPaymentTransaction';
 						this.form.selectedGuideEntryID.value='<bean:write name="guideEntry" property="idInternal" />';
 						this.form.selectedGuideEntryDocumentType.value='<bean:write name="documentType" />';
 					</bean:define>
-					<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" value="Criar Transa��o" onclick="<%= behavior %>" />				
+					<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" value="Criar Transaï¿½ï¿½o" onclick="<%= behavior %>" />				
 				<% }%>	
 								
 				<br />
@@ -131,9 +131,9 @@
 		</tr>
 		<tr>
 			<td ><b>Tipo de Documento: </b></td>
-			<td><b>Descri��o: </b></td>
+			<td><b>Descrição: </b></td>
 			<td><b>Quantidade: </b></td>
-			<td><b>Pre�o: </b></td>
+			<td><b>Preço: </b></td>
 		</tr>
 		<tr>
 			<td>
@@ -157,7 +157,7 @@
 			<td>&nbsp;</td>
 		</tr>
 		<tr>
-			<td><h2>Situa��es de Guia</h2></td>
+			<td><h2>Situaï¿½ï¿½es de Guia</h2></td>
 		</tr>
 		<tr>
 			<td>&nbsp;</td>
@@ -174,7 +174,7 @@
 				- <bean:write name="guideSituation" property="idInternal" />
 				- <bean:write name="guideSituation" property="situation.name" />
 				- <bean:write name="guideSituation" property="state" />
-				- <html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" value="Apagar Situa��o" onclick="<%= behavior %>" />	</td>	
+				- <html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" value="Apagar Situação" onclick="<%= behavior %>" />	</td>	
 			</tr>		
 		</logic:iterate>
 		
@@ -182,15 +182,15 @@
 			<td>&nbsp;</td>
 		</tr>
 		<tr>
-			<td><b>Nova Situa��o:</b></td>
+			<td><b>Nova Situação:</b></td>
 		</tr>
 		<tr>
 			<td>&nbsp;</td>
 		</tr>
 		<tr>
-			<td ><b>Descri��o:</b></td>
+			<td ><b>Descrição:</b></td>
 			<td colspan="2"><b>Data: </b></td>
-			<td colspan="2"><b>Situa��o: </b></td>			
+			<td colspan="2"><b>Situação: </b></td>			
 		</tr>
 			<td ><html:text bundle="HTMLALT_RESOURCES" altKey="text.newSituationRemarks" size="30" property="newSituationRemarks" /></td>
 			<td colspan="2"> 				
@@ -217,7 +217,7 @@
 			</html:select></td>
 		</tr>		
 		<tr>
-			<td><html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" value="Adicionar Situa��o"
+			<td><html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" value="Adicionar Situação"
 				onclick="this.form.method.value='addGuideSituation'" /></td>
 		</tr>
 

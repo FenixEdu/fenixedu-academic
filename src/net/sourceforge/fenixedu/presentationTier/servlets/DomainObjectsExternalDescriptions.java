@@ -2,7 +2,7 @@ package net.sourceforge.fenixedu.presentationTier.servlets;
 
 /**
  * 
- * @author Jo„o Cachopo
+ * @author Jo√£o Cachopo
  * 
  */
 public class DomainObjectsExternalDescriptions {

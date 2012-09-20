@@ -8,7 +8,7 @@ import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 /**
  * @author dcs-rjao
- * @author Fernanda Quitério
+ * @author Fernanda QuitÃ©rio
  * 
  *         19/Mar/2003
  */

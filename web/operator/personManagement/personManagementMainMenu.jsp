@@ -11,7 +11,7 @@
 		</html:link>
 	</li>
 		
-	<li class="navheader">Gestão de Pessoas</li>
+	<li class="navheader">GestÃ£o de Pessoas</li>
 		<li>
 			<html:link page="/findPerson.do?method=prepareFindPerson">
 				<bean:message key="label.manager.findPerson" bundle="MANAGER_RESOURCES" />

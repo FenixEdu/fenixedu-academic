@@ -49,11 +49,11 @@ public class StringFormatter {
 	allLowerSet.add("por");
 	allLowerSet.add("sobre");
 
-	// contracções de artigos com preposições
+	// contracÃ§Ãµes de artigos com preposiÃ§Ãµes
 	allLowerSet.add("ao");
 	allLowerSet.add("aos");
-	allLowerSet.add("à");
-	allLowerSet.add("às");
+	allLowerSet.add("Ã ");
+	allLowerSet.add("Ã s");
 	allLowerSet.add("do");
 	allLowerSet.add("dos");
 	allLowerSet.add("da");
@@ -64,7 +64,7 @@ public class StringFormatter {
 	allLowerSet.add("nas");
 	allLowerSet.add("num");
 
-	// conjunções
+	// conjunÃ§Ãµes
 	allLowerSet.add("e");
 
 	// EN

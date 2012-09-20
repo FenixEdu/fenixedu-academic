@@ -10,7 +10,7 @@
 		<bean:write name="infoStudentCurricularPlan"  property="infoDegreeCurricularPlan.infoDegree.nome"/> 
 			<logic:equal name="infoStudentCurricularPlan" property="specialization.name" value='<%= Specialization.STUDENT_CURRICULAR_PLAN_MASTER_DEGREE.toString()%>'>
     	 		ministrado neste instituto, obteve aproveitamento nas disciplinas abaixo discriminadas, como extra-curriculares ao curso especializado conducente 
-    			à obtenção do grau de mestre:
+    			Ã  obtenÃ§Ã£o do grau de mestre:
 			</logic:equal>
 			<logic:equal name="infoStudentCurricularPlan" property="specialization" value='<%= Specialization.STUDENT_CURRICULAR_PLAN_SPECIALIZATION.toString()%>'>
  				ministrado neste instituto, obteve aproveitamento nas disciplinas abaixo discriminada, como extra-curriculares.

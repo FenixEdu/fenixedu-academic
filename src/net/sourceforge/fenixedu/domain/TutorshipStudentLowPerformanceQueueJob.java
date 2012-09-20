@@ -165,14 +165,14 @@ public class TutorshipStudentLowPerformanceQueueJob extends TutorshipStudentLowP
 	Spreadsheet spreadsheet = new Spreadsheet(getFilename());
 
 	spreadsheet.setHeader("Nome");
-	spreadsheet.setHeader("Número");
+	spreadsheet.setHeader("NÃºmero");
 	spreadsheet.setHeader("Nome do Curso");
 	spreadsheet.setHeader("Ciclo");
-	spreadsheet.setHeader("Créditos Alcançados");
+	spreadsheet.setHeader("CrÃ©ditos AlcanÃ§ados");
 	spreadsheet.setHeader("Regime");
 	spreadsheet.setHeader("Email");
-	spreadsheet.setHeader("Número de Inscrições");
-	spreadsheet.setHeader("Início da Matrícula");
+	spreadsheet.setHeader("NÃºmero de InscriÃ§Ãµes");
+	spreadsheet.setHeader("InÃ­cio da MatrÃ­cula");
 	spreadsheet.setHeader("Tutor");
 	spreadsheet.setHeader("Email do Tutor");
 

@@ -20,7 +20,7 @@ import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 
 /**
- * @author Fernanda Quitério 5/Nov/2003
+ * @author Fernanda QuitÃ©rio 5/Nov/2003
  * 
  */
 public class ReadActiveDegreeCurricularPlanByID extends ReadDegreeCurricularPlanBaseService {

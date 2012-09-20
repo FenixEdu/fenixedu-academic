@@ -76,7 +76,7 @@
 
 
 <p><b>Deve optar por:</b></p>
-<p class="mbottom05">a) Filtrar as listas por "Data Início/Fim"</p>
+<p class="mbottom05">a) Filtrar as listas por "Data InÃ­cio/Fim"</p>
 <table class="tstyle5 thlight mtop05 thmiddle">
 	<tr>
 		<th><bean:message key="label.list.byCriteria.grant.owner.dateBegin"/>:</th>

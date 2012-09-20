@@ -26,7 +26,7 @@ import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
 
 /**
- * @author T‚nia Pous„o
+ * @author T√¢nia Pous√£o
  * 
  */
 public class ReadStudentsAndMarksByEvaluation extends FenixService {
@@ -56,7 +56,7 @@ public class ReadStudentsAndMarksByEvaluation extends FenixService {
 	    public Object transform(Object input) {
 		Attends attend = (Attends) input;
 		InfoFrequenta infoAttend = InfoFrequentaWithAll.newInfoFromDomain(attend);
-		// Melhoria Alterar isto depois: isto est· feio assim
+		// Melhoria Alterar isto depois: isto est√° feio assim
 		if (attend.getEnrolment() != null) {
 		    if (!attend.getEnrolment().getExecutionPeriod().equals(executionCourse.getExecutionPeriod())) {
 			infoAttend.setEnrolmentEvaluationType(EnrolmentEvaluationType.IMPROVEMENT);

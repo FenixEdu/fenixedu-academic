@@ -19,7 +19,7 @@
 
 <%--  ###  Return Links / Steps Information(for multistep forms)  ### --%>
 <%-- <html:link action="/phdIndividualProgramProcess.do?method=choosePhdEmailRecipients" paramId="phdProgramId" paramName="phdEmailBean" paramProperty="phdProgram.externalId">
-	« <bean:message bundle="PHD_RESOURCES" key="label.back"/>
+	Â« <bean:message bundle="PHD_RESOURCES" key="label.back"/>
 </html:link>--%>
 
 <%--  ### Return Links / Steps Information (for multistep forms)  ### --%>
@@ -74,7 +74,7 @@
 		
 		<table class="tstyle5 thlight thright mtop05 mbottom0 ulnomargin width1000px">
 			<tr>
-				<th style="width: 150px;">Destinatários:</th>
+				<th style="width: 150px;">DestinatÃ¡rios:</th>
 				<td class="xpto">
 	
 					<div>

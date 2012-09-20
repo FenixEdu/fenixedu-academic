@@ -27,7 +27,7 @@ font-weight: normal;
 <script type="text/javascript" language="javascript">switchGlobal();</script> 
 <h2><bean:message key="title.inquiry.quc.coordinator" bundle="INQUIRIES_RESOURCES"/></h2>
 
-<h3><bean:write name="executionCourse" property="name"/> - <bean:write name="executionCourse" property="sigla"/> (<bean:write name="executionPeriod" property="semester"/>บ Semestre <bean:write name="executionPeriod" property="executionYear.year"/>)</h3>
+<h3><bean:write name="executionCourse" property="name"/> - <bean:write name="executionCourse" property="sigla"/> (<bean:write name="executionPeriod" property="semester"/>ยบ Semestre <bean:write name="executionPeriod" property="executionYear.year"/>)</h3>
 
 <p><bean:message key="message.coordinator.details.results" bundle="INQUIRIES_RESOURCES"/></p>
 	

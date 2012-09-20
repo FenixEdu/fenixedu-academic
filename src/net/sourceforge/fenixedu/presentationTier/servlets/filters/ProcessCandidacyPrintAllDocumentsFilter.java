@@ -125,7 +125,7 @@ public class ProcessCandidacyPrintAllDocumentsFilter implements Filter {
 	    setField("T_CodCur", registration.getDegree().getMinistryCode());
 	    setField("T_Curso", CardGenerationEntry.normalizeDegreeName(registration.getDegree()));
 	    setField("T_CodEstEns", Campus.getUniversityCode(registration.getLastDegreeCurricularPlan().getCurrentCampus()));
-	    setField("T_EstEns", "Instituto Superior Técnico");
+	    setField("T_EstEns", "Instituto Superior TÃ©cnico");
 	    setField("T_NumAL", student.getStudentNumber().getNumber().toString());
 	    setField("T_GrauEns", CardGenerationEntry.normalizeDegreeType12(registration.getDegreeType()));
 	    setField("CB2", "");

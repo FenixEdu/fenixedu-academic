@@ -1,4 +1,4 @@
-<?xml version='1.0' encoding='ISO-8859-1'?>
+<?xml version="1.0" encoding="UTF-8"?>
 <struts-config>
       <data-sources></data-sources>
       <form-beans type="org.apache.struts.action.ActionFormBean"></form-beans>

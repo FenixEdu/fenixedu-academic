@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="ISO-8859-1"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE tiles-definitions PUBLIC "-//Apache Software Foundation//DTD Tiles Configuration 1.1//EN" "http://jakarta.apache.org/struts/dtds/tiles-config_1_1.dtd">
 <!-- Tiles definitions -->
 <tiles-definitions>
@@ -337,8 +337,8 @@
 	</definition>	
 
 	<definition name="chooseRoom" extends="definition.public.mainPage">
-		<put name="title" value="Instituto Superior Técnico" />
-		<put name="serviceName" value="Instituto Superior Técnico" />
+		<put name="title" value="Instituto Superior TÃ©cnico" />
+		<put name="serviceName" value="Instituto Superior TÃ©cnico" />
 		<put name="symbols_row" value="/publico/degreeSite/symbolsRow.jsp" />
 		<put name="profile_navigation" value="/publico/degreeSite/profileNavigation.jsp" />
 		<put name="lateral_nav" value="/publico/commonNavLocalPub.jsp" />
@@ -347,8 +347,8 @@
 	</definition>	
 
 	<definition name="viewRoom" extends="chooseRoom">
-		<put name="title" value="Instituto Superior Técnico" />
-		<put name="serviceName" value="Instituto Superior Técnico" />
+		<put name="title" value="Instituto Superior TÃ©cnico" />
+		<put name="serviceName" value="Instituto Superior TÃ©cnico" />
 		<put name="symbols_row" value="/publico/degreeSite/symbolsRow.jsp" />
 		<put name="profile_navigation" value="/publico/degreeSite/profileNavigation.jsp" />
 		<put name="lateral_nav" value="/publico/commonNavLocalPub.jsp" />

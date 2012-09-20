@@ -159,7 +159,7 @@
                                     	<fr:property name="size" value="50"/>
                                     </fr:layout>
                                 </fr:edit>
-                                <p class="mvert05 smalltxt color888">O URL deve ser inserido com o protocolo, exemplo: "http://www.ist.utl.pt" e n„o "www.ist.utl.pt"</p>
+                                <p class="mvert05 smalltxt color888">O URL deve ser inserido com o protocolo, exemplo: "http://www.ist.utl.pt" e n√£o "www.ist.utl.pt"</p>
                             </td>
                             <td class="tdclear tderror1">
                             </td>

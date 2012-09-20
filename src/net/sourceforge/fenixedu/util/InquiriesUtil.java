@@ -15,7 +15,7 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoObject;
 import org.apache.commons.beanutils.BeanComparator;
 
 /**
- * @author Jo„o Fialho & Rita Ferreira
+ * @author Jo√£o Fialho & Rita Ferreira
  * 
  */
 public class InquiriesUtil extends FenixUtil {

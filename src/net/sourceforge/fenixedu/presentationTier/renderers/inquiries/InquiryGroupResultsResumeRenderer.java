@@ -146,7 +146,7 @@ public class InquiryGroupResultsResumeRenderer extends InputRenderer {
 	    madeCommentHeaderText.setEscaped(false);
 	    String commentMade = inquiryResultComment.getComment();
 	    if (StringUtils.isBlank(commentMade)) {
-		commentMade = "<em>Sem coment·rio</em>";
+		commentMade = "<em>Sem coment√°rio</em>";
 	    }
 	    HtmlText madeCommentText = new HtmlText("<p class=\"mtop05\">" + commentMade + "</p>");
 	    madeCommentText.setEscaped(false);

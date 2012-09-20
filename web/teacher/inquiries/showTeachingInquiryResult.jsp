@@ -107,9 +107,9 @@ padding-right: 8px;
 
 <bean:define id="inquiryResult" name="inquiryResult" type="net.sourceforge.fenixedu.domain.oldInquiries.StudentInquiriesTeachingResult"></bean:define>
 
-<p class="mtop0" style="float: right;"><em>InformaÁ„o do sistema, recolhida a 5 Novembro 2008</em></p>
+<p class="mtop0" style="float: right;"><em>Informa√ß√£o do sistema, recolhida a 5 Novembro 2008</em></p>
 
-<h2>QUC - Garantia da Qualidade das UC - Resultados dos inquÈritos aos alunos</h2>
+<h2>QUC - Garantia da Qualidade das UC - Resultados dos inqu√©ritos aos alunos</h2>
 
 <div class="infoop2" style="font-size: 1.3em; padding: 0.5em 1em; margin: 1em 0;">
 	<p style="margin: 0.75em 0;">Semestre: 
@@ -139,11 +139,11 @@ padding-right: 8px;
 <table class="tstyle1 thlight thleft tdcenter">
 	<tr class="top">
 		<th></th>
-		<th class="aright">Respons·veis pela gest„o acadÈmica <a href="#" class="helpleft">[?] <span>Representatividade - n∫ de respostas v·lidas superior a 5 e a 10% do n∫ estimado de inscritos para o par Docente/Tipo de Aula.</span></a></th>
-		<th class="aright">Comunidade acadÈmica IST <a href="#" class="helpleft">[?] <span>Representatividade - n∫ de respostas v·lidas superior a 5 e a 50% do n∫ estimado de inscritos para o par Docente/Tipo de Aula.</span></a></th>
+		<th class="aright">Respons√°veis pela gest√£o acad√©mica <a href="#" class="helpleft">[?] <span>Representatividade - n¬∫ de respostas v√°lidas superior a 5 e a 10% do n¬∫ estimado de inscritos para o par Docente/Tipo de Aula.</span></a></th>
+		<th class="aright">Comunidade acad√©mica IST <a href="#" class="helpleft">[?] <span>Representatividade - n¬∫ de respostas v√°lidas superior a 5 e a 50% do n¬∫ estimado de inscritos para o par Docente/Tipo de Aula.</span></a></th>
 	</tr>
 	<tr>
-		<th>Representatividade para divulgaÁ„o</th>
+		<th>Representatividade para divulga√ß√£o</th>
 		<td><bean:message key="<%= "label." + inquiryResult.getInternalDegreeDisclosure().toString() %>" bundle="INQUIRIES_RESOURCES"/></td>
 		<td><bean:message key="<%= "label." + inquiryResult.getPublicDegreeDisclosure().toString() %>" bundle="INQUIRIES_RESOURCES"/></td>
 	</tr>
@@ -154,10 +154,10 @@ padding-right: 8px;
 	<tr class="top">
 		<th></th>
 		<th class="aright">Assiduidade dos alunos <a href="#" class="helpleft">[?] <span>Resultados a melhorar se mais 25% alunos classifica como abaixo ou igual a 3 (De vez em quando).</span></a></th>
-		<th class="aright">Proveito da aprendizagem presencial <a href="#" class="helpleft">[?] <span>Resultados a melhorar se, entre os alunos que frequentaram as aulas, mais 25% classifica como abaixo ou igual a 3 (Discordo) 2 das 3 questıes do grupo.</span></a></th>
-		<th class="aright">Capacidade pedagÛgica <a href="#" class="helpleft">[?] <span>Resultados a melhorar se, entre os alunos que frequentaram as aulas, mais 25% classifica como abaixo ou igual a 3 (Discordo) 2 das 4 questıes do grupo.</span></a></th>
-		<th class="aright">InteracÁ„o com os alunos <a href="#" class="helpleft">[?] <span>Resultados a melhorar se, entre os alunos que frequentaram as aulas, mais 25% classifica como abaixo ou igual a 3 (Discordo) as 2 questıes do grupo.</span></a></th>
-		<th class="aright">PassÌvel de Auditoria <a href="#" class="helpleft">[?] <span>PassÌvel de Auditoria se existem, pelo menos, 2 grupos com resultados a melhorar.</span></a></th>
+		<th class="aright">Proveito da aprendizagem presencial <a href="#" class="helpleft">[?] <span>Resultados a melhorar se, entre os alunos que frequentaram as aulas, mais 25% classifica como abaixo ou igual a 3 (Discordo) 2 das 3 quest√µes do grupo.</span></a></th>
+		<th class="aright">Capacidade pedag√≥gica <a href="#" class="helpleft">[?] <span>Resultados a melhorar se, entre os alunos que frequentaram as aulas, mais 25% classifica como abaixo ou igual a 3 (Discordo) 2 das 4 quest√µes do grupo.</span></a></th>
+		<th class="aright">Interac√ß√£o com os alunos <a href="#" class="helpleft">[?] <span>Resultados a melhorar se, entre os alunos que frequentaram as aulas, mais 25% classifica como abaixo ou igual a 3 (Discordo) as 2 quest√µes do grupo.</span></a></th>
+		<th class="aright">Pass√≠vel de Auditoria <a href="#" class="helpleft">[?] <span>Pass√≠vel de Auditoria se existem, pelo menos, 2 grupos com resultados a melhorar.</span></a></th>
 	</tr>
 	<tr>
 		<th>Resultados a melhorar</th>
@@ -178,8 +178,8 @@ padding-right: 8px;
 	<tr class="top">
 		<th></th>
 		<th class="aright">N</th>
-		<th class="aright">MÈdia</th>
-		<th class="aright separatorright">Desvio padr„o</th>
+		<th class="aright">M√©dia</th>
+		<th class="aright separatorright">Desvio padr√£o</th>
 		<th class="aright">Nunca<br/><b>1</b></th>
 		<th class="aright"><b>2</b></th>
 		<th class="aright">De vez em quando<br/><b>3</b></th>
@@ -208,15 +208,15 @@ padding-right: 8px;
 <table class="tstyle1 thlight thleft tdright td50px">
 	<tr class="top">
 		<th colspan="2"></th>
-		<th class="aright">Hor·rio</th>
+		<th class="aright">Hor√°rio</th>
 		<th class="aright">Docente</th>
-		<th class="aright">Conte˙dos</th>
+		<th class="aright">Conte√∫dos</th>
 
 		<th class="aright">Repetente</th>
 		<th class="aright">Outro</th>
 	</tr>
 	<tr>
-		<th rowspan="2" class="vamiddle">A fraca assiduidade ‡s aulas deveu-se a:</th>
+		<th rowspan="2" class="vamiddle">A fraca assiduidade √†s aulas deveu-se a:</th>
 		<td style="background: #f8f8f8;">N</td>
 		<td><fmt:formatNumber type="number" maxFractionDigits="0" minFractionDigits="0" value="${inquiryResult.p6_1_1_aForPresentation}" /></td>
 		<td><fmt:formatNumber type="number" maxFractionDigits="0" minFractionDigits="0" value="${inquiryResult.p6_1_1_bForPresentation}" /></td>
@@ -242,13 +242,13 @@ padding-right: 8px;
 	<tr class="top">
 		<th></th>
 		<th class="aright">N</th>
-		<th class="aright">MÈdia</th>
-		<th class="aright separatorright">Desvio padr„o</th>
+		<th class="aright">M√©dia</th>
+		<th class="aright separatorright">Desvio padr√£o</th>
 		<th class="aright">Discordo totalmente<br/><b>1</b></th>
 		<th class="aright"><b>2</b></th>
 		<th class="aright">Discordo<br/><b>3</b></th>
 		<th class="aright"><b>4</b></th>
-		<th class="aright">N„o concordo nem discordo<br/><b>5</b></th>
+		<th class="aright">N√£o concordo nem discordo<br/><b>5</b></th>
 		<th class="aright"><b>6</b></th>
 		<th class="aright">Concordo<br/><b>7</b></th>
 		<th class="aright"><b>8</b></th>
@@ -256,7 +256,7 @@ padding-right: 8px;
 	</tr>
 	<tr>
 
-		<th>O docente cumpriu regularmente o hor·rio das aulas e outras actividades programadas</th>
+		<th>O docente cumpriu regularmente o hor√°rio das aulas e outras actividades programadas</th>
 		<td><c:out value="${inquiryResult.number_P6_2}" /></td>
 		<td><fmt:formatNumber type="number" maxFractionDigits="2" minFractionDigits="2" value="${inquiryResult.average_P6_2ForPresentation}" /></td>
 		<td class="separatorright"><fmt:formatNumber type="number" maxFractionDigits="2" minFractionDigits="2" value="${inquiryResult.standardDeviation_P6_2ForPresentation}" /></td>
@@ -288,19 +288,19 @@ padding-right: 8px;
 </table>
 
 
-<p class="mtop15 mbottom0"><strong>Capacidade pedagÛgica</strong></p>
+<p class="mtop15 mbottom0"><strong>Capacidade pedag√≥gica</strong></p>
 
 <table class="tstyle1 thlight thleft tdright td50px">
 	<tr class="top">
 		<th></th>
 		<th class="aright">N</th>
-		<th class="aright">MÈdia</th>
-		<th class="aright separatorright">Desvio padr„o</th>
+		<th class="aright">M√©dia</th>
+		<th class="aright separatorright">Desvio padr√£o</th>
 		<th class="aright">Discordo totalmente<br/><b>1</b></th>
 		<th class="aright"><b>2</b></th>
 		<th class="aright">Discordo<br/><b>3</b></th>
 		<th class="aright"><b>4</b></th>
-		<th class="aright">N„o concordo nem discordo<br/><b>5</b></th>
+		<th class="aright">N√£o concordo nem discordo<br/><b>5</b></th>
 		<th class="aright"><b>6</b></th>
 		<th class="aright">Concordo<br/><b>7</b></th>
 		<th class="aright"><b>8</b></th>
@@ -324,7 +324,7 @@ padding-right: 8px;
 
 	</tr>
 	<tr>
-		<th>O docente expÙs os conte˙dos de forma atractiva</th>
+		<th>O docente exp√¥s os conte√∫dos de forma atractiva</th>
 		<td><c:out value="${inquiryResult.number_P7_2}" /></td>
 		<td><fmt:formatNumber type="number" maxFractionDigits="2" minFractionDigits="2" value="${inquiryResult.average_P7_2ForPresentation}" /></td>
 		<td class="separatorright"><fmt:formatNumber type="number" maxFractionDigits="2" minFractionDigits="2" value="${inquiryResult.standardDeviation_P7_2ForPresentation}" /></td>
@@ -339,7 +339,7 @@ padding-right: 8px;
 		<td><fmt:formatNumber type="percent" maxFractionDigits="0" minFractionDigits="0" value="${inquiryResult.perc_P7_2_9ForPresentation}" /></td>
 	</tr>
 	<tr>
-		<th>O docente demonstrou seguranÁa na exposiÁ„o</th>
+		<th>O docente demonstrou seguran√ßa na exposi√ß√£o</th>
 		<td><c:out value="${inquiryResult.number_P7_3}" /></td>
 		<td><fmt:formatNumber type="number" maxFractionDigits="2" minFractionDigits="2" value="${inquiryResult.average_P7_3ForPresentation}" /></td>
 		<td class="separatorright"><fmt:formatNumber type="number" maxFractionDigits="2" minFractionDigits="2" value="${inquiryResult.standardDeviation_P7_3ForPresentation}" /></td>
@@ -354,7 +354,7 @@ padding-right: 8px;
 		<td><fmt:formatNumber type="percent" maxFractionDigits="0" minFractionDigits="0" value="${inquiryResult.perc_P7_3_9ForPresentation}" /></td>
 	</tr>
 	<tr>
-		<th>O docente expÙs os conte˙dos com clareza</th>
+		<th>O docente exp√¥s os conte√∫dos com clareza</th>
 
 		<td><c:out value="${inquiryResult.number_P7_4}" /></td>
 		<td><fmt:formatNumber type="number" maxFractionDigits="2" minFractionDigits="2" value="${inquiryResult.average_P7_4ForPresentation}" /></td>
@@ -373,20 +373,20 @@ padding-right: 8px;
 </table>
 
 
-<p class="mtop15 mbottom0"><strong>InteracÁ„o com os alunos</strong></p>
+<p class="mtop15 mbottom0"><strong>Interac√ß√£o com os alunos</strong></p>
 
 <table class="tstyle1 thlight thleft tdright td50px">
 	<tr class="top">
 		<th></th>
 		<th class="aright">N</th>
-		<th class="aright">MÈdia</th>
+		<th class="aright">M√©dia</th>
 
-		<th class="aright separatorright">Desvio padr„o</th>
+		<th class="aright separatorright">Desvio padr√£o</th>
 		<th class="aright">Discordo totalmente<br/><b>1</b></th>
 		<th class="aright"><b>2</b></th>
 		<th class="aright">Discordo<br/><b>3</b></th>
 		<th class="aright"><b>4</b></th>
-		<th class="aright">N„o concordo nem discordo<br/><b>5</b></th>
+		<th class="aright">N√£o concordo nem discordo<br/><b>5</b></th>
 		<th class="aright"><b>6</b></th>
 		<th class="aright">Concordo<br/><b>7</b></th>
 		<th class="aright"><b>8</b></th>
@@ -394,7 +394,7 @@ padding-right: 8px;
 
 	</tr>
 	<tr>
-		<th>O docente estimulou a participaÁ„o e discuss„o</th>
+		<th>O docente estimulou a participa√ß√£o e discuss√£o</th>
 		<td><c:out value="${inquiryResult.number_P8_1}" /></td>
 		<td><fmt:formatNumber type="number" maxFractionDigits="2" minFractionDigits="2" value="${inquiryResult.average_P8_1ForPresentation}" /></td>
 		<td class="separatorright"><fmt:formatNumber type="number" maxFractionDigits="2" minFractionDigits="2" value="${inquiryResult.standardDeviation_P8_1ForPresentation}" /></td>
@@ -409,7 +409,7 @@ padding-right: 8px;
 		<td><fmt:formatNumber type="percent" maxFractionDigits="0" minFractionDigits="0" value="${inquiryResult.perc_P8_1_9ForPresentation}" /></td>
 	</tr>
 	<tr>
-		<th>O docente mostrou abertura para o esclarecimento de d˙vidas, dentro e fora das aulas</th>
+		<th>O docente mostrou abertura para o esclarecimento de d√∫vidas, dentro e fora das aulas</th>
 		<td><c:out value="${inquiryResult.number_P8_2}" /></td>
 		<td><fmt:formatNumber type="number" maxFractionDigits="2" minFractionDigits="2" value="${inquiryResult.average_P8_2ForPresentation}" /></td>
 		<td class="separatorright"><fmt:formatNumber type="number" maxFractionDigits="2" minFractionDigits="2" value="${inquiryResult.standardDeviation_P8_2ForPresentation}" /></td>
@@ -430,14 +430,14 @@ padding-right: 8px;
 	<tr class="top">
 		<th></th>
 		<th class="aright">N</th>
-		<th class="aright">MÈdia</th>
-		<th class="aright separatorright">Desvio padr„o</th>
+		<th class="aright">M√©dia</th>
+		<th class="aright separatorright">Desvio padr√£o</th>
 		<th class="aright">A melhorar<br/><b>1</b></th>
 		<th class="aright">Bom<br/><b>2</b></th>
 		<th class="aright">Muito bom<br/><b>3</b></th>
 	</tr>
 	<tr>
-		<th>AvaliaÁ„o global do desempenho do docente</th>
+		<th>Avalia√ß√£o global do desempenho do docente</th>
 		<td><c:out value="${inquiryResult.number_P9}" /></td>
 		<td><fmt:formatNumber type="number" maxFractionDigits="2" minFractionDigits="2" value="${inquiryResult.average_P9ForPresentation}" /></td>
 		<td class="separatorright"><fmt:formatNumber type="number" maxFractionDigits="2" minFractionDigits="2" value="${inquiryResult.standardDeviation_P9ForPresentation}" /></td>

@@ -69,8 +69,8 @@ execute "Create MetaDomainObjhect From Site Templates" createMetaDomainObjectsFr
 execute "Update Roles" updateRole.sql
 execute "Migrate Top Sections, esta esqueci-me depois aquando merge pode-se juntar com o migrateSectionsAndItems" migrateTopSections.sql
 
-execute "Criar chave da Pool, este scripts pode depois ser merged na criação da tabela meta domain object" createKeysForPool.sql
-execute "Associar os conteúdos às pools. Com algum cuidado tb deverá ser merged na criação da tabela meta domain object" createPools.sql
+execute "Criar chave da Pool, este scripts pode depois ser merged na criaÃ§Ã£o da tabela meta domain object" createKeysForPool.sql
+execute "Associar os conteÃºdos Ã s pools. Com algum cuidado tb deverÃ¡ ser merged na criaÃ§Ã£o da tabela meta domain object" createPools.sql
 
 execute "Initialize portal stuff from modules." initPortals.sql
 execute "Initialize old portals" initiateOldPortals.sql

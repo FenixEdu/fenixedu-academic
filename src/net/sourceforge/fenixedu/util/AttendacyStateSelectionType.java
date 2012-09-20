@@ -4,7 +4,7 @@
 package net.sourceforge.fenixedu.util;
 
 /**
- * @author AndrÈ Fernandes / Jo„o Brito
+ * @author Andr√© Fernandes / Jo√£o Brito
  */
 public class AttendacyStateSelectionType {
     public static final int ALL_TYPE = 1;

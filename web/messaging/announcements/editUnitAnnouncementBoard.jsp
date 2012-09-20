@@ -76,7 +76,7 @@
 			</tr>										
 		</table>
 		<html:submit>
-			Guardar Alterações
+			Guardar AlteraÃ§Ãµes
 		</html:submit>
 	</html:form>
 

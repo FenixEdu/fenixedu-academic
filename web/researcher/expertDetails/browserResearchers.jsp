@@ -16,7 +16,7 @@
 
 <style>
 li {
-padding-bottom: 0.3em; /* é preciso criar uma class para isto <--- */
+padding-bottom: 0.3em; /* Ã© preciso criar uma class para isto <--- */
 }
 </style>
 

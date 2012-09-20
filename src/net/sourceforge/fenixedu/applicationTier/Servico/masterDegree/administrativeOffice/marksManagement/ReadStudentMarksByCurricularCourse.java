@@ -29,7 +29,7 @@ import org.apache.commons.collections.Predicate;
 import pt.ist.fenixWebFramework.services.Service;
 
 /**
- * @author Fernanda QuitÈrio 01/07/2003
+ * @author Fernanda Quit√©rio 01/07/2003
  * 
  */
 public class ReadStudentMarksByCurricularCourse extends FenixService {
@@ -145,7 +145,7 @@ public class ReadStudentMarksByCurricularCourse extends FenixService {
 	    enrolment = curricularCourse.getEnrolmentByStudentAndYear(studentCurricularPlan.getRegistration(), executionYear);
 
 	} else {
-	    // TODO: N„o se sabe se este comportamento est· correcto!
+	    // TODO: N√£o se sabe se este comportamento est√° correcto!
 	    List<Enrolment> enrollments = studentCurricularPlan.getEnrolments(curricularCourse);
 
 	    if (enrollments.isEmpty()) {

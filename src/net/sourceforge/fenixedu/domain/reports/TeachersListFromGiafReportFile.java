@@ -34,12 +34,12 @@ public class TeachersListFromGiafReportFile extends TeachersListFromGiafReportFi
 
     @Override
     public String getJobName() {
-	return "InformaÁ„o sobre docentes do IST";
+	return "Informa√ß√£o sobre docentes do IST";
     }
 
     @Override
     protected String getPrefix() {
-	return "InformaÁ„o sobre docentes do IST";
+	return "Informa√ß√£o sobre docentes do IST";
     }
 
     @Override
@@ -49,26 +49,26 @@ public class TeachersListFromGiafReportFile extends TeachersListFromGiafReportFi
 
     private void generateNameAndHeaders(Spreadsheet spreadsheet, ExecutionYear executionYear) {
 	spreadsheet.setName("Docentes do IST " + executionYear.getQualifiedName().replace("/", ""));
-	spreadsheet.setHeader("IdentificaÁ„o");
+	spreadsheet.setHeader("Identifica√ß√£o");
 	spreadsheet.setHeader("OID_PERSON");
 	spreadsheet.setHeader("Tipo Docente");
 	spreadsheet.setHeader("Nome");
 	spreadsheet.setHeader("Data de nascimento");
 	spreadsheet.setHeader("Sexo");
 	spreadsheet.setHeader("Nacionalidade");
-	spreadsheet.setHeader("Departamento ou SecÁ„o AutÛnoma");
-	spreadsheet.setHeader("¡rea cientÌfica ou SecÁ„o");
-	spreadsheet.setHeader("Grau acadÈmico");
-	spreadsheet.setHeader("Local de obtenÁ„o do grau");
-	spreadsheet.setHeader("Nome ou ¡rea do grau");
+	spreadsheet.setHeader("Departamento ou Sec√ß√£o Aut√≥noma");
+	spreadsheet.setHeader("√Årea cient√≠fica ou Sec√ß√£o");
+	spreadsheet.setHeader("Grau acad√©mico");
+	spreadsheet.setHeader("Local de obten√ß√£o do grau");
+	spreadsheet.setHeader("Nome ou √Årea do grau");
 	spreadsheet.setHeader("E-mail");
 	spreadsheet.setHeader("Categoria");
-	spreadsheet.setHeader("Regime de contrataÁ„o");
-	spreadsheet.setHeader("VÌnculo");
-	spreadsheet.setHeader("Data inÌcio contrato/AutorizaÁ„o");
-	spreadsheet.setHeader("Data conclus„o contrato/AutorizaÁ„o");
-	spreadsheet.setHeader("N∫ de Horas lectivas");
-	spreadsheet.setHeader("N∫ de anos na instituiÁ„o");
+	spreadsheet.setHeader("Regime de contrata√ß√£o");
+	spreadsheet.setHeader("V√≠nculo");
+	spreadsheet.setHeader("Data in√≠cio contrato/Autoriza√ß√£o");
+	spreadsheet.setHeader("Data conclus√£o contrato/Autoriza√ß√£o");
+	spreadsheet.setHeader("N¬∫ de Horas lectivas");
+	spreadsheet.setHeader("N¬∫ de anos na institui√ß√£o");
     }
 
     private void listTeachers(Spreadsheet spreadsheet, final ExecutionYear executionYear) throws IOException {
@@ -147,7 +147,7 @@ public class TeachersListFromGiafReportFile extends TeachersListFromGiafReportFi
 	    ProfessionalRelation professionalRelation, LocalDate beginDate, LocalDate endDate, Double hours,
 	    Integer yearsInInstitution) {
 	final Row row = spreadsheet.addRow();
-	// Coluna "Nr mecanogr·fico"
+	// Coluna "Nr mecanogr√°fico"
 	row.setCell(teacher.getPerson().getIstUsername());
 	// Coluna "OID"
 	row.setCell(teacher.getPerson().getExternalId());
@@ -163,15 +163,15 @@ public class TeachersListFromGiafReportFile extends TeachersListFromGiafReportFi
 	row.setCell(teacher.getPerson().getCountry() != null ? teacher.getPerson().getCountry().getCountryNationality()
 		.getContent() : null);
 
-	// Coluna "Departamento ou SecÁ„o AutÛnoma" e
-	// "¡rea cientÌfica ou SecÁ„o"
+	// Coluna "Departamento ou Sec√ß√£o Aut√≥noma" e
+	// "√Årea cient√≠fica ou Sec√ß√£o"
 	DepartmentUnit departmentUnit = unit != null ? unit.getDepartmentUnit() : null;
 	row.setCell(departmentUnit != null ? departmentUnit.getName() : null);
 	row.setCell(unit != null && (departmentUnit == null || departmentUnit != unit) ? unit.getName() : null);
 
-	// Coluna "Grau acadÈmico"
-	// Coluna "Local de obtenÁ„o do grau"
-	// Coluna "Nome ou ·rea do grau"
+	// Coluna "Grau acad√©mico"
+	// Coluna "Local de obten√ß√£o do grau"
+	// Coluna "Nome ou √°rea do grau"
 	Qualification qualification = getBetterQualificationOfPersonByExecutionYear(teacher.getPerson(), executionYear);
 
 	row.setCell(qualification != null && qualification.getType() != null ? qualification.getType().getLocalizedName() : null);
@@ -184,22 +184,22 @@ public class TeachersListFromGiafReportFile extends TeachersListFromGiafReportFi
 	// Coluna "Categoria"
 	row.setCell(professionalCategory != null ? professionalCategory.getName().getContent() : null);
 
-	// Coluna "Regime de contrataÁ„o"
+	// Coluna "Regime de contrata√ß√£o"
 	row.setCell(professionalRegime != null ? professionalRegime.getName().toString() : null);
 
-	// Coluna "VÌnculo"
+	// Coluna "V√≠nculo"
 	row.setCell(professionalRelation != null ? professionalRelation.getName().toString() : null);
 
-	// Coluna "Data inÌcio contrato/AutorizaÁ„o"
+	// Coluna "Data in√≠cio contrato/Autoriza√ß√£o"
 	row.setCell(writeDate(beginDate));
 
-	// Coluna "Data conclus„o contrato/AutorizaÁ„o"
+	// Coluna "Data conclus√£o contrato/Autoriza√ß√£o"
 	row.setCell(writeDate(endDate));
 
-	// N∫ de Horas lectivas
+	// N¬∫ de Horas lectivas
 	row.setCell(hours);
 
-	// Coluna "N∫ de anos na instituiÁ„o"
+	// Coluna "N¬∫ de anos na institui√ß√£o"
 	row.setCell(yearsInInstitution);
 
 	return;

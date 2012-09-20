@@ -18,7 +18,7 @@ import net.sourceforge.fenixedu.domain.DomainObject;
 import net.sourceforge.fenixedu.domain.ShiftType;
 
 /**
- * @author Jo„o Fialho & Rita Ferreira
+ * @author Jo√£o Fialho & Rita Ferreira
  * 
  */
 public class InfoTeacherOrNonAffiliatedTeacherWithRemainingClassTypes extends InfoObject {

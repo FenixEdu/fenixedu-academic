@@ -4,7 +4,7 @@ START TRANSACTION;
 
 INSERT INTO EXECUTION_PATH (EXECUTION_PATH,CONTENT_ID,KEY_FUNCTIONALITY,KEY_ROOT_DOMAIN_OBJECT) VALUES ('/viewEmployeeAssiduousness.do?method=chooseEmployee&action=showVacationsMap','f108f2c0-36c8-46e9-82b8-dfb863748780',5,1)  ;
 
-INSERT INTO CONTENT (EXECUTION_PATH,VISIBLE,KEY_EXECUTION_PATH_VALUE,CONTENT_ID,CREATION_DATE,NAME,TITLE,BODY,DESCRIPTION,NORMALIZED_NAME,KEY_PORTAL,KEY_AVAILABILITY_POLICY,KEY_ROOT_DOMAIN_OBJECT,KEY_CREATOR,OJB_CONCRETE_CLASS) VALUES ('/viewEmployeeAssiduousness.do?method=chooseEmployee&action=showVacationsMap',null,6,'24342f3c-3ee6-4323-bed7-d145f9d5a8e7','2009-04-16 15:05:37','pt14:Mapa de Fériasen13:Vacations Map','pt14:Mapa de Fériasen13:Vacations Map',null,null,'en13:vacations-mappt14:mapa-de-ferias',null,null,1,null,'net.sourceforge.fenixedu.domain.functionalities.Functionality')  ;
+INSERT INTO CONTENT (EXECUTION_PATH,VISIBLE,KEY_EXECUTION_PATH_VALUE,CONTENT_ID,CREATION_DATE,NAME,TITLE,BODY,DESCRIPTION,NORMALIZED_NAME,KEY_PORTAL,KEY_AVAILABILITY_POLICY,KEY_ROOT_DOMAIN_OBJECT,KEY_CREATOR,OJB_CONCRETE_CLASS) VALUES ('/viewEmployeeAssiduousness.do?method=chooseEmployee&action=showVacationsMap',null,6,'24342f3c-3ee6-4323-bed7-d145f9d5a8e7','2009-04-16 15:05:37','pt14:Mapa de FÃ©riasen13:Vacations Map','pt14:Mapa de FÃ©riasen13:Vacations Map',null,null,'en13:vacations-mappt14:mapa-de-ferias',null,null,1,null,'net.sourceforge.fenixedu.domain.functionalities.Functionality')  ;
 
 INSERT INTO NODE (NODE_ORDER,ASCENDING,VISIBLE,CONTENT_ID,KEY_CHILD,KEY_PARENT,KEY_ROOT_DOMAIN_OBJECT,OJB_CONCRETE_CLASS) VALUES (7,1,1,'940d3b34-752c-4e56-8d35-c1dab4f954a8:24342f3c-3ee6-4323-bed7-d145f9d5a8e7',7,8,1,'net.sourceforge.fenixedu.domain.contents.ExplicitOrderNode')  ;
 

@@ -65,9 +65,9 @@ $(document).ready(function() {
 <bean:define id="areCreditsCalculated" name="annualTeachingCreditsBean" property="areCreditsCalculated"/>
 <logic:equal name="areCreditsCalculated" value="true">
 	<div class="panel first">
-		<h3 class="credits-header mtop2"><b>Carga Lectiva Nominal</b><span><fr:view name="annualTeachingCreditsBean" property="annualTeachingLoad"><fr:layout name="decimal-format"><fr:property name="format" value="######0.00 'CrÈditos'"/></fr:layout></fr:view></span></h3>
-		<h3 class="credits-header mtop2"><b>CrÈditos Obtidos<logic:equal name="annualTeachingCreditsBean" property="hasAnyLimitation" value="true"><span class="tderror1"> *</span></logic:equal></b><span><fr:view name="annualTeachingCreditsBean" property="yearCredits"><fr:layout name="decimal-format"><fr:property name="format" value="######0.00 'CrÈditos'"/></fr:layout></fr:view></span></h3>
-		<h3 class="credits-header mtop2"><b>CrÈditos Finais</b><span><fr:view name="annualTeachingCreditsBean" property="finalCredits"><fr:layout name="decimal-format"><fr:property name="format" value="######0.00 'CrÈditos'"/></fr:layout></fr:view></span></h3>
+		<h3 class="credits-header mtop2"><b>Carga Lectiva Nominal</b><span><fr:view name="annualTeachingCreditsBean" property="annualTeachingLoad"><fr:layout name="decimal-format"><fr:property name="format" value="######0.00 'Cr√©ditos'"/></fr:layout></fr:view></span></h3>
+		<h3 class="credits-header mtop2"><b>Cr√©ditos Obtidos<logic:equal name="annualTeachingCreditsBean" property="hasAnyLimitation" value="true"><span class="tderror1"> *</span></logic:equal></b><span><fr:view name="annualTeachingCreditsBean" property="yearCredits"><fr:layout name="decimal-format"><fr:property name="format" value="######0.00 'Cr√©ditos'"/></fr:layout></fr:view></span></h3>
+		<h3 class="credits-header mtop2"><b>Cr√©ditos Finais</b><span><fr:view name="annualTeachingCreditsBean" property="finalCredits"><fr:layout name="decimal-format"><fr:property name="format" value="######0.00 'Cr√©ditos'"/></fr:layout></fr:view></span></h3>
 	</div>
 </logic:equal>
 
@@ -75,7 +75,7 @@ $(document).ready(function() {
 <div class="panel first"><h3 class="infoop mtop2"><img id="status-icon" width="15px" alt="" src="<%= request.getContextPath() +"/images/right30.png" %>">
 <b><bean:message key="label.teacherCreditsSheet.professorships" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></b>
 <logic:equal name="areCreditsCalculated" value="true">
-	<span><fr:view name="annualTeachingCreditsBean" property="teachingCredits"><fr:layout name="decimal-format"><fr:property name="format" value="######0.00 'CrÈditos'"/></fr:layout></fr:view></span>
+	<span><fr:view name="annualTeachingCreditsBean" property="teachingCredits"><fr:layout name="decimal-format"><fr:property name="format" value="######0.00 'Cr√©ditos'"/></fr:layout></fr:view></span>
 </logic:equal></h3>
 	<div class="inner-panel" style="display: none;">
 		<logic:iterate id="annualTeachingCreditsByPeriodBean" name="annualTeachingCreditsBean" property="annualTeachingCreditsByPeriodBeans">
@@ -222,7 +222,7 @@ $(document).ready(function() {
 <div class="panel"><h3 class="infoop mtop2"><img id="status-icon" width="15px" alt="" src="<%= request.getContextPath() +"/images/right30.png" %>">
 <b><bean:message key="label.credits.masterDegreeTheses" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></b>
 <logic:equal name="areCreditsCalculated" value="true">
-	<span><fr:view name="annualTeachingCreditsBean" property="masterDegreeThesesCredits"><fr:layout name="decimal-format"><fr:property name="format" value="######0.00 'CrÈditos'"/></fr:layout></fr:view></span>
+	<span><fr:view name="annualTeachingCreditsBean" property="masterDegreeThesesCredits"><fr:layout name="decimal-format"><fr:property name="format" value="######0.00 'Cr√©ditos'"/></fr:layout></fr:view></span>
 </logic:equal></h3>
 	<div class="inner-panel" style="display: none;">
 	<logic:empty name="annualTeachingCreditsBean" property="masterDegreeThesis">
@@ -249,7 +249,7 @@ $(document).ready(function() {
 <div class="panel"><h3 class="infoop mtop2"><img id="status-icon" width="15px" alt="" src="<%= request.getContextPath() +"/images/right30.png" %>">
 <b><bean:message key="label.credits.phdDegreeTheses" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></b>
 <logic:equal name="areCreditsCalculated" value="true">
-	<span><fr:view name="annualTeachingCreditsBean" property="phdDegreeThesesCredits"><fr:layout name="decimal-format"><fr:property name="format" value="######0.00 'CrÈditos'"/></fr:layout></fr:view></span>
+	<span><fr:view name="annualTeachingCreditsBean" property="phdDegreeThesesCredits"><fr:layout name="decimal-format"><fr:property name="format" value="######0.00 'Cr√©ditos'"/></fr:layout></fr:view></span>
 </logic:equal></h3>
 	<div class="inner-panel" style="display: none;">
 		<bean:define id="phdDegreeTheses" name="annualTeachingCreditsBean" property="phdDegreeTheses"/>
@@ -277,7 +277,7 @@ $(document).ready(function() {
 <div class="panel"><h3 class="infoop mtop2"><img id="status-icon" width="15px" alt="" src="<%= request.getContextPath() +"/images/right30.png" %>">
 <b><bean:message key="label.credits.projectsAndTutorials" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></b>
 <logic:equal name="areCreditsCalculated" value="true">
-	<span><fr:view name="annualTeachingCreditsBean" property="projectsTutorialsCredits"><fr:layout name="decimal-format"><fr:property name="format" value="######0.00 'CrÈditos'"/></fr:layout></fr:view></span>
+	<span><fr:view name="annualTeachingCreditsBean" property="projectsTutorialsCredits"><fr:layout name="decimal-format"><fr:property name="format" value="######0.00 'Cr√©ditos'"/></fr:layout></fr:view></span>
 </logic:equal></h3>
 	<div class="inner-panel" style="display: none;">
 	<bean:define id="projectAndTutorialProfessorships" name="annualTeachingCreditsBean" property="projectAndTutorialProfessorships"/>
@@ -325,7 +325,7 @@ $(document).ready(function() {
 <div class="panel"><h3 class="infoop mtop2"><img id="status-icon" width="15px" alt="" src="<%= request.getContextPath() +"/images/right30.png" %>">
 <b><bean:message key="label.teacherCreditsSheet.managementPositionLines" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></b>
 <logic:equal name="areCreditsCalculated" value="true">
-	<span><fr:view name="annualTeachingCreditsBean" property="managementFunctionCredits"><fr:layout name="decimal-format"><fr:property name="format" value="######0.00 'CrÈditos'"/></fr:layout></fr:view></span>
+	<span><fr:view name="annualTeachingCreditsBean" property="managementFunctionCredits"><fr:layout name="decimal-format"><fr:property name="format" value="######0.00 'Cr√©ditos'"/></fr:layout></fr:view></span>
 </logic:equal></h3>
 	<div class="inner-panel" style="display: none;">
 		<logic:iterate id="annualTeachingCreditsByPeriodBean" name="annualTeachingCreditsBean" property="annualTeachingCreditsByPeriodBeans">
@@ -335,14 +335,14 @@ $(document).ready(function() {
 			<p><logic:equal name="roleType" value="SCIENTIFIC_COUNCIL">
 				<html:link page='<%= "/managePersonFunctionsShared.do?method=prepareToAddPersonFunction&amp;page=0" + "&amp;executionPeriodOid=" + executionPeriodOid + "&amp;teacherOid=" + teacherId %>'>
 					<%--<bean:message key="link.change"/>&nbsp;<bean:write name="annualTeachingCreditsByPeriodBean" property="executionPeriod.qualifiedName"/>--%>
-					Inserir Cargo de Gest„o AcadÈmica
+					Inserir Cargo de Gest√£o Acad√©mica
 				</html:link>
 				|
 			</logic:equal>
 			<logic:equal name="canEditTeacherManagementFunctions" value="true">
 				<html:link page='<%= "/managePersonFunctionsShared.do?method=prepareToAddPersonFunctionShared&amp;page=0" + "&amp;executionPeriodOid=" + executionPeriodOid + "&amp;teacherOid=" + teacherId %>'>
 					<%--<bean:message key="link.change"/>&nbsp;<bean:write name="annualTeachingCreditsByPeriodBean" property="executionPeriod.qualifiedName"/>--%>
-					Inserir Cargo de Gest„o de Unidades
+					Inserir Cargo de Gest√£o de Unidades
 				</html:link>
 			</logic:equal></p>
 			
@@ -387,7 +387,7 @@ $(document).ready(function() {
 <div class="panel"><h3 class="infoop mtop2"><img id="status-icon" width="15px" alt="" src="<%= request.getContextPath() +"/images/right30.png" %>">
 <b><bean:message key="label.teacherCreditsSheet.otherTypeCreditLines" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></b>
 <logic:equal name="areCreditsCalculated" value="true">
-	<span><fr:view name="annualTeachingCreditsBean" property="othersCredits"><fr:layout name="decimal-format"><fr:property name="format" value="######0.00 'CrÈditos'"/></fr:layout></fr:view></span>
+	<span><fr:view name="annualTeachingCreditsBean" property="othersCredits"><fr:layout name="decimal-format"><fr:property name="format" value="######0.00 'Cr√©ditos'"/></fr:layout></fr:view></span>
 </logic:equal></h3>
 	<div class="inner-panel" style="display: none;">
 		<logic:iterate id="annualTeachingCreditsByPeriodBean" name="annualTeachingCreditsBean" property="annualTeachingCreditsByPeriodBeans">
@@ -432,7 +432,7 @@ $(document).ready(function() {
 <b><bean:message key="label.credits.creditsReduction" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></b>
 <logic:equal name="areCreditsCalculated" value="true">
 	<logic:equal name="annualTeachingCreditsBean" property="canSeeCreditsReduction" value="true">
-		<span><fr:view name="annualTeachingCreditsBean" property="creditsReduction"><fr:layout name="decimal-format"><fr:property name="format" value="######0.00 'CrÈditos'"/></fr:layout></fr:view></span>
+		<span><fr:view name="annualTeachingCreditsBean" property="creditsReduction"><fr:layout name="decimal-format"><fr:property name="format" value="######0.00 'Cr√©ditos'"/></fr:layout></fr:view></span>
 	</logic:equal>
 </logic:equal></h3>
 	<div class="inner-panel" style="display: none;">
@@ -464,7 +464,7 @@ $(document).ready(function() {
 <div class="panel"><h3 class="infoop mtop2"><img id="status-icon" width="15px" alt="" src="<%= request.getContextPath() +"/images/right30.png" %>">
 <b><bean:message key="label.teacherCreditsSheet.serviceExemptionLines" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></b>
 <logic:equal name="areCreditsCalculated" value="true">
-	<span><fr:view name="annualTeachingCreditsBean" property="serviceExemptionCredits"><fr:layout name="decimal-format"><fr:property name="format" value="######0.00 'CrÈditos'"/></fr:layout></fr:view></span>
+	<span><fr:view name="annualTeachingCreditsBean" property="serviceExemptionCredits"><fr:layout name="decimal-format"><fr:property name="format" value="######0.00 'Cr√©ditos'"/></fr:layout></fr:view></span>
 </logic:equal></h3>
 	<div class="inner-panel" style="display: none;">
 		<logic:iterate id="annualTeachingCreditsByPeriodBean" name="annualTeachingCreditsBean" property="annualTeachingCreditsByPeriodBeans">

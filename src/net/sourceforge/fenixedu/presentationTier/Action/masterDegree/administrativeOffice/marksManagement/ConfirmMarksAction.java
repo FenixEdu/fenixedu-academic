@@ -27,7 +27,7 @@ import pt.ist.fenixWebFramework.security.UserView;
 
 /**
  * 
- * @author Fernanda Quitério 10/07/2003
+ * @author Fernanda QuitÃ©rio 10/07/2003
  * 
  */
 public class ConfirmMarksAction extends FenixDispatchAction {

@@ -31,15 +31,15 @@
 
 <ul>
 <li>
-    <strong>Em meados de FEVEREIRO</strong>, ser„o afixadas as condiÁıes dos est·gios obtidos pela
-	IAESTE Portugal e que, nessa altura, caso um dos est·gios me interesse, <strong>devo fazer
-	a minha inscriÁ„o.</strong>
+    <strong>Em meados de FEVEREIRO</strong>, ser√£o afixadas as condi√ß√µes dos est√°gios obtidos pela
+	IAESTE Portugal e que, nessa altura, caso um dos est√°gios me interesse, <strong>devo fazer
+	a minha inscri√ß√£o.</strong>
 </li>
-	<li>Caso n„o obtenha um est·gio nesta fase de candidatura, devo
-	entrar novamente em contacto com o centro de inscriÁ„o IAESTE do meu
-	estabelecimento de ensino <strong>a partir do mÍs de ABRIL</strong>,
-	para continuar a ser considerado como candidato para novos est·gios que
-	apareÁam daÌ em diante.</li>
+	<li>Caso n√£o obtenha um est√°gio nesta fase de candidatura, devo
+	entrar novamente em contacto com o centro de inscri√ß√£o IAESTE do meu
+	estabelecimento de ensino <strong>a partir do m√™s de ABRIL</strong>,
+	para continuar a ser considerado como candidato para novos est√°gios que
+	apare√ßam da√≠ em diante.</li>
 </ul>
 
 <p>Carregue em "Submeter Candidatura" para concluir o processo de candidatura:</p>

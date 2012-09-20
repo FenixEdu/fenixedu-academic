@@ -7,7 +7,7 @@
 
 <logic:present role="MANAGER">
 
-	<h2>Editar prestação do plano de propina de <em>nome do curso</em></h2>
+	<h2>Editar prestaÃ§Ã£o do plano de propina de <em>nome do curso</em></h2>
 	
 	<h3>Tipo de plano</h3>
 	

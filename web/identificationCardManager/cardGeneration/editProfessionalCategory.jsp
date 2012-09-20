@@ -5,7 +5,7 @@
 
 <em><bean:message key="link.manage.card.generation.header"/></em>
 <h2><bean:message bundle="CARD_GENERATION_RESOURCES" key="link.manage.card.generation.edit.professionalCategory" /></h2>
-<p><html:link page="/manageCardGeneration.do?method=showCategoryCodes">« Voltar</html:link></p>
+<p><html:link page="/manageCardGeneration.do?method=showCategoryCodes">Â« Voltar</html:link></p>
 
 <fr:edit id="professionalCategory"
 		 name="professionalCategory"

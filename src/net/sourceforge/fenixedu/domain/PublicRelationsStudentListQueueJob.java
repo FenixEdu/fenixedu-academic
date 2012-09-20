@@ -21,7 +21,7 @@ public class PublicRelationsStudentListQueueJob extends PublicRelationsStudentLi
 
     @Override
     public String getDescription() {
-	return "Listagem de Alunos para Relações públicas";
+	return "Listagem de Alunos para RelaÃ§Ãµes pÃºblicas";
     }
 
     @Override

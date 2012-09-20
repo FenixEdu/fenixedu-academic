@@ -3,7 +3,7 @@ package net.sourceforge.fenixedu.dataTransferObject;
 import net.sourceforge.fenixedu.domain.MasterDegreeThesisDataVersion;
 
 /**
- * @author Fernanda Quitério Created on 6/Set/2004
+ * @author Fernanda QuitÃ©rio Created on 6/Set/2004
  * 
  */
 public class InfoMasterDegreeThesisDataVersionWithGuidersAndResp extends InfoMasterDegreeThesisDataVersionWithGuiders {

@@ -38,22 +38,22 @@ update PROFESSIONAL_CATEGORY set IDENTIFICATION_CARD_LABEL = 'PROF CAT CONV' whe
 --                                                            Professor Catedratico
 update PROFESSIONAL_CATEGORY set IDENTIFICATION_CARD_LABEL = 'PROF CATEDRATICO' where GIAF_ID = '078510050';
 
---                                                            Dir.Superior 1∫ Grau
+--                                                            Dir.Superior 1¬∫ Grau
 update PROFESSIONAL_CATEGORY set IDENTIFICATION_CARD_LABEL = 'DIR SUPER GRAU 1' where GIAF_ID = '090020010';
 
---                                                            Dir.IntermÈdia 5∫ Grau
+--                                                            Dir.Interm√©dia 5¬∫ Grau
 update PROFESSIONAL_CATEGORY set IDENTIFICATION_CARD_LABEL = 'DIR INTERM GRAU 5' where GIAF_ID = '090030050';
 
---                                                            Dir.IntermÈdia 4∫ Grau
+--                                                            Dir.Interm√©dia 4¬∫ Grau
 update PROFESSIONAL_CATEGORY set IDENTIFICATION_CARD_LABEL = 'DIR INTERM GRAU 4' where GIAF_ID = '090030040';
 
---                                                            Dir.IntermÈdia 3∫ Grau
+--                                                            Dir.Interm√©dia 3¬∫ Grau
 update PROFESSIONAL_CATEGORY set IDENTIFICATION_CARD_LABEL = 'DIR INTERM GRAU 3' where GIAF_ID = '090030030';
 
---                                                            Dir.IntermÈdia 2∫ Grau
+--                                                            Dir.Interm√©dia 2¬∫ Grau
 update PROFESSIONAL_CATEGORY set IDENTIFICATION_CARD_LABEL = 'DIR INTERM GRAU 2' where GIAF_ID = '090030020';
 
---                                                            Dir.IntermÈdia 1∫ Grau
+--                                                            Dir.Interm√©dia 1¬∫ Grau
 update PROFESSIONAL_CATEGORY set IDENTIFICATION_CARD_LABEL = 'DIR INTERM GRAU 1' where GIAF_ID = '090030010';
 
 --                                                            Eq. Assistente Operacional
@@ -65,28 +65,28 @@ update PROFESSIONAL_CATEGORY set IDENTIFICATION_CARD_LABEL = 'ENCARREGADO OPER' 
 --                                                            Assistente Operacional
 update PROFESSIONAL_CATEGORY set IDENTIFICATION_CARD_LABEL = 'ASSIS OPERACIONAL' where GIAF_ID = '110010320';
 
---                                                            Eq. Assistente TÈcnico
+--                                                            Eq. Assistente T√©cnico
 update PROFESSIONAL_CATEGORY set IDENTIFICATION_CARD_LABEL = 'EQ ASSIS TECNICO' where GIAF_ID = '100000110';
 
---                                                            Assistente TÈcnico
+--                                                            Assistente T√©cnico
 update PROFESSIONAL_CATEGORY set IDENTIFICATION_CARD_LABEL = 'ASSIST TECNICO' where GIAF_ID = '100010110';
 
---                                                            Eq. Coordenador TÈcnico
+--                                                            Eq. Coordenador T√©cnico
 update PROFESSIONAL_CATEGORY set IDENTIFICATION_CARD_LABEL = 'EQ COORD TECNICO' where GIAF_ID = '100000100';
 
---                                                            Coordenador TÈcnico
+--                                                            Coordenador T√©cnico
 update PROFESSIONAL_CATEGORY set IDENTIFICATION_CARD_LABEL = 'COORD TECNICO' where GIAF_ID = '100010100';
 
---                                                            TÈcnico Superior
+--                                                            T√©cnico Superior
 update PROFESSIONAL_CATEGORY set IDENTIFICATION_CARD_LABEL = 'TECNICO SUPERIOR' where GIAF_ID = '050010200';
 
---                                                            Eq. TÈcnico Superior
+--                                                            Eq. T√©cnico Superior
 update PROFESSIONAL_CATEGORY set IDENTIFICATION_CARD_LABEL = 'EQ TECN SUPERIOR' where GIAF_ID = '050000200';
 
 --                                                            Colaborador da ADIST
 update PROFESSIONAL_CATEGORY set IDENTIFICATION_CARD_LABEL = 'COLABORADOR ADIST' where GIAF_ID = '990000001';
 
---                                                            Especialista Inform·tica Grau 2
+--                                                            Especialista Inform√°tica Grau 2
 update PROFESSIONAL_CATEGORY set IDENTIFICATION_CARD_LABEL = 'ESPEC.INFORM.GR.2' where GIAF_ID = '089101101';
 
 --                                                            Eq. Tecnico Profissional 2Cl
@@ -98,7 +98,7 @@ update PROFESSIONAL_CATEGORY set IDENTIFICATION_CARD_LABEL = 'TECN.PROF.ESP.' wh
 --                                                            Auxiliar Administrativo
 update PROFESSIONAL_CATEGORY set IDENTIFICATION_CARD_LABEL = 'AUX. ADMINISTR.' where GIAF_ID = '021030755';
 
---                                                            Eq. Especialista Inform. Grau 1 NÌvel 1
+--                                                            Eq. Especialista Inform. Grau 1 N√≠vel 1
 update PROFESSIONAL_CATEGORY set IDENTIFICATION_CARD_LABEL = 'ESPEC INFORM GR 1' where GIAF_ID = '080001380';
 
 --                                                            Auxiliar Tecnico
@@ -110,7 +110,7 @@ update PROFESSIONAL_CATEGORY set IDENTIFICATION_CARD_LABEL = 'ASSIST.ADM.PRINC.'
 --                                                            Assistente Administrativo Especialista
 update PROFESSIONAL_CATEGORY set IDENTIFICATION_CARD_LABEL = 'ASSIST.ADMN.ESP.' where GIAF_ID = '010110655';
 
---                                                            Chefe SecÁ„o
+--                                                            Chefe Sec√ß√£o
 update PROFESSIONAL_CATEGORY set IDENTIFICATION_CARD_LABEL = 'CHEFE DE SECCAO' where GIAF_ID = '010100654';
 
 --                                                            Tecnico Profissional Principal
@@ -119,16 +119,16 @@ update PROFESSIONAL_CATEGORY set IDENTIFICATION_CARD_LABEL = 'TECN.PROF.PRINC.' 
 --                                                            Tecnico Profissional Especialista Princi
 update PROFESSIONAL_CATEGORY set IDENTIFICATION_CARD_LABEL = 'TECN.PROF.ESP.PR.' where GIAF_ID = '040100340';
 
---                                                            Eq. Especialista Inform. Grau 1 NÌvel 2
+--                                                            Eq. Especialista Inform. Grau 1 N√≠vel 2
 update PROFESSIONAL_CATEGORY set IDENTIFICATION_CARD_LABEL = 'ESPEC.INFORM.GR.1' where GIAF_ID = '080001370';
 
---                                                            Eq. Especialista Inform. Grau 1 NÌvel 3
+--                                                            Eq. Especialista Inform. Grau 1 N√≠vel 3
 update PROFESSIONAL_CATEGORY set IDENTIFICATION_CARD_LABEL = 'ESPEC.INFORM.GR.1' where GIAF_ID = '080001350';
 
---                                                            Eq. Especialista Inform. Grau 2 NÌvel 1
+--                                                            Eq. Especialista Inform. Grau 2 N√≠vel 1
 update PROFESSIONAL_CATEGORY set IDENTIFICATION_CARD_LABEL = 'ESPEC.INFORM.GR.1' where GIAF_ID = '080001340';
 
---                                                            Eq. Especialista Inform. Grau 2 NÌvel 2
+--                                                            Eq. Especialista Inform. Grau 2 N√≠vel 2
 update PROFESSIONAL_CATEGORY set IDENTIFICATION_CARD_LABEL = 'MEIC A' where GIAF_ID = '080001330';
 
 --                                                            Eq. Auxiliar Manutencao
@@ -152,55 +152,55 @@ update PROFESSIONAL_CATEGORY set IDENTIFICATION_CARD_LABEL = 'TECN.ESPEC.PRINC.'
 --                                                            Tecnico Profissional Especialista
 update PROFESSIONAL_CATEGORY set IDENTIFICATION_CARD_LABEL = 'TECN.PROF.ESP.' where GIAF_ID = '043800341';
 
---                                                            TÈcnico Superior 1 Cl
+--                                                            T√©cnico Superior 1 Cl
 update PROFESSIONAL_CATEGORY set IDENTIFICATION_CARD_LABEL = 'TECN.SUP.1 CLASSE' where GIAF_ID = '055830160';
 
 --                                                            Pintor Principal
 update PROFESSIONAL_CATEGORY set IDENTIFICATION_CARD_LABEL = 'PINTOR PRINCIPAL' where GIAF_ID = '067250855';
 
---                                                            Especialista Inform·tica Grau 1 NÌvel 2
+--                                                            Especialista Inform√°tica Grau 1 N√≠vel 2
 update PROFESSIONAL_CATEGORY set IDENTIFICATION_CARD_LABEL = 'ESPEC INFORM GR 1' where GIAF_ID = '089101170';
 
---                                                            Especialista Inform·tica Grau 1 NÌvel 3
+--                                                            Especialista Inform√°tica Grau 1 N√≠vel 3
 update PROFESSIONAL_CATEGORY set IDENTIFICATION_CARD_LABEL = 'EQ ESP INF GRAU 1' where GIAF_ID = '089101150';
 
---                                                            Especialista Inform·tica Grau 2 NÌvel 1
+--                                                            Especialista Inform√°tica Grau 2 N√≠vel 1
 update PROFESSIONAL_CATEGORY set IDENTIFICATION_CARD_LABEL = 'ESPEC INFORM GR 3' where GIAF_ID = '089101140';
 
---                                                            Especialista Inform·tica Grau 2 NÌvel 2
+--                                                            Especialista Inform√°tica Grau 2 N√≠vel 2
 update PROFESSIONAL_CATEGORY set IDENTIFICATION_CARD_LABEL = 'ESPEC INFORM GR 2' where GIAF_ID = '089101130';
 
---                                                            Especialista Inform·tica Grau 3 NÌvel 1
+--                                                            Especialista Inform√°tica Grau 3 N√≠vel 1
 update PROFESSIONAL_CATEGORY set IDENTIFICATION_CARD_LABEL = 'ESPEC INFORM GR 3' where GIAF_ID = '089101120';
 
---                                                            Especialista Inform·tica Grau 3 NÌvel 2
+--                                                            Especialista Inform√°tica Grau 3 N√≠vel 2
 update PROFESSIONAL_CATEGORY set IDENTIFICATION_CARD_LABEL = 'ESPEC INFORM GR 3' where GIAF_ID = '089101110';
 
---                                                            TÈcnico Inform·tica Grau 1 NÌvel 1
+--                                                            T√©cnico Inform√°tica Grau 1 N√≠vel 1
 update PROFESSIONAL_CATEGORY set IDENTIFICATION_CARD_LABEL = 'TEC INFORM GRAU 1' where GIAF_ID = '088011180';
 
---                                                            TÈcnico Inform·tica Grau 1 NÌvel 3
+--                                                            T√©cnico Inform√°tica Grau 1 N√≠vel 3
 update PROFESSIONAL_CATEGORY set IDENTIFICATION_CARD_LABEL = 'TEC INFORM GRAU 1' where GIAF_ID = '088011150';
 
---                                                            TÈcnico Inform·tica Grau 2 NÌvel 1
+--                                                            T√©cnico Inform√°tica Grau 2 N√≠vel 1
 update PROFESSIONAL_CATEGORY set IDENTIFICATION_CARD_LABEL = 'TEC INFORM GRAU 2' where GIAF_ID = '088011140';
 
---                                                            TÈcnico Inform·tica Grau 2 NÌvel 2
+--                                                            T√©cnico Inform√°tica Grau 2 N√≠vel 2
 update PROFESSIONAL_CATEGORY set IDENTIFICATION_CARD_LABEL = 'TEC INFORM GRAU 2' where GIAF_ID = '088011130';
 
---                                                            TÈcnico Inform·tica Grau 3 NÌvel 1
+--                                                            T√©cnico Inform√°tica Grau 3 N√≠vel 1
 update PROFESSIONAL_CATEGORY set IDENTIFICATION_CARD_LABEL = 'TEC INFORM GRAU 3' where GIAF_ID = '088011120';
 
---                                                            TÈcnico Inform·tica Grau 3 NÌvel 2
+--                                                            T√©cnico Inform√°tica Grau 3 N√≠vel 2
 update PROFESSIONAL_CATEGORY set IDENTIFICATION_CARD_LABEL = 'TEC INFORM GRAU 3' where GIAF_ID = '088011110';
 
---                                                            Especialista Inform·tica Grau 1 NÌvel 1
+--                                                            Especialista Inform√°tica Grau 1 N√≠vel 1
 update PROFESSIONAL_CATEGORY set IDENTIFICATION_CARD_LABEL = 'ESPEC INFORM GR 1' where GIAF_ID = '089101180';
 
---                                                            Chefe Divis„o
+--                                                            Chefe Divis√£o
 update PROFESSIONAL_CATEGORY set IDENTIFICATION_CARD_LABEL = 'CHEFE DE DIVISAO' where GIAF_ID = '090010127';
 
---                                                            Eq. TÈcnico Superior (Estag)
+--                                                            Eq. T√©cnico Superior (Estag)
 update PROFESSIONAL_CATEGORY set IDENTIFICATION_CARD_LABEL = 'EQ TECN SUP ESTAG' where GIAF_ID = '050000300';
 
 --                                                            Investigador Auxiliar Convidado
@@ -218,7 +218,7 @@ update PROFESSIONAL_CATEGORY set IDENTIFICATION_CARD_LABEL = 'EQ INV AUX CONV' w
 --                                                            Equip.Estagiario Investigador
 update PROFESSIONAL_CATEGORY set IDENTIFICATION_CARD_LABEL = 'EST.INVESTIGACAO' where GIAF_ID = '120000176';
 
---                                                            Equip.Assistente de InvestigaÁao
+--                                                            Equip.Assistente de Investiga√ßao
 update PROFESSIONAL_CATEGORY set IDENTIFICATION_CARD_LABEL = 'EQ ASSIST INV' where GIAF_ID = '120000175';
 
 --                                                            Equip.Investigador Auxiliar

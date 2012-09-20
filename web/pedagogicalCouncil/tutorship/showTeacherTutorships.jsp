@@ -95,9 +95,9 @@
 			<ul class="nobullet list2">
 				<li class="mvert05"><span class="approvedMonitoringYear performanceGridLegend">&nbsp;</span> Aprovado em <bean:write name="monitoringYear" property="year"/> </li>
 				<li class="mvert05"><span class="approvedAnotherYear performanceGridLegend">&nbsp;</span> Aprovado noutro ano lectivo</li>
-				<li class="mvert05"><span class="enroled performanceGridLegend">&nbsp;</span> Inscrito e n„o aprovado em <bean:write name="monitoringYear" property="year"/></li>
+				<li class="mvert05"><span class="enroled performanceGridLegend">&nbsp;</span> Inscrito e n√£o aprovado em <bean:write name="monitoringYear" property="year"/></li>
 				<li class="mvert05"><span class="notApprovedMonitoringYear performanceGridLegend">&nbsp;</span> Reprovado em <bean:write name="monitoringYear" property="year"/></li>
-				<li class="mvert05"><span class="notApprovedAnotherYear performanceGridLegend">&nbsp;</span> Inscrito e n„o aprovado noutro ano lectivo</li>
+				<li class="mvert05"><span class="notApprovedAnotherYear performanceGridLegend">&nbsp;</span> Inscrito e n√£o aprovado noutro ano lectivo</li>
 			</ul>
 		</logic:notEmpty>
 	</logic:present>

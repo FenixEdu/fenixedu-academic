@@ -8,8 +8,8 @@ package net.sourceforge.fenixedu.dataTransferObject;
 import java.util.List;
 
 /**
- * @author Jo„o Mota
- * @author Fernanda QuitÈrio
+ * @author Jo√£o Mota
+ * @author Fernanda Quit√©rio
  * 
  * 
  */

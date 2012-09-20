@@ -98,7 +98,7 @@ public class VacationsManagementDispatchAction extends FenixDispatchAction {
 	spreadsheet.addHeader(bundle.getString("label.art17Days"));
 	spreadsheet.addHeader(bundle.getString("label.monthsToDiscountInArt17Vacations"));
 	spreadsheet.addHeader(bundle.getString("label.usedArt17Days"));
-	spreadsheet.addHeader("Férias por A17 a passar para " + (assiduousnessExportChoices.getYearMonth().getYear() + 1));
+	spreadsheet.addHeader("FÃ©rias por A17 a passar para " + (assiduousnessExportChoices.getYearMonth().getYear() + 1));
 
 	for (Assiduousness assiduousness : assiduousnessExportChoices.getAssiduousnesses()) {
 

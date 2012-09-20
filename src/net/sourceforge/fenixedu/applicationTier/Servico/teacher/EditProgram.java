@@ -10,9 +10,9 @@ import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
 
 /**
- * @author Fernanda QuitÈrio
+ * @author Fernanda Quit√©rio
  * 
- *         Modified by T‚nia Pous„o at 2/Dez/2003
+ *         Modified by T√¢nia Pous√£o at 2/Dez/2003
  */
 public class EditProgram extends FenixService {
 

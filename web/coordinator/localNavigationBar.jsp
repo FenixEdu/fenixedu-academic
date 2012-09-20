@@ -24,7 +24,7 @@
 		</li>
 		<li>
 			<html:link page="/phdEnrolmentsManagement.do?method=showPhdProgram">
-				Inscrições
+				InscriÃ§Ãµes
 			</html:link>
 		</li>
 		

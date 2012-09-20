@@ -7,11 +7,11 @@
 
 <!-- alumniMailingLists.jsp -->
 
-<h1>InscriÁ„o Alumni</h1>
+<h1>Inscri√ß√£o Alumni</h1>
 
 <h2>Mailing Lists</h2>
 
-<p><a href="<%= request.getAttribute("publicAccessUrl").toString() %>">´ Registo P˙blico</a></p>
+<p><a href="<%= request.getAttribute("publicAccessUrl").toString() %>">¬´ Registo P√∫blico</a></p>
 
 <div class="alumnilogo">
 	
@@ -20,11 +20,11 @@
 	</html:messages>
 
 <p class="greytxt">
-	Ao subscrever as listas abaixo especificadas, estreita o laÁo comunicacional com a comunidade IST: pode trocar mensagens com os restantes membros da lista; receber informaÁ„o ˙til e beneficiar do serviÁo de alertas (agenda de realizaÁıes organizadas no IST e outras notÌcias de interesse).
+	Ao subscrever as listas abaixo especificadas, estreita o la√ßo comunicacional com a comunidade IST: pode trocar mensagens com os restantes membros da lista; receber informa√ß√£o √∫til e beneficiar do servi√ßo de alertas (agenda de realiza√ß√µes organizadas no IST e outras not√≠cias de interesse).
 </p>
 
 <p class="greytxt">
-	Ao efectuar a subscriÁ„o, indique o seu nome e n∫ de aluno(a) ou n∫ de BI para efeito de autenticaÁ„o.
+	Ao efectuar a subscri√ß√£o, indique o seu nome e n¬∫ de aluno(a) ou n¬∫ de BI para efeito de autentica√ß√£o.
 </p>
 
 <table class="tab_lay" id="table1" cellpadding="5" cellspacing="0" width="65%">
@@ -32,7 +32,7 @@
 
         <tr>
             <th>
-                ¡rea CiÍntifica
+                √Årea Ci√™ntifica
             </th>
             <th>
                 Moderador
@@ -76,7 +76,7 @@
         </tr>
         <tr>
             <td>
-                <a href="mailto:alumni-biologica@mlists.ist.utl.pt">Engenharia BiolÛgica</a>
+                <a href="mailto:alumni-biologica@mlists.ist.utl.pt">Engenharia Biol√≥gica</a>
             </td>
             <td>
                 Helena Pinheiro
@@ -87,13 +87,13 @@
         </tr>
         <tr class="bluecell">
             <td>
-                <a href="mailto:alumni-lebm@mlists.ist.utl.pt">Engenharia BiomÈdica</a>
+                <a href="mailto:alumni-lebm@mlists.ist.utl.pt">Engenharia Biom√©dica</a>
             </td>
             <td>
                 -
             </td>
             <td>
-                Engenharia BiomÈdica / <a href="mailto:alumni@ist.utl.pt">GCRP</a>
+                Engenharia Biom√©dica / <a href="mailto:alumni@ist.utl.pt">GCRP</a>
             </td>
         </tr>
         <tr>
@@ -109,13 +109,13 @@
         </tr>
         <tr class="bluecell">
             <td>
-                <a href="mailto:legi.graduados@mlists.ist.utl.pt">Engenharia de Gest„o Industrial</a>
+                <a href="mailto:legi.graduados@mlists.ist.utl.pt">Engenharia de Gest√£o Industrial</a>
             </td>
             <td>
-                JosÈ Figueiredo
+                Jos√© Figueiredo
             </td>
             <td>
-                JosÈ Figueiredo / <a href="mailto:alumni@ist.utl.pt">GCRP</a>
+                Jos√© Figueiredo / <a href="mailto:alumni@ist.utl.pt">GCRP</a>
             </td>
         </tr>
         <tr>
@@ -123,7 +123,7 @@
                 <a href="mailto:demat_e@mlists.ist.utl.pt">Engenharia de Materiais</a>
             </td>
             <td>
-                JosÈ Carlos Pereira<br/>Augusto Moita de Deus
+                Jos√© Carlos Pereira<br/>Augusto Moita de Deus
             </td>
             <td>
                 Engenharia de Materiais / <a href="mailto:alumni@ist.utl.pt">GCRP</a> 
@@ -134,7 +134,7 @@
                 <a href="mailto:alumni-minas@mlists.ist.utl.pt">Engenharia de Minas e Georecursos</a>
             </td>
             <td>
-                AntÛnio MaurÌcio
+                Ant√≥nio Maur√≠cio
             </td>
             <td>
                 <a href="mailto:alumni@ist.utl.pt">GCRP</a>
@@ -153,7 +153,7 @@
         </tr>
         <tr class="bluecell">
             <td>
-                <a href="mailto:alumni-leec@mlists.ist.utl.pt">Engenharia ElectrotÈcnica e Computadores</a>
+                <a href="mailto:alumni-leec@mlists.ist.utl.pt">Engenharia Electrot√©cnica e Computadores</a>
             </td>
             <td>
                 Alexandre Bernardino
@@ -164,10 +164,10 @@
         </tr>
         <tr>
             <td>
-                <a href="mailto:alumni-left@mlists.ist.utl.pt">Engenharia FÌsica e TecnolÛgica</a>
+                <a href="mailto:alumni-left@mlists.ist.utl.pt">Engenharia F√≠sica e Tecnol√≥gica</a>
             </td>
             <td>
-                Hor·cio Fernandes
+                Hor√°cio Fernandes
             </td>
             <td>
                 <a href="mailto:alumni@ist.utl.pt">GCRP</a>
@@ -175,10 +175,10 @@
         </tr>
         <tr class="bluecell">
             <td>
-                <a href="mailto:alumni-leic@mlists.ist.utl.pt">Engenharia Inform·tica e Computadores</a>
+                <a href="mailto:alumni-leic@mlists.ist.utl.pt">Engenharia Inform√°tica e Computadores</a>
             </td>
             <td>
-                JosÈ Borbinha
+                Jos√© Borbinha
             </td>
             <td>
                 <a href="mailto:alumni@ist.utl.pt">GCRP</a>
@@ -186,7 +186,7 @@
         </tr>
         <tr>
             <td>
-                <a href="mailto:alumni-mec@mlists.ist.utl.pt">Engenharia Mec‚nica</a>
+                <a href="mailto:alumni-mec@mlists.ist.utl.pt">Engenharia Mec√¢nica</a>
             </td>
             <td>
                 Pedro Coelho
@@ -197,10 +197,10 @@
         </tr>
         <tr class="bluecell">
             <td>
-                <a href="mailto:alumni-eq@mlists.ist.utl.pt">Engenharia QuÌmica</a>
+                <a href="mailto:alumni-eq@mlists.ist.utl.pt">Engenharia Qu√≠mica</a>
             </td>
             <td>
-                M. Ros·rio Ribeiro
+                M. Ros√°rio Ribeiro
             </td>
             <td>
                 <a href="mailto:alumni@ist.utl.pt">GCRP</a>
@@ -208,7 +208,7 @@
         </tr>
         <tr>
             <td>
-                <a href="mailto:alumni-matapcomp@mlists.ist.utl.pt">Matem·tica Aplicada e ComputaÁ„o</a>
+                <a href="mailto:alumni-matapcomp@mlists.ist.utl.pt">Matem√°tica Aplicada e Computa√ß√£o</a>
             </td>
             <td>
                 Paulo Mateus
@@ -219,10 +219,10 @@
         </tr>
         <tr class="bluecell">
             <td>
-                <a href="mailto:alumni-quimica@mlists.ist.utl.pt">QuÌmica</a>
+                <a href="mailto:alumni-quimica@mlists.ist.utl.pt">Qu√≠mica</a>
             </td>
             <td>
-                M. Ros·rio Ribeiro
+                M. Ros√°rio Ribeiro
             </td>
             <td>
                 <a href="mailto:alumni@ist.utl.pt">GCRP</a>
@@ -230,7 +230,7 @@
         </tr>
         <tr>
             <td>
-                <a href="mailto:alumni-terr@mlists.ist.utl.pt">TerritÛrio</a>
+                <a href="mailto:alumni-terr@mlists.ist.utl.pt">Territ√≥rio</a>
             </td>
             <td>
                 Luis Castro

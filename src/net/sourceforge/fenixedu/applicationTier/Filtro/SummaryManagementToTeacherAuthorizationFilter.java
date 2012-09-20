@@ -13,7 +13,7 @@ import pt.utl.ist.berserk.ServiceRequest;
 import pt.utl.ist.berserk.ServiceResponse;
 
 /**
- * @author Jo„o Mota
+ * @author Jo√£o Mota
  */
 public class SummaryManagementToTeacherAuthorizationFilter extends AuthorizationByRoleFilter {
 

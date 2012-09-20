@@ -19,7 +19,7 @@
 	<bean:write name="executionDegree" property="executionYear.nextYearsYearString"/>
 </h3>
 
-<p><html:link page="<%= "/manageFinalDegreeWork.do?method=showProposals&page=0&degreeCurricularPlanID=" + degreeCurricularPlanID + "&executionDegreeOID=" + executionDegreeOID%>">« <bean:message key="title.finalDegreeWorkProposals"/></html:link></p>
+<p><html:link page="<%= "/manageFinalDegreeWork.do?method=showProposals&page=0&degreeCurricularPlanID=" + degreeCurricularPlanID + "&executionDegreeOID=" + executionDegreeOID%>">Â« <bean:message key="title.finalDegreeWorkProposals"/></html:link></p>
 
 <logic:present name="executionDegree" property="scheduling">
 <logic:notEqual name="executionDegree" property="scheduling.executionDegreesSortedByDegreeName" value="1">

@@ -1,5 +1,5 @@
 /*
- * Created on 19/Jul/2004 by T‚nia Pous„o
+ * Created on 19/Jul/2004 by T√¢nia Pous√£o
  *
  */
 package net.sourceforge.fenixedu.applicationTier.Filtro;
@@ -7,7 +7,7 @@ package net.sourceforge.fenixedu.applicationTier.Filtro;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 
 /**
- * @author T‚nia Pous„o
+ * @author T√¢nia Pous√£o
  */
 public class OperatorAuthorizationFilter extends AuthorizationByRoleFilter {
 

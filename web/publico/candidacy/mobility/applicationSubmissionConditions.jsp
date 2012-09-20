@@ -36,7 +36,7 @@
 
 <bean:define id="hash" name="hash"/> 
 <fr:form action='<%= mappingPath + ".do?method=prepareCandidacyCreation&hash=" + hash %>'>
-	<p class="mtop15 mbottom2"><html:submit><bean:message key="erasmus.application.submission.button" bundle="CANDIDATE_RESOURCES" /> »</html:submit></p>
+	<p class="mtop15 mbottom2"><html:submit><bean:message key="erasmus.application.submission.button" bundle="CANDIDATE_RESOURCES" /> Â»</html:submit></p>
 </fr:form>
 
 

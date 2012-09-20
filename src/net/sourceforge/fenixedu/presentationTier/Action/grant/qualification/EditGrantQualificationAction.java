@@ -93,7 +93,7 @@ public class EditGrantQualificationAction extends FenixDispatchAction {
 	// Adding a select country line to the list (presentation reasons)
 	InfoCountryEditor selectCountry = new InfoCountryEditor();
 	selectCountry.setIdInternal(null);
-	selectCountry.setName("[Escolha um país]");
+	selectCountry.setName("[Escolha um paÃ­s]");
 	countryList.add(0, selectCountry);
 	request.setAttribute("countryList", countryList);
 	return mapping.findForward("edit-grant-qualification");

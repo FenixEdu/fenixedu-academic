@@ -89,7 +89,7 @@ public class DistributionTeacherServicesByTeachersDTO extends DataTranferObject 
 			finalString.append(iteratorFirstCurricularYearsSet.next());
 		    }
 
-		    finalString.append("ºano");
+		    finalString.append("Âºano");
 		}
 
 		finalString.append(")");
@@ -114,7 +114,7 @@ public class DistributionTeacherServicesByTeachersDTO extends DataTranferObject 
 			    finalString.append(iteratorCurricularYearsSet.next());
 			}
 
-			finalString.append("ºano");
+			finalString.append("Âºano");
 		    }
 		    finalString.append(")");
 

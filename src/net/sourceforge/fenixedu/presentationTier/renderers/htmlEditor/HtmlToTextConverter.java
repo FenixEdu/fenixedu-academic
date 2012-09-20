@@ -304,15 +304,15 @@ public class HtmlToTextConverter extends TidyConverter {
 				null,
 				HTMLEntities
 					.htmlentities("<p>a<br/></p><p>b</p>"
-						+ "&lt;&quot;Isto È que n„o p·&quot;&gt;. <a href=\"http://www.google.com\">testing</a><br/>\n"
+						+ "&lt;&quot;Isto √© que n√£o p√°&quot;&gt;. <a href=\"http://www.google.com\">testing</a><br/>\n"
 						+ "<ol>\n"
-						+ "  <li> pois È <ol><li>um dois tres um dois tres um dois tres um dois tres um dois tres um dois tres um dois tres um dois tres um dois tres um dois tres <li>dois</ol>\n"
-						+ "  <li> Isto È outro teste\n"
+						+ "  <li> pois √© <ol><li>um dois tres um dois tres um dois tres um dois tres um dois tres um dois tres um dois tres um dois tres um dois tres um dois tres <li>dois</ol>\n"
+						+ "  <li> Isto √© outro teste\n"
 						+ "</ol>\n"
 						+ "<hr/>\n"
-						+ "<blockquote>isto È um teste <p>com bastante texto</p> para fazer wrap desta coisa isto ldksjfslkdj flskdfj slakfjsalk lsdkfj slakfj salkjd lakfj "
+						+ "<blockquote>isto √© um teste <p>com bastante texto</p> para fazer wrap desta coisa isto ldksjfslkdj flskdfj slakfjsalk lsdkfj slakfj salkjd lakfj "
 						+ "<blockquote>tem que crescer mais um bocado para fazer wrap<br/>asdasdsa</blockquote>asdsadsadds</blockquote>"
-						+ "<hr/>\n" + "<p>" + "agora È cÛdigo da classe <code>BlaBlabla</code>\n<hr/>"
+						+ "<hr/>\n" + "<p>" + "agora √© c√≥digo da classe <code>BlaBlabla</code>\n<hr/>"
 						+ "<pre>\n" + "    ...\n" + "    java() {\n" + "      print();\n"
 						+ "    }</pre><hr/>")));
     }

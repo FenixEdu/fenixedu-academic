@@ -16,7 +16,7 @@ import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.ist.fenixWebFramework.services.Service;
 
 /**
- * @author Jo„o Fialho & Rita Ferreira
+ * @author Jo√£o Fialho & Rita Ferreira
  * 
  */
 public class ReadOldInquiryCoursesResByExecutionPeriodAndDegreeIdAndCourseCode extends FenixService {

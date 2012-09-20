@@ -5,7 +5,7 @@
 #The must contain ONLY the names and their states, it can not contain anything else, like this comments for example
 #Example:
 
-PROGRAMA«√O POR OBJECTOS	approved
-ELECTR”NICA R¡PIDA	approved
-ELECTR”NICA DE POT NCIA	approved
+PROGRAMA√á√ÉO POR OBJECTOS	approved
+ELECTR√ìNICA R√ÅPIDA	approved
+ELECTR√ìNICA DE POT√äNCIA	approved
 SISTEMAS OPERATIVOS	approved

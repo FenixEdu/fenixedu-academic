@@ -9,7 +9,7 @@ import java.util.List;
 
 /**
  * @author jmota
- * @author Fernanda Quitério
+ * @author Fernanda QuitÃ©rio
  * 
  */
 public class InfoSiteProgram extends DataTranferObject implements ISiteComponent {

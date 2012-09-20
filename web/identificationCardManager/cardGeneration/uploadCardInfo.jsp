@@ -7,7 +7,7 @@
 <em><bean:message key="title.card.generation" bundle="CARD_GENERATION_RESOURCES"/></em>
 <h2><bean:message key="link.manage.card.generation.upload.card.info"/></h2>
 
-<p><html:link page="/manageCardGeneration.do?method=firstPage">« Voltar</html:link></p>
+<p><html:link page="/manageCardGeneration.do?method=firstPage">Â« Voltar</html:link></p>
 
 <logic:notPresent name="readingComplete">
 	<p>

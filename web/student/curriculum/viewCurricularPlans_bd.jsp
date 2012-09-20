@@ -28,10 +28,10 @@
 					<span class="emphasis-box">info</span>
 				</td>
 				<td class="infoop">
-					<strong>Nota: … normal a existÍncia de dois planos curriculares para o mesmo curso.</strong><br/>
-					O plano curricular com a data mais antiga (ano da sua entrada no IST), contem o seu currÌculo tal e qual como o pode visionar no ponto habitual acedido atravÈs da p·gina do IST.<br/>
-					O plano curricular com a data mais recente (este ano lectivo), contem o seu currÌculo como se o tivesse iniciado este ano, ou seja, apenas com as disciplinas em que se encontra inscrito a partir deste ano lectivo.<br/>
-					A raz„o desta separaÁ„o È dar a hipÛtese de verificar a correcÁ„o do seu currÌculo passado para, mais tarde (e depois de ter a certeza de que est· tudo em ordem), juntar toda a informaÁ„o num sÛ plano curricular.
+					<strong>Nota: √â normal a exist√™ncia de dois planos curriculares para o mesmo curso.</strong><br/>
+					O plano curricular com a data mais antiga (ano da sua entrada no IST), contem o seu curr√≠culo tal e qual como o pode visionar no ponto habitual acedido atrav√©s da p√°gina do IST.<br/>
+					O plano curricular com a data mais recente (este ano lectivo), contem o seu curr√≠culo como se o tivesse iniciado este ano, ou seja, apenas com as disciplinas em que se encontra inscrito a partir deste ano lectivo.<br/>
+					A raz√£o desta separa√ß√£o √© dar a hip√≥tese de verificar a correc√ß√£o do seu curr√≠culo passado para, mais tarde (e depois de ter a certeza de que est√° tudo em ordem), juntar toda a informa√ß√£o num s√≥ plano curricular.
 				</td>
 			</tr>
 		</table>

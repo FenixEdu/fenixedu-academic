@@ -10,7 +10,7 @@
 <bean:define id="executionSemester" name="executionCourseSearchBean" property="executionPeriod"/>
 <h3>
 	<bean:message key="label.inquiry.audit.processes" bundle="INQUIRIES_RESOURCES"/>
-	(<bean:write name="executionSemester" property="semester"/>บ <bean:message key="label.inquiries.semester" bundle="INQUIRIES_RESOURCES"/> 
+	(<bean:write name="executionSemester" property="semester"/>ยบ <bean:message key="label.inquiries.semester" bundle="INQUIRIES_RESOURCES"/> 
 		<bean:write name="executionSemester" property="executionYear.year"/>)
 </h3>
 
@@ -51,7 +51,7 @@
 
 <h3>
 	<bean:message key="title.inquiry.audit.search.executionCourse" bundle="INQUIRIES_RESOURCES"/>
-	(<bean:write name="executionSemester" property="semester"/>บ <bean:message key="label.inquiries.semester" bundle="INQUIRIES_RESOURCES"/>
+	(<bean:write name="executionSemester" property="semester"/>ยบ <bean:message key="label.inquiries.semester" bundle="INQUIRIES_RESOURCES"/>
 		 <bean:write name="executionSemester" property="executionYear.year"/>)
 </h3>
 
@@ -60,7 +60,7 @@
 		<fr:schema type="net.sourceforge.fenixedu.dataTransferObject.inquiries.ExecutionCourseQucAuditSearchBean" bundle="APPLICATION_RESOURCES">
 			<fr:slot name="executionPeriod" key="label.executionPeriod" layout="menu-select-postback" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
 				<fr:property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.Action.departmentMember.ViewQUCResultsDA$ExecutionSemesterQucProvider"/>
-				<fr:property name="format" value="${semester}บ Semestre ${executionYear.year}" />
+				<fr:property name="format" value="${semester}ยบ Semestre ${executionYear.year}" />
 			</fr:slot>
 			<fr:slot name="executionDegree" key="label.executionDegree" layout="menu-select">
 				<fr:property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.ExecutionDegree1stAnd2ndCycleProviderForExecutionCourseSearchBean" />

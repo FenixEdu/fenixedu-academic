@@ -22,12 +22,12 @@ public class DissertationsProposalsReportFile extends DissertationsProposalsRepo
 
     @Override
     public String getJobName() {
-	return "Listagem de propostas de dissertações com afiliações externas";
+	return "Listagem de propostas de dissertaÃ§Ãµes com afiliaÃ§Ãµes externas";
     }
 
     @Override
     protected String getPrefix() {
-	return "propostas de dissertações com afiliações externas";
+	return "propostas de dissertaÃ§Ãµes com afiliaÃ§Ãµes externas";
     }
 
     @Override
@@ -44,7 +44,7 @@ public class DissertationsProposalsReportFile extends DissertationsProposalsRepo
 	spreadsheet.setHeader("Distribuicao Creditos Orientador");
 	spreadsheet.setHeader("Distribuicao Creditos Corientador");
 	spreadsheet.setHeader("Empresa do Acompanhante");
-	spreadsheet.setHeader("Local de Realização");
+	spreadsheet.setHeader("Local de RealizaÃ§Ã£o");
 
 	for (final Scheduleing scheduleing : getRootDomainObject().getScheduleingsSet()) {
 	    final StringBuilder degreeNamesSB = new StringBuilder();

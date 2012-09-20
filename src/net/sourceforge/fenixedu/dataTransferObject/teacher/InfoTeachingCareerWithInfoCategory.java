@@ -9,7 +9,7 @@ import net.sourceforge.fenixedu.domain.teacher.TeachingCareer;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 /**
- * @author T‚nia Pous„o
+ * @author T√¢nia Pous√£o
  * 
  */
 public class InfoTeachingCareerWithInfoCategory extends InfoTeachingCareer {

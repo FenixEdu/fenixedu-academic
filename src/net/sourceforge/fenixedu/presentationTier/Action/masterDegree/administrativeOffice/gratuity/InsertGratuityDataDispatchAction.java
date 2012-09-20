@@ -56,7 +56,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 /**
- * @author Fernanda Quitério 7/Jan/2003
+ * @author Fernanda QuitÃ©rio 7/Jan/2003
  * 
  */
 @Mapping(module = "masterDegreeAdministrativeOffice", path = "/insertGratuityDataDA", input = "/insertGratuityDataDA.do?method=prepareInsertGratuityDataChooseDegree&page=0", attribute = "insertGratuityDataForm", formBean = "insertGratuityDataForm", scope = "request", parameter = "method")

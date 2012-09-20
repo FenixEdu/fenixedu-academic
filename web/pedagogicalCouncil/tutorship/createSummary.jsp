@@ -66,13 +66,13 @@
 	<div class="simpleblock3">
 	<dl>
 		<dt><bean:message key="label.tutorshipSummary.form.participationType" bundle="APPLICATION_RESOURCES"/>:</dt>
-		<dd>Nenhuma (0%) Baixa (0-25%)  MÈdia (25-50%)  Alta (50-75%)  Muito Alta (>= 75%)</dd> 
+		<dd>Nenhuma (0%) Baixa (0-25%)  M√©dia (25-50%)  Alta (50-75%)  Muito Alta (>= 75%)</dd> 
 		<dt><bean:message key="label.tutorshipSummary.form.participationRegularly" bundle="APPLICATION_RESOURCES"/>:</dt>
 		<dd>Respondeu + metade dos contactos do Tutor</dd> 
 		<dt><bean:message key="label.tutorshipSummary.form.participationNone" bundle="APPLICATION_RESOURCES"/>: </dt>
-		<dd>N„o respondeu nunca ao Tutor</dd> 
+		<dd>N√£o respondeu nunca ao Tutor</dd> 
 		<dt><bean:message key="label.tutorshipSummary.form.outOfTouch" bundle="APPLICATION_RESOURCES"/>: </dt>
-		<dd>N„o foi possÌvel contactar o aluno</dd> 
+		<dd>N√£o foi poss√≠vel contactar o aluno</dd> 
 		<dt><bean:message key="label.tutorshipSummary.form.highPerformance" bundle="APPLICATION_RESOURCES"/>: </dt>
 		<dd>Aprovado a todas as disciplinas</dd> 
 		<dt><bean:message key="label.tutorshipSummary.form.lowPerformance" bundle="APPLICATION_RESOURCES"/>:</dt>
@@ -93,33 +93,33 @@
 	<table class="tstyle1 printborder tpadding1">
 		<tr>
 			<td><fr:edit name="createSummaryBean" slot="problemsR1" /></td>
-			<td>Hor·rios/InscriÁıes</td>
+			<td>Hor√°rios/Inscri√ß√µes</td>
 			<td><fr:edit name="createSummaryBean" slot="problemsR2" /></td>
-			<td>MÈtodos de Estudo</td>
+			<td>M√©todos de Estudo</td>
 			<td><fr:edit name="createSummaryBean" slot="problemsR3" /></td>
-			<td>Gest„o de Tempo/Volume de Trabalho</td>
+			<td>Gest√£o de Tempo/Volume de Trabalho</td>
 		</tr>
 		<tr>
 			<td><fr:edit name="createSummaryBean" slot="problemsR4" /></td>
-			<td>Acesso a InformaÁ„o (ex.:aspectos administrativos; ERASMUS; etc.)</td>
+			<td>Acesso a Informa√ß√£o (ex.:aspectos administrativos; ERASMUS; etc.)</td>
 			<td><fr:edit name="createSummaryBean" slot="problemsR5" /></td>
-			<td>TransiÁ„o Ensino Secund·rio/Ensino Superior</td>
+			<td>Transi√ß√£o Ensino Secund√°rio/Ensino Superior</td>
 			<td><fr:edit name="createSummaryBean" slot="problemsR6" /></td>
 			<td>Problemas Vocacionais</td>
 		</tr>
 		<tr>
 			<td><fr:edit name="createSummaryBean" slot="problemsR7" /></td>
-			<td>RelaÁ„o Professor - Aluno</td>
+			<td>Rela√ß√£o Professor - Aluno</td>
 			<td><fr:edit name="createSummaryBean" slot="problemsR8" /></td>
-			<td>Desempenho AcadÈmico (ex.: taxas de aprovaÁ„o)</td>
+			<td>Desempenho Acad√©mico (ex.: taxas de aprova√ß√£o)</td>
 			<td></td>
 			<td></td>
 		</tr>
 		<tr>
 			<td><fr:edit name="createSummaryBean" slot="problemsR9" /></td>
-			<td>AvaliaÁ„o (ex.: metodologia, datas de exames; etc.)</td>
+			<td>Avalia√ß√£o (ex.: metodologia, datas de exames; etc.)</td>
 			<td><fr:edit name="createSummaryBean" slot="problemsR10" /></td>
-			<td>AdaptaÁ„o ao IST</td>
+			<td>Adapta√ß√£o ao IST</td>
 			<td></td>
 			<td></td>
 		</tr>
@@ -140,33 +140,33 @@
 	<table class="tstyle1 printborder tpadding1">
 		<tr>
 			<td><fr:edit name="createSummaryBean" slot="gainsR1" /></td>
-			<td>Maior responsabilizaÁ„o/autonomizaÁ„o do Aluno</td>
+			<td>Maior responsabiliza√ß√£o/autonomiza√ß√£o do Aluno</td>
 			<td><fr:edit name="createSummaryBean" slot="gainsR2" /></td>
-			<td>AlteraÁ„o dos mÈtodos de estudo</td>
+			<td>Altera√ß√£o dos m√©todos de estudo</td>
 			<td><fr:edit name="createSummaryBean" slot="gainsR3" /></td>
-			<td>Planeamento do semestre/AvaliaÁ„o</td>
+			<td>Planeamento do semestre/Avalia√ß√£o</td>
 		</tr>
 		<tr>
 			<td><fr:edit name="createSummaryBean" slot="gainsR4" /></td>
 			<td>Acompanhamento mais individualizado</td>
 			<td><fr:edit name="createSummaryBean" slot="gainsR5" /></td>
-			<td>Maior motivaÁ„o para o curso</td>
+			<td>Maior motiva√ß√£o para o curso</td>
 			<td><fr:edit name="createSummaryBean" slot="gainsR6" /></td>
-			<td>Melhor desempenho acadÈmico</td>
+			<td>Melhor desempenho acad√©mico</td>
 		</tr>
 		<tr>
 			<td><fr:edit name="createSummaryBean" slot="gainsR7" /></td>
 			<td>Maior proximidade Professor-Aluno</td>
 			<td><fr:edit name="createSummaryBean" slot="gainsR8" /></td>
-			<td>TransiÁ„o do Ensino Secund·rio para o Ensino Superior mais f·cil</td>
+			<td>Transi√ß√£o do Ensino Secund√°rio para o Ensino Superior mais f√°cil</td>
 			<td></td>
 			<td></td>
 		</tr>
 		<tr>
 			<td><fr:edit name="createSummaryBean" slot="gainsR9" /></td>
-			<td>Melhor adaptaÁ„o ao IST</td>
+			<td>Melhor adapta√ß√£o ao IST</td>
 			<td><fr:edit name="createSummaryBean" slot="gainsR10" /></td>
-			<td>Apoio na tomada de decisıes/ResoluÁ„o de problemas</td>
+			<td>Apoio na tomada de decis√µes/Resolu√ß√£o de problemas</td>
 			<td></td>
 			<td></td>
 		</tr>
@@ -193,7 +193,7 @@
 
 	<table class="tstyle1 thlight mtop0 mbottom15 tdleft">
 		<tr>
-			<td>ApreciaÁ„o Global do Programa:</td>
+			<td>Aprecia√ß√£o Global do Programa:</td>
 			<td><fr:edit name="createSummaryBean" slot="tutorshipSummaryProgramAssessment" /></td>
 		</tr>
 	</table>
@@ -225,7 +225,7 @@
 
 	<table class="tstyle1 thlight mtop0 mbottom15 tdleft">
 		<tr>
-			<td>Sugestıes</td>
+			<td>Sugest√µes</td>
 			<td>
 				<fr:edit name="createSummaryBean" slot="suggestions">
 					<fr:layout name="longText">

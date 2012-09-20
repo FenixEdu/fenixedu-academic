@@ -52,7 +52,7 @@ public class ViewFilesDA extends UnitFunctionalities {
 	    departmentsGroup.add(new PersonFileSourceBean(department.getDepartmentUnit()));
 	}
 
-	MultiLanguageString researchUnitsName = new MultiLanguageString().with(Language.pt, "Unidades de InvestigaÁ„o").with(
+	MultiLanguageString researchUnitsName = new MultiLanguageString().with(Language.pt, "Unidades de Investiga√ß√£o").with(
 		Language.en, "Research Units");
 	PersonFileSourceGroupBean researchUnitsGroup = new PersonFileSourceGroupBean(researchUnitsName);
 
@@ -62,7 +62,7 @@ public class ViewFilesDA extends UnitFunctionalities {
 	    researchUnitsGroup.add(new PersonFileSourceBean(unit));
 	}
 
-	MultiLanguageString scientificAreaName = new MultiLanguageString().with(Language.pt, "¡reas CiÍntificas").with(
+	MultiLanguageString scientificAreaName = new MultiLanguageString().with(Language.pt, "√Åreas Ci√™ntificas").with(
 		Language.en, "Scientific Areas");
 	PersonFileSourceGroupBean scientificAreaUnits = new PersonFileSourceGroupBean(scientificAreaName);
 

@@ -74,7 +74,7 @@ public class ParkingManagerDispatchAction extends FenixDispatchAction {
 
     public ActionForward showParkingRequests(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
-	// verificar autorização
+	// verificar autorizaÃ§Ã£o
 	ParkingRequestSearch parkingRequestSearch = getRenderedObject("parkingRequestSearch");
 
 	if (parkingRequestSearch == null) {
@@ -113,7 +113,7 @@ public class ParkingManagerDispatchAction extends FenixDispatchAction {
 
     public ActionForward showRequest(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
-	// verificar autorização
+	// verificar autorizaÃ§Ã£o
 
 	Integer code = getIntegerFromRequest(request, "idInternal");
 
@@ -364,9 +364,9 @@ public class ParkingManagerDispatchAction extends FenixDispatchAction {
 	    if ((person.getTeacher() != null && person.getTeacher().getCurrentWorkingDepartment() != null)
 		    || (person.getEmployee() != null && person.getEmployee().getCurrentWorkingContract() != null && person
 			    .getPersonRole(RoleType.TEACHER) == null)) {
-		return "Nº Mec: " + number;
+		return "NÂº Mec: " + number;
 	    } else {
-		return "Nº" + number;
+		return "NÂº" + number;
 	    }
 	}
 	return "";
@@ -600,11 +600,11 @@ public class ParkingManagerDispatchAction extends FenixDispatchAction {
 	StyledExcelSpreadsheet spreadsheet = new StyledExcelSpreadsheet("Pedidos_Parque", 15);
 	spreadsheet.newHeaderRow();
 	spreadsheet.addHeader("Categoria");
-	spreadsheet.addHeader("Número");
+	spreadsheet.addHeader("NÃºmero");
 	spreadsheet.addHeader("Nome", 9000);
 	spreadsheet.addHeader("Estado");
 	spreadsheet.addHeader("Data Pedido");
-	spreadsheet.addHeader("Outras Informações", 6000);
+	spreadsheet.addHeader("Outras InformaÃ§Ãµes", 6000);
 
 	final ResourceBundle enumerationBundle = ResourceBundle.getBundle("resources.EnumerationResources", Language.getLocale());
 	for (ParkingRequest parkingRequest : parkingRequestList) {

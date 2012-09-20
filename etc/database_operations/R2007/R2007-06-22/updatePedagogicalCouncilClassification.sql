@@ -1,5 +1,5 @@
 UPDATE PARTY SET CLASSIFICATION = "PEDAGOGICAL_COUNCIL"
-WHERE NAME = "Conselho Pedagógico";
+WHERE NAME = "Conselho PedagÃ³gico";
 
 INSERT INTO SITE (OJB_CONCRETE_CLASS, KEY_ROOT_DOMAIN_OBJECT, KEY_UNIT)
 SELECT 'net.sourceforge.fenixedu.domain.PedagogicalCouncilSite', 1, U.ID_INTERNAL 
@@ -54,7 +54,7 @@ SELECT CURRENT_TIMESTAMP(),
 	   'UB_UNITSITE_MANAGERS',
 	   'UB_PUBLIC',
 	   'UB_MANAGER',
-	   'Anúncios',
+	   'AnÃºncios',
 	   U.ID_INTERNAL,
 	   concat("role('MANAGER') || unitSiteManagers($I(", S.ID_INTERNAL, ", 'PedagogicalCouncilSite'))"),
 	   "role('MANAGER')"

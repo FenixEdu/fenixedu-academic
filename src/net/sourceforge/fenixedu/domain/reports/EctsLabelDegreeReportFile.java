@@ -48,37 +48,37 @@ public class EctsLabelDegreeReportFile extends EctsLabelDegreeReportFile_Base {
 
 	"Nome",
 
-	"Nome Inglês",
+	"Nome InglÃªs",
 
 	"Tipo Curso",
 
-	"Duração em anos",
+	"DuraÃ§Ã£o em anos",
 
-	"Duração em Semanas de Estudo",
+	"DuraÃ§Ã£o em Semanas de Estudo",
 
-	"Créditos ECTS",
+	"CrÃ©ditos ECTS",
 
 	"Requisitos de Ingresso",
 
-	"Requisitos de Ingresso (inglês)",
+	"Requisitos de Ingresso (inglÃªs)",
 
 	"Objectivos Educacionais",
 
-	"Objectivos Educacionais (inglês)",
+	"Objectivos Educacionais (inglÃªs)",
 
-	"Acesso a um nível superior de estudos",
+	"Acesso a um nÃ­vel superior de estudos",
 
-	"Acesso a um nível superior de estudos (inglês)",
+	"Acesso a um nÃ­vel superior de estudos (inglÃªs)",
 
 	"Normas e Regulamentos",
 
-	"Normas e Regulamentos (inglês)",
+	"Normas e Regulamentos (inglÃªs)",
 
 	"Coordenador",
 
 	"Contactos",
 
-	"Contactos (inglês)"
+	"Contactos (inglÃªs)"
 
 	});
     }

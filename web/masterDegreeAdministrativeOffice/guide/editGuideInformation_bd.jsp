@@ -192,7 +192,7 @@
          	</tr>
      </table>
      
-     <html:submit bundle="HTMLALT_RESOURCES" altKey="submit.Alterar" property="Alterar">Alterar Informação</html:submit>
+     <html:submit bundle="HTMLALT_RESOURCES" altKey="submit.Alterar" property="Alterar">Alterar InformaÃ§Ã£o</html:submit>
      
     </html:form>
 

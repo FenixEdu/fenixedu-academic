@@ -103,7 +103,7 @@ public class RaidesDfaReportFile extends RaidesDfaReportFile_Base {
 
     private void createHeaders(Spreadsheet spreadsheet) {
 	RaidesCommonReportFieldsWrapper.createHeaders(spreadsheet);
-	spreadsheet.setHeader("Total ECTS necess·rios para a conclus„o");
+	spreadsheet.setHeader("Total ECTS necess√°rios para a conclus√£o");
     }
 
     private void reportRaides(final Spreadsheet sheet, final Registration registration, List<Registration> registrationPath,
@@ -112,7 +112,7 @@ public class RaidesDfaReportFile extends RaidesDfaReportFile_Base {
 	final Row row = RaidesCommonReportFieldsWrapper.reportRaidesFields(sheet, registration, registrationPath, executionYear,
 		cycleType, concluded, conclusionDate, null, false);
 
-	// Total de ECTS concluÌdos atÈ ao fim do ano lectivo anterior ao que se referem os dados  no curso actual
+	// Total de ECTS conclu√≠dos at√© ao fim do ano lectivo anterior ao que se referem os dados  no curso actual
 	double totalEctsConcludedUntilPreviousYear = 0d;
 	for (final CycleCurriculumGroup cycleCurriculumGroup : registration.getLastStudentCurricularPlan()
 		.getInternalCycleCurriculumGrops()) {
@@ -120,7 +120,7 @@ public class RaidesDfaReportFile extends RaidesDfaReportFile_Base {
 		    .getPreviousExecutionYear());
 	}
 
-	// Total de ECTS necess·rios para a conclus„o
+	// Total de ECTS necess√°rios para a conclus√£o
 	if (concluded) {
 	    row.setCell(0);
 	} else {

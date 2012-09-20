@@ -14,7 +14,7 @@ import net.sourceforge.fenixedu.domain.NonAffiliatedTeacher;
 import net.sourceforge.fenixedu.domain.Professorship;
 
 /**
- * @author Jo„o Fialho & Rita Ferreira
+ * @author Jo√£o Fialho & Rita Ferreira
  * 
  */
 public class InfoAttendsWithProfessorshipTeachersAndNonAffiliatedTeachers extends InfoFrequenta {

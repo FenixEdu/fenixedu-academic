@@ -85,7 +85,7 @@
 		</fr:edit>
 		
 		<p>
-			<strong>Notas:</strong> Além do texto referido, irá ser acrescentada informação com as disciplinas aceites ou rejeitadas
+			<strong>Notas:</strong> AlÃ©m do texto referido, irÃ¡ ser acrescentada informaÃ§Ã£o com as disciplinas aceites ou rejeitadas
 		</p>
 		
 		<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" onclick="this.form.method.value='acceptEnrolments';"><bean:message bundle="PHD_RESOURCES" key="label.phd.accept.enrolments"/></html:submit>

@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="ISO-8859-1"  ?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with iReport - A designer for JasperReports -->
 <!DOCTYPE jasperReport PUBLIC "//JasperReports//DTD Report Design//EN" "http://jasperreports.sourceforge.net/dtds/jasperreport.dtd">
 <jasperReport
@@ -18,7 +18,7 @@
 		 isTitleNewPage="false"
 		 isSummaryNewPage="false">
 	<property name="ireport.scriptlethandling" value="0" />
-	<property name="ireport.encoding" value="ISO-8859-1" />
+	<property name="ireport.encoding" value="UTF-8" />
 	<import value="java.util.*" />
 	<import value="net.sf.jasperreports.engine.*" />
 	<import value="net.sf.jasperreports.engine.data.*" />
@@ -77,7 +77,7 @@
 					<textElement>
 						<font pdfFontName="Helvetica-Oblique" isBold="false" isItalic="true"/>
 					</textElement>
-				<text><![CDATA[As cargas horárias não se aplicam às seguintes disciplinas:]]></text>
+				<text><![CDATA[As cargas horÃ¡rias nÃ£o se aplicam Ã s seguintes disciplinas:]]></text>
 				</staticText>
 			</band>
 		</title>

@@ -22,7 +22,7 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
 /**
- * @author Jo„o Mota
+ * @author Jo√£o Mota
  */
 public class PrepareSelectExecutionCourseActionNew extends FenixContextAction {
 

@@ -8,7 +8,7 @@ import java.io.Serializable;
 import java.util.Map;
 
 /**
- * @author Jo„o Mota
+ * @author Jo√£o Mota
  */
 public class InfoAttendWithEnrollment extends InfoObject implements Serializable {
     protected InfoStudent _aluno;

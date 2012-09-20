@@ -22,7 +22,7 @@ public class StatusAndApprovalReportFile extends StatusAndApprovalReportFile_Bas
 
     @Override
     public String getJobName() {
-	return "Estatutos e aprovações desde 2003/2004";
+	return "Estatutos e aprovaÃ§Ãµes desde 2003/2004";
     }
 
     public static class EnrolmentAndAprovalCounter {
@@ -112,15 +112,15 @@ public class StatusAndApprovalReportFile extends StatusAndApprovalReportFile_Bas
 
     @Override
     public void renderReport(Spreadsheet spreadsheet) throws Exception {
-	spreadsheet.setHeader("número aluno");
+	spreadsheet.setHeader("nÃºmero aluno");
 	spreadsheet.setHeader("ano lectivo");
 	spreadsheet.setHeader("semestre");
 	setDegreeHeaders(spreadsheet);
 	spreadsheet.setHeader("estatuto");
 	spreadsheet.setHeader("ciclo de estudos");
 	spreadsheet.setHeader("regime");
-	spreadsheet.setHeader("número inscricoes");
-	spreadsheet.setHeader("número aprovacoes");
+	spreadsheet.setHeader("nÃºmero inscricoes");
+	spreadsheet.setHeader("nÃºmero aprovacoes");
 
 	final ExecutionSemester firstExecutionSemester = ExecutionYear.readExecutionYearByName("2003/2004")
 		.getFirstExecutionPeriod();

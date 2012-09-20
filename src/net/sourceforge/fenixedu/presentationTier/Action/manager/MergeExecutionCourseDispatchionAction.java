@@ -35,8 +35,8 @@ import org.apache.struts.action.DynaActionForm;
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 
 /**
- * @author <a href="mailto:joao.mota@ist.utl.pt">Jo„o Mota </a> 3/Dez/2003
- * @author Fernanda QuitÈrio 17/Dez/2003
+ * @author <a href="mailto:joao.mota@ist.utl.pt">Jo√£o Mota </a> 3/Dez/2003
+ * @author Fernanda Quit√©rio 17/Dez/2003
  * 
  */
 public class MergeExecutionCourseDispatchionAction extends FenixDispatchAction {

@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="ISO-8859-1" ?>
+<?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE tiles-definitions PUBLIC "-//Apache Software Foundation//DTD Tiles Configuration 1.1//EN"
 	"http://jakarta.apache.org/struts/dtds/tiles-config_1_1.dtd">
 <!-- Tiles definitions -->
@@ -84,7 +84,7 @@
     </definition>
     
 	<definition name="definition.teacher.two-column.extra-menu" extends="df.layout.two-column.extra-menu">	  
-		<put name="title" value="Docência" />
+		<put name="title" value="DocÃªncia" />
   		<put name="serviceName" value="Portal do Docente" />
  	   	<put name="navLocal" value="/teacher/commons/navigationBarIndex.jsp"/>   
  	   	<put name="navLocalExtra" value="/commons/blank.jsp" /> 	   

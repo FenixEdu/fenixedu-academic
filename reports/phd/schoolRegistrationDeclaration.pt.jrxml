@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="ISO-8859-1"  ?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with iReport - A designer for JasperReports -->
 <!DOCTYPE jasperReport PUBLIC "//JasperReports//DTD Report Design//EN" "http://jasperreports.sourceforge.net/dtds/jasperreport.dtd">
 <jasperReport
@@ -18,7 +18,7 @@
 		 isTitleNewPage="false"
 		 isSummaryNewPage="false">
 	<property name="ireport.scriptlethandling" value="0" />
-	<property name="ireport.encoding" value="ISO-8859-1" />
+	<property name="ireport.encoding" value="UTF-8" />
 	<import value="java.util.*" />
 	<import value="net.sf.jasperreports.engine.*" />
 	<import value="net.sf.jasperreports.engine.data.*" />
@@ -136,7 +136,7 @@
 					<textElement textAlignment="Right">
 						<font/>
 					</textElement>
-				<textFieldExpression   class="java.lang.String"><![CDATA["SUPERVISÃO DOS SERVIÇOS ACADÉMICOS"]]></textFieldExpression>
+				<textFieldExpression   class="java.lang.String"><![CDATA["SUPERVISÃƒO DOS SERVIÃ‡OS ACADÃ‰MICOS"]]></textFieldExpression>
 				</textField>
 			</band>
 		</title>
@@ -153,7 +153,7 @@
 					<textElement textAlignment="Center">
 						<font pdfFontName="Helvetica-Bold" size="14" isBold="true" isUnderline="true"/>
 					</textElement>
-				<text><![CDATA[DECLARAÇÃO]]></text>
+				<text><![CDATA[DECLARAÃ‡ÃƒO]]></text>
 				</staticText>
 			</band>
 		</pageHeader>
@@ -179,7 +179,7 @@
 					<textElement textAlignment="Justified" lineSpacing="1_1_2">
 						<font pdfFontName="Times-Roman" size="14" isItalic="false"/>
 					</textElement>
-				<textFieldExpression   class="java.lang.String"><![CDATA[$P{administrativeOfficeCoordinator} + ", Coordenadora do " + $P{administrativeOfficeName} + " do " + $P{institutionName} + " - " + $P{universityName} + ", declara, a pedido do interessado, que o(a) aluno(a) Nº " + $P{studentNumber} + " "  + $P{studentName} + ", com documento de identificação Nº " + $P{documentId}  + ", natural de " + $P{parishOfBirth} + " e nacionalidade " + $P{nationality} + " está " + $P{registrationState} + " no ano lectivo " + $P{executionYear} + " no Curso de Doutoramento em " + $P{phdProgramName} + "."]]></textFieldExpression>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$P{administrativeOfficeCoordinator} + ", Coordenadora do " + $P{administrativeOfficeName} + " do " + $P{institutionName} + " - " + $P{universityName} + ", declara, a pedido do interessado, que o(a) aluno(a) NÂº " + $P{studentNumber} + " "  + $P{studentName} + ", com documento de identificaÃ§Ã£o NÂº " + $P{documentId}  + ", natural de " + $P{parishOfBirth} + " e nacionalidade " + $P{nationality} + " estÃ¡ " + $P{registrationState} + " no ano lectivo " + $P{executionYear} + " no Curso de Doutoramento em " + $P{phdProgramName} + "."]]></textFieldExpression>
 				</textField>
 			</band>
 		</detail>

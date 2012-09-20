@@ -89,40 +89,40 @@ public class TutorshipSummaryDA extends ViewStudentsByTutorDispatchAction {
 		addCell(bundle.getString("label.tutorshipSummary.form.howManyContactsEmail"), summary.getHowManyContactsEmail());
 
 		addCell("Problemas:", "");
-		addCell("Hor·rios/InscriÁıes", convertBoolean(summary.getProblemsR1()));
-		addCell("MÈtodos de Estudo", convertBoolean(summary.getProblemsR2()));
-		addCell("Gest„o de Tempo/Volume de Trabalho", convertBoolean(summary.getProblemsR3()));
-		addCell("Acesso a InformaÁ„o (ex.:aspectos administrativos; ERASMUS; etc.)",
+		addCell("Hor√°rios/Inscri√ß√µes", convertBoolean(summary.getProblemsR1()));
+		addCell("M√©todos de Estudo", convertBoolean(summary.getProblemsR2()));
+		addCell("Gest√£o de Tempo/Volume de Trabalho", convertBoolean(summary.getProblemsR3()));
+		addCell("Acesso a Informa√ß√£o (ex.:aspectos administrativos; ERASMUS; etc.)",
 			convertBoolean(summary.getProblemsR4()));
-		addCell("TransiÁ„o Ensino Secund·rio/Ensino Superior", convertBoolean(summary.getProblemsR5()));
+		addCell("Transi√ß√£o Ensino Secund√°rio/Ensino Superior", convertBoolean(summary.getProblemsR5()));
 		addCell("Problemas Vocacionais", convertBoolean(summary.getProblemsR6()));
-		addCell("RelaÁ„o Professor - Aluno", convertBoolean(summary.getProblemsR7()));
-		addCell("Desempenho AcadÈmico (ex.: taxas de aprovaÁ„o)", convertBoolean(summary.getProblemsR8()));
-		addCell("AvaliaÁ„o (ex.: metodologia, datas de exames; etc.)", convertBoolean(summary.getProblemsR9()));
-		addCell("AdaptaÁ„o ao IST", convertBoolean(summary.getProblemsR10()));
+		addCell("Rela√ß√£o Professor - Aluno", convertBoolean(summary.getProblemsR7()));
+		addCell("Desempenho Acad√©mico (ex.: taxas de aprova√ß√£o)", convertBoolean(summary.getProblemsR8()));
+		addCell("Avalia√ß√£o (ex.: metodologia, datas de exames; etc.)", convertBoolean(summary.getProblemsR9()));
+		addCell("Adapta√ß√£o ao IST", convertBoolean(summary.getProblemsR10()));
 		addCell("Outro", summary.getProblemsOther());
 
 		addCell("Ganhos:", "");
-		addCell("Maior responsabilizaÁ„o/autonomizaÁ„o do Aluno", convertBoolean(summary.getGainsR1()));
-		addCell("AlteraÁ„o dos mÈtodos de estudo", convertBoolean(summary.getGainsR2()));
-		addCell("Planeamento do semestre/AvaliaÁ„o", convertBoolean(summary.getGainsR3()));
+		addCell("Maior responsabiliza√ß√£o/autonomiza√ß√£o do Aluno", convertBoolean(summary.getGainsR1()));
+		addCell("Altera√ß√£o dos m√©todos de estudo", convertBoolean(summary.getGainsR2()));
+		addCell("Planeamento do semestre/Avalia√ß√£o", convertBoolean(summary.getGainsR3()));
 		addCell("Acompanhamento mais individualizado", convertBoolean(summary.getGainsR4()));
-		addCell("Maior motivaÁ„o para o curso", convertBoolean(summary.getGainsR5()));
-		addCell("Melhor desempenho acadÈmico", convertBoolean(summary.getGainsR6()));
+		addCell("Maior motiva√ß√£o para o curso", convertBoolean(summary.getGainsR5()));
+		addCell("Melhor desempenho acad√©mico", convertBoolean(summary.getGainsR6()));
 		addCell("Maior proximidade Professor-Aluno", convertBoolean(summary.getGainsR7()));
-		addCell("TransiÁ„o do Ensino Secund·rio para o Ensino Superior mais f·cil", convertBoolean(summary.getGainsR8()));
-		addCell("Melhor adaptaÁ„o ao IST", convertBoolean(summary.getGainsR9()));
-		addCell("Apoio na tomada de decisıes/ResoluÁ„o de problemas", convertBoolean(summary.getGainsR10()));
+		addCell("Transi√ß√£o do Ensino Secund√°rio para o Ensino Superior mais f√°cil", convertBoolean(summary.getGainsR8()));
+		addCell("Melhor adapta√ß√£o ao IST", convertBoolean(summary.getGainsR9()));
+		addCell("Apoio na tomada de decis√µes/Resolu√ß√£o de problemas", convertBoolean(summary.getGainsR10()));
 		addCell("Outro", summary.getGainsOther());
 
 		if (summary.getTutorshipSummaryProgramAssessment() != null) {
-		    addCell("ApreciaÁ„o Global", bundleEnum.getString(summary.getTutorshipSummaryProgramAssessment().getName()));
+		    addCell("Aprecia√ß√£o Global", bundleEnum.getString(summary.getTutorshipSummaryProgramAssessment().getName()));
 		} else {
-		    addCell("ApreciaÁ„o Global", "");
+		    addCell("Aprecia√ß√£o Global", "");
 		}
 		addCell("Dificuldades", summary.getDifficulties());
 		addCell("Ganhos", summary.getGains());
-		addCell("Sugestıes", summary.getSuggestions());
+		addCell("Sugest√µes", summary.getSuggestions());
 	    }
 	};
 

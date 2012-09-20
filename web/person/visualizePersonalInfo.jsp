@@ -619,7 +619,7 @@
 </fr:view>
 
 
-<!-- Informação de Utilizador -->
+<!-- InformaÃ§Ã£o de Utilizador -->
 <table class="mtop15" width="98%" cellpadding="0" cellspacing="0">
 	<tr>
 		<td class="infoop" width="25"><span class="emphasis-box">4</span></td>
@@ -633,7 +633,7 @@
 </fr:view>
 
 
-<!-- Filiação -->
+<!-- FiliaÃ§Ã£o -->
 <table class="mtop15" width="98%" cellpadding="0" cellspacing="0">
 	<tr>
 		<td class="infoop" width="25"><span class="emphasis-box">5</span></td>

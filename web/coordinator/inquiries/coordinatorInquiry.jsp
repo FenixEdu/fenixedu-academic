@@ -36,7 +36,7 @@ border-top: 1px solid #ccc;
 
 <h2><bean:message key="title.inquiry.quc.coordinator" bundle="INQUIRIES_RESOURCES"/></h2>
 
-<h3><bean:write name="degreeAcronym"/> (<bean:write name="executionPeriod" property="semester"/>บ Semestre <bean:write name="executionPeriod" property="executionYear.year"/>)</h3>
+<h3><bean:write name="degreeAcronym"/> (<bean:write name="executionPeriod" property="semester"/>ยบ Semestre <bean:write name="executionPeriod" property="executionYear.year"/>)</h3>
 
 <p><em><bean:message key="message.coordinator.details.inquiry" bundle="INQUIRIES_RESOURCES"/></em></p>
 

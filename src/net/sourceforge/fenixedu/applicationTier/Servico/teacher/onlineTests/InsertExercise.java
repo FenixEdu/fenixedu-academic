@@ -99,7 +99,7 @@ public class InsertExercise extends FenixService {
 			    metadata = new Metadata(executionCourse, xmlFile, vector);
 			    metadata.getQuestions().addAll(listToThisMetadata);
 			} else {
-			    badXmls.add(xmlFileName + ": Metadata sem exercício associado.");
+			    badXmls.add(xmlFileName + ": Metadata sem exercÃ­cio associado.");
 			}
 		    } catch (ParseException e) {
 			badXmls.add(xmlFileName);

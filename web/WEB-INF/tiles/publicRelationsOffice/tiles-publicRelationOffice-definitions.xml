@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="ISO-8859-1" ?>
+<?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE tiles-definitions 
 	PUBLIC "-//Apache Software Foundation//DTD Tiles Configuration 1.1//EN"
 	"http://jakarta.apache.org/struts/dtds/tiles-config_1_1.dtd">
@@ -6,8 +6,8 @@
 <!-- Tiles definitions -->
 <tiles-definitions>
 	<definition name="definition.publicRelationOffice.master" extends="df.layout.two-column">
-	  <put name="title" value="Relações Públicas" />
-	  <put name="serviceName" value="Relações Públicas" />
+	  <put name="title" value="RelaÃ§Ãµes PÃºblicas" />
+	  <put name="serviceName" value="RelaÃ§Ãµes PÃºblicas" />
 	  <put name="navLocal" value="/commons/functionalities/side-menu.jsp" />
 	  <put name="navGeral" value="/commons/functionalities/top-menu.jsp" />
       <put name="body" value="/commons/blank.jsp" />

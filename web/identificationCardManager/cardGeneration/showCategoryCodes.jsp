@@ -6,7 +6,7 @@
 <em><bean:message key="link.manage.card.generation.header"/></em>
 <h2><bean:message key="link.manage.card.generation.consult.category.codes"/></h2>
 
-<p><html:link page="/manageCardGeneration.do?method=firstPage">« Voltar</html:link></p>
+<p><html:link page="/manageCardGeneration.do?method=firstPage">Â« Voltar</html:link></p>
 
 <table class="tstyle4 tdtop thlight mtop05">
   <tr>
@@ -55,7 +55,7 @@
     				00 
     			</logic:equal>
     			<logic:equal name="category" property="code" value="72">
-    				01 - Avençados
+    				01 - AvenÃ§ados
     				<br/>
     				05 - AEIST
     				<br/>
@@ -88,12 +88,12 @@
     			<logic:equal name="category" property="code" value="95">
     				00
     				<br/>
-    				01 - Pós-graduação
+    				01 - PÃ³s-graduaÃ§Ã£o
     			</logic:equal>
     			<logic:equal name="category" property="code" value="96">
     				01 - IST
     				<br/>
-    				03 - Bolseiro ou Investigador de um Centro de Investigação
+    				03 - Bolseiro ou Investigador de um Centro de InvestigaÃ§Ã£o
     			</logic:equal>
     			<logic:equal name="category" property="code" value="97">
     				00

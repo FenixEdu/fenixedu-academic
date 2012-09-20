@@ -45,7 +45,7 @@
 	<br/>
 
 	<html:link action="/manageEnrolementPeriods.do?method=prepareCreatePeriod" paramId="executionSemesterId" paramName="executionSemester" paramProperty="externalId">
-		Criar período
+		Criar perÃ­odo
 	</html:link>
 
 </logic:present>

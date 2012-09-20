@@ -124,7 +124,7 @@
 						key="error.empty.periods" /> </span>
 			</div>
 		</logic:empty>
-		<h3>Adicionar excepções ao valor da divida</h3>
+		<h3>Adicionar excepÃ§Ãµes ao valor da divida</h3>
 		<fr:edit id="quirks" name="quirks" schema="addPhdGratuityPeriod">
 			<fr:layout name="tabular">
 				<fr:property name="classes" value="tstyle5 thlight thright" />
@@ -173,7 +173,7 @@
 		</logic:notEmpty>
 		<logic:empty name="bean" property="exceptions">
 			<div style="margin-top: 10px; margin-bottom: 10px;">
-				<span>Esta regra não tem excepções definidas.</span>
+				<span>Esta regra nÃ£o tem excepÃ§Ãµes definidas.</span>
 			</div>
 		</logic:empty>
 		<p>

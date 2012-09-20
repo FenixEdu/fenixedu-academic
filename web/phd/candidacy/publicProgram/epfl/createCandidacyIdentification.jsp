@@ -39,6 +39,6 @@
 			<fr:destination name="invalid" path="/applications/epfl/phdProgramCandidacyProcess.do?method=createCandidacyIdentificationInvalid" />
 		</fr:edit>
 	</fieldset>	
-	<p class="mtop15"><html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit"><bean:message bundle="PHD_RESOURCES" key="label.continue"/> »</html:submit></p>
+	<p class="mtop15"><html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit"><bean:message bundle="PHD_RESOURCES" key="label.continue"/> Â»</html:submit></p>
 </fr:form>
 </div>

@@ -85,7 +85,7 @@ public class ReadCandidatesForSelectionAuthorizationFilter extends Filtro {
 	}
 
 	if (id.hasRoleType(RoleType.COORDINATOR)) {
-	    // modified by T‚nia Pous„o
+	    // modified by T√¢nia Pous√£o
 	    List<Coordinator> coodinatorsList = executionDegree.getCoordinatorsList();
 	    if (coodinatorsList == null) {
 		return false;

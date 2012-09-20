@@ -53,7 +53,7 @@ public class StudentHighPerformanceQueueJob extends StudentHighPerformanceQueueJ
 		for (Enrolment enrolment : enrols) {
 		    totalEcts += enrolment.getEctsCredits();
 		}
-		addCell("Créditos Inscritos", totalEcts);
+		addCell("CrÃ©ditos Inscritos", totalEcts);
 		addCell("Curso", item.getDegree().getNameFor(semester));
 		CycleType cycleType = item.getCycleType(semester.getExecutionYear());
 		addCell("Ciclo", cycleType != null ? cycleType.getDescription() : null);

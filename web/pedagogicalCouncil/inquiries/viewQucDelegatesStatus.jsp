@@ -9,11 +9,11 @@
 <h2>QUC - Garantia da Qualidade das UC</h2>
 
 <br/>
-<h4>Lista de Delegados com questıes obrigatÛrias por responder:</h4>
+<h4>Lista de Delegados com quest√µes obrigat√≥rias por responder:</h4>
 <logic:present name="delegateInquiryOID">	
 	<p><html:link action="qucDelegatesStatus.do?method=dowloadReport" paramId="delegateInquiryOID" paramName="delegateInquiryOID">Ver ficheiro</html:link></p>
 </logic:present>
 
 <logic:notPresent name="delegateInquiryOID">
-	<p>O inquÈrito ao Delegado encontra-se fechado.</p>
+	<p>O inqu√©rito ao Delegado encontra-se fechado.</p>
 </logic:notPresent>

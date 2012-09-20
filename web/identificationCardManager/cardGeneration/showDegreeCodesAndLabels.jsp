@@ -3,11 +3,11 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <html:xhtml/>
 
-<em>Cartões de Identificação</em>
+<em>CartÃµes de IdentificaÃ§Ã£o</em>
 <h2>
 	<bean:message bundle="CARD_GENERATION_RESOURCES" key="link.manage.card.generation.show.degree.codes.and.labels"/>
 </h2>
-<p><html:link page="/manageCardGeneration.do?method=showCategoryCodes">« Voltar</html:link></p>
+<p><html:link page="/manageCardGeneration.do?method=showCategoryCodes">Â« Voltar</html:link></p>
 
 <bean:message bundle="CARD_GENERATION_RESOURCES" key="label.degree.type"/>:
 <logic:iterate id="degree" name="degrees" length="1">

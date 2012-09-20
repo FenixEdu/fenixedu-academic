@@ -2,18 +2,18 @@
       select @RootModule:=ROOT_DOMAIN_OBJECT.KEY_ROOT_MODULE from ROOT_DOMAIN_OBJECT;
       select @RootPortal:=ROOT_DOMAIN_OBJECT.KEY_ROOT_PORTAL from ROOT_DOMAIN_OBJECT;
       CREATE TEMPORARY TABLE OLD_PORTAL_INIT(SECTION_ID INTEGER, FUNCTIONALITY_ID INTEGER);
-      -- Generating Functionality for: Gest„o de PatrimÛnio---
+      -- Generating Functionality for: Gest√£o de Patrim√≥nio---
       
       
-      insert into CONTENT(NAME,TITLE,CREATION_DATE,CONTENT_ID,ENABLED,VISIBLE,EXECUTION_PATH,OJB_CONCRETE_CLASS)VALUES('pt20:Gest„o de PatrimÛnio','pt20:Gest„o de PatrimÛnio', NOW(),'0b9447c9-3c30-4712-9883-71e36c4afd94',1,1,'/index.do','net.sourceforge.fenixedu.domain.functionalities.Functionality');
+      insert into CONTENT(NAME,TITLE,CREATION_DATE,CONTENT_ID,ENABLED,VISIBLE,EXECUTION_PATH,OJB_CONCRETE_CLASS)VALUES('pt20:Gest√£o de Patrim√≥nio','pt20:Gest√£o de Patrim√≥nio', NOW(),'0b9447c9-3c30-4712-9883-71e36c4afd94',1,1,'/index.do','net.sourceforge.fenixedu.domain.functionalities.Functionality');
       
       insert into NODE(KEY_PARENT,KEY_CHILD,NODE_ORDER,VISIBLE,ASCENDING, OJB_CONCRETE_CLASS) values((SELECT ID_INTERNAL FROM CONTENT WHERE CONTENT_ID='7a8440b9-8a15-4111-a71a-4f4e2ac6fcc8' GROUP BY CONTENT_ID), (SELECT ID_INTERNAL FROM CONTENT WHERE CONTENT_ID='0b9447c9-3c30-4712-9883-71e36c4afd94' GROUP BY CONTENT_ID),1,1,1,'net.sourceforge.fenixedu.domain.contents.ExplicitOrderNode');
       
       insert into OLD_PORTAL_INIT(SECTION_ID, FUNCTIONALITY_ID) VALUES((SELECT C.ID_INTERNAL FROM CONTENT C, CONTENT C2, NODE N, NODE N2 WHERE C.OJB_CONCRETE_CLASS LIKE '%Section' AND C2.CONTENT_ID='7a8440b9-8a15-4111-a71a-4f4e2ac6fcc8' AND C.NAME=C2.NAME AND N.KEY_CHILD = C.ID_INTERNAL AND N2.KEY_CHILD = C2.ID_INTERNAL AND N.KEY_PARENT=@RootPortal AND N2.KEY_PARENT=@RootModule),(SELECT ID_INTERNAL FROM CONTENT WHERE CONTENT_ID='0b9447c9-3c30-4712-9883-71e36c4afd94'));
-      -- Generating Functionality for: ComunicaÁ„o---
+      -- Generating Functionality for: Comunica√ß√£o---
       
       
-      insert into CONTENT(NAME,TITLE,CREATION_DATE,CONTENT_ID,ENABLED,VISIBLE,EXECUTION_PATH,OJB_CONCRETE_CLASS)VALUES('pt11:ComunicaÁ„o','pt11:ComunicaÁ„o', NOW(),'5c3c81c0-40ad-4e84-9275-28f102a9562b',1,1,'/index.do','net.sourceforge.fenixedu.domain.functionalities.Functionality');
+      insert into CONTENT(NAME,TITLE,CREATION_DATE,CONTENT_ID,ENABLED,VISIBLE,EXECUTION_PATH,OJB_CONCRETE_CLASS)VALUES('pt11:Comunica√ß√£o','pt11:Comunica√ß√£o', NOW(),'5c3c81c0-40ad-4e84-9275-28f102a9562b',1,1,'/index.do','net.sourceforge.fenixedu.domain.functionalities.Functionality');
       
       insert into NODE(KEY_PARENT,KEY_CHILD,NODE_ORDER,VISIBLE,ASCENDING, OJB_CONCRETE_CLASS) values((SELECT ID_INTERNAL FROM CONTENT WHERE CONTENT_ID='9cf56518-f706-4854-b28e-2108ba374c43' GROUP BY CONTENT_ID), (SELECT ID_INTERNAL FROM CONTENT WHERE CONTENT_ID='5c3c81c0-40ad-4e84-9275-28f102a9562b' GROUP BY CONTENT_ID),1,1,1,'net.sourceforge.fenixedu.domain.contents.ExplicitOrderNode');
       
@@ -25,10 +25,10 @@
       insert into NODE(KEY_PARENT,KEY_CHILD,NODE_ORDER,VISIBLE,ASCENDING, OJB_CONCRETE_CLASS) values((SELECT ID_INTERNAL FROM CONTENT WHERE CONTENT_ID='eabed4f4-7a0b-4e77-8edb-e8525857f934' GROUP BY CONTENT_ID), (SELECT ID_INTERNAL FROM CONTENT WHERE CONTENT_ID='e165b3f2-7461-4bac-829c-6e12bd51bec9' GROUP BY CONTENT_ID),1,1,1,'net.sourceforge.fenixedu.domain.contents.ExplicitOrderNode');
       
       insert into OLD_PORTAL_INIT(SECTION_ID, FUNCTIONALITY_ID) VALUES((SELECT C.ID_INTERNAL FROM CONTENT C, CONTENT C2, NODE N, NODE N2 WHERE C.OJB_CONCRETE_CLASS LIKE '%Section' AND C2.CONTENT_ID='eabed4f4-7a0b-4e77-8edb-e8525857f934' AND C.NAME=C2.NAME AND N.KEY_CHILD = C.ID_INTERNAL AND N2.KEY_CHILD = C2.ID_INTERNAL AND N.KEY_PARENT=@RootPortal AND N2.KEY_PARENT=@RootModule),(SELECT ID_INTERNAL FROM CONTENT WHERE CONTENT_ID='e165b3f2-7461-4bac-829c-6e12bd51bec9'));
-      -- Generating Functionality for: Conselho PedagÛgico---
+      -- Generating Functionality for: Conselho Pedag√≥gico---
       
       
-      insert into CONTENT(NAME,TITLE,CREATION_DATE,CONTENT_ID,ENABLED,VISIBLE,EXECUTION_PATH,OJB_CONCRETE_CLASS)VALUES('pt19:Conselho PedagÛgico','pt19:Conselho PedagÛgico', NOW(),'d68fc498-3078-4443-8430-cb59edb982a8',1,1,'/index.do','net.sourceforge.fenixedu.domain.functionalities.Functionality');
+      insert into CONTENT(NAME,TITLE,CREATION_DATE,CONTENT_ID,ENABLED,VISIBLE,EXECUTION_PATH,OJB_CONCRETE_CLASS)VALUES('pt19:Conselho Pedag√≥gico','pt19:Conselho Pedag√≥gico', NOW(),'d68fc498-3078-4443-8430-cb59edb982a8',1,1,'/index.do','net.sourceforge.fenixedu.domain.functionalities.Functionality');
       
       insert into NODE(KEY_PARENT,KEY_CHILD,NODE_ORDER,VISIBLE,ASCENDING, OJB_CONCRETE_CLASS) values((SELECT ID_INTERNAL FROM CONTENT WHERE CONTENT_ID='315334e8-bfd5-4d19-b4c2-4097393d7dda' GROUP BY CONTENT_ID), (SELECT ID_INTERNAL FROM CONTENT WHERE CONTENT_ID='d68fc498-3078-4443-8430-cb59edb982a8' GROUP BY CONTENT_ID),1,1,1,'net.sourceforge.fenixedu.domain.contents.ExplicitOrderNode');
       
@@ -41,18 +41,18 @@
       insert into NODE(KEY_PARENT,KEY_CHILD,NODE_ORDER,VISIBLE,ASCENDING, OJB_CONCRETE_CLASS) values((SELECT ID_INTERNAL FROM CONTENT WHERE CONTENT_ID='ebad2636-7c48-402d-944e-95bc587724be' GROUP BY CONTENT_ID), (SELECT ID_INTERNAL FROM CONTENT WHERE CONTENT_ID='899f41fa-9d42-48ec-83e2-38658eb50bf3' GROUP BY CONTENT_ID),1,1,1,'net.sourceforge.fenixedu.domain.contents.ExplicitOrderNode');
       
       insert into OLD_PORTAL_INIT(SECTION_ID, FUNCTIONALITY_ID) VALUES((SELECT C.ID_INTERNAL FROM CONTENT C, CONTENT C2, NODE N, NODE N2 WHERE C.OJB_CONCRETE_CLASS LIKE '%Section' AND C2.CONTENT_ID='ebad2636-7c48-402d-944e-95bc587724be' AND C.NAME=C2.NAME AND N.KEY_CHILD = C.ID_INTERNAL AND N2.KEY_CHILD = C2.ID_INTERNAL AND N.KEY_PARENT=@RootPortal AND N2.KEY_PARENT=@RootModule GROUP BY C.CONTENT_ID),(SELECT ID_INTERNAL FROM CONTENT WHERE CONTENT_ID='899f41fa-9d42-48ec-83e2-38658eb50bf3' GROUP BY CONTENT_ID));
-      -- Generating Functionality for: InvestigaÁ„o---
+      -- Generating Functionality for: Investiga√ß√£o---
       
       
-      insert into CONTENT(NAME,TITLE,CREATION_DATE,CONTENT_ID,ENABLED,VISIBLE,EXECUTION_PATH,OJB_CONCRETE_CLASS)VALUES('pt12:InvestigaÁ„o','pt12:InvestigaÁ„o', NOW(),'fb3e6d00-375a-464b-9695-cf7e73aa2c4f',1,1,'/index.do','net.sourceforge.fenixedu.domain.functionalities.Functionality');
+      insert into CONTENT(NAME,TITLE,CREATION_DATE,CONTENT_ID,ENABLED,VISIBLE,EXECUTION_PATH,OJB_CONCRETE_CLASS)VALUES('pt12:Investiga√ß√£o','pt12:Investiga√ß√£o', NOW(),'fb3e6d00-375a-464b-9695-cf7e73aa2c4f',1,1,'/index.do','net.sourceforge.fenixedu.domain.functionalities.Functionality');
       
       insert into NODE(KEY_PARENT,KEY_CHILD,NODE_ORDER,VISIBLE,ASCENDING, OJB_CONCRETE_CLASS) values((SELECT ID_INTERNAL FROM CONTENT WHERE CONTENT_ID='2fc34f7f-e879-42b7-936a-e9d60db53875' GROUP BY CONTENT_ID), (SELECT ID_INTERNAL FROM CONTENT WHERE CONTENT_ID='fb3e6d00-375a-464b-9695-cf7e73aa2c4f' GROUP BY CONTENT_ID),1,1,1,'net.sourceforge.fenixedu.domain.contents.ExplicitOrderNode');
       
       insert into OLD_PORTAL_INIT(SECTION_ID, FUNCTIONALITY_ID) VALUES((SELECT C.ID_INTERNAL FROM CONTENT C, CONTENT C2, NODE N, NODE N2 WHERE C.OJB_CONCRETE_CLASS LIKE '%Section' AND C2.CONTENT_ID='2fc34f7f-e879-42b7-936a-e9d60db53875' AND C.NAME=C2.NAME AND N.KEY_CHILD = C.ID_INTERNAL AND N2.KEY_CHILD = C2.ID_INTERNAL AND N.KEY_PARENT=@RootPortal AND N2.KEY_PARENT=@RootModule GROUP BY C.CONTENT_ID),(SELECT ID_INTERNAL FROM CONTENT WHERE CONTENT_ID='fb3e6d00-375a-464b-9695-cf7e73aa2c4f' GROUP BY CONTENT_ID));
-      -- Generating Functionality for: Gest„o de EspaÁos---
+      -- Generating Functionality for: Gest√£o de Espa√ßos---
       
       
-      insert into CONTENT(NAME,TITLE,CREATION_DATE,CONTENT_ID,ENABLED,VISIBLE,EXECUTION_PATH,OJB_CONCRETE_CLASS)VALUES('pt17:Gest„o de EspaÁos','pt17:Gest„o de EspaÁos', NOW(),'25babbe9-0104-4f16-adf4-655f6ef63e17',1,1,'/index.do','net.sourceforge.fenixedu.domain.functionalities.Functionality');
+      insert into CONTENT(NAME,TITLE,CREATION_DATE,CONTENT_ID,ENABLED,VISIBLE,EXECUTION_PATH,OJB_CONCRETE_CLASS)VALUES('pt17:Gest√£o de Espa√ßos','pt17:Gest√£o de Espa√ßos', NOW(),'25babbe9-0104-4f16-adf4-655f6ef63e17',1,1,'/index.do','net.sourceforge.fenixedu.domain.functionalities.Functionality');
       
       insert into NODE(KEY_PARENT,KEY_CHILD,NODE_ORDER,VISIBLE,ASCENDING, OJB_CONCRETE_CLASS) values((SELECT ID_INTERNAL FROM CONTENT WHERE CONTENT_ID='35fc54d5-7ae9-4195-ad94-be98894ce012' GROUP BY CONTENT_ID), (SELECT ID_INTERNAL FROM CONTENT WHERE CONTENT_ID='25babbe9-0104-4f16-adf4-655f6ef63e17' GROUP BY CONTENT_ID),1,1,1,'net.sourceforge.fenixedu.domain.contents.ExplicitOrderNode');
       
@@ -121,10 +121,10 @@
       insert into NODE(KEY_PARENT,KEY_CHILD,NODE_ORDER,VISIBLE,ASCENDING, OJB_CONCRETE_CLASS) values((SELECT ID_INTERNAL FROM CONTENT WHERE CONTENT_ID='97805947-1f30-4780-8fc6-ee283514f534' GROUP BY CONTENT_ID), (SELECT ID_INTERNAL FROM CONTENT WHERE CONTENT_ID='c7c443f1-f837-4c80-af88-992571999919' GROUP BY CONTENT_ID),1,1,1,'net.sourceforge.fenixedu.domain.contents.ExplicitOrderNode');
       
       insert into OLD_PORTAL_INIT(SECTION_ID, FUNCTIONALITY_ID) VALUES((SELECT C.ID_INTERNAL FROM CONTENT C, CONTENT C2, NODE N, NODE N2 WHERE C.OJB_CONCRETE_CLASS LIKE '%Section' AND C2.CONTENT_ID='97805947-1f30-4780-8fc6-ee283514f534' AND C.NAME=C2.NAME AND N.KEY_CHILD = C.ID_INTERNAL AND N2.KEY_CHILD = C2.ID_INTERNAL AND N.KEY_PARENT=@RootPortal AND N2.KEY_PARENT=@RootModule GROUP BY C.CONTENT_ID),(SELECT ID_INTERNAL FROM CONTENT WHERE CONTENT_ID='c7c443f1-f837-4c80-af88-992571999919' GROUP BY CONTENT_ID));
-      -- Generating Functionality for: Semin·rios---
+      -- Generating Functionality for: Semin√°rios---
       
       
-      insert into CONTENT(NAME,TITLE,CREATION_DATE,CONTENT_ID,ENABLED,VISIBLE,EXECUTION_PATH,OJB_CONCRETE_CLASS)VALUES('pt10:Semin·rios','pt10:Semin·rios', NOW(),'7754f6aa-1672-4003-829d-aa3c4476e449',1,1,'/seminariesIndex.jsp','net.sourceforge.fenixedu.domain.functionalities.Functionality');
+      insert into CONTENT(NAME,TITLE,CREATION_DATE,CONTENT_ID,ENABLED,VISIBLE,EXECUTION_PATH,OJB_CONCRETE_CLASS)VALUES('pt10:Semin√°rios','pt10:Semin√°rios', NOW(),'7754f6aa-1672-4003-829d-aa3c4476e449',1,1,'/seminariesIndex.jsp','net.sourceforge.fenixedu.domain.functionalities.Functionality');
       
       insert into NODE(KEY_PARENT,KEY_CHILD,NODE_ORDER,VISIBLE,ASCENDING, OJB_CONCRETE_CLASS) values((SELECT ID_INTERNAL FROM CONTENT WHERE CONTENT_ID='264b6a46-3a52-4935-9094-88be1fbfb33d' GROUP BY CONTENT_ID), (SELECT ID_INTERNAL FROM CONTENT WHERE CONTENT_ID='7754f6aa-1672-4003-829d-aa3c4476e449' GROUP BY CONTENT_ID),1,1,1,'net.sourceforge.fenixedu.domain.contents.ExplicitOrderNode');
       
@@ -137,50 +137,50 @@
       insert into NODE(KEY_PARENT,KEY_CHILD,NODE_ORDER,VISIBLE,ASCENDING, OJB_CONCRETE_CLASS) values((SELECT ID_INTERNAL FROM CONTENT WHERE CONTENT_ID='ec219d83-2928-4c5f-84ea-28768c22d5bd' GROUP BY CONTENT_ID), (SELECT ID_INTERNAL FROM CONTENT WHERE CONTENT_ID='f6ec4338-03f7-4311-9253-1a82709f8f08' GROUP BY CONTENT_ID),1,1,1,'net.sourceforge.fenixedu.domain.contents.ExplicitOrderNode');
       
       insert into OLD_PORTAL_INIT(SECTION_ID, FUNCTIONALITY_ID) VALUES((SELECT C.ID_INTERNAL FROM CONTENT C, CONTENT C2, NODE N, NODE N2 WHERE C.OJB_CONCRETE_CLASS LIKE '%Section' AND C2.CONTENT_ID='ec219d83-2928-4c5f-84ea-28768c22d5bd' AND C.NAME=C2.NAME AND N.KEY_CHILD = C.ID_INTERNAL AND N2.KEY_CHILD = C2.ID_INTERNAL AND N.KEY_PARENT=@RootPortal AND N2.KEY_PARENT=@RootModule GROUP BY C.CONTENT_ID),(SELECT ID_INTERNAL FROM CONTENT WHERE CONTENT_ID='f6ec4338-03f7-4311-9253-1a82709f8f08' GROUP BY CONTENT_ID));
-      -- Generating Functionality for: Conselho CientÌfico---
+      -- Generating Functionality for: Conselho Cient√≠fico---
       
       
-      insert into CONTENT(NAME,TITLE,CREATION_DATE,CONTENT_ID,ENABLED,VISIBLE,EXECUTION_PATH,OJB_CONCRETE_CLASS)VALUES('pt19:Conselho CientÌfico','pt19:Conselho CientÌfico', NOW(),'1d6877ab-e627-444e-a06e-06d19e77be35',1,1,'/index.do','net.sourceforge.fenixedu.domain.functionalities.Functionality');
+      insert into CONTENT(NAME,TITLE,CREATION_DATE,CONTENT_ID,ENABLED,VISIBLE,EXECUTION_PATH,OJB_CONCRETE_CLASS)VALUES('pt19:Conselho Cient√≠fico','pt19:Conselho Cient√≠fico', NOW(),'1d6877ab-e627-444e-a06e-06d19e77be35',1,1,'/index.do','net.sourceforge.fenixedu.domain.functionalities.Functionality');
       
       insert into NODE(KEY_PARENT,KEY_CHILD,NODE_ORDER,VISIBLE,ASCENDING, OJB_CONCRETE_CLASS) values((SELECT ID_INTERNAL FROM CONTENT WHERE CONTENT_ID='b5d85b58-d775-4fca-8f0c-30e2fdb60cba' GROUP BY CONTENT_ID), (SELECT ID_INTERNAL FROM CONTENT WHERE CONTENT_ID='1d6877ab-e627-444e-a06e-06d19e77be35' GROUP BY CONTENT_ID),1,1,1,'net.sourceforge.fenixedu.domain.contents.ExplicitOrderNode');
       
       insert into OLD_PORTAL_INIT(SECTION_ID, FUNCTIONALITY_ID) VALUES((SELECT C.ID_INTERNAL FROM CONTENT C, CONTENT C2, NODE N, NODE N2 WHERE C.OJB_CONCRETE_CLASS LIKE '%Section' AND C2.CONTENT_ID='b5d85b58-d775-4fca-8f0c-30e2fdb60cba' AND C.NAME=C2.NAME AND N.KEY_CHILD = C.ID_INTERNAL AND N2.KEY_CHILD = C2.ID_INTERNAL AND N.KEY_PARENT=@RootPortal AND N2.KEY_PARENT=@RootModule GROUP BY C.CONTENT_ID),(SELECT ID_INTERNAL FROM CONTENT WHERE CONTENT_ID='1d6877ab-e627-444e-a06e-06d19e77be35' GROUP BY CONTENT_ID));
-      -- Generating Functionality for: Portal de ServiÁos de GraduaÁ„o - Super Utilizador---
+      -- Generating Functionality for: Portal de Servi√ßos de Gradua√ß√£o - Super Utilizador---
       
       
-      insert into CONTENT(NAME,TITLE,CREATION_DATE,CONTENT_ID,ENABLED,VISIBLE,EXECUTION_PATH,OJB_CONCRETE_CLASS)VALUES('pt50:Portal de ServiÁos de GraduaÁ„o - Super Utilizador','pt50:Portal de ServiÁos de GraduaÁ„o - Super Utilizador', NOW(),'1b44b7cb-e1f8-432d-99cf-f6e4cb82cf95',1,1,'/index.do','net.sourceforge.fenixedu.domain.functionalities.Functionality');
+      insert into CONTENT(NAME,TITLE,CREATION_DATE,CONTENT_ID,ENABLED,VISIBLE,EXECUTION_PATH,OJB_CONCRETE_CLASS)VALUES('pt50:Portal de Servi√ßos de Gradua√ß√£o - Super Utilizador','pt50:Portal de Servi√ßos de Gradua√ß√£o - Super Utilizador', NOW(),'1b44b7cb-e1f8-432d-99cf-f6e4cb82cf95',1,1,'/index.do','net.sourceforge.fenixedu.domain.functionalities.Functionality');
       
       insert into NODE(KEY_PARENT,KEY_CHILD,NODE_ORDER,VISIBLE,ASCENDING, OJB_CONCRETE_CLASS) values((SELECT ID_INTERNAL FROM CONTENT WHERE CONTENT_ID='64d01274-211d-49c1-b1ed-aa07a368efd2' GROUP BY CONTENT_ID), (SELECT ID_INTERNAL FROM CONTENT WHERE CONTENT_ID='1b44b7cb-e1f8-432d-99cf-f6e4cb82cf95' GROUP BY CONTENT_ID),1,1,1,'net.sourceforge.fenixedu.domain.contents.ExplicitOrderNode');
       
       insert into OLD_PORTAL_INIT(SECTION_ID, FUNCTIONALITY_ID) VALUES((SELECT C.ID_INTERNAL FROM CONTENT C, CONTENT C2, NODE N, NODE N2 WHERE C.OJB_CONCRETE_CLASS LIKE '%Section' AND C2.CONTENT_ID='64d01274-211d-49c1-b1ed-aa07a368efd2' AND C.NAME=C2.NAME AND N.KEY_CHILD = C.ID_INTERNAL AND N2.KEY_CHILD = C2.ID_INTERNAL AND N.KEY_PARENT=@RootPortal AND N2.KEY_PARENT=@RootModule GROUP BY C.CONTENT_ID),(SELECT ID_INTERNAL FROM CONTENT WHERE CONTENT_ID='1b44b7cb-e1f8-432d-99cf-f6e4cb82cf95' GROUP BY CONTENT_ID));
-      -- Generating Functionality for: AdministraÁ„o de crÈditos de docentes do departamento---
+      -- Generating Functionality for: Administra√ß√£o de cr√©ditos de docentes do departamento---
       
       
-      insert into CONTENT(NAME,TITLE,CREATION_DATE,CONTENT_ID,ENABLED,VISIBLE,EXECUTION_PATH,OJB_CONCRETE_CLASS)VALUES('pt53:AdministraÁ„o de crÈditos de docentes do departamento','pt53:AdministraÁ„o de crÈditos de docentes do departamento', NOW(),'7e6ecc9e-0715-49ee-a184-7b1b596f1260',1,1,'/index.do','net.sourceforge.fenixedu.domain.functionalities.Functionality');
+      insert into CONTENT(NAME,TITLE,CREATION_DATE,CONTENT_ID,ENABLED,VISIBLE,EXECUTION_PATH,OJB_CONCRETE_CLASS)VALUES('pt53:Administra√ß√£o de cr√©ditos de docentes do departamento','pt53:Administra√ß√£o de cr√©ditos de docentes do departamento', NOW(),'7e6ecc9e-0715-49ee-a184-7b1b596f1260',1,1,'/index.do','net.sourceforge.fenixedu.domain.functionalities.Functionality');
       
       insert into NODE(KEY_PARENT,KEY_CHILD,NODE_ORDER,VISIBLE,ASCENDING, OJB_CONCRETE_CLASS) values((SELECT ID_INTERNAL FROM CONTENT WHERE CONTENT_ID='05edef46-6c85-4361-b35e-017d73f9bd6c' GROUP BY CONTENT_ID), (SELECT ID_INTERNAL FROM CONTENT WHERE CONTENT_ID='7e6ecc9e-0715-49ee-a184-7b1b596f1260' GROUP BY CONTENT_ID),1,1,1,'net.sourceforge.fenixedu.domain.contents.ExplicitOrderNode');
       
       insert into OLD_PORTAL_INIT(SECTION_ID, FUNCTIONALITY_ID) VALUES((SELECT C.ID_INTERNAL FROM CONTENT C, CONTENT C2, NODE N, NODE N2 WHERE C.OJB_CONCRETE_CLASS LIKE '%Section' AND C2.CONTENT_ID='05edef46-6c85-4361-b35e-017d73f9bd6c' AND C.NAME=C2.NAME AND N.KEY_CHILD = C.ID_INTERNAL AND N2.KEY_CHILD = C2.ID_INTERNAL AND N.KEY_PARENT=@RootPortal AND N2.KEY_PARENT=@RootModule GROUP BY C.CONTENT_ID),(SELECT ID_INTERNAL FROM CONTENT WHERE CONTENT_ID='7e6ecc9e-0715-49ee-a184-7b1b596f1260' GROUP BY CONTENT_ID));
-      -- Generating Functionality for: SecÁ„o de Pessoal Docente e Investigador---
+      -- Generating Functionality for: Sec√ß√£o de Pessoal Docente e Investigador---
       
       
-      insert into CONTENT(NAME,TITLE,CREATION_DATE,CONTENT_ID,ENABLED,VISIBLE,EXECUTION_PATH,OJB_CONCRETE_CLASS)VALUES('pt40:SecÁ„o de Pessoal Docente e Investigador','pt40:SecÁ„o de Pessoal Docente e Investigador', NOW(),'9cf98c03-d05f-423c-a1f8-f60ea7964f7f',1,1,'/index.do','net.sourceforge.fenixedu.domain.functionalities.Functionality');
+      insert into CONTENT(NAME,TITLE,CREATION_DATE,CONTENT_ID,ENABLED,VISIBLE,EXECUTION_PATH,OJB_CONCRETE_CLASS)VALUES('pt40:Sec√ß√£o de Pessoal Docente e Investigador','pt40:Sec√ß√£o de Pessoal Docente e Investigador', NOW(),'9cf98c03-d05f-423c-a1f8-f60ea7964f7f',1,1,'/index.do','net.sourceforge.fenixedu.domain.functionalities.Functionality');
       
       insert into NODE(KEY_PARENT,KEY_CHILD,NODE_ORDER,VISIBLE,ASCENDING, OJB_CONCRETE_CLASS) values((SELECT ID_INTERNAL FROM CONTENT WHERE CONTENT_ID='63bb3ae4-d1a0-4fc7-be16-ae25918a8831' GROUP BY CONTENT_ID), (SELECT ID_INTERNAL FROM CONTENT WHERE CONTENT_ID='9cf98c03-d05f-423c-a1f8-f60ea7964f7f' GROUP BY CONTENT_ID),1,1,1,'net.sourceforge.fenixedu.domain.contents.ExplicitOrderNode');
       
       insert into OLD_PORTAL_INIT(SECTION_ID, FUNCTIONALITY_ID) VALUES((SELECT C.ID_INTERNAL FROM CONTENT C, CONTENT C2, NODE N, NODE N2 WHERE C.OJB_CONCRETE_CLASS LIKE '%Section' AND C2.CONTENT_ID='63bb3ae4-d1a0-4fc7-be16-ae25918a8831' AND C.NAME=C2.NAME AND N.KEY_CHILD = C.ID_INTERNAL AND N2.KEY_CHILD = C2.ID_INTERNAL AND N.KEY_PARENT=@RootPortal AND N2.KEY_PARENT=@RootModule GROUP BY C.CONTENT_ID),(SELECT ID_INTERNAL FROM CONTENT WHERE CONTENT_ID='9cf98c03-d05f-423c-a1f8-f60ea7964f7f' GROUP BY CONTENT_ID));
-      -- Generating Functionality for: Portal de ServiÁos de GraduaÁ„o---
+      -- Generating Functionality for: Portal de Servi√ßos de Gradua√ß√£o---
       
       
-      insert into CONTENT(NAME,TITLE,CREATION_DATE,CONTENT_ID,ENABLED,VISIBLE,EXECUTION_PATH,OJB_CONCRETE_CLASS)VALUES('pt31:Portal de ServiÁos de GraduaÁ„o','pt31:Portal de ServiÁos de GraduaÁ„o', NOW(),'f66c6357-e28c-43dd-a839-940871039dea',1,1,'/index.do','net.sourceforge.fenixedu.domain.functionalities.Functionality');
+      insert into CONTENT(NAME,TITLE,CREATION_DATE,CONTENT_ID,ENABLED,VISIBLE,EXECUTION_PATH,OJB_CONCRETE_CLASS)VALUES('pt31:Portal de Servi√ßos de Gradua√ß√£o','pt31:Portal de Servi√ßos de Gradua√ß√£o', NOW(),'f66c6357-e28c-43dd-a839-940871039dea',1,1,'/index.do','net.sourceforge.fenixedu.domain.functionalities.Functionality');
       
       insert into NODE(KEY_PARENT,KEY_CHILD,NODE_ORDER,VISIBLE,ASCENDING, OJB_CONCRETE_CLASS) values((SELECT ID_INTERNAL FROM CONTENT WHERE CONTENT_ID='9ba1269a-0b8f-4daa-bde2-abbd0132327b' GROUP BY CONTENT_ID), (SELECT ID_INTERNAL FROM CONTENT WHERE CONTENT_ID='f66c6357-e28c-43dd-a839-940871039dea' GROUP BY CONTENT_ID),1,1,1,'net.sourceforge.fenixedu.domain.contents.ExplicitOrderNode');
       
       insert into OLD_PORTAL_INIT(SECTION_ID, FUNCTIONALITY_ID) VALUES((SELECT C.ID_INTERNAL FROM CONTENT C, CONTENT C2, NODE N, NODE N2 WHERE C.OJB_CONCRETE_CLASS LIKE '%Section' AND C2.CONTENT_ID='9ba1269a-0b8f-4daa-bde2-abbd0132327b' AND C.NAME=C2.NAME AND N.KEY_CHILD = C.ID_INTERNAL AND N2.KEY_CHILD = C2.ID_INTERNAL AND N.KEY_PARENT=@RootPortal AND N2.KEY_PARENT=@RootModule GROUP BY C.CONTENT_ID),(SELECT ID_INTERNAL FROM CONTENT WHERE CONTENT_ID='f66c6357-e28c-43dd-a839-940871039dea' GROUP BY CONTENT_ID));
-      -- Generating Functionality for: Funcion·rio---
+      -- Generating Functionality for: Funcion√°rio---
       
       
-      insert into CONTENT(NAME,TITLE,CREATION_DATE,CONTENT_ID,ENABLED,VISIBLE,EXECUTION_PATH,OJB_CONCRETE_CLASS)VALUES('pt11:Funcion·rio','pt11:Funcion·rio', NOW(),'c9b31d0f-7fd6-417f-b63b-e8e3caa8d525',1,1,'/index.do','net.sourceforge.fenixedu.domain.functionalities.Functionality');
+      insert into CONTENT(NAME,TITLE,CREATION_DATE,CONTENT_ID,ENABLED,VISIBLE,EXECUTION_PATH,OJB_CONCRETE_CLASS)VALUES('pt11:Funcion√°rio','pt11:Funcion√°rio', NOW(),'c9b31d0f-7fd6-417f-b63b-e8e3caa8d525',1,1,'/index.do','net.sourceforge.fenixedu.domain.functionalities.Functionality');
       
       insert into NODE(KEY_PARENT,KEY_CHILD,NODE_ORDER,VISIBLE,ASCENDING, OJB_CONCRETE_CLASS) values((SELECT ID_INTERNAL FROM CONTENT WHERE CONTENT_ID='232d33c1-c50a-418b-a61f-c652539b90cf' GROUP BY CONTENT_ID), (SELECT ID_INTERNAL FROM CONTENT WHERE CONTENT_ID='c9b31d0f-7fd6-417f-b63b-e8e3caa8d525' GROUP BY CONTENT_ID),1,1,1,'net.sourceforge.fenixedu.domain.contents.ExplicitOrderNode');
       
@@ -193,26 +193,26 @@
       insert into NODE(KEY_PARENT,KEY_CHILD,NODE_ORDER,VISIBLE,ASCENDING, OJB_CONCRETE_CLASS) values((SELECT ID_INTERNAL FROM CONTENT WHERE CONTENT_ID='85ce6f13-fddd-44dd-941e-25a1c2dd857e' GROUP BY CONTENT_ID), (SELECT ID_INTERNAL FROM CONTENT WHERE CONTENT_ID='c1761f13-6099-4f3c-b6de-a9f237be28eb' GROUP BY CONTENT_ID),1,1,1,'net.sourceforge.fenixedu.domain.contents.ExplicitOrderNode');
       
       insert into OLD_PORTAL_INIT(SECTION_ID, FUNCTIONALITY_ID) VALUES((SELECT C.ID_INTERNAL FROM CONTENT C, CONTENT C2, NODE N, NODE N2 WHERE C.OJB_CONCRETE_CLASS LIKE '%Section' AND C2.CONTENT_ID='85ce6f13-fddd-44dd-941e-25a1c2dd857e' AND C.NAME=C2.NAME AND N.KEY_CHILD = C.ID_INTERNAL AND N2.KEY_CHILD = C2.ID_INTERNAL AND N.KEY_PARENT=@RootPortal AND N2.KEY_PARENT=@RootModule GROUP BY C.CONTENT_ID),(SELECT ID_INTERNAL FROM CONTENT WHERE CONTENT_ID='c1761f13-6099-4f3c-b6de-a9f237be28eb' GROUP BY CONTENT_ID));
-      -- Generating Functionality for: Portal de ServiÁos de PÛs-GraduaÁ„o---
+      -- Generating Functionality for: Portal de Servi√ßos de P√≥s-Gradua√ß√£o---
       
       
-      insert into CONTENT(NAME,TITLE,CREATION_DATE,CONTENT_ID,ENABLED,VISIBLE,EXECUTION_PATH,OJB_CONCRETE_CLASS)VALUES('pt35:Portal de ServiÁos de PÛs-GraduaÁ„o','pt35:Portal de ServiÁos de PÛs-GraduaÁ„o', NOW(),'ba4543cc-07e6-4d36-8a59-9ae2be20844a',1,1,'/index.do','net.sourceforge.fenixedu.domain.functionalities.Functionality');
+      insert into CONTENT(NAME,TITLE,CREATION_DATE,CONTENT_ID,ENABLED,VISIBLE,EXECUTION_PATH,OJB_CONCRETE_CLASS)VALUES('pt35:Portal de Servi√ßos de P√≥s-Gradua√ß√£o','pt35:Portal de Servi√ßos de P√≥s-Gradua√ß√£o', NOW(),'ba4543cc-07e6-4d36-8a59-9ae2be20844a',1,1,'/index.do','net.sourceforge.fenixedu.domain.functionalities.Functionality');
       
       insert into NODE(KEY_PARENT,KEY_CHILD,NODE_ORDER,VISIBLE,ASCENDING, OJB_CONCRETE_CLASS) values((SELECT ID_INTERNAL FROM CONTENT WHERE CONTENT_ID='ffa828bb-e3d5-4b3d-9996-39b4cb226ba8' GROUP BY CONTENT_ID), (SELECT ID_INTERNAL FROM CONTENT WHERE CONTENT_ID='ba4543cc-07e6-4d36-8a59-9ae2be20844a' GROUP BY CONTENT_ID),1,1,1,'net.sourceforge.fenixedu.domain.contents.ExplicitOrderNode');
       
       insert into OLD_PORTAL_INIT(SECTION_ID, FUNCTIONALITY_ID) VALUES((SELECT C.ID_INTERNAL FROM CONTENT C, CONTENT C2, NODE N, NODE N2 WHERE C.OJB_CONCRETE_CLASS LIKE '%Section' AND C2.CONTENT_ID='ffa828bb-e3d5-4b3d-9996-39b4cb226ba8' AND C.NAME=C2.NAME AND N.KEY_CHILD = C.ID_INTERNAL AND N2.KEY_CHILD = C2.ID_INTERNAL AND N.KEY_PARENT=@RootPortal AND N2.KEY_PARENT=@RootModule GROUP BY C.CONTENT_ID),(SELECT ID_INTERNAL FROM CONTENT WHERE CONTENT_ID='ba4543cc-07e6-4d36-8a59-9ae2be20844a' GROUP BY CONTENT_ID));
-      -- Generating Functionality for: Portal do Candidato a PÛs-GraduaÁıes---
+      -- Generating Functionality for: Portal do Candidato a P√≥s-Gradua√ß√µes---
       
       
-      insert into CONTENT(NAME,TITLE,CREATION_DATE,CONTENT_ID,ENABLED,VISIBLE,EXECUTION_PATH,OJB_CONCRETE_CLASS)VALUES('pt36:Portal do Candidato a PÛs-GraduaÁıes','pt36:Portal do Candidato a PÛs-GraduaÁıes', NOW(),'4b046b05-efab-4234-b8ad-d56206b64827',1,1,'/index.do','net.sourceforge.fenixedu.domain.functionalities.Functionality');
+      insert into CONTENT(NAME,TITLE,CREATION_DATE,CONTENT_ID,ENABLED,VISIBLE,EXECUTION_PATH,OJB_CONCRETE_CLASS)VALUES('pt36:Portal do Candidato a P√≥s-Gradua√ß√µes','pt36:Portal do Candidato a P√≥s-Gradua√ß√µes', NOW(),'4b046b05-efab-4234-b8ad-d56206b64827',1,1,'/index.do','net.sourceforge.fenixedu.domain.functionalities.Functionality');
       
       insert into NODE(KEY_PARENT,KEY_CHILD,NODE_ORDER,VISIBLE,ASCENDING, OJB_CONCRETE_CLASS) values((SELECT ID_INTERNAL FROM CONTENT WHERE CONTENT_ID='9f33514d-c6c3-4acb-b1ca-a02980128d90' GROUP BY CONTENT_ID), (SELECT ID_INTERNAL FROM CONTENT WHERE CONTENT_ID='4b046b05-efab-4234-b8ad-d56206b64827' GROUP BY CONTENT_ID),1,1,1,'net.sourceforge.fenixedu.domain.contents.ExplicitOrderNode');
       
       insert into OLD_PORTAL_INIT(SECTION_ID, FUNCTIONALITY_ID) VALUES((SELECT C.ID_INTERNAL FROM CONTENT C, CONTENT C2, NODE N, NODE N2 WHERE C.OJB_CONCRETE_CLASS LIKE '%Section' AND C2.CONTENT_ID='9f33514d-c6c3-4acb-b1ca-a02980128d90' AND C.NAME=C2.NAME AND N.KEY_CHILD = C.ID_INTERNAL AND N2.KEY_CHILD = C2.ID_INTERNAL AND N.KEY_PARENT=@RootPortal AND N2.KEY_PARENT=@RootModule GROUP BY C.CONTENT_ID),(SELECT ID_INTERNAL FROM CONTENT WHERE CONTENT_ID='4b046b05-efab-4234-b8ad-d56206b64827' GROUP BY CONTENT_ID));
-      -- Generating Functionality for: Gest„o de Recursos---
+      -- Generating Functionality for: Gest√£o de Recursos---
       
       
-      insert into CONTENT(NAME,TITLE,CREATION_DATE,CONTENT_ID,ENABLED,VISIBLE,EXECUTION_PATH,OJB_CONCRETE_CLASS)VALUES('pt18:Gest„o de Recursos','pt18:Gest„o de Recursos', NOW(),'791b7e6a-7fd9-4795-8998-7200eeea4445',1,1,'/index.do','net.sourceforge.fenixedu.domain.functionalities.Functionality');
+      insert into CONTENT(NAME,TITLE,CREATION_DATE,CONTENT_ID,ENABLED,VISIBLE,EXECUTION_PATH,OJB_CONCRETE_CLASS)VALUES('pt18:Gest√£o de Recursos','pt18:Gest√£o de Recursos', NOW(),'791b7e6a-7fd9-4795-8998-7200eeea4445',1,1,'/index.do','net.sourceforge.fenixedu.domain.functionalities.Functionality');
       
       insert into NODE(KEY_PARENT,KEY_CHILD,NODE_ORDER,VISIBLE,ASCENDING, OJB_CONCRETE_CLASS) values((SELECT ID_INTERNAL FROM CONTENT WHERE CONTENT_ID='6a97cab2-491d-4e9f-a876-3a15d1d1033f' GROUP BY CONTENT_ID), (SELECT ID_INTERNAL FROM CONTENT WHERE CONTENT_ID='791b7e6a-7fd9-4795-8998-7200eeea4445' GROUP BY CONTENT_ID),1,1,1,'net.sourceforge.fenixedu.domain.contents.ExplicitOrderNode');
       
@@ -225,10 +225,10 @@
       insert into NODE(KEY_PARENT,KEY_CHILD,NODE_ORDER,VISIBLE,ASCENDING, OJB_CONCRETE_CLASS) values((SELECT ID_INTERNAL FROM CONTENT WHERE CONTENT_ID='123c9a8e-de47-4b4f-9543-a38116c03b54' GROUP BY CONTENT_ID), (SELECT ID_INTERNAL FROM CONTENT WHERE CONTENT_ID='8b5d55ce-7cc8-4439-bc74-7ff67c214584' GROUP BY CONTENT_ID),1,1,1,'net.sourceforge.fenixedu.domain.contents.ExplicitOrderNode');
       
       insert into OLD_PORTAL_INIT(SECTION_ID, FUNCTIONALITY_ID) VALUES((SELECT C.ID_INTERNAL FROM CONTENT C, CONTENT C2, NODE N, NODE N2 WHERE C.OJB_CONCRETE_CLASS LIKE '%Section' AND C2.CONTENT_ID='123c9a8e-de47-4b4f-9543-a38116c03b54' AND C.NAME=C2.NAME AND N.KEY_CHILD = C.ID_INTERNAL AND N2.KEY_CHILD = C2.ID_INTERNAL AND N.KEY_PARENT=@RootPortal AND N2.KEY_PARENT=@RootModule GROUP BY C.CONTENT_ID),(SELECT ID_INTERNAL FROM CONTENT WHERE CONTENT_ID='8b5d55ce-7cc8-4439-bc74-7ff67c214584' GROUP BY CONTENT_ID));
-      -- Generating Functionality for: DocÍncia---
+      -- Generating Functionality for: Doc√™ncia---
       
       
-      insert into CONTENT(NAME,TITLE,CREATION_DATE,CONTENT_ID,ENABLED,VISIBLE,EXECUTION_PATH,OJB_CONCRETE_CLASS)VALUES('pt8:DocÍncia','pt8:DocÍncia', NOW(),'25b139a3-19e6-446b-b190-74e4caaaac6d',1,1,'/index.do','net.sourceforge.fenixedu.domain.functionalities.Functionality');
+      insert into CONTENT(NAME,TITLE,CREATION_DATE,CONTENT_ID,ENABLED,VISIBLE,EXECUTION_PATH,OJB_CONCRETE_CLASS)VALUES('pt8:Doc√™ncia','pt8:Doc√™ncia', NOW(),'25b139a3-19e6-446b-b190-74e4caaaac6d',1,1,'/index.do','net.sourceforge.fenixedu.domain.functionalities.Functionality');
       
       insert into NODE(KEY_PARENT,KEY_CHILD,NODE_ORDER,VISIBLE,ASCENDING, OJB_CONCRETE_CLASS) values((SELECT ID_INTERNAL FROM CONTENT WHERE CONTENT_ID='d30ed02d-2d26-4736-8e14-4184595cedd5' GROUP BY CONTENT_ID), (SELECT ID_INTERNAL FROM CONTENT WHERE CONTENT_ID='25b139a3-19e6-446b-b190-74e4caaaac6d' GROUP BY CONTENT_ID),1,1,1,'net.sourceforge.fenixedu.domain.contents.ExplicitOrderNode');
       
@@ -251,10 +251,10 @@
       insert into OLD_PORTAL_INIT(SECTION_ID, FUNCTIONALITY_ID) VALUES((SELECT C.ID_INTERNAL FROM CONTENT C, CONTENT C2, NODE N, NODE N2 WHERE C.OJB_CONCRETE_CLASS LIKE '%Section' AND C2.CONTENT_ID='ca8c9543-646b-4706-8465-f41345cfadf2' AND C.NAME=C2.NAME AND N.KEY_CHILD = C.ID_INTERNAL AND N2.KEY_CHILD = C2.ID_INTERNAL AND N.KEY_PARENT=@RootPortal AND N2.KEY_PARENT=@RootModule GROUP BY C.CONTENT_ID),(SELECT ID_INTERNAL FROM CONTENT WHERE CONTENT_ID='56beb72a-7c1d-459a-b742-57f530ee8eae' GROUP BY CONTENT_ID));
       insert into NODE(KEY_PARENT,KEY_CHILD,NODE_ORDER,VISIBLE,ASCENDING,OJB_CONCRETE_CLASS)SELECT SECTION_ID, FUNCTIONALITY_ID, '1','1','1','net.sourceforge.fenixedu.domain.contents.ExplicitOrderNode' FROM OLD_PORTAL_INIT;
 
-    -- Generating Functionality for: Gest„o do WebSite---
+    -- Generating Functionality for: Gest√£o do WebSite---
 
 
-      insert into CONTENT(NAME,TITLE,CREATION_DATE,CONTENT_ID,ENABLED,VISIBLE,EXECUTION_PATH,OJB_CONCRETE_CLASS)VALUES('pt17:Gest„o do WebSite','pt17:Gest„o do WebSite', NOW(),'d741fdcd-fba8-4e4a-b261-9c31ab6df969',1,1,'/index.do','net.sourceforge.fenixedu.domain.functionalities.Functionality');
+      insert into CONTENT(NAME,TITLE,CREATION_DATE,CONTENT_ID,ENABLED,VISIBLE,EXECUTION_PATH,OJB_CONCRETE_CLASS)VALUES('pt17:Gest√£o do WebSite','pt17:Gest√£o do WebSite', NOW(),'d741fdcd-fba8-4e4a-b261-9c31ab6df969',1,1,'/index.do','net.sourceforge.fenixedu.domain.functionalities.Functionality');
 
       insert into NODE(KEY_PARENT,KEY_CHILD,NODE_ORDER,VISIBLE,ASCENDING, OJB_CONCRETE_CLASS) values((SELECT ID_INTERNAL FROM CONTENT WHERE CONTENT_ID='421011e0-fadc-102a-b5ba-0013d3b09da0' GROUP BY CONTENT_ID), (SELECT ID_INTERNAL FROM CONTENT WHERE CONTENT_ID='d741fdcd-fba8-4e4a-b261-9c31ab6df969' GROUP BY CONTENT_ID),1,1,1,'net.sourceforge.fenixedu.domain.contents.ExplicitOrderNode');
 
@@ -270,9 +270,9 @@
 
 
 
-  	 -- Generating Functionality for: SecÁ„o de Pessoal---
+  	 -- Generating Functionality for: Sec√ß√£o de Pessoal---
      
-      insert into CONTENT(NAME,TITLE,CREATION_DATE,CONTENT_ID,ENABLED,VISIBLE,EXECUTION_PATH,OJB_CONCRETE_CLASS)VALUES('pt17:SecÁ„o de Pessoal','pt17:SecÁ„o de Pessoal', NOW(),'a21411a5-f2d0-4c53-a4ab-8157f26ebb30',1,1,'/index.do','net.sourceforge.fenixedu.domain.functionalities.Functionality');
+      insert into CONTENT(NAME,TITLE,CREATION_DATE,CONTENT_ID,ENABLED,VISIBLE,EXECUTION_PATH,OJB_CONCRETE_CLASS)VALUES('pt17:Sec√ß√£o de Pessoal','pt17:Sec√ß√£o de Pessoal', NOW(),'a21411a5-f2d0-4c53-a4ab-8157f26ebb30',1,1,'/index.do','net.sourceforge.fenixedu.domain.functionalities.Functionality');
      
     update NODE set NODE_ORDER=NODE_ORDER+1 WHERE KEY_PARENT=(SELECT ID_INTERNAL FROM CONTENT WHERE CONTENT_ID='36496cce-ebc4-4a27-b16e-a408672f0bf6');
 
@@ -280,18 +280,18 @@
       
      insert into OLD_PORTAL_INIT(SECTION_ID, FUNCTIONALITY_ID) VALUES((SELECT C.ID_INTERNAL FROM CONTENT C, CONTENT C2, NODE N, NODE N2 WHERE C.OJB_CONCRETE_CLASS LIKE '%Section' AND C2.CONTENT_ID='36496cce-ebc4-4a27-b16e-a408672f0bf6' AND C.NAME=C2.NAME AND N.KEY_CHILD = C.ID_INTERNAL AND N2.KEY_CHILD = C2.ID_INTERNAL AND N.KEY_PARENT=@RootPortal AND N2.KEY_PARENT=@RootModule GROUP BY C.CONTENT_ID),(SELECT ID_INTERNAL FROM CONTENT WHERE CONTENT_ID='a21411a5-f2d0-4c53-a4ab-8157f26ebb30' GROUP BY CONTENT_ID));
 
-      -- Generating Functionality for: Secretaria AcadÈmica---
+      -- Generating Functionality for: Secretaria Acad√©mica---
 
 
-      insert into CONTENT(NAME,TITLE,CREATION_DATE,CONTENT_ID,ENABLED,VISIBLE,EXECUTION_PATH,OJB_CONCRETE_CLASS)VALUES('pt20:Secretaria AcadÈmica','pt20:Secretaria AcadÈmica', NOW(),'6d68667f-11e0-4992-acf2-9fda2ad6f317',1,1,'/index.do','net.sourceforge.fenixedu.domain.functionalities.Functionality');
+      insert into CONTENT(NAME,TITLE,CREATION_DATE,CONTENT_ID,ENABLED,VISIBLE,EXECUTION_PATH,OJB_CONCRETE_CLASS)VALUES('pt20:Secretaria Acad√©mica','pt20:Secretaria Acad√©mica', NOW(),'6d68667f-11e0-4992-acf2-9fda2ad6f317',1,1,'/index.do','net.sourceforge.fenixedu.domain.functionalities.Functionality');
 
       insert into NODE(KEY_PARENT,KEY_CHILD,NODE_ORDER,VISIBLE,ASCENDING, OJB_CONCRETE_CLASS) values((SELECT ID_INTERNAL FROM CONTENT WHERE CONTENT_ID='3d30565c-fb8c-102a-b5ba-0013d3b09da0' GROUP BY CONTENT_ID), (SELECT ID_INTERNAL FROM CONTENT WHERE CONTENT_ID='6d68667f-11e0-4992-acf2-9fda2ad6f317' GROUP BY CONTENT_ID),1,1,1,'net.sourceforge.fenixedu.domain.contents.ExplicitOrderNode');
 
       insert into OLD_PORTAL_INIT(SECTION_ID, FUNCTIONALITY_ID) VALUES((SELECT C.ID_INTERNAL FROM CONTENT C, CONTENT C2, NODE N, NODE N2 WHERE C.OJB_CONCRETE_CLASS LIKE '%Section' AND C2.CONTENT_ID='3d30565c-fb8c-102a-b5ba-0013d3b09da0' AND C.NAME=C2.NAME AND N.KEY_CHILD = C.ID_INTERNAL AND N2.KEY_CHILD = C2.ID_INTERNAL AND N.KEY_PARENT=@RootPortal AND N2.KEY_PARENT=@RootModule GROUP BY C.CONTENT_ID),(SELECT ID_INTERNAL FROM CONTENT WHERE CONTENT_ID='6d68667f-11e0-4992-acf2-9fda2ad6f317' GROUP BY CONTENT_ID));
-      -- Generating Functionality for: AvaliaÁ„o---
+      -- Generating Functionality for: Avalia√ß√£o---
 
 
-      insert into CONTENT(NAME,TITLE,CREATION_DATE,CONTENT_ID,ENABLED,VISIBLE,EXECUTION_PATH,OJB_CONCRETE_CLASS)VALUES('pt9:AvaliaÁ„o','pt9:AvaliaÁ„o', NOW(),'e4ec700e-1782-4b19-8892-987c18f4ff44',1,1,'/index.do','net.sourceforge.fenixedu.domain.functionalities.Functionality');
+      insert into CONTENT(NAME,TITLE,CREATION_DATE,CONTENT_ID,ENABLED,VISIBLE,EXECUTION_PATH,OJB_CONCRETE_CLASS)VALUES('pt9:Avalia√ß√£o','pt9:Avalia√ß√£o', NOW(),'e4ec700e-1782-4b19-8892-987c18f4ff44',1,1,'/index.do','net.sourceforge.fenixedu.domain.functionalities.Functionality');
 
       insert into NODE(KEY_PARENT,KEY_CHILD,NODE_ORDER,VISIBLE,ASCENDING, OJB_CONCRETE_CLASS) values((SELECT ID_INTERNAL FROM CONTENT WHERE CONTENT_ID='e0181ae0-fb8b-102a-b5ba-0013d3b09da0' GROUP BY CONTENT_ID), (SELECT ID_INTERNAL FROM CONTENT WHERE CONTENT_ID='e4ec700e-1782-4b19-8892-987c18f4ff44' GROUP BY CONTENT_ID),1,1,1,'net.sourceforge.fenixedu.domain.contents.ExplicitOrderNode');
 

@@ -32,7 +32,7 @@
 	<bean:write name="sourceInfoDegree" property="sigla" /> - 
 	<bean:write name="sourceInfoDegree" property="presentationName" />
 	<br/>
-	<strong>Escolha a Disciplina Execução de Origem</strong>
+	<strong>Escolha a Disciplina ExecuÃ§Ã£o de Origem</strong>
 	<br/>	
 	<br/>
 	<table>
@@ -55,7 +55,7 @@
 	<bean:write name="destinationInfoDegree" property="sigla" /> - 
 	<bean:write name="destinationInfoDegree" property="presentationName" />
 	<br/>
-	<strong>Escolha a Disciplina Execução de Destino</strong>
+	<strong>Escolha a Disciplina ExecuÃ§Ã£o de Destino</strong>
 	<table>
 	<logic:iterate id="executionCourse" name="destinationExecutionCourses">
 		<tr>

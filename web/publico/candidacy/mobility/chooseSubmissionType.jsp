@@ -45,8 +45,8 @@
 			</td>
 		</tr>
 		<tr>
-			<td style="text-align: center;"><%= pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX %><a href='<%= f("%s/candidacies/erasmus/nationalCardSubmission", request.getContextPath()) %>'><b>Submit with your European e-ID »</b></a></td>
-			<td style="text-align: center;"><%= pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX %><a href='<%= f("%s/candidacies/erasmus/preregistration", request.getContextPath()) %>'><b>Submit with the email access link »</b></a></td>
+			<td style="text-align: center;"><%= pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX %><a href='<%= f("%s/candidacies/erasmus/nationalCardSubmission", request.getContextPath()) %>'><b>Submit with your European e-ID Â»</b></a></td>
+			<td style="text-align: center;"><%= pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX %><a href='<%= f("%s/candidacies/erasmus/preregistration", request.getContextPath()) %>'><b>Submit with the email access link Â»</b></a></td>
 		</tr>
 	</tbody>
 </table>

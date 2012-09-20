@@ -12,10 +12,10 @@
 	<h:outputText value="<h2>#{bundle['link.writtenTests.enrolment']}</h2>" escape="false"
 	  rendered="#{manageEvaluationsForStudent.evaluationTypeString == 'net.sourceforge.fenixedu.domain.WrittenTest'}"/>
 	<h:outputText value="<div class='infoop2'>
-	<b>Sincronizar Calendário</b><br/>
-    Pode ficar a par de novidades relacionadas com testes e exames directamente no seu calendário pessoal.
-    A funcionalidade \"Sincronizar Calendário\" permite-lhe sincronizar o calendário de testes e exames com o seu calendário digital.
-    Para mais informações consulte a página <a href='/student/ICalTimeTable.do?method=prepare'>Sincronizar Calendário</a>.
+	<b>Sincronizar CalendÃ¡rio</b><br/>
+    Pode ficar a par de novidades relacionadas com testes e exames directamente no seu calendÃ¡rio pessoal.
+    A funcionalidade \"Sincronizar CalendÃ¡rio\" permite-lhe sincronizar o calendÃ¡rio de testes e exames com o seu calendÃ¡rio digital.
+    Para mais informaÃ§Ãµes consulte a pÃ¡gina <a href='/student/ICalTimeTable.do?method=prepare'>Sincronizar CalendÃ¡rio</a>.
 	</div>" escape="false"/>
 	  
 	<h:form>

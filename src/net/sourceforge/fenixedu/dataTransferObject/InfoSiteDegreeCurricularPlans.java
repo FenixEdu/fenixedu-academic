@@ -8,7 +8,7 @@ package net.sourceforge.fenixedu.dataTransferObject;
 import java.util.List;
 
 /**
- * @author Jo„o Mota
+ * @author Jo√£o Mota
  * 
  *         24/Jul/2003 fenix-head DataBeans
  * 

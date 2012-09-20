@@ -10,7 +10,7 @@
 <bean:define id="processId" name="process" property="idInternal" />
 
 <html:link action='<%= "/caseHandlingOver23CandidacyProcess.do?method=listProcesses&amp;processId=" + processId.toString() %>'>
-	« <bean:message key="label.back" bundle="APPLICATION_RESOURCES"/>
+	Â« <bean:message key="label.back" bundle="APPLICATION_RESOURCES"/>
 </html:link>
 <br/>
 <br/>
@@ -24,7 +24,7 @@
 <ul>
 	<li>
 		<html:link action='<%= "/caseHandlingOver23CandidacyProcess.do?method=prepareIntroduceCandidacyResults&amp;processId=" + processId.toString() %>'>
-			« <bean:message key="label.candidacy.introduce.results" bundle="APPLICATION_RESOURCES"/>
+			Â« <bean:message key="label.candidacy.introduce.results" bundle="APPLICATION_RESOURCES"/>
 		</html:link>
 	</li>
 </ul>

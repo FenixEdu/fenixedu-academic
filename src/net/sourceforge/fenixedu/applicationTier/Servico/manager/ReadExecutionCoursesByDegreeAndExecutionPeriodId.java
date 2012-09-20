@@ -20,7 +20,7 @@ import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicInterval;
 import pt.ist.fenixWebFramework.services.Service;
 
 /**
- * @author <a href="mailto:joao.mota@ist.utl.pt">Jo„o Mota </a> 3/Dez/2003
+ * @author <a href="mailto:joao.mota@ist.utl.pt">Jo√£o Mota </a> 3/Dez/2003
  * 
  */
 public class ReadExecutionCoursesByDegreeAndExecutionPeriodId extends FenixService {

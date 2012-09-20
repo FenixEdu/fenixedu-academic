@@ -9,7 +9,7 @@ import java.util.Calendar;
 import java.util.Comparator;
 
 /**
- * @author Jo„o Mota
+ * @author Jo√£o Mota
  * @author Susana Fernandes
  * 
  *         22/Jul/2003 fenix-head

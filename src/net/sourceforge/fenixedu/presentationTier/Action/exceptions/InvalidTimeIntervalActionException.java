@@ -6,7 +6,7 @@
 package net.sourceforge.fenixedu.presentationTier.Action.exceptions;
 
 /**
- * @author Jo„o Mota
+ * @author Jo√£o Mota
  */
 public class InvalidTimeIntervalActionException extends FenixActionException {
     public static String key = "errors.lesson.invalid.time.interval";

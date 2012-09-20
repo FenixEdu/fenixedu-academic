@@ -320,8 +320,8 @@ public class ExecutionYearViewDA extends FenixDispatchAction {
      * sei o q possa ser esse score. vou extrair o 'average_NDE' e
      * 'average_P6_1' apenas a titulo de exemplo. nao tem qq valor real. os
      * values sao em double, passar a BigDecimals e trabalhar sempre neste
-     * format). 4. Aplicar 50% à media do score de todos os CourseResults e 50%
-     * à media do score de todos os TeacherResults 5. Mostrar esse score.
+     * format). 4. Aplicar 50% Ã  media do score de todos os CourseResults e 50%
+     * Ã  media do score de todos os TeacherResults 5. Mostrar esse score.
      */
 
     private String generateQUCResults(YearViewBean bean) {

@@ -9,7 +9,7 @@
 <h2><bean:message key="label.tutorshipSummary" bundle="APPLICATION_RESOURCES" /></h2>
 
 <html:link page="/tutorshipSummaryPeriod.do?method=prepareCreate">
-Definir Período de Preenchimento das Fichas
+Definir PerÃ­odo de Preenchimento das Fichas
 </html:link>
 
 <br />

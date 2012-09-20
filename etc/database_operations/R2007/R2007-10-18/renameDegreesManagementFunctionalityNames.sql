@@ -26,10 +26,10 @@ UPDATE `ACCESSIBLE_ITEM` AS own SET own.`NAME` = 'pt26:Estrutura de Cursos Antig
 UPDATE `ACCESSIBLE_ITEM` AS own SET own.`NAME` = 'pt26:Estrutura de Cursos Antiga', own.`ORDER_IN_MODULE` = 1 WHERE own.`UUID` = '5b51f27d-2f26-4f11-83a7-8b22ccfc7016';
 
 --  ID: 59 UUID: '0cac3f6f-6be4-4476-8681-7b980edbccee'
-UPDATE `ACCESSIBLE_ITEM` AS own SET own.`NAME` = 'pt23:Competência Pré-Bolonha', own.`ORDER_IN_MODULE` = 4 WHERE own.`UUID` = '0cac3f6f-6be4-4476-8681-7b980edbccee';
+UPDATE `ACCESSIBLE_ITEM` AS own SET own.`NAME` = 'pt23:CompetÃªncia PrÃ©-Bolonha', own.`ORDER_IN_MODULE` = 4 WHERE own.`UUID` = '0cac3f6f-6be4-4476-8681-7b980edbccee';
 
 --  ID: 60 UUID: '10e32908-a524-47df-8a36-f6ab0d48462c'
-UPDATE `ACCESSIBLE_ITEM` AS own SET own.`NAME` = 'pt23:Competência Pré-Bolonha', own.`ORDER_IN_MODULE` = 5 WHERE own.`UUID` = '10e32908-a524-47df-8a36-f6ab0d48462c';
+UPDATE `ACCESSIBLE_ITEM` AS own SET own.`NAME` = 'pt23:CompetÃªncia PrÃ©-Bolonha', own.`ORDER_IN_MODULE` = 5 WHERE own.`UUID` = '10e32908-a524-47df-8a36-f6ab0d48462c';
 
 --  ID: 64 UUID: 'fe00b1c9-b931-489c-9398-21ddf806a638'
 UPDATE `ACCESSIBLE_ITEM` AS own SET own.`NAME` = 'pt19:Estrutura de Cursos', own.`ORDER_IN_MODULE` = 2 WHERE own.`UUID` = 'fe00b1c9-b931-489c-9398-21ddf806a638';
@@ -38,13 +38,13 @@ UPDATE `ACCESSIBLE_ITEM` AS own SET own.`NAME` = 'pt19:Estrutura de Cursos', own
 UPDATE `ACCESSIBLE_ITEM` AS own SET own.`NAME` = 'pt19:Estrutura de Cursos', own.`ORDER_IN_MODULE` = 3 WHERE own.`UUID` = '59e0a4d6-3e45-4ca0-8313-0bf62b898b15';
 
 --  ID: 79 UUID: '50ab74d4-5050-4975-b88c-91b0c39ed493'
-UPDATE `ACCESSIBLE_ITEM` AS own SET own.`NAME` = 'pt20:Competências Bolonha', own.`ORDER_IN_MODULE` = 6 WHERE own.`UUID` = '50ab74d4-5050-4975-b88c-91b0c39ed493';
+UPDATE `ACCESSIBLE_ITEM` AS own SET own.`NAME` = 'pt20:CompetÃªncias Bolonha', own.`ORDER_IN_MODULE` = 6 WHERE own.`UUID` = '50ab74d4-5050-4975-b88c-91b0c39ed493';
 
 --  ID: 80 UUID: '0b58f724-6282-48fb-9de7-b84c852a940c'
-UPDATE `ACCESSIBLE_ITEM` AS own SET own.`NAME` = 'pt20:Competências Bolonha', own.`ORDER_IN_MODULE` = 7 WHERE own.`UUID` = '0b58f724-6282-48fb-9de7-b84c852a940c';
+UPDATE `ACCESSIBLE_ITEM` AS own SET own.`NAME` = 'pt20:CompetÃªncias Bolonha', own.`ORDER_IN_MODULE` = 7 WHERE own.`UUID` = '0b58f724-6282-48fb-9de7-b84c852a940c';
 
 --  ID: 252 UUID: '9cf56518-f706-4854-b28e-2108ba374c43'
-UPDATE `ACCESSIBLE_ITEM` AS own SET own.`NAME` = 'en9:Messagingpt11:Comunicação' WHERE own.`UUID` = '9cf56518-f706-4854-b28e-2108ba374c43';
+UPDATE `ACCESSIBLE_ITEM` AS own SET own.`NAME` = 'en9:Messagingpt11:ComunicaÃ§Ã£o' WHERE own.`UUID` = '9cf56518-f706-4854-b28e-2108ba374c43';
 
 --  ID: 17209 UUID: '6c6c707b-3a07-4f8c-b76e-7bfdce694324'
 UPDATE `ACCESSIBLE_ITEM` AS own SET own.`ORDER_IN_MODULE` = 8 WHERE own.`UUID` = '6c6c707b-3a07-4f8c-b76e-7bfdce694324';

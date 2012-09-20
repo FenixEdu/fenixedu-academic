@@ -107,21 +107,21 @@ public class ReportType extends FenixUtil {
 
     public static final String OPENING_PROJECT_FILE_LABEL = "Ficha de Abertura de Projecto";
 
-    public static final String PROJECT_BUDGETARY_BALANCE_LABEL = "Saldo OrÁamental por Rubrica";
+    public static final String PROJECT_BUDGETARY_BALANCE_LABEL = "Saldo Or√ßamental por Rubrica";
 
     // public static final String COORDINATOR_BUDGETARY_BALANCE_LABEL = "Saldo
-    // OrÁamental por Coordenador";
+    // Or√ßamental por Coordenador";
 
-    public static final String REVENUE_NOTE = "Nota: Nos movimentos com tipo DE (DevoluÁıes) e ES (Estorno), embora o valor indicado no movimento seja positivo, eles diminuem o total das despesas. Se quiser usar estes dados para calcular totais efectivos de despesas fazendo somas na coluna total, deve considerar os campos DE e ES como valores negativos.";
+    public static final String REVENUE_NOTE = "Nota: Nos movimentos com tipo DE (Devolu√ß√µes) e ES (Estorno), embora o valor indicado no movimento seja positivo, eles diminuem o total das despesas. Se quiser usar estes dados para calcular totais efectivos de despesas fazendo somas na coluna total, deve considerar os campos DE e ES como valores negativos.";
 
     public static final String EXPENSES_NOTE = REVENUE_NOTE, CABIMENTOS_NOTE = REVENUE_NOTE, ADIANTAMENTOS_NOTE = REVENUE_NOTE,
 	    COMPLETE_EXPENSES_NOTE = REVENUE_NOTE;
 
-    public static final String SUMMARY_NOTE = "(*) O Saldo OrÁamental È calculado com base no valor da coluna M·ximo Financi·vel";
+    public static final String SUMMARY_NOTE = "(*) O Saldo Or√ßamental √© calculado com base no valor da coluna M√°ximo Financi√°vel";
 
-    public static final String OVERHEADS_SUMMARY_NOTE = "Nota:\nReceita OG - È a totalidade da receita sobre a qual foram calculados overheads para o Centro de Custo indicado na sua qualidade de ”rg„os de Gest„o.\nReceita OA - È a totalidade da receita sobre a qual foram calculados overheads para o Centro de Custo indicado na sua qualidade de Unidade AcadÈmica.\nReceita OO - È a totalidade da receita sobre a qual foram calculados overheads para o Centro de Custo indicado na sua qualidade de Unidade Operacional.\nReceita OE - È a totalidade da receita sobre a qual foram calculados overheads para o Centro de Custo indicado na sua qualidade de Unidade de ExploraÁ„o.";
+    public static final String OVERHEADS_SUMMARY_NOTE = "Nota:\nReceita OG - √© a totalidade da receita sobre a qual foram calculados overheads para o Centro de Custo indicado na sua qualidade de √ìrg√£os de Gest√£o.\nReceita OA - √© a totalidade da receita sobre a qual foram calculados overheads para o Centro de Custo indicado na sua qualidade de Unidade Acad√©mica.\nReceita OO - √© a totalidade da receita sobre a qual foram calculados overheads para o Centro de Custo indicado na sua qualidade de Unidade Operacional.\nReceita OE - √© a totalidade da receita sobre a qual foram calculados overheads para o Centro de Custo indicado na sua qualidade de Unidade de Explora√ß√£o.";
 
-    public static final String PROJECT_BUDGETARY_BALANCE_NOTE = "Nota: Nos casos em que o projecto È constituÌdo por v·rios membros, o valor orÁamentado corresponde ao total orÁamentado para todos os membros.";
+    public static final String PROJECT_BUDGETARY_BALANCE_NOTE = "Nota: Nos casos em que o projecto √© constitu√≠do por v√°rios membros, o valor or√ßamentado corresponde ao total or√ßamentado para todos os membros.";
 
     public static final ReportType REVENUE = new ReportType(REVENUE_TYPE);
 

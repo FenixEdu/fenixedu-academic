@@ -22,7 +22,7 @@
 <%--
 <p>
 	<html:link action="/applications/phd/phdProgramApplicationProcess.do?method=viewApplication" paramId="hash" paramName="hash">
-		« <bean:message bundle="PHD_RESOURCES" key="label.back"/>
+		Â« <bean:message bundle="PHD_RESOURCES" key="label.back"/>
 	</html:link>
 </p>
 --%>
@@ -59,7 +59,7 @@
 
 	<p>
 		<logic:messagesPresent message="true" property="validation">
-			<html:submit onclick="javascript:document.getElementById('methodForm').value='viewApplication';javascript:document.getElementById('validateCandidacyForm').submit();" bundle="HTMLALT_RESOURCES" altKey="submit.submit">« <bean:message bundle="PHD_RESOURCES" key="label.back"/></html:submit>
+			<html:submit onclick="javascript:document.getElementById('methodForm').value='viewApplication';javascript:document.getElementById('validateCandidacyForm').submit();" bundle="HTMLALT_RESOURCES" altKey="submit.submit">Â« <bean:message bundle="PHD_RESOURCES" key="label.back"/></html:submit>
 		</logic:messagesPresent>
 		<logic:messagesNotPresent message="true" property="validation">
 			<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit"><bean:message bundle="PHD_RESOURCES" key="label.phd.public.submit.candidacy"/></html:submit>

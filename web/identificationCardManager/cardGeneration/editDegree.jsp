@@ -3,9 +3,9 @@
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr" %>
 <html:xhtml/>
 
-<em>Cartões de Identificação</em>
+<em>CartÃµes de IdentificaÃ§Ã£o</em>
 <h2><bean:message bundle="CARD_GENERATION_RESOURCES" key="link.manage.card.generation.edit.degree" /></h2>
-<p><html:link page="/manageCardGeneration.do?method=showDegreeCodesAndLabels">« Voltar</html:link></p>
+<p><html:link page="/manageCardGeneration.do?method=showDegreeCodesAndLabels">Â« Voltar</html:link></p>
 
 <bean:define id="url" type="java.lang.String">/manageCardGeneration.do?method=showDegreeCodesAndLabels&amp;degreeType=<bean:write name="degree" property="degreeType.name"/></bean:define>
 <fr:edit id="net.sourceforge.fenixedu.domain.Degree.card.generation.edit"

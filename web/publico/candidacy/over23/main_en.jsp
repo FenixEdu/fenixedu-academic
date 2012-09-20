@@ -18,10 +18,10 @@
 </div>
 
 <div id="contextual_nav">
-<h2 class="brown">Nesta página</h2>
+<h2 class="brown">Nesta pÃ¡gina</h2>
 	<ul>
-    	<li><%= pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX %><a href="#critsel">Critérios de selecção</a></li>
-    	<li><%= pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX %><a href="#docnec">Documentos necessários</a></li>
+    	<li><%= pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX %><a href="#critsel">CritÃ©rios de selecÃ§Ã£o</a></li>
+    	<li><%= pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX %><a href="#docnec">Documentos necessÃ¡rios</a></li>
     	<li><%= pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX %><a href="#emol">Emolumentos de candidatura</a></li>
     	<li><%= pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX %><a href="#vag">Vagas</a></li>
     	<li><%= pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX %><a href="#prop">Propinas</a></li>
@@ -33,46 +33,46 @@
 
 
 
-<h1>Candidato: Maiores de 23 anos (1º Ciclo)</h1>
+<h1>Candidato: Maiores de 23 anos (1Âº Ciclo)</h1>
 
-<p>Ao Concurso Especial de Acesso destinado a Maiores de 23 anos podem candidatar-se os indivíduos que, cumulativamente:</p>
+<p>Ao Concurso Especial de Acesso destinado a Maiores de 23 anos podem candidatar-se os indivÃ­duos que, cumulativamente:</p>
 
 <ul>
-	<li>Completem 23 anos de idade até ao dia 31 de Dezembro do ano que antecede a candidatura;</li>
-	<li>Não sejam titulares de habilitação de acesso ao ensino superior;</li>
-	<li>Não sejam titulares de um curso superior, nem tenham frequência anterior do ensino superior.</li>
+	<li>Completem 23 anos de idade atÃ© ao dia 31 de Dezembro do ano que antecede a candidatura;</li>
+	<li>NÃ£o sejam titulares de habilitaÃ§Ã£o de acesso ao ensino superior;</li>
+	<li>NÃ£o sejam titulares de um curso superior, nem tenham frequÃªncia anterior do ensino superior.</li>
 </ul>
 
 <p><a href="http://www.ist.utl.pt/files/ensino/reg_maiores23.pdf">Regulamento (PDF, 68KB)</a></p>
 
 
-<h2 id="critsel">Critérios de selecção</h2>
+<h2 id="critsel">CritÃ©rios de selecÃ§Ã£o</h2>
 
-<p>A avaliação da capacidade para a frequência de um curso de licenciatura ou do 1º ciclo de um curso integrado do IST consta das seguintes componentes:</p>
+<p>A avaliaÃ§Ã£o da capacidade para a frequÃªncia de um curso de licenciatura ou do 1Âº ciclo de um curso integrado do IST consta das seguintes componentes:</p>
 
 <ol>
-	<li>Apreciação do currículo escolar e profissional do candidato;</li>
-	<li>Realização de uma prova escrita de avaliação de conhecimentos em interpretação e expressão escrita;</li>
-	<li>Realização de uma prova escrita de avaliação da capacidade científica;</li>
-	<li>Avaliação das motivações do candidato através da realização de uma entrevista.</li>
+	<li>ApreciaÃ§Ã£o do currÃ­culo escolar e profissional do candidato;</li>
+	<li>RealizaÃ§Ã£o de uma prova escrita de avaliaÃ§Ã£o de conhecimentos em interpretaÃ§Ã£o e expressÃ£o escrita;</li>
+	<li>RealizaÃ§Ã£o de uma prova escrita de avaliaÃ§Ã£o da capacidade cientÃ­fica;</li>
+	<li>AvaliaÃ§Ã£o das motivaÃ§Ãµes do candidato atravÃ©s da realizaÃ§Ã£o de uma entrevista.</li>
 </ol>
 
-<p>A prova a que se referem as alíneas 2) e 3) constará de um conjunto de perguntas, elaboradas por um júri, terá a duração máxima
-de três horas e será realizada numa única chamada. As componentes da prova poderão variar consoante o(s) curso(s) a que o
+<p>A prova a que se referem as alÃ­neas 2) e 3) constarÃ¡ de um conjunto de perguntas, elaboradas por um jÃºri, terÃ¡ a duraÃ§Ã£o mÃ¡xima
+de trÃªs horas e serÃ¡ realizada numa Ãºnica chamada. As componentes da prova poderÃ£o variar consoante o(s) curso(s) a que o
 candidato pretenda aceder.</p>
 
-<p><a href="http://www.ist.utl.pt/files/ensino/programas_23anos_20092010.pdf">Programa das provas de avaliação (PDF, 136KB)</a></p>
+<p><a href="http://www.ist.utl.pt/files/ensino/programas_23anos_20092010.pdf">Programa das provas de avaliaÃ§Ã£o (PDF, 136KB)</a></p>
 
 
-<h2 id="docnec">Documentos necessários</h2>
+<h2 id="docnec">Documentos necessÃ¡rios</h2>
 
-<p>Para completar o processo de candidatura é necessário submeter os seguintes documentos digitalizados:</p>
+<p>Para completar o processo de candidatura Ã© necessÃ¡rio submeter os seguintes documentos digitalizados:</p>
 <ul>
 	<li>Foto actual</li>
 	<li>Curriculum vitae</li>
-	<li>Certificados de habilitações discriminado com média</li>
-	<li>Documento de identificação</li>
-	<li>Cartão de contribuinte</li>
+	<li>Certificados de habilitaÃ§Ãµes discriminado com mÃ©dia</li>
+	<li>Documento de identificaÃ§Ã£o</li>
+	<li>CartÃ£o de contribuinte</li>
 	<li>Comprovativo de pagamento dos emolumentos de candidatura</li>
 </ul>
 
@@ -90,7 +90,7 @@ candidato pretenda aceder.</p>
 
 <h2 id="vag">Vagas</h2>
 
-<table class="tab_lay" width="99%" cellspacing="0" summary="Informações sobre vagas por licenciatura para candidatos titulares de Curso Médio e Superior">
+<table class="tab_lay" width="99%" cellspacing="0" summary="InformaÃ§Ãµes sobre vagas por licenciatura para candidatos titulares de Curso MÃ©dio e Superior">
 	<tr>
 		<th>Cursos</th>
 		<th>Campus</th>
@@ -194,27 +194,27 @@ candidato pretenda aceder.</p>
 </table>
 
 <h2 id="prop">Propinas</h2>
-<p>Para o ano lectivo de 2009/2010 a propina para as Licenciaturas de 1º ciclo e 1º ciclo de Mestrados Integrados está prevista no valor de <b>996,85 Euros</b>.</p>
+<p>Para o ano lectivo de 2009/2010 a propina para as Licenciaturas de 1Âº ciclo e 1Âº ciclo de Mestrados Integrados estÃ¡ prevista no valor de <b>996,85 Euros</b>.</p>
 
 
 <h2 id="praz">Prazos</h2>
 
-<table class="tab_simpler" summary="Prazos para candidatos em mudanÃ§a ou transferÃªncia de curso" cellspacing="0">
+<table class="tab_simpler" summary="Prazos para candidatos em mudanÃƒÂ§a ou transferÃƒÂªncia de curso" cellspacing="0">
 	<tr>
 	<td class="align_r"><span class="marker">16 de Abril de 2009</span></td>
-	<td>Afixação dos programas das provas</td>
+	<td>AfixaÃ§Ã£o dos programas das provas</td>
 	</tr>
 	<tr>
 	<td class="align_r"><span class="marker">4 a 29 de Maio de 2009</span></td>
-	<td><a href="<%= fullPath + "?method=preparePreCreationOfCandidacy" %>">Apresentação de candidaturas </a></td>
+	<td><a href="<%= fullPath + "?method=preparePreCreationOfCandidacy" %>">ApresentaÃ§Ã£o de candidaturas </a></td>
 	</tr>
 	<tr>
 	<td class="align_r"><span class="marker">23 de Junho de 2009</span></td>
-	<td>Realização dos exames</td>
+	<td>RealizaÃ§Ã£o dos exames</td>
 	</tr>
 	<tr>
 	<td class="align_r"><span class="marker">6 de Julho de 2009</span></td>
-	<td>Afixação de resultados dos exames e marcação das entrevistas</td>
+	<td>AfixaÃ§Ã£o de resultados dos exames e marcaÃ§Ã£o das entrevistas</td>
 	</tr>
 	<tr>
 	<td class="align_r"><span class="marker">13 a 17 de Julho de 2009</span></td>
@@ -222,14 +222,14 @@ candidato pretenda aceder.</p>
 	</tr>
 	<tr>
 	<td class="align_r"><span class="marker">17 de Julho de 2009</span></td>
-	<td>Afixação dos resultados finais</td>
+	<td>AfixaÃ§Ã£o dos resultados finais</td>
 	</tr>
 	<tr>
 	<td class="align_r"><span class="marker">21 de Julho de 2009</span></td>
-	<td>Data limite para apresentação de recursos ao Presidente do IST</td>
+	<td>Data limite para apresentaÃ§Ã£o de recursos ao Presidente do IST</td>
 	</tr>
 	<tr>
 	<td class="align_r"><span class="marker">24 de Julho de 2009</span></td>
-	<td>Afixação dos resultados dos recursos</td>
+	<td>AfixaÃ§Ã£o dos resultados dos recursos</td>
 	</tr>
 </table>

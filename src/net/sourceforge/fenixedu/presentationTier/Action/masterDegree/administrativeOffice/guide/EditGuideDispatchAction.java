@@ -62,7 +62,7 @@ public class EditGuideDispatchAction extends FenixDispatchAction {
 	try {
 	    infoGuide = (InfoGuide) ServiceManagerServiceFactory.executeService("ChooseGuide", args);
 	} catch (NonExistingServiceException e) {
-	    throw new NonExistingActionException("A Vers„o da Guia", e);
+	    throw new NonExistingActionException("A Vers√£o da Guia", e);
 	}
 
 	editGuideForm.set("paymentDateDay", Data.OPTION_DEFAULT);

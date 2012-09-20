@@ -24,7 +24,7 @@ import org.apache.commons.collections.Transformer;
  * 
  * This class contains all the information regarding a Reimbursement Guide. <br/>
  * 
- * @author <a href="mailto:joao.mota@ist.utl.pt">Jo„o Mota </a>
+ * @author <a href="mailto:joao.mota@ist.utl.pt">Jo√£o Mota </a>
  * 
  */
 public class InfoReimbursementGuide extends InfoObject {

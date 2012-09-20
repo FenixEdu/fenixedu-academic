@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="ISO-8859-1"  ?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with iReport - A designer for JasperReports -->
 <!DOCTYPE jasperReport PUBLIC "//JasperReports//DTD Report Design//EN" "http://jasperreports.sourceforge.net/dtds/jasperreport.dtd">
 <jasperReport
@@ -18,7 +18,7 @@
 		 isTitleNewPage="false"
 		 isSummaryNewPage="false">
 	<property name="ireport.scriptlethandling" value="0" />
-	<property name="ireport.encoding" value="ISO-8859-1" />
+	<property name="ireport.encoding" value="UTF-8" />
 	<import value="java.util.*" />
 	<import value="net.sf.jasperreports.engine.*" />
 	<import value="net.sf.jasperreports.engine.data.*" />
@@ -81,7 +81,7 @@
 					<textElement textAlignment="Center" verticalAlignment="Middle">
 						<font pdfFontName="Times-Roman" size="13" isBold="true"/>
 					</textElement>
-				<text><![CDATA[PRESIDÊNCIA DO CONSELHO DE MINISTROS E MINISTÉRIOS DAS FINANÇAS E DA ADMINISTRAÇÃO PÚBLICA, DAS OBRAS PÚBLICAS, TRANSPORTES E COMUNICAÇÕES E DA CIÊNCIA, TECNOLOGIA E ENSINO SUPERIOR]]></text>
+				<text><![CDATA[PRESIDÃŠNCIA DO CONSELHO DE MINISTROS E MINISTÃ‰RIOS DAS FINANÃ‡AS E DA ADMINISTRAÃ‡ÃƒO PÃšBLICA, DAS OBRAS PÃšBLICAS, TRANSPORTES E COMUNICAÃ‡Ã•ES E DA CIÃŠNCIA, TECNOLOGIA E ENSINO SUPERIOR]]></text>
 				</staticText>
 				<image  hAlign="Center" onErrorType="Icon" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
@@ -118,7 +118,7 @@
 					<textElement textAlignment="Center" verticalAlignment="Middle">
 						<font size="14" isBold="true"/>
 					</textElement>
-				<text><![CDATA[DECLARAÇÃO de INSCRIÇÃO]]></text>
+				<text><![CDATA[DECLARAÃ‡ÃƒO de INSCRIÃ‡ÃƒO]]></text>
 				</staticText>
 				<staticText>
 					<reportElement
@@ -195,7 +195,7 @@
 					<textElement verticalAlignment="Middle">
 						<font/>
 					</textElement>
-				<text><![CDATA[Cartão do Cidadão/B.I.:]]></text>
+				<text><![CDATA[CartÃ£o do CidadÃ£o/B.I.:]]></text>
 				</staticText>
 				<textField isStretchWithOverflow="true" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
@@ -359,7 +359,7 @@
 					<textElement verticalAlignment="Middle">
 						<font/>
 					</textElement>
-				<text><![CDATA[Código Postal]]></text>
+				<text><![CDATA[CÃ³digo Postal]]></text>
 				</staticText>
 				<textField isStretchWithOverflow="true" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
@@ -401,7 +401,7 @@
 					<textElement verticalAlignment="Middle">
 						<font size="12" isBold="false"/>
 					</textElement>
-				<textFieldExpression   class="java.lang.String"><![CDATA["Está inscrito neste estabelecimento de ensino superior, no ano lectivo de " + $P{executionYear}]]></textFieldExpression>
+				<textFieldExpression   class="java.lang.String"><![CDATA["EstÃ¡ inscrito neste estabelecimento de ensino superior, no ano lectivo de " + $P{executionYear}]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="true" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
@@ -442,7 +442,7 @@
 					<textElement verticalAlignment="Middle">
 						<font/>
 					</textElement>
-				<text><![CDATA[Código Postal]]></text>
+				<text><![CDATA[CÃ³digo Postal]]></text>
 				</staticText>
 				<staticText>
 					<reportElement

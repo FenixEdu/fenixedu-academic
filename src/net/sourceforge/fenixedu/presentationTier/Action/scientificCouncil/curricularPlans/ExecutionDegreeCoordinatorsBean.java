@@ -58,11 +58,11 @@ public class ExecutionDegreeCoordinatorsBean implements Serializable {
     }
     
     public String getEscapedBackPath() {
-	return new String(this.backPath.replace('&', 'ง'));
+	return new String(this.backPath.replace('&', 'ยง'));
     }
     
     public void setEscapedBackPath(String escapedBackPath) {
-	this.backPath = escapedBackPath.replace('ง', '&');
+	this.backPath = escapedBackPath.replace('ยง', '&');
     }
 
     public ExecutionDegreeCoordinatorsBean() {

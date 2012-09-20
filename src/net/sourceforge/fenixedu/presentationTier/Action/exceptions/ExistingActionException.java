@@ -11,7 +11,7 @@ import org.apache.struts.action.ActionForward;
 
 /**
  * 
- * @author Luis Cruz & Nuno Nunes & Jo„o Mota
+ * @author Luis Cruz & Nuno Nunes & Jo√£o Mota
  */
 
 public class ExistingActionException extends FenixActionException {

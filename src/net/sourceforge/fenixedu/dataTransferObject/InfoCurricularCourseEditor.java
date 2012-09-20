@@ -77,9 +77,9 @@ public class InfoCurricularCourseEditor extends InfoObject implements ISiteCompo
 	String result = "";
 	if (getBasic() != null) {
 	    if (getBasic().booleanValue()) {
-		result = "Básica";
+		result = "BÃ¡sica";
 	    } else {
-		result = "Não Básica";
+		result = "NÃ£o BÃ¡sica";
 	    }
 	}
 	return result;

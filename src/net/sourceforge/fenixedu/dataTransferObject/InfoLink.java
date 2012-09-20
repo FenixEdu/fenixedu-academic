@@ -11,7 +11,7 @@ import net.sourceforge.fenixedu._development.PropertiesManager;
 /**
  * fenix-head DataBeans
  * 
- * @author Jo„o Mota 17/Set/2003
+ * @author Jo√£o Mota 17/Set/2003
  * 
  */
 public class InfoLink extends DataTranferObject {

@@ -17,8 +17,8 @@ import pt.utl.ist.fenix.tools.util.i18n.Language;
  * package. Field values along enums created here are based on the following
  * paper:
  * 
- * "Manual de Apoio para a utilização de Meta-dados na catalogação de conteúdos
- * com próposito educativo"
+ * "Manual de Apoio para a utilizaÃ§Ã£o de Meta-dados na catalogaÃ§Ã£o de conteÃºdos
+ * com prÃ³posito educativo"
  */
 public class ScormCreationBean extends FileContentCreationBean {
 

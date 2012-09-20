@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="ISO-8859-1"?>
+<?xml version="1.0" encoding="UTF-8"?>
 
 <!-- TODO: make this a public id or at least obsolute 
      Currently there is a semi-hack built in the RendererPlugin to accept this format.
@@ -85,7 +85,7 @@ Documentation:
     <renderer type="java.lang.Object" layout="template" class="pt.ist.fenixWebFramework.renderers.TemplateRenderer"/>
     
     <!--@ This layout shows each slot value after the previous without a special organization. You can specify
-          a separator between values and achive simple presentations like "6666 / José Dias" for a person. -->
+          a separator between values and achive simple presentations like "6666 / JosÃ© Dias" for a person. -->
     <renderer type="java.lang.Object" layout="values" class="pt.ist.fenixWebFramework.renderers.ValuesRenderer"/>
 	
 	<!--@ Same thing as values renderer but does not displays slots with null values -->

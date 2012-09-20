@@ -129,7 +129,7 @@ public class SelectCandidacies extends FenixDispatchAction {
 
 	ChangeCandidacyApprovanceStatus.run(changedStatusCandidaciesIds);
 
-	// modified by Fernanda Quitério
+	// modified by Fernanda QuitÃ©rio
 	// destiny = mapping.findForward("prepareForm");
 	// return destiny;
 	return prepare(mapping, form, request, response);

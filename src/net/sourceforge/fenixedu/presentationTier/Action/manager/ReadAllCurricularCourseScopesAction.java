@@ -40,7 +40,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 /**
- * @author Fernanda Quitério 28/10/2003
+ * @author Fernanda QuitÃ©rio 28/10/2003
  * 
  */
 @Mapping(module = "manager", path = "/readAllCurricularCourseScopes", input = "/readcurricularCourse.do", scope = "session")

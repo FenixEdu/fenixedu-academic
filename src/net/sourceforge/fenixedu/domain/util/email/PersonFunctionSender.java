@@ -23,7 +23,7 @@ public class PersonFunctionSender extends PersonFunctionSender_Base {
 	    fromName = String.format("%s", personFunction.getFunction().getTypeName());
 	} else {
 	    Integer delegateYear = personFunction.getCurricularYear().getYear();
-	    fromName = String.format("Delegado do %sº ano", delegateYear);
+	    fromName = String.format("Delegado do %sÂº ano", delegateYear);
 	}
 	Person person = personFunction.getPerson();
 	setFromName(fromName);

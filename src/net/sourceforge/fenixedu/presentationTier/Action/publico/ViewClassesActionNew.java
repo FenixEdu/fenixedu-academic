@@ -42,7 +42,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 /**
- * @author Jo„o Mota
+ * @author Jo√£o Mota
  */
 @Mapping(module = "publico", path = "/viewClassesNew", attribute = "chooseSearchContextForm", formBean = "chooseSearchContextForm", scope = "request", validate = false)
 @Forwards(value = { @Forward(name = "Sucess", path = "viewClasses") })

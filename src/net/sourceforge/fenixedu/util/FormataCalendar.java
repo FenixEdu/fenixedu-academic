@@ -4,7 +4,7 @@ import java.util.Calendar;
 
 /**
  * 
- * @author Fernanda QuitÈrio & Tania Pous„o
+ * @author Fernanda Quit√©rio & Tania Pous√£o
  */
 public abstract class FormataCalendar extends FenixUtil {
 

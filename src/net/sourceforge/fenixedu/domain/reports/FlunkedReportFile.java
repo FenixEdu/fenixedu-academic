@@ -23,7 +23,7 @@ public class FlunkedReportFile extends FlunkedReportFile_Base {
 
     @Override
     public String getJobName() {
-	return "Listagem de prescrições";
+	return "Listagem de prescriÃ§Ãµes";
     }
 
     @Override
@@ -33,7 +33,7 @@ public class FlunkedReportFile extends FlunkedReportFile_Base {
 
     @Override
     public void renderReport(Spreadsheet spreadsheet) {
-	spreadsheet.setHeader("número aluno");
+	spreadsheet.setHeader("nÃºmero aluno");
 	spreadsheet.setHeader("ciclo estudos");
 	setDegreeHeaders(spreadsheet);
 

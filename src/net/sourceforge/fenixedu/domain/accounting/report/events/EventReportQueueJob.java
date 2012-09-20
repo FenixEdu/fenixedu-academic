@@ -327,7 +327,7 @@ public class EventReportQueueJob extends EventReportQueueJob_Base {
 		addCell("Aluno", bean.studentNumber);
 		addCell("Nome", bean.studentName);
 		addCell("Email", bean.email);
-		addCell("Data inscrição", bean.registrationStartDate);
+		addCell("Data inscriÃ§Ã£o", bean.registrationStartDate);
 		addCell("Ano lectivo", bean.executionYear);
 		addCell("Tipo de matricula", bean.studiesType);
 		addCell("Nome do Curso", bean.degreeName);
@@ -335,15 +335,15 @@ public class EventReportQueueJob extends EventReportQueueJob_Base {
 		addCell("Programa doutoral", bean.phdProgramName);
 		addCell("ECTS inscritos", bean.enrolledECTS);
 		addCell("Regime", bean.regime);
-		addCell("Modelo de inscrição", bean.enrolmentModel);
-		addCell("Residência - Ano", bean.residenceYear);
-		addCell("Residência - Mês", bean.residenceMonth);
+		addCell("Modelo de inscriÃ§Ã£o", bean.enrolmentModel);
+		addCell("ResidÃªncia - Ano", bean.residenceYear);
+		addCell("ResidÃªncia - MÃªs", bean.residenceMonth);
 		addCell("Tipo de divida", bean.description);
-		addCell("Data de criação", bean.whenOccured);
+		addCell("Data de criaÃ§Ã£o", bean.whenOccured);
 		addCell("Valor Total", bean.totalAmount);
 		addCell("Valor Pago", bean.payedAmount);
 		addCell("Valor em divida", bean.amountToPay);
-		addCell("Valor Reembolsável", bean.reimbursableAmount);
+		addCell("Valor ReembolsÃ¡vel", bean.reimbursableAmount);
 		addCell("Desconto", bean.totalDiscount);
 
 		List<InstallmentWrapper> list = bean.installments;
@@ -592,10 +592,10 @@ public class EventReportQueueJob extends EventReportQueueJob_Base {
 	    protected void makeLine(ExemptionBean bean) {
 
 		addCell("Identificador", bean.eventExternalId);
-		addCell("Tipo da Isenção", bean.exemptionTypeDescription);
-		addCell("Valor da Isenção", bean.exemptionValue);
-		addCell("Percentagem da Isenção", bean.percentage);
-		addCell("Motivo da Isenção", bean.justification);
+		addCell("Tipo da IsenÃ§Ã£o", bean.exemptionTypeDescription);
+		addCell("Valor da IsenÃ§Ã£o", bean.exemptionValue);
+		addCell("Percentagem da IsenÃ§Ã£o", bean.percentage);
+		addCell("Motivo da IsenÃ§Ã£o", bean.justification);
 
 	    }
 
@@ -642,7 +642,7 @@ public class EventReportQueueJob extends EventReportQueueJob_Base {
     /* ALL TRANSACTIONS */
 
     private SheetData<AccountingTransactionBean> allTransactions() {
-	final Spreadsheet spreadsheet = new Spreadsheet("Transacções");
+	final Spreadsheet spreadsheet = new Spreadsheet("TransacÃ§Ãµes");
 
 	List<String> allEventsExternalIds = getAllEventsExternalIds();
 	System.out.println(String.format("%s events to process", allEventsExternalIds.size()));
@@ -719,7 +719,7 @@ public class EventReportQueueJob extends EventReportQueueJob_Base {
 		addCell("Data do ajuste", bean.whenAdjustmentRegistered);
 		addCell("Data de entrada do ajuste", bean.whenAdjustmentProcessed);
 		addCell("Montante do ajuste", bean.adjustmentAmount);
-		addCell("Justificação", bean.comments);
+		addCell("JustificaÃ§Ã£o", bean.comments);
 
 	    }
 

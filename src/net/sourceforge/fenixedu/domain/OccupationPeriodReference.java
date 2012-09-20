@@ -83,7 +83,7 @@ public class OccupationPeriodReference extends OccupationPeriodReference_Base {
 	    if (returnStr.length() > 0)
 		returnStr.append(", ");
 
-	    returnStr.append(year + "บ");
+	    returnStr.append(year + "ยบ");
 	}
 
 	if (yearList.size() > 1)

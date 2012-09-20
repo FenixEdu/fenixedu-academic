@@ -59,7 +59,7 @@
 					<th><bean:message key="label.installment" bundle="ASSIDUOUSNESS_RESOURCES"/>:</th>
 					<logic:iterate id="anualBonusInstallmentBean" name="anualBonusInstallmentFactory" property="anualBonusInstallmentBeanList" indexId="index">
 						<bean:define id="myIndex" value="<%=new Integer( index.intValue()+1).toString()%>"/>
-						<th style="text-align: center !important;"><bean:write name="myIndex"/>ª</th>
+						<th style="text-align: center !important;"><bean:write name="myIndex"/>Âª</th>
 					</logic:iterate>
 					</tr><tr><th><bean:message key="label.payments" bundle="ASSIDUOUSNESS_RESOURCES"/>:</th>
 					<logic:iterate id="anualBonusInstallmentBean" name="anualBonusInstallmentFactory" property="anualBonusInstallmentBeanList">
@@ -97,7 +97,7 @@
 					<th><bean:message key="label.installment" bundle="ASSIDUOUSNESS_RESOURCES"/></th>
 					<logic:iterate id="anualBonusInstallmentBean" name="anualBonusInstallmentFactory" property="anualBonusInstallmentBeanList" indexId="index">
 						<bean:define id="myIndex" value="<%=new Integer( index.intValue()+1).toString()%>"/>
-						<th style="text-align: center !important;"><bean:write name="myIndex"/>ª</th>
+						<th style="text-align: center !important;"><bean:write name="myIndex"/>Âª</th>
 					</logic:iterate>
 					</tr><tr><th><bean:message key="label.payments" bundle="ASSIDUOUSNESS_RESOURCES"/></th>
 					<logic:iterate id="anualBonusInstallmentBean" name="anualBonusInstallmentFactory" property="anualBonusInstallmentBeanList">

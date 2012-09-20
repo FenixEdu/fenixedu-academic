@@ -32,7 +32,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 /**
- * @author <a href="mailto:joao.mota@ist.utl.pt">Jo„o Mota </a> 26/Nov/2003
+ * @author <a href="mailto:joao.mota@ist.utl.pt">Jo√£o Mota </a> 26/Nov/2003
  * 
  */
 @Mapping(module = "student", path = "/studentGaugingTestResults", scope = "request")

@@ -5,7 +5,7 @@
 
 <html:xhtml/>
 
-<h2>Mover Anúncios</h2>
+<h2>Mover AnÃºncios</h2>
 
 <bean:define id="sourceExecutionCourseId" name="bean" property="sourceExecutionCourse.idInternal"/>
 

@@ -138,7 +138,7 @@ public class AssiduousnessPersonFunctionFactory implements Serializable, Factory
 		}
 	    }
 	}
-	return new Function(new MultiLanguageString(Language.pt, "Respons·vel pela Assiduidade"), begin, null,
+	return new Function(new MultiLanguageString(Language.pt, "Respons√°vel pela Assiduidade"), begin, null,
 		FunctionType.ASSIDUOUSNESS_RESPONSIBLE, unit, AccountabilityTypeEnum.ASSIDUOUSNESS_STRUCTURE);
     }
 

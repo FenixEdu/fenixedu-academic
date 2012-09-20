@@ -41,14 +41,14 @@ public class CleanSubQuestions extends FenixService {
 		}
 		SubQuestion subQuestion = studentTestQuestion.getStudentSubQuestions().get(0);
 		if (subQuestion.getItemId().equals(studentTestQuestion.getItemId())) {
-		    // e a 1ª
+		    // e a 1Âª
 		    studentTestQuestion.setResponse(null);
 		} else {
 		    studentTestQuestion.delete();
 		}
 	    }
 	}
-	new StudentTestLog(distributedTest, registration, "Apagou resposta da pergunta/alínea: " + itemCode);
+	new StudentTestLog(distributedTest, registration, "Apagou resposta da pergunta/alÃ­nea: " + itemCode);
 	return;
     }
 

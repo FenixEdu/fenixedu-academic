@@ -176,10 +176,10 @@ public class OccupationPeriodBean implements Serializable, Comparable<Occupation
 
     public String getName() {
 	if (occupationPeriod == null)
-	    return "Novo período";
+	    return "Novo perÃ­odo";
 
-	return "Período de " + occupationPeriodType.getLocalizedName()
-		+ (semester == null ? "" : " - " + semester + "º Semestre");
+	return "PerÃ­odo de " + occupationPeriodType.getLocalizedName()
+		+ (semester == null ? "" : " - " + semester + "Âº Semestre");
     }
 
     @Override

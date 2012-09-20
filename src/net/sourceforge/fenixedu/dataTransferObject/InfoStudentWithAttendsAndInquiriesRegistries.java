@@ -11,7 +11,7 @@ import net.sourceforge.fenixedu.dataTransferObject.oldInquiries.InfoInquiriesReg
 import net.sourceforge.fenixedu.domain.student.Registration;
 
 /**
- * @author Jo„o Fialho & Rita Ferreira
+ * @author Jo√£o Fialho & Rita Ferreira
  * 
  */
 public class InfoStudentWithAttendsAndInquiriesRegistries extends InfoStudent {

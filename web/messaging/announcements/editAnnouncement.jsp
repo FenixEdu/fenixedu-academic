@@ -52,7 +52,7 @@
 
 <table class="tstyle5 thlight thtop thright mtop025">
 
-<%-- Título --%>
+<%-- TÃ­tulo --%>
 	<tr>
 		<th style="width: 125px;">
 			<span class="required">*</span> <bean:message bundle="MESSAGING_RESOURCES" key="net.sourceforge.fenixedu.domain.messaging.Announcement.title.label"/>:
@@ -194,7 +194,7 @@
 		</td>
 	</tr>
 
-<%-- Início do evento --%>
+<%-- InÃ­cio do evento --%>
 	<tr>
 		<th>
 			<bean:message bundle="MESSAGING_RESOURCES" key="net.sourceforge.fenixedu.domain.messaging.Announcement.referedSubjectBegin.label"/>:
@@ -214,7 +214,7 @@
 		</td>
 	</tr>
 
-<%-- Início de publicação --%>
+<%-- InÃ­cio de publicaÃ§Ã£o --%>
 	<tr>
 		<th>
 			<bean:message bundle="MESSAGING_RESOURCES" key="net.sourceforge.fenixedu.domain.messaging.Announcement.publicationBegin.label"/>:
@@ -224,7 +224,7 @@
 		</td>
 	</tr>
 
-<%-- Fim de publicação --%>
+<%-- Fim de publicaÃ§Ã£o --%>
 	<tr>
 		<th>
 			<bean:message bundle="MESSAGING_RESOURCES" key="net.sourceforge.fenixedu.domain.messaging.Announcement.publicationEnd.label"/>:
@@ -234,7 +234,7 @@
 		</td>
 	</tr>
 
-<%-- Visível --%>
+<%-- VisÃ­vel --%>
 	<tr>
 		<th>
 			<bean:message bundle="MESSAGING_RESOURCES" key="net.sourceforge.fenixedu.domain.messaging.Announcement.visible.label"/>:

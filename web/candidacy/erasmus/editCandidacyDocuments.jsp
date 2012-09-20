@@ -14,7 +14,7 @@
 
 <p>
 	<html:link action='<%= "/caseHandling" + processName.toString() + ".do?method=listProcessAllowedActivities&amp;processId=" + processId.toString() %>'>
-		« <bean:message key="label.back" bundle="APPLICATION_RESOURCES"/>	
+		Â« <bean:message key="label.back" bundle="APPLICATION_RESOURCES"/>	
 	</html:link>
 </p>
 

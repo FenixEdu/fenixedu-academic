@@ -27,8 +27,8 @@ function executeWithTempFile() {
 	echo
 }
 
-executeWithTempFile "Alter table Party - 1บ Step" alterTableParty.sql
-execute "Alter table Party - 2บ Step" alterTableParty2.sql
+executeWithTempFile "Alter table Party - 1ยบ Step" alterTableParty.sql
+execute "Alter table Party - 2ยบ Step" alterTableParty2.sql
 
 execute "Add show participations options to site" addShowParticipationsToSite.sql
 execute "Alter Project submission" alterProjectSubmissionTable.sql

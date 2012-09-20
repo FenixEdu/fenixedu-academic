@@ -135,7 +135,7 @@
 
 	<p>
 		<strong>Notas:</strong> 
-		AlÈm do texto referido, ir· ser acrescentada a informaÁ„o de acesso, consoante o perfil do novo elemento:
+		Al√©m do texto referido, ir√° ser acrescentada a informa√ß√£o de acesso, consoante o perfil do novo elemento:
 	</p>
 	<ul>
 		<li>Coordenador do programa doutoral do aluno - <bean:message key="message.phd.candidacy.feedback.coordinator.access" bundle="PHD_RESOURCES" /></li>

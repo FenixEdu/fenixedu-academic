@@ -7,7 +7,7 @@ package net.sourceforge.fenixedu.dataTransferObject;
 import net.sourceforge.fenixedu.domain.Attends;
 
 /**
- * @author AndrÈ Fernandes / Jo„o Brito
+ * @author Andr√© Fernandes / Jo√£o Brito
  */
 public class InfoAttendsWithInfoStudentAndPersonAndInfoEnrollment extends InfoFrequentaWithInfoStudentAndPerson {
     public void copyFromDomain(Attends frequenta) {

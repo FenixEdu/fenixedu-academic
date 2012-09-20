@@ -1,5 +1,5 @@
 /**
- * @author Sérgio Silva ist152416
+ * @author SÃ©rgio Silva ist152416
  */
 
 package net.sourceforge.fenixedu.presentationTier.Action.student;

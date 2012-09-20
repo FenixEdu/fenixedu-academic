@@ -20,11 +20,11 @@ public class TestType extends FenixUtil {
 
     public static final int INQUIRY = 3;
 
-    public static final String EVALUATION_STRING = "Ficha de Avaliação (guardar primeira resposta)";
+    public static final String EVALUATION_STRING = "Ficha de AvaliaÃ§Ã£o (guardar primeira resposta)";
 
-    public static final String STUDY_STRING = "Ficha de Estudo (guardar última resposta)";
+    public static final String STUDY_STRING = "Ficha de Estudo (guardar Ãºltima resposta)";
 
-    public static final String INQUIRY_STRING = "Inquérito";
+    public static final String INQUIRY_STRING = "InquÃ©rito";
 
     private final Integer type;
 

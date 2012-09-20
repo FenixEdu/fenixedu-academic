@@ -70,7 +70,7 @@
 				<fr:property name="columnClasses" value=",,acenter" />
 			</fr:layout>
 		</fr:view>
-		<em>- disciplinas disponíveis para inscrição</em>
+		<em>- disciplinas disponÃ­veis para inscriÃ§Ã£o</em>
 	</logic:notEmpty>
 
 	<logic:messagesPresent message="true" property="success">

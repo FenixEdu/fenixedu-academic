@@ -53,7 +53,7 @@ e alterar aulas).</p>
   </tr>
 </table>
 <p>Na &aacute;rea da Gest&atilde;o de Disciplinas pode efectuar algumas opera&ccedil;&otilde;es sobre <strong>disciplinas de execu&ccedil;&atilde;o</strong> 
-	(agrupar disciplinas de execu&ccedil;&atilde;o e gerir cargas hor·rias).</p>
+	(agrupar disciplinas de execu&ccedil;&atilde;o e gerir cargas hor√°rias).</p>
 
 <br/>
 

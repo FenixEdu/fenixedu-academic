@@ -89,7 +89,7 @@ public class DocumentRequestExcelUtils {
 	    protected void makeLine(AcademicServiceRequest request) {
 		IDocumentRequest document = (IDocumentRequest) request;
 		ResourceBundle enumeration = ResourceBundle.getBundle("resources.EnumerationResources", Language.getLocale());
-		addCell("Código", document.getRegistryCode().getCode());
+		addCell("CÃ³digo", document.getRegistryCode().getCode());
 		addCell("Tipo de Documento", enumeration.getString(document.getDocumentRequestType().name()));
 		CycleType cycle = null;
 		switch (document.getDocumentRequestType()) {
@@ -113,7 +113,7 @@ public class DocumentRequestExcelUtils {
 		} else if (document.isRequestForPhd()) {
 		    addCell("Tipo de Estudos", "Programa doutoral");
 		}
-		addCell("Nº de Aluno", document.getStudent().getNumber());
+		addCell("NÂº de Aluno", document.getStudent().getNumber());
 		addCell("Nome", document.getPerson().getName());
 		if (!(document.isDiploma())) {
 		    addCell("Ficheiro", request.getLastGeneratedDocument().getFilename());

@@ -5,7 +5,7 @@
 package net.sourceforge.fenixedu.domain.gratuity;
 
 /**
- * @author <a href="mailto:joao.mota@ist.utl.pt">Jo„o Mota </a> 13/Nov/2003
+ * @author <a href="mailto:joao.mota@ist.utl.pt">Jo√£o Mota </a> 13/Nov/2003
  * 
  */
 public enum ReimbursementGuideState {

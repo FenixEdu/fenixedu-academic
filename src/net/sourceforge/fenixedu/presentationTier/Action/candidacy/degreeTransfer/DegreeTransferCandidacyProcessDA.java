@@ -257,7 +257,7 @@ public class DegreeTransferCandidacyProcessDA extends CandidacyProcessDA {
 	spreadsheet.addHeader(bundle.getString("label.candidacy.approvedEcts"));
 	spreadsheet.addHeader(bundle.getString("label.candidacy.enroledEcts"));
 
-	// Id + Nº + Nome merge
+	// Id + NÂº + Nome merge
 	spreadsheet.getSheet().addMergedRegion(new Region(2, (short) 0, 2, (short) 1));
 	// Degree name merge
 	spreadsheet.getSheet().addMergedRegion(new Region(2, (short) 2, 3, (short) 2));

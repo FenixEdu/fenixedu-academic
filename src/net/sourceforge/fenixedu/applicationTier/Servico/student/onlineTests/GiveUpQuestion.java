@@ -92,7 +92,7 @@ public class GiveUpQuestion extends FenixService {
 		    path.replace('\\', '/')));
 	}
 
-	new StudentTestLog(distributedTest, registration, "Desistiu da pergunta/alínea: "
+	new StudentTestLog(distributedTest, registration, "Desistiu da pergunta/alÃ­nea: "
 		+ thisStudentTestQuestion.getTestQuestionOrder());
 	return;
     }

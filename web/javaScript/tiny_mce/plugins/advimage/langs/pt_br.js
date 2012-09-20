@@ -10,15 +10,15 @@
  */
 tinyMCE.addToLang('advimage',{
 tab_general : 'Geral',
-tab_appearance : 'Aparência',
-tab_advanced : 'Avançado',
+tab_appearance : 'AparÃªncia',
+tab_advanced : 'AvanÃ§ado',
 general : 'Geral',
-title : 'Título',
+title : 'TÃ­tulo',
 preview : 'Visualizar (Preview)',
-constrain_proportions : 'Bloquear proporções',
-langdir : 'Direção da linguagem',
-langcode : 'Código da linguagem',
-long_desc : 'Descrição completa do link',
+constrain_proportions : 'Bloquear proporÃ§Ãµes',
+langdir : 'DireÃ§Ã£o da linguagem',
+langcode : 'CÃ³digo da linguagem',
+long_desc : 'DescriÃ§Ã£o completa do link',
 style : 'Estilo',
 classes : 'Classes',
 ltr : 'Esquerda para direita',
@@ -29,7 +29,7 @@ swap_image : 'Trocar imagem',
 alt_image : 'Imagem alternativa',
 mouseover : 'para o mouse sobre o link',
 mouseout : 'para o mouse fora do link',
-misc : 'Miscelânia',
-example_img : 'Aparência&nbsp;Visualizar&nbsp;Imagem',
-missing_alt : 'Tem certeza que deseja continuar sem incluir uma descrição para imagem? Sem isso a imagem pode não estar acessível para alguns usuários especiáis, ou para aqueles que utilizam um navegador em modo texto, ou para navegadores com imagens desativadas.'
+misc : 'MiscelÃ¢nia',
+example_img : 'AparÃªncia&nbsp;Visualizar&nbsp;Imagem',
+missing_alt : 'Tem certeza que deseja continuar sem incluir uma descriÃ§Ã£o para imagem? Sem isso a imagem pode nÃ£o estar acessÃ­vel para alguns usuÃ¡rios especiÃ¡is, ou para aqueles que utilizam um navegador em modo texto, ou para navegadores com imagens desativadas.'
 });

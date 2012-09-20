@@ -14,7 +14,7 @@ import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.oldInquiries.OldInquiriesTeachersRes;
 
 /**
- * @author Jo„o Fialho & Rita Ferreira
+ * @author Jo√£o Fialho & Rita Ferreira
  * 
  */
 public class InfoOldInquiriesTeachersRes extends InfoObject implements Comparable {

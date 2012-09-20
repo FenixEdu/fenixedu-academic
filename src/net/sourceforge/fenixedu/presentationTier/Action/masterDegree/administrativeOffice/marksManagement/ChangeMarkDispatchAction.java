@@ -44,7 +44,7 @@ import org.apache.struts.action.DynaActionForm;
 import pt.ist.fenixWebFramework.security.UserView;
 
 /**
- * @author Angela 30/06/2003 Modified by Fernanda QuitÈrio
+ * @author Angela 30/06/2003 Modified by Fernanda Quit√©rio
  */
 public class ChangeMarkDispatchAction extends FenixDispatchAction {
     InfoSiteEnrolmentEvaluation infoSiteEnrolmentEvaluation = null;
@@ -284,7 +284,7 @@ public class ChangeMarkDispatchAction extends FenixDispatchAction {
 
 	if ((examDay == null) || (examMonth == null) || (examYear == null) || (examDay.length() == 0)
 		|| (examMonth.length() == 0) || (examYear.length() == 0)) {
-	    addErrorMessage(request, "TeacharNumberRequired", "error.data.exame.inv·lida");
+	    addErrorMessage(request, "TeacharNumberRequired", "error.data.exame.inv√°lida");
 	    return chooseStudentMarks(mapping, form, request, response);
 	}
 
@@ -304,7 +304,7 @@ public class ChangeMarkDispatchAction extends FenixDispatchAction {
 		|| (gradeAvailableDateDay.length() == 0) || (gradeAvailableDateMonth.length() == 0)
 		|| (gradeAvailableDateYear.length() == 0)) {
 
-	    addErrorMessage(request, "TeacharNumberRequired", "error.data.lanÁamento.inv·lida");
+	    addErrorMessage(request, "TeacharNumberRequired", "error.data.lan√ßamento.inv√°lida");
 	    return chooseStudentMarks(mapping, form, request, response);
 	}
 

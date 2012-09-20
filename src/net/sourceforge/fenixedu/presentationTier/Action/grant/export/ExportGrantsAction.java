@@ -98,7 +98,7 @@ public class ExportGrantsAction extends FenixDispatchAction {
     private void getExcelRow(GrantContractRegime grantContractRegime, StyledExcelSpreadsheet spreadsheet, boolean betweenDates,
 	    GrantSearch grantSearch, ResourceBundle bundle) {
 	spreadsheet.newRow();
-	// - ¡rea cientifica principal das actividades de I&D;
+	// - √Årea cientifica principal das actividades de I&D;
 
 	spreadsheet.addCell(grantContractRegime.getGrantContract().getGrantOwner().getNumber());
 	spreadsheet.addCell(grantContractRegime.getGrantContract().getGrantOwner().getPerson().getName());

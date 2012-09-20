@@ -48,9 +48,9 @@ public class SearchAction extends FenixDispatchAction {
 
 	List<FoundPerson> foundPeople = new ArrayList<FoundPerson>();
 
-	foundPeople.add(new FoundPerson("José António", bean.getMinAge(), bean.getGender()));
-	foundPeople.add(new FoundPerson("António José", bean.getMaxAge(), bean.getGender()));
-	foundPeople.add(new FoundPerson("Anté Josónio", (bean.getMaxAge() + bean.getMinAge()) / 2, bean.getGender()));
+	foundPeople.add(new FoundPerson("JosÃ© AntÃ³nio", bean.getMinAge(), bean.getGender()));
+	foundPeople.add(new FoundPerson("AntÃ³nio JosÃ©", bean.getMaxAge(), bean.getGender()));
+	foundPeople.add(new FoundPerson("AntÃ© JosÃ³nio", (bean.getMaxAge() + bean.getMinAge()) / 2, bean.getGender()));
 
 	request.setAttribute("found", foundPeople);
 

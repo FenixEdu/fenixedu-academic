@@ -93,7 +93,7 @@ UPDATE `ACCESSIBLE_ITEM` AS own SET own.`ORDER_IN_MODULE` = 32 WHERE own.`UUID` 
 UPDATE `ACCESSIBLE_ITEM` AS own SET own.`ORDER_IN_MODULE` = 34 WHERE own.`UUID` = 'eabed4f4-7a0b-4e77-8edb-e8525857f934';
 
 --  ID: 252 UUID: '9cf56518-f706-4854-b28e-2108ba374c43'
-UPDATE `ACCESSIBLE_ITEM` AS own SET own.`NAME` = 'pt11:Comunicaçãoen9:Messaging' WHERE own.`UUID` = '9cf56518-f706-4854-b28e-2108ba374c43';
+UPDATE `ACCESSIBLE_ITEM` AS own SET own.`NAME` = 'pt11:ComunicaÃ§Ã£oen9:Messaging' WHERE own.`UUID` = '9cf56518-f706-4854-b28e-2108ba374c43';
 
 --  ID: 16193 UUID: '1b6d4c06-fdfb-4426-a4a1-c3a217e89977'
 UPDATE `ACCESSIBLE_ITEM` AS own SET own.`ORDER_IN_MODULE` = 33 WHERE own.`UUID` = '1b6d4c06-fdfb-4426-a4a1-c3a217e89977';
@@ -102,16 +102,16 @@ UPDATE `ACCESSIBLE_ITEM` AS own SET own.`ORDER_IN_MODULE` = 33 WHERE own.`UUID` 
 UPDATE `ACCESSIBLE_ITEM` AS own SET own.`ORDER_IN_MODULE` = 2 WHERE own.`UUID` = '197325b3-e343-4945-9dba-dacb86df3112';
 
 --  ID: 16196 UUID: '8b992ca5-c112-4963-a2ca-91a5713e3f0a'
-UPDATE `ACCESSIBLE_ITEM` AS own SET own.`NAME` = 'pt14:Página Inicialen12:Initial Page' WHERE own.`UUID` = '8b992ca5-c112-4963-a2ca-91a5713e3f0a';
+UPDATE `ACCESSIBLE_ITEM` AS own SET own.`NAME` = 'pt14:PÃ¡gina Inicialen12:Initial Page' WHERE own.`UUID` = '8b992ca5-c112-4963-a2ca-91a5713e3f0a';
 
 --  ID: 16197 UUID: 'c168fb54-39ed-4e76-8c7d-df4827aefc4d'
-UPDATE `ACCESSIBLE_ITEM` AS own SET own.`NAME` = 'pt8:Anúnciosen13:Announcements' WHERE own.`UUID` = 'c168fb54-39ed-4e76-8c7d-df4827aefc4d';
+UPDATE `ACCESSIBLE_ITEM` AS own SET own.`NAME` = 'pt8:AnÃºnciosen13:Announcements' WHERE own.`UUID` = 'c168fb54-39ed-4e76-8c7d-df4827aefc4d';
 
 --  ID: 16198 UUID: 'a7ae9674-17c9-4166-91f4-a80b38d79a41'
 UPDATE `ACCESSIBLE_ITEM` AS own SET own.`NAME` = 'pt11:Planeamentoen8:Planning' WHERE own.`UUID` = 'a7ae9674-17c9-4166-91f4-a80b38d79a41';
 
 --  ID: 16199 UUID: '729d1770-b7f0-4bf9-acd0-b07b951b2e2e'
-UPDATE `ACCESSIBLE_ITEM` AS own SET own.`NAME` = 'pt8:Sumáriosen9:Summaries' WHERE own.`UUID` = '729d1770-b7f0-4bf9-acd0-b07b951b2e2e';
+UPDATE `ACCESSIBLE_ITEM` AS own SET own.`NAME` = 'pt8:SumÃ¡riosen9:Summaries' WHERE own.`UUID` = '729d1770-b7f0-4bf9-acd0-b07b951b2e2e';
 
 --  ID: 16200 UUID: '9a31d73a-a1d4-462a-af5c-0fb6ffb15761'
 UPDATE `ACCESSIBLE_ITEM` AS own SET own.`NAME` = 'pt10:Objectivosen10:Objectives' WHERE own.`UUID` = '9a31d73a-a1d4-462a-af5c-0fb6ffb15761';
@@ -120,34 +120,34 @@ UPDATE `ACCESSIBLE_ITEM` AS own SET own.`NAME` = 'pt10:Objectivosen10:Objectives
 UPDATE `ACCESSIBLE_ITEM` AS own SET own.`NAME` = 'pt8:Programaen7:Program' WHERE own.`UUID` = 'c71ee66b-5246-4259-b135-c6eed8d21e7a';
 
 --  ID: 16202 UUID: '51b95e9b-f636-4466-ab5b-f455184b9fe3'
-UPDATE `ACCESSIBLE_ITEM` AS own SET own.`NAME` = 'pt19:Método de Avaliaçãoen17:Evaluation Method' WHERE own.`UUID` = '51b95e9b-f636-4466-ab5b-f455184b9fe3';
+UPDATE `ACCESSIBLE_ITEM` AS own SET own.`NAME` = 'pt19:MÃ©todo de AvaliaÃ§Ã£oen17:Evaluation Method' WHERE own.`UUID` = '51b95e9b-f636-4466-ab5b-f455184b9fe3';
 
 --  ID: 16203 UUID: '672d9b28-2100-46ba-9586-f9bb09692747'
 UPDATE `ACCESSIBLE_ITEM` AS own SET own.`NAME` = 'pt12:Bibliografiaen12:Bibliography' WHERE own.`UUID` = '672d9b28-2100-46ba-9586-f9bb09692747';
 
 --  ID: 16204 UUID: '98b12f32-87b6-4c9d-8c18-8bd5c00d303c'
-UPDATE `ACCESSIBLE_ITEM` AS own SET own.`NAME` = 'pt7:Horárioen9:Timesheet' WHERE own.`UUID` = '98b12f32-87b6-4c9d-8c18-8bd5c00d303c';
+UPDATE `ACCESSIBLE_ITEM` AS own SET own.`NAME` = 'pt7:HorÃ¡rioen9:Timesheet' WHERE own.`UUID` = '98b12f32-87b6-4c9d-8c18-8bd5c00d303c';
 
 --  ID: 16205 UUID: '859fb0f6-ee73-4baa-bf34-80ea3ec8ab5f'
 UPDATE `ACCESSIBLE_ITEM` AS own SET own.`NAME` = 'pt6:Turnosen6:Shifts' WHERE own.`UUID` = '859fb0f6-ee73-4baa-bf34-80ea3ec8ab5f';
 
 --  ID: 16206 UUID: 'bf220aff-96eb-4a67-ab1c-848f90b6aaa3'
-UPDATE `ACCESSIBLE_ITEM` AS own SET own.`NAME` = 'pt9:Avaliaçãoen10:Evaluation' WHERE own.`UUID` = 'bf220aff-96eb-4a67-ab1c-848f90b6aaa3';
+UPDATE `ACCESSIBLE_ITEM` AS own SET own.`NAME` = 'pt9:AvaliaÃ§Ã£oen10:Evaluation' WHERE own.`UUID` = 'bf220aff-96eb-4a67-ab1c-848f90b6aaa3';
 
 --  ID: 16207 UUID: 'cc6df75a-3be9-45d9-b47b-3b7544565251'
 UPDATE `ACCESSIBLE_ITEM` AS own SET own.`NAME` = 'pt12:Agrupamentosen6:Groups' WHERE own.`UUID` = 'cc6df75a-3be9-45d9-b47b-3b7544565251';
 
 --  ID: 22170 UUID: '360d6646-953c-45cc-a0bf-721365af5e00'
-UPDATE `ACCESSIBLE_ITEM` AS own SET own.`NAME` = 'pt21:Pesquisa de Conteúdosen15:Search Contents', own.`TITLE` = 'pt19:Pesquisar Conteúdosen15:Search Contents' WHERE own.`UUID` = '360d6646-953c-45cc-a0bf-721365af5e00';
+UPDATE `ACCESSIBLE_ITEM` AS own SET own.`NAME` = 'pt21:Pesquisa de ConteÃºdosen15:Search Contents', own.`TITLE` = 'pt19:Pesquisar ConteÃºdosen15:Search Contents' WHERE own.`UUID` = '360d6646-953c-45cc-a0bf-721365af5e00';
 
 --  ID: 24843 UUID: 'ab4c28f5-1803-4f98-a900-87ee6705b79e'
 UPDATE `ACCESSIBLE_ITEM` AS own SET own.`NAME` = 'pt5:Cursoen6:Degree' WHERE own.`UUID` = 'ab4c28f5-1803-4f98-a900-87ee6705b79e';
 
 --  ID: 24844 UUID: 'd30145de-ed6b-4abb-a760-50753d4de23b'
-UPDATE `ACCESSIBLE_ITEM` AS own SET own.`NAME` = 'pt9:Descriçãoen11:Description' WHERE own.`UUID` = 'd30145de-ed6b-4abb-a760-50753d4de23b';
+UPDATE `ACCESSIBLE_ITEM` AS own SET own.`NAME` = 'pt9:DescriÃ§Ã£oen11:Description' WHERE own.`UUID` = 'd30145de-ed6b-4abb-a760-50753d4de23b';
 
 --  ID: 24845 UUID: 'b36012ae-41f4-401d-9297-2f5d2e55c5da'
-UPDATE `ACCESSIBLE_ITEM` AS own SET own.`NAME` = 'pt8:Anúnciosen13:Announcements' WHERE own.`UUID` = 'b36012ae-41f4-401d-9297-2f5d2e55c5da';
+UPDATE `ACCESSIBLE_ITEM` AS own SET own.`NAME` = 'pt8:AnÃºnciosen13:Announcements' WHERE own.`UUID` = 'b36012ae-41f4-401d-9297-2f5d2e55c5da';
 
 --  ID: 24846 UUID: '5204408e-7703-413d-adec-bc50eeebc1f3'
 UPDATE `ACCESSIBLE_ITEM` AS own SET own.`NAME` = 'pt16:Regime de Acessoen22:Admission Requirements' WHERE own.`UUID` = '5204408e-7703-413d-adec-bc50eeebc1f3';
@@ -159,16 +159,16 @@ UPDATE `ACCESSIBLE_ITEM` AS own SET own.`NAME` = 'pt21:Estatuto Profissionalen19
 UPDATE `ACCESSIBLE_ITEM` AS own SET own.`NAME` = 'pt16:Plano Curricularen15:Curricular Plan' WHERE own.`UUID` = 'd1f52ea5-1280-4ae0-ac2e-e43ca44dad34';
 
 --  ID: 24849 UUID: 'e570d796-43e6-4499-87bb-99a59bd3b608'
-UPDATE `ACCESSIBLE_ITEM` AS own SET own.`NAME` = 'pt22:Páginas de Disciplinasen16:Course Web Pages' WHERE own.`UUID` = 'e570d796-43e6-4499-87bb-99a59bd3b608';
+UPDATE `ACCESSIBLE_ITEM` AS own SET own.`NAME` = 'pt22:PÃ¡ginas de Disciplinasen16:Course Web Pages' WHERE own.`UUID` = 'e570d796-43e6-4499-87bb-99a59bd3b608';
 
 --  ID: 24850 UUID: '10085a1d-de69-4803-af0f-c084a80f37fe'
-UPDATE `ACCESSIBLE_ITEM` AS own SET own.`NAME` = 'pt18:Horários por Turmaen15:Class timetable' WHERE own.`UUID` = '10085a1d-de69-4803-af0f-c084a80f37fe';
+UPDATE `ACCESSIBLE_ITEM` AS own SET own.`NAME` = 'pt18:HorÃ¡rios por Turmaen15:Class timetable' WHERE own.`UUID` = '10085a1d-de69-4803-af0f-c084a80f37fe';
 
 --  ID: 24851 UUID: '7e7160fe-0f68-4886-9599-8dc92ba4eb12'
-UPDATE `ACCESSIBLE_ITEM` AS own SET own.`NAME` = 'pt10:Avaliaçõesen11:Evaluations' WHERE own.`UUID` = '7e7160fe-0f68-4886-9599-8dc92ba4eb12';
+UPDATE `ACCESSIBLE_ITEM` AS own SET own.`NAME` = 'pt10:AvaliaÃ§Ãµesen11:Evaluations' WHERE own.`UUID` = '7e7160fe-0f68-4886-9599-8dc92ba4eb12';
 
 --  ID: 26327 UUID: 'c113952d-6c49-44c0-b30b-d56ab1d2d047'
-UPDATE `ACCESSIBLE_ITEM` AS own SET own.`NAME` = 'pt8:Anúnciosen13:Announcements' WHERE own.`UUID` = 'c113952d-6c49-44c0-b30b-d56ab1d2d047';
+UPDATE `ACCESSIBLE_ITEM` AS own SET own.`NAME` = 'pt8:AnÃºnciosen13:Announcements' WHERE own.`UUID` = 'c113952d-6c49-44c0-b30b-d56ab1d2d047';
 
 --  ID: 26330 UUID: '85372e2e-ffe0-48ff-a758-1017a11c797f'
 UPDATE `ACCESSIBLE_ITEM` AS own SET own.`NAME` = 'pt11:Disciplinasen7:Courses' WHERE own.`UUID` = '85372e2e-ffe0-48ff-a758-1017a11c797f';
@@ -177,10 +177,10 @@ UPDATE `ACCESSIBLE_ITEM` AS own SET own.`NAME` = 'pt11:Disciplinasen7:Courses' W
 UPDATE `ACCESSIBLE_ITEM` AS own SET own.`ORDER_IN_MODULE` = 9 WHERE own.`UUID` = '3cc0ecf4-b897-48d7-925c-af865f028b9b';
 
 --  ID: 133470 UUID: 'aade3f06-9faf-49cc-a28b-d2cf136f8469'
-UPDATE `ACCESSIBLE_ITEM` AS own SET own.`NAME` = 'pt20:Site de Investigaçãoen13:Research Site' WHERE own.`UUID` = 'aade3f06-9faf-49cc-a28b-d2cf136f8469';
+UPDATE `ACCESSIBLE_ITEM` AS own SET own.`NAME` = 'pt20:Site de InvestigaÃ§Ã£oen13:Research Site' WHERE own.`UUID` = 'aade3f06-9faf-49cc-a28b-d2cf136f8469';
 
 --  ID: 133472 UUID: '8d123cd3-b4ce-4152-9860-ab3b1b8ab900'
-UPDATE `ACCESSIBLE_ITEM` AS own SET own.`NAME` = 'pt31:Gestão de Sites de Investigaçãoen24:Research Site Management', own.`TITLE` = 'pt43:Gestão de Sites de Unidades de Investigaçãoen29:Research Unit Site Management' WHERE own.`UUID` = '8d123cd3-b4ce-4152-9860-ab3b1b8ab900';
+UPDATE `ACCESSIBLE_ITEM` AS own SET own.`NAME` = 'pt31:GestÃ£o de Sites de InvestigaÃ§Ã£oen24:Research Site Management', own.`TITLE` = 'pt43:GestÃ£o de Sites de Unidades de InvestigaÃ§Ã£oen29:Research Unit Site Management' WHERE own.`UUID` = '8d123cd3-b4ce-4152-9860-ab3b1b8ab900';
 
 --  ID: 133474 UUID: '931438dc-b0e2-4d2a-b017-1a449adf59e3'
 UPDATE `ACCESSIBLE_ITEM` AS own SET own.`NAME` = 'pt7:Eventosen6:Events' WHERE own.`UUID` = '931438dc-b0e2-4d2a-b017-1a449adf59e3';
@@ -189,7 +189,7 @@ UPDATE `ACCESSIBLE_ITEM` AS own SET own.`NAME` = 'pt7:Eventosen6:Events' WHERE o
 UPDATE `ACCESSIBLE_ITEM` AS own SET own.`NAME` = 'pt7:Eventosen6:Events', own.`TITLE` = 'pt7:Eventosen6:Events' WHERE own.`UUID` = 'e9ab1a2b-cfd2-4c6d-9476-27c7c3caf4c6';
 
 --  ID: 140671 UUID: '8481d1a7-1b95-43f6-b091-e0d582aa86e5'
-UPDATE `ACCESSIBLE_ITEM` AS own SET own.`NAME` = 'pt8:Anúnciosen13:Announcements', own.`TITLE` = 'pt8:Anúnciosen13:Announcements' WHERE own.`UUID` = '8481d1a7-1b95-43f6-b091-e0d582aa86e5';
+UPDATE `ACCESSIBLE_ITEM` AS own SET own.`NAME` = 'pt8:AnÃºnciosen13:Announcements', own.`TITLE` = 'pt8:AnÃºnciosen13:Announcements' WHERE own.`UUID` = '8481d1a7-1b95-43f6-b091-e0d582aa86e5';
 
 --  ID: 140674 UUID: '95b0bf15-1f4d-4430-815a-dfc1fb373ea6'
 UPDATE `ACCESSIBLE_ITEM` AS own SET own.`NAME` = 'pt6:Cursosen7:Degrees' WHERE own.`UUID` = '95b0bf15-1f4d-4430-815a-dfc1fb373ea6';
@@ -198,23 +198,23 @@ UPDATE `ACCESSIBLE_ITEM` AS own SET own.`NAME` = 'pt6:Cursosen7:Degrees' WHERE o
 UPDATE `ACCESSIBLE_ITEM` AS own SET own.`NAME` = 'pt7:Membrosen7:Members', own.`TITLE` = 'pt7:Membrosen7:Members' WHERE own.`UUID` = '2a487bf2-9986-40cf-923d-c571c211491f';
 
 --  ID: 163280 UUID: '5a35c10e-2108-412d-94f5-8ba12f051305'
-UPDATE `ACCESSIBLE_ITEM` AS own SET own.`NAME` = 'pt11:Publicaçõesen12:Publications', own.`TITLE` = 'pt11:Publicaçõesen12:Publications' WHERE own.`UUID` = '5a35c10e-2108-412d-94f5-8ba12f051305';
+UPDATE `ACCESSIBLE_ITEM` AS own SET own.`NAME` = 'pt11:PublicaÃ§Ãµesen12:Publications', own.`TITLE` = 'pt11:PublicaÃ§Ãµesen12:Publications' WHERE own.`UUID` = '5a35c10e-2108-412d-94f5-8ba12f051305';
 
 --  ID: 189877 UUID: '4cbd4716-40e1-4052-ac47-b24db983efd4'
 UPDATE `ACCESSIBLE_ITEM` AS own SET own.`ORDER_IN_MODULE` = 35 WHERE own.`UUID` = '4cbd4716-40e1-4052-ac47-b24db983efd4';
 
 --  ID: 189878 UUID: '4caaa9c0-1db1-449b-a91a-487454cc62ec'
-UPDATE `ACCESSIBLE_ITEM` AS own SET own.`NAME` = 'pt6:Inícioen5:Start', own.`TITLE` = 'pt24:Página inicial do portalen19:Portal inicial page' WHERE own.`UUID` = '4caaa9c0-1db1-449b-a91a-487454cc62ec';
+UPDATE `ACCESSIBLE_ITEM` AS own SET own.`NAME` = 'pt6:InÃ­cioen5:Start', own.`TITLE` = 'pt24:PÃ¡gina inicial do portalen19:Portal inicial page' WHERE own.`UUID` = '4caaa9c0-1db1-449b-a91a-487454cc62ec';
 
 --  ID: 189879 UUID: '9dc80775-4df0-4876-b991-cff3bcbd59cb'
-UPDATE `ACCESSIBLE_ITEM` AS own SET own.`NAME` = 'pt12:Dissertaçõesen6:Theses' WHERE own.`UUID` = '9dc80775-4df0-4876-b991-cff3bcbd59cb';
+UPDATE `ACCESSIBLE_ITEM` AS own SET own.`NAME` = 'pt12:DissertaÃ§Ãµesen6:Theses' WHERE own.`UUID` = '9dc80775-4df0-4876-b991-cff3bcbd59cb';
 
 -- 
 --  Inserting new functionalities
 -- 
 
 --  ID: 203879 UUID: '7a8440b9-8a15-4111-a71a-4f4e2ac6fcc8'
-INSERT INTO `ACCESSIBLE_ITEM` (`UUID`, `OJB_CONCRETE_CLASS`, `KEY_ROOT_DOMAIN_OBJECT`, `KEY_PARENT`, `KEY_MODULE`, `KEY_AVAILABILITY_POLICY`, `NAME`, `TITLE`, `DESCRIPTION`, `PATH`, `PREFIX`, `RELATIVE`, `ENABLED`, `PARAMETERS`, `ORDER_IN_MODULE`, `VISIBLE`, `MAXIMIZED`, `PRINCIPAL`, `KEY_SUPERIOR_SECTION`, `SECTION_ORDER`, `KEY_SITE`, `LAST_MODIFIED_DATE_YEAR_MONTH_DAY`, `KEY_SECTION`, `ITEM_ORDER`, `INFORMATION`, `KEY_FUNCTIONALITY`, `SHOW_NAME`, `KEY_INTRODUCTION_UNIT_SITE`) SELECT '7a8440b9-8a15-4111-a71a-4f4e2ac6fcc8', 'net.sourceforge.fenixedu.domain.functionalities.Module', 1, NULL, NULL, NULL, 'pt20:Gestão de Património', 'pt20:Gestão de Património', NULL, '/resourceManager/index.do', '/resourceManager', 1, 1, NULL, 6, 1, 0, 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, NULL;
+INSERT INTO `ACCESSIBLE_ITEM` (`UUID`, `OJB_CONCRETE_CLASS`, `KEY_ROOT_DOMAIN_OBJECT`, `KEY_PARENT`, `KEY_MODULE`, `KEY_AVAILABILITY_POLICY`, `NAME`, `TITLE`, `DESCRIPTION`, `PATH`, `PREFIX`, `RELATIVE`, `ENABLED`, `PARAMETERS`, `ORDER_IN_MODULE`, `VISIBLE`, `MAXIMIZED`, `PRINCIPAL`, `KEY_SUPERIOR_SECTION`, `SECTION_ORDER`, `KEY_SITE`, `LAST_MODIFIED_DATE_YEAR_MONTH_DAY`, `KEY_SECTION`, `ITEM_ORDER`, `INFORMATION`, `KEY_FUNCTIONALITY`, `SHOW_NAME`, `KEY_INTRODUCTION_UNIT_SITE`) SELECT '7a8440b9-8a15-4111-a71a-4f4e2ac6fcc8', 'net.sourceforge.fenixedu.domain.functionalities.Module', 1, NULL, NULL, NULL, 'pt20:GestÃ£o de PatrimÃ³nio', 'pt20:GestÃ£o de PatrimÃ³nio', NULL, '/resourceManager/index.do', '/resourceManager', 1, 1, NULL, 6, 1, 0, 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, NULL;
 INSERT INTO `AVAILABILITY_POLICY` (`OJB_CONCRETE_CLASS`, `KEY_ROOT_DOMAIN_OBJECT`, `KEY_ACCESSIBLE_ITEM`, `EXPRESSION`, `TARGET_GROUP`) SELECT 'net.sourceforge.fenixedu.domain.functionalities.ExpressionGroupAvailability', 1, `ID_INTERNAL`, 'role(RESOURCE_MANAGER)', 'role(RESOURCE_MANAGER)' FROM `ACCESSIBLE_ITEM` WHERE `UUID` = '7a8440b9-8a15-4111-a71a-4f4e2ac6fcc8';
 UPDATE `ACCESSIBLE_ITEM` AS f, `AVAILABILITY_POLICY` AS ap SET f.`KEY_AVAILABILITY_POLICY` = ap.`ID_INTERNAL` WHERE f.`UUID` = '7a8440b9-8a15-4111-a71a-4f4e2ac6fcc8' AND ap.`KEY_ACCESSIBLE_ITEM` = f.`ID_INTERNAL`;
 

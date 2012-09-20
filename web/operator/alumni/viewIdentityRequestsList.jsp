@@ -15,7 +15,7 @@
 	<div class="infoop2">
 		Esta lista consiste nos pedidos feitos por alumni com o objectivo de:
 		<ul>
-			<li>obter o número de aluno para efectuar registo online</li>
+			<li>obter o nÃºmero de aluno para efectuar registo online</li>
 			<li>ou consultar o Curriculum do Aluno no Portal do Alumni.</li>
 		</ul>
 	</div>

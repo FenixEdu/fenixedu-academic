@@ -1,7 +1,7 @@
 package net.sourceforge.fenixedu.dataTransferObject;
 
 /**
- * @author Fernanda Quitério
+ * @author Fernanda QuitÃ©rio
  * 
  */
 public class TeacherAdministrationSiteView extends SiteView {

@@ -15,7 +15,7 @@ import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.ist.fenixWebFramework.services.Service;
 
 /**
- * @author T‚nia Pous„o
+ * @author T√¢nia Pous√£o
  * 
  */
 public class ReadGratuitySituationByStudentCurricularPlanByGratuityValues extends FenixService {

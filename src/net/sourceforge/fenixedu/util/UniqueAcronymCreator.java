@@ -420,8 +420,8 @@ public class UniqueAcronymCreator<T extends DomainObject> {
     private static Set<String> numberSet = new HashSet<String>();
     private static Set<String> numerationSet = new HashSet<String>();
     static {
-	rejectionSet.add("às");
-	rejectionSet.add("à");
+	rejectionSet.add("Ã s");
+	rejectionSet.add("Ã ");
 	rejectionSet.add("com");
 	rejectionSet.add("sobre");
 	rejectionSet.add("de");
@@ -517,163 +517,163 @@ public class UniqueAcronymCreator<T extends DomainObject> {
 	    char c = ptxt.charAt(i);
 
 	    switch (c) {
-	    case 'Ã':
+	    case 'Ãƒ':
 		sbna.append('A');
 		break;
-	    case 'À':
+	    case 'Ã€':
 		sbna.append('A');
 		break;
-	    case 'Á':
+	    case 'Ã':
 		sbna.append('A');
 		break;
-	    case 'Â':
+	    case 'Ã‚':
 		sbna.append('A');
 		break;
-	    case 'Ä':
+	    case 'Ã„':
 		sbna.append('A');
 		break;
-	    case 'Å':
+	    case 'Ã…':
 		sbna.append('A');
 		break;
-	    case 'à':
+	    case 'Ã ':
 		sbna.append('a');
 		break;
-	    case 'á':
+	    case 'Ã¡':
 		sbna.append('a');
 		break;
-	    case 'â':
+	    case 'Ã¢':
 		sbna.append('a');
 		break;
-	    case 'ã':
+	    case 'Ã£':
 		sbna.append('a');
 		break;
-	    case 'ä':
+	    case 'Ã¤':
 		sbna.append('a');
 		break;
-	    case 'å':
+	    case 'Ã¥':
 		sbna.append('a');
 		break;
-	    case 'Ç':
+	    case 'Ã‡':
 		sbna.append('C');
 		break;
-	    case 'ç':
+	    case 'Ã§':
 		sbna.append('c');
 		break;
-	    case 'È':
+	    case 'Ãˆ':
 		sbna.append('E');
 		break;
-	    case 'É':
+	    case 'Ã‰':
 		sbna.append('E');
 		break;
-	    case 'Ê':
+	    case 'ÃŠ':
 		sbna.append('E');
 		break;
-	    case 'Ë':
+	    case 'Ã‹':
 		sbna.append('E');
 		break;
-	    case 'è':
+	    case 'Ã¨':
 		sbna.append('e');
 		break;
-	    case 'é':
+	    case 'Ã©':
 		sbna.append('e');
 		break;
-	    case 'ê':
+	    case 'Ãª':
 		sbna.append('e');
 		break;
-	    case 'ë':
+	    case 'Ã«':
 		sbna.append('e');
 		break;
-	    case 'Ì':
+	    case 'ÃŒ':
 		sbna.append('I');
 		break;
-	    case 'Í':
+	    case 'Ã':
 		sbna.append('I');
 		break;
-	    case 'Î':
+	    case 'Ã':
 		sbna.append('I');
 		break;
-	    case 'Ï':
+	    case 'Ã':
 		sbna.append('I');
 		break;
-	    case 'ì':
+	    case 'Ã¬':
 		sbna.append('i');
 		break;
-	    case 'í':
+	    case 'Ã­':
 		sbna.append('i');
 		break;
-	    case 'î':
+	    case 'Ã®':
 		sbna.append('i');
 		break;
-	    case 'ï':
+	    case 'Ã¯':
 		sbna.append('i');
 		break;
-	    case 'Ñ':
+	    case 'Ã‘':
 		sbna.append('N');
 		break;
-	    case 'ñ':
+	    case 'Ã±':
 		sbna.append('n');
 		break;
-	    case 'Ò':
+	    case 'Ã’':
 		sbna.append('O');
 		break;
-	    case 'Ó':
+	    case 'Ã“':
 		sbna.append('O');
 		break;
-	    case 'Ô':
+	    case 'Ã”':
 		sbna.append('O');
 		break;
-	    case 'Õ':
+	    case 'Ã•':
 		sbna.append('O');
 		break;
-	    case 'Ö':
+	    case 'Ã–':
 		sbna.append('O');
 		break;
-	    case 'ò':
+	    case 'Ã²':
 		sbna.append('o');
 		break;
-	    case 'ó':
+	    case 'Ã³':
 		sbna.append('o');
 		break;
-	    case 'ô':
+	    case 'Ã´':
 		sbna.append('o');
 		break;
-	    case 'õ':
+	    case 'Ãµ':
 		sbna.append('o');
 		break;
-	    case 'ö':
+	    case 'Ã¶':
 		sbna.append('o');
 		break;
-	    case 'Ù':
+	    case 'Ã™':
 		sbna.append('U');
 		break;
-	    case 'Ú':
+	    case 'Ãš':
 		sbna.append('U');
 		break;
-	    case 'Û':
+	    case 'Ã›':
 		sbna.append('U');
 		break;
-	    case 'Ü':
+	    case 'Ãœ':
 		sbna.append('U');
 		break;
-	    case 'ù':
+	    case 'Ã¹':
 		sbna.append('u');
 		break;
-	    case 'ú':
+	    case 'Ãº':
 		sbna.append('u');
 		break;
-	    case 'û':
+	    case 'Ã»':
 		sbna.append('u');
 		break;
-	    case 'ü':
+	    case 'Ã¼':
 		sbna.append('u');
 		break;
-	    case 'İ':
+	    case 'Ã':
 		sbna.append('Y');
 		break;
-	    case 'ı':
+	    case 'Ã½':
 		sbna.append('Y');
 		break;
-	    case 'ÿ':
+	    case 'Ã¿':
 		sbna.append('y');
 		break;
 
@@ -689,11 +689,11 @@ public class UniqueAcronymCreator<T extends DomainObject> {
 		sbna.append(" -");
 		break;
 
-	    case 'º':
+	    case 'Âº':
 		sbna.append(' ');
 		break;
 
-	    case 'ª':
+	    case 'Âª':
 		sbna.append(' ');
 		break;
 

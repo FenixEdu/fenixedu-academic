@@ -42,7 +42,7 @@
 	
 		<logic:greaterThan name="numberOfStudentsOutsideAttendsSet" value="0">
 			<p class="mbottom05">
-				<span class="warning0">AtenÁ„o: <b><bean:write name="numberOfStudentsOutsideAttendsSet"/></b> <bean:message key="message.numberOfStudentsOutsideAttendsSet"/></span>
+				<span class="warning0">Aten√ß√£o: <b><bean:write name="numberOfStudentsOutsideAttendsSet"/></b> <bean:message key="message.numberOfStudentsOutsideAttendsSet"/></span>
 			</p>
 			<ul class="mtop05">
 				<li>
@@ -101,7 +101,7 @@
 
 		<logic:greaterThan name="numberOfStudentsOutsideAttendsSet" value="0">
 			<p>
-				<span color="red">AtenÁ„o: <b><bean:write name="numberOfStudentsOutsideAttendsSet"/></b> <bean:message key="message.numberOfStudentsOutsideAttendsSet"/></span>
+				<span color="red">Aten√ß√£o: <b><bean:write name="numberOfStudentsOutsideAttendsSet"/></b> <bean:message key="message.numberOfStudentsOutsideAttendsSet"/></span>
 				<html:link page="<%="/prepareInsertStudentsInAttendsSet.do?method=prepareInsertStudentsInAttendsSet&amp;objectCode=" + pageContext.findAttribute("objectCode")+ "&amp;groupPropertiesCode=" + request.getParameter("groupPropertiesCode")+ "&amp;groupingOID=" + groupingOID.toString()%>">
 	   			<bean:message key="link.insertStudentsInAttendsSet"/>
 		    	</html:link>
@@ -148,7 +148,7 @@
 		
 		<logic:greaterThan name="numberOfStudentsOutsideAttendsSet" value="0">
 			<p class="mbottom05">
-				<span class="warning0">ATEN«√O: <b><bean:write name="numberOfStudentsOutsideAttendsSet"/></b> <bean:message key="message.numberOfStudentsOutsideAttendsSet"/></span>
+				<span class="warning0">ATEN√á√ÉO: <b><bean:write name="numberOfStudentsOutsideAttendsSet"/></b> <bean:message key="message.numberOfStudentsOutsideAttendsSet"/></span>
 			</p>
 			<ul class="mtop05">
 				<li>

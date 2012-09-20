@@ -79,7 +79,7 @@ float: none;
 <em><bean:message key="title.teacherPortal" bundle="INQUIRIES_RESOURCES"/></em>
 <h2><bean:message key="title.inquiry.quc.teacher" bundle="INQUIRIES_RESOURCES"/></h2>
 
-<h3><bean:write name="executionCourse" property="name"/> - <bean:write name="executionCourse" property="sigla"/> (<bean:write name="executionPeriod" property="semester"/>º Semestre <bean:write name="executionPeriod" property="executionYear.year"/>)</h3>
+<h3><bean:write name="executionCourse" property="name"/> - <bean:write name="executionCourse" property="sigla"/> (<bean:write name="executionPeriod" property="semester"/>Âº Semestre <bean:write name="executionPeriod" property="executionYear.year"/>)</h3>
 
 <p><bean:message key="message.teacher.details.inquiry" bundle="INQUIRIES_RESOURCES"/></p>
 
@@ -101,7 +101,7 @@ float: none;
 		</bean:define>
 	</logic:present>
 	<div id="teacher-results" class="<%= exceptionClass %>">
-		<h3 class="separator2 mtop2"><span style="font-weight: normal;">1. Resultados do Inquérito aos alunos</span></h3>
+		<h3 class="separator2 mtop2"><span style="font-weight: normal;">1. Resultados do InquÃ©rito aos alunos</span></h3>
 		<bean:define id="teacherToogleFunctions" value=""/>
 		<logic:notEmpty name="teacherInquiryBean" property="teachersResults">
 			<logic:iterate indexId="teacherIter" id="teacherShiftTypeResult" name="teacherInquiryBean" property="teachersResults" type="net.sourceforge.fenixedu.dataTransferObject.inquiries.TeacherShiftTypeResultsBean">

@@ -6,4 +6,4 @@ update DEGREE_MODULE set GRADUATE_TITLE_SUFFIX = NULL WHERE GRADUATE_TITLE_SUFFI
 update DEGREE_MODULE set GRADUATE_TITLE_SUFFIX = replace(DEGREE_MODULE.GRADUATE_TITLE_SUFFIX, "pt0:", "");
 update DEGREE_MODULE set GRADUATE_TITLE_SUFFIX = replace(DEGREE_MODULE.GRADUATE_TITLE_SUFFIX, "en0:", "");
 
-update DEGREE_MODULE set GRADUATE_TITLE_SUFFIX = "pt22:Ciências de Engenhariaen20:Engineering Sciences" where GRADUATE_TITLE_SUFFIX = "pt22:Ciências de Engenharia";
+update DEGREE_MODULE set GRADUATE_TITLE_SUFFIX = "pt22:CiÃªncias de Engenhariaen20:Engineering Sciences" where GRADUATE_TITLE_SUFFIX = "pt22:CiÃªncias de Engenharia";

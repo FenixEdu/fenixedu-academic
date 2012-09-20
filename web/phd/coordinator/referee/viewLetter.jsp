@@ -18,7 +18,7 @@
 <bean:define id="process" name="process" />
 
 <html:link action="/phdIndividualProgramProcess.do?method=viewRefereeLetters" paramId="processId" paramName="process" paramProperty="externalId">
-	« <bean:message bundle="PHD_RESOURCES" key="label.back"/>
+	Â« <bean:message bundle="PHD_RESOURCES" key="label.back"/>
 </html:link>
 
 <br/><br/>

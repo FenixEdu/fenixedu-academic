@@ -9,7 +9,7 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoStudent;
 import net.sourceforge.fenixedu.domain.gaugingTests.physics.GaugingTestResult;
 
 /**
- * @author <a href="mailto:joao.mota@ist.utl.pt">Jo„o Mota </a> 26/Nov/2003
+ * @author <a href="mailto:joao.mota@ist.utl.pt">Jo√£o Mota </a> 26/Nov/2003
  * 
  */
 public class InfoGaugingTestResult extends InfoObject {

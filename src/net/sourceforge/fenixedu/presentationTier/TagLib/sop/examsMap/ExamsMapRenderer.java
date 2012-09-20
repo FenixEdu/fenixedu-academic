@@ -27,7 +27,7 @@ import org.apache.commons.collections.Predicate;
 
 public class ExamsMapRenderer implements IExamsMapRenderer {
 
-    private String[] daysOfWeek = { "Segunda", "Terça", "Quarta", "Quinta", "Sexta", "Sábado" };
+    private String[] daysOfWeek = { "Segunda", "TerÃ§a", "Quarta", "Quinta", "Sexta", "SÃ¡bado" };
 
     private int numberOfWeks;
 
@@ -71,11 +71,11 @@ public class ExamsMapRenderer implements IExamsMapRenderer {
 	    strBuffer.append("<td width='100%'>");
 	    if (year2 == null) {
 
-		strBuffer.append("<strong>" + year1 + "º<strong> ");
+		strBuffer.append("<strong>" + year1 + "Âº<strong> ");
 		strBuffer.append(bundle.getString("label.year"));
 	    } else {
-		strBuffer.append("<strong>" + year1 + "º</strong>");
-		strBuffer.append(" e <strong>" + year2 + "º</strong> ");
+		strBuffer.append("<strong>" + year1 + "Âº</strong>");
+		strBuffer.append(" e <strong>" + year2 + "Âº</strong> ");
 		strBuffer.append(bundle.getString("label.year"));
 	    }
 
@@ -133,7 +133,7 @@ public class ExamsMapRenderer implements IExamsMapRenderer {
     }
 
     private void renderExecutionCourseListForYear(StringBuilder strBuffer, Integer year) {
-	strBuffer.append("<strong>Disciplinas do " + year + "º ano:</strong><br />");
+	strBuffer.append("<strong>Disciplinas do " + year + "Âº ano:</strong><br />");
 	for (int i = 0; i < examsMap.getExecutionCourses().size(); i++) {
 	    InfoExecutionCourse infoExecutionCourse = (InfoExecutionCourse) examsMap.getExecutionCourses().get(i);
 
@@ -199,7 +199,7 @@ public class ExamsMapRenderer implements IExamsMapRenderer {
 				+ PresentationConstants.EXECUTION_DEGREE_OID + "="
 				+ examsMap.getInfoExecutionDegree().getIdInternal() + getCurricularYearsArgs());
 			strBuffer.append("'>");
-			strBuffer.append("Definir comentário");
+			strBuffer.append("Definir comentÃ¡rio");
 			strBuffer.append("</a>");
 		    }
 		}
@@ -240,7 +240,7 @@ public class ExamsMapRenderer implements IExamsMapRenderer {
 			if (infoRooms != null && infoRooms.size() > 0) {
 			    strBuffer.append("<tr>");
 			    strBuffer.append("<td nowrap='nowrap' valign='top'>");
-			    strBuffer.append("1ª Época: ");
+			    strBuffer.append("1Âª Ã‰poca: ");
 			    strBuffer.append("</td>");
 			    strBuffer.append("<td>");
 			    for (int r = 0; r < infoRooms.size(); r++) {
@@ -258,7 +258,7 @@ public class ExamsMapRenderer implements IExamsMapRenderer {
 			if (infoRooms != null && infoRooms.size() > 0) {
 			    strBuffer.append("<tr>");
 			    strBuffer.append("<td nowrap='nowrap' valign='top'>");
-			    strBuffer.append("2ª Época: ");
+			    strBuffer.append("2Âª Ã‰poca: ");
 			    strBuffer.append("</td>");
 
 			    strBuffer.append("<td>");

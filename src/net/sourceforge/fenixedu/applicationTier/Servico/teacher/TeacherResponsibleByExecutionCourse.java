@@ -8,7 +8,7 @@ import net.sourceforge.fenixedu.domain.Teacher;
 import pt.ist.fenixWebFramework.services.Service;
 
 /**
- * @author T‚nia Pous„o Create on 18/Dez/2003
+ * @author T√¢nia Pous√£o Create on 18/Dez/2003
  */
 public class TeacherResponsibleByExecutionCourse extends FenixService {
 

@@ -28,15 +28,15 @@
 			<ul>
 				<li>Alunos Externos</li>
 				<li>Melhorias de Nota</li>
-				<li>Alunos com processos de Equivalência em curso</li>
+				<li>Alunos com processos de EquivalÃªncia em curso</li>
 			</ul>
 		</li>
         
 		<li><bean:message bundle="STUDENT_RESOURCES" key="message.warning.student.enrolmentClasses.notEnroll.chooseCourse" /> <html:link page="<%= "/studentShiftEnrollmentManager.do?method=start&amp;selectCourses=true&amp;registrationOID=" + registration.getIdInternal().toString()%>"><bean:message bundle="STUDENT_RESOURCES" key="message.warning.student.enrolmentClasses.notEnroll.chooseCourse.link" /></html:link></li>		
-        
+
         <li><bean:message bundle="STUDENT_RESOURCES" key="message.warning.student.enrolmentClasses.first.year.first.semester" /></li>
-        
-	</ul>
+    
+    </ul>
 	</div>
 	
 	<br />

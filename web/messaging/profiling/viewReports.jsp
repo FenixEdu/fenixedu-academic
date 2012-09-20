@@ -30,7 +30,7 @@
 </logic:notEmpty>	
 	
 <logic:notEmpty name="modules">
-		<em>Módulos</em> (<%= request.getParameter("serverName") %>)
+		<em>MÃ³dulos</em> (<%= request.getParameter("serverName") %>)
 		<ul>
 			<li>
 				<html:link page="<%= "/profileReport.do?method=viewReports&date=" + localDate%>">Voltar</html:link>

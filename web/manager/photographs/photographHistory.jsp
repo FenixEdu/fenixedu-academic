@@ -7,7 +7,7 @@
 
 <html:xhtml />
 
-<h2>Histórico de Fotografias<!-- bean:message key="documents.management.title" bundle="MANAGER_RESOURCES" / --></h2>
+<h2>HistÃ³rico de Fotografias<!-- bean:message key="documents.management.title" bundle="MANAGER_RESOURCES" / --></h2>
 
 <logic:present role="MANAGER">
 

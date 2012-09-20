@@ -72,7 +72,7 @@
 		<h:outputText value="<li>#{scouncilBundle['lessonHours']}: " escape="false"/>	
 
 		<fc:dataRepeater value="#{competenceCourse.sortedCompetenceCourseLoads}" var="competenceCourseLoad" rowCountVar="numberOfElements">
-			<h:outputText value="<p class='mbotton0'><em>#{competenceCourseLoad.order}บ #{scouncilBundle['semester']}</em></p>" escape="false"
+			<h:outputText value="<p class='mbotton0'><em>#{competenceCourseLoad.order}ยบ #{scouncilBundle['semester']}</em></p>" escape="false"
 				rendered="#{competenceCourse.regime.name == 'ANUAL' && numberOfElements == 2}"/>
 			
 			<h:outputText value="<ul class='mvert0'>" escape="false"/>

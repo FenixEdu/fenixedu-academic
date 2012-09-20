@@ -7,7 +7,7 @@ package net.sourceforge.fenixedu.applicationTier.Filtro;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 
 /**
- * @author Jo„o Mota
+ * @author Jo√£o Mota
  */
 public class DirectiveCouncilAuthorizationFilter extends AuthorizationByRoleFilter {
 

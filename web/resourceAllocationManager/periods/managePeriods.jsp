@@ -39,7 +39,7 @@
 				<logic:equal value="false" name="managementBean" property="hasNewObject">
 					<fr:form action="/periods.do?method=addNewPeriod">
 						<fr:edit name="managementBean" visible="false" />
-						<html:submit value="Criar novo Período"/>
+						<html:submit value="Criar novo PerÃ­odo"/>
 					</fr:form>
 				</logic:equal>
 				
@@ -126,7 +126,7 @@
 									</fr:slot>
 									<fr:slot name="semester" layout="menu-select">
 										<fr:property name="from" value="possibleSemesters" />
-										<fr:property name="defaultText" value="Época Especial" />
+										<fr:property name="defaultText" value="Ã‰poca Especial" />
 									</fr:slot>
 							</fr:schema>
 						</fr:edit>
@@ -179,8 +179,8 @@
 					</ul>
 					<ul class="placeholder-tip">
 						<li><span><bean:message key="<%= "label.occupation.period.dragCourses" + (newObject ? ".new" : "") %>" bundle="SOP_RESOURCES"/></span>
-						<html:submit value="Descartar Alterações" styleClass="saveButton" onclick="<%= "this.form.submit;" %>"/>
-						<html:submit value="Guardar Alterações" styleClass="saveButton" onclick="<%= "prepareEditPeriod($(this).parents().eq(3), " + id + ");" %>" property="editPeriodCourses" style="margin-right: 8px;"/>
+						<html:submit value="Descartar AlteraÃ§Ãµes" styleClass="saveButton" onclick="<%= "this.form.submit;" %>"/>
+						<html:submit value="Guardar AlteraÃ§Ãµes" styleClass="saveButton" onclick="<%= "prepareEditPeriod($(this).parents().eq(3), " + id + ");" %>" property="editPeriodCourses" style="margin-right: 8px;"/>
 						</li>
 					</ul>
 				</div><!--period-->

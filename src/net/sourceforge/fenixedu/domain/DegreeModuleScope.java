@@ -163,9 +163,9 @@ public abstract class DegreeModuleScope {
     }
 
     public LabelFormatter getDescription() {
-	return new LabelFormatter(getCurricularYear().toString()).appendLabel("บ ").appendLabel("label.curricular.year",
+	return new LabelFormatter(getCurricularYear().toString()).appendLabel("ยบ ").appendLabel("label.curricular.year",
 		LabelFormatter.APPLICATION_RESOURCES).appendLabel(" ").appendLabel(getCurricularSemester().toString())
-		.appendLabel("บ ").appendLabel("label.semester.short", LabelFormatter.APPLICATION_RESOURCES);
+		.appendLabel("ยบ ").appendLabel("label.semester.short", LabelFormatter.APPLICATION_RESOURCES);
 
     }
 

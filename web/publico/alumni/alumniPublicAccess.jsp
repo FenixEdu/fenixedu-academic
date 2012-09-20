@@ -36,7 +36,7 @@
 	<fr:form action="/alumni.do?method=validateFenixAcessData">
 
 		<fieldset style="display: block;">
-			<h3>Identificação <%-- <bean:message key="label.alumni.form" bundle="ALUMNI_RESOURCES" /> --%></h3>
+			<h3>IdentificaÃ§Ã£o <%-- <bean:message key="label.alumni.form" bundle="ALUMNI_RESOURCES" /> --%></h3>
 			<p>
 				<bean:message key="label.alumni.registration.process" bundle="ALUMNI_RESOURCES" />				
 			</p>
@@ -132,25 +132,25 @@
 		<ol>
 			<li>
 				<h4>Como recuperar a minha IST-ID?</h4>
-				<p>Poderá contactar a Direção de Serviços de Informática (ci@ist.utl.pt), fornecendo o seu número de identificação (BI, Cartão do Cidadão...).</p>
+				<p>PoderÃ¡ contactar a DireÃ§Ã£o de ServiÃ§os de InformÃ¡tica (ci@ist.utl.pt), fornecendo o seu nÃºmero de identificaÃ§Ã£o (BI, CartÃ£o do CidadÃ£o...).</p>
 			</li>
 			<li>
 				<h4>Como recuperar a password?</h4>
-				<p>Existem várias possibilidades de recuperação, que podem ser consultadas no seguinte endereço: <a href="https://id.ist.utl.pt/password/recover.php?language=pt" title="Recuperar password">https://id.ist.utl.pt/password/recover.php?language=pt</a>.</p>
+				<p>Existem vÃ¡rias possibilidades de recuperaÃ§Ã£o, que podem ser consultadas no seguinte endereÃ§o: <a href="https://id.ist.utl.pt/password/recover.php?language=pt" title="Recuperar password">https://id.ist.utl.pt/password/recover.php?language=pt</a>.</p>
 			</li>
 			<li>
 				<h4>Como alterar a IST-ID?</h4>
-				<p>Não é possível alterar a IST-ID, uma vez que é um número de identificação gerado uma única vez, utilizado para o acesso aos serviços informáticos do IST, correspondendo na maior parte dos casos ao número de Aluno/Docente (ex: Nºde Aluno 55000 corresponde ao IST-ID ist155000).</p>
+				<p>NÃ£o Ã© possÃ­vel alterar a IST-ID, uma vez que Ã© um nÃºmero de identificaÃ§Ã£o gerado uma Ãºnica vez, utilizado para o acesso aos serviÃ§os informÃ¡ticos do IST, correspondendo na maior parte dos casos ao nÃºmero de Aluno/Docente (ex: NÂºde Aluno 55000 corresponde ao IST-ID ist155000).</p>
 			</li>
 			<li>
-				<h4>Tive mais do que um número de aluno. Qual o número que deverei facultar?</h4>
-				<p>Poderá facultar qualquer número de Aluno (Licenciatura, Mestrado, Doutoramento), uma vez que a IST-ID agrupa todas as Matriculas que teve enquanto Aluno.</p>
+				<h4>Tive mais do que um nÃºmero de aluno. Qual o nÃºmero que deverei facultar?</h4>
+				<p>PoderÃ¡ facultar qualquer nÃºmero de Aluno (Licenciatura, Mestrado, Doutoramento), uma vez que a IST-ID agrupa todas as Matriculas que teve enquanto Aluno.</p>
 			</li>
 			<li>
-				<h4>Como alterar o número de telemóvel?</h4>
-				<p>Terá de solicitar ao Núcleo correspondente ao seu Curso a atualização dos seus dados Pessoais (neste caso, telemóvel).<br>
-				Núcleo de Graduação - <a href="mailto:nucleo.graduacao@ist.utl.pt" title="Enviar email">nucleo.graduacao@ist.utl.pt</a><br>
-				Núcleo de Pós-Graduação e Formação Contínua - <a href="mailto:npfc@ist.utl.pt" title="Enviar email">npfc@ist.utl.pt</a></p>
+				<h4>Como alterar o nÃºmero de telemÃ³vel?</h4>
+				<p>TerÃ¡ de solicitar ao NÃºcleo correspondente ao seu Curso a atualizaÃ§Ã£o dos seus dados Pessoais (neste caso, telemÃ³vel).<br>
+				NÃºcleo de GraduaÃ§Ã£o - <a href="mailto:nucleo.graduacao@ist.utl.pt" title="Enviar email">nucleo.graduacao@ist.utl.pt</a><br>
+				NÃºcleo de PÃ³s-GraduaÃ§Ã£o e FormaÃ§Ã£o ContÃ­nua - <a href="mailto:npfc@ist.utl.pt" title="Enviar email">npfc@ist.utl.pt</a></p>
 			</li>
 		</ol>
 	</div>

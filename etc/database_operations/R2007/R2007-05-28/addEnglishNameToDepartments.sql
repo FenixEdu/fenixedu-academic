@@ -3,34 +3,34 @@ ALTER TABLE `DEPARTMENT`
 	
 UPDATE `DEPARTMENT`
 	SET `REAL_NAME_EN` = 'Department of Electrical and Computer Engineering (DEEC)'
-	WHERE `REAL_NAME`  = 'Departamento de Engenharia Electrotécnica e de Computadores (DEEC)';
+	WHERE `REAL_NAME`  = 'Departamento de Engenharia ElectrotÃ©cnica e de Computadores (DEEC)';
 UPDATE `DEPARTMENT`
-	SET `REAL_NAME_EN` = 'Departamento de Engenharia Química e Biológica (DEQB)'
-	WHERE `REAL_NAME`  = 'Departamento de Engenharia Química e Biológica (DEQB)';
+	SET `REAL_NAME_EN` = 'Departamento de Engenharia QuÃ­mica e BiolÃ³gica (DEQB)'
+	WHERE `REAL_NAME`  = 'Departamento de Engenharia QuÃ­mica e BiolÃ³gica (DEQB)';
 UPDATE `DEPARTMENT`
 	SET `REAL_NAME_EN` = 'Departamento de Engenharia Civil e Arquitectura (DECivil)'
 	WHERE `REAL_NAME`  = 'Departamento de Engenharia Civil e Arquitectura (DECivil)';
 UPDATE `DEPARTMENT`
 	SET `REAL_NAME_EN` = 'Mechanical Engineering Department (DEM)'
-	WHERE `REAL_NAME`  = 'Departamento de Engenharia Mecânica (DEM)';
+	WHERE `REAL_NAME`  = 'Departamento de Engenharia MecÃ¢nica (DEM)';
 UPDATE `DEPARTMENT`
-	SET `REAL_NAME_EN` = 'Departamento de Física (DF)'
-	WHERE `REAL_NAME`  = 'Departamento de Física (DF)';
+	SET `REAL_NAME_EN` = 'Departamento de FÃ­sica (DF)'
+	WHERE `REAL_NAME`  = 'Departamento de FÃ­sica (DF)';
 UPDATE `DEPARTMENT`
 	SET `REAL_NAME_EN` = 'Departamento de Engenharia de Minas e Georrecursos (DEMG)'
 	WHERE `REAL_NAME`  = 'Departamento de Engenharia de Minas e Georrecursos (DEMG)';
 UPDATE `DEPARTMENT`
 	SET `REAL_NAME_EN` = 'Mathematics Department (DM)'
-	WHERE `REAL_NAME`  = 'Departamento de Matemática (DM)';
+	WHERE `REAL_NAME`  = 'Departamento de MatemÃ¡tica (DM)';
 UPDATE `DEPARTMENT`
 	SET `REAL_NAME_EN` = 'Departamento de Engenharia de Materiais (DEMAT)'
 	WHERE `REAL_NAME`  = 'Departamento de Engenharia de Materiais (DEMAT)';
 UPDATE `DEPARTMENT`
 	SET `REAL_NAME_EN` = 'Department of Information Systems and Computer Engineering (DEI)'
-	WHERE `REAL_NAME`  = 'Departamento de Engenharia Informática (DEI)';
+	WHERE `REAL_NAME`  = 'Departamento de Engenharia InformÃ¡tica (DEI)';
 UPDATE `DEPARTMENT`
 	SET `REAL_NAME_EN` = 'Departament of Engineering and Management (DEG)'
-	WHERE `REAL_NAME`  = 'Departamento de Engenharia e Gestão (DEG)';
+	WHERE `REAL_NAME`  = 'Departamento de Engenharia e GestÃ£o (DEG)';
 UPDATE `DEPARTMENT`
 	SET `REAL_NAME_EN` = 'Naval Architecture and Marine Engineering (SAEN)'
-	WHERE `REAL_NAME`  = 'Secção Autónoma de Engenharia Naval (SAEN)';
+	WHERE `REAL_NAME`  = 'SecÃ§Ã£o AutÃ³noma de Engenharia Naval (SAEN)';

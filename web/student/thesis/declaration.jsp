@@ -50,25 +50,25 @@
 <div style="background: #f5f5f5; color: #444; border: 1px solid #ddd; padding: 0.75em 1em;">
 
 <p style="line-height: 1.9em;">
-    <strong><%= name %></strong>, aluno do <%=net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionName()%> nº <strong><%= number %></strong>, autor da
-    dissertação para obtenção do <strong>Grau de Mestre em <%= degree %></strong> com o
-    título <strong><%= title %></strong>, autorizo o <%=net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionName()%> a inserir,
-    em formato pdf, a versão final desta dissertação e o seu resumo alargado na sua
+    <strong><%= name %></strong>, aluno do <%=net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionName()%> nÂº <strong><%= number %></strong>, autor da
+    dissertaÃ§Ã£o para obtenÃ§Ã£o do <strong>Grau de Mestre em <%= degree %></strong> com o
+    tÃ­tulo <strong><%= title %></strong>, autorizo o <%=net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionName()%> a inserir,
+    em formato pdf, a versÃ£o final desta dissertaÃ§Ã£o e o seu resumo alargado na sua
     <fr:edit id="visibility" name="bean" slot="visibility"/>
     , possibilitando assim o seu conhecimento a todos os que
-    possam aceder àquele meio, com a ressalva de que estes não possam, sem a minha
-    expressa autorização, reproduzir, por qualquer meio, o texto daquela minha
-    dissertação para além dos limites fixados no Código do Direito de Autor e dos
+    possam aceder Ã quele meio, com a ressalva de que estes nÃ£o possam, sem a minha
+    expressa autorizaÃ§Ã£o, reproduzir, por qualquer meio, o texto daquela minha
+    dissertaÃ§Ã£o para alÃ©m dos limites fixados no CÃ³digo do Direito de Autor e dos
     Direitos Conexos.
 </p>
 
 <p style="line-height: 1.9em;">
-    Mais autorizo, com carácter de não exclusividade, o <%=net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionName()%> a
-    reproduzir, no todo ou em parte, aquela minha dissertação para assim responder a
-    pedidos que lhe sejam formulados, por parte de instituições de ensino ou de
-    investigação bem como por parte de Centros de Documentação ou de Bibliotecas, e
-    desde que desses pedidos resulte que a reprodução solicitada da minha
-    dissertação apenas se destina a fins pedagógicos ou de investigação.
+    Mais autorizo, com carÃ¡cter de nÃ£o exclusividade, o <%=net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionName()%> a
+    reproduzir, no todo ou em parte, aquela minha dissertaÃ§Ã£o para assim responder a
+    pedidos que lhe sejam formulados, por parte de instituiÃ§Ãµes de ensino ou de
+    investigaÃ§Ã£o bem como por parte de Centros de DocumentaÃ§Ã£o ou de Bibliotecas, e
+    desde que desses pedidos resulte que a reproduÃ§Ã£o solicitada da minha
+    dissertaÃ§Ã£o apenas se destina a fins pedagÃ³gicos ou de investigaÃ§Ã£o.
 </p>
 
 </div>

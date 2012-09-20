@@ -449,7 +449,7 @@ public class EmployeeExtraWorkRequestFactory implements Serializable, FactoryExe
 	Duration nightHoursWorked = assiduousnessMonthlyResume.getNightlyBalance();
 
 	if (getRequestedNightHours() != null) {
-	    // só para quem tem horário nocturno:
+	    // sÃ³ para quem tem horÃ¡rio nocturno:
 	    if (!employeeExtraWorkAuthorization.getNightExtraWork()) {
 		return new ActionMessage("error.extraWorkRequest.notAuthorized", bundle.getString("label.nightWork"));
 	    }
@@ -462,7 +462,7 @@ public class EmployeeExtraWorkRequestFactory implements Serializable, FactoryExe
 
 	Double nightExtraWorkAmount = new Double(0);
 	if (getRequestedExtraNightHours() != null && getRequestedExtraNightDays() != null) {
-	    // para quem não tem horário nocturno:
+	    // para quem nÃ£o tem horÃ¡rio nocturno:
 	    if (!employeeExtraWorkAuthorization.getNightExtraWork()) {
 		return new ActionMessage("error.extraWorkRequest.notAuthorized", bundle.getString("label.nightWork"));
 	    }
@@ -580,7 +580,7 @@ public class EmployeeExtraWorkRequestFactory implements Serializable, FactoryExe
 			.getHours();
 	    }
 
-	    // Tenho de descontar as nocturnas já pagas.
+	    // Tenho de descontar as nocturnas jÃ¡ pagas.
 	    Integer alreadyPayed = assiduousnessMonthlyResume.getPayedWorkWeekBalance();
 	    if (getExtraNightHours() != null) {
 		alreadyPayed = alreadyPayed + getExtraNightHours();
@@ -627,7 +627,7 @@ public class EmployeeExtraWorkRequestFactory implements Serializable, FactoryExe
 		if (employeeExtraWorkAuthorization.getExecutiveAuxiliarPersonel()) {
 		    limit = executiveAuxiliarPaymentLimitPercentage;
 		}
-		// Tenho de descontar as nocturnas já pagas neste pedido.
+		// Tenho de descontar as nocturnas jÃ¡ pagas neste pedido.
 		Double monthLimit = (monthValue.doubleValue() * limit) - nightExtraWorkAmount;
 		if ((workdayHoursFirstLevelAmount + workdayHoursSecondLevelAmount) > monthLimit) {
 		    if (workdayHoursFirstLevelAmount > monthLimit) {

@@ -1,7 +1,7 @@
 package net.sourceforge.fenixedu.dataTransferObject.credits;
 
 /**
- * @author T‚nia Pous„o
+ * @author T√¢nia Pous√£o
  * 
  */
 public class InfoCreditsWrapper extends InfoCredits {

@@ -9,7 +9,7 @@ import pt.ist.fenixWebFramework.services.Service;
 
 /*
  * 
- * @author Fernanda Quitério 22/Dez/2003
+ * @author Fernanda QuitÃ©rio 22/Dez/2003
  *  
  */
 public class ReadInfoExecutionCourseByOID extends FenixService {

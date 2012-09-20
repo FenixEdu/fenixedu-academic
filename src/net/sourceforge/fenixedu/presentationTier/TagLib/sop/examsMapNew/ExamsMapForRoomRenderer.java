@@ -23,7 +23,7 @@ import net.sourceforge.fenixedu.presentationTier.TagLib.sop.examsMapNew.renderer
 
 public class ExamsMapForRoomRenderer implements IExamsMapRenderer {
 
-    private String[] daysOfWeek = { "Segunda", "Terça", "Quarta", "Quinta", "Sexta", "Sábado" };
+    private String[] daysOfWeek = { "Segunda", "TerÃ§a", "Quarta", "Quinta", "Sexta", "SÃ¡bado" };
 
     private int numberOfWeks;
 
@@ -157,11 +157,11 @@ public class ExamsMapForRoomRenderer implements IExamsMapRenderer {
 			strBuffer.append(infoCCS.getInfoCurricularCourse().getInfoDegreeCurricularPlan().getName());
 			strBuffer.append(" ");
 			strBuffer.append(infoCCS.getInfoCurricularSemester().getInfoCurricularYear().getYear());
-			strBuffer.append("º ano <br/>");
+			strBuffer.append("Âº ano <br/>");
 		    }
 		    strBuffer.append("</td>");
 
-		    strBuffer.append("<td>" + infoExam.getSeason().getSeason() + "ª </td>");
+		    strBuffer.append("<td>" + infoExam.getSeason().getSeason() + "Âª </td>");
 		    strBuffer.append("<td>" + infoExam.getDate() + "</td>");
 		    strBuffer.append("<td>" + infoExam.getBeginningHour() + "</td>");
 		    strBuffer.append("<td>" + infoExam.getEndHour() + "</td>");
@@ -180,7 +180,7 @@ public class ExamsMapForRoomRenderer implements IExamsMapRenderer {
 	strBuffer.append("<tr>");
 	strBuffer.append("<td> Disciplina </td>");
 	strBuffer.append("<td> Degree e Ano </td>");
-	strBuffer.append("<td> Época </td>");
+	strBuffer.append("<td> Ã‰poca </td>");
 	strBuffer.append("<td> Data </td>");
 	strBuffer.append("<td> Hora Inicio </td>");
 	strBuffer.append("<td> Hora Fim </td>");

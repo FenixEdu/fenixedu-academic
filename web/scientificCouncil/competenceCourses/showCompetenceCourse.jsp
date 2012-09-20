@@ -90,7 +90,7 @@
 	<h:outputText value="#{enumerationBundle[CompetenceCourseManagement.regime]}</li>" escape="false"/>	
 	<h:outputText value="<li>#{scouncilBundle['lessonHours']}: " escape="false"/>	
 	<fc:dataRepeater value="#{CompetenceCourseManagement.sortedCompetenceCourseLoads}" var="competenceCourseLoad" rowCountVar="numberOfElements">
-		<h:outputText value="<p class='mbotton0'><em>#{competenceCourseLoad.order}บ #{scouncilBundle['semester']}</em></p>" escape="false"
+		<h:outputText value="<p class='mbotton0'><em>#{competenceCourseLoad.order}ยบ #{scouncilBundle['semester']}</em></p>" escape="false"
 			rendered="#{CompetenceCourseManagement.regime == 'ANUAL' && numberOfElements == 2}"/>
 		
 		<h:outputText value="<ul class='mvert0'>" escape="false"/>

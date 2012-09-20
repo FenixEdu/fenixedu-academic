@@ -10,7 +10,7 @@
 <em><bean:message key="label.portal.alumni" bundle="ALUMNI_RESOURCES" /></em>
 <h2><bean:message key="inquiries.alumni.title" bundle="ALUMNI_RESOURCES" /></h2>
 
-<p class="breadcumbs"><span class="highlight1">1ª parte - <bean:message key="inquiries.alumni.job.history" bundle="ALUMNI_RESOURCES" /></span> > 2ª parte - <bean:message key="inquiries.alumni.job.evolution" bundle="ALUMNI_RESOURCES" /></p> 
+<p class="breadcumbs"><span class="highlight1">1Âª parte - <bean:message key="inquiries.alumni.job.history" bundle="ALUMNI_RESOURCES" /></span> > 2Âª parte - <bean:message key="inquiries.alumni.job.evolution" bundle="ALUMNI_RESOURCES" /></p> 
 
 <h3 class="mtop15">
 	<bean:message key="inquiries.alumni.job.history" bundle="ALUMNI_RESOURCES" />

@@ -1,6 +1,6 @@
 UPDATE PARTY 
 SET OJB_CONCRETE_CLASS = 'net.sourceforge.fenixedu.domain.organizationalStructure.ScientificCouncilUnit'
-WHERE NAME = 'Conselho Científico';
+WHERE NAME = 'Conselho CientÃ­fico';
 
 update PARTY set KEY_PARTY_TYPE = (select ID_INTERNAL from PARTY_TYPE where TYPE = 'SCIENTIFIC_COUNCIL') where OJB_CONCRETE_CLASS = 'net.sourceforge.fenixedu.domain.organizationalStructure.ScientificCouncilUnit';
 
@@ -50,7 +50,7 @@ SELECT CURRENT_TIMESTAMP(),
 	   'UB_UNITSITE_MANAGERS',
 	   'UB_PUBLIC',
 	   'UB_MANAGER',
-	   'Anúncios',
+	   'AnÃºncios',
 	   U.ID_INTERNAL,
 	   concat("role('MANAGER') || unitSiteManagers($I(", S.ID_INTERNAL, ", 'ScientificCouncilSite'))"),
 	   "role('MANAGER')"

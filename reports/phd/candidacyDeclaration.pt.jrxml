@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="ISO-8859-1"  ?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with iReport - A designer for JasperReports -->
 <!DOCTYPE jasperReport PUBLIC "//JasperReports//DTD Report Design//EN" "http://jasperreports.sourceforge.net/dtds/jasperreport.dtd">
 <jasperReport
@@ -18,7 +18,7 @@
 		 isTitleNewPage="false"
 		 isSummaryNewPage="false">
 	<property name="ireport.scriptlethandling" value="0" />
-	<property name="ireport.encoding" value="ISO-8859-1" />
+	<property name="ireport.encoding" value="UTF-8" />
 	<import value="java.util.*" />
 	<import value="net.sf.jasperreports.engine.*" />
 	<import value="net.sf.jasperreports.engine.data.*" />
@@ -66,7 +66,7 @@
 					<textElement textAlignment="Justified">
 						<font/>
 					</textElement>
-				<text><![CDATA[Coordenadora do Núcleo de Pós-Graduação e Formação Contínua]]></text>
+				<text><![CDATA[Coordenadora do NÃºcleo de PÃ³s-GraduaÃ§Ã£o e FormaÃ§Ã£o ContÃ­nua]]></text>
 				</staticText>
 				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
@@ -101,7 +101,7 @@
 					<textElement>
 						<font/>
 					</textElement>
-				<textFieldExpression   class="java.lang.String"><![CDATA["Candidato Nº " +  $P{candidacyNumber}]]></textFieldExpression>
+				<textFieldExpression   class="java.lang.String"><![CDATA["Candidato NÂº " +  $P{candidacyNumber}]]></textFieldExpression>
 				</textField>
 			</band>
 		</title>
@@ -118,7 +118,7 @@
 					<textElement textAlignment="Center">
 						<font pdfFontName="Helvetica-Bold" size="14" isBold="true" isUnderline="true"/>
 					</textElement>
-				<text><![CDATA[DECLARAÇÃO]]></text>
+				<text><![CDATA[DECLARAÃ‡ÃƒO]]></text>
 				</staticText>
 			</band>
 		</pageHeader>
@@ -143,7 +143,7 @@
 					<textElement textAlignment="Justified" lineSpacing="1_1_2">
 						<font pdfFontName="Times-Italic" size="12" isItalic="true"/>
 					</textElement>
-				<textFieldExpression   class="java.lang.String"><![CDATA["A pedido do(a) interessado(a) " + $P{name} + ", portador do Documento de Identificação N.º " + $P{documentIdNumber} + ", declaro que entregou neste Núcleo a candidatura ao Curso de Doutoramento em " + $P{programName} + " a " + $P{candidacyDate}.toString("dd/MM/yyyy") + "."]]></textFieldExpression>
+				<textFieldExpression   class="java.lang.String"><![CDATA["A pedido do(a) interessado(a) " + $P{name} + ", portador do Documento de IdentificaÃ§Ã£o N.Âº " + $P{documentIdNumber} + ", declaro que entregou neste NÃºcleo a candidatura ao Curso de Doutoramento em " + $P{programName} + " a " + $P{candidacyDate}.toString("dd/MM/yyyy") + "."]]></textFieldExpression>
 				</textField>
 			</band>
 		</detail>

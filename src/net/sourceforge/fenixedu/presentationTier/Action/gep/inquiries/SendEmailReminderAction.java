@@ -58,7 +58,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 /**
- * @author Jo„o Fialho & Rita Ferreira
+ * @author Jo√£o Fialho & Rita Ferreira
  * 
  */
 @Mapping(module = "gep", path = "/sendEmailReminder", input = "/sendEmailReminder.do?method=prepare&page=0", attribute = "sendEmailReminderForm", formBean = "sendEmailReminderForm", scope = "request", parameter = "method")

@@ -18,7 +18,7 @@
 <%--  ###  Return Links / Steps Information(for multistep forms)  ### --%>
 <p>
 	<html:link action="/phdProgramInformation.do?method=listPhdProgramInformations" paramId="phdProgramId" paramName="phdProgramId">
-		« <bean:message bundle="PHD_RESOURCES" key="label.back"/>
+		Â« <bean:message bundle="PHD_RESOURCES" key="label.back"/>
 	</html:link>
 </p>
 
