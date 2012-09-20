@@ -12,8 +12,10 @@ import javax.ws.rs.core.MediaType;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.User;
+import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
 import net.sourceforge.fenixedu.domain.person.RoleType;
+import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.protocols.Protocol;
 import net.sourceforge.fenixedu.domain.student.Student;
 
@@ -43,6 +45,14 @@ public class JerseyServices {
 	    return (String) personMethod.invoke(person);
 	}
 	return null;
+    }
+
+    @GET
+    @Produces(MediaType.TEXT_PLAIN)
+    @Path("hasRemotePerson")
+    public Boolean hasRemotePerson(@QueryParam("username") final String username) throws NoSuchMethodException,
+	    SecurityException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
+	return Person.readPersonByUsername(username) != null;
     }
 
     @GET
@@ -104,12 +114,25 @@ public class JerseyServices {
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    @Path("readAllStudentInfoForJobBank")
-    public static String readAllStudentInfoForJobBank(@QueryParam("username")
-    final String username) {
+    @Path("readStudentInfoForJobBank")
+    public static String readStudentInfoForJobBank(@QueryParam("username") final String username) {
 	final Person person = Person.readPersonByUsername(username);
 	final Student student = person.getStudent();
 	return student != null ? student.readAllStudentInfoForJobBank() : StringUtils.EMPTY;
+    }
+
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    @Path("readAllStudentsInfoForJobBank")
+    public static String readAllStudentsInfoForJobBank() {
+	return Registration.readAllStudentsInfoForJobBank();
+    }
+
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    @Path("readBolonhaDegrees")
+    public static String readBolonhaDegrees() {
+	return AdministrativeOffice.readDegreeAdministrativeOffice().getJSONAdministratedBolonhaDegrees();
     }
 
     @GET

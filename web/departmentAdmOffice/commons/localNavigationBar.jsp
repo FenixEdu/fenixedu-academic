@@ -72,6 +72,11 @@
 					<bean:message key="label.credits" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/>
 				</html:link>
 			</li>
+			<li>
+				<html:link page="/exportCredits.do?method=prepareExportDepartmentCourses">
+					<bean:message key="label.executionCourses.types" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/>
+				</html:link>
+			</li>
 
 			<!-- Temporary solution (until we make expectations available for all departments) DEI Code = 28 -->
 			<% String deiCode = "28"; %>

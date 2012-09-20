@@ -4,6 +4,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.domain.credits.util.TeacherCreditsBean;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.presentationTier.Action.credits.ViewTeacherCreditsDA;
 
@@ -25,5 +26,14 @@ public class ScientificCouncilViewTeacherCreditsDA extends ViewTeacherCreditsDA 
     public ActionForward viewAnnualTeachingCredits(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) throws NumberFormatException, FenixServiceException, Exception {
 	return viewAnnualTeachingCredits(mapping, form, request, response, RoleType.SCIENTIFIC_COUNCIL);
+    }
+
+    @Override
+    public ActionForward showTeacherCredits(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) throws NumberFormatException, FenixServiceException, Exception {
+	TeacherCreditsBean teacherBean = getRenderedObject();
+	teacherBean.prepareAnnualTeachingCredits(RoleType.SCIENTIFIC_COUNCIL);
+	request.setAttribute("teacherBean", teacherBean);
+	return mapping.findForward("showTeacherCredits");
     }
 }

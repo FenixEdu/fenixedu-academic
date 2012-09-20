@@ -47,7 +47,7 @@ public class DepartmentAdmOfficeViewTeacherCreditsDA extends ViewTeacherCreditsD
 	    return prepareTeacherSearch(mapping, form, request, response);
 	}
 
-	teacherBean.prepareAnnualTeachingCredits();
+	teacherBean.prepareAnnualTeachingCredits(RoleType.DEPARTMENT_ADMINISTRATIVE_OFFICE);
 	request.setAttribute("teacherBean", teacherBean);
 	return mapping.findForward("showTeacherCredits");
     }

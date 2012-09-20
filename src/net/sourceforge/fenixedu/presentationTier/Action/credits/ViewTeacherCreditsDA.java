@@ -28,13 +28,8 @@ public abstract class ViewTeacherCreditsDA extends FenixDispatchAction {
 	return mapping.findForward("selectTeacher");
     }
 
-    public ActionForward showTeacherCredits(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) throws NumberFormatException, FenixServiceException, Exception {
-	TeacherCreditsBean teacherBean = getRenderedObject();
-	teacherBean.prepareAnnualTeachingCredits();
-	request.setAttribute("teacherBean", teacherBean);
-	return mapping.findForward("showTeacherCredits");
-    }
+    public abstract ActionForward showTeacherCredits(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) throws NumberFormatException, FenixServiceException, Exception;
 
     public abstract ActionForward viewAnnualTeachingCredits(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) throws NumberFormatException, FenixServiceException, Exception;

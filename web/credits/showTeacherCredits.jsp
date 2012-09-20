@@ -35,9 +35,7 @@
 </html:link></p>
  --%>
 	<logic:notEmpty name="teacherBean" property="annualTeachingCredits">
-		<fr:view name="teacherBean" property="annualTeachingCredits" schema="show.teacherCreditsBean">
-			
-			
+		<fr:view name="teacherBean" property="annualTeachingCredits">
 			<fr:schema bundle="TEACHER_CREDITS_SHEET_RESOURCES" type="net.sourceforge.fenixedu.domain.credits.util.TeacherCreditsBean">
 				<fr:slot name="executionYear" key="label.executionYear" layout="link">
 					<fr:property name="subSchema" value="net.sourceforge.fenixedu.domain.ExecutionYear.view"/>
@@ -71,11 +69,19 @@
 					<fr:property name="subLayout" value="decimal-format"/>
 					<fr:property name="headerToolTip" value="label.credits.otherTypeCreditLine.code.explanation"/>
 				</fr:slot>
-				<fr:slot name="creditsReduction" layout="null-as-label" key="label.credits.creditsReduction.simpleCode">
-					<fr:property name="subLayout" value="decimal-format"/>
-					<fr:property name="headerToolTip" value="label.credits.creditsReduction"/>
-				</fr:slot>
-				<fr:slot name="serviceExemptionCredits" key="label.credits.serviceExemptionSituations.simpleCode" layout="null-as-label">
+				<logic:equal name="teacherBean" property="canSeeCreditsReduction" value="true">
+					<fr:slot name="creditsReduction" key="label.credits.creditsReduction.simpleCode" layout="null-as-label">
+						<fr:property name="subLayout" value="decimal-format"/>
+						<fr:property name="headerToolTip" value="label.credits.creditsReduction"/>
+					</fr:slot>
+				</logic:equal>
+				<logic:notEqual name="teacherBean" property="canSeeCreditsReduction" value="true">
+					<fr:slot name="creditsReduction" key="label.credits.creditsReduction.simpleCode" layout="format">
+						<fr:property name="format" value="-"/>
+						<fr:property name="headerToolTip" value="label.credits.creditsReduction"/>
+					</fr:slot>
+				</logic:notEqual>
+				<fr:slot name="serviceExemptionCredits" layout="null-as-label" key="label.credits.serviceExemptionSituations.simpleCode" >
 					<fr:property name="subLayout" value="decimal-format"/>
 					<fr:property name="headerToolTip" value="label.credits.serviceExemptionSituations.code.definition"/>
 				</fr:slot>

@@ -1295,6 +1295,17 @@ public class ExecutionCourse extends ExecutionCourse_Base {
 	return lessons;
     }
 
+    public boolean hasAnyLesson() {
+	for (CourseLoad courseLoad : getCourseLoadsSet()) {
+	    for (final Shift shift : courseLoad.getShiftsSet()) {
+		if (shift.hasAnyAssociatedLessons()) {
+		    return true;
+		}
+	    }
+	}
+	return false;
+    }
+
     public SortedSet<WrittenEvaluation> getWrittenEvaluations() {
 	final SortedSet<WrittenEvaluation> writtenEvaluations = new TreeSet<WrittenEvaluation>(
 		WrittenEvaluation.COMPARATOR_BY_BEGIN_DATE);

@@ -181,4 +181,27 @@ public class PersonFunctionBean implements Serializable {
 		.getEndDateYearMonthDay());
     }
 
+    public List<Function> getAvailableFunctions() {
+	List<Function> result = new ArrayList<Function>();
+	if (getUnit() != null) {
+	    for (Function function : getUnit().getFunctions(true)) {
+		if ((!(function instanceof SharedFunction)) && !function.isVirtual()) {
+		    result.add(function);
+		}
+	    }
+	}
+	return result;
+    }
+
+    public List<Function> getAvailableSharedFunctions() {
+	List<Function> result = new ArrayList<Function>();
+	if (getUnit() != null) {
+	    for (Function function : getUnit().getFunctions(true)) {
+		if (function instanceof SharedFunction && !function.isVirtual()) {
+		    result.add(function);
+		}
+	    }
+	}
+	return result;
+    }
 }

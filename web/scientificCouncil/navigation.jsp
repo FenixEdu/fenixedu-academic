@@ -113,6 +113,11 @@
 		  		<bean:message key="link.teacher.sheet"/>
 		  	</html:link>  
 		</li>
+		<li>
+			<html:link page="/exportCredits.do?method=prepareExportDepartmentCourses">
+				<bean:message key="label.executionCourses.types" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/>
+			</html:link>
+		</li>
 		<%--
 		<li>
 		  	<html:link page="/showAllTeacherCreditsResume.do?method=prepareTeacherSearch">

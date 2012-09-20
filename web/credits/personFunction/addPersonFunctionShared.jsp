@@ -69,7 +69,7 @@
 				<fr:schema bundle="TEACHER_CREDITS_SHEET_RESOURCES" type="net.sourceforge.fenixedu.domain.credits.util.PersonFunctionBean">
 					<fr:slot name="unit.presentationName" key="label.unit" readOnly="true"/>
 					<fr:slot name="function" key="label.function" layout="menu-select-postback" required="true">
-						<fr:property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.credits.SharedFunctionsProvider"/>
+						<fr:property name="from" value="availableSharedFunctions"/>
 						<fr:property name="destination" value="/managePersonFunctionsShared.do?method=prepareToEditPersonFunctionShared"/>
 						<fr:property name="format" value="${typeName}"/>
 					</fr:slot>

@@ -45,6 +45,16 @@ public class AnnualTeachingCreditsBean implements Serializable {
     private Boolean areCreditsCalculated = false;
     private boolean canEditTeacherCredits;
     private boolean canEditTeacherCreditsInAnyPeriod = false;
+    private boolean canSeeCreditsReduction = false;
+
+    public boolean isCanSeeCreditsReduction() {
+	return canSeeCreditsReduction;
+    }
+
+    public void setCanSeeCreditsReduction(boolean canSeeCreditsReduction) {
+	this.canSeeCreditsReduction = canSeeCreditsReduction;
+    }
+
     private RoleType roleType;
     private Set<ExecutionYear> correctionInYears = new TreeSet<ExecutionYear>(ExecutionYear.COMPARATOR_BY_YEAR);
 
@@ -102,6 +112,9 @@ public class AnnualTeachingCreditsBean implements Serializable {
 
     protected void setAnnualTeachingCreditsByPeriod(ExecutionYear executionYear, Teacher teacher, RoleType roleType) {
 	setRoleType(roleType);
+	if (roleType.equals(RoleType.SCIENTIFIC_COUNCIL) || roleType.equals(RoleType.DEPARTMENT_MEMBER)) {
+	    setCanSeeCreditsReduction(true);
+	}
 	for (ExecutionSemester executionSemester : executionYear.getExecutionPeriods()) {
 	    annualTeachingCreditsByPeriodBeans.add(new AnnualTeachingCreditsByPeriodBean(executionSemester, teacher, roleType));
 	    if (executionSemester.isInValidCreditsPeriod(roleType)) {

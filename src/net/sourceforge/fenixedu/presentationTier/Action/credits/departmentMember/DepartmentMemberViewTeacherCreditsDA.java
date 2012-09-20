@@ -30,7 +30,7 @@ public class DepartmentMemberViewTeacherCreditsDA extends ViewTeacherCreditsDA {
 	final IUserView userView = UserView.getUser();
 	if (userView.getPerson().getTeacher() != null) {
 	    TeacherCreditsBean teacherBean = new TeacherCreditsBean(userView.getPerson().getTeacher());
-	    teacherBean.prepareAnnualTeachingCredits();
+	    teacherBean.prepareAnnualTeachingCredits(RoleType.DEPARTMENT_MEMBER);
 	    request.setAttribute("teacherBean", teacherBean);
 	}
 	return mapping.findForward("showTeacherCredits");

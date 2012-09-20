@@ -106,23 +106,31 @@ $(document).ready(function() {
 					<bean:define id="executionPeriodId" name="professorship" property="executionCourse.executionPeriod.idInternal"/>
 					<bean:define id="totalNumberOfLessons" name="professorship" property="allLessonsNumber"/>
 					<bean:size id="numberOfShifts" name="professorship" property="degreeTeachingServicesOrderedByShift"/>
+					<tr>
+						<td rowspan="<%= java.lang.Math.max(((Integer)totalNumberOfLessons).intValue(),1)%>">
+							<logic:equal name="canEditCreditsInfo" value="true">
+								<html:link page='<%= "/degreeTeachingServiceManagement.do?page=0&amp;method=showTeachingServiceDetails&amp;professorshipID="+professorshipID + "&amp;executionPeriodId="+ executionPeriodId %>'>
+									<bean:write name="professorship" property="executionCourse.name"/> (<bean:write name="professorship" property="degreeSiglas"/>)
+								</html:link>
+							</logic:equal>
+							<logic:notEqual name="canEditCreditsInfo" value="true">
+								<bean:write name="professorship" property="executionCourse.name"/> (<bean:write name="professorship" property="degreeSiglas"/>)
+							</logic:notEqual>									
+						</td>
+						<logic:equal name="numberOfShifts" value="0">
+							<td colspan="7"/>
+						</logic:equal>
+						
 						<logic:iterate id="degreeTeachingService" name="professorship" property="degreeTeachingServicesOrderedByShift" indexId="indexShifts">
 							<bean:size id="numberOfLessons" name="degreeTeachingService" property="shift.lessonsOrderedByWeekDayAndStartTime"/>
 							<logic:iterate id="lesson" name="degreeTeachingService" property="shift.lessonsOrderedByWeekDayAndStartTime" indexId="indexLessons">
-								<tr>
+								<logic:notEqual name="indexLessons" value="0">
+									</tr>
+								</logic:notEqual>
+								<logic:notEqual name="indexShifts" value="0">
+									<tr>
+								</logic:notEqual>
 								<logic:equal name="indexLessons" value="0">
-									<logic:equal name="indexShifts" value="0">
-										<td rowspan="<%= totalNumberOfLessons%>">
-											<logic:equal name="canEditCreditsInfo" value="true">
-												<html:link page='<%= "/degreeTeachingServiceManagement.do?page=0&amp;method=showTeachingServiceDetails&amp;professorshipID="+professorshipID + "&amp;executionPeriodId="+ executionPeriodId %>'>
-													<bean:write name="professorship" property="executionCourse.name"/> (<bean:write name="professorship" property="degreeSiglas"/>)
-												</html:link>
-											</logic:equal>
-											<logic:notEqual name="canEditCreditsInfo" value="true">
-												<bean:write name="professorship" property="executionCourse.name"/> (<bean:write name="professorship" property="degreeSiglas"/>)
-											</logic:notEqual>									
-										</td>
-									</logic:equal>							
 									<td rowspan="<%= numberOfLessons %>"><bean:write name="degreeTeachingService" property="shift.nome"/></td>
 									<td rowspan="<%= numberOfLessons %>"><bean:write name="degreeTeachingService" property="shift.shiftTypesPrettyPrint"/></td>
 								</logic:equal>
@@ -142,9 +150,9 @@ $(document).ready(function() {
 										<%= ((Math.round(((Double)teachingServicePercentage).doubleValue() * 100.0)) / 100.0) %>
 									</td>
 								</logic:equal>
-								</tr>
 							</logic:iterate>
 						</logic:iterate>
+						</tr>
 						<bean:size id="numberOfSupportLessons" name="professorship" property="supportLessonsOrderedByStartTimeAndWeekDay"/>
 						<logic:iterate id="supportLesson" name="professorship" property="supportLessonsOrderedByStartTimeAndWeekDay" indexId="indexSupportLessons">
 							<tr>
@@ -423,26 +431,33 @@ $(document).ready(function() {
 <div class="panel"><h3 class="infoop mtop2"><img id="status-icon" width="15px" alt="" src="<%= request.getContextPath() +"/images/right30.png" %>">
 <b><bean:message key="label.credits.creditsReduction" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></b>
 <logic:equal name="areCreditsCalculated" value="true">
-	<span><fr:view name="annualTeachingCreditsBean" property="creditsReduction"><fr:layout name="decimal-format"><fr:property name="format" value="######0.00 'Créditos'"/></fr:layout></fr:view></span>
+	<logic:equal name="annualTeachingCreditsBean" property="canSeeCreditsReduction" value="true">
+		<span><fr:view name="annualTeachingCreditsBean" property="creditsReduction"><fr:layout name="decimal-format"><fr:property name="format" value="######0.00 'Créditos'"/></fr:layout></fr:view></span>
+	</logic:equal>
 </logic:equal></h3>
 	<div class="inner-panel" style="display: none;">
-		<fr:view name="annualTeachingCreditsBean" property="annualTeachingCreditsByPeriodBeans">
-			<fr:schema bundle="TEACHER_CREDITS_SHEET_RESOURCES" type="net.sourceforge.fenixedu.domain.credits.util.AnnualTeachingCreditsByPeriodBean">
-				<fr:slot name="executionPeriod.name" key="label.period"/>
-				<fr:slot name="creditsReductionService" key="label.credits" layout="null-as-label">
-						<fr:property name="subSchema" value="show.reductionService"/>
-						<fr:property name="subLayout" value="values"/>
-				</fr:slot>
-			</fr:schema>
-			<fr:layout name="tabular">
-				<fr:property name="classes" value="tstyle2 thlight thleft mtop05 mbottom05"/>
-			    <fr:property name="link(edit)" value="/creditsReductions.do?method=editCreditsReduction" />
-				<fr:property name="key(edit)" value="label.edit" />
-				<fr:property name="param(edit)" value="executionPeriod.externalId/executionPeriodOID,teacher.externalId/teacherOID" />
-				<fr:property name="bundle(edit)" value="TEACHER_CREDITS_SHEET_RESOURCES" />
-				<fr:property name="visibleIf(edit)" value="canEditTeacherCreditsReductions" />
-			</fr:layout>
-		</fr:view>
+		<logic:equal name="annualTeachingCreditsBean" property="canSeeCreditsReduction" value="true">
+			<fr:view name="annualTeachingCreditsBean" property="annualTeachingCreditsByPeriodBeans">
+				<fr:schema bundle="TEACHER_CREDITS_SHEET_RESOURCES" type="net.sourceforge.fenixedu.domain.credits.util.AnnualTeachingCreditsByPeriodBean">
+					<fr:slot name="executionPeriod.name" key="label.period"/>
+					<fr:slot name="creditsReductionService" key="label.credits" layout="null-as-label">
+							<fr:property name="subSchema" value="show.reductionService"/>
+							<fr:property name="subLayout" value="values"/>
+					</fr:slot>
+				</fr:schema>
+				<fr:layout name="tabular">
+					<fr:property name="classes" value="tstyle2 thlight thleft mtop05 mbottom05"/>
+				    <fr:property name="link(edit)" value="/creditsReductions.do?method=editCreditsReduction" />
+					<fr:property name="key(edit)" value="label.edit" />
+					<fr:property name="param(edit)" value="executionPeriod.externalId/executionPeriodOID,teacher.externalId/teacherOID" />
+					<fr:property name="bundle(edit)" value="TEACHER_CREDITS_SHEET_RESOURCES" />
+					<fr:property name="visibleIf(edit)" value="canEditTeacherCreditsReductions" />
+				</fr:layout>
+			</fr:view>
+		</logic:equal>
+		<logic:notEqual name="annualTeachingCreditsBean" property="canSeeCreditsReduction" value="true">
+			<bean:message key="label.confidencialInformation" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/>
+		</logic:notEqual>
 	</div>
 </div>
 

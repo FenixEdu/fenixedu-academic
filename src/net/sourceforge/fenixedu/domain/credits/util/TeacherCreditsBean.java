@@ -10,6 +10,7 @@ import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.TeacherCredits;
 import net.sourceforge.fenixedu.domain.credits.AnnualTeachingCredits;
+import net.sourceforge.fenixedu.domain.person.RoleType;
 
 public class TeacherCreditsBean implements Serializable {
     private Teacher teacher;
@@ -17,6 +18,7 @@ public class TeacherCreditsBean implements Serializable {
     private Set<CreditLineDTO> pastTeachingCredits;
     private boolean hasAnyYearWithCreditsLimitation = false;
     private boolean hasAnyYearWithCorrections = false;
+    private boolean canSeeCreditsReduction = false;
 
     public TeacherCreditsBean(Teacher teacher) {
 	this.teacher = teacher;
@@ -57,7 +59,7 @@ public class TeacherCreditsBean implements Serializable {
 	this.hasAnyYearWithCorrections = hasAnyYearWithCorrections;
     }
 
-    public void prepareAnnualTeachingCredits() {
+    public void prepareAnnualTeachingCredits(RoleType roleType) {
 	annualTeachingCredits = new TreeSet<AnnualTeachingCreditsBean>(new Comparator<AnnualTeachingCreditsBean>() {
 
 	    @Override
@@ -69,7 +71,7 @@ public class TeacherCreditsBean implements Serializable {
 	boolean hasCurrentYear = false;
 	ExecutionYear currentExecutionYear = ExecutionYear.readCurrentExecutionYear();
 	for (AnnualTeachingCredits annualTeachingCredits : teacher.getAnnualTeachingCredits()) {
-	    AnnualTeachingCreditsBean annualTeachingCreditsBean = new AnnualTeachingCreditsBean(annualTeachingCredits, null);
+	    AnnualTeachingCreditsBean annualTeachingCreditsBean = new AnnualTeachingCreditsBean(annualTeachingCredits, roleType);
 	    this.annualTeachingCredits.add(annualTeachingCreditsBean);
 	    if (annualTeachingCredits.getAnnualCreditsState().getExecutionYear().equals(currentExecutionYear)) {
 		hasCurrentYear = true;
@@ -82,8 +84,11 @@ public class TeacherCreditsBean implements Serializable {
 	    }
 	}
 	if (!hasCurrentYear) {
-	    // this.annualTeachingCredits.add(new
-	    // AnnualTeachingCreditsBean(currentExecutionYear, teacher, null));
+	    this.annualTeachingCredits.add(new AnnualTeachingCreditsBean(currentExecutionYear, teacher, roleType));
+	}
+
+	if (roleType.equals(RoleType.SCIENTIFIC_COUNCIL) || roleType.equals(RoleType.DEPARTMENT_MEMBER)) {
+	    setCanSeeCreditsReduction(true);
 	}
     }
 
@@ -103,6 +108,14 @@ public class TeacherCreditsBean implements Serializable {
 		hasAnyYearWithCorrections = true;
 	    }
 	}
+    }
+
+    public boolean getCanSeeCreditsReduction() {
+	return canSeeCreditsReduction;
+    }
+
+    public void setCanSeeCreditsReduction(boolean canSeeCreditsReduction) {
+	this.canSeeCreditsReduction = canSeeCreditsReduction;
     }
 
 }
