@@ -84,13 +84,12 @@ import org.apache.commons.collections.Predicate;
 import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
 import org.joda.time.YearMonthDay;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
 
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.ist.fenixWebFramework.services.Service;
 import pt.ist.fenixframework.pstm.Transaction;
-
-import com.google.gwt.json.client.JSONArray;
-import com.google.gwt.json.client.JSONObject;
 
 public class Student extends Student_Base {
 
@@ -1535,7 +1534,8 @@ public class Student extends Student_Base {
     }
 
     /*
-     * If student has delegate role, get the curricular courses he is responsible for
+     * If student has delegate role, get the curricular courses he is
+     * responsible for
      */
     public Set<CurricularCourse> getCurricularCoursesResponsibleForByFunctionType(FunctionType delegateFunctionType,
 	    ExecutionYear executionYear) {
@@ -1913,14 +1913,18 @@ public class Student extends Student_Base {
 		}
 
 		/*
-		 * The conditions below are not equivalent of bolonha master degree registrations
+		 * The conditions below are not equivalent of bolonha master
+		 * degree registrations
 		 * 
-		 * What if the student is enrolled on bolonha degree and master degree at the same time? He will be able to subscribe.
-		 * But this rule is not applied for integrated master degrees students
+		 * What if the student is enrolled on bolonha degree and master
+		 * degree at the same time? He will be able to subscribe. But
+		 * this rule is not applied for integrated master degrees
+		 * students
 		 * 
 		 * if (hasConcludedFirstCycle(registration)) { return true; }
 		 * 
-		 * if (hasAnyOtherConcludedFirstCycle(registration)) { return true; }
+		 * if (hasAnyOtherConcludedFirstCycle(registration)) { return
+		 * true; }
 		 */
 	    }
 	}
@@ -2073,36 +2077,35 @@ public class Student extends Student_Base {
 	int i = 0;
 	for (Registration registration : registrations) {
 	    JSONObject studentInfoForJobBank = new JSONObject();
-	    //	    studentInfoForJobBank.put("username", registration.getPerson().getUsername());
-	    //	    studentInfoForJobBank.put("hasPersonalDataAuthorization", registration.getStudent()
-	    //		    .hasPersonalDataAuthorizationForProfessionalPurposesAt().toString());
-	    //	    Person person = registration.getStudent().getPerson();
-	    //	    studentInfoForJobBank.put("dateOfBirth", person.getDateOfBirthYearMonthDay() == null ? null : person
-	    //		    .getDateOfBirthYearMonthDay().toString());
-	    //	    studentInfoForJobBank.put("nationality", person.getCountry() == null ? null : person.getCountry().getName());
-	    //	    studentInfoForJobBank.put("address", person.getDefaultPhysicalAddress().getAddress());
-	    //	    studentInfoForJobBank.put("area", person.getDefaultPhysicalAddress().getArea());
-	    //	    studentInfoForJobBank.put("areaCode", person.getDefaultPhysicalAddress().getAreaCode());
-	    //	    studentInfoForJobBank.put("districtSubdivisionOfResidence", person.getDefaultPhysicalAddress()
-	    //		    .getDistrictSubdivisionOfResidence());
-	    //	    studentInfoForJobBank.put("mobilePhone", person.getDefaultMobilePhoneNumber());
-	    //	    studentInfoForJobBank.put("phone", person.getDefaultPhoneNumber());
-	    //	    studentInfoForJobBank.put("email", person.getEmailForSendingEmails());
-	    //	    studentInfoForJobBank.put("remoteRegistrationOID", registration.getExternalId());
-	    //	    studentInfoForJobBank.put("number", registration.getNumber().toString());
-	    //	    studentInfoForJobBank.put("degreeOID", registration.getDegree().getExternalId());
-	    //	    studentInfoForJobBank.put("isConcluded", String.valueOf(registration.isRegistrationConclusionProcessed()));
-	    //	    studentInfoForJobBank.put("curricularYear", String.valueOf(registration.getCurricularYear()));
+	    studentInfoForJobBank.put("username", registration.getPerson().getUsername());
+	    studentInfoForJobBank.put("hasPersonalDataAuthorization", registration.getStudent()
+		    .hasPersonalDataAuthorizationForProfessionalPurposesAt().toString());
+	    Person person = registration.getStudent().getPerson();
+	    studentInfoForJobBank.put("dateOfBirth", person.getDateOfBirthYearMonthDay() == null ? null : person
+		    .getDateOfBirthYearMonthDay().toString());
+	    studentInfoForJobBank.put("nationality", person.getCountry() == null ? null : person.getCountry().getName());
+	    studentInfoForJobBank.put("address", person.getDefaultPhysicalAddress().getAddress());
+	    studentInfoForJobBank.put("area", person.getDefaultPhysicalAddress().getArea());
+	    studentInfoForJobBank.put("areaCode", person.getDefaultPhysicalAddress().getAreaCode());
+	    studentInfoForJobBank.put("districtSubdivisionOfResidence", person.getDefaultPhysicalAddress()
+		    .getDistrictSubdivisionOfResidence());
+	    studentInfoForJobBank.put("mobilePhone", person.getDefaultMobilePhoneNumber());
+	    studentInfoForJobBank.put("phone", person.getDefaultPhoneNumber());
+	    studentInfoForJobBank.put("email", person.getEmailForSendingEmails());
+	    studentInfoForJobBank.put("remoteRegistrationOID", registration.getExternalId());
+	    studentInfoForJobBank.put("number", registration.getNumber().toString());
+	    studentInfoForJobBank.put("degreeOID", registration.getDegree().getExternalId());
+	    studentInfoForJobBank.put("isConcluded", String.valueOf(registration.isRegistrationConclusionProcessed()));
+	    studentInfoForJobBank.put("curricularYear", String.valueOf(registration.getCurricularYear()));
 	    for (CycleCurriculumGroup cycleCurriculumGroup : registration.getLastStudentCurricularPlan()
 		    .getCycleCurriculumGroups()) {
-		//		studentInfoForJobBank.put(cycleCurriculumGroup.getCycleType().name(), cycleCurriculumGroup.getAverage()
-		//			.toString());
+		studentInfoForJobBank.put(cycleCurriculumGroup.getCycleType().name(), cycleCurriculumGroup.getAverage()
+			.toString());
 
 	    }
-	    //	    infos.add(studentInfoForJobBank);
+	    infos.add(studentInfoForJobBank);
 	}
-	//	return infos.toJSONString();
-	return null;
+	return infos.toJSONString();
     }
 
     public PersonalIngressionData getLatestPersonalIngressionData() {
