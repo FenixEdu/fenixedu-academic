@@ -2,6 +2,9 @@ package net.sourceforge.fenixedu.presentationTier.Action.manager.functionalities
 
 import java.io.Serializable;
 
+import net.sourceforge.fenixedu.domain.accessControl.Group;
+import net.sourceforge.fenixedu.domain.contents.Content;
+
 /**
  * Helper used to collect a single expression string from the user.
  * 
@@ -17,8 +20,16 @@ public class ExpressionBean implements Serializable {
 	super();
     }
 
-    public ExpressionBean(String expression) {
-	this.expression = expression;
+    public ExpressionBean(final String expression) {
+	setExpression(expression);
+    }
+
+    public ExpressionBean(final Group group) {
+	this(group == null ? null : group.getExpression());
+    }
+
+    public ExpressionBean(final Content content) {
+	this(content == null ? null : content.getPermittedGroup());
     }
 
     public String getExpression() {
@@ -33,4 +44,5 @@ public class ExpressionBean implements Serializable {
 	    this.expression = expression.replaceAll("\\r\\n?", "\n");
 	}
     }
+
 }
