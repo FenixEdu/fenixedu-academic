@@ -65,7 +65,7 @@ public class ParseSubQuestion extends DefaultHandler {
 	    try {
 		parseFile(question.getXmlFile(), path);
 	    } catch (Exception e) {
-		throw new ParseQuestionException();
+		throw new ParseQuestionException(e);
 	    }
 	    for (QuestionElement questionElement : questionElementList) {
 		question.addSubQuestion(createSubQuestion(questionElement));
@@ -79,7 +79,7 @@ public class ParseSubQuestion extends DefaultHandler {
 	try {
 	    parseFile(fileString, path);
 	} catch (Exception e) {
-	    throw new ParseQuestionException();
+	    throw new ParseQuestionException(e);
 	}
 	return createSubQuestion(questionElementList.get(0));
     }
@@ -90,7 +90,7 @@ public class ParseSubQuestion extends DefaultHandler {
 	    try {
 		parseFile(studentTestQuestion.getQuestion().getXmlFile(), path);
 	    } catch (Exception e) {
-		throw new ParseQuestionException();
+		throw new ParseQuestionException(e);
 	    }
 	    for (QuestionElement questionElement : questionElementList) {
 		studentTestQuestion.addStudentSubQuestion(createSubQuestion(questionElement));
@@ -417,7 +417,7 @@ public class ParseSubQuestion extends DefaultHandler {
 		try {
 		    value = df.parse(element.getValue().replace(',', '.')).doubleValue();
 		} catch (ParseException e) {
-		    throw new ParseQuestionException("Erro na cotação da pergunta");
+		    throw new ParseQuestionException("Erro na cotação da pergunta", e);
 		}
 		responseProcessing.setResponseValue(value);
 		if (responseProcessing.getAction().intValue() == ResponseProcessing.SET

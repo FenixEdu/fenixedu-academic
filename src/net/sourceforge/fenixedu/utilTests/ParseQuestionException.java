@@ -14,8 +14,16 @@ public class ParseQuestionException extends Exception {
     public ParseQuestionException() {
     }
 
+    public ParseQuestionException(final Throwable t) {
+	super(t);
+    }
+
     public ParseQuestionException(String errorMessage) {
 	super(errorMessage);
+    }
+
+    public ParseQuestionException(String errorMessage, final Throwable t) {
+	super(errorMessage, t);
     }
 
     public ParseQuestionException(String element, boolean isElement) {
