@@ -172,6 +172,10 @@ li {
 #logoist {
 	margin:25px 0 25px 40px;
 }
+#logoist a {
+	text-decoration: none;
+	border: none;
+}
 #header_links {
 	position:absolute;
 	top:20px;
