@@ -5,63 +5,45 @@
 <html:xhtml/>
 
 <style>
-.MobilityApplicationProcessCreation-PreLoadConfigurations-Frame-Ok {
+.MobilityApplicationProcessCreation-PreLoadConfigurations-Frame {
 	border: 1px dotted #112233;
-	height: 80px;
-	width: 390px;
-}
-
-.MobilityApplicationProcessCreation-PreLoadConfigurations-Frame-Warn {
-	border: 1px dotted #112233;
-	height: 80px;
-	width: 540px;
-}
-
-.MobilityApplicationProcessCreation-PreLoadConfigurations-Frame-Error {
-	border: 1px dotted #112233;
-	height: 80px;
-	width: 400px;
+	display: inline-block;
 }
 
 .MobilityApplicationProcessCreation-PreLoadConfigurations-Panel-Ok {
 	background-color: rgb(240, 240, 240);
 	margin: 5px;
-	height: 70px;
+	padding: 30px;
 }
 
 .MobilityApplicationProcessCreation-PreLoadConfigurations-Panel-Warn {
 	background-color: rgb(255, 230, 163);
 	margin: 5px;
-	height: 70px;
+	padding: 30px;
 }
 
 .MobilityApplicationProcessCreation-PreLoadConfigurations-Panel-Error {
 	background-color: rgb(255, 110, 107);
 	margin: 5px;
-	height: 70px;
+	padding: 30px;
 }
 
 a {border-bottom: none !important;}
 
 .MobilityApplicationProcessCreation-PreLoadConfigurations-Link {
 	display: inline;
-	position: relative;
-	top: 21px;
-	left: 20px;
 }
 
 .MobilityApplicationProcessCreation-PreLoadConfigurations-MessageBox {
-	display: inline;
-	position: relative;
+	display: inline-block;
 	background: white;
-	top: 20px;
-	left: 30px;
-	padding: 6px;
+	padding: 3px 8px;
+	margin-left: 7px;
 }
 
 .MobilityApplicationProcessCreation-PreLoadConfigurations-MessageIcon {
 	position:relative;
-	top:4px;
+	top: 3px;
 	padding-right: 4px;
 }
 
@@ -116,12 +98,12 @@ a {border-bottom: none !important;}
 </fr:edit>
 <br/>
 
-<h3>Pré-carregamento de configurações</h3>
-<div class="MobilityApplicationProcessCreation-PreLoadConfigurations-Frame-<%=preloadLevel%>">
+<h3><bean:message key='<%= "mobilityApplicationProcess.editProcess.preLoadTitle" %>' bundle="CASE_HANDLING_RESOURCES" /></h3>
+<div class="MobilityApplicationProcessCreation-PreLoadConfigurations-Frame">
 	<div class="MobilityApplicationProcessCreation-PreLoadConfigurations-Panel-<%=preloadLevel%>">
 		<div class="MobilityApplicationProcessCreation-PreLoadConfigurations-Link">
 			<a href='<%= request.getContextPath() + "/academicAdminOffice/caseHandling" + processName.toString() + ".do?method=preLoadLastConfigurations&amp;processEid=" + processEid + "&amp;processId=" + processId %>'>
-				<button <% if (preloadLevel == "Error") %> disabled="disabled" <% ; %>type='button'>Carregar configurações</button>
+				<button <% if (preloadLevel == "Error") %> disabled="disabled" <% ; %>type='button'><bean:message key='<%= "mobilityApplicationProcess.editProcess.preLoadButton" %>' bundle="CASE_HANDLING_RESOURCES" /></button>
 			</a>
 		</div>
 		<% 	String iconName = "";
