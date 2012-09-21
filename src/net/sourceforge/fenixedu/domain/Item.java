@@ -78,9 +78,15 @@ public class Item extends Item_Base {
      *         <code>null</code> if the item is the last
      */
     public Item getNextItem() {
-	List<Item> items = (List<Item>) getUniqueParentContainer().getOrderedChildren(Item.class);
-	Integer order = items.indexOf(this) + 1;
-	return order < items.size() ? items.get(order) : null;
+	Item result = null;
+
+	if (hasAnyParents()) {
+	    final List<Item> items = (List<Item>) getUniqueParentContainer().getOrderedChildren(Item.class);
+	    final Integer order = items.indexOf(this) + 1;
+	    result = order < items.size() ? items.get(order) : null;
+	}
+
+	return result;
     }
 
     /**
@@ -95,7 +101,7 @@ public class Item extends Item_Base {
     public void setNextItem(Item item) {
 	if (item != null) {
 	    setItemOrder(item.getUniqueParentExplicitOrderNode().getNodeOrder());
-	} else {
+	} else if (hasAnyParents()) {
 	    List<Item> items = (List<Item>) getUniqueParentContainer().getChildren(Item.class);
 	    setItemOrder(items.size() - 1);
 	}
@@ -163,7 +169,9 @@ public class Item extends Item_Base {
     }
 
     public void removeSection() {
-	getUniqueParentExplicitOrderNode().delete();
+	if (hasAnyParents()) {
+	    getUniqueParentExplicitOrderNode().delete();
+	}
     }
 
     public Section getSection() {
