@@ -467,7 +467,7 @@
 	      <url-pattern>*.jsp</url-pattern>
 	      <el-ignored>true</el-ignored>
 	      <!--<page-encoding>UTF-8</page-encoding>-->
-	      <page-encoding>ISO-8859-1</page-encoding>
+	      <page-encoding>UTF-8</page-encoding>
 	    </jsp-property-group>
     </jsp-config>
     
