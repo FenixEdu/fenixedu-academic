@@ -4,7 +4,7 @@
 <html:html xhtml="true">
 <head>
 <title></title>
-<meta http-equiv="Content-Type" content="text/html; charset=<%= net.sourceforge.fenixedu._development.PropertiesManager.DEFAULT_CHARSET %>" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <link href="<%= request.getContextPath() %>/CSS/dotist.css" rel="stylesheet" media="screen" type="text/css" />
 <link href="<%= request.getContextPath() %>/CSS/print.css" rel="stylesheet" media="print" type="text/css" />
 

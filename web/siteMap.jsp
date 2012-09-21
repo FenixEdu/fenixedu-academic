@@ -1,4 +1,5 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<%@page import="java.nio.charset.Charset"%>
 <%@ taglib uri="/WEB-INF/struts-tiles.tld" prefix="tiles" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
@@ -6,7 +7,7 @@
 
 <html:html xhtml="true">
 	<head>
-		<meta http-equiv="Content-Type" content="text/html; charset=<%= net.sourceforge.fenixedu._development.PropertiesManager.DEFAULT_CHARSET %>" />
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 		<meta name="keywords" content="<bean:message key="meta.keywords" bundle="GLOBAL_RESOURCES"/>" />
 		<meta name="description" content="<bean:message key="meta.description" bundle="GLOBAL_RESOURCES"/>" />
 
@@ -104,5 +105,12 @@
 			</bean:define>
 			<jsp:include page="degreesTable.jsp"/>
 		</div>
+
+		<br/>
+		request charset: <%= request.getCharacterEncoding() %>
+		<br/>
+		default charst: <%= Charset.defaultCharset() %>
+		<br/>
+
 	</body>
 </html:html>

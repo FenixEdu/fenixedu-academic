@@ -10,7 +10,7 @@
 <html xml:lang="pt-PT" xmlns="http://www.w3.org/1999/xhtml" lang="pt-PT"> 
 <head> 
 <title>QUC</title> 
-<meta http-equiv="Content-Type" content="text/html; charset=<%= net.sourceforge.fenixedu._development.PropertiesManager.DEFAULT_CHARSET %>" /> 
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" /> 
  
 <script type="text/javascript" src="<%= request.getContextPath() %>/javaScript/inquiries/jquery.min.js"></script> 
 <script type="text/javascript">jQuery.noConflict();</script> 

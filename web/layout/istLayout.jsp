@@ -8,7 +8,7 @@
 <%@page import="net.sourceforge.fenixedu.presentationTier.servlets.filters.functionalities.FilterFunctionalityContext"%>
 <html:html xhtml="true">
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=<%= net.sourceforge.fenixedu._development.PropertiesManager.DEFAULT_CHARSET %>" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="keywords" content="<bean:message key="meta.keywords" bundle="GLOBAL_RESOURCES"/>" />
 <meta name="description" content="<bean:message key="meta.description" bundle="GLOBAL_RESOURCES"/>" />
 <logic:present name="dont-cache-pages-in-search-engines">

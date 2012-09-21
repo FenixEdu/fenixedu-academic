@@ -12,7 +12,7 @@
 <title>QUC</title> 
 
 <link href="<%= request.getContextPath() %>/CSS/quc_results.css" rel="stylesheet" media="screen, print" type="text/css" />
-<meta http-equiv="Content-Type" content="text/html; charset=<%= net.sourceforge.fenixedu._development.PropertiesManager.DEFAULT_CHARSET %>" /> 
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" /> 
  
 <style>
 .question {

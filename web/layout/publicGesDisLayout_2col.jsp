@@ -10,7 +10,7 @@
 <html:html xhtml="true">
 
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=<%= net.sourceforge.fenixedu._development.PropertiesManager.DEFAULT_CHARSET %>" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 
 <%-- <link rel="stylesheet" type="text/css" media="screen" href="<%= request.getContextPath() %>/CSS/iststyle.css" /> --%>
 <link rel="stylesheet" type="text/css" media="print" href="<%= request.getContextPath() %>/CSS/iststyle_print.css" />

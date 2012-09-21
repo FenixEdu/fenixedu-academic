@@ -8,7 +8,7 @@
 
 <html:html xhtml="true">
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=<%= net.sourceforge.fenixedu._development.PropertiesManager.DEFAULT_CHARSET %>" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 
 <style type="text/css" media="screen,print">
 body {

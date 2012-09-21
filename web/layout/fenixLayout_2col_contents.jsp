@@ -6,7 +6,7 @@
 <html:html xhtml="true">
 <head>
 	<title><bean:message key="dot.title" bundle="GLOBAL_RESOURCES"/> - <tiles:insert name="title" ignore="true" /></title>
-	<meta http-equiv="Content-Type" content="text/html; charset=<%= net.sourceforge.fenixedu._development.PropertiesManager.DEFAULT_CHARSET %>" />
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 	<%
 		final String contextPath = request.getContextPath();
 	%>
