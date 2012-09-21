@@ -201,7 +201,8 @@ public class Login extends Login_Base {
 		&& !person.hasRole(RoleType.IT_PROJECTS_MANAGER)
 		&& !person.hasRole(RoleType.ISTID_PROJECTS_MANAGER)
 		&& !person.hasRole(RoleType.ADIST_PROJECTS_MANAGER)
-		&& !person.hasRole(RoleType.MANAGER)) {
+		&& !person.hasRole(RoleType.MANAGER)
+		&& !person.hasRole(RoleType.GRANT_OWNER)) {
 
 	    // minusDays(1) -> This is for person dont make login today
 	    YearMonthDay currentDate = new YearMonthDay().minusDays(1);
@@ -228,6 +229,7 @@ public class Login extends Login_Base {
 	case ISTID_PROJECTS_MANAGER:
 	case ADIST_PROJECTS_MANAGER:
 	case PROJECTS_MANAGER:
+	case GRANT_OWNER:
 	    for (LoginPeriod loginPeriod : getLoginPeriodsSet()) {
 		if (loginPeriod.getEndDate() == null) {
 		    return;
