@@ -5,6 +5,8 @@ import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.accessControl.Group;
 import net.sourceforge.fenixedu.domain.accessControl.GroupUnion;
 import net.sourceforge.fenixedu.domain.accessControl.PersonGroup;
+import net.sourceforge.fenixedu.domain.accessControl.RoleGroup;
+import net.sourceforge.fenixedu.domain.person.RoleType;
 import pt.utl.ist.fenix.tools.file.VirtualPath;
 import pt.utl.ist.fenix.tools.file.VirtualPathNode;
 
@@ -23,7 +25,8 @@ public class ExecutionCourseAuditFile extends ExecutionCourseAuditFile_Base {
     private Group getPermissionGroup() {
 	PersonGroup teacherGroup = new PersonGroup(getExecutionCourseAudit().getTeacherAuditor().getPerson());
 	PersonGroup studentGroup = new PersonGroup(getExecutionCourseAudit().getStudentAuditor().getPerson());
-	return new GroupUnion(teacherGroup, studentGroup);
+	RoleGroup pedagogicalCouncil = new RoleGroup(RoleType.PEDAGOGICAL_COUNCIL);
+	return new GroupUnion(teacherGroup, studentGroup, pedagogicalCouncil);
     }
 
     private VirtualPath getVirtualPath() {
