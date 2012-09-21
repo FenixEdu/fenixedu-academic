@@ -243,9 +243,9 @@ public class DegreeChangeIndividualCandidacy extends DegreeChangeIndividualCandi
 	formatter.format("%s: %s\n", candidateBundle.getString("label.process.id"), getCandidacyProcess().getProcessCode());
 	PrecedentDegreeInformation precedentDegreeInformation = getCandidacyProcess().getPrecedentDegreeInformation();
 	formatter.format("%s: %s\n", bundle.getString("label.SecondCycleIndividualCandidacy.previous.degree"),
-		precedentDegreeInformation.getDegreeDesignation());
+		precedentDegreeInformation.getPrecedentDegreeDesignation());
 	formatter.format("%s: %s\n", bundle.getString("label.SecondCycleIndividualCandidacy.institution"),
-		precedentDegreeInformation.getInstitution().getName());
+		precedentDegreeInformation.getPrecedentInstitution().getName());
 	formatter.format("%s: %s\n", applicationBundle.getString("label.candidacy.numberOfEnroledCurricularCourses"),
 		precedentDegreeInformation.getNumberOfEnroledCurricularCourses());
 	formatter.format("%s: %s\n", applicationBundle.getString("label.candidacy.numberOfApprovedCurricularCourses"),
@@ -276,6 +276,7 @@ public class DegreeChangeIndividualCandidacy extends DegreeChangeIndividualCandi
 	return getCandidacyProcess().getDisplayName() + (hasSelectedDegree() ? ": " + getSelectedDegree().getNameI18N() : "");
     }
 
+    @Override
     public boolean isDegreeChange() {
 	return true;
     }
