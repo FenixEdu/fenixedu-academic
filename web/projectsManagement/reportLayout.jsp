@@ -1,4 +1,6 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<%@page import="net.sourceforge.fenixedu.injectionCode.AccessControl"%>
+<%@page import="net.sourceforge.fenixedu._development.PropertiesManager"%>
 <%@ taglib uri="/WEB-INF/struts-tiles.tld" prefix="tiles"%>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
@@ -20,6 +22,9 @@
 </head>
 
 <body>
+<% if (PropertiesManager.useBarraAsAuthenticationBroker()) { %>
+<script id="ist-bar" data-login="https://fenix.ist.utl.pt/loginPage.jsp" data-fluid="true" <% if(AccessControl.getUserView() == null) {%> data-use-offline="true" <%} %> data-next-param="service" src="https://barra.ist.utl.pt/site_media/static/js/barra.js"></script>
+<% } %>
 <%-- Layout component parameters : title, context, header, navGeral, navLocal, body, footer --%>
 
 <!-- Context -->
@@ -28,30 +33,28 @@
 
 
 <!-- Header -->
+<% if (!PropertiesManager.useBarraAsAuthenticationBroker()) { %>
 <div id="top">
 	<h1 id="logo">
 		<img alt="<bean:message key="institution.logo" bundle="IMAGE_RESOURCES" />" src="<bean:message key="dot.logo" bundle="GLOBAL_RESOURCES" arg0="<%= request.getContextPath() %>"/>"/>
 	</h1>
 
-	<%--
-	<tiles:getAsString name="serviceName" />
-	--%>
-	
-	<bean:define id="supportLink" type="java.lang.String">mailto:<bean:message key="suporte.mail" bundle="GLOBAL_RESOURCES"/></bean:define>
-	<ul>
-		<li style="display: none;"><a href="">Skip to Content</a> |</li>
-		<li class="support"><a href="<%= supportLink %>">Suporte</a></li>
-		<li class="logout"><a href="<%= request.getContextPath() %>/logoff.do">Logout</a></li>
-	</ul>
+	<tiles:insert page="/commons/headerButtons.jsp" />
 	<p id="user">
 		<tiles:insert page="/commons/personalInfoTitleBar.jsp" />
 	</p>
 </div>
+<% } %>
 <!-- End Header -->
 
 
 <!-- NavGeral -->
 <div id="navtop">
+	<% if (PropertiesManager.useBarraAsAuthenticationBroker()) { %>
+	<h1 class="applicationName">
+		<bean:message key="application.name" bundle="GLOBAL_RESOURCES" /><span class="applicationName-subtle"><bean:message key="application.name.subtle" bundle="GLOBAL_RESOURCES" /></span>
+	</h1>
+	<% } %>
 	<tiles:insert attribute="navGeral" />
 </div>
 <!-- End NavGeral -->
