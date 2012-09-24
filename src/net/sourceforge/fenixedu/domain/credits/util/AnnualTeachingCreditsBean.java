@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Set;
+import java.util.SortedSet;
 import java.util.TreeSet;
 
 import net.sourceforge.fenixedu.domain.Department;
@@ -20,6 +21,7 @@ import net.sourceforge.fenixedu.domain.phd.InternalPhdParticipant;
 import net.sourceforge.fenixedu.domain.teacher.OtherService;
 import net.sourceforge.fenixedu.domain.teacher.TeacherService;
 import net.sourceforge.fenixedu.domain.teacher.TeacherServiceComment;
+import net.sourceforge.fenixedu.domain.teacher.TeacherServiceLog;
 import net.sourceforge.fenixedu.domain.thesis.Thesis;
 import net.sourceforge.fenixedu.domain.thesis.ThesisEvaluationParticipant;
 import net.sourceforge.fenixedu.domain.thesis.ThesisParticipationType;
@@ -312,6 +314,14 @@ public class AnnualTeachingCreditsBean implements Serializable {
 
     public void setCorrectionInYears(Set<ExecutionYear> correctionInYears) {
 	this.correctionInYears = correctionInYears;
+    }
+
+    public SortedSet<TeacherServiceLog> getLogs() {
+	final SortedSet<TeacherServiceLog> logs = new TreeSet<TeacherServiceLog>();
+	for (final AnnualTeachingCreditsByPeriodBean bean : annualTeachingCreditsByPeriodBeans) {
+	    logs.addAll(bean.getLogs());
+	}
+	return logs;
     }
 
 }

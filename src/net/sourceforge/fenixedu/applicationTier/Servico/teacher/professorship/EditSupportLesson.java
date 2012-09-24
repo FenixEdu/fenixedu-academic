@@ -8,6 +8,8 @@ import net.sourceforge.fenixedu.domain.SupportLesson;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.teacher.TeacherService;
+import net.sourceforge.fenixedu.domain.teacher.TeacherServiceLog;
+import net.sourceforge.fenixedu.util.BundleUtil;
 
 public class EditSupportLesson extends FenixService {
 
@@ -22,11 +24,29 @@ public class EditSupportLesson extends FenixService {
 	    new TeacherService(teacher, executionSemester);
 	}
 
+	final StringBuilder log = new StringBuilder();
+
 	SupportLesson supportLesson = rootDomainObject.readSupportLessonByOID(supportLessonDTO.getIdInternal());
 	if (supportLesson == null) {
 	    supportLesson = new SupportLesson(supportLessonDTO, professorship, roleType);
+	    log.append(BundleUtil.getStringFromResourceBundle("resources.TeacherCreditsSheetResources", "label.teacher.schedule.supportLessons.create"));
 	} else {
 	    supportLesson.update(supportLessonDTO, roleType);
+	    log.append(BundleUtil.getStringFromResourceBundle("resources.TeacherCreditsSheetResources", "label.teacher.schedule.supportLessons.change"));
 	}
+
+	log.append(supportLessonDTO.getWeekDay().toString());
+	log.append(" ");
+	log.append(supportLessonDTO.getStartTime().getHours());
+	log.append(":");
+	log.append(supportLessonDTO.getStartTime().getMinutes());
+	log.append(" - ");
+	log.append(supportLessonDTO.getEndTime().getHours());
+	log.append(":");
+	log.append(supportLessonDTO.getEndTime().getMinutes());
+	log.append(" - ");
+	log.append(supportLessonDTO.getPlace());
+
+	new TeacherServiceLog(teacherService, log.toString());
     }
 }

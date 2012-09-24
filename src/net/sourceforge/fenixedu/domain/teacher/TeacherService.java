@@ -5,6 +5,8 @@ import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.SortedSet;
+import java.util.TreeSet;
 
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
@@ -302,6 +304,10 @@ public class TeacherService extends TeacherService_Base {
 
     public BigDecimal getReductionServiceCredits() {
 	return getReductionService() == null ? BigDecimal.ZERO : getReductionService().getCreditsReduction();
+    }
+
+    public SortedSet<TeacherServiceLog> getSortedLogs() {
+	return new TreeSet<TeacherServiceLog>(getTeacherServiceLogSet());
     }
 
 }

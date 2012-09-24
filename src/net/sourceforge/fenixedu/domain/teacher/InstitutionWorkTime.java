@@ -7,6 +7,7 @@ import net.sourceforge.fenixedu.dataTransferObject.teacher.workTime.InstitutionW
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.person.RoleType;
+import net.sourceforge.fenixedu.util.BundleUtil;
 import net.sourceforge.fenixedu.util.CalendarUtil;
 import net.sourceforge.fenixedu.util.WeekDay;
 import net.sourceforge.fenixedu.util.date.TimePeriod;
@@ -26,6 +27,22 @@ public class InstitutionWorkTime extends InstitutionWorkTime_Base {
 	setEndTime(endTime);
 	setWeekDay(weekDay);
 	verifyOverlappings();
+	log("label.teacher.schedule.institutionWorkTime.create");
+    }
+
+    private void log(final String key) {
+	final StringBuilder log = new StringBuilder();
+	log.append(BundleUtil.getStringFromResourceBundle("resources.TeacherCreditsSheetResources", key));
+	log.append(getWeekDay().toString());
+	log.append(" ");
+	log.append(getStartTime().getHours());
+	log.append(":");
+	log.append(getStartTime().getMinutes());
+	log.append(" - ");
+	log.append(getEndTime().getHours());
+	log.append(":");
+	log.append(getEndTime().getMinutes());
+	new TeacherServiceLog(getTeacherService(), log.toString());
     }
 
     private RoleType getUserRoleType() {
@@ -43,6 +60,7 @@ public class InstitutionWorkTime extends InstitutionWorkTime_Base {
     @Service
     public void delete(RoleType roleType) {
 	getTeacherService().getExecutionPeriod().checkValidCreditsPeriod(roleType);
+	log("label.teacher.schedule.institutionWorkTime.delete");
 	removeTeacherService();
 	super.delete();
     }
@@ -58,6 +76,7 @@ public class InstitutionWorkTime extends InstitutionWorkTime_Base {
 	setStartTime(institutionWorkTimeDTO.getStartTime());
 	setEndTime(institutionWorkTimeDTO.getEndTime());
 	verifyOverlappings();
+	log("label.teacher.schedule.institutionWorkTime.edit");
     }
 
     public void update(WeekDay weekDay, Date startTime, Date endTime) {
@@ -65,6 +84,7 @@ public class InstitutionWorkTime extends InstitutionWorkTime_Base {
 	setStartTime(startTime);
 	setEndTime(endTime);
 	verifyOverlappings();
+	log("label.teacher.schedule.institutionWorkTime.edit");
     }
 
     private void verifyOverlappings() {

@@ -536,6 +536,16 @@ $(document).ready(function() {
 	</div>
 </div>
 
+<div class="panel"><h3 class="infoop mtop2"><img id="status-icon" width="15px" alt="" src="<%= request.getContextPath() +"/images/right30.png" %>">
+	<b><bean:message key="label.teacher.service.logs" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></b>
+	<logic:equal name="areCreditsCalculated" value="true">
+		<span>-</span>
+	</logic:equal></h3>
+	<div class="inner-panel" style="display: none;">
+		<jsp:include page="showTeachingServiceLogs.jsp"/>
+	</div>
+</div>
+
 <logic:equal name="areCreditsCalculated" value="true">
 	<logic:equal name="annualTeachingCreditsBean" property="hasAnyLimitation" value="true">
 		<p><span class="tderror1">* </span><bean:message key="message.hasCreditsLimitation" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></p>

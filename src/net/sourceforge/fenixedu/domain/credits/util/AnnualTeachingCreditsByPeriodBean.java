@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Set;
 
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.Professorship;
@@ -15,6 +16,7 @@ import net.sourceforge.fenixedu.domain.teacher.InstitutionWorkTime;
 import net.sourceforge.fenixedu.domain.teacher.OtherService;
 import net.sourceforge.fenixedu.domain.teacher.ReductionService;
 import net.sourceforge.fenixedu.domain.teacher.TeacherService;
+import net.sourceforge.fenixedu.domain.teacher.TeacherServiceLog;
 import net.sourceforge.fenixedu.domain.teacher.TeacherServiceNotes;
 
 import org.apache.commons.beanutils.BeanComparator;
@@ -138,4 +140,14 @@ public class AnnualTeachingCreditsByPeriodBean implements Serializable {
     public void setCanEditTeacherManagementFunctions(Boolean canEditTeacherManagementFunctions) {
 	this.canEditTeacherManagementFunctions = canEditTeacherManagementFunctions;
     }
+
+    public TeacherService getTeacherService() {
+	return teacher.getTeacherServiceByExecutionPeriod(executionPeriod);
+    }
+
+    public Set<TeacherServiceLog> getLogs() {
+	final TeacherService teacherService = getTeacherService();
+	return teacherService == null ? Collections.EMPTY_SET : teacherService.getSortedLogs();
+    }
+
 }

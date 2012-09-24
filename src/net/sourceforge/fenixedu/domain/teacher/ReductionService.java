@@ -8,6 +8,7 @@ import net.sourceforge.fenixedu.domain.teacher.evaluation.ApprovedTeacherEvaluat
 import net.sourceforge.fenixedu.domain.teacher.evaluation.FacultyEvaluationProcessYear;
 import net.sourceforge.fenixedu.domain.teacher.evaluation.TeacherEvaluationMark;
 import net.sourceforge.fenixedu.domain.teacher.evaluation.TeacherEvaluationProcess;
+import net.sourceforge.fenixedu.util.BundleUtil;
 
 import org.joda.time.Interval;
 import org.joda.time.PeriodType;
@@ -25,6 +26,7 @@ public class ReductionService extends ReductionService_Base {
 	}
 	setTeacherService(teacherService);
 	setCreditsReduction(creditsReduction);
+	log("label.teacher.schedule.reductionService.create");
     }
 
     @Override
@@ -49,6 +51,7 @@ public class ReductionService extends ReductionService_Base {
 	}
 
 	super.setCreditsReduction(creditsReduction);
+	log("label.teacher.schedule.reductionService.edit");
     }
 
     private BigDecimal getTeacherMaxCreditsFromAge() {
@@ -108,4 +111,12 @@ public class ReductionService extends ReductionService_Base {
 	}
 	return BigDecimal.ZERO;
     }
+
+    private void log(final String key) {
+	final StringBuilder log = new StringBuilder();
+	log.append(BundleUtil.getStringFromResourceBundle("resources.TeacherCreditsSheetResources", key));
+	log.append(getCreditsReduction());
+	new TeacherServiceLog(getTeacherService(), log.toString());
+    }
+
 }

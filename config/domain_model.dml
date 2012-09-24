@@ -5960,6 +5960,11 @@ class DomainObject {
     class teacher.TeacherService extends DomainObject {
     }
 
+    class teacher.TeacherServiceLog extends DomainObject {
+    	DateTime modificationDate;
+    	String description;
+    }
+
     class teacher.TeacherServiceItem extends DomainObject {
     }
 
@@ -16457,6 +16462,27 @@ relation RootDomainObjectTeacherService {
     teacher.TeacherService playsRole teacherServices {
         multiplicity *;
     }
+}
+
+relation RootDomainObjectTeacherServiceLog {
+    RootDomainObject playsRole rootDomainObject;
+    teacher.TeacherServiceLog playsRole teacherServiceLog {
+        multiplicity *;
+    }
+}
+
+relation TeacherServiceTeacherServiceLog {
+    teacher.TeacherService playsRole teacherService;
+    teacher.TeacherServiceLog playsRole teacherServiceLog {
+        multiplicity *;
+    }
+}
+
+relation TeacherServiceLogUser {
+    teacher.TeacherServiceLog playsRole teacherServiceLog {
+        multiplicity *;
+    }
+    User playsRole user;
 }
 
 relation RootDomainObjectTeacherServiceItem {
