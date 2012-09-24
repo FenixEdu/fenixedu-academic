@@ -397,7 +397,26 @@ public class StudentLine implements IFileLine, java.io.Serializable {
 	    return null;
 	}
 
-	return getStudentCurricularPlan().getEnrolmentsEctsCredits(getForExecutionYear());
+	return getEnrolmentsEctsCredits(getForExecutionYear());
+    }
+
+    private double getEnrolmentsEctsCredits(final ExecutionYear executionYear) {
+	double result = 0.0;
+	Set<Enrolment> annualEnrolments = new HashSet<Enrolment>();
+
+	for (final ExecutionSemester executionSemester : executionYear.getExecutionPeriodsSet()) {
+	    for (final Enrolment enrolment : getStudentCurricularPlan().getEnrolmentsSet()) {
+		if (enrolment.isValid(executionSemester) && !annualEnrolments.contains(enrolment)) {
+		    result += enrolment.getEctsCredits();
+
+		    if (enrolment.isAnual()) {
+			annualEnrolments.add(enrolment);
+		    }
+		}
+	    }
+	}
+
+	return result;
     }
 
     public boolean isMultiplePersonsFound() {
