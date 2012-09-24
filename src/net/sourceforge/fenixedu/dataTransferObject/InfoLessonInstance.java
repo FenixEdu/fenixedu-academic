@@ -6,6 +6,7 @@ import net.sourceforge.fenixedu.domain.Lesson;
 import net.sourceforge.fenixedu.domain.LessonInstance;
 import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.domain.ShiftType;
+import net.sourceforge.fenixedu.util.BundleUtil;
 import net.sourceforge.fenixedu.util.DiaSemana;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 
@@ -67,7 +68,7 @@ public class InfoLessonInstance extends InfoShowOccupation {
 
     public String getShiftTypesPrettyPrint() {
 	if (getLessonInstance().hasCourseLoad()) {
-	    return Shift.enumerationResourcesBundle.getString(getLessonInstance().getCourseLoad().getType().getName());
+	    return BundleUtil.getStringFromResourceBundle("resources.EnumerationResources", getLessonInstance().getCourseLoad().getType().getName());
 	} else {
 	    return getLessonInstance().getLesson().getShift().getShiftTypesPrettyPrint();
 	}
