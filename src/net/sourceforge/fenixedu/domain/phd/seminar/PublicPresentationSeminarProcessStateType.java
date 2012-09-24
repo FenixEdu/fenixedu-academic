@@ -63,7 +63,8 @@ public enum PublicPresentationSeminarProcessStateType implements PhdProcessState
 		    COMMISSION_WAITING_FOR_VALIDATION, EXEMPTED
 	    });
 	case COMMISSION_WAITING_FOR_VALIDATION:
-	    return Collections.singletonList(COMMISSION_VALIDATED);
+	    return Arrays.asList(new PublicPresentationSeminarProcessStateType[] { COMMISSION_VALIDATED,
+		    WAITING_FOR_COMMISSION_CONSTITUTION });
 	case COMMISSION_VALIDATED:
 	    return Collections.singletonList(PUBLIC_PRESENTATION_DATE_SCHEDULED);
 	case PUBLIC_PRESENTATION_DATE_SCHEDULED:

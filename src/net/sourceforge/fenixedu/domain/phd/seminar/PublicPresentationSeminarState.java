@@ -108,7 +108,7 @@ public class PublicPresentationSeminarState extends PublicPresentationSeminarSta
 	if (!possibleNextStates.contains(type)) {
 	    String expectedStatesDescription = buildExpectedStatesDescription(possibleNextStates);
 	    throw new PhdDomainOperationException("error.phd.seminar.PublicPresentationSeminarState.invalid.next.state",
-		    expectedStatesDescription);
+		    type.getLocalizedName(), expectedStatesDescription);
 	}
 
 	return new PublicPresentationSeminarState(process, type, person, remarks, stateDate);
