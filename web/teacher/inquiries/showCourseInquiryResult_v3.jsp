@@ -34,6 +34,7 @@ page-break-after: always;
 <bean:define id="totalAnswersLabel" name="totalAnswers" property="inquiryQuestion.label"/>
 <bean:define id="totalAnswersNumber" name="totalAnswers" property="questionResult.value"/>
 
+<logic:equal value="true" name="executionCourse" property="availableForInquiries">
 <bean:define id="answerResultsJS">
 <script type="text/javascript"> 
 var chart;
@@ -102,21 +103,9 @@ jQuery(document).ready(function() {
    });
 });
 
-Highcharts.theme = {
-   colors: ["#00518B", "#0072AA", "#000000"],
-   chart: {
-      backgroundColor: {
-         linearGradient: [0, 0, 250, 500],
-         stops: [
-            [0, 'rgb(245, 245, 245)'],
-            [1, 'rgb(245, 245, 245)']
-         ]
-      }
-   }
-};
-var highchartsOptions = Highcharts.setOptions(Highcharts.theme)
 </script> 
 </bean:define>
+</logic:equal>
 
 <bean:define id="workLoadTitle" name="workLoadSummaryBean" property="inquiryGroupQuestion.inquiryQuestionHeader.title"/>
 
@@ -179,6 +168,21 @@ jQuery(document).ready(function() {
 			]
    });
 });
+
+
+Highcharts.theme = {
+   colors: ["#00518B", "#0072AA", "#000000"],
+   chart: {
+      backgroundColor: {
+         linearGradient: [0, 0, 250, 500],
+         stops: [
+            [0, 'rgb(245, 245, 245)'],
+            [1, 'rgb(245, 245, 245)']
+         ]
+      }
+   }
+};
+var highchartsOptions = Highcharts.setOptions(Highcharts.theme)
 </script> 
 </bean:define> 
 
@@ -266,7 +270,9 @@ jQuery(document).ready(function() {
 </script>
 </bean:define>
 
-<bean:write name="answerResultsJS" filter="false"/>
+<logic:equal value="true" name="executionCourse" property="availableForInquiries">
+	<bean:write name="answerResultsJS" filter="false"/>
+</logic:equal>
 <bean:write name="workloadJS" filter="false"/>
 <bean:write name="ucEvaluationsJS" filter="false"/> 
 
@@ -344,33 +350,35 @@ jQuery(document).ready(function() {
 				</tr> 
 			</table>
 		</td> 
-		<td style="width: 500px;"> 
-			<div class="chart" style="margin-top: 5px;"> 
-				<div id="pie1" class="highcharts-container" style="height: 225px; width: 480px;"></div> 
-			</div>
+		<td style="width: 500px; vertical-align: bottom;">
 			<style>				
 				p.nonresponses span, p.inquiry-available span { padding: 0 0 0 0; color: #555; }
 				p.nonresponses, p.inquiry-available { line-height: 20px; margin-bottom: 0; }
 				p.nonresponses { margin-bottom: 0; }
-				p.inquiry-available { margin-top: 0; }			
-			</style>
-			<p class="nonresponses">
-				<span>Opção "Não responder":</span>
-				<bean:size id="size" name="nonAnswersResultsSummaryBean" property="questionsResults"/>
-				<logic:iterate indexId="index" length="length" id="questionResult" name="nonAnswersResultsSummaryBean" property="questionsResults">
-					<bean:define id="questionLabel" name="questionResult" property="inquiryQuestion.label"/>				
-					<bean:define id="questionValue" name="questionResult" property="presentationValue"/>
-					<logic:notEmpty name="questionValue">
-						<logic:notEqual value="0" name="questionValue">
-							<bean:define id="labelValue">
-				            	<%= index+1 != size ? "<span>" + questionLabel.toString() + " " + questionValue + "% - </span>" 
-				            	: "<span>" + questionLabel.toString() + " " + questionValue + "% </span>" %>		            	
-				            </bean:define>
-				            <bean:write name="labelValue" filter="false"/>
-			            </logic:notEqual>
-		            </logic:notEmpty>
-            	</logic:iterate>				
-			</p>
+				p.inquiry-available { margin-top: 0;}			
+			</style> 
+			<logic:equal value="true" name="executionCourse" property="availableForInquiries">
+				<div class="chart" style="margin-top: 5px;"> 
+					<div id="pie1" class="highcharts-container" style="height: 225px; width: 480px;"></div> 
+				</div>				
+				<p class="nonresponses">
+					<span>Opção "Não responder":</span>
+					<bean:size id="size" name="nonAnswersResultsSummaryBean" property="questionsResults"/>
+					<logic:iterate indexId="index" length="length" id="questionResult" name="nonAnswersResultsSummaryBean" property="questionsResults">
+						<bean:define id="questionLabel" name="questionResult" property="inquiryQuestion.label"/>				
+						<bean:define id="questionValue" name="questionResult" property="presentationValue"/>
+						<logic:notEmpty name="questionValue">
+							<logic:notEqual value="0" name="questionValue">
+								<bean:define id="labelValue">
+					            	<%= index+1 != size ? "<span>" + questionLabel.toString() + " " + questionValue + "% - </span>" 
+					            	: "<span>" + questionLabel.toString() + " " + questionValue + "% </span>" %>		            	
+					            </bean:define>
+					            <bean:write name="labelValue" filter="false"/>
+				            </logic:notEqual>
+			            </logic:notEmpty>
+	            	</logic:iterate>				
+				</p>
+			</logic:equal>
 			<p class="inquiry-available">
 				<span>
 					Disponível para inquérito: 
