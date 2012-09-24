@@ -31,7 +31,7 @@ import org.apache.commons.lang.StringUtils;
 import pt.ist.fenixWebFramework.services.Service;
 
 /**
- * @author Jo�o Mota
+ * @author João Mota
  */
 public class Professorship extends Professorship_Base implements ICreditsEventOriginator {
 
