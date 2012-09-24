@@ -37,6 +37,7 @@ import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionEx
 import org.apache.struts.util.LabelValueBean;
 
 import pt.ist.fenixWebFramework.security.UserView;
+import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 /**
  * @author jpvl
@@ -208,7 +209,7 @@ public abstract class RequestUtils {
 
     public static void setLessonTypes(HttpServletRequest request) {
 	final List<LabelValueBean> tiposAula = new ArrayList<LabelValueBean>();
-	final ResourceBundle bundle = ResourceBundle.getBundle("resources.EnumerationResources", request.getLocale());
+	final ResourceBundle bundle = ResourceBundle.getBundle("resources.EnumerationResources", Language.getLocale());
 	for (final ShiftType shiftType : ShiftType.values()) {
 	    tiposAula.add(createLabelValueBean(bundle, shiftType));
 	}
