@@ -223,16 +223,20 @@ public abstract class ResearchResultPublication extends ResearchResultPublicatio
     }
 
     public void setPreferredLevel(PreferredPublicationPriority priority) {
-	if (getPreferredPublicationForCurrentUser() != null && priority == PreferredPublicationPriority.NONE) {
-	    getPreferredPublicationForCurrentUser().delete();
-	} else if (priority != PreferredPublicationPriority.NONE) {
-	    PreferredPublication preferred = getPreferredPublicationForCurrentUser();
-	    if (preferred == null) {
-		IUserView user = UserView.getUser();
-		preferred = new PreferredPublication(user.getPerson(), this, priority);
-	    } else {
-		preferred.setPriority(priority);
+	setPreferredLevel(UserView.<IUserView> getUser().getPerson(), priority);
+    }
+
+    public void setPreferredLevel(Person person, PreferredPublicationPriority priority) {
+	if (getPreferredPublicationForPerson(person) != null) {
+	    getPreferredPublicationForPerson(person).delete();
+	}
+	for (PreferredPublication preferred : person.getPreferredPublicationSet()) {
+	    if (preferred.getPriority().equals(priority)) {
+		preferred.delete();
 	    }
+	}
+	if (priority != PreferredPublicationPriority.NONE) {
+	    new PreferredPublication(person, this, priority);
 	}
     }
 

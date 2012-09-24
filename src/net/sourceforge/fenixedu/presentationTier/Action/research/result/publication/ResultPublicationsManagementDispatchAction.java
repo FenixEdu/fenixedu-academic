@@ -589,8 +589,9 @@ public class ResultPublicationsManagementDispatchAction extends ResultsManagemen
 	setRequestAttributesToList(request, getLoggedPerson(request), first, last);
 	request.setAttribute("first", first);
 	request.setAttribute("last", last);
-
 	request.setAttribute("preferredSetting", true);
+
+	RenderUtils.invalidateViewState();
 	return mapping.findForward("ListPublications");
     }
 
@@ -658,11 +659,6 @@ public class ResultPublicationsManagementDispatchAction extends ResultsManagemen
 	request.setAttribute("personId", person.getIdInternal());
 	request.setAttribute("units", getUnits(person));
 	return mapping.findForward("setUnitToAll");
-    }
-
-    public ActionForward setPreferredPublications(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-	    HttpServletResponse response) {
-	return listPublications(mapping, actionForm, request, response);
     }
 
     /**

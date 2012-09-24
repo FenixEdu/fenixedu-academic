@@ -96,6 +96,10 @@
 	<p>
 		<strong><bean:message key="label.selectedInterval" bundle="RESEARCHER_RESOURCES"/></strong>: <fr:view name="first" property="year"/> - <fr:view name="last" property="year"/>
 	</p>
+	
+	<p>
+		<html:link action="/publications/management.do?method=listPublications"><bean:message bundle="RESEARCHER_RESOURCES" key="label.back"/></html:link>
+	</p>
 </logic:present>
 
 <logic:empty name="publications">
@@ -108,13 +112,7 @@
 <logic:notEmpty name="publications">
 
 <logic:present name="preferredSetting">
-   <fr:form action="/publications/management.do?method=setPreferredPublications">
        <jsp:include page="publicationsCategories.jsp" />
-       <p class="mtop2">
-	       <html:submit><bean:message bundle="RESEARCHER_RESOURCES" key="button.save" /></html:submit>
-	       <html:cancel><bean:message bundle="RESEARCHER_RESOURCES" key="button.cancel" /></html:cancel>
-       </p>
-    </fr:form>
 </logic:present>
 
 <logic:notPresent name="preferredSetting">

@@ -13,11 +13,15 @@
 	<tr>
 	    <td class="priority">
 	    <logic:present name="preferredSetting">
-			<fr:edit name="result" slot="preferredLevel" nested="true">
-			    <fr:layout>
-    			    <fr:property name="defaultOptionHidden" value="true" />
-			    </fr:layout>
-			</fr:edit>
+	    	<bean:define id="firstId" name="first" property="externalId"></bean:define>
+	    	<bean:define id="lastId" name="last" property="externalId"></bean:define>
+	    	<fr:form action="<%= "/publications/management.do?method=prepareSetPreferredPublications&firstOID=" + firstId + "&lastOID=" + lastId  %>">
+				<fr:edit name="result" slot="preferredLevel" nested="true">
+				    <fr:layout name="menu-postback">
+	    			    <fr:property name="defaultOptionHidden" value="true" />
+				    </fr:layout>
+				</fr:edit>
+			</fr:form>
 	    </logic:present>
 	    <logic:notPresent name="preferredSetting">
 	        <bean:define id="level" name="result" property="preferredLevel.name" type="java.lang.String" />
