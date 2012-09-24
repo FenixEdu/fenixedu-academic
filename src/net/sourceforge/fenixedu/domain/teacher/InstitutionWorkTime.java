@@ -33,7 +33,7 @@ public class InstitutionWorkTime extends InstitutionWorkTime_Base {
     private void log(final String key) {
 	final StringBuilder log = new StringBuilder();
 	log.append(BundleUtil.getStringFromResourceBundle("resources.TeacherCreditsSheetResources", key));
-	log.append(getWeekDay().toString());
+	log.append(getWeekDay().getLabel());
 	log.append(" ");
 	log.append(getStartTime().getHours());
 	log.append(":");

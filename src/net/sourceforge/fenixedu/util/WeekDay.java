@@ -17,7 +17,7 @@ public enum WeekDay {
 	return name();
     }
 
-    public static WeekDay getWeekDay(DiaSemana weekDay) {
+    public static WeekDay getWeekDay(final DiaSemana weekDay) {
 	switch (weekDay.getDiaSemana()) {
 	case DiaSemana.DOMINGO:
 	    return WeekDay.SUNDAY;
@@ -38,9 +38,8 @@ public enum WeekDay {
 	}
     }
 
-    // Return a WeekDay converted from JodaTime DateTime.
-    public static WeekDay fromJodaTimeToWeekDay(DateTime date) {
-	int dayOfWeek = date.dayOfWeek().get();
+    public static WeekDay fromJodaTimeToWeekDay(final DateTime date) {
+	final int dayOfWeek = date.dayOfWeek().get();
 	switch (dayOfWeek) {
 	case 1:
 	    return WeekDay.MONDAY;
@@ -59,6 +58,14 @@ public enum WeekDay {
 	default:
 	    return null;
 	}
+    }
+
+    public String getLabel() {
+	return BundleUtil.getStringFromResourceBundle("resources.EnumerationResources", name());
+    }
+
+    public String getLabelShort() {
+	return BundleUtil.getStringFromResourceBundle("resources.EnumerationResources", name() + ".short");
     }
 
 }

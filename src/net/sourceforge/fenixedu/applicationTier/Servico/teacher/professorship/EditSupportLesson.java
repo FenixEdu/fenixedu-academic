@@ -10,6 +10,7 @@ import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.teacher.TeacherService;
 import net.sourceforge.fenixedu.domain.teacher.TeacherServiceLog;
 import net.sourceforge.fenixedu.util.BundleUtil;
+import net.sourceforge.fenixedu.util.WeekDay;
 
 public class EditSupportLesson extends FenixService {
 
@@ -35,7 +36,7 @@ public class EditSupportLesson extends FenixService {
 	    log.append(BundleUtil.getStringFromResourceBundle("resources.TeacherCreditsSheetResources", "label.teacher.schedule.supportLessons.change"));
 	}
 
-	log.append(supportLessonDTO.getWeekDay().toString());
+	log.append(WeekDay.getWeekDay(supportLessonDTO.getWeekDay()).getLabel());
 	log.append(" ");
 	log.append(supportLessonDTO.getStartTime().getHours());
 	log.append(":");

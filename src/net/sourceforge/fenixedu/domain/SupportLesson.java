@@ -9,6 +9,7 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.teacher.TeacherService;
 import net.sourceforge.fenixedu.util.CalendarUtil;
+import net.sourceforge.fenixedu.util.DiaSemana;
 import net.sourceforge.fenixedu.util.WeekDay;
 import net.sourceforge.fenixedu.util.date.TimePeriod;
 
@@ -144,5 +145,9 @@ public class SupportLesson extends SupportLesson_Base implements ICreditsEventOr
 		else setStartTimeHourMinuteSecond(net.sourceforge.fenixedu.util.HourMinuteSecond.fromDateFields(date));
 	}
 
+	public WeekDay getWeekDayObject() {
+	    final DiaSemana diaSemana = getWeekDay();
+	    return diaSemana == null ? null : WeekDay.getWeekDay(diaSemana);
+	}
 
 }

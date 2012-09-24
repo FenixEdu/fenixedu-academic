@@ -13,6 +13,7 @@ import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.teacher.TeacherService;
 import net.sourceforge.fenixedu.domain.teacher.TeacherServiceLog;
 import net.sourceforge.fenixedu.util.BundleUtil;
+import net.sourceforge.fenixedu.util.WeekDay;
 
 /**
  * @author Ricardo Rodrigues
@@ -30,7 +31,7 @@ public class DeleteSupportLesson extends FenixService {
     private void log(final SupportLesson supportLesson) {
 	final StringBuilder log = new StringBuilder();
 	log.append(BundleUtil.getStringFromResourceBundle("resources.TeacherCreditsSheetResources", "label.teacher.schedule.supportLessons.delete"));
-	log.append(supportLesson.getWeekDay().toString());
+	log.append(WeekDay.getWeekDay(supportLesson.getWeekDay()).getLabel());
 	log.append(" ");
 	log.append(supportLesson.getStartTime().getHours());
 	log.append(":");

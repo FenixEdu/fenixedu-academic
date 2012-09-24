@@ -62,7 +62,7 @@
 							
 							<td>
 								<logic:iterate id="lesson" name="lessonList" indexId="index">
-									<bean:write name="lesson" property="diaSemana"/> 						
+									<bean:write name="lesson" property="weekDay.labelShort"/> 						
 									(<dt:format patternId="hoursPattern">
 										<bean:write name="lesson" property="inicio.timeInMillis"/>
 								      </dt:format> 
@@ -95,7 +95,7 @@
 								
 								<td>
 									<logic:iterate id="lesson" name="lessonList" indexId="index">
-										<bean:write name="lesson" property="diaSemana"/> 						
+										<bean:write name="lesson" property="weekDay.labelShort"/> 						
 										(<dt:format patternId="hoursPattern">
 											<bean:write name="lesson" property="inicio.timeInMillis"/>
 									      </dt:format> 
@@ -153,7 +153,7 @@
 					<logic:iterate id="supportLesson" name="supportLessonList" length="<%= String.valueOf(supportLessonsLength) %>">
 						<tr>
 							<td><bean:message key="label.supportLessons" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></td>
-							<td style="text-align: center;"><bean:write name="supportLesson" property="weekDay"/></td>
+							<td style="text-align: center;"><bean:write name="supportLesson" property="weekDay.labelShort"/></td>
 							<td style="text-align: center;">
 							  	<dt:format patternId="hoursPattern">
 									<bean:write name="supportLesson" property="startTime.time"/>
@@ -176,7 +176,7 @@
 						<logic:iterate id="supportLesson" name="supportLessonList" offset="<%= String.valueOf(supportLessonsLength) %>">
 							<tr>
 								<td><bean:message key="label.supportLessons" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></td>
-								<td style="text-align: center;"><bean:write name="supportLesson" property="weekDay"/></td>
+								<td style="text-align: center;"><bean:write name="supportLesson" property="weekDay.labelShort"/></td>
 								<td style="text-align: center;">
 								  	<dt:format patternId="hoursPattern">
 										<bean:write name="supportLesson" property="startTime.time"/>

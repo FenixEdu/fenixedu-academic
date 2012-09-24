@@ -133,7 +133,7 @@
 							<td rowspan="<%= lessonsSize %>"><bean:write name="shift" property="nome"/></td>
 							<td rowspan="<%= lessonsSize %>"><bean:write name="shift" property="shiftTypesCodePrettyPrint"/></td>
 							<td>
-								<bean:write name="lesson" property="diaSemana"/>
+								<bean:write name="lesson" property="weekDay.labelShort"/>
 							</td>
 							<td>
 								<dt:format patternId="hoursPattern">
@@ -188,7 +188,7 @@
 						<logic:greaterThan name="indexLessons" value="0">
 							<tr>
 								<td>
-									<bean:write name="lesson" property="diaSemana"/>
+									<bean:write name="lesson" property="weekDay.labelShort"/>
 								</td>
 								<td>
 									<dt:format patternId="hoursPattern">
@@ -244,7 +244,7 @@
 		<logic:iterate id="supportLesson" name="supportLessonList">
 			<tr>
 				<td>
-					<bean:write name="supportLesson" property="weekDay"/>
+					<bean:write name="supportLesson" property="weekDayObject.labelShort"/>
 				</td>			
 				<td>
 					<dt:format patternId="hoursPattern">

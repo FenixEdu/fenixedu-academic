@@ -134,7 +134,7 @@ $(document).ready(function() {
 									<td rowspan="<%= numberOfLessons %>"><bean:write name="degreeTeachingService" property="shift.nome"/></td>
 									<td rowspan="<%= numberOfLessons %>"><bean:write name="degreeTeachingService" property="shift.shiftTypesPrettyPrint"/></td>
 								</logic:equal>
-								<td><bean:write name="lesson" property="diaSemana"/></td>
+								<td><bean:write name="lesson" property="weekDay.labelShort"/></td>
 								<td><fr:view name="lesson" property="beginHourMinuteSecond"/></td>
 								<td><fr:view name="lesson" property="endHourMinuteSecond"/></td>
 								<td><logic:notEmpty name="lesson" property="sala">
@@ -160,7 +160,7 @@ $(document).ready(function() {
 								<td rowspan="<%= numberOfSupportLessons %>">-</td>
 								<td rowspan="<%= numberOfSupportLessons %>"><bean:message key="label.supportLessons" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></td>
 							</logic:equal>
-							<td><bean:write name="supportLesson" property="weekDay"/></td>
+							<td><bean:write name="supportLesson" property="weekDayObject.labelShort"/></td>
 							<td><fr:view name="supportLesson" property="startTimeHourMinuteSecond"/></td>
 							<td><fr:view name="supportLesson" property="endTimeHourMinuteSecond"/></td>
 							<td><bean:write name="supportLesson" property="place"/></td>
@@ -192,7 +192,7 @@ $(document).ready(function() {
 			</logic:equal>
 			<fr:view name="annualTeachingCreditsByPeriodBean" property="institutionWorkTime">
 				<fr:schema bundle="TEACHER_CREDITS_SHEET_RESOURCES" type="net.sourceforge.fenixedu.domain.teacher.InstitutionWorkTime">
-					<fr:slot name="weekDay" key="label.teacher-institution-working-time.weekday"/>
+					<fr:slot name="weekDay.label" key="label.teacher-institution-working-time.weekday"/>
 					<fr:slot name="startTime" key="label.teacher-institution-working-time.start-time">
 						<fr:property name="format" value="HH:mm"/>
 					</fr:slot>

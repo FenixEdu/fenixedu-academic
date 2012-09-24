@@ -27,6 +27,7 @@ import net.sourceforge.fenixedu.domain.util.email.Recipient;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.util.BundleUtil;
 import net.sourceforge.fenixedu.util.DiaSemana;
+import net.sourceforge.fenixedu.util.WeekDay;
 
 import org.apache.commons.lang.StringUtils;
 
@@ -34,8 +35,6 @@ import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.ist.fenixWebFramework.services.Service;
 
 public class Shift extends Shift_Base {
-
-    public static final ResourceBundle enumerationResourcesBundle = ResourceBundle.getBundle("resources/EnumerationResources");
 
     public static final Comparator<Shift> SHIFT_COMPARATOR_BY_NAME = new Comparator<Shift>() {
 
@@ -385,7 +384,7 @@ public class Shift extends Shift_Base {
 	int index = 0;
 	SortedSet<ShiftType> sortedTypes = getSortedTypes();
 	for (ShiftType shiftType : sortedTypes) {
-	    builder.append(enumerationResourcesBundle.getString(shiftType.getName()));
+	    builder.append(BundleUtil.getStringFromResourceBundle("resources.EnumerationResources", shiftType.getName()));
 	    index++;
 	    if (index < sortedTypes.size()) {
 		builder.append(", ");
@@ -538,7 +537,7 @@ public class Shift extends Shift_Base {
 
 	    for (Iterator<Lesson> iterator = this.getAssociatedLessonsIterator(); iterator.hasNext();) {
 		Lesson lesson = iterator.next();
-		stringBuilder.append(lesson.getDiaSemana().toString());
+		stringBuilder.append(WeekDay.getWeekDay(lesson.getDiaSemana()).getLabelShort());
 		stringBuilder.append(" ");
 		stringBuilder.append(lesson.getBeginHourMinuteSecond().toString("HH:mm"));
 		stringBuilder.append(" - ");
@@ -561,7 +560,7 @@ public class Shift extends Shift_Base {
 	if (this.hasAnyAssociatedLessons()) {
 	    for (Iterator<Lesson> iterator = this.getAssociatedLessonsIterator(); iterator.hasNext();) {
 		Lesson lesson = iterator.next();
-		stringBuilder.append(lesson.getDiaSemana().toString());
+		stringBuilder.append(WeekDay.getWeekDay(lesson.getDiaSemana()).getLabelShort());
 		stringBuilder.append(" ");
 		stringBuilder.append(lesson.getBeginHourMinuteSecond().toString("HH:mm"));
 		stringBuilder.append(" - ");

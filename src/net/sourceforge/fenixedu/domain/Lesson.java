@@ -27,6 +27,7 @@ import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicInterval;
 import net.sourceforge.fenixedu.domain.util.icalendar.EventBean;
 import net.sourceforge.fenixedu.util.DiaSemana;
 import net.sourceforge.fenixedu.util.HourMinuteSecond;
+import net.sourceforge.fenixedu.util.WeekDay;
 
 import org.apache.commons.collections.comparators.ReverseComparator;
 import org.joda.time.DateTime;
@@ -1072,5 +1073,9 @@ public class Lesson extends Lesson_Base {
 		else setEndHourMinuteSecond(net.sourceforge.fenixedu.util.HourMinuteSecond.fromDateFields(date));
 	}
 
+	public WeekDay getWeekDay() {
+	    final DiaSemana diaSemana = getDiaSemana();
+	    return diaSemana == null ? null : WeekDay.getWeekDay(diaSemana);
+	}
 
 }
