@@ -43,6 +43,5 @@ function executeWithTempFile() {
 	echo
 }
 
-execute "Create table for teacher service logs." updates.sql
 
 
