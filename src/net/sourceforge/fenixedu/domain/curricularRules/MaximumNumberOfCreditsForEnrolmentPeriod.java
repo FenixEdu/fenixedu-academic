@@ -16,7 +16,7 @@ import net.sourceforge.fenixedu.domain.student.Registration;
 public class MaximumNumberOfCreditsForEnrolmentPeriod extends MaximumNumberOfCreditsForEnrolmentPeriod_Base {
 
     static final public double MAXIMUM_NUMBER_OF_CREDITS = 40.5;
-    static final public double MAXIMUM_NUMBER_OF_CREDITS_PARTIAL_TIME = MAXIMUM_NUMBER_OF_CREDITS;
+    static final public double MAXIMUM_NUMBER_OF_CREDITS_PARTIAL_TIME = MAXIMUM_NUMBER_OF_CREDITS / 2;
 
     /*
      * Previous value was 0.75d until 2008/2009. These constants should be rule
