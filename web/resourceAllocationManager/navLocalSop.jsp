@@ -66,7 +66,7 @@
 	%>
 	
 	<% 	
-		if(loggedPerson.getIstUsername().equalsIgnoreCase("ist24412")) { 
+		if(loggedPerson.getIstUsername().equalsIgnoreCase("ist24412") || loggedPerson.getIstUsername().equalsIgnoreCase("ist23303")) { 
 	%>	
         <li class="navheader"><bean:message key="title.firstTimeStudents.menu" bundle="SOP_RESOURCES"/></li>
         <li>
