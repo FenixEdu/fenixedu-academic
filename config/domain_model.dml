@@ -1266,6 +1266,10 @@ class DomainObject {
        FileSetMetaData entry;
     }
     
+    class log.FirstYearShiftsCapacityToggleLog extends DomainObject {
+    	DateTime creationDate;
+    }
+    
     /* Documents */
     class documents.GeneratedDocument extends File {
         GeneratedDocumentType type;
@@ -12169,6 +12173,20 @@ relation ExtraWorkRequestUnit {
     }
 }
 
+relation FirstYearShiftsCapacityLogWithExecutionSemester {
+	ExecutionSemester playsRole executionSemester;
+	log.FirstYearShiftsCapacityToggleLog playsRole firstYearShiftsCapacityToggleLog {
+		multiplicity *;
+	}
+}
+
+relation FirstYearShiftsCapacityLogWithUser {
+	User playsRole creator;
+	log.FirstYearShiftsCapacityToggleLog playsRole firstYearShiftsCapacityToggleLog {
+		multiplicity *;
+	}
+}
+
 relation PersonPhoto {
     Photograph playsRole personalPhoto;
     Person playsRole person;
@@ -15223,6 +15241,13 @@ relation RootDomainObjectFile {
 relation RootDomainObjectFileLocalContents {
     RootDomainObject playsRole rootDomainObject;
     FileLocalContent playsRole fileLocalContents {
+        multiplicity *;
+    }
+}
+
+relation RootDomainObjectFirstYearShiftsCapacityToggleLog {
+    RootDomainObject playsRole rootDomainObject;
+    log.FirstYearShiftsCapacityToggleLog playsRole firstYearShiftsCapacityToggleLogs {
         multiplicity *;
     }
 }

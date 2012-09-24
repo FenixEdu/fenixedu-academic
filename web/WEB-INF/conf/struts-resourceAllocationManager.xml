@@ -374,6 +374,7 @@
             <!-- CONTEXTO -->
             <action path="/chooseExecutionPeriod" name="pagedIndexForm" input="/chooseExecutionPeriod.do?method=prepare" type="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.ExecutionPeriodDA" parameter="method" validate="true" scope="request">
                   <forward name="showForm" path="/chooseExecutionPeriod.jsp"></forward>
+                  <forward name="toggleFirstYearShiftsCapacity" path="/toggleFirstYearShiftsCapacity.jsp"></forward>
                   <forward name="viewRoom" path="/sopViewRoom.jsp"></forward>
                   <forward name="showTimeTable" path="df.page.showTimeTable"></forward>
             </action>

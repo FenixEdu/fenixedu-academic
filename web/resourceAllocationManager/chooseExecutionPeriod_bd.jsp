@@ -38,6 +38,15 @@
 </fr:form>
 
 <br/>
+
+<logic:present name="executionYear">
+	<html:link page="/chooseExecutionPeriod.do?method=toggleFirstYearShiftsCapacity" paramId="executionYearId" paramName="executionYear" paramProperty="OID">
+		<bean:message bundle="SOP_RESOURCES" key="link.toggleFirstYearShiftsCapacity" /> <bean:write name="executionYear" property="name"/>
+	</html:link>
+</logic:present>
+
+
+<br/>
 <br/>
 
 <h3><bean:message key="title.manage.schedule.students" bundle="APPLICATION_RESOURCES" /></h3>
