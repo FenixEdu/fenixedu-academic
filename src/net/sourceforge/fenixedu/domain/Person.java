@@ -120,6 +120,7 @@ import net.sourceforge.fenixedu.domain.research.Researcher;
 import net.sourceforge.fenixedu.domain.research.result.ResearchResult;
 import net.sourceforge.fenixedu.domain.research.result.ResultParticipation;
 import net.sourceforge.fenixedu.domain.research.result.patent.ResearchResultPatent;
+import net.sourceforge.fenixedu.domain.research.result.publication.PreferredPublication;
 import net.sourceforge.fenixedu.domain.research.result.publication.ResearchResultPublication;
 import net.sourceforge.fenixedu.domain.space.Campus;
 import net.sourceforge.fenixedu.domain.space.PersonSpaceOccupation;
@@ -1340,6 +1341,10 @@ public class Person extends Person_Base {
 
 	if (hasResearcher()) {
 	    getResearcher().delete();
+	}
+	
+	for(PreferredPublication preferred : getPreferredPublication()) {
+	    preferred.delete();
 	}
 
 	super.delete();

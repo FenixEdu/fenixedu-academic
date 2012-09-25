@@ -14262,7 +14262,9 @@ relation PreferredPublicationRootDomainObject {
     research.result.publication.PreferredPublication playsRole preferredPublication {
         multiplicity *;
     }
-    RootDomainObject playsRole rootDomainObject;
+    RootDomainObject playsRole rootDomainObject {
+    	multiplicity 1..1;
+    }
 }
 
 relation PreferredPublicationsOwner {
@@ -14270,13 +14272,13 @@ relation PreferredPublicationsOwner {
         multiplicity *;
     }
     Person playsRole personThatPrefers {
-        multiplicity 0..1;
+        multiplicity 1..1;
     }
 }
 
 relation PreferredPublicationsPublication {
     research.result.publication.ResearchResultPublication playsRole preferredPublication {
-        multiplicity 0..1;
+        multiplicity 1..1;
     }
     research.result.publication.PreferredPublication playsRole personThatPrefers {
         multiplicity *;
