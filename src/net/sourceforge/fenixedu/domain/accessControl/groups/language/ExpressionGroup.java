@@ -211,12 +211,12 @@ public class ExpressionGroup extends Group implements GroupContextProvider {
 
     @Override
     public boolean equals(Object other) {
-	return getGroup().equals(other);
+	return getGroup() == null ? super.equals(other) : getGroup().equals(other);
     }
 
     @Override
     public int hashCode() {
-	return getGroup().hashCode();
+	return getGroup() == null ? super.hashCode() : getGroup().hashCode();
     }
 
 }
