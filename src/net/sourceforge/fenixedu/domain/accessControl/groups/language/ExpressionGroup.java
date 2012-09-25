@@ -84,6 +84,7 @@ public class ExpressionGroup extends Group implements GroupContextProvider {
      * @exception GroupContextRequiredException
      *                if a group context is not defined
      */
+    @Override
     public GroupContext getContext() {
 	if (this.context == null) {
 	    throw new GroupContextRequiredException(this);
@@ -206,6 +207,16 @@ public class ExpressionGroup extends Group implements GroupContextProvider {
 	} finally {
 	    setContext(null);
 	}
+    }
+
+    @Override
+    public boolean equals(Object other) {
+	return getGroup().equals(other);
+    }
+
+    @Override
+    public int hashCode() {
+	return getGroup().hashCode();
     }
 
 }
