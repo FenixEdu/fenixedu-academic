@@ -72,13 +72,13 @@
 				<logic:equal name="teacherBean" property="canSeeCreditsReduction" value="true">
 					<fr:slot name="creditsReduction" key="label.credits.creditsReduction.simpleCode" layout="null-as-label">
 						<fr:property name="subLayout" value="decimal-format"/>
-						<fr:property name="headerToolTip" value="label.credits.creditsReduction"/>
+						<fr:property name="headerToolTip" value="label.credits.creditsReduction.definition"/>
 					</fr:slot>
 				</logic:equal>
 				<logic:notEqual name="teacherBean" property="canSeeCreditsReduction" value="true">
 					<fr:slot name="creditsReduction" key="label.credits.creditsReduction.simpleCode" layout="format">
 						<fr:property name="format" value="-"/>
-						<fr:property name="headerToolTip" value="label.credits.creditsReduction"/>
+						<fr:property name="headerToolTip" value="label.credits.creditsReduction.definition"/>
 					</fr:slot>
 				</logic:notEqual>
 				<fr:slot name="serviceExemptionCredits" layout="null-as-label" key="label.credits.serviceExemptionSituations.simpleCode" >

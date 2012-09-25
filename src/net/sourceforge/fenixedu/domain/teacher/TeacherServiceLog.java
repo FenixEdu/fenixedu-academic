@@ -7,15 +7,15 @@ import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import org.joda.time.DateTime;
 
 public class TeacherServiceLog extends TeacherServiceLog_Base implements Comparable<TeacherServiceLog> {
-    
+
     public TeacherServiceLog(final TeacherService teacherService, final String description) {
-        super();
-        setModificationDate(new DateTime());
-        setTeacherService(teacherService);
-        final Person person = AccessControl.getPerson();
-        final User user = person == null ? null : person.getUser();
-        setUser(user);
-        setDescription(description);
+	super();
+	setModificationDate(new DateTime());
+	setTeacherService(teacherService);
+	final Person person = AccessControl.getPerson();
+	final User user = person == null ? null : person.getUser();
+	setUser(user);
+	setDescription(description);
     }
 
     @Override
@@ -23,7 +23,8 @@ public class TeacherServiceLog extends TeacherServiceLog_Base implements Compara
 	if (o == null) {
 	    return -1;
 	}
-	return getModificationDate().compareTo(o.getModificationDate());
+	int compareTo = getModificationDate().compareTo(o.getModificationDate());
+	return compareTo == 0 ? getExternalId().compareTo(o.getExternalId()) : compareTo;
     }
-    
+
 }

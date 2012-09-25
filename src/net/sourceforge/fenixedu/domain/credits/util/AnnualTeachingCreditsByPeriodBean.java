@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.domain.credits.util;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -40,8 +41,10 @@ public class AnnualTeachingCreditsByPeriodBean implements Serializable {
 	    this.teacherServiceNotes = teacherService.getTeacherServiceNotes();
 	}
 	setCanEditTeacherCredits(executionPeriod.isInValidCreditsPeriod(roleType));
+	ReductionService creditsReductionService = getCreditsReductionService();
 	setCanEditTeacherCreditsReductions(roleType == null || roleType.equals(RoleType.DEPARTMENT_ADMINISTRATIVE_OFFICE) ? false
-		: getCanEditTeacherCredits());
+		: getCanEditTeacherCredits()
+			&& (creditsReductionService == null || creditsReductionService.getAttributionDate() == null));
 	setCanEditTeacherManagementFunctions(roleType == null || roleType.equals(RoleType.DEPARTMENT_MEMBER) ? false
 		: getCanEditTeacherCredits());
     }
@@ -103,6 +106,16 @@ public class AnnualTeachingCreditsByPeriodBean implements Serializable {
     public ReductionService getCreditsReductionService() {
 	TeacherService teacherService = teacher.getTeacherServiceByExecutionPeriod(executionPeriod);
 	return teacherService != null ? teacherService.getReductionService() : null;
+    }
+
+    public BigDecimal getCreditsReduction() {
+	ReductionService reductionService = getCreditsReductionService();
+	return reductionService != null ? reductionService.getCreditsReduction() : null;
+    }
+
+    public BigDecimal getCreditsReductionServiceAttribute() {
+	ReductionService reductionService = getCreditsReductionService();
+	return reductionService != null ? reductionService.getCreditsReductionAttributed() : null;
     }
 
     public Teacher getTeacher() {

@@ -1,0 +1,1 @@
+alter table `TEACHER_SERVICE_ITEM` add `ATTRIBUTION_DATE` timestamp NULL default NULL, add `CREDITS_REDUCTION_ATTRIBUTED` text;

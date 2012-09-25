@@ -5983,6 +5983,8 @@ class DomainObject {
         
         class teacher.ReductionService extends teacher.TeacherServiceItem {
         	BigDecimal creditsReduction;
+        	BigDecimal creditsReductionAttributed;
+        	DateTime attributionDate;
         }
 
         class teacher.OtherService extends teacher.TeacherServiceItem {

@@ -28,6 +28,7 @@
 					<tr>
 						<th><bean:message key="label.teacher.service.logs.when" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></th>
 						<th><bean:message key="label.teacher.service.logs.who" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></th>
+						<th><bean:message key="label.execution-period" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></th>
 						<th><bean:message key="label.teacher.service.logs.description" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></th>
 					</tr>
 				</thead>
@@ -42,6 +43,9 @@
 								</td>
 								<td>
 									<%= person.getNickname() %> (<%= person.getUsername() %>)
+								</td>
+								<td>
+									<%= log.getTeacherService().getExecutionPeriod().getName() %>
 								</td>
 								<td>
 									<%= log.getDescription() %>

@@ -61,6 +61,16 @@
 	if (AccessControl.getPerson().getTeacher() != null && department!=null && department.isCurrentUserCurrentDepartmentPresident()){ %>
 	<ul>
 		<li class="navheader">
+			<bean:message key="link.teacher.creditsSupervision" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/>
+		</li>
+		<li>
+		  	<html:link page="/creditsReductions.do?method=showReductionServices">
+		  		<bean:message key="label.credits.creditsReduction" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/>
+		  	</html:link>  
+		</li>
+	</ul>
+	<ul>
+		<li class="navheader">
 			<bean:message key="label.teacher.evaluation.title" bundle="RESEARCHER_RESOURCES"/>
 		</li>
 

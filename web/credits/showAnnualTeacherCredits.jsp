@@ -176,7 +176,7 @@ $(document).ready(function() {
 	</div>
 </div>
 <div class="panel"><h3 class="infoop mtop2"><img id="status-icon" width="15px" alt="" src="<%= request.getContextPath() +"/images/right30.png" %>">
-<b><bean:message key="label.teacherCreditsSheet.institutionWorkingTime" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></b>
+<b><bean:message key="label.teacherCreditsSheet.institutionWorkingTime.optional" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></b>
 <logic:equal name="areCreditsCalculated" value="true">
 	<span>-</span>
 </logic:equal></h3>
@@ -429,7 +429,7 @@ $(document).ready(function() {
 </div>	
 
 <div class="panel"><h3 class="infoop mtop2"><img id="status-icon" width="15px" alt="" src="<%= request.getContextPath() +"/images/right30.png" %>">
-<b><bean:message key="label.credits.creditsReduction" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></b>
+<b><bean:message key="label.credits.creditsReduction.definition" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></b>
 <logic:equal name="areCreditsCalculated" value="true">
 	<logic:equal name="annualTeachingCreditsBean" property="canSeeCreditsReduction" value="true">
 		<span><fr:view name="annualTeachingCreditsBean" property="creditsReduction"><fr:layout name="decimal-format"><fr:property name="format" value="######0.00 'Créditos'"/></fr:layout></fr:view></span>
@@ -440,10 +440,8 @@ $(document).ready(function() {
 			<fr:view name="annualTeachingCreditsBean" property="annualTeachingCreditsByPeriodBeans">
 				<fr:schema bundle="TEACHER_CREDITS_SHEET_RESOURCES" type="net.sourceforge.fenixedu.domain.credits.util.AnnualTeachingCreditsByPeriodBean">
 					<fr:slot name="executionPeriod.name" key="label.period"/>
-					<fr:slot name="creditsReductionService" key="label.credits" layout="null-as-label">
-							<fr:property name="subSchema" value="show.reductionService"/>
-							<fr:property name="subLayout" value="values"/>
-					</fr:slot>
+					<fr:slot name="creditsReduction" key="label.requestedReductionCredits" layout="null-as-label"/>
+					<fr:slot name="creditsReductionServiceAttribute" key="label.attributedReductionCredits" layout="null-as-label"/>
 				</fr:schema>
 				<fr:layout name="tabular">
 					<fr:property name="classes" value="tstyle2 thlight thleft mtop05 mbottom05"/>
@@ -536,15 +534,18 @@ $(document).ready(function() {
 	</div>
 </div>
 
-<div class="panel"><h3 class="infoop mtop2"><img id="status-icon" width="15px" alt="" src="<%= request.getContextPath() +"/images/right30.png" %>">
-	<b><bean:message key="label.teacher.service.logs" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></b>
-	<logic:equal name="areCreditsCalculated" value="true">
-		<span>-</span>
-	</logic:equal></h3>
-	<div class="inner-panel" style="display: none;">
-		<jsp:include page="showTeachingServiceLogs.jsp"/>
+
+<logic:equal name="annualTeachingCreditsBean" property="canUserSeeTeacherServiceLogs" value="true">
+	<div class="panel"><h3 class="infoop mtop2"><img id="status-icon" width="15px" alt="" src="<%= request.getContextPath() +"/images/right30.png" %>">
+		<b><bean:message key="label.teacher.service.logs" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></b>
+		<logic:equal name="areCreditsCalculated" value="true">
+			<span>-</span>
+		</logic:equal></h3>
+		<div class="inner-panel" style="display: none;">
+			<jsp:include page="showTeachingServiceLogs.jsp"/>
+		</div>
 	</div>
-</div>
+</logic:equal>
 
 <logic:equal name="areCreditsCalculated" value="true">
 	<logic:equal name="annualTeachingCreditsBean" property="hasAnyLimitation" value="true">

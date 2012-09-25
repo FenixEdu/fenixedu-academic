@@ -10,6 +10,7 @@ import net.sourceforge.fenixedu.domain.teacher.evaluation.TeacherEvaluationMark;
 import net.sourceforge.fenixedu.domain.teacher.evaluation.TeacherEvaluationProcess;
 import net.sourceforge.fenixedu.util.BundleUtil;
 
+import org.joda.time.DateTime;
 import org.joda.time.Interval;
 import org.joda.time.PeriodType;
 import org.joda.time.YearMonthDay;
@@ -29,18 +30,20 @@ public class ReductionService extends ReductionService_Base {
 	log("label.teacher.schedule.reductionService.create");
     }
 
+    public ReductionService(final BigDecimal creditsReductionAttributed, final TeacherService teacherService) {
+	super();
+	setRootDomainObject(RootDomainObject.getInstance());
+	if (teacherService == null) {
+	    throw new DomainException("arguments can't be null");
+	}
+	setTeacherService(teacherService);
+	setCreditsReductionAttributed(creditsReductionAttributed);
+	log("label.teacher.schedule.reductionService.validation");
+    }
+
     @Override
     public void setCreditsReduction(BigDecimal creditsReduction) {
-	if (creditsReduction == null || creditsReduction.compareTo(BigDecimal.ZERO) < 0) {
-	    creditsReduction = BigDecimal.ZERO;
-	}
-	if (!getTeacherService().getTeacher().isTeacherProfessorCategory(getTeacherService().getExecutionPeriod())) {
-	    throw new DomainException("label.creditsReduction.invalidCategory");
-	}
-	if (creditsReduction.compareTo(MAX_CREDITS_REDUCTION) > 0) {
-	    throw new DomainException("label.creditsReduction.exceededMaxAllowed");
-	}
-
+	checkCredits(creditsReduction);
 	BigDecimal maxCreditsFromEvaluation = getTeacherEvaluationMark();
 	BigDecimal maxCreditsFromAge = getTeacherMaxCreditsFromAge();
 
@@ -49,9 +52,28 @@ public class ReductionService extends ReductionService_Base {
 	    throw new DomainException("label.creditsReduction.exceededMaxAllowed.evaluationAndAge",
 		    maxCreditsFromEvaluationAndAge.toString());
 	}
-
 	super.setCreditsReduction(creditsReduction);
 	log("label.teacher.schedule.reductionService.edit");
+    }
+
+    @Override
+    public void setCreditsReductionAttributed(BigDecimal creditsReductionAttributed) {
+	checkCredits(creditsReductionAttributed);
+	super.setCreditsReductionAttributed(creditsReductionAttributed);
+	setAttributionDate(new DateTime());
+	log("label.teacher.schedule.reductionService.validation");
+    }
+
+    private void checkCredits(BigDecimal creditsReduction) {
+	if (creditsReduction == null) {
+	    creditsReduction = BigDecimal.ZERO;
+	}
+	if (!getTeacherService().getTeacher().isTeacherProfessorCategory(getTeacherService().getExecutionPeriod())) {
+	    throw new DomainException("label.creditsReduction.invalidCategory");
+	}
+	if (creditsReduction.compareTo(MAX_CREDITS_REDUCTION) > 0) {
+	    throw new DomainException("label.creditsReduction.exceededMaxAllowed");
+	}
     }
 
     private BigDecimal getTeacherMaxCreditsFromAge() {

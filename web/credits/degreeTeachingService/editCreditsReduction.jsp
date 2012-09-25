@@ -15,7 +15,7 @@
 	<bean:define id="teacherService" name="reductionService" property="teacherService"/>
 </logic:present>
 
-<h3><bean:message key="label.credits.creditsReduction" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></h3>
+<h3><bean:message key="label.credits.creditsReduction.definition" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></h3>
 <jsp:include page="../teacherCreditsStyles.jsp"/>
 <bean:define id="url" type="java.lang.String">/publico/retrievePersonalPhoto.do?method=retrieveByUUID&amp;contentContextPath_PATH=/homepage&amp;uuid=<bean:write name="teacherService" property="teacher.person.username"/></bean:define>
 <table class="headerTable"><tr>	

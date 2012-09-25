@@ -97,12 +97,14 @@
 		  	<html:link page="/defineCreditsPeriods.do?method=showPeriods">
 		  		<bean:message key="link.define.periods"/>
 		  	</html:link>  
-		</li>		
+		</li>	
+		<%--	
 		<li>
 			<html:link page="/functionsManagement/personSearchForFunctionsManagement.faces" >
 				<bean:message key="link.managementPositions.management"/>
 			</html:link>
 		</li>
+		--%>
 		<li>
 			<html:link page="/masterDegreeCreditsManagement.do?method=prepare">
 		  		<bean:message key="link.credits.masterDegree"/>
@@ -124,7 +126,7 @@
 		  		<bean:message key="link.teacher.sheet"/>
 		  	</html:link>  
 		</li>
-		
+		<%--
 		<li>
 		  	<html:link page="/manageNonRegularTeachingService.do?method=chooseNonRegularTeacher">
 		  		<bean:message key="link.nonRegularTeacher.sheet"/>
