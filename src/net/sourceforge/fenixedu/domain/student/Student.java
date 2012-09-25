@@ -1902,6 +1902,7 @@ public class Student extends Student_Base {
     }
 
     public boolean isEligibleForCareerWorkshopApplication() {
+	/* RULE TO FILTER 2nd CYCLE STUDENTS ONLY - Prior to Sep2012
 	for (Registration registration : getActiveRegistrations()) {
 
 	    if (isMasterDegreeOnly(registration))
@@ -1911,24 +1912,11 @@ public class Student extends Student_Base {
 		if (isEnroledOnSecondCycle(registration)) {
 		    return true;
 		}
-
-		/*
-		 * The conditions below are not equivalent of bolonha master
-		 * degree registrations
-		 * 
-		 * What if the student is enrolled on bolonha degree and master
-		 * degree at the same time? He will be able to subscribe. But
-		 * this rule is not applied for integrated master degrees
-		 * students
-		 * 
-		 * if (hasConcludedFirstCycle(registration)) { return true; }
-		 * 
-		 * if (hasAnyOtherConcludedFirstCycle(registration)) { return
-		 * true; }
-		 */
 	    }
 	}
 	return false;
+	*/
+	return true;
     }
 
     private boolean isEnroledOnSecondCycle(Registration registration) {
