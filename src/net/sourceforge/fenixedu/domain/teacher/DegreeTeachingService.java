@@ -34,10 +34,6 @@ public class DegreeTeachingService extends DegreeTeachingService_Base {
 	if (percentage > 100 || percentage < 0) {
 	    throw new DomainException("message.invalid.professorship.percentage");
 	}
-	if (professorship.getExecutionCourse().isMasterDegreeDFAOrDEAOnly()) {
-	    throw new DomainException("message.invalid.executionCourse");
-	}
-
 	setTeacherService(teacherService);
 	getTeacherService().getExecutionPeriod().checkValidCreditsPeriod(roleType);
 	setProfessorship(professorship);
