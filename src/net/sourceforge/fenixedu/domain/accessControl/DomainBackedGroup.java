@@ -32,11 +32,6 @@ public abstract class DomainBackedGroup<T extends DomainObject> extends LeafGrou
     }
 
     @Override
-    public boolean hasPresentationNameDynamic() {
-	return true;
-    }
-
-    @Override
     public String getExpression() {
 	// HACK: when an object is deleted a domain reference starts pointing to
 	// null;
