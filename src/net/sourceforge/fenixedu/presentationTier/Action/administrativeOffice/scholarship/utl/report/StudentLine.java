@@ -512,7 +512,7 @@ public class StudentLine implements IFileLine, java.io.Serializable {
 	    return "";
 	}
 
-	return getRegistration().getStudent().getFirstRegistrationExecutionYear().getName();
+	return ((Integer) getRegistration().getStudent().getFirstRegistrationExecutionYear().getBeginCivilYear()).toString();
     }
 
     public Integer getCountNumberOfEnrolmentsYearsSinceRegistrationStart() {
@@ -909,7 +909,8 @@ public class StudentLine implements IFileLine, java.io.Serializable {
 	List<ExecutionYear> enrolmentsExecutionYears = new ArrayList<ExecutionYear>(getEnrolmentsExecutionYears(getStudent()));
 	Collections.sort(enrolmentsExecutionYears, ExecutionYear.REVERSE_COMPARATOR_BY_YEAR);
 	
-	return enrolmentsExecutionYears.isEmpty() ? "" : enrolmentsExecutionYears.get(0).getName();
+	return enrolmentsExecutionYears.isEmpty() ? "" : ((Integer) enrolmentsExecutionYears.get(0).getBeginCivilYear())
+		.toString();
     }
 
     public String getNif() {

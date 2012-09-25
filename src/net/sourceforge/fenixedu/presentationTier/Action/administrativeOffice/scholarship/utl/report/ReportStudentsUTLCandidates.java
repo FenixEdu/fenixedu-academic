@@ -138,33 +138,25 @@ public class ReportStudentsUTLCandidates implements java.io.Serializable {
 			15);
 		addCellValue(row, onNullEmptyString(firstRegistrationExecutionYear), 16);
 		addCellValue(row, onNullEmptyString(countNumberOfEnrolmentsYearsSinceRegistrationStart), 17);
-		addCellValue(row, onNullEmptyString(numberOfDegreeCurricularYears), 18);
-		addCellValue(row, onNullEmptyString(curricularYearOneYearAgo), 19);
-		addCellValue(row, onNullEmptyString(numberOfEnrolledEctsOneYearAgo), 20);
-		addCellValue(row, onNullEmptyString(numberOfApprovedEctsOneYearAgo), 21);
-		addCellValue(row, "", 22); // "=IF(V5/U5<50%,\"Não\",\"Sim\")",
-					   // 22);
+		addCellValue(row, "", 18);
+		addCellValue(row, onNullEmptyString(numberOfDegreeCurricularYears), 19);
+		addCellValue(row, onNullEmptyString(curricularYearOneYearAgo), 20);
+		addCellValue(row, onNullEmptyString(numberOfEnrolledEctsOneYearAgo), 21);
+		addCellValue(row, onNullEmptyString(numberOfApprovedEctsOneYearAgo), 22);
 		addCellValue(row, onNullEmptyString(curricularYearInCurrentYear), 23);
 		addCellValue(row, onNullEmptyString(numberOfEnrolledECTS), 24);
-		addCellValue(
-			row,
- "", // "IF(P3=4;\"Não Aplicável\";IF(P3=3;IF(S3<=3;IF((2*S3+2)>=R3+(S3-X3);\"SIM\";\"NÃO\");IF((2*S3+3)>=R3+(S3-X3);\"SIM\";\"NÃO\"));IF(OR(P3=2;L3>0);IF(S3<=3;IF((S3+2)>=R3+(S3-X3);\"SIM\";\"NÃO\");IF(S3>3;IF((S3+3)>=R3+(S3-X3);\"SIM\";\"NÃO\")));IF(AND(L3=0;P3=1);IF(S3<=3;IF(S3+1>=R3+(S3-X3);\"SIM\";\"NÃO\");IF(S3>3;IF(S3+2>=R3+(S3-X3);\"SIM\";\"NÃO\")))))))",
-			25);
-		addCellValue(
-			row,
- "", // "IF(P3=4;IF(W3=\"Sim\";\"Deferido\";\"Indeferido\");IF(Y3>=30;IF(OR(W3=\"NÃO\";Z3=\"NÃO\";AI3=\"Sim\");\"Indeferido\";\"Deferido\");\"Indeferido\"))",
-			26);
-		addCellValue(row, onNullEmptyString(gratuityAmount), 27);
-		addCellValue(row, onNullEmptyString(numberOfMonthsExecutionYear), 28);
-		addCellValue(row, onNullEmptyString(firstMonthOfPayment), 29);
-		addCellValue(row, onNullEmptyString(ownerOfCETQualification), 30);
-		addCellValue(row, onNullEmptyString(degreeQualificationOwner), 31);
-		addCellValue(row, onNullEmptyString(masterQualificationOwner), 32);
-		addCellValue(row, onNullEmptyString(phdQualificationOwner), 33);
-		addCellValue(row, onNullEmptyString(ownerOfCollegeQualification), 34);
-		addCellValue(row, onNullEmptyString(observations), 35);
-		addCellValue(row, onNullEmptyString(lastEnrolmentExecutionYear), 36);
-		addCellValue(row, onNullEmptyString(nif), 37);
+		addCellValue(row, onNullEmptyString(gratuityAmount), 25);
+		addCellValue(row, onNullEmptyString(numberOfMonthsExecutionYear), 26);
+		addCellValue(row, onNullEmptyString(firstMonthOfPayment), 27);
+		addCellValue(row, onNullEmptyString(ownerOfCETQualification), 28);
+		addCellValue(row, onNullEmptyString(degreeQualificationOwner), 29);
+		addCellValue(row, onNullEmptyString(masterQualificationOwner), 30);
+		addCellValue(row, onNullEmptyString(phdQualificationOwner), 31);
+		addCellValue(row, onNullEmptyString(ownerOfCollegeQualification), 32);
+		addCellValue(row, onNullEmptyString(observations), 33);
+		addCellValue(row, onNullEmptyString(lastEnrolmentExecutionYear), 34);
+		addCellValue(row, onNullEmptyString(nif), 35);
+		addCellValue(row, "", 36);
 	    } catch (Exception e) {
 		e.printStackTrace();
 	    }
@@ -203,7 +195,7 @@ public class ReportStudentsUTLCandidates implements java.io.Serializable {
 	addHeaderCell(sheet, getHeaderInBundle(bundle, "degreeCode"), 7);
 	addHeaderCell(sheet, getHeaderInBundle(bundle, "degreeName"), 8);
 	addHeaderCell(sheet, getHeaderInBundle(bundle, "degreeTypeName"), 9);
-	addHeaderCell(sheet, "", 10);
+	addHeaderCell(sheet, "code", 10);
 	addHeaderCell(sheet, getHeaderInBundle(bundle, "countNumberOfDegreeChanges"), 11);
 	addHeaderCell(sheet, getHeaderInBundle(bundle, "hasMadeDegreeChange"), 12);
 	addHeaderCell(sheet, getHeaderInBundle(bundle, "firstEnrolmentOnCurrentExecutionYear"), 13);
@@ -214,7 +206,7 @@ public class ReportStudentsUTLCandidates implements java.io.Serializable {
 	HSSFCell cell = row.createCell(16);
 	cell.setCellValue(getHeaderInBundle(bundle, "ingression.year.on.cycle.studies"));
 	cell.setCellStyle(headerStyle);
-	sheet.addMergedRegion(new CellRangeAddress(0, 0, 16, 17));
+	sheet.addMergedRegion(new CellRangeAddress(0, 0, 16, 18));
 
 	cell = sheet.getRow(1).createCell(16);
 	cell.setCellValue(getHeaderInBundle(bundle, "ingression.year.on.cycle.studies.year"));
@@ -224,26 +216,28 @@ public class ReportStudentsUTLCandidates implements java.io.Serializable {
 	cell.setCellValue(getHeaderInBundle(bundle, "ingression.year.on.cycle.studies.count"));
 	cell.setCellStyle(headerStyle);
 
-	addHeaderCell(sheet, getHeaderInBundle(bundle, "numberOfDegreeCurricularYears"), 18);
-	addHeaderCell(sheet, getHeaderInBundle(bundle, "curricularYearOneYearAgo"), 19);
-	addHeaderCell(sheet, getHeaderInBundle(bundle, "numberOfEnrolledEctsOneYearAgo"), 20);
-	addHeaderCell(sheet, getHeaderInBundle(bundle, "numberOfApprovedEctsOneYearAgo"), 21);
-	addHeaderCell(sheet, getHeaderInBundle(bundle, "studentHadPerformanceLastYear"), 22);
+	cell = sheet.getRow(1).createCell(18);
+	cell.setCellValue(getHeaderInBundle(bundle, "ingression.year.on.cycle.studies.integral.count"));
+	cell.setCellStyle(headerStyle);
+
+	addHeaderCell(sheet, getHeaderInBundle(bundle, "numberOfDegreeCurricularYears"), 19);
+	addHeaderCell(sheet, getHeaderInBundle(bundle, "curricularYearOneYearAgo"), 20);
+	addHeaderCell(sheet, getHeaderInBundle(bundle, "numberOfEnrolledEctsOneYearAgo"), 21);
+	addHeaderCell(sheet, getHeaderInBundle(bundle, "numberOfApprovedEctsOneYearAgo"), 22);
 	addHeaderCell(sheet, getHeaderInBundle(bundle, "curricularYearInCurrentYear"), 23);
 	addHeaderCell(sheet, getHeaderInBundle(bundle, "numberOfEnrolledECTS"), 24);
-	addHeaderCell(sheet, getHeaderInBundle(bundle, "degreeConclusionValue"), 25);
-	addHeaderCell(sheet, getHeaderInBundle(bundle, "finalResultValue"), 26);
-	addHeaderCell(sheet, getHeaderInBundle(bundle, "gratuityAmount"), 27);
-	addHeaderCell(sheet, getHeaderInBundle(bundle, "numberOfMonthsExecutionYear"), 28);
-	addHeaderCell(sheet, getHeaderInBundle(bundle, "firstMonthOfPayment"), 29);
-	addHeaderCell(sheet, getHeaderInBundle(bundle, "ownerOfCETQualification"), 30);
-	addHeaderCell(sheet, getHeaderInBundle(bundle, "degreeQualificationOwner"), 31);
-	addHeaderCell(sheet, getHeaderInBundle(bundle, "masterQualificationOwner"), 32);
-	addHeaderCell(sheet, getHeaderInBundle(bundle, "phdQualificationOwner"), 33);
-	addHeaderCell(sheet, getHeaderInBundle(bundle, "ownerOfCollegeQualification"), 34);
-	addHeaderCell(sheet, getHeaderInBundle(bundle, "observations"), 35);
-	addHeaderCell(sheet, getHeaderInBundle(bundle, "lastEnrolledExecutionYear"), 36);
-	addHeaderCell(sheet, getHeaderInBundle(bundle, "nif"), 37);
+	addHeaderCell(sheet, getHeaderInBundle(bundle, "gratuityAmount"), 25);
+	addHeaderCell(sheet, getHeaderInBundle(bundle, "numberOfMonthsExecutionYear"), 26);
+	addHeaderCell(sheet, getHeaderInBundle(bundle, "firstMonthOfPayment"), 27);
+	addHeaderCell(sheet, getHeaderInBundle(bundle, "ownerOfCETQualification"), 28);
+	addHeaderCell(sheet, getHeaderInBundle(bundle, "degreeQualificationOwner"), 29);
+	addHeaderCell(sheet, getHeaderInBundle(bundle, "masterQualificationOwner"), 30);
+	addHeaderCell(sheet, getHeaderInBundle(bundle, "phdQualificationOwner"), 31);
+	addHeaderCell(sheet, getHeaderInBundle(bundle, "ownerOfCollegeQualification"), 32);
+	addHeaderCell(sheet, getHeaderInBundle(bundle, "observations"), 33);
+	addHeaderCell(sheet, getHeaderInBundle(bundle, "lastEnrolledExecutionYear"), 34);
+	addHeaderCell(sheet, getHeaderInBundle(bundle, "nif"), 35);
+	addHeaderCell(sheet, getHeaderInBundle(bundle, "last.conclusion.academic.facts"), 36);
     }
     
     private String getHeaderInBundle(ResourceBundle bundle, String field) {
