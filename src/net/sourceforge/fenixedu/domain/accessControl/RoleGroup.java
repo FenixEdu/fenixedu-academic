@@ -82,17 +82,24 @@ public class RoleGroup extends LeafGroup {
     }
 
     @Override
-    public boolean equals(Object obj) {
-	if (!(obj instanceof RoleGroup)) {
-	    return false;
+    public boolean equals(final Object other) {
+	boolean result = other != null;
+
+	if (result) {
+	    result = this.getClass().equals(other.getClass());
 	}
 
-	return this.roleType.equals(((RoleGroup) obj).roleType);
+	if (result) {
+	    final RoleGroup otherGroup = (RoleGroup) other;
+	    result = this.roleType.equals(otherGroup.roleType);
+	}
+
+	return result;
     }
 
     @Override
     public int hashCode() {
-	return this.roleType.hashCode();
+	return super.hashCode() + this.roleType.hashCode();
     }
 
     @Override
