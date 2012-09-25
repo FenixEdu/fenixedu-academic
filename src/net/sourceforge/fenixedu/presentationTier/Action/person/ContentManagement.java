@@ -42,14 +42,6 @@ import org.apache.struts.action.ActionMessage;
 import org.apache.struts.action.ActionMessages;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
-import pt.ist.fenixWebFramework.struts.annotations.Forward;
-import pt.ist.fenixWebFramework.struts.annotations.Forwards;
-import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
@@ -413,7 +405,7 @@ public class ContentManagement extends FenixDispatchAction {
 	saveMessages(request, messages);
     }
 
-    private void createParserReport(HttpServletRequest request, GroupExpressionException e, ExpressionBean bean) {
+    protected void createParserReport(HttpServletRequest request, GroupExpressionException e, ExpressionBean bean) {
 	createMessage(request, "error", e);
 
 	if (e.hasLineInformation()) {
