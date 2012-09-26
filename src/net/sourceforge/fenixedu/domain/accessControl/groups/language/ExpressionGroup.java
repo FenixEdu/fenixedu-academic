@@ -219,4 +219,9 @@ public class ExpressionGroup extends Group implements GroupContextProvider {
 	return getGroup() == null ? super.hashCode() : getGroup().hashCode();
     }
 
+    @Override
+    public Group without(final Group group) {
+	return getGroup().without(group);
+    }
+
 }

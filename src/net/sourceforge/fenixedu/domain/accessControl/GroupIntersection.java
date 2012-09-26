@@ -3,6 +3,7 @@ package net.sourceforge.fenixedu.domain.accessControl;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Set;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
@@ -20,6 +21,23 @@ public final class GroupIntersection extends NodeGroup {
 
     public GroupIntersection(Collection<IGroup> groups) {
 	super(groups);
+    }
+
+    @Override
+    public Group without(final Group group) {
+	Group result = this;
+
+	if (group != null) {
+	    final List<IGroup> updated = new ArrayList<IGroup>();
+	    for (final IGroup iter : getChildren()) {
+		if (!iter.equals(group) && iter instanceof Group) {
+		    updated.add(((Group) iter).without(group));
+		}
+	    }
+	    result = updated.size() == 1 ? (Group) updated.iterator().next() : new GroupIntersection(updated);
+	}
+
+	return result;
     }
 
     @Override

@@ -29,6 +29,19 @@ public final class GroupDifference extends NodeGroup {
 	this.excludeGroup = new GroupUnion(excludeGroups);
     }
 
+    @Override
+    public Group without(final Group group) {
+	Group result = this;
+
+	if (group != null && getIncludeGroup() instanceof Group && getExcludeGroup() instanceof Group) {
+	    final Group include = (Group) getIncludeGroup();
+	    final Group exclude = (Group) getExcludeGroup();
+	    result = new GroupDifference(include.without(group), new GroupUnion(exclude, group));
+	}
+
+	return result;
+    }
+
     protected IGroup getExcludeGroup() {
 	return this.excludeGroup;
     }

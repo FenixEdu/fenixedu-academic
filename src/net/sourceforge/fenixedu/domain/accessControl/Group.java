@@ -62,6 +62,16 @@ public abstract class Group implements Serializable, IGroup {
 	this.creationDate = new Date();
     }
 
+    public Group without(final Group group) {
+	Group result = this;
+
+	if (this.equals(group)) {
+	    result = new EveryoneGroup();
+	}
+
+	return result;
+    }
+
     public Date getCreationDate() {
 	return this.creationDate;
     }
@@ -201,4 +211,5 @@ public abstract class Group implements Serializable, IGroup {
     public static Group fromString(String expr) {
 	return ((expr == null) || expr.length() == 0) ? null : (new ExpressionGroup(expr).getGroup());
     }
+
 }
