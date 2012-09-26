@@ -60,7 +60,7 @@ public class AnnualTeachingCredits extends AnnualTeachingCredits_Base {
 	BigDecimal annualTeachingLoadFinalCredits = BigDecimal.ZERO;
 
 	boolean hasOrientantionCredits = false;
-	boolean hasAccumulatedCredits = false;
+	boolean hasFinalAndAccumulatedCredits = false;
 
 	for (ExecutionSemester executionSemester : getAnnualCreditsState().getExecutionYear().getExecutionPeriods()) {
 	    if (getTeacher().isActiveForSemester(executionSemester) || getTeacher().hasTeacherAuthorization(executionSemester)) {
@@ -87,11 +87,11 @@ public class AnnualTeachingCredits extends AnnualTeachingCredits_Base {
 		    setHasAnyLimitation(true);
 		}
 		yearCredits = yearCredits.add(thisSemesterYearCredits);
-		if (getTeacher().isActiveForSemester(executionSemester) && !getTeacher().isMonitor(executionSemester)) {
+		if (canHaveFinalCredits(executionSemester, getTeacher())) {
 		    yearCreditsForFinalCredits = yearCreditsForFinalCredits.add(thisSemesterYearCredits);
 		    annualTeachingLoadFinalCredits = annualTeachingLoadFinalCredits.add(thisSemesterTeachingLoad);
 		    if (executionSemester.getSemester() == 2) {
-			hasAccumulatedCredits = true;
+			hasFinalAndAccumulatedCredits = true;
 		    } else {
 			hasOrientantionCredits = true;
 		    }
@@ -116,16 +116,21 @@ public class AnnualTeachingCredits extends AnnualTeachingCredits_Base {
 	}
 
 	setYearCredits(yearCredits);
-	setFinalCredits(yearCreditsForFinalCredits.subtract(annualTeachingLoadFinalCredits));
-
 	BigDecimal accumulatedCredits = BigDecimal.ZERO;
-	if (hasAccumulatedCredits) {
+	BigDecimal finalCredits = BigDecimal.ZERO;
+	if (hasFinalAndAccumulatedCredits) {
+	    finalCredits = yearCreditsForFinalCredits.subtract(annualTeachingLoadFinalCredits);
 	    BigDecimal lastYearAccumulated = getPreviousAccumulatedCredits();
-	    accumulatedCredits = getFinalCredits().add(lastYearAccumulated);
+	    accumulatedCredits = finalCredits.add(lastYearAccumulated);
 	}
+	setFinalCredits(finalCredits);
 	setAccumulatedCredits(accumulatedCredits);
 	setLastModifiedDate(new DateTime());
 
+    }
+
+    private boolean canHaveFinalCredits(ExecutionSemester executionSemester, Teacher teacher) {
+	return getTeacher().isActiveForSemester(executionSemester) && !getTeacher().isMonitor(executionSemester);
     }
 
     private BigDecimal getPreviousAccumulatedCredits() {
