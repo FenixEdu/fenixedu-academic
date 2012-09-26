@@ -145,6 +145,9 @@ public class ExpressionGroup extends Group implements GroupContextProvider {
 	} catch (RecognitionException e) {
 	    logger.severe(expression);
 	    throw new GroupExpressionException(e);
+	} catch (GroupExpressionException e) {
+	    logger.severe(expression);
+	    throw e;
 	}
     }
 
