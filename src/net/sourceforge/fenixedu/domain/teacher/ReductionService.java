@@ -130,6 +130,8 @@ public class ReductionService extends ReductionService_Base {
 		    }
 		}
 	    }
+	} else {
+	    return MAX_CREDITS_REDUCTION;
 	}
 	return BigDecimal.ZERO;
     }
