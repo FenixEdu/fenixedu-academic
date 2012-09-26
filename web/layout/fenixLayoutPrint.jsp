@@ -46,7 +46,7 @@
 <% if (!PropertiesManager.useBarraAsAuthenticationBroker()) { %>
 <div id="top">
 	<h1 id="logo">
-		<img alt="<bean:message key="institution.logo" bundle="IMAGE_RESOURCES" />" src="<bean:message key="dot.logo" bundle="GLOBAL_RESOURCES" arg0="<%= request.getContextPath() %>"/>"/>
+		<img alt="<bean:message key="institution.logo" bundle="IMAGE_RESOURCES" />" style="padding-left:30px;padding-top:20px;" src="<bean:message key="fenix.logo.location" bundle="GLOBAL_RESOURCES" arg0="<%= request.getContextPath() %>"/>"/>
 	</h1>
 
 	<tiles:insert page="/commons/headerButtons.jsp" />
