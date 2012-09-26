@@ -2,6 +2,7 @@ package net.sourceforge.fenixedu.domain.accessControl.groups.language;
 
 import java.io.StringReader;
 import java.util.Set;
+import java.util.logging.Logger;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.domain.Person;
@@ -28,6 +29,8 @@ import antlr.TokenStreamRecognitionException;
  * @author cfgi
  */
 public class ExpressionGroup extends Group implements GroupContextProvider {
+
+    private static Logger logger = Logger.getLogger(ExpressionGroup.class.getName());
 
     private static final long serialVersionUID = 1L;
 
@@ -124,10 +127,13 @@ public class ExpressionGroup extends Group implements GroupContextProvider {
 	try {
 	    parser.start();
 	} catch (RecognitionException e) {
+	    logger.severe(expression);
 	    throw new GroupExpressionException(e);
 	} catch (TokenStreamRecognitionException e) {
+	    logger.severe(expression);
 	    throw new GroupExpressionException(e.recog);
 	} catch (TokenStreamException e) {
+	    logger.severe(expression);
 	    throw new GroupExpressionException(e);
 	}
 
@@ -137,6 +143,7 @@ public class ExpressionGroup extends Group implements GroupContextProvider {
 	try {
 	    return treeParser.start(parser.getAST());
 	} catch (RecognitionException e) {
+	    logger.severe(expression);
 	    throw new GroupExpressionException(e);
 	}
     }
