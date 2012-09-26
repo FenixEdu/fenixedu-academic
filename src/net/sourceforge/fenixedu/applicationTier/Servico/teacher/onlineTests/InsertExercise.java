@@ -16,7 +16,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Vector;
 
-import net.sourceforge.fenixedu._development.PropertiesManager;
 import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
@@ -78,11 +77,7 @@ public class InsertExercise extends FenixService {
 		} catch (DomainException domainException) {
 		    throw domainException;
 		} catch (ParseQuestionException e) {
-		    if (e.getMessage() == null) {
-			metadatas.add(labelValueBean);
-		    } else {
-			badXmls.add(xmlFileName + e);
-		    }
+		    metadatas.add(labelValueBean);
 		}
 	    }
 
@@ -102,7 +97,7 @@ public class InsertExercise extends FenixService {
 			    badXmls.add(xmlFileName + ": Metadata sem exercício associado.");
 			}
 		    } catch (ParseException e) {
-			badXmls.add(xmlFileName);
+			badXmls.add(xmlFileName + e);
 		    }
 		}
 		if (metadata == null) {
@@ -150,7 +145,7 @@ public class InsertExercise extends FenixService {
 		List<LabelValueBean> xmlList = new ArrayList<LabelValueBean>();
 		if (xmlZipFile.getContentType().equals("text/xml") || xmlZipFile.getContentType().equals("application/xml")) {
 		    if (xmlZipFile.getSize() <= FILE_SIZE_LIMIT) {
-			xmlList.add(new LabelValueBean(xmlZipFile.getName(), new String(xmlZipFile.getFileData(), PropertiesManager.DEFAULT_CHARSET)));
+			xmlList.add(new LabelValueBean(xmlZipFile.getName(), new String(xmlZipFile.getFileData(), "ISO-8859-1")));
 		    } else {
 			xmlList.add(new LabelValueBean(xmlZipFile.getName(), null));
 		    }
@@ -190,7 +185,7 @@ public class InsertExercise extends FenixService {
 	    if (entry.getName().endsWith("zip")) {
 		xmlListMap = readFromZip(xmlListMap, is, entry.getName());
 	    } else {
-		for (int readed = 0; (readed = is.read(b)) > -1; stringBuilder.append(new String(b, 0, readed, PropertiesManager.DEFAULT_CHARSET))) {
+		for (int readed = 0; (readed = is.read(b)) > -1; stringBuilder.append(new String(b, 0, readed, "ISO-8859-1"))) {
 		    // nothing to do :o)
 		}
 		if (stringBuilder.length() <= FILE_SIZE_LIMIT) {

@@ -9,7 +9,6 @@ import java.util.List;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 
-import net.sourceforge.fenixedu._development.PropertiesManager;
 import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
@@ -79,7 +78,7 @@ public class InsertExerciseVariation extends FenixService {
 	    if (xmlZipFile.getContentType().equals("text/xml") || xmlZipFile.getContentType().equals("application/xml")) {
 		if (xmlZipFile.getSize() <= FILE_SIZE_LIMIT) {
 		    xmlFilesList
-			    .add(new LabelValueBean(xmlZipFile.getName(), new String(xmlZipFile.getFileData(), PropertiesManager.DEFAULT_CHARSET)));
+			    .add(new LabelValueBean(xmlZipFile.getName(), new String(xmlZipFile.getFileData(), "ISO-8859-1")));
 		}
 	    } else {
 		zipFile = new ZipInputStream(xmlZipFile.getInputStream());
@@ -87,7 +86,7 @@ public class InsertExerciseVariation extends FenixService {
 		    final StringBuilder stringBuilder = new StringBuilder();
 		    final byte[] b = new byte[1000];
 		    for (int readed = 0; (readed = zipFile.read(b)) > -1; stringBuilder.append(new String(b, 0, readed,
-			    PropertiesManager.DEFAULT_CHARSET))) {
+			    "ISO-8859-1"))) {
 			// nothing to do :o)
 		    }
 		    if (stringBuilder.length() <= FILE_SIZE_LIMIT) {
