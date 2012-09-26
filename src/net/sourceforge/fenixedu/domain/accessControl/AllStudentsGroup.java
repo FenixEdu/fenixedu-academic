@@ -16,6 +16,22 @@ public class AllStudentsGroup extends Group {
     }
 
     @Override
+    public boolean equals(final Object other) {
+	boolean result = other != null;
+
+	if (result) {
+	    result = this.getClass().equals(other.getClass());
+	}
+
+	return result;
+    }
+
+    @Override
+    public int hashCode() {
+	return getClass().hashCode();
+    }
+
+    @Override
     public Set<Person> getElements() {
 	Set<Person> elements = new HashSet<Person>();
 	List<Person> people = Role.getRoleByRoleType(RoleType.STUDENT).getAssociatedPersons();

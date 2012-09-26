@@ -11,6 +11,23 @@ import net.sourceforge.fenixedu.domain.accessControl.groups.language.GroupBuilde
 import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
 
 public class AuthorGroup extends Group {
+
+    @Override
+    public boolean equals(final Object other) {
+	boolean result = other != null;
+
+	if (result) {
+	    result = this.getClass().equals(other.getClass());
+	}
+
+	return result;
+    }
+
+    @Override
+    public int hashCode() {
+	return getClass().hashCode();
+    }
+
     public static class AuthorGroupBuilder implements GroupBuilder {
 	@Override
 	public Group build(Object[] arguments) {
