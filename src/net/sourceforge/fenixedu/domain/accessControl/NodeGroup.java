@@ -58,6 +58,21 @@ public abstract class NodeGroup extends Group {
 	return this.children.hashCode();
     }
 
+    abstract public Group with(final Group... group);
+
+    @Override
+    public Group with(final NodeGroup nodeGroup, final Group group) {
+	Group result = null;
+
+	if (this.getClass().equals(nodeGroup.getClass())) {
+	    result = this.with(group);
+	} else {
+	    result = super.with(nodeGroup, group);
+	}
+
+	return result;
+    }
+
     @Override
     public String getExpression() {
 	StringBuilder builder = new StringBuilder();

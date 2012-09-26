@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.domain.accessControl;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
@@ -20,6 +21,23 @@ public final class GroupUnion extends NodeGroup {
 
     public GroupUnion(Collection<IGroup> groups) {
 	super(groups);
+    }
+
+    @Override
+    public Group with(final Group... groups) {
+	final List<IGroup> resultGroups = new ArrayList<IGroup>();
+	resultGroups.addAll(getChildren());
+	resultGroups.addAll(Arrays.asList(groups));
+
+	for (final IGroup iter : resultGroups) {
+	    if (iter instanceof GroupUnion) {
+		resultGroups.addAll(((GroupUnion) iter).getChildren());
+	    } else {
+		resultGroups.add(iter);
+	    }
+	}
+
+	return new GroupUnion(resultGroups);
     }
 
     @Override

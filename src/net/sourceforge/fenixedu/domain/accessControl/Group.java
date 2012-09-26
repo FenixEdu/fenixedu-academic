@@ -62,6 +62,10 @@ public abstract class Group implements Serializable, IGroup {
 	this.creationDate = new Date();
     }
 
+    public Group with(final NodeGroup nodeGroup, final Group group) {
+	return nodeGroup.with(this, group);
+    }
+
     public Group without(final Group group) {
 	Group result = this;
 

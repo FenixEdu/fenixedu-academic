@@ -6,6 +6,7 @@ import java.util.Set;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.accessControl.Group;
+import net.sourceforge.fenixedu.domain.accessControl.NodeGroup;
 import net.sourceforge.fenixedu.domain.accessControl.groups.language.exceptions.GroupContextRequiredException;
 import net.sourceforge.fenixedu.domain.accessControl.groups.language.exceptions.GroupExpressionException;
 import antlr.RecognitionException;
@@ -217,6 +218,11 @@ public class ExpressionGroup extends Group implements GroupContextProvider {
     @Override
     public int hashCode() {
 	return getGroup() == null ? super.hashCode() : getGroup().hashCode();
+    }
+
+    @Override
+    public Group with(NodeGroup nodeGroup, Group group) {
+	return getGroup().with(nodeGroup, group);
     }
 
     @Override
