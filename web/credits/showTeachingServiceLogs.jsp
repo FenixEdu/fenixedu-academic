@@ -35,14 +35,16 @@
 				<tbody> 
 					<%
 						for (final TeacherServiceLog log : logs) {
-						    final Person person = log.getUser().getPerson();
+						    final Person person = log.getUser()!=null?log.getUser().getPerson():null;
 					%>
 							<tr>
 								<td>
 									<%= log.getModificationDate().toString("yyyy-MM-dd HH:mm") %>
 								</td>
 								<td>
+									<% if(person != null){ %>
 									<%= person.getNickname() %> (<%= person.getUsername() %>)
+									<%}%>
 								</td>
 								<td>
 									<%= log.getTeacherService().getExecutionPeriod().getName() %>
