@@ -35,6 +35,7 @@ import net.sourceforge.fenixedu.domain.personnelSection.contracts.PersonContract
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.Student;
+import net.sourceforge.fenixedu.domain.teacher.CategoryType;
 import net.sourceforge.fenixedu.util.BundleUtil;
 
 import org.apache.commons.beanutils.BeanComparator;
@@ -219,9 +220,17 @@ public class ParkingParty extends ParkingParty_Base {
 		}
 	    }
 	    GrantOwner grantOwner = person.getGrantOwner();
-	    if (grantOwner != null && person.getPersonRole(RoleType.GRANT_OWNER) != null && grantOwner.hasCurrentContract()) {
+	    if (person.getPersonRole(RoleType.GRANT_OWNER) != null && grantOwner != null && grantOwner.hasCurrentContract()) {
 		roles.add(RoleType.GRANT_OWNER);
+	    } else if (person.getPersonRole(RoleType.GRANT_OWNER) != null && person.getEmployee() != null) {
+		PersonContractSituation currentGrantOwnerContractSituation = person.getPersonProfessionalData() != null ? person
+			.getPersonProfessionalData().getCurrentPersonContractSituationByCategoryType(CategoryType.GRANT_OWNER)
+			: null;
+		if (currentGrantOwnerContractSituation != null) {
+		    roles.add(RoleType.GRANT_OWNER);
+		}
 	    }
+
 	}
 	if (roles.size() == 0) {
 	    roles.add(RoleType.PERSON);
@@ -324,6 +333,27 @@ public class ParkingParty extends ParkingParty_Base {
 		    }
 		}
 		occupations.add(stringBuilder.toString());
+	    } else if (person.getPersonRole(RoleType.GRANT_OWNER) != null && person.getEmployee() != null) {
+		PersonContractSituation currentGrantOwnerContractSituation = person.getPersonProfessionalData() != null ? person
+			.getPersonProfessionalData().getCurrentPersonContractSituationByCategoryType(CategoryType.GRANT_OWNER)
+			: null;
+		if (currentGrantOwnerContractSituation != null) {
+		    StringBuilder stringBuilder = new StringBuilder(BundleUtil.getStringFromResourceBundle(
+			    "resources.ParkingResources", "message.person.identification",
+			    new String[] { RoleType.GRANT_OWNER.getLocalizedName(),
+				    person.getEmployee().getEmployeeNumber().toString() }));
+		    Unit currentUnit = person.getEmployee().getCurrentWorkingPlace();
+		    if (currentUnit != null) {
+			stringBuilder.append(currentUnit.getName());
+		    }
+		    DateTimeFormatter fmt = DateTimeFormat.forPattern("yyyy/MM/dd");
+		    stringBuilder.append("<br/> (Data inicio: ").append(
+			    fmt.print(currentGrantOwnerContractSituation.getBeginDate()));
+		    if (currentGrantOwnerContractSituation.getEndDate() != null) {
+			stringBuilder.append(" - Data fim: ").append(fmt.print(currentGrantOwnerContractSituation.getEndDate()));
+		    }
+		    occupations.add(stringBuilder.append(")<br/>").toString());
+		}
 	    }
 
 	    if (person.hasResearcher()) {
@@ -665,7 +695,7 @@ public class ParkingParty extends ParkingParty_Base {
 				parkingPartyBean.getCardAlwaysValid())
 			|| changedObject(getCardNumber(), parkingPartyBean.getCardNumber())
 			|| changedObject(getParkingGroup(), parkingPartyBean.getParkingGroup()) || changedObject(getPhdNumber(),
-			parkingPartyBean.getPhdNumber()))) {
+			    parkingPartyBean.getPhdNumber()))) {
 	    new ParkingPartyHistory(this, false);
 	}
 	setCardNumber(parkingPartyBean.getCardNumber());
