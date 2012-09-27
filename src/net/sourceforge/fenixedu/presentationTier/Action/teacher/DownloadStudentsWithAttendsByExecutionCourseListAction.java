@@ -4,6 +4,7 @@
 package net.sourceforge.fenixedu.presentationTier.Action.teacher;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -11,7 +12,6 @@ import java.util.ResourceBundle;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
-import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -172,9 +172,9 @@ public class DownloadStudentsWithAttendsByExecutionCourseListAction extends Feni
 	}
 
 	try {
-	    final ServletOutputStream writer = response.getOutputStream();
 	    System.out.println("Charset OutputStream: " + response.getCharacterEncoding());
-	    response.setContentType("plain/text");
+	    response.setContentType("plain/text;charset=UTF-8");
+	    final PrintWriter printWriter = response.getWriter();
 	    System.out.println("Charset OutputStream: " + response.getCharacterEncoding());
 	    final StringBuilder fileName = new StringBuilder();
 	    final YearMonthDay currentDate = new YearMonthDay();
@@ -184,8 +184,9 @@ public class DownloadStudentsWithAttendsByExecutionCourseListAction extends Feni
 	    fileName.append("-").append(currentDate.getMonthOfYear()).append("-").append(currentDate.getYear());
 	    fileName.append(".tsv");
 	    response.setHeader("Content-disposition", "attachment; filename=" + StringNormalizer.normalize(fileName.toString()));
-	    writer.print(fileContents);
-	    writer.flush();
+	    printWriter.print(fileContents);
+	    // writer.print(fileContents);
+	    printWriter.flush();
 	    response.flushBuffer();
 	} catch (final IOException e1) {
 	    throw new FenixActionException(e1);
