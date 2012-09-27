@@ -31,6 +31,7 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.joda.time.YearMonthDay;
 
+import pt.utl.ist.fenix.tools.util.StringNormalizer;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 /**
@@ -182,7 +183,7 @@ public class DownloadStudentsWithAttendsByExecutionCourseListAction extends Feni
 		    .append(currentDate.getDayOfMonth());
 	    fileName.append("-").append(currentDate.getMonthOfYear()).append("-").append(currentDate.getYear());
 	    fileName.append(".tsv");
-	    response.setHeader("Content-disposition", "attachment; filename=" + fileName);
+	    response.setHeader("Content-disposition", "attachment; filename=" + StringNormalizer.normalize(fileName.toString()));
 	    writer.print(fileContents);
 	    writer.flush();
 	    response.flushBuffer();
