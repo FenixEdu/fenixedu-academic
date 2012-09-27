@@ -16,6 +16,7 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
+import pt.ist.fenixWebFramework.services.Service;
 import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 public class ManageTeacherServiceCommentsDispatchAction extends FenixDispatchAction {
@@ -33,14 +34,20 @@ public class ManageTeacherServiceCommentsDispatchAction extends FenixDispatchAct
 		    .fromExternalId((String) getFromRequest(request, "executionYearOid"));
 
 	    ExecutionSemester firstExecutionPeriod = executionYear.getFirstExecutionPeriod();
-	    TeacherService teacherService = teacher.getTeacherServiceByExecutionPeriod(firstExecutionPeriod);
-	    if (teacherService == null) {
-		teacherService = new TeacherService(teacher, firstExecutionPeriod);
-	    }
+	    TeacherService teacherService = getTeacherService(teacher, firstExecutionPeriod);
 
 	    request.setAttribute("teacherService", teacherService);
 	}
 	return mapping.findForward("editTeacherServiceComment");
+    }
+
+    @Service
+    protected TeacherService getTeacherService(Teacher teacher, ExecutionSemester firstExecutionPeriod) {
+	TeacherService teacherService = teacher.getTeacherServiceByExecutionPeriod(firstExecutionPeriod);
+	if (teacherService == null) {
+	    teacherService = new TeacherService(teacher, firstExecutionPeriod);
+	}
+	return teacherService;
     }
 
     public ActionForward deleteTeacherServiceComment(ActionMapping mapping, ActionForm form, HttpServletRequest request,
