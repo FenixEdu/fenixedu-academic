@@ -264,6 +264,11 @@
 	<slot name="amountPerPage" key="label.net.sourceforge.fenixedu.domain.accounting.postingRules.serviceRequests.CertificateRequestPR.amountPerPage"  />
 </schema>
 
+<schema name="CertificateRequestWithoutBasePR.view"
+	type="net.sourceforge.fenixedu.domain.accounting.postingRules.serviceRequests.CertificateRequestWithoutBasePR"
+	bundle="APPLICATION_RESOURCES" extends="CertificateRequestPR.view">
+</schema>
+
 <schema name="EnrolmentCertificateRequestPR.view"
 	type="net.sourceforge.fenixedu.domain.accounting.postingRules.serviceRequests.EnrolmentCertificateRequestPR"
 	bundle="APPLICATION_RESOURCES" extends="CertificateRequestPR.view">
@@ -466,6 +471,11 @@
 	<setter signature="edit(baseAmount,amountPerUnit,amountPerPage, maximumAmount)"/>
 </schema>
 
+<schema name="CertificateRequestWithoutBasePR.edit"
+	type="net.sourceforge.fenixedu.domain.accounting.postingRules.serviceRequests.CertificateRequestWithoutBasePR"
+	bundle="APPLICATION_RESOURCES" extends="CertificateRequestPR.edit">
+</schema>
+
 <schema name="EnrolmentCertificateRequestPR.edit"
 	type="net.sourceforge.fenixedu.domain.accounting.postingRules.serviceRequests.EnrolmentCertificateRequestPR"
 	bundle="APPLICATION_RESOURCES" extends="CertificateRequestPR.edit">
@@ -626,6 +636,9 @@
 
 <schema name="CertificateRequestPR.view-student" type="net.sourceforge.fenixedu.domain.accounting.postingRules.serviceRequests.CertificateRequestPR" extends="BaseAmountPlusAmountPerUnitPR.view-student" bundle="APPLICATION_RESOURCES">
 	<slot name="amountPerPage" key="label.net.sourceforge.fenixedu.domain.accounting.postingRules.serviceRequests.CertificateRequestPR.amountPerPage"  />
+</schema>
+
+<schema name="CertificateRequestWithoutBasePR.view-student" type="net.sourceforge.fenixedu.domain.accounting.postingRules.serviceRequests.CertificateRequestWithoutBasePR" extends="CertificateRequestPR.view-student" bundle="APPLICATION_RESOURCES">
 </schema>
 
 <schema name="EnrolmentCertificateRequestPR.view-student" type="net.sourceforge.fenixedu.domain.accounting.postingRules.serviceRequests.EnrolmentCertificateRequestPR" 

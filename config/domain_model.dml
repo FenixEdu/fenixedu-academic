@@ -2418,6 +2418,8 @@ class DomainObject {
                 class accounting.postingRules.serviceRequests.CertificateRequestPR extends accounting.postingRules.BaseAmountPlusAmountPerUnitPR {
                     Money amountPerPage;
                 }
+                	class accounting.postingRules.serviceRequests.CertificateRequestWithoutBasePR extends accounting.postingRules.serviceRequests.CertificateRequestPR {
+                	}
 
                     class accounting.postingRules.serviceRequests.EnrolmentCertificateRequestPR extends accounting.postingRules.serviceRequests.CertificateRequestPR {
                     }

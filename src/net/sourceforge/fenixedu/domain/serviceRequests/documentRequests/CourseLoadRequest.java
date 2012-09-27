@@ -47,7 +47,7 @@ public class CourseLoadRequest extends CourseLoadRequest_Base {
 
     @Override
     public Integer getNumberOfUnits() {
-	return Integer.valueOf(0);
+	return getEnrolmentsCount();
     }
 
     @Override

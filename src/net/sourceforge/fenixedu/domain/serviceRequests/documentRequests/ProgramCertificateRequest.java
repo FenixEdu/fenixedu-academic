@@ -47,7 +47,7 @@ public class ProgramCertificateRequest extends ProgramCertificateRequest_Base {
 
     @Override
     public Integer getNumberOfUnits() {
-	return Integer.valueOf(0);
+	return getEnrolmentsCount();
     }
 
     @Override
