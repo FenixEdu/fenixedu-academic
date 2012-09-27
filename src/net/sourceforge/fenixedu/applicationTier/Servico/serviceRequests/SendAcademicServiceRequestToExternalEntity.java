@@ -272,7 +272,7 @@ public class SendAcademicServiceRequestToExternalEntity extends FenixService {
 	    }
 
 	    //joantune: here we are exporting the curricular plan of the active degree (didn't felt pain! at all!)
-	    if (registration.getActiveDegreeCurricularPlan().hasRoot()) {
+	    if (registration.getLastStudentCurricularPlan().hasRoot()) {
 
 		StyledExcelSpreadsheet spreadsheet = new StyledExcelSpreadsheet("Disciplinas");
 
