@@ -185,7 +185,8 @@ public class AnnualTeachingCreditsBean implements Serializable {
 	ExecutionYear previousExecutionYear = executionYear.getPreviousExecutionYear();
 	for (Professorship professorship : getTeacher().getPerson().getProfessorshipsSet()) {
 	    if (professorship.getExecutionCourse().getExecutionPeriod().getExecutionYear().equals(previousExecutionYear)
-		    && professorship.getExecutionCourse().getProjectTutorialCourse()) {
+		    && professorship.getExecutionCourse().getProjectTutorialCourse()
+		    && !professorship.getExecutionCourse().isDissertation()) {
 		professorships.add(professorship);
 	    }
 	}
