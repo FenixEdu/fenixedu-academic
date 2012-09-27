@@ -5975,6 +5975,7 @@ class DomainObject {
         }
 
         class teacher.DegreeProjectTutorialService extends teacher.TeacherServiceItem {
+        	Integer percentageValue;
         }
 
         class teacher.InstitutionWorkTime extends teacher.TeacherServiceItem {
@@ -11359,8 +11360,10 @@ relation DegreeTeachingServiceProfessorship {
     Professorship playsRole professorship;
 }
 
-relation DegreeProjectTutorialServiceProfessorship {
-    teacher.DegreeProjectTutorialService playsRole degreeProjectTutorialService;
+relation ProfessorshipDegreeProjectTutorialService {
+    teacher.DegreeProjectTutorialService playsRole degreeProjectTutorialServices {
+        multiplicity *;
+    }
     Professorship playsRole professorship;
 }
 
@@ -11369,6 +11372,13 @@ relation DegreeProjectTutorialServiceAttends {
     Attends playsRole attends {
         multiplicity *;
     }
+}
+
+relation AttendsDegreeProjectTutorialServices {
+    teacher.DegreeProjectTutorialService playsRole degreeProjectTutorialServices {
+        multiplicity *;
+    }
+    Attends playsRole attend;
 }
 
 relation DegreeTeachingServiceShift {

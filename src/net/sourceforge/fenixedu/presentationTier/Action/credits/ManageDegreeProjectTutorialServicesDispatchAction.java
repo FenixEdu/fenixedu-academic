@@ -11,6 +11,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.domain.Attends;
 import net.sourceforge.fenixedu.domain.Professorship;
 import net.sourceforge.fenixedu.domain.credits.util.ProjectTutorialServiceBean;
+import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.teacher.DegreeProjectTutorialService;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 
@@ -18,7 +19,6 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
-import pt.ist.fenixWebFramework.services.Service;
 import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 public class ManageDegreeProjectTutorialServicesDispatchAction extends FenixDispatchAction {
@@ -31,43 +31,34 @@ public class ManageDegreeProjectTutorialServicesDispatchAction extends FenixDisp
 	if (professorship == null) {
 	    return mapping.findForward("teacher-not-found");
 	}
-	request.setAttribute("projectTutorialService", new ProjectTutorialServiceBean(professorship));
+	List<ProjectTutorialServiceBean> projectTutorialServiceBeans = new ArrayList<ProjectTutorialServiceBean>();
+	for (Attends attend : professorship.getExecutionCourse().getAttends()) {
+	    ProjectTutorialServiceBean projectTutorialServiceBean = new ProjectTutorialServiceBean(professorship, attend);
+	    projectTutorialServiceBeans.add(projectTutorialServiceBean);
+	}
+
+	request.setAttribute("professorship", professorship);
+	request.setAttribute("projectTutorialServiceBeans", projectTutorialServiceBeans);
 	return mapping.findForward("show-project-tutorial-service");
     }
 
     public ActionForward updateProjectTutorialService(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
-
-	ProjectTutorialServiceBean projectTutorialService = getRenderedObject("projectTutorialService");
-
-	updateProjectTutorialService(projectTutorialService);
-
-	request.setAttribute("teacherOid", projectTutorialService.getProfessorship().getTeacher().getExternalId());
-	request.setAttribute("executionYearOid", projectTutorialService.getProfessorship().getExecutionCourse()
-		.getExecutionYear().getNextExecutionYear().getExternalId());
+	String professorshipID = (String) getFromRequest(request, "professorshipID");
+	Professorship professorship = AbstractDomainObject.fromExternalId(professorshipID);
+	List<ProjectTutorialServiceBean> projectTutorialServiceBeans = getRenderedObject("projectTutorialService");
+	try {
+	    DegreeProjectTutorialService.updateProjectTutorialService(projectTutorialServiceBeans);
+	} catch (DomainException domainException) {
+	    addActionMessage("error", request, domainException.getMessage());
+	    request.setAttribute("professorship", professorship);
+	    request.setAttribute("projectTutorialServiceBeans", projectTutorialServiceBeans);
+	    return mapping.findForward("show-project-tutorial-service");
+	}
+	request.setAttribute("teacherOid", professorship.getTeacher().getExternalId());
+	request.setAttribute("executionYearOid", professorship.getExecutionCourse().getExecutionPeriod().getExecutionYear()
+		.getNextExecutionYear().getExternalId());
 	return mapping.findForward("viewAnnualTeachingCredits");
-    }
-
-    @Service
-    private void updateProjectTutorialService(ProjectTutorialServiceBean projectTutorialService) {
-	DegreeProjectTutorialService degreeProjectTutorialService = projectTutorialService.getProfessorship()
-		.getDegreeProjectTutorialService();
-	if (degreeProjectTutorialService == null) {
-	    degreeProjectTutorialService = new DegreeProjectTutorialService(projectTutorialService.getProfessorship());
-	}
-
-	for (Attends attend : projectTutorialService.getOrientations()) {
-	    if (!degreeProjectTutorialService.getAttends().contains(attend) && attend.getDegreeProjectTutorialService() == null) {
-		degreeProjectTutorialService.getAttends().add(attend);
-	    }
-	}
-	List<Attends> attends = new ArrayList<Attends>(degreeProjectTutorialService.getAttends());
-	for (Attends attend : attends) {
-	    if (!projectTutorialService.getOrientations().contains(attend)) {
-		degreeProjectTutorialService.removeAttends(attend);
-	    }
-	}
-
     }
 
 }

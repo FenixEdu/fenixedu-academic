@@ -41,7 +41,6 @@
 
 <p><html:link page="<%="/credits.do?method=viewAnnualTeachingCredits&amp;executionYearOid="+executionYearOid+"&teacherOid="+teacherId%>"><bean:message key="link.return"/></html:link></p>
 
-<span class="error"><!-- Error messages go here --><html:errors /></span>
 <html:messages id="message" message="true">
 	<span class="error"><!-- Error messages go here -->
 		<bean:write name="message" filter="false"/>

@@ -211,21 +211,21 @@
 	<slot name="schoolClassCalculationMethod" key="label.teacherServiceDistribution.schoolClassCalculationMethod" layout="option-select"/>
 </schema>
 
-<schema name="show.degreeProjectTutorialServiceOrientations" type="net.sourceforge.fenixedu.domain.credits.util.ProjectTutorialServiceBean" bundle="TEACHER_CREDITS_SHEET_RESOURCES">
-	<slot name="orientations" layout="tabular-option" key="label.availableOrientations" schema="edit.projectTutorialService">
-	  	<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.executionCourse.AvailableAttendsForProjectTutorialServiceProvider"/>
-	  	<property name="classes" value="tstyle2 thlight thleft mtop05 mbottom05"/>
-	</slot>
+<schema name="show.degreeProjectTutorialService" type="net.sourceforge.fenixedu.domain.teacher.DegreeProjectTutorialService" bundle="TEACHER_CREDITS_SHEET_RESOURCES">
+	<slot name="attend.registration.number" key="label.teacher-thesis-student.student-number"/>
+	<slot name="attend.registration.student.person.name" key="label.teacher-thesis-student.student-name"/>
+	<slot name="attend.enrolment" key="label.date" layout="values" schema="show.enrolment.approvementDate"/>
+	<slot name="percentageValue" key="label.teacher-thesis-student.percentage" layout="null-as-label"/>
 </schema>
 
-<schema name="edit.projectTutorialService" type="net.sourceforge.fenixedu.domain.Attends" bundle="TEACHER_CREDITS_SHEET_RESOURCES">
+<schema name="show.degreeProjectTutorialService.attend" bundle="TEACHER_CREDITS_SHEET_RESOURCES" type="net.sourceforge.fenixedu.domain.Attends">
 	<slot name="registration.number" key="label.teacher-thesis-student.student-number"/>
 	<slot name="registration.student.person.name" key="label.teacher-thesis-student.student-name"/>
-	<slot name="degreeProjectTutorialService" layout="values" schema="show.degreeProjectTutorialService" key="label.teacher"/>
+	<slot name="enrolment" key="label.date" layout="values" schema="show.enrolment.approvementDate"/>
 </schema>
-		
-<schema name="show.degreeProjectTutorialService" type="net.sourceforge.fenixedu.domain.teacher.DegreeProjectTutorialService">
-	<slot name="professorship.teacher.person.name" layout="null-as-label"/>
+
+<schema name="show.enrolment.approvementDate" type="net.sourceforge.fenixedu.domain.Enrolment">
+	<slot name="approvementDate" key="label.date" layout="null-as-label"/>
 </schema>
 
 <schema name="create.reductionService" type="net.sourceforge.fenixedu.domain.teacher.ReductionService" constructor="teacherService,creditsReduction" bundle="TEACHER_CREDITS_SHEET_RESOURCES">
@@ -287,14 +287,4 @@
 		<property name="format" value="HH:mm" />
 		<validator class="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
 	</slot>
-</schema>
-
-<schema name="show.degreeProjectTutorialService.attend" bundle="TEACHER_CREDITS_SHEET_RESOURCES" type="net.sourceforge.fenixedu.domain.Attends">
-	<slot name="registration.number" key="label.teacher-thesis-student.student-number"/>
-	<slot name="registration.student.person.name" key="label.teacher-thesis-student.student-name"/>
-	<slot name="enrolment" key="label.date" layout="values" schema="show.enrolment.approvementDate"/>
-</schema>
-
-<schema name="show.enrolment.approvementDate" type="net.sourceforge.fenixedu.domain.Enrolment">
-	<slot name="approvementDate" key="label.date" layout="null-as-label"/>
 </schema>

@@ -299,13 +299,13 @@ $(document).ready(function() {
 				</fr:view>
 			</h3>
 			
-			<logic:present name="professorship" property="degreeProjectTutorialService">
-				<fr:view name="professorship" property="degreeProjectTutorialService.attends" schema="show.degreeProjectTutorialService.attend">
+			<logic:notEmpty name="professorship" property="degreeProjectTutorialServices">
+				<fr:view name="professorship" property="degreeProjectTutorialServices" schema="show.degreeProjectTutorialService">
 					<fr:layout name="tabular">
 						<fr:property name="classes" value="tstyle2 thlight thleft mtop05 mbottom05"/>
 					</fr:layout>
 				</fr:view>
-			</logic:present> 
+			</logic:notEmpty> 
 			<bean:define id="canEditCreditsInfo" name="annualTeachingCreditsBean" property="canEditTeacherCredits"/>
 			<logic:equal name="canEditCreditsInfo" value="true">
 				<html:link page='<%= "/degreeProjectTutorialService.do?page=0&amp;method=showProjectTutorialServiceDetails&amp;professorshipID="+professorshipID + "&amp;executionPeriodId="+ executionPeriodId %>'>
