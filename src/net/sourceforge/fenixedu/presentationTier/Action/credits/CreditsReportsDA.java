@@ -61,7 +61,8 @@ public class CreditsReportsDA extends FenixDispatchAction {
 		    spreadsheet.newRow();
 		    spreadsheet.addCell(executionCourse.getName());
 		    spreadsheet.addCell(executionCourse.getDegreePresentationString());
-		    spreadsheet.addCell(executionCourse.getProjectTutorialCourse() ? "A" : "B");
+		    spreadsheet.addCell(executionCourse.isDissertation() ? "DISS"
+			    : executionCourse.getProjectTutorialCourse() ? "A" : "B");
 		    spreadsheet.addCell(executionCourse.hasAnyLesson() ? "S" : "N");
 		}
 	    }
