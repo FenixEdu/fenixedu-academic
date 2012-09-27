@@ -82,17 +82,17 @@ public class DownloadStudentsWithAttendsByExecutionCourseListAction extends Feni
 
     private static final String NUMBER_STUDENTS = "Número de alunos";
 
-    private final ResourceBundle enumerationResources = ResourceBundle.getBundle("resources.EnumerationResources", Language
-	    .getLocale());
+    private final ResourceBundle enumerationResources = ResourceBundle.getBundle("resources.EnumerationResources",
+	    Language.getLocale());
 
     @Override
-    public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
-	    throws FenixActionException, FenixFilterException, FenixServiceException {
+    public ActionForward execute(final ActionMapping mapping, final ActionForm form, final HttpServletRequest request,
+	    final HttpServletResponse response) throws FenixActionException, FenixFilterException, FenixServiceException {
 
-	SearchExecutionCourseAttendsBean executionCourseAttendsBean = getRenderedObject("downloadViewState");
+	final SearchExecutionCourseAttendsBean executionCourseAttendsBean = getRenderedObject("downloadViewState");
 	executionCourseAttendsBean.getExecutionCourse().searchAttends(executionCourseAttendsBean);
 
-	List<Attends> attendsResult = new ArrayList<Attends>(executionCourseAttendsBean.getAttendsResult());
+	final List<Attends> attendsResult = new ArrayList<Attends>(executionCourseAttendsBean.getAttendsResult());
 	Collections.sort(attendsResult, Attends.COMPARATOR_BY_STUDENT_NUMBER);
 
 	String fileContents = new String();
@@ -104,27 +104,28 @@ public class DownloadStudentsWithAttendsByExecutionCourseListAction extends Feni
 	fileContents += COURSE + SEPARATOR;
 	fileContents += NAME + SEPARATOR;
 
-	List<Grouping> groupings = new ArrayList<Grouping>(executionCourseAttendsBean.getExecutionCourse().getGroupings());
+	final List<Grouping> groupings = new ArrayList<Grouping>(executionCourseAttendsBean.getExecutionCourse().getGroupings());
 	Collections.sort(groupings, Grouping.COMPARATOR_BY_ENROLMENT_BEGIN_DATE);
 
 	if (!groupings.isEmpty()) {
-	    for (Grouping grouping : groupings) {
+	    for (final Grouping grouping : groupings) {
 		fileContents += GROUP + grouping.getName() + SEPARATOR;
 	    }
 	}
 
 	fileContents += EMAIL + SEPARATOR;
 
-	List<ShiftType> shiftTypes = new ArrayList<ShiftType>(executionCourseAttendsBean.getExecutionCourse().getShiftTypes());
+	final List<ShiftType> shiftTypes = new ArrayList<ShiftType>(executionCourseAttendsBean.getExecutionCourse()
+		.getShiftTypes());
 	Collections.sort(shiftTypes);
-	for (ShiftType shiftType : shiftTypes) {
+	for (final ShiftType shiftType : shiftTypes) {
 	    fileContents += SHIFT + enumerationResources.getString(shiftType.getName()) + SEPARATOR;
 	}
 
 	fileContents += NEWLINE;
 
 	// building each line
-	for (Attends attends : attendsResult) {
+	for (final Attends attends : attendsResult) {
 	    fileContents += attends.getRegistration().getStudent().getNumber().toString() + SEPARATOR;
 	    if (attends.getEnrolment() == null) {
 		fileContents += NULL + SEPARATOR;
@@ -136,8 +137,8 @@ public class DownloadStudentsWithAttendsByExecutionCourseListAction extends Feni
 	    fileContents += enumerationResources.getString(attends.getAttendsStateType().getQualifiedName()) + SEPARATOR;
 	    fileContents += attends.getStudentCurricularPlanFromAttends().getDegreeCurricularPlan().getName() + SEPARATOR;
 	    fileContents += attends.getRegistration().getStudent().getPerson().getName() + SEPARATOR;
-	    for (Grouping grouping : groupings) {
-		StudentGroup studentGroup = attends.getStudentGroupByGrouping(grouping);
+	    for (final Grouping grouping : groupings) {
+		final StudentGroup studentGroup = attends.getStudentGroupByGrouping(grouping);
 		if (studentGroup == null) {
 		    fileContents += NOT_AVAILABLE + SEPARATOR;
 		} else {
@@ -145,11 +146,12 @@ public class DownloadStudentsWithAttendsByExecutionCourseListAction extends Feni
 		}
 	    }
 
-	    String email = attends.getRegistration().getStudent().getPerson().getEmail();
+	    final String email = attends.getRegistration().getStudent().getPerson().getEmail();
 	    fileContents += (email != null ? email : "") + SEPARATOR;
 
-	    for (ShiftType shiftType : shiftTypes) {
-		Shift shift = attends.getRegistration().getShiftFor(executionCourseAttendsBean.getExecutionCourse(), shiftType);
+	    for (final ShiftType shiftType : shiftTypes) {
+		final Shift shift = attends.getRegistration().getShiftFor(executionCourseAttendsBean.getExecutionCourse(),
+			shiftType);
 		if (shift == null) {
 		    fileContents += NOT_AVAILABLE + SEPARATOR;
 		} else {
@@ -163,26 +165,26 @@ public class DownloadStudentsWithAttendsByExecutionCourseListAction extends Feni
 	fileContents += SUMMARY + NEWLINE;
 
 	fileContents += NUMBER_ENROLLMENTS + SEPARATOR + NUMBER_STUDENTS + NEWLINE;
-	SortedSet<Integer> keys = new TreeSet<Integer>(executionCourseAttendsBean.getEnrolmentsNumberMap().keySet());
-	for (Integer key : keys) {
+	final SortedSet<Integer> keys = new TreeSet<Integer>(executionCourseAttendsBean.getEnrolmentsNumberMap().keySet());
+	for (final Integer key : keys) {
 	    fileContents += key + SEPARATOR + executionCourseAttendsBean.getEnrolmentsNumberMap().get(key) + NEWLINE;
 	}
 
 	try {
-	    ServletOutputStream writer = response.getOutputStream();
-	    response.setContentType("plain/text");
-	    StringBuilder fileName = new StringBuilder();
-	    YearMonthDay currentDate = new YearMonthDay();
+	    final ServletOutputStream writer = response.getOutputStream();
+	    response.setContentType("plain/text;charset=UTF-8");
+	    final StringBuilder fileName = new StringBuilder();
+	    final YearMonthDay currentDate = new YearMonthDay();
 	    fileName.append("listaDeAlunos_");
-	    fileName.append(executionCourseAttendsBean.getExecutionCourse().getSigla()).append("_").append(
-		    currentDate.getDayOfMonth());
+	    fileName.append(executionCourseAttendsBean.getExecutionCourse().getSigla()).append("_")
+		    .append(currentDate.getDayOfMonth());
 	    fileName.append("-").append(currentDate.getMonthOfYear()).append("-").append(currentDate.getYear());
 	    fileName.append(".tsv");
 	    response.setHeader("Content-disposition", "attachment; filename=" + fileName);
 	    writer.print(fileContents);
 	    writer.flush();
 	    response.flushBuffer();
-	} catch (IOException e1) {
+	} catch (final IOException e1) {
 	    throw new FenixActionException(e1);
 	}
 
