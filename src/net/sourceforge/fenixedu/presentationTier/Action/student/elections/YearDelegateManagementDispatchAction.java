@@ -31,18 +31,9 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
-import pt.ist.fenixWebFramework.struts.annotations.Forward;
-import pt.ist.fenixWebFramework.struts.annotations.Forwards;
-import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 @Mapping(module = "student", path = "/yearDelegateManagement", scope = "request", parameter = "method")
 @Forwards(value = { @Forward(name = "showYearDelegateManagement", path = "/student/elections/yearDelegateManagement.jsp") })
@@ -201,10 +192,16 @@ public class YearDelegateManagementDispatchAction extends FenixDispatchAction {
      */
 
     private YearDelegateElection getYearDelegateElectionForStudent(Student student) {
-	final Registration registration = student.getLastActiveRegistration();
+	final List<Registration> registrations = student.getActiveRegistrations();
 	final ExecutionYear currentExecutionYear = ExecutionYear.readCurrentExecutionYear();
-	if (registration != null) {
-	    return registration.getYearDelegateElectionsGivenExecutionYear(currentExecutionYear);
+	for (Registration registration : registrations) {
+	    if (registration != null) {
+		YearDelegateElection yearDelegateElectionsGivenExecutionYear = registration
+			.getYearDelegateElectionsGivenExecutionYear(currentExecutionYear);
+		if (yearDelegateElectionsGivenExecutionYear != null) {
+		    return yearDelegateElectionsGivenExecutionYear;
+		}
+	    }
 	}
 	return null;
     }
