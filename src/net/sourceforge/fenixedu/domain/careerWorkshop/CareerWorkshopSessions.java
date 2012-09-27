@@ -28,7 +28,7 @@ public enum CareerWorkshopSessions {
     APR_30_11(new DateTime(2011,4,30,0,0,0,0))
     */
 
-    /* Data from 2012 */
+    /* Data from 2012 
     FEB_11_12(new DateTime(2012,2,11,0,0,0,0)),
 
     FEB_18_12(new DateTime(2012,2,18,0,0,0,0)),
@@ -42,6 +42,20 @@ public enum CareerWorkshopSessions {
     MAR_17_12(new DateTime(2012,3,17,0,0,0,0)),
 
     MAR_24_12(new DateTime(2012,3,24,0,0,0,0))
+    */
+    
+    /* Data from 2013 */
+    FEB_23_13(new DateTime(2013,2,23,0,0,0,0)),
+    
+    MAR_02_13(new DateTime(2013,3,2,0,0,0,0)),
+    
+    MAR_09_13(new DateTime(2013,3,9,0,0,0,0)),
+    
+    MAR_16_13(new DateTime(2013,3,16,0,0,0,0)),
+    
+    MAR_23_13(new DateTime(2013,3,23,0,0,0,0)),
+    
+    MAR_30_13(new DateTime(2013,3,30,0,0,0,0))
     
     ;
 
