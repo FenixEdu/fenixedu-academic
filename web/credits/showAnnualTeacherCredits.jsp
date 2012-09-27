@@ -300,12 +300,7 @@ $(document).ready(function() {
 			</h3>
 			
 			<logic:present name="professorship" property="degreeProjectTutorialService">
-				<fr:view name="professorship" property="degreeProjectTutorialService.attends">
-					<fr:schema bundle="TEACHER_CREDITS_SHEET_RESOURCES" type="net.sourceforge.fenixedu.domain.Attends">
-						<fr:slot name="registration.number" key="label.teacher-thesis-student.student-number"/>
-						<fr:slot name="registration.student.person.name" key="label.teacher-thesis-student.student-name"/>
-						<fr:slot name="enrolment.approvementDate" key="label.date"/>
-					</fr:schema>
+				<fr:view name="professorship" property="degreeProjectTutorialService.attends" schema="show.degreeProjectTutorialService.attend">
 					<fr:layout name="tabular">
 						<fr:property name="classes" value="tstyle2 thlight thleft mtop05 mbottom05"/>
 					</fr:layout>

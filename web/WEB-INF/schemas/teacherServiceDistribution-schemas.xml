@@ -288,3 +288,13 @@
 		<validator class="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
 	</slot>
 </schema>
+
+<schema name="show.degreeProjectTutorialService.attend" bundle="TEACHER_CREDITS_SHEET_RESOURCES" type="net.sourceforge.fenixedu.domain.Attends">
+	<slot name="registration.number" key="label.teacher-thesis-student.student-number"/>
+	<slot name="registration.student.person.name" key="label.teacher-thesis-student.student-name"/>
+	<slot name="enrolment" key="label.date" layout="values" schema="show.enrolment.approvementDate"/>
+</schema>
+
+<schema name="show.enrolment.approvementDate" type="net.sourceforge.fenixedu.domain.Enrolment">
+	<slot name="approvementDate" key="label.date" layout="null-as-label"/>
+</schema>
