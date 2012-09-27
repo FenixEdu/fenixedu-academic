@@ -172,7 +172,9 @@ public class DownloadStudentsWithAttendsByExecutionCourseListAction extends Feni
 
 	try {
 	    final ServletOutputStream writer = response.getOutputStream();
-	    response.setContentType("plain/text;charset=UTF-8");
+	    System.out.println("Charset OutputStream: " + response.getCharacterEncoding());
+	    response.setContentType("plain/text");
+	    System.out.println("Charset OutputStream: " + response.getCharacterEncoding());
 	    final StringBuilder fileName = new StringBuilder();
 	    final YearMonthDay currentDate = new YearMonthDay();
 	    fileName.append("listaDeAlunos_");
