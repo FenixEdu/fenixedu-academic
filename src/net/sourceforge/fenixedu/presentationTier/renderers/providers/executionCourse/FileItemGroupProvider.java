@@ -6,6 +6,7 @@ import java.util.List;
 import net.sourceforge.fenixedu.domain.FileContent;
 import net.sourceforge.fenixedu.domain.Site;
 import net.sourceforge.fenixedu.domain.accessControl.EveryoneGroup;
+import net.sourceforge.fenixedu.domain.accessControl.Group;
 import net.sourceforge.fenixedu.domain.accessControl.InternalPersonGroup;
 import net.sourceforge.fenixedu.domain.messaging.ExecutionCourseAnnouncementBoard;
 import net.sourceforge.fenixedu.domain.messaging.UnitAnnouncementBoard;
@@ -13,6 +14,7 @@ import net.sourceforge.fenixedu.injectionCode.IGroup;
 import net.sourceforge.fenixedu.presentationTier.Action.manager.FileContentCreationBean;
 import net.sourceforge.fenixedu.presentationTier.Action.manager.FileItemPermissionBean;
 import pt.ist.fenixWebFramework.renderers.DataProvider;
+import pt.ist.fenixWebFramework.renderers.components.converters.BiDirectionalConverter;
 import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
 
 public class FileItemGroupProvider implements DataProvider {
@@ -67,7 +69,17 @@ public class FileItemGroupProvider implements DataProvider {
 
     @Override
     public Converter getConverter() {
-	return null;
+	return new BiDirectionalConverter() {
+	    @Override
+	    public Object convert(Class type, Object value) {
+		return value == null ? null : Group.fromString((String) value);
+	    }
+
+	    @Override
+	    public String deserialize(Object object) {
+		return object == null ? null : ((Group) object).getExpression();
+	    }
+	};
     }
 
 }
