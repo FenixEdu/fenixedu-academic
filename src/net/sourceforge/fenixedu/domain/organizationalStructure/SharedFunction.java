@@ -14,4 +14,9 @@ public class SharedFunction extends SharedFunction_Base {
 	setCredits(credits);
     }
 
+    @Override
+    public boolean isSharedFunction() {
+	return true;
+    }
+
 }

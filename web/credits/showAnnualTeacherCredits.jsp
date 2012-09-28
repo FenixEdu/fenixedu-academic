@@ -326,21 +326,18 @@ $(document).ready(function() {
 		<logic:iterate id="annualTeachingCreditsByPeriodBean" name="annualTeachingCreditsBean" property="annualTeachingCreditsByPeriodBeans">
 			<h3><bean:write name="annualTeachingCreditsByPeriodBean" property="executionPeriod.qualifiedName"/></h3>
 			<bean:define id="executionPeriodOid" name="annualTeachingCreditsByPeriodBean" property="executionPeriod.externalId"/>
-			<bean:define id="canEditTeacherManagementFunctions" name="annualTeachingCreditsByPeriodBean" property="canEditTeacherManagementFunctions"/>
 			<p><logic:equal name="roleType" value="SCIENTIFIC_COUNCIL">
 				<html:link page='<%= "/managePersonFunctionsShared.do?method=prepareToAddPersonFunction&amp;page=0" + "&amp;executionPeriodOid=" + executionPeriodOid + "&amp;teacherOid=" + teacherId %>'>
-					<%--<bean:message key="link.change"/>&nbsp;<bean:write name="annualTeachingCreditsByPeriodBean" property="executionPeriod.qualifiedName"/>--%>
-					Inserir Cargo de Gestão Académica
+					<bean:message key="link.managementPosition.create" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/>
 				</html:link>
-				|
 			</logic:equal>
-			<logic:equal name="canEditTeacherManagementFunctions" value="true">
-				<html:link page='<%= "/managePersonFunctionsShared.do?method=prepareToAddPersonFunctionShared&amp;page=0" + "&amp;executionPeriodOid=" + executionPeriodOid + "&amp;teacherOid=" + teacherId %>'>
-					<%--<bean:message key="link.change"/>&nbsp;<bean:write name="annualTeachingCreditsByPeriodBean" property="executionPeriod.qualifiedName"/>--%>
-					Inserir Cargo de Gestão de Unidades
-				</html:link>
+			<logic:equal name="roleType" value="DEPARTMENT_ADMINISTRATIVE_OFFICE">
+				<logic:equal name="annualTeachingCreditsByPeriodBean" property="canEditTeacherManagementFunctions" value="true">
+					<html:link page='<%= "/managePersonFunctionsShared.do?method=prepareToAddPersonFunctionShared&amp;page=0" + "&amp;executionPeriodOid=" + executionPeriodOid + "&amp;teacherOid=" + teacherId %>'>
+						<bean:message key="link.managementPosition.create" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/>
+					</html:link>
+				</logic:equal>
 			</logic:equal></p>
-			
 			<bean:define id="personFunctions" name="annualTeachingCreditsByPeriodBean" property="personFunctions"/>
 			<logic:empty name="personFunctions">
 				<bean:message key="label.teacherCreditsSheet.noDataFound" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/>
@@ -358,19 +355,18 @@ $(document).ready(function() {
 					</fr:schema>
 					<fr:layout name="tabular">
 						<fr:property name="classes" value="tstyle2 thlight thleft mtop05 mbottom05"/>
-						<logic:equal name="canEditTeacherManagementFunctions" value="true">
+						<logic:equal name="roleType" value="DEPARTMENT_ADMINISTRATIVE_OFFICE">
 							<fr:property name="link(edit)" value="/managePersonFunctionsShared.do?method=prepareToEditPersonFunctionShared" />
 							<fr:property name="key(edit)" value="label.edit" />
 							<fr:property name="param(edit)" value="externalId/personFunctionOid" />
 							<fr:property name="bundle(edit)" value="TEACHER_CREDITS_SHEET_RESOURCES" />
-							<fr:property name="visibleIf(edit)" value="personFunctionShared" />
+							<fr:property name="visibleIf(edit)" value="canBeEditedByDepartmentAdministrativeOffice" />
 						</logic:equal>
 						<logic:equal name="roleType" value="SCIENTIFIC_COUNCIL">
 							<fr:property name="link(edit2)" value="<%="/managePersonFunctionsShared.do?method=prepareToEditPersonFunction&executionPeriodOid="+executionPeriodOid%>" />
 							<fr:property name="key(edit2)" value="label.edit" />
 							<fr:property name="param(edit2)" value="externalId/personFunctionOid" />
 							<fr:property name="bundle(edit2)" value="TEACHER_CREDITS_SHEET_RESOURCES" />
-							<fr:property name="visibleIfNot(edit2)" value="personFunctionShared" />
 						</logic:equal>
 					</fr:layout>
 				</fr:view>

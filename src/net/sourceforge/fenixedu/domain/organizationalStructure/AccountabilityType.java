@@ -58,6 +58,10 @@ public class AccountabilityType extends AccountabilityType_Base {
 	return false;
     }
 
+    public boolean isSharedFunction() {
+	return false;
+    }
+
     public String getName() {
 	return getTypeName().getPreferedContent();
     }

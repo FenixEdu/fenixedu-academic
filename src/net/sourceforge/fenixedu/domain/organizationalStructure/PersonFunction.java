@@ -1,12 +1,16 @@
 package net.sourceforge.fenixedu.domain.organizationalStructure;
 
 import java.util.Comparator;
+import java.util.Iterator;
+import java.util.List;
 
 import net.sourceforge.fenixedu.domain.CurricularYear;
 import net.sourceforge.fenixedu.domain.DomainObject;
 import net.sourceforge.fenixedu.domain.ExecutionInterval;
+import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.util.email.PersonFunctionSender;
 
 import org.apache.commons.beanutils.BeanComparator;
@@ -218,5 +222,22 @@ public class PersonFunction extends PersonFunction_Base {
 	    removeSender();
 	}
 	super.delete();
+    }
+
+    public boolean getCanBeEditedByDepartmentAdministrativeOffice() {
+	ExecutionSemester executionSemester = ExecutionSemester.readByYearMonthDay(getBeginDate());
+	if (isPersonFunctionShared() && executionSemester.isInValidCreditsPeriod(RoleType.DEPARTMENT_ADMINISTRATIVE_OFFICE)) {
+	    List<Unit> units = UnitUtils.readAllActiveUnitsByType(PartyTypeEnum.DEPARTMENT);
+	    units.addAll(UnitUtils.readAllActiveUnitsByType(PartyTypeEnum.DEGREE_UNIT));
+	    units.addAll(UnitUtils.readAllActiveUnitsByType(PartyTypeEnum.SCIENTIFIC_AREA));
+	    for (Iterator<Unit> iterator = units.iterator(); iterator.hasNext();) {
+		Unit unit = iterator.next();
+		if (unit.getUnitName().getIsExternalUnit()) {
+		    iterator.remove();
+		}
+	    }
+	    return units.contains(getUnit());
+	}
+	return false;
     }
 }

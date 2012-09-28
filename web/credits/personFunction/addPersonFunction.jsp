@@ -83,18 +83,55 @@
 			</fr:edit>
 		</logic:empty>	
 		<logic:notEmpty name="personFunctionBean" property="function">
-			<fr:edit id="personFunctionBean3" name="personFunctionBean" action="/managePersonFunctionsShared.do?method=editPersonFunction">
-				<fr:schema bundle="TEACHER_CREDITS_SHEET_RESOURCES" type="net.sourceforge.fenixedu.domain.credits.util.PersonFunctionBean">
-					<fr:slot name="unit.presentationName" key="label.unit" readOnly="true"/>
-					<fr:slot name="function.typeName" key="label.function" readOnly="true"/>
-					<fr:slot name="credits" key="label.credits" required="true"/>
-				</fr:schema>
-				<fr:layout name="tabular">
-					<fr:property name="classes" value="tstyle2 thlight thleft mtop05 mbottom05"/>
-					<fr:property name="columnClasses" value=",,tdclear tderror1"/>
-				</fr:layout>
-				<fr:destination name="cancel" path="<%="/credits.do?method=viewAnnualTeachingCredits&executionYearOid="+executionYearOid+"&teacherOid="+teacherOid %>"/>
-			</fr:edit>
+			<bean:define id="function" name="personFunctionBean" property="function" type="net.sourceforge.fenixedu.domain.organizationalStructure.Function"/>
+			<% if( function.isSharedFunction()){ %>
+				<fr:edit id="personFunctionBean3" name="personFunctionBean" action="/managePersonFunctionsShared.do?method=editPersonFunctionShared">
+					<fr:schema bundle="TEACHER_CREDITS_SHEET_RESOURCES" type="net.sourceforge.fenixedu.domain.credits.util.PersonFunctionBean">
+						<fr:slot name="unit.presentationName" key="label.unit" readOnly="true"/>
+						<fr:slot name="function.typeName" key="label.function" readOnly="true"/>
+						<fr:slot name="percentage" key="label.teacher-dfp-student.percentage" required="true"/>
+					</fr:schema>
+					<fr:layout name="tabular">
+						<fr:property name="classes" value="tstyle2 thlight thleft mtop05 mbottom05"/>
+						<fr:property name="columnClasses" value=",,tdclear tderror1"/>
+					</fr:layout>
+					<fr:destination name="cancel" path="<%="/credits.do?method=viewAnnualTeachingCredits&executionYearOid="+executionYearOid+"&teacherOid="+teacherOid %>"/>
+				</fr:edit>
+				<br/>
+				<logic:notEmpty name="personFunctionBean" property="personFunctionsShared">
+					<h3><bean:message key="label.percentageDistribuition" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></h3>
+					<fr:view name="personFunctionBean" property="personFunctionsShared">
+						<fr:schema bundle="TEACHER_CREDITS_SHEET_RESOURCES" type="net.sourceforge.fenixedu.domain.credits.util.PersonFunctionBean">
+							<fr:slot name="childParty" key="label.empty" layout="view-as-image">
+								<fr:property name="classes" value="column3" />
+								<fr:property name="useParent" value="true" />
+								<fr:property name="moduleRelative" value="false" />
+								<fr:property name="contextRelative" value="true" />
+								<fr:property name="imageFormat" value="/person/retrievePersonalPhoto.do?method=retrieveByUUID&amp;uuid=${person.istUsername}" />
+							</fr:slot>
+							<fr:slot name="childParty.presentationName" key="label.name"/>
+							<fr:slot name="percentage" key="label.teacher-dfp-student.percentage"/>
+						</fr:schema>
+						<fr:layout name="tabular">
+							<fr:property name="classes" value="tstyle2 thlight thleft mtop05 mbottom05"/>
+							<fr:property name="columnClasses" value="headerTable,,"/>
+						</fr:layout>
+					</fr:view>
+				</logic:notEmpty>
+			<%} else{ %>
+				<fr:edit id="personFunctionBean3" name="personFunctionBean" action="/managePersonFunctionsShared.do?method=editPersonFunction">
+					<fr:schema bundle="TEACHER_CREDITS_SHEET_RESOURCES" type="net.sourceforge.fenixedu.domain.credits.util.PersonFunctionBean">
+						<fr:slot name="unit.presentationName" key="label.unit" readOnly="true"/>
+						<fr:slot name="function.typeName" key="label.function" readOnly="true"/>
+						<fr:slot name="credits" key="label.credits" required="true"/>
+					</fr:schema>
+					<fr:layout name="tabular">
+						<fr:property name="classes" value="tstyle2 thlight thleft mtop05 mbottom05"/>
+						<fr:property name="columnClasses" value=",,tdclear tderror1"/>
+					</fr:layout>
+					<fr:destination name="cancel" path="<%="/credits.do?method=viewAnnualTeachingCredits&executionYearOid="+executionYearOid+"&teacherOid="+teacherOid %>"/>
+				</fr:edit>
+			<% } %>
 		</logic:notEmpty>
 	</logic:notEmpty>
 	<br/>
