@@ -66,8 +66,9 @@ public class MobilityIndividualApplicationProcessBean extends IndividualCandidac
 
     public MobilityIndividualApplicationProcessBean(CandidacyProcess candidacyProcess) {
 	this();
-	setCandidacyProcess(candidacyProcess);
-	setMobilityStudentDataBean(new MobilityStudentDataBean(getCandidacyProcess()));
+	final MobilityApplicationProcess map = (MobilityApplicationProcess) candidacyProcess;
+	setCandidacyProcess(map);
+	setMobilityStudentDataBean(new MobilityStudentDataBean(getCandidacyProcess(), map.getForSemester()));
     }
 
     public MobilityIndividualApplicationProcessBean(final MobilityIndividualApplicationProcess process) {

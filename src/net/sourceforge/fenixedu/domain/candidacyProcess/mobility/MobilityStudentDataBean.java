@@ -61,8 +61,9 @@ public class MobilityStudentDataBean implements Serializable {
 
     private ErasmusApplyForSemesterType applyFor;
 
-    public MobilityStudentDataBean(CandidacyProcess process) {
+    public MobilityStudentDataBean(CandidacyProcess process, ErasmusApplyForSemesterType applyFor) {
 	setParentProcess(process);
+	setApplyFor(applyFor);
     }
 
     public MobilityStudentDataBean(final MobilityStudentData erasmusStudentData) {
