@@ -39,7 +39,7 @@ public class CreateScormPackage extends CreateFileContent {
 	    is = new FileInputStream(file);
 	    return fileManager.saveScormFile(filePath, originalFilename, permission, metaData, is, FileSetType.PACKAGE_SCORM_1_2);
 	} catch (FileNotFoundException e) {
-	    throw new FenixServiceException(e.getMessage());
+	    throw new FenixServiceException(e.getMessage(), e);
 	} finally {
 	    is.close();
 	}
