@@ -15,6 +15,9 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.PersonFunctionSha
 import net.sourceforge.fenixedu.domain.organizationalStructure.SharedFunction;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.organizationalStructure.UnitName;
+import net.sourceforge.fenixedu.domain.teacher.TeacherService;
+import net.sourceforge.fenixedu.domain.teacher.TeacherServiceLog;
+import net.sourceforge.fenixedu.util.BundleUtil;
 import pt.ist.fenixWebFramework.services.Service;
 
 public class PersonFunctionBean implements Serializable {
@@ -121,6 +124,7 @@ public class PersonFunctionBean implements Serializable {
     @Service
     public void createOrEditPersonFunction() {
 	PersonFunction thisPersonFunction = getPersonFunction();
+	final StringBuilder log = new StringBuilder();
 	if (getFunction() instanceof SharedFunction) {
 	    BigDecimal availablePercentage = new BigDecimal(100);
 	    PersonFunctionShared thisPersonFunctionShared = (PersonFunctionShared) thisPersonFunction;
@@ -139,6 +143,9 @@ public class PersonFunctionBean implements Serializable {
 	    } else {
 		thisPersonFunctionShared.setPercentage(getPercentage());
 	    }
+	    log.append(BundleUtil.getStringFromResourceBundle("resources.TeacherCreditsSheetResources",
+		    "label.teacher.personFunction.createOrEdit", getFunction().getName(), getUnit().getPresentationName(),
+		    getTeacher().getPerson().getNickname(), getPercentage().toString()));
 	} else {
 	    if (thisPersonFunction == null) {
 		new PersonFunction(getUnit(), getTeacher().getPerson(), getFunction(), getExecutionSemester(), getCredits()
@@ -146,7 +153,16 @@ public class PersonFunctionBean implements Serializable {
 	    } else {
 		thisPersonFunction.setCredits(getCredits().doubleValue());
 	    }
+	    log.append(BundleUtil.getStringFromResourceBundle("resources.TeacherCreditsSheetResources",
+		    "label.teacher.personFunction.createOrEdit", getFunction().getName(), getUnit().getPresentationName(),
+		    getTeacher().getPerson().getNickname(), getCredits().toString()));
+
 	}
+	TeacherService teacherService = getTeacher().getTeacherServiceByExecutionPeriod(getExecutionSemester());
+	if (teacherService == null) {
+	    teacherService = new TeacherService(getTeacher(), getExecutionSemester());
+	}
+	new TeacherServiceLog(teacherService, log.toString());
     }
 
     public List<PersonFunctionShared> getPersonFunctionsShared() {

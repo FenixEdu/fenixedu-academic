@@ -2,6 +2,7 @@ package net.sourceforge.fenixedu.domain.teacher;
 
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.util.BundleUtil;
 import pt.ist.fenixWebFramework.services.Service;
 
 public class OtherService extends OtherService_Base {
@@ -15,7 +16,7 @@ public class OtherService extends OtherService_Base {
 	setValues(teacherService, credits, reason, null);
     }
 
-    protected void setValues(TeacherService teacherService, Double credits, String reason,
+    public void setValues(TeacherService teacherService, Double credits, String reason,
 	    ExecutionSemester correctedExecutionSemester) {
 	if (teacherService == null || credits == null || reason == null) {
 	    throw new DomainException("arguments can't be null");
@@ -25,11 +26,17 @@ public class OtherService extends OtherService_Base {
 	setReason(reason);
 	setCorrectedExecutionSemester(correctedExecutionSemester != null ? correctedExecutionSemester : teacherService
 		.getExecutionPeriod());
+	new TeacherServiceLog(teacherService, BundleUtil.getStringFromResourceBundle("resources.TeacherCreditsSheetResources",
+		"label.teacher.otherService", credits.toString(), reason, getCorrectedExecutionSemester().getExecutionYear()
+			.getQualifiedName()));
     }
 
     @Override
     @Service
     public void delete() {
+	new TeacherServiceLog(getTeacherService(), BundleUtil.getStringFromResourceBundle(
+		"resources.TeacherCreditsSheetResources", "label.teacher.otherService.delete", getCredits().toString(),
+		getReason(), getCorrectedExecutionSemester().getExecutionYear().getQualifiedName()));
 	removeTeacherService();
 	removeCorrectedExecutionSemester();
 	super.delete();
