@@ -1,5 +1,4 @@
 <?xml version='1.0' encoding='UTF-8'?>
-
 <web-app xmlns="http://java.sun.com/xml/ns/j2ee"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd"
@@ -7,8 +6,12 @@
 	<distributable/>
 	<locale-encoding-mapping-list>
 		<locale-encoding-mapping>
-		<locale>pt</locale>
-		<encoding>UTF-8</encoding>
+			<locale>pt</locale>
+			<encoding>UTF-8</encoding>
+		</locale-encoding-mapping>
+		<locale-encoding-mapping>
+			<locale>en</locale>
+			<encoding>UTF-8</encoding>
 		</locale-encoding-mapping>
 	</locale-encoding-mapping-list>
 
