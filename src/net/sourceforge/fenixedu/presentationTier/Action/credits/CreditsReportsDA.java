@@ -15,6 +15,7 @@ import net.sourceforge.fenixedu.domain.Department;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.credits.util.DepartmentCreditsBean;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
+import net.sourceforge.fenixedu.util.BundleUtil;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -51,10 +52,16 @@ public class CreditsReportsDA extends FenixDispatchAction {
 	    String sheetName = "Disciplinas_" + department.getAcronym();
 	    spreadsheet.getSheet(sheetName);
 	    spreadsheet.newHeaderRow();
-	    spreadsheet.addHeader("Disciplina", 5000);
-	    spreadsheet.addHeader("Cursos");
-	    spreadsheet.addHeader("Tipo");
-	    spreadsheet.addHeader("Tem Horário");
+	    spreadsheet.addHeader(
+		    BundleUtil.getStringFromResourceBundle("resources.TeacherCreditsSheetResources", "label.course"), 10000);
+	    spreadsheet.addHeader(BundleUtil.getStringFromResourceBundle("resources.TeacherCreditsSheetResources",
+		    "label.degrees"));
+	    spreadsheet.addHeader(BundleUtil.getStringFromResourceBundle("resources.TeacherCreditsSheetResources",
+		    "label.shift.type"));
+	    spreadsheet.addHeader(BundleUtil.getStringFromResourceBundle("resources.TeacherCreditsSheetResources",
+		    "label.hasSchedule"));
+	    spreadsheet.addHeader(BundleUtil.getStringFromResourceBundle("resources.TeacherCreditsSheetResources",
+		    "label.enrolmentsNumber"));
 	    for (CompetenceCourse competenceCourse : department.getDepartmentUnit().getCompetenceCourses()) {
 		for (ExecutionCourse executionCourse : competenceCourse
 			.getExecutionCoursesByExecutionPeriod(departmentCreditsBean.getExecutionSemester())) {
@@ -64,6 +71,7 @@ public class CreditsReportsDA extends FenixDispatchAction {
 		    spreadsheet.addCell(executionCourse.isDissertation() ? "DISS"
 			    : executionCourse.getProjectTutorialCourse() ? "A" : "B");
 		    spreadsheet.addCell(executionCourse.hasAnyLesson() ? "S" : "N");
+		    spreadsheet.addCell(executionCourse.getEnrolmentCount());
 		}
 	    }
 	}

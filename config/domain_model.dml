@@ -11367,13 +11367,6 @@ relation ProfessorshipDegreeProjectTutorialService {
     Professorship playsRole professorship;
 }
 
-relation DegreeProjectTutorialServiceAttends {
-    teacher.DegreeProjectTutorialService playsRole degreeProjectTutorialService;
-    Attends playsRole attends {
-        multiplicity *;
-    }
-}
-
 relation AttendsDegreeProjectTutorialServices {
     teacher.DegreeProjectTutorialService playsRole degreeProjectTutorialServices {
         multiplicity *;
