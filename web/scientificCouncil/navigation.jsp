@@ -116,7 +116,7 @@
 		  	</html:link>  
 		</li>
 		<li>
-			<html:link page="/exportCredits.do?method=prepareExportDepartmentCourses">
+			<html:link page="/projectTutorialCourses.do?method=showDepartmentExecutionCourses">
 				<bean:message key="label.executionCourses.types" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/>
 			</html:link>
 		</li>

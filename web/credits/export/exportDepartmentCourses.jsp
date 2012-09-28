@@ -22,7 +22,7 @@
 			</fr:slot>
 			<fr:slot name="executionSemester" key="label.execution-period" layout="menu-select" required="true">
 				<fr:property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.ExecutionSemestersProvider" />
-				<fr:property name="format" value="${executionYear.year} - ${semester}บ semestre" />
+				<fr:property name="format" value="${executionYear.year} - ${semester}ยบ semestre" />
 				<fr:property name="nullOptionHidden" value="true" />
 			</fr:slot>
 		</fr:schema>

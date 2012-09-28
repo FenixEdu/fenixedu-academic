@@ -51,6 +51,9 @@ public class DegreeProjectTutorialService extends DegreeProjectTutorialService_B
     @Service
     public static void updateProjectTutorialService(List<ProjectTutorialServiceBean> projectTutorialServicesBean) {
 	for (ProjectTutorialServiceBean projectTutorialServiceBean : projectTutorialServicesBean) {
+	    if (!projectTutorialServiceBean.getProfessorship().getExecutionCourse().getProjectTutorialCourse()) {
+		throw new DomainException("message.invalid.executionCourseType");
+	    }
 	    DegreeProjectTutorialService degreeProjectTutorialService = projectTutorialServiceBean
 		    .getDegreeProjectTutorialService();
 	    if (projectTutorialServiceBean.getPercentage() == null) {
@@ -69,6 +72,10 @@ public class DegreeProjectTutorialService extends DegreeProjectTutorialService_B
 
     @Override
     public void delete() {
+	new TeacherServiceLog(getTeacherService(), BundleUtil.getStringFromResourceBundle(
+		"resources.TeacherCreditsSheetResources", "label.teacher.degreeProjectTutorialService.delete", getProfessorship()
+			.getExecutionCourse().getName(), getProfessorship().getTeacher().getPerson().getNickname(), getAttend()
+			.getRegistration().getNumber().toString(), getPercentageValue().toString()));
 	removeAttend();
 	removeProfessorship();
 	super.delete();

@@ -11,6 +11,7 @@ import net.sourceforge.fenixedu.domain.Professorship;
 import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.person.RoleType;
+import net.sourceforge.fenixedu.util.BundleUtil;
 import net.sourceforge.fenixedu.util.CalendarUtil;
 import net.sourceforge.fenixedu.util.DiaSemana;
 import net.sourceforge.fenixedu.util.WeekDay;
@@ -26,10 +27,12 @@ public class DegreeTeachingService extends DegreeTeachingService_Base {
 
     public DegreeTeachingService(TeacherService teacherService, Professorship professorship, Shift shift, Double percentage,
 	    RoleType roleType) {
-
 	super();
 	if (teacherService == null || professorship == null || shift == null || percentage == null) {
 	    throw new DomainException("arguments can't be null");
+	}
+	if (professorship.getExecutionCourse().getProjectTutorialCourse()) {
+	    throw new DomainException("message.invalid.executionCourseType");
 	}
 	if (percentage > 100 || percentage < 0) {
 	    throw new DomainException("message.invalid.professorship.percentage");
@@ -54,6 +57,9 @@ public class DegreeTeachingService extends DegreeTeachingService_Base {
 
     @Override
     public void delete() {
+	new TeacherServiceLog(getTeacherService(), BundleUtil.getStringFromResourceBundle(
+		"resources.TeacherCreditsSheetResources", "label.teacher.schedule.delete", getTeacherService().getTeacher()
+			.getPerson().getNickname(), getShift().getPresentationName(), getPercentage().toString()));
 	removeTeacherService();
 	removeShift();
 	removeProfessorship();
