@@ -111,6 +111,7 @@ function check(e,v){
 	    <fr:property name="columnClasses" value=",,tdclear tderror1"/>
 	    <fr:property name="rowClasses" value="width46em"/>
 	</fr:layout>
+	<fr:destination name="cancel" path="/findPerson.do?method=prepareFindPerson"/>
 </fr:edit>
 
 <p>
