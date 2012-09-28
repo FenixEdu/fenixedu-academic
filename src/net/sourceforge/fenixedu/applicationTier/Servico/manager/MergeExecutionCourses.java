@@ -180,6 +180,8 @@ public class MergeExecutionCourses extends FenixService {
 	for (final Announcement announcement : executionCourseAnnouncementBoardFrom.getAnnouncements()) {
 	    executionCourseAnnouncementBoardTo.addAnnouncements(announcement);
 	}
+	executionCourseAnnouncementBoardTo.getChildrenSet().addAll(executionCourseAnnouncementBoardFrom.getChildrenSet());
+	
 
 	executionCourseAnnouncementBoardFrom.delete();
     }
