@@ -17,6 +17,7 @@ import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterExce
 import net.sourceforge.fenixedu.applicationTier.Servico.ExcepcaoAutenticacao;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.DomainObject;
+import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.PendingRequest;
 import net.sourceforge.fenixedu.domain.PendingRequestParameter;
@@ -71,6 +72,8 @@ public abstract class BaseAuthenticationAction extends FenixAction {
 		    && DomainObject.fromExternalId(pendingRequest) != null
 		    && isValidChecksumForUser((PendingRequest) AbstractDomainObject.fromExternalId(pendingRequest))) {
 		return handleSessionRestoreAndGetForward(request, form, userView, session);
+	    } else if (hasMissingTeacherService(userView)) {
+		return handleSessionCreationAndForwardToTeachingService(request, userView, session);
 	    } else if (hasMissingRAIDESInformation(userView)) {
 		return handleSessionCreationAndForwardToRAIDESInquiriesResponseQuestion(request, userView, session);
 	    } else if (isAlumniAndHasInquiriesToResponde(userView)) {
@@ -99,6 +102,19 @@ public abstract class BaseAuthenticationAction extends FenixAction {
 	}
     }
 
+    private boolean hasMissingTeacherService(IUserView userView) {
+	if (userView.getPerson() != null && userView.getPerson().getTeacher() != null
+		&& userView.getPerson().hasRole(RoleType.DEPARTMENT_MEMBER)) {
+	    ExecutionSemester executionSemester = ExecutionSemester.readActualExecutionSemester();
+	    if (executionSemester != null
+		    && (userView.getPerson().getTeacher().isActiveForSemester(executionSemester) || userView.getPerson()
+			    .getTeacher().getTeacherAuthorization(executionSemester) != null)) {
+		return executionSemester.isInValidCreditsPeriod(RoleType.DEPARTMENT_MEMBER);
+	    }
+	}
+	return false;
+    }
+
     private ActionForward handlePartyContactValidationRequests(HttpServletRequest request, IUserView userView, HttpSession session) {
 	createNewSession(request, session, userView);
 	return new ActionForward("/partyContactValidationReminder.do?method=showReminder");
@@ -106,9 +122,12 @@ public abstract class BaseAuthenticationAction extends FenixAction {
 
     private boolean hasMissingRAIDESInformation(IUserView userView) {
 	return false;
-	//TODO: Temporary hack to prevent the filling of RAIDES data while it is under development
-	//return userView.getPerson() != null && userView.getPerson().hasStudent()
-	//	&& userView.getPerson().getStudent().hasAnyMissingPersonalInformation();
+	// TODO: Temporary hack to prevent the filling of RAIDES data while it
+	// is under development
+	// return userView.getPerson() != null &&
+	// userView.getPerson().hasStudent()
+	// &&
+	// userView.getPerson().getStudent().hasAnyMissingPersonalInformation();
     }
 
     private boolean hasPendingPartyContactValidationRequests(IUserView userView) {
@@ -167,8 +186,8 @@ public abstract class BaseAuthenticationAction extends FenixAction {
 
     private boolean isTeacherAndHasInquiriesToRespond(IUserView userView) {
 	if (userView.hasRoleType(RoleType.TEACHER)
-		|| (TeacherInquiryTemplate.getCurrentTemplate() != null && !userView.getPerson().getProfessorships(
-			TeacherInquiryTemplate.getCurrentTemplate().getExecutionPeriod()).isEmpty())) {
+		|| (TeacherInquiryTemplate.getCurrentTemplate() != null && !userView.getPerson()
+			.getProfessorships(TeacherInquiryTemplate.getCurrentTemplate().getExecutionPeriod()).isEmpty())) {
 	    return userView.getPerson().hasTeachingInquiriesToAnswer();
 	}
 	return false;
@@ -176,8 +195,8 @@ public abstract class BaseAuthenticationAction extends FenixAction {
 
     private boolean isRegentAndHasInquiriesToRespond(IUserView userView) {
 	if (userView.hasRoleType(RoleType.TEACHER)
-		|| (RegentInquiryTemplate.getCurrentTemplate() != null && !userView.getPerson().getProfessorships(
-			RegentInquiryTemplate.getCurrentTemplate().getExecutionPeriod()).isEmpty())) {
+		|| (RegentInquiryTemplate.getCurrentTemplate() != null && !userView.getPerson()
+			.getProfessorships(RegentInquiryTemplate.getCurrentTemplate().getExecutionPeriod()).isEmpty())) {
 	    return userView.getPerson().hasRegentInquiriesToAnswer();
 	}
 	return false;
@@ -205,7 +224,7 @@ public abstract class BaseAuthenticationAction extends FenixAction {
 	}
 	return false;
     }
-    
+
     protected abstract IUserView doAuthentication(ActionForm form, HttpServletRequest request, String remoteHostName)
 	    throws FenixFilterException, FenixServiceException;
 
@@ -221,6 +240,30 @@ public abstract class BaseAuthenticationAction extends FenixAction {
 	return checkExpirationDate(mapping, request, userView, actionForward);
     }
 
+    private ActionForward handleSessionCreationAndForwardToTeachingService(HttpServletRequest request, IUserView userView,
+	    HttpSession session) {
+	createNewSession(request, session, userView);
+	final List<Content> contents = new ArrayList<Content>();
+	RootDomainObject.getInstance().getRootPortal().addPathContentsForTrailingPath(contents, "departamento/departamento");
+	final FilterFunctionalityContext context = new FilterFunctionalityContext(request, contents);
+	request.setAttribute(FilterFunctionalityContext.CONTEXT_KEY, context);
+
+	HtmlLink link = new HtmlLink();
+	link.setModule("/departmentMember");
+	link.setUrl("/credits.do?method=showTeacherCredits&"
+		+ net.sourceforge.fenixedu.presentationTier.servlets.filters.ContentInjectionRewriter.CONTEXT_ATTRIBUTE_NAME
+		+ "=/departamento/departamento");
+	link.setEscapeAmpersand(false);
+	String calculatedUrl = link.calculateUrl();
+	return new ActionForward(
+		"/departmentMember/credits.do?method=showTeacherCredits&"
+			+ net.sourceforge.fenixedu.presentationTier.servlets.filters.ContentInjectionRewriter.CONTEXT_ATTRIBUTE_NAME
+			+ "=/departamento/departamento&_request_checksum_="
+			+ pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter
+				.calculateChecksum(calculatedUrl),
+		true);
+    }
+
     private ActionForward handleSessionCreationAndForwardToRAIDESInquiriesResponseQuestion(HttpServletRequest request,
 	    IUserView userView, HttpSession session) {
 	createNewSession(request, session, userView);
@@ -232,13 +275,18 @@ public abstract class BaseAuthenticationAction extends FenixAction {
 
 	HtmlLink link = new HtmlLink();
 	link.setModule("/student");
-	link.setUrl("/editMissingCandidacyInformation.do?method=prepareEdit&" +  net.sourceforge.fenixedu.presentationTier.servlets.filters.ContentInjectionRewriter.CONTEXT_ATTRIBUTE_NAME + "=/estudante/estudante");
+	link.setUrl("/editMissingCandidacyInformation.do?method=prepareEdit&"
+		+ net.sourceforge.fenixedu.presentationTier.servlets.filters.ContentInjectionRewriter.CONTEXT_ATTRIBUTE_NAME
+		+ "=/estudante/estudante");
 	link.setEscapeAmpersand(false);
 	String calculatedUrl = link.calculateUrl();
 	return new ActionForward(
-		"/student/editMissingCandidacyInformation.do?method=prepareEdit&" +  net.sourceforge.fenixedu.presentationTier.servlets.filters.ContentInjectionRewriter.CONTEXT_ATTRIBUTE_NAME + "=/estudante/estudante&_request_checksum_="
+		"/student/editMissingCandidacyInformation.do?method=prepareEdit&"
+			+ net.sourceforge.fenixedu.presentationTier.servlets.filters.ContentInjectionRewriter.CONTEXT_ATTRIBUTE_NAME
+			+ "=/estudante/estudante&_request_checksum_="
 			+ pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter
-				.calculateChecksum(calculatedUrl), true);
+				.calculateChecksum(calculatedUrl),
+		true);
     }
 
     private ActionForward handleSessionCreationAndForwardToAlumniInquiriesResponseQuestion(HttpServletRequest request,
@@ -306,8 +354,8 @@ public abstract class BaseAuthenticationAction extends FenixAction {
 
 	    for (PendingRequestParameter pendingRequestParameter : pendingRequest.getPendingRequestParameter()) {
 		if (!pendingRequestParameter.getAttribute()) {
-		    url = LoginRedirectAction.addToUrl(url, pendingRequestParameter.getParameterKey(), pendingRequestParameter
-			    .getParameterValue());
+		    url = LoginRedirectAction.addToUrl(url, pendingRequestParameter.getParameterKey(),
+			    pendingRequestParameter.getParameterValue());
 		}
 	    }
 
@@ -343,7 +391,8 @@ public abstract class BaseAuthenticationAction extends FenixAction {
 	    try {
 		session.invalidate();
 	    } catch (final IllegalStateException ise) {
-		// session already invalidated... that's ok just create a new one and proceed happily fipping and flopping.
+		// session already invalidated... that's ok just create a new
+		// one and proceed happily fipping and flopping.
 	    }
 	}
 
