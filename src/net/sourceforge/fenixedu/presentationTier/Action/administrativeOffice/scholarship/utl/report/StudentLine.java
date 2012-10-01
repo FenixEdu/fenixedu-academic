@@ -523,6 +523,22 @@ public class StudentLine implements IFileLine, java.io.Serializable {
 	return getRegistration().getEnrolmentsExecutionYears().size();
     }
 
+    public Integer getCountNumberOfEnrolmentsYearsInIntegralRegime() {
+	if (getRegistration() == null) {
+	    return null;
+	}
+
+	Collection<ExecutionYear> registrationExecutionYears = getRegistration().getEnrolmentsExecutionYears();
+	int count = 0;
+	for (ExecutionYear executionYear : registrationExecutionYears) {
+	    RegistrationRegimeType regimeType = getRegistration().getRegimeType(executionYear);
+	    
+	    count += (RegistrationRegimeType.FULL_TIME.equals(regimeType)) ? 1 : 0;
+	}
+
+	return count;
+    }
+
     public Integer getCurricularYearOneYearAgo() {
 	ExecutionYear oneYearAgo = getForExecutionYear().getPreviousExecutionYear();
 

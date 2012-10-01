@@ -98,6 +98,8 @@ public class ReportStudentsUTLCandidates implements java.io.Serializable {
 		String firstRegistrationExecutionYear = studentLine.getFirstRegistrationExecutionYear();
 		Integer countNumberOfEnrolmentsYearsSinceRegistrationStart = studentLine
 			.getCountNumberOfEnrolmentsYearsSinceRegistrationStart();
+		Integer countNumberOfEnrolmentsYearsInIntegralRegime = studentLine
+			.getCountNumberOfEnrolmentsYearsInIntegralRegime();
 		Integer numberOfDegreeCurricularYears = studentLine.getNumberOfDegreeCurricularYears();
 		Integer curricularYearOneYearAgo = studentLine.getCurricularYearOneYearAgo();
 		BigDecimal numberOfEnrolledEctsOneYearAgo = studentLine.getNumberOfEnrolledEctsOneYearAgo();
@@ -127,36 +129,31 @@ public class ReportStudentsUTLCandidates implements java.io.Serializable {
 		addCellValue(row, onNullEmptyString(degreeCode), 7);
 		addCellValue(row, onNullEmptyString(degreeName), 8);
 		addCellValue(row, onNullEmptyString(degreeTypeName), 9);
-		addCellValue(row, "", 10);
-		addCellValue(row, onNullEmptyString(countNumberOfDegreeChanges), 11);
-		addCellValue(row, onNullEmptyString(hasMadeDegreeChange), 12);
-		addCellValue(row, onNullEmptyString(firstEnrolmentOnCurrentExecutionYear), 13);
-		addCellValue(row, onNullEmptyString(regime), 14);
-		addCellValue(
-			row,
- "", // VALUE(IF(ISNA(VLOOKUP(O4,$Regime.A2:B6,2,FALSE()));\"Regime não tipificado\";VLOOKUP(O4,$Regime.A2:B6,2,FALSE())))",
-			15);
-		addCellValue(row, onNullEmptyString(firstRegistrationExecutionYear), 16);
-		addCellValue(row, onNullEmptyString(countNumberOfEnrolmentsYearsSinceRegistrationStart), 17);
-		addCellValue(row, "", 18);
-		addCellValue(row, onNullEmptyString(numberOfDegreeCurricularYears), 19);
-		addCellValue(row, onNullEmptyString(curricularYearOneYearAgo), 20);
-		addCellValue(row, onNullEmptyString(numberOfEnrolledEctsOneYearAgo), 21);
-		addCellValue(row, onNullEmptyString(numberOfApprovedEctsOneYearAgo), 22);
-		addCellValue(row, onNullEmptyString(curricularYearInCurrentYear), 23);
-		addCellValue(row, onNullEmptyString(numberOfEnrolledECTS), 24);
-		addCellValue(row, onNullEmptyString(gratuityAmount), 25);
-		addCellValue(row, onNullEmptyString(numberOfMonthsExecutionYear), 26);
-		addCellValue(row, onNullEmptyString(firstMonthOfPayment), 27);
-		addCellValue(row, onNullEmptyString(ownerOfCETQualification), 28);
-		addCellValue(row, onNullEmptyString(degreeQualificationOwner), 29);
-		addCellValue(row, onNullEmptyString(masterQualificationOwner), 30);
-		addCellValue(row, onNullEmptyString(phdQualificationOwner), 31);
-		addCellValue(row, onNullEmptyString(ownerOfCollegeQualification), 32);
-		addCellValue(row, onNullEmptyString(observations), 33);
-		addCellValue(row, onNullEmptyString(lastEnrolmentExecutionYear), 34);
-		addCellValue(row, onNullEmptyString(nif), 35);
-		addCellValue(row, "", 36);
+		addCellValue(row, onNullEmptyString(countNumberOfDegreeChanges), 10);
+		addCellValue(row, onNullEmptyString(hasMadeDegreeChange), 11);
+		addCellValue(row, onNullEmptyString(firstEnrolmentOnCurrentExecutionYear), 12);
+		addCellValue(row, onNullEmptyString(regime), 13);
+		addCellValue(row, onNullEmptyString(firstRegistrationExecutionYear), 14);
+		addCellValue(row, onNullEmptyString(countNumberOfEnrolmentsYearsSinceRegistrationStart), 15);
+		addCellValue(row, onNullEmptyString(countNumberOfEnrolmentsYearsInIntegralRegime), 16);
+		addCellValue(row, onNullEmptyString(numberOfDegreeCurricularYears), 17);
+		addCellValue(row, onNullEmptyString(curricularYearOneYearAgo), 18);
+		addCellValue(row, onNullEmptyString(numberOfEnrolledEctsOneYearAgo), 19);
+		addCellValue(row, onNullEmptyString(numberOfApprovedEctsOneYearAgo), 20);
+		addCellValue(row, onNullEmptyString(curricularYearInCurrentYear), 21);
+		addCellValue(row, onNullEmptyString(numberOfEnrolledECTS), 22);
+		addCellValue(row, onNullEmptyString(gratuityAmount), 23);
+		addCellValue(row, onNullEmptyString(numberOfMonthsExecutionYear), 24);
+		addCellValue(row, onNullEmptyString(firstMonthOfPayment), 25);
+		addCellValue(row, onNullEmptyString(ownerOfCETQualification), 26);
+		addCellValue(row, onNullEmptyString(degreeQualificationOwner), 27);
+		addCellValue(row, onNullEmptyString(masterQualificationOwner), 28);
+		addCellValue(row, onNullEmptyString(phdQualificationOwner), 29);
+		addCellValue(row, onNullEmptyString(ownerOfCollegeQualification), 30);
+		addCellValue(row, onNullEmptyString(observations), 31);
+		addCellValue(row, onNullEmptyString(lastEnrolmentExecutionYear), 32);
+		addCellValue(row, onNullEmptyString(nif), 33);
+		addCellValue(row, "", 34);
 	    } catch (Exception e) {
 		e.printStackTrace();
 	    }
@@ -195,49 +192,47 @@ public class ReportStudentsUTLCandidates implements java.io.Serializable {
 	addHeaderCell(sheet, getHeaderInBundle(bundle, "degreeCode"), 7);
 	addHeaderCell(sheet, getHeaderInBundle(bundle, "degreeName"), 8);
 	addHeaderCell(sheet, getHeaderInBundle(bundle, "degreeTypeName"), 9);
-	addHeaderCell(sheet, "code", 10);
-	addHeaderCell(sheet, getHeaderInBundle(bundle, "countNumberOfDegreeChanges"), 11);
-	addHeaderCell(sheet, getHeaderInBundle(bundle, "hasMadeDegreeChange"), 12);
-	addHeaderCell(sheet, getHeaderInBundle(bundle, "firstEnrolmentOnCurrentExecutionYear"), 13);
-	addHeaderCell(sheet, getHeaderInBundle(bundle, "regime"), 14);
-	addHeaderCell(sheet, getHeaderInBundle(bundle, "regimeCode"), 15);
+	addHeaderCell(sheet, getHeaderInBundle(bundle, "countNumberOfDegreeChanges"), 10);
+	addHeaderCell(sheet, getHeaderInBundle(bundle, "hasMadeDegreeChange"), 11);
+	addHeaderCell(sheet, getHeaderInBundle(bundle, "firstEnrolmentOnCurrentExecutionYear"), 12);
+	addHeaderCell(sheet, getHeaderInBundle(bundle, "regime"), 13);
 
 	HSSFRow row = sheet.getRow(0);
-	HSSFCell cell = row.createCell(16);
+	HSSFCell cell = row.createCell(14);
 	cell.setCellValue(getHeaderInBundle(bundle, "ingression.year.on.cycle.studies"));
 	cell.setCellStyle(headerStyle);
-	sheet.addMergedRegion(new CellRangeAddress(0, 0, 16, 18));
+	sheet.addMergedRegion(new CellRangeAddress(0, 0, 14, 16));
 
-	cell = sheet.getRow(1).createCell(16);
+	cell = sheet.getRow(1).createCell(14);
 	cell.setCellValue(getHeaderInBundle(bundle, "ingression.year.on.cycle.studies.year"));
 	cell.setCellStyle(headerStyle);
 
-	cell = sheet.getRow(1).createCell(17);
+	cell = sheet.getRow(1).createCell(15);
 	cell.setCellValue(getHeaderInBundle(bundle, "ingression.year.on.cycle.studies.count"));
 	cell.setCellStyle(headerStyle);
 
-	cell = sheet.getRow(1).createCell(18);
+	cell = sheet.getRow(1).createCell(16);
 	cell.setCellValue(getHeaderInBundle(bundle, "ingression.year.on.cycle.studies.integral.count"));
 	cell.setCellStyle(headerStyle);
 
-	addHeaderCell(sheet, getHeaderInBundle(bundle, "numberOfDegreeCurricularYears"), 19);
-	addHeaderCell(sheet, getHeaderInBundle(bundle, "curricularYearOneYearAgo"), 20);
-	addHeaderCell(sheet, getHeaderInBundle(bundle, "numberOfEnrolledEctsOneYearAgo"), 21);
-	addHeaderCell(sheet, getHeaderInBundle(bundle, "numberOfApprovedEctsOneYearAgo"), 22);
-	addHeaderCell(sheet, getHeaderInBundle(bundle, "curricularYearInCurrentYear"), 23);
-	addHeaderCell(sheet, getHeaderInBundle(bundle, "numberOfEnrolledECTS"), 24);
-	addHeaderCell(sheet, getHeaderInBundle(bundle, "gratuityAmount"), 25);
-	addHeaderCell(sheet, getHeaderInBundle(bundle, "numberOfMonthsExecutionYear"), 26);
-	addHeaderCell(sheet, getHeaderInBundle(bundle, "firstMonthOfPayment"), 27);
-	addHeaderCell(sheet, getHeaderInBundle(bundle, "ownerOfCETQualification"), 28);
-	addHeaderCell(sheet, getHeaderInBundle(bundle, "degreeQualificationOwner"), 29);
-	addHeaderCell(sheet, getHeaderInBundle(bundle, "masterQualificationOwner"), 30);
-	addHeaderCell(sheet, getHeaderInBundle(bundle, "phdQualificationOwner"), 31);
-	addHeaderCell(sheet, getHeaderInBundle(bundle, "ownerOfCollegeQualification"), 32);
-	addHeaderCell(sheet, getHeaderInBundle(bundle, "observations"), 33);
-	addHeaderCell(sheet, getHeaderInBundle(bundle, "lastEnrolledExecutionYear"), 34);
-	addHeaderCell(sheet, getHeaderInBundle(bundle, "nif"), 35);
-	addHeaderCell(sheet, getHeaderInBundle(bundle, "last.conclusion.academic.facts"), 36);
+	addHeaderCell(sheet, getHeaderInBundle(bundle, "numberOfDegreeCurricularYears"), 17);
+	addHeaderCell(sheet, getHeaderInBundle(bundle, "curricularYearOneYearAgo"), 18);
+	addHeaderCell(sheet, getHeaderInBundle(bundle, "numberOfEnrolledEctsOneYearAgo"), 19);
+	addHeaderCell(sheet, getHeaderInBundle(bundle, "numberOfApprovedEctsOneYearAgo"), 20);
+	addHeaderCell(sheet, getHeaderInBundle(bundle, "curricularYearInCurrentYear"), 21);
+	addHeaderCell(sheet, getHeaderInBundle(bundle, "numberOfEnrolledECTS"), 22);
+	addHeaderCell(sheet, getHeaderInBundle(bundle, "gratuityAmount"), 23);
+	addHeaderCell(sheet, getHeaderInBundle(bundle, "numberOfMonthsExecutionYear"), 24);
+	addHeaderCell(sheet, getHeaderInBundle(bundle, "firstMonthOfPayment"), 25);
+	addHeaderCell(sheet, getHeaderInBundle(bundle, "ownerOfCETQualification"), 26);
+	addHeaderCell(sheet, getHeaderInBundle(bundle, "degreeQualificationOwner"), 27);
+	addHeaderCell(sheet, getHeaderInBundle(bundle, "masterQualificationOwner"), 28);
+	addHeaderCell(sheet, getHeaderInBundle(bundle, "phdQualificationOwner"), 29);
+	addHeaderCell(sheet, getHeaderInBundle(bundle, "ownerOfCollegeQualification"), 30);
+	addHeaderCell(sheet, getHeaderInBundle(bundle, "observations"), 31);
+	addHeaderCell(sheet, getHeaderInBundle(bundle, "lastEnrolledExecutionYear"), 32);
+	addHeaderCell(sheet, getHeaderInBundle(bundle, "nif"), 33);
+	addHeaderCell(sheet, getHeaderInBundle(bundle, "last.conclusion.academic.facts"), 34);
     }
     
     private String getHeaderInBundle(ResourceBundle bundle, String field) {
