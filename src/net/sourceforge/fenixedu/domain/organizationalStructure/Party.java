@@ -1111,9 +1111,9 @@ public abstract class Party extends Party_Base implements Comparable<Party> {
 	if (hasInstitutionalEmailAddress()) {
 	    getInstitutionalEmailAddress().setValue(email);
 	} else {
-	    EmailAddress.createEmailAddress(this, email, PartyContactType.INSTITUTIONAL, false);
+	    EmailAddress emailAddress = EmailAddress.createEmailAddress(this, email, PartyContactType.INSTITUTIONAL, false);
+	    emailAddress.setValid();
 	}
-	getInstitutionalEmailAddress().setValid();
     }
 
     public String getInstitutionalOrDefaultEmailAddressValue() {
