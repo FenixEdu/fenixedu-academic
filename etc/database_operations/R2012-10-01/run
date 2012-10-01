@@ -43,3 +43,4 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "Add columns for duplicate request" addDuplicateRequestColumns.sql
