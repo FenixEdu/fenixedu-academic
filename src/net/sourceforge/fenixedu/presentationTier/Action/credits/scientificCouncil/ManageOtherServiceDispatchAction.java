@@ -18,7 +18,6 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
-import pt.ist.fenixWebFramework.services.Service;
 import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
 import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
@@ -41,19 +40,10 @@ public class ManageOtherServiceDispatchAction extends FenixDispatchAction {
 	    ExecutionSemester executionSemester = AbstractDomainObject.fromExternalId((String) getFromRequest(request,
 		    "executionPeriodOid"));
 	    Teacher teacher = AbstractDomainObject.fromExternalId((String) getFromRequest(request, "teacherId"));
-	    TeacherService teacherService = getTeacherService(teacher, executionSemester);
+	    TeacherService teacherService = TeacherService.getTeacherService(teacher, executionSemester);
 	    request.setAttribute("teacherService", teacherService);
 	}
 	return mapping.findForward("editOtherService");
-    }
-
-    @Service
-    private TeacherService getTeacherService(Teacher teacher, ExecutionSemester executionSemester) {
-	TeacherService teacherService = teacher.getTeacherServiceByExecutionPeriod(executionSemester);
-	if (teacherService == null) {
-	    teacherService = new TeacherService(teacher, executionSemester);
-	}
-	return teacherService;
     }
 
     public ActionForward deleteOtherService(ActionMapping mapping, ActionForm form, HttpServletRequest request,

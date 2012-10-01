@@ -20,7 +20,6 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
-import pt.ist.fenixWebFramework.services.Service;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 
@@ -37,18 +36,9 @@ public class ManageTeacherInstitutionWorkingTimeDispatchAction extends FenixDisp
 	    throws NumberFormatException, FenixFilterException, FenixServiceException {
 	Teacher teacher = DomainObject.fromExternalId((String) getFromRequest(request, "teacherId"));
 	ExecutionSemester executionPeriod = DomainObject.fromExternalId((String) getFromRequest(request, "executionPeriodId"));
-	TeacherService teacherService = getTeacherService(teacher, executionPeriod);
+	TeacherService teacherService = TeacherService.getTeacherService(teacher, executionPeriod);
 	request.setAttribute("teacherService", teacherService);
 	return mapping.findForward("edit-institution-work-time");
-    }
-
-    @Service
-    private TeacherService getTeacherService(Teacher teacher, ExecutionSemester executionSemester) {
-	TeacherService teacherService = teacher.getTeacherServiceByExecutionPeriod(executionSemester);
-	if (teacherService == null) {
-	    teacherService = new TeacherService(teacher, executionSemester);
-	}
-	return teacherService;
     }
 
     public ActionForward prepareEdit(ActionMapping mapping, ActionForm form, HttpServletRequest request,
