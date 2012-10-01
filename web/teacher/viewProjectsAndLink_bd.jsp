@@ -20,6 +20,7 @@ function check(e,v){
 }
 </script>
 
+<%--  01/08/2012 This is comment is here just for force jsp recompile due to encoding problems --%>
 
 <logic:present name="siteView" property="component">
 	<bean:define id="component" name="siteView" property="component" />
