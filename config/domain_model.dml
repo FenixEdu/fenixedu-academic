@@ -2108,6 +2108,9 @@ class DomainObject {
 
                 class accounting.events.serviceRequests.CertificateRequestEvent extends accounting.events.serviceRequests.RegistrationAcademicServiceRequestEvent {
                 }
+                
+                class accounting.events.serviceRequests.DuplicateRequestEvent extends accounting.events.serviceRequests.RegistrationAcademicServiceRequestEvent {
+                }
     
                     class accounting.events.serviceRequests.PastCertificateRequestEvent extends accounting.events.serviceRequests.CertificateRequestEvent {
                         Money pastAmount;
@@ -2192,6 +2195,7 @@ class DomainObject {
 
 				class accounting.events.serviceRequests.PhdFinalizationCertificateRequestEvent extends accounting.events.serviceRequests.PhdAcademicServiceRequestEvent {
 				}
+				
         class accounting.events.EnrolmentOutOfPeriodEvent extends accounting.AcademicEvent {
             Integer numberOfDelayDays;
         }
@@ -2377,6 +2381,9 @@ class DomainObject {
         class accounting.postingRules.GenericSingleEntryTypePR extends accounting.PostingRule {
             EntryType entryType;
         }
+        
+        	class accounting.postingRules.DuplicateRequestPR extends accounting.postingRules.GenericSingleEntryTypePR {
+        	}
 
             class accounting.postingRules.EnrolmentOutOfPeriodPR extends accounting.postingRules.GenericSingleEntryTypePR{
                 Money baseAmount;
@@ -5403,6 +5410,11 @@ class DomainObject {
             class serviceRequests.FreeSolicitationAcademicRequest extends serviceRequests.RegistrationAcademicServiceRequest {
                 String subject;
                 String purpose;
+            }
+            
+            class serviceRequests.DuplicateRequest extends serviceRequests.RegistrationAcademicServiceRequest {
+            	String description;
+            	Money amountToPay;
             }
             
             class serviceRequests.SpecialSeasonRequest extends serviceRequests.RegistrationAcademicServiceRequest {

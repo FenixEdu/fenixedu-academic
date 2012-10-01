@@ -1052,7 +1052,6 @@
 	type="net.sourceforge.fenixedu.domain.accounting.postingRules.serviceRequests.phd.PhdFinalizationCertificateRequestPR"
 	bundle="APPLICATION_RESOURCES" extends="FixedAmountPR.view" />
 
-
 <schema name="PhdFinalizationCertificateRequestPR.view-student" 
 	type="net.sourceforge.fenixedu.domain.accounting.postingRules.serviceRequests.phd.PhdFinalizationCertificateRequestPR"
 	bundle="APPLICATION_RESOURCES" extends="FixedAmountPR.view-student" />
@@ -1060,3 +1059,13 @@
 <schema name="PhdFinalizationCertificateRequestPR.edit"
 	type="net.sourceforge.fenixedu.domain.accounting.postingRules.serviceRequests.phd.PhdFinalizationCertificateRequestPR"
 	bundle="APPLICATION_RESOURCES" extends="FixedAmountPR.edit"/>
+
+<schema name="DuplicateRequestPR.view"
+	type="net.sourceforge.fenixedu.domain.accounting.postingRules.DuplicateRequestPR"
+	bundle="APPLICATION_RESOURCES" extends="PostingRule.view">
+</schema>
+
+<schema name="DuplicateRequestPR.view-student"
+	type="net.sourceforge.fenixedu.domain.accounting.postingRules.DuplicateRequestPR"
+	bundle="APPLICATION_RESOURCES" extends="PostingRule.view-student">
+</schema>

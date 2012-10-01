@@ -904,6 +904,12 @@
 	<slot name="purpose" key="label.serviceRequests.purpose" />
 </schema>
 
+<schema name="DuplicateRequest.view" type="net.sourceforge.fenixedu.domain.serviceRequests.DuplicateRequest"
+		extends="AcademicServiceRequest.view" bundle="ACADEMIC_OFFICE_RESOURCES">
+	<slot name="description" />
+	<slot name="amountToPay" />
+</schema>
+
 <schema name="RegistrationAcademicServiceRequestCreateBean.SPECIAL_SEASON_REQUEST"
 	type="net.sourceforge.fenixedu.dataTransferObject.serviceRequests.RegistrationAcademicServiceRequestCreateBean" bundle="ACADEMIC_OFFICE_RESOURCES"
 	extends="RegistrationAcademicServiceRequestCreateBean.choose.type">
@@ -952,6 +958,13 @@
 <schema name="RegistrationAcademicServiceRequestCreateBean.PARTIAL_REGIME_REQUEST"
 	type="net.sourceforge.fenixedu.dataTransferObject.serviceRequests.RegistrationAcademicServiceRequestCreateBean" bundle="ACADEMIC_OFFICE_RESOURCES"
 	extends="RegistrationAcademicServiceRequestCreateBean.choose.type">
+</schema>
+
+<schema name="RegistrationAcademicServiceRequestCreateBean.DUPLICATE_REQUEST"
+	type="net.sourceforge.fenixedu.dataTransferObject.serviceRequests.RegistrationAcademicServiceRequestCreateBean" bundle="ACADEMIC_OFFICE_RESOURCES"
+	extends="RegistrationAcademicServiceRequestCreateBean.choose.type">
+	<slot name="description" layout="longText"/>
+	<slot name="amountToPay" />	
 </schema>
 
 <schema name="PartialRegistrationRegimeRequest.view" type="net.sourceforge.fenixedu.domain.serviceRequests.PartialRegistrationRegimeRequest"

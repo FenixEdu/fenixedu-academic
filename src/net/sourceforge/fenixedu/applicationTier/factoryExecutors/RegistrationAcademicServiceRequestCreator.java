@@ -4,6 +4,7 @@ import net.sourceforge.fenixedu.dataTransferObject.serviceRequests.RegistrationA
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.serviceRequests.CourseGroupChangeRequest;
+import net.sourceforge.fenixedu.domain.serviceRequests.DuplicateRequest;
 import net.sourceforge.fenixedu.domain.serviceRequests.EquivalencePlanRequest;
 import net.sourceforge.fenixedu.domain.serviceRequests.EquivalencePlanRevisionRequest;
 import net.sourceforge.fenixedu.domain.serviceRequests.ExtraExamRequest;
@@ -66,6 +67,10 @@ public class RegistrationAcademicServiceRequestCreator extends RegistrationAcade
 
 	case PARTIAL_REGIME_REQUEST:
 	    result = new PartialRegistrationRegimeRequest(this);
+	    break;
+
+	case DUPLICATE_REQUEST:
+	    result = new DuplicateRequest(this);
 	    break;
 
 	default:

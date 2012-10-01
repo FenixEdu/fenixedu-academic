@@ -2,6 +2,10 @@ package net.sourceforge.fenixedu.domain.serviceRequests.documentRequests;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
+import java.util.ResourceBundle;
+
+import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 public enum AcademicServiceRequestType {
 
@@ -23,7 +27,11 @@ public enum AcademicServiceRequestType {
 
     PHOTOCOPY_REQUEST(true),
 
-    PARTIAL_REGIME_REQUEST(true), PHD_STUDENT_REINGRESSION(true);
+    PARTIAL_REGIME_REQUEST(true),
+
+    PHD_STUDENT_REINGRESSION(true),
+
+    DUPLICATE_REQUEST(false);
 
     private boolean isServiceRequest;
 
@@ -56,4 +64,17 @@ public enum AcademicServiceRequestType {
 	}
 	return result;
     }
+
+    public String localizedName(Locale locale) {
+	return ResourceBundle.getBundle("resources.EnumerationResources", locale).getString(getName());
+    }
+
+    protected String localizedName() {
+	return localizedName(Language.getLocale());
+    }
+
+    public String getLocalizedName() {
+	return localizedName();
+    }
+
 }
