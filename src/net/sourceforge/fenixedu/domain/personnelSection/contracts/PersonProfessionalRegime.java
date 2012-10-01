@@ -3,6 +3,7 @@ package net.sourceforge.fenixedu.domain.personnelSection.contracts;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 
 import org.joda.time.DateTime;
+import org.joda.time.Days;
 import org.joda.time.Interval;
 import org.joda.time.LocalDate;
 
@@ -33,8 +34,23 @@ public class PersonProfessionalRegime extends PersonProfessionalRegime_Base {
 		getEndDate().plusDays(1).toDateTimeAtStartOfDay()) : null;
     }
 
+    public boolean overlaps(final Interval interval) {
+	Interval regimeInterval = getInterval();
+	return getBeginDate() != null
+		&& ((regimeInterval != null && regimeInterval.overlaps(interval)) || (regimeInterval == null && !getBeginDate()
+			.isAfter(interval.getEnd().toLocalDate())));
+    }
+
     public boolean isActive(LocalDate date) {
 	return !getBeginDate().isAfter(date) && (getEndDate() == null || !getEndDate().isBefore(date));
+    }
+
+    public int getDaysInInterval(Interval interval) {
+	LocalDate beginDate = getBeginDate().isBefore(interval.getStart().toLocalDate()) ? interval.getStart().toLocalDate()
+		: getBeginDate();
+	LocalDate endDate = getEndDate() == null || getEndDate().isAfter(interval.getEnd().toLocalDate()) ? interval.getEnd()
+		.toLocalDate() : getEndDate();
+	return Days.daysBetween(beginDate, endDate).getDays();
     }
 
     public boolean betweenDates(LocalDate beginDate, LocalDate endDate) {

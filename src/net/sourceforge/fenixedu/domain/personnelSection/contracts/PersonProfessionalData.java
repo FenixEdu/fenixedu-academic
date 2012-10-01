@@ -69,10 +69,6 @@ public class PersonProfessionalData extends PersonProfessionalData_Base {
 	return getLastProfessionalCategoryByCategoryType(categoryType, null, null);
     }
 
-    public ProfessionalCategory getLastProfessionalCategory(LocalDate beginDate, LocalDate endDate) {
-	return getLastProfessionalCategoryByCategoryType(null, beginDate, endDate);
-    }
-
     public ProfessionalCategory getLastProfessionalCategoryByCategoryType(CategoryType categoryType, LocalDate beginDate,
 	    LocalDate endDate) {
 	Interval dateInterval = null;
@@ -184,6 +180,27 @@ public class PersonProfessionalData extends PersonProfessionalData_Base {
 	return currentPersonContractSituation != null ? currentPersonContractSituation : lastPersonContractSituation;
     }
 
+    public PersonContractSituation getDominantPersonContractSituationByCategoryType(CategoryType categoryType,
+	    Interval dateInterval) {
+	PersonContractSituation dominantContractSituation = null;
+	int dominantContractSituationDays = 0;
+	GiafProfessionalData giafProfessionalDataByCategoryType = getGiafProfessionalDataByCategoryType(categoryType);
+	if (giafProfessionalDataByCategoryType != null) {
+	    for (final PersonContractSituation situation : giafProfessionalDataByCategoryType.getValidPersonContractSituations()) {
+		if (situation.overlaps(dateInterval)) {
+		    int thisSituationDays = situation.getDaysInInterval(dateInterval);
+		    if (dominantContractSituationDays < thisSituationDays
+			    || (dominantContractSituationDays == thisSituationDays && (dominantContractSituation == null || situation
+				    .isAfter(dominantContractSituation)))) {
+			dominantContractSituation = situation;
+			dominantContractSituationDays = thisSituationDays;
+		    }
+		}
+	    }
+	}
+	return dominantContractSituation;
+    }
+
     public ProfessionalRegime getLastProfessionalRegime(GiafProfessionalData giafProfessionalData, LocalDate beginDate,
 	    LocalDate endDate) {
 	PersonProfessionalRegime lastPersonProfessionalRegime = null;
@@ -202,6 +219,30 @@ public class PersonProfessionalData extends PersonProfessionalData_Base {
 	    }
 	}
 	return lastPersonProfessionalRegime == null ? null : lastPersonProfessionalRegime.getProfessionalRegime();
+    }
+
+    public ProfessionalRegime getDominantProfessionalRegime(GiafProfessionalData giafProfessionalData, Interval interval) {
+	PersonProfessionalRegime dominantPersonProfessionalRegime = null;
+	int dominantPersonProfessionalRegimeDays = 0;
+	if (giafProfessionalData != null) {
+	    for (final PersonProfessionalRegime regime : giafProfessionalData.getValidPersonProfessionalRegimes()) {
+		if (regime.overlaps(interval)) {
+		    int thisRegimeDays = regime.getDaysInInterval(interval);
+		    if (dominantPersonProfessionalRegimeDays < thisRegimeDays
+			    || (dominantPersonProfessionalRegimeDays == thisRegimeDays && (dominantPersonProfessionalRegime == null || regime
+				    .isAfter(dominantPersonProfessionalRegime)))) {
+			dominantPersonProfessionalRegime = regime;
+		    }
+		}
+	    }
+	    if (dominantPersonProfessionalRegime == null) {
+		if (giafProfessionalData.getProfessionalRegimeDate() != null
+			&& !giafProfessionalData.getProfessionalRegimeDate().isAfter(interval.getEnd().toLocalDate())) {
+		    return giafProfessionalData.getProfessionalRegime();
+		}
+	    }
+	}
+	return dominantPersonProfessionalRegime == null ? null : dominantPersonProfessionalRegime.getProfessionalRegime();
     }
 
     public ProfessionalRelation getLastProfessionalRelation(GiafProfessionalData giafProfessionalData, LocalDate beginDate,

@@ -329,6 +329,12 @@ public class Teacher extends Teacher_Base {
 		CategoryType.TEACHER, begin, end) : null;
     }
 
+    public PersonContractSituation getDominantTeacherContractSituation(Interval interval) {
+	PersonProfessionalData personProfessionalData = getPerson().getPersonProfessionalData();
+	return personProfessionalData != null ? personProfessionalData.getDominantPersonContractSituationByCategoryType(
+		CategoryType.TEACHER, interval) : null;
+    }
+
     public boolean hasAnyTeacherContractSituation() {
 	PersonProfessionalData personProfessionalData = getPerson().getPersonProfessionalData();
 	if (personProfessionalData != null) {
@@ -838,8 +844,7 @@ public class Teacher extends Teacher_Base {
 	Interval semesterInterval = new Interval(executionSemester.getBeginDateYearMonthDay().toLocalDate()
 		.toDateTimeAtStartOfDay(), executionSemester.getEndDateYearMonthDay().toLocalDate().toDateTimeAtStartOfDay());
 	if (isActiveForSemester(executionSemester)) {
-	    teacherContractSituation = getCurrentOrLastTeacherContractSituation(executionSemester.getBeginDateYearMonthDay()
-		    .toLocalDate(), executionSemester.getEndDateYearMonthDay().toLocalDate());
+	    teacherContractSituation = getDominantTeacherContractSituation(semesterInterval);
 	    PersonContractSituation personContractSituation = getDominantTeacherServiceExemption(executionSemester);
 	    if (personContractSituation != null && !personContractSituation.countForCredits(semesterInterval)) {
 		teacherContractSituation = personContractSituation;

@@ -45,9 +45,9 @@ public class PersonContractSituation extends PersonContractSituation_Base {
     }
 
     public boolean overlaps(final Interval interval) {
-	Interval categoryInterval = getInterval();
+	Interval situationInterval = getInterval();
 	return getBeginDate() != null
-		&& ((categoryInterval != null && categoryInterval.overlaps(interval)) || (categoryInterval == null && !getBeginDate()
+		&& ((situationInterval != null && situationInterval.overlaps(interval)) || (situationInterval == null && !getBeginDate()
 			.isAfter(interval.getEnd().toLocalDate())));
     }
 
@@ -96,8 +96,8 @@ public class PersonContractSituation extends PersonContractSituation_Base {
 		|| !getContractSituation().getInExercise()) {
 	    return Double.valueOf(0);
 	}
-	ProfessionalCategory professionalCategory = getProfessionalCategory(interval);
-	ProfessionalRegime professionalRegime = getProfessionalRegime(interval);
+	ProfessionalCategory professionalCategory = getProfessionalCategory();
+	ProfessionalRegime professionalRegime = getDominantProfessionalRegime(interval);
 	if (professionalCategory != null) {
 	    if (professionalRegime == null) {
 		if (professionalCategory.isTeacherMonitorCategory()) {
@@ -134,14 +134,9 @@ public class PersonContractSituation extends PersonContractSituation_Base {
 	return Double.valueOf(12);
     }
 
-    private ProfessionalCategory getProfessionalCategory(Interval interval) {
-	return getGiafProfessionalData().getPersonProfessionalData().getLastProfessionalCategory(
-		interval.getStart().toLocalDate(), interval.getEnd().toLocalDate());
-    }
-
-    private ProfessionalRegime getProfessionalRegime(Interval interval) {
-	return getGiafProfessionalData().getPersonProfessionalData().getLastProfessionalRegime(getGiafProfessionalData(),
-		interval.getStart().toLocalDate(), interval.getEnd().toLocalDate());
+    private ProfessionalRegime getDominantProfessionalRegime(Interval interval) {
+	return getGiafProfessionalData().getPersonProfessionalData().getDominantProfessionalRegime(getGiafProfessionalData(),
+		interval);
     }
 
     public PersonProfessionalExemption getPersonProfessionalExemption() {
