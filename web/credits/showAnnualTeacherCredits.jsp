@@ -507,18 +507,6 @@ $(document).ready(function() {
 				</fr:schema>
 				<fr:layout name="tabular">
 					<fr:property name="classes" value="tstyle2 thlight thleft mtop05 mbottom05"/>
-					<logic:equal name="canEditCreditsInfo" value="true">
-						<fr:property name="link(edit)" value="/teacherServiceComments.do?method=editTeacherServiceComment" />
-						<fr:property name="key(edit)" value="label.edit" />
-						<fr:property name="param(edit)" value="externalId/teacherServiceCommentOid" />
-						<fr:property name="bundle(edit)" value="TEACHER_CREDITS_SHEET_RESOURCES" />
-						<fr:property name="visibleIf(edit)" value="canEdit" />
-						<fr:property name="link(delete)" value="/teacherServiceComments.do?method=deleteTeacherServiceComment" />
-						<fr:property name="key(delete)" value="label.delete" />
-						<fr:property name="param(delete)" value="externalId/teacherServiceCommentOid" />
-						<fr:property name="bundle(delete)" value="TEACHER_CREDITS_SHEET_RESOURCES" />
-						<fr:property name="visibleIf(delete)" value="canEdit" />
-					</logic:equal>
 				</fr:layout>
 			</fr:view>
 		</logic:notEmpty>
