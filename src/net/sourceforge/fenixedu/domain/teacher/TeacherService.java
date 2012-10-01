@@ -23,11 +23,9 @@ import net.sourceforge.fenixedu.util.WeekDay;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
 
-public class TeacherService extends TeacherService_Base {
+import pt.ist.fenixWebFramework.services.Service;
 
-    static {
-	TeacherServiceTeacherServiceItem.addListener(new TeacherServiceTeacherServiceItemListener());
-    }
+public class TeacherService extends TeacherService_Base {
 
     public TeacherService(Teacher teacher, ExecutionSemester executionSemester) {
 	super();
@@ -52,6 +50,15 @@ public class TeacherService extends TeacherService_Base {
 	} else {
 	    throw new DomainException("There are service items associated to this Teacher Service");
 	}
+    }
+
+    @Service
+    public static TeacherService getTeacherService(Teacher teacher, ExecutionSemester executionPeriod) {
+	TeacherService teacherService = teacher.getTeacherServiceByExecutionPeriod(executionPeriod);
+	if (teacherService == null) {
+	    teacherService = new TeacherService(teacher, executionPeriod);
+	}
+	return teacherService;
     }
 
     public DegreeTeachingService getDegreeTeachingServiceByShiftAndProfessorship(final Shift shift,
@@ -290,16 +297,6 @@ public class TeacherService extends TeacherService_Base {
 
     private Double round(double n) {
 	return Math.round((n * 100.0)) / 100.0;
-    }
-
-    private static class TeacherServiceTeacherServiceItemListener extends
-	    dml.runtime.RelationAdapter<TeacherService, TeacherServiceItem> {
-	@Override
-	public void afterRemove(TeacherService teacherService, TeacherServiceItem serviceItem) {
-	    if (teacherService != null && teacherService.getServiceItems().isEmpty()) {
-		teacherService.delete();
-	    }
-	}
     }
 
     public BigDecimal getReductionServiceCredits() {
