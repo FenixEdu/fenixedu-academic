@@ -14,6 +14,7 @@ public class ReportStudentsUTLCandidatesBean implements Serializable {
     private InputStream xlsFile = null;
     private String fileName;
     private Integer fileSize;
+    private Boolean forFirstYear;
 
     public ReportStudentsUTLCandidatesBean() {
     }
@@ -56,4 +57,13 @@ public class ReportStudentsUTLCandidatesBean implements Serializable {
 
 	return contents;
     }
+
+    public Boolean getForFirstYear() {
+	return forFirstYear;
+    }
+
+    public void setForFirstYear(Boolean forFirstYear) {
+	this.forFirstYear = forFirstYear;
+    }
+
 }

@@ -47,7 +47,14 @@ public class ReportStudentsUTLCandidatesDA extends FenixDispatchAction {
 	    return prepare(mapping, actionForm, request, response);
 	}
 
-	ReportStudentsUTLCandidates report = new ReportStudentsUTLCandidates(bean.getExecutionYear(), sheet);
+	ReportStudentsUTLCandidates report = null;
+
+	if (bean.getForFirstYear()) {
+	    report = new ReportStudentsUTLCandidatesForFirstYear(bean.getExecutionYear(), sheet);
+	} else {
+	    report = new ReportStudentsUTLCandidates(bean.getExecutionYear(), sheet);
+	}
+
 	request.setAttribute("report", report);
 	
 	List<StudentLine> correctStudentLines = new ArrayList<StudentLine>();

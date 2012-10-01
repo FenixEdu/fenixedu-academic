@@ -20,6 +20,7 @@
 				<fr:property name="format" value="${year}" />
 				<fr:property name="sortBy" value="year=desc" />
 			</fr:slot>
+			<fr:slot name="forFirstYear" />
 			<fr:slot name="xlsFile" >
 				<property name="fileNameSlot" value="fileName" />
 				<property name="fileSizeSlot" value="fileSize" />

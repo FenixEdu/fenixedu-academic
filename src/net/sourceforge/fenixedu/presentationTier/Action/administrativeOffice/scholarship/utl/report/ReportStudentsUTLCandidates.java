@@ -24,7 +24,7 @@ public class ReportStudentsUTLCandidates implements java.io.Serializable {
     private ExecutionYear forExecutionYear;
     private List<StudentLine> correctStudentLines;
     private List<StudentLine> erroneousStudentLines;
-    private CellStyle headerStyle;
+    protected CellStyle headerStyle;
 
     public ReportStudentsUTLCandidates(final ExecutionYear forExecutionYear, final HSSFSheet sheet) {
 	this.forExecutionYear = forExecutionYear;
@@ -75,7 +75,7 @@ public class ReportStudentsUTLCandidates implements java.io.Serializable {
 	}
     }
 
-    private void addValues(HSSFSheet sheet) {
+    protected void addValues(HSSFSheet sheet) {
 	int i = 2;
 	for (StudentLine studentLine : getCorrectStudentLines()) {
 
@@ -162,7 +162,7 @@ public class ReportStudentsUTLCandidates implements java.io.Serializable {
 	}
     }
 
-    private String onNullEmptyString(Object value) {
+    protected String onNullEmptyString(Object value) {
 
 	if (value == null) {
 	    return "";
@@ -176,7 +176,7 @@ public class ReportStudentsUTLCandidates implements java.io.Serializable {
 	return value.toString();
     }
 
-    private void addHeaders(HSSFSheet sheet) {
+    protected void addHeaders(HSSFSheet sheet) {
 	sheet.createRow(0);
 	sheet.createRow(1);
 
@@ -235,11 +235,11 @@ public class ReportStudentsUTLCandidates implements java.io.Serializable {
 	addHeaderCell(sheet, getHeaderInBundle(bundle, "last.conclusion.academic.facts"), 34);
     }
     
-    private String getHeaderInBundle(ResourceBundle bundle, String field) {
+    protected String getHeaderInBundle(ResourceBundle bundle, String field) {
 	return bundle.getString("label.net.sourceforge.fenixedu.presentationTier.Action.administrativeOffice.scholarship.utl.report.StudentLine." + field);
     }
 
-    private void addHeaderCell(HSSFSheet sheet, String value, int columnNumber) {
+    protected void addHeaderCell(HSSFSheet sheet, String value, int columnNumber) {
 	HSSFRow row = sheet.getRow(0);
 	HSSFCell cell = row.createCell(columnNumber);
 	
@@ -257,7 +257,7 @@ public class ReportStudentsUTLCandidates implements java.io.Serializable {
 	return style;
     }
 
-    private void addCellValue(HSSFRow row, String value, int cellNumber) {
+    protected void addCellValue(HSSFRow row, String value, int cellNumber) {
 	HSSFCell cell = row.createCell(cellNumber);
 	cell.setCellValue(value);
     }
