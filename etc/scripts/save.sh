@@ -17,7 +17,7 @@ fi
 
 function export_functionalities_table() {
   local table=ACCESSIBLE_ITEM
-  local dump_args="--default-character-set=latin1 --skip-opt -t -c"
+  local dump_args="--default-character-set=utf8 --skip-opt -t -c"
 
   if [ -z "$PASSWORD" ] ; then
     mysqldump -u$USER $dump_args $DB $table | grep "^INSERT INTO" | grep "net.sourceforge.fenixedu.domain.functionalities.ConcreteFunctionality\|net.sourceforge.fenixedu.domain.functionalities.Module" > STATE.sql

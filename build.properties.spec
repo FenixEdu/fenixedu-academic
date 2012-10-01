@@ -121,7 +121,7 @@ repository.db.driver=com.mysql.jdbc.Driver
 
 # @message = Database url additional parameters
 # @type = string
-repository.db.url.parameters=?useUnicode=true&amp;characterEncoding=latin1
+repository.db.url.parameters=?useUnicode=true&amp;characterEncoding=utf8
 
 # @message = Fenix database url protocol
 # @type = string
