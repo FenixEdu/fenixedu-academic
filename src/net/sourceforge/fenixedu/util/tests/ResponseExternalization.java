@@ -33,17 +33,7 @@ public class ResponseExternalization {
     }
 
     public static Response internalize(String source) {
-	String xmlResponse = null;
-	try {
-	    // This latin1 to UTF-8 conversion actually undoes the
-	    // "bug" of the externalize method.
-	    xmlResponse = new String(source.getBytes(CharEncoding.ISO_8859_1), CharEncoding.UTF_8);
-	} catch (UnsupportedEncodingException e) {
-	    e.printStackTrace();
-	}
-
-	Response response = getResponse(xmlResponse);
-	return response;
+	return getResponse(source);
     }
 
     private static Response getResponse(String xmlResponse) {
