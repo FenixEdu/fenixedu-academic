@@ -18,7 +18,6 @@ import net.sourceforge.fenixedu.domain.teacher.OtherService;
 import net.sourceforge.fenixedu.domain.teacher.ReductionService;
 import net.sourceforge.fenixedu.domain.teacher.TeacherService;
 import net.sourceforge.fenixedu.domain.teacher.TeacherServiceLog;
-import net.sourceforge.fenixedu.domain.teacher.TeacherServiceNotes;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.comparators.ComparatorChain;
@@ -27,26 +26,33 @@ import org.joda.time.Interval;
 public class AnnualTeachingCreditsByPeriodBean implements Serializable {
     private ExecutionSemester executionPeriod;
     private Teacher teacher;
-    private TeacherServiceNotes teacherServiceNotes;
-    private Boolean canEditTeacherCredits;
-    private Boolean canEditTeacherCreditsReductions;
-    private Boolean canEditTeacherManagementFunctions;
+    private Boolean canLockTeacherCredits = false;
+    private Boolean canUnlockTeacherCredits = false;
+    private Boolean canEditTeacherCredits = false;
+    private Boolean canEditTeacherCreditsReductions = false;
+    private Boolean canEditTeacherManagementFunctions = false;
 
     public AnnualTeachingCreditsByPeriodBean(ExecutionSemester executionPeriod, Teacher teacher, RoleType roleType) {
 	super();
 	this.executionPeriod = executionPeriod;
 	this.teacher = teacher;
-	TeacherService teacherService = teacher.getTeacherServiceByExecutionPeriod(executionPeriod);
-	if (teacherService != null) {
-	    this.teacherServiceNotes = teacherService.getTeacherServiceNotes();
+	if (roleType != null) {
+	    TeacherService teacherService = teacher.getTeacherServiceByExecutionPeriod(executionPeriod);
+	    boolean inValidCreditsPeriod = executionPeriod.isInValidCreditsPeriod(roleType);
+	    if (teacherService != null) {
+		setCanLockTeacherCredits(roleType.equals(RoleType.DEPARTMENT_MEMBER) && inValidCreditsPeriod
+			&& teacherService.getTeacherServiceLock() == null);
+		setCanUnlockTeacherCredits((!roleType.equals(RoleType.DEPARTMENT_MEMBER)) && inValidCreditsPeriod
+			&& teacherService.getTeacherServiceLock() != null);
+	    }
+	    setCanEditTeacherCredits(inValidCreditsPeriod
+		    && (getCanLockTeacherCredits() || !roleType.equals(RoleType.DEPARTMENT_MEMBER)));
+	    ReductionService creditsReductionService = getCreditsReductionService();
+	    setCanEditTeacherCreditsReductions(roleType.equals(RoleType.DEPARTMENT_ADMINISTRATIVE_OFFICE) ? false
+		    : getCanEditTeacherCredits()
+			    && (creditsReductionService == null || creditsReductionService.getAttributionDate() == null));
+	    setCanEditTeacherManagementFunctions(roleType.equals(RoleType.DEPARTMENT_MEMBER) ? false : getCanEditTeacherCredits());
 	}
-	setCanEditTeacherCredits(executionPeriod.isInValidCreditsPeriod(roleType));
-	ReductionService creditsReductionService = getCreditsReductionService();
-	setCanEditTeacherCreditsReductions(roleType == null || roleType.equals(RoleType.DEPARTMENT_ADMINISTRATIVE_OFFICE) ? false
-		: getCanEditTeacherCredits()
-			&& (creditsReductionService == null || creditsReductionService.getAttributionDate() == null));
-	setCanEditTeacherManagementFunctions(roleType == null || roleType.equals(RoleType.DEPARTMENT_MEMBER) ? false
-		: getCanEditTeacherCredits());
     }
 
     public List<Professorship> getProfessorships() {
@@ -126,10 +132,6 @@ public class AnnualTeachingCreditsByPeriodBean implements Serializable {
 	return executionPeriod;
     }
 
-    public TeacherServiceNotes getTeacherServiceNotes() {
-	return teacherServiceNotes;
-    }
-
     public Boolean getCanEditTeacherCredits() {
 	return canEditTeacherCredits;
     }
@@ -156,6 +158,22 @@ public class AnnualTeachingCreditsByPeriodBean implements Serializable {
 
     public TeacherService getTeacherService() {
 	return teacher.getTeacherServiceByExecutionPeriod(executionPeriod);
+    }
+
+    public Boolean getCanLockTeacherCredits() {
+	return canLockTeacherCredits;
+    }
+
+    public void setCanLockTeacherCredits(Boolean canLockTeacherCredits) {
+	this.canLockTeacherCredits = canLockTeacherCredits;
+    }
+
+    public Boolean getCanUnlockTeacherCredits() {
+	return canUnlockTeacherCredits;
+    }
+
+    public void setCanUnlockTeacherCredits(Boolean canUnlockTeacherCredits) {
+	this.canUnlockTeacherCredits = canUnlockTeacherCredits;
     }
 
     public Set<TeacherServiceLog> getLogs() {

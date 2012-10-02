@@ -17,11 +17,13 @@ import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.domain.SupportLesson;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.util.BundleUtil;
 import net.sourceforge.fenixedu.util.CalendarUtil;
 import net.sourceforge.fenixedu.util.WeekDay;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
+import org.joda.time.DateTime;
 
 import pt.ist.fenixWebFramework.services.Service;
 
@@ -305,6 +307,20 @@ public class TeacherService extends TeacherService_Base {
 
     public SortedSet<TeacherServiceLog> getSortedLogs() {
 	return new TreeSet<TeacherServiceLog>(getTeacherServiceLogSet());
+    }
+
+    @Service
+    public void lockTeacherCredits() {
+	setTeacherServiceLock(new DateTime());
+	new TeacherServiceLog(this, BundleUtil.getStringFromResourceBundle("resources.TeacherCreditsSheetResources",
+		"label.teacher.lockTeacherCredits"));
+    }
+
+    @Service
+    public void unlockTeacherCredits() {
+	setTeacherServiceLock(null);
+	new TeacherServiceLog(this, BundleUtil.getStringFromResourceBundle("resources.TeacherCreditsSheetResources",
+		"label.teacher.unlockTeacherCredits"));
     }
 
 }

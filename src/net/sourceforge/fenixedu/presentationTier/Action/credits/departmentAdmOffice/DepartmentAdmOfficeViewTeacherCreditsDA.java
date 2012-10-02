@@ -14,6 +14,7 @@ import net.sourceforge.fenixedu.domain.credits.util.TeacherCreditsBean;
 import net.sourceforge.fenixedu.domain.organizationalStructure.DepartmentUnit;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.person.RoleType;
+import net.sourceforge.fenixedu.domain.teacher.TeacherService;
 import net.sourceforge.fenixedu.presentationTier.Action.credits.ViewTeacherCreditsDA;
 
 import org.apache.struts.action.ActionForm;
@@ -24,6 +25,7 @@ import pt.ist.fenixWebFramework.security.UserView;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 @Mapping(module = "departmentAdmOffice", path = "/credits", scope = "request", parameter = "method")
 @Forwards(value = { @Forward(name = "selectTeacher", path = "/credits/selectTeacher.jsp"),
@@ -68,4 +70,15 @@ public class DepartmentAdmOfficeViewTeacherCreditsDA extends ViewTeacherCreditsD
 	return false;
     }
 
+    public ActionForward unlockTeacherCredits(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) throws NumberFormatException, FenixServiceException, Exception {
+	Teacher teacher = AbstractDomainObject.fromExternalId((String) getFromRequest(request, "teacherOid"));
+	ExecutionSemester executionSemester = AbstractDomainObject.fromExternalId((String) getFromRequest(request,
+		"executionPeriodOid"));
+	TeacherService teacherService = TeacherService.getTeacherService(teacher, executionSemester);
+	teacherService.unlockTeacherCredits();
+	request.setAttribute("teacherOid", teacher.getExternalId());
+	request.setAttribute("executionYearOid", executionSemester.getExecutionYear().getExternalId());
+	return viewAnnualTeachingCredits(mapping, form, request, response, RoleType.DEPARTMENT_ADMINISTRATIVE_OFFICE);
+    }
 }

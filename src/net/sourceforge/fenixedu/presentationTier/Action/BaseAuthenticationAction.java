@@ -30,6 +30,7 @@ import net.sourceforge.fenixedu.domain.inquiries.RegentInquiryTemplate;
 import net.sourceforge.fenixedu.domain.inquiries.TeacherInquiryTemplate;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.student.Student;
+import net.sourceforge.fenixedu.domain.teacher.TeacherService;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixAction;
 import net.sourceforge.fenixedu.presentationTier.Action.commons.LoginRedirectAction;
 import net.sourceforge.fenixedu.presentationTier.servlets.filters.functionalities.FilterFunctionalityContext;
@@ -109,7 +110,10 @@ public abstract class BaseAuthenticationAction extends FenixAction {
 	    if (executionSemester != null
 		    && (userView.getPerson().getTeacher().isActiveForSemester(executionSemester) || userView.getPerson()
 			    .getTeacher().getTeacherAuthorization(executionSemester) != null)) {
-		return executionSemester.isInValidCreditsPeriod(RoleType.DEPARTMENT_MEMBER);
+		TeacherService teacherService = userView.getPerson().getTeacher()
+			.getTeacherServiceByExecutionPeriod(executionSemester);
+		return (teacherService == null || teacherService.getTeacherServiceLock() == null)
+			&& executionSemester.isInValidCreditsPeriod(RoleType.DEPARTMENT_MEMBER);
 	    }
 	}
 	return false;
@@ -248,15 +252,23 @@ public abstract class BaseAuthenticationAction extends FenixAction {
 	final FilterFunctionalityContext context = new FilterFunctionalityContext(request, contents);
 	request.setAttribute(FilterFunctionalityContext.CONTEXT_KEY, context);
 
+	String teacherOid = userView.getPerson().getTeacher().getExternalId();
+	String executionYearOid = ExecutionYear.readCurrentExecutionYear().getExternalId();
+
 	HtmlLink link = new HtmlLink();
 	link.setModule("/departmentMember");
-	link.setUrl("/credits.do?method=showTeacherCredits&"
+	link.setUrl("/credits.do?method=viewAnnualTeachingCredits&teacherOid=" + teacherOid + "&executionYearOid="
+		+ executionYearOid + "&"
 		+ net.sourceforge.fenixedu.presentationTier.servlets.filters.ContentInjectionRewriter.CONTEXT_ATTRIBUTE_NAME
 		+ "=/departamento/departamento");
 	link.setEscapeAmpersand(false);
 	String calculatedUrl = link.calculateUrl();
 	return new ActionForward(
-		"/departmentMember/credits.do?method=showTeacherCredits&"
+		"/departmentMember/credits.do?method=viewAnnualTeachingCredits&teacherOid="
+			+ teacherOid
+			+ "&executionYearOid="
+			+ executionYearOid
+			+ "&"
 			+ net.sourceforge.fenixedu.presentationTier.servlets.filters.ContentInjectionRewriter.CONTEXT_ATTRIBUTE_NAME
 			+ "=/departamento/departamento&_request_checksum_="
 			+ pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter

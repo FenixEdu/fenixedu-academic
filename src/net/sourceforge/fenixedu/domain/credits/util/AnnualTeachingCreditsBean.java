@@ -121,12 +121,16 @@ public class AnnualTeachingCreditsBean implements Serializable {
 	    setCanSeeCreditsReduction(true);
 	}
 	for (ExecutionSemester executionSemester : executionYear.getExecutionPeriods()) {
-	    annualTeachingCreditsByPeriodBeans.add(new AnnualTeachingCreditsByPeriodBean(executionSemester, teacher, roleType));
-	    if (executionSemester.isInValidCreditsPeriod(roleType)) {
+	    AnnualTeachingCreditsByPeriodBean annualTeachingCreditsByPeriodBean = new AnnualTeachingCreditsByPeriodBean(
+		    executionSemester, teacher, roleType);
+	    annualTeachingCreditsByPeriodBeans.add(annualTeachingCreditsByPeriodBean);
+	    if (annualTeachingCreditsByPeriodBean.getCanEditTeacherCredits()) {
 		setCanEditTeacherCreditsInAnyPeriod(true);
 	    }
+	    if (executionSemester.isFirstOfYear()) {
+		setCanEditTeacherCredits(annualTeachingCreditsByPeriodBean.getCanEditTeacherCredits());
+	    }
 	}
-	setCanEditTeacherCredits(executionYear.getFirstExecutionPeriod().isInValidCreditsPeriod(roleType));
     }
 
     public List<AnnualTeachingCreditsByPeriodBean> getAnnualTeachingCreditsByPeriodBeans() {

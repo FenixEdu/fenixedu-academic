@@ -65,12 +65,28 @@ $(document).ready(function() {
 <bean:define id="areCreditsCalculated" name="annualTeachingCreditsBean" property="areCreditsCalculated"/>
 <logic:equal name="areCreditsCalculated" value="true">
 	<div class="panel first">
-		<h3 class="credits-header mtop2"><b>Carga Lectiva Nominal</b><span><fr:view name="annualTeachingCreditsBean" property="annualTeachingLoad"><fr:layout name="decimal-format"><fr:property name="format" value="######0.00 'Créditos'"/></fr:layout></fr:view></span></h3>
-		<h3 class="credits-header mtop2"><b>Créditos Obtidos<logic:equal name="annualTeachingCreditsBean" property="hasAnyLimitation" value="true"><span class="tderror1"> *</span></logic:equal></b><span><fr:view name="annualTeachingCreditsBean" property="yearCredits"><fr:layout name="decimal-format"><fr:property name="format" value="######0.00 'Créditos'"/></fr:layout></fr:view></span></h3>
-		<h3 class="credits-header mtop2"><b>Créditos Finais</b><span><fr:view name="annualTeachingCreditsBean" property="finalCredits"><fr:layout name="decimal-format"><fr:property name="format" value="######0.00 'Créditos'"/></fr:layout></fr:view></span></h3>
+		<h3 class="credits-header mtop2"><b><bean:message key="label.credits.normalizedAcademicCredits"  bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></b><span><fr:view name="annualTeachingCreditsBean" property="annualTeachingLoad"><fr:layout name="decimal-format"><fr:property name="format" value="######0.00 'Créditos'"/></fr:layout></fr:view></span></h3>
+		<h3 class="credits-header mtop2"><b><bean:message key="label.credits.yearCredits"  bundle="TEACHER_CREDITS_SHEET_RESOURCES"/><logic:equal name="annualTeachingCreditsBean" property="hasAnyLimitation" value="true"><span class="tderror1"> *</span></logic:equal></b><span><fr:view name="annualTeachingCreditsBean" property="yearCredits"><fr:layout name="decimal-format"><fr:property name="format" value="######0.00 'Créditos'"/></fr:layout></fr:view></span></h3>
+		<h3 class="credits-header mtop2"><b><bean:message key="label.credits.finalCredits"  bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></b><span><fr:view name="annualTeachingCreditsBean" property="finalCredits"><fr:layout name="decimal-format"><fr:property name="format" value="######0.00 'Créditos'"/></fr:layout></fr:view></span></h3>
 	</div>
 </logic:equal>
-
+<logic:notEqual name="areCreditsCalculated" value="true">
+	<logic:iterate id="annualTeachingCreditsByPeriodBean" name="annualTeachingCreditsBean" property="annualTeachingCreditsByPeriodBeans">
+		<logic:equal name="annualTeachingCreditsByPeriodBean" property="canLockTeacherCredits" value="true">
+			<bean:define id="executionPeriodOid" name="annualTeachingCreditsByPeriodBean" property="executionPeriod.externalId"/>
+			<bean:define id="confirmationMessage"><bean:message key="label.teacher.lockTeacherCredits.confirmationMessage"  bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></bean:define>
+			<p><html:link page='<%= "/credits.do?method=lockTeacherCredits&amp;executionPeriodOid=" + executionPeriodOid + "&amp;teacherOid=" + teacherId %>' onclick="<%="return confirm('"+confirmationMessage+"')" %>">
+				<bean:message key="label.teacher.lockTeacherCredits"  bundle="TEACHER_CREDITS_SHEET_RESOURCES"/> <bean:write name="annualTeachingCreditsByPeriodBean" property="executionPeriod.qualifiedName"/>
+			</html:link></p>
+		</logic:equal>
+		<logic:equal name="annualTeachingCreditsByPeriodBean" property="canUnlockTeacherCredits" value="true">
+			<bean:define id="executionPeriodOid" name="annualTeachingCreditsByPeriodBean" property="executionPeriod.externalId"/>
+			<p><html:link page='<%= "/credits.do?method=unlockTeacherCredits&amp;executionPeriodOid=" + executionPeriodOid + "&amp;teacherOid=" + teacherId %>'>
+					<bean:message key="label.teacher.unlockTeacherCredits" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/> <bean:write name="annualTeachingCreditsByPeriodBean" property="executionPeriod.qualifiedName"/>
+			</html:link></p>
+		</logic:equal>
+	</logic:iterate>
+</logic:notEqual>
 
 <div class="panel first"><h3 class="infoop mtop2"><img id="status-icon" width="15px" alt="" src="<%= request.getContextPath() +"/images/right30.png" %>">
 <b><bean:message key="label.teacherCreditsSheet.professorships" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></b>

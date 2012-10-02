@@ -5972,6 +5972,7 @@ class DomainObject {
     }
     
     class teacher.TeacherService extends DomainObject {
+    	DateTime teacherServiceLock; 
     }
 
     class teacher.TeacherServiceLog extends DomainObject {
