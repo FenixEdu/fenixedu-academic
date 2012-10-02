@@ -55,8 +55,6 @@ import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.domain.student.WeeklyWorkLoad;
 import net.sourceforge.fenixedu.domain.studentCurriculum.Dismissal;
-import net.sourceforge.fenixedu.domain.teacher.DegreeProjectTutorialService;
-import net.sourceforge.fenixedu.domain.teacher.DegreeTeachingService;
 import net.sourceforge.fenixedu.domain.tests.NewTestGroup;
 import net.sourceforge.fenixedu.domain.tests.TestGroupStatus;
 import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicInterval;
@@ -2469,19 +2467,6 @@ public class ExecutionCourse extends ExecutionCourse_Base {
 
     @Service
     public void changeProjectTutorialCourse() {
-	if (getProjectTutorialCourse()) {
-	    for (Professorship professorship : getProfessorships()) {
-		for (DegreeProjectTutorialService degreeProjectTutorialService : professorship.getDegreeProjectTutorialServices()) {
-		    degreeProjectTutorialService.delete();
-		}
-	    }
-	} else {
-	    for (Professorship professorship : getProfessorships()) {
-		for (DegreeTeachingService degreeTeachingService : professorship.getDegreeTeachingServices()) {
-		    degreeTeachingService.delete();
-		}
-	    }
-	}
 	setProjectTutorialCourse(!getProjectTutorialCourse());
     }
 

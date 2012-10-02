@@ -60,8 +60,7 @@ public class AnnualTeachingCreditsByPeriodBean implements Serializable {
 	for (Professorship professorship : getTeacher().getProfessorships()) {
 	    if (professorship.getExecutionCourse().getExecutionPeriod().equals(executionPeriod)
 		    && professorship.getExecutionCourse().hasAnyLesson()
-		    && (!professorship.getExecutionCourse().isDissertation())
-		    && (!professorship.getExecutionCourse().getProjectTutorialCourse())) {
+		    && (!professorship.getExecutionCourse().isDissertation())) {
 		professorships.add(professorship);
 	    }
 	}
