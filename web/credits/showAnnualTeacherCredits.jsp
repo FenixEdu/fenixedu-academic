@@ -62,6 +62,12 @@ $(document).ready(function() {
 		recalcular
 </html:link></p>
 --%>		
+<div class="infoop2">
+	<ul>
+		<li><a href="https://fenix.ist.utl.pt/conselhocientifico/topo/servico-docente/regulamento-de-prestacao-de-servico-dos-docentes-do-ist">Regulamento de Prestação de Serviço dos Docentes do IST</a></li>
+		<li><a href="http://fenix.ist.utl.pt/conselhocientifico/topo/servico-docente/glossario-do-rsd-(versao-19-9-2012)">Glossário do RSD (versão 19-9-2012)</a></li>
+	</ul>
+</div>
 <bean:define id="areCreditsCalculated" name="annualTeachingCreditsBean" property="areCreditsCalculated"/>
 <logic:equal name="areCreditsCalculated" value="true">
 	<div class="panel first">
@@ -76,13 +82,13 @@ $(document).ready(function() {
 			<bean:define id="executionPeriodOid" name="annualTeachingCreditsByPeriodBean" property="executionPeriod.externalId"/>
 			<bean:define id="confirmationMessage"><bean:message key="label.teacher.lockTeacherCredits.confirmationMessage"  bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></bean:define>
 			<p><html:link page='<%= "/credits.do?method=lockTeacherCredits&amp;executionPeriodOid=" + executionPeriodOid + "&amp;teacherOid=" + teacherId %>' onclick="<%="return confirm('"+confirmationMessage+"')" %>">
-				<bean:message key="label.teacher.lockTeacherCredits"  bundle="TEACHER_CREDITS_SHEET_RESOURCES"/> <bean:write name="annualTeachingCreditsByPeriodBean" property="executionPeriod.qualifiedName"/>
+				<b><bean:message key="label.teacher.lockTeacherCredits"  bundle="TEACHER_CREDITS_SHEET_RESOURCES"/> <bean:write name="annualTeachingCreditsByPeriodBean" property="executionPeriod.qualifiedName"/></b>
 			</html:link></p>
 		</logic:equal>
 		<logic:equal name="annualTeachingCreditsByPeriodBean" property="canUnlockTeacherCredits" value="true">
 			<bean:define id="executionPeriodOid" name="annualTeachingCreditsByPeriodBean" property="executionPeriod.externalId"/>
 			<p><html:link page='<%= "/credits.do?method=unlockTeacherCredits&amp;executionPeriodOid=" + executionPeriodOid + "&amp;teacherOid=" + teacherId %>'>
-					<bean:message key="label.teacher.unlockTeacherCredits" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/> <bean:write name="annualTeachingCreditsByPeriodBean" property="executionPeriod.qualifiedName"/>
+				<bean:message key="label.teacher.unlockTeacherCredits" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/> <bean:write name="annualTeachingCreditsByPeriodBean" property="executionPeriod.qualifiedName"/>
 			</html:link></p>
 		</logic:equal>
 	</logic:iterate>
