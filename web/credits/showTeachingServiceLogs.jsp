@@ -50,7 +50,7 @@
 									<%= log.getTeacherService().getExecutionPeriod().getName() %>
 								</td>
 								<td>
-									<%= log.getDescription() %>
+									<pre><%= log.getDescription() %></pre>
 								</td>
 							</tr>
 					<%
