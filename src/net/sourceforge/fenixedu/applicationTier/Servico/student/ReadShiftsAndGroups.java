@@ -24,6 +24,7 @@ import net.sourceforge.fenixedu.domain.ExportGrouping;
 import net.sourceforge.fenixedu.domain.Grouping;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Shift;
+import net.sourceforge.fenixedu.domain.ShiftGroupingProperties;
 import net.sourceforge.fenixedu.domain.StudentGroup;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
@@ -110,6 +111,9 @@ public class ReadShiftsAndGroups extends FenixService {
 	final List<StudentGroup> studentGroups = grouping.readAllStudentGroupsBy(shift);
 	Integer capacity;
 	if (grouping.getDifferentiatedCapacity()) {
+	    if (!shift.hasShiftGroupingProperties()) {
+		new ShiftGroupingProperties(shift, grouping, 0);
+	    }
 	    capacity = shift.getShiftGroupingProperties().getCapacity();
 	} else {
 	    capacity = grouping.getGroupMaximumNumber();
