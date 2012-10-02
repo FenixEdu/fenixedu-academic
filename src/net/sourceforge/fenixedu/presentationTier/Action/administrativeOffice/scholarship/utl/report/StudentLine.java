@@ -377,7 +377,8 @@ public class StudentLine implements IFileLine, java.io.Serializable {
 	    return "";
 	}
 
-	return getRegistration().getDegree().getMinistryCode();
+	String ministryCode = getRegistration().getDegree().getMinistryCode();
+	return "9999".equals(ministryCode) ? "0" : ministryCode;
     }
 
     public String getDegreeName() {
@@ -906,7 +907,7 @@ public class StudentLine implements IFileLine, java.io.Serializable {
     }
 
     public String getFirstMonthOfPayment() {
-	return "Outubro";
+	return "Setembro";
     }
 
     public Boolean getOwnerOfCETQualification() {
@@ -925,8 +926,22 @@ public class StudentLine implements IFileLine, java.io.Serializable {
 	List<ExecutionYear> enrolmentsExecutionYears = new ArrayList<ExecutionYear>(getEnrolmentsExecutionYears(getStudent()));
 	Collections.sort(enrolmentsExecutionYears, ExecutionYear.REVERSE_COMPARATOR_BY_YEAR);
 	
-	return enrolmentsExecutionYears.isEmpty() ? "" : ((Integer) enrolmentsExecutionYears.get(0).getBeginCivilYear())
-		.toString();
+	ExecutionYear lastEnrolledExecutionYear = null;
+
+	if (enrolmentsExecutionYears.isEmpty()) {
+	    return "";
+	}
+
+	if (enrolmentsExecutionYears.size() == 1
+		&& ExecutionYear.readCurrentExecutionYear().equals(enrolmentsExecutionYears.get(0))) {
+	    lastEnrolledExecutionYear = null;
+	} else if (ExecutionYear.readCurrentExecutionYear().equals(enrolmentsExecutionYears.get(0))) {
+	    lastEnrolledExecutionYear = enrolmentsExecutionYears.get(1);
+	} else {
+	    lastEnrolledExecutionYear = enrolmentsExecutionYears.get(0);
+	}
+
+	return ((Integer) lastEnrolledExecutionYear.getBeginCivilYear()).toString();
     }
 
     public String getNif() {
