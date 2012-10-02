@@ -6,6 +6,7 @@ import java.util.Set;
 import java.util.TreeSet;
 
 import net.sourceforge.fenixedu.dataTransferObject.credits.CreditLineDTO;
+import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.TeacherCredits;
@@ -83,13 +84,22 @@ public class TeacherCreditsBean implements Serializable {
 		hasAnyYearWithCorrections = true;
 	    }
 	}
-	if (!hasCurrentYear) {
+	if (!hasCurrentYear && isTeacherActiveForYear(currentExecutionYear)) {
 	    this.annualTeachingCredits.add(new AnnualTeachingCreditsBean(currentExecutionYear, teacher, roleType));
 	}
 
 	if (roleType.equals(RoleType.SCIENTIFIC_COUNCIL) || roleType.equals(RoleType.DEPARTMENT_MEMBER)) {
 	    setCanSeeCreditsReduction(true);
 	}
+    }
+
+    private boolean isTeacherActiveForYear(ExecutionYear currentExecutionYear) {
+	for (ExecutionSemester executionSemester : currentExecutionYear.getExecutionPeriods()) {
+	    if (teacher.isActiveForSemester(executionSemester) || teacher.getTeacherAuthorization(executionSemester) != null) {
+		return true;
+	    }
+	}
+	return false;
     }
 
     public void preparePastTeachingCredits() {
