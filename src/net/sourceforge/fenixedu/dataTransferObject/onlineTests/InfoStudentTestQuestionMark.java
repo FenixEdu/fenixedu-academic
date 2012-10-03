@@ -20,6 +20,8 @@ public class InfoStudentTestQuestionMark extends InfoObject {
 
     private Integer studentIdInternal;
 
+    private String studentDegree;
+
     private List<Double> testQuestionMarks;
 
     private Double maximumMark;
@@ -62,6 +64,14 @@ public class InfoStudentTestQuestionMark extends InfoObject {
 	this.studentNumber = studentNumber;
     }
 
+    public String getStudentDegree() {
+	return studentDegree;
+    }
+
+    public void setStudentDegree(String studentDegree) {
+	this.studentDegree = studentDegree;
+    }
+
     public List<Double> getTestQuestionMarks() {
 	if (testQuestionMarks == null) {
 	    testQuestionMarks = new ArrayList<Double>();
@@ -79,6 +89,8 @@ public class InfoStudentTestQuestionMark extends InfoObject {
 	    if (studentTestQuestion.getStudent() != null) {
 		setStudentIdInternal(studentTestQuestion.getStudent().getIdInternal());
 		setStudentNumber(studentTestQuestion.getStudent().getNumber());
+		setStudentDegree(studentTestQuestion.getStudent().getDegree() != null ? studentTestQuestion.getStudent()
+			.getDegree().getSigla() : "-");
 		if (studentTestQuestion.getStudent().getPerson() != null)
 		    setStudentName(studentTestQuestion.getStudent().getPerson().getName());
 	    }

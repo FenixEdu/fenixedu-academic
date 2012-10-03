@@ -53,6 +53,7 @@
 					<tr>
 						<th class="listClasses-header"><bean:message key="label.number"/></th>
 						<th class="listClasses-header"><bean:message key="label.name"/></th>
+						<th class="listClasses-header"><bean:message key="label.Degree"/></th>
 						<% for(int i=1; i<=new Integer(questionNumber.toString()).intValue();i++ ){
 							out.write(new String("<th class='listClasses-header'><b>P"+i+"</b></th>"));
 						} %>
@@ -67,6 +68,7 @@
 				<tr>
 				<td class="listClasses"><bean:write name="studentTestQuestion" property="studentNumber"/></td>
 				<td class="listClasses"><bean:write name="studentTestQuestion" property="studentName"/></td>
+				<td class="listClasses"><bean:write name="studentTestQuestion" property="studentDegree"/></td>
 			<% } %>
 			
 			<bean:define id="finalMark" value="0"/>
