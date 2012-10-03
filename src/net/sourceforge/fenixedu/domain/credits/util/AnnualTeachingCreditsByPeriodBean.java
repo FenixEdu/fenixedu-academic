@@ -39,16 +39,12 @@ public class AnnualTeachingCreditsByPeriodBean implements Serializable {
 	if (roleType != null) {
 	    TeacherService teacherService = teacher.getTeacherServiceByExecutionPeriod(executionPeriod);
 	    boolean inValidCreditsPeriod = executionPeriod.isInValidCreditsPeriod(roleType);
-	    if (teacherService != null) {
-		setCanLockTeacherCredits(roleType.equals(RoleType.DEPARTMENT_MEMBER) && inValidCreditsPeriod
-			&& teacherService.getTeacherServiceLock() == null);
-		setCanUnlockTeacherCredits((!roleType.equals(RoleType.DEPARTMENT_MEMBER)) && inValidCreditsPeriod
-			&& teacherService.getTeacherServiceLock() != null);
-		setCanEditTeacherCredits(inValidCreditsPeriod
-			&& (getCanLockTeacherCredits() || !roleType.equals(RoleType.DEPARTMENT_MEMBER)));
-	    } else {
-		setCanEditTeacherCredits(inValidCreditsPeriod);
-	    }
+	    setCanLockTeacherCredits(roleType.equals(RoleType.DEPARTMENT_MEMBER) && inValidCreditsPeriod
+		    && (teacherService == null || teacherService.getTeacherServiceLock() == null));
+	    setCanUnlockTeacherCredits((!roleType.equals(RoleType.DEPARTMENT_MEMBER)) && inValidCreditsPeriod
+		    && teacherService != null && teacherService.getTeacherServiceLock() != null);
+	    setCanEditTeacherCredits(inValidCreditsPeriod
+		    && (getCanLockTeacherCredits() || !roleType.equals(RoleType.DEPARTMENT_MEMBER)));
 	    ReductionService creditsReductionService = getCreditsReductionService();
 	    setCanEditTeacherCreditsReductions(roleType.equals(RoleType.DEPARTMENT_ADMINISTRATIVE_OFFICE) ? false
 		    : getCanEditTeacherCredits()
