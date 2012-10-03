@@ -9,7 +9,7 @@
 <%@page import="net.sourceforge.fenixedu.presentationTier.servlets.filters.ContentInjectionRewriter"%>
 
 
-<em>Gest�o de Canais</em>
+<em><bean:message bundle="MESSAGING_RESOURCES" key="label.manage.channels"/></em>
 <h2><bean:message bundle="MESSAGING_RESOURCES" key="messaging.annoucenment.edit.label"/></h2>
 
 <jsp:include flush="true" page="/messaging/context.jsp"/>
@@ -28,7 +28,6 @@
 
 <table class="tstyle5 thlight thtop thright mtop025">
 
-<%-- T�tulo --%>
 	<tr>
 		<th style="width: 125px;">
 			<span class="required">*</span> <bean:message bundle="MESSAGING_RESOURCES" key="net.sourceforge.fenixedu.domain.messaging.Announcement.title.label"/>:
@@ -43,7 +42,6 @@
 		</td>
 	</tr>
 
-<%-- Corpo --%>
 	<tr>
 		<th>
 			<span class="required">*</span> <bean:message bundle="MESSAGING_RESOURCES" key="net.sourceforge.fenixedu.domain.messaging.Announcement.body.label"/>:
@@ -73,6 +71,7 @@
 				
 				<p><fr:view name="file" property="displayName"/>
 				   <span class="color888">(<fr:view name="file" property="filename"/>)
+				   <bean:write name="file" property="externalId"/>
 				   <fr:view name="file" property="permittedGroup" layout="null-as-label" type="net.sourceforge.fenixedu.domain.accessControl.Group">
 	                                        <fr:layout>
 	                                            <fr:property name="label" value="<%= String.format("label.%s", net.sourceforge.fenixedu.domain.accessControl.EveryoneGroup.class.getName()) %>"/>
@@ -97,7 +96,6 @@
             
 <p class="mtop1 mbottom025"><strong>Campos opcionais:</strong></p>
 <table class="tstyle5 thlight thtop thright mtop025">
-<%-- Excerto --%>
 	<tr>
 		<th style="width: 125px;">
 			<bean:message bundle="MESSAGING_RESOURCES" key="net.sourceforge.fenixedu.domain.messaging.Announcement.excerpt.label"/>:
@@ -112,7 +110,6 @@
 		</td>
 	</tr>
 
-<%-- Local --%>
 	<tr>
 		<th>
 			<bean:message bundle="MESSAGING_RESOURCES" key="net.sourceforge.fenixedu.domain.messaging.Announcement.place.label"/>:
@@ -127,7 +124,6 @@
 	</tr>
 
 	
-<%-- Palavras-chave --%>
 	<tr>
 		<th>
 			<bean:message bundle="MESSAGING_RESOURCES" key="net.sourceforge.fenixedu.domain.messaging.Announcement.keywords.label"/>:
@@ -141,7 +137,6 @@
 		</td>
 	</tr>
 
-<%-- Nome do autor --%>
 	<tr>
 		<th>
 			<bean:message bundle="MESSAGING_RESOURCES" key="net.sourceforge.fenixedu.domain.messaging.Announcement.authorName.label"/>:
@@ -156,7 +151,6 @@
 	</tr>
 
 
-<%-- E-mail do autor --%>
 	<tr>
 		<th>
 			<bean:message bundle="MESSAGING_RESOURCES" key="net.sourceforge.fenixedu.domain.messaging.Announcement.authorEmail.label"/>:
@@ -170,7 +164,6 @@
 		</td>
 	</tr>
 
-<%-- In�cio do evento --%>
 	<tr>
 		<th>
 			<bean:message bundle="MESSAGING_RESOURCES" key="net.sourceforge.fenixedu.domain.messaging.Announcement.referedSubjectBegin.label"/>:
@@ -180,7 +173,6 @@
 		</td>
 	</tr>
 
-<%-- Fim do evento --%>
 	<tr>
 		<th>
 			<bean:message bundle="MESSAGING_RESOURCES" key="net.sourceforge.fenixedu.domain.messaging.Announcement.referedSubjectEnd.label"/>:
@@ -190,7 +182,6 @@
 		</td>
 	</tr>
 
-<%-- In�cio de publica��o --%>
 	<tr>
 		<th>
 			<bean:message bundle="MESSAGING_RESOURCES" key="net.sourceforge.fenixedu.domain.messaging.Announcement.publicationBegin.label"/>:
@@ -200,7 +191,6 @@
 		</td>
 	</tr>
 
-<%-- Fim de publica��o --%>
 	<tr>
 		<th>
 			<bean:message bundle="MESSAGING_RESOURCES" key="net.sourceforge.fenixedu.domain.messaging.Announcement.publicationEnd.label"/>:
@@ -210,7 +200,6 @@
 		</td>
 	</tr>
 
-<%-- Vis�vel --%>
 	<tr>
 		<th>
 			<bean:message bundle="MESSAGING_RESOURCES" key="net.sourceforge.fenixedu.domain.messaging.Announcement.visible.label"/>:
