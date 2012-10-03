@@ -45,11 +45,8 @@ public abstract class DomainBackedGroup<T extends DomainObject> extends LeafGrou
 
     @Override
     public boolean equals(Object other) {
-	if (other == null) {
-	    return false;
-	}
-
-	if (!this.getClass().isAssignableFrom(other.getClass())) {
+	if (this.reference == null || other == null
+		|| !this.getClass().isAssignableFrom(other.getClass())) {
 	    return false;
 	}
 
@@ -59,6 +56,6 @@ public abstract class DomainBackedGroup<T extends DomainObject> extends LeafGrou
 
     @Override
     public int hashCode() {
-	return this.reference.hashCode();
+	return this.reference == null ? -1 : this.reference.hashCode();
     }
 }

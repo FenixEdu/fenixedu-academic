@@ -36,7 +36,8 @@ public abstract class ExecutionCourseGroup extends DomainBackedGroup<ExecutionCo
 
     @Override
     final public String[] getPresentationNameKeyArgs() {
-	return new String[] { getExecutionCourse().getNome() };
+	final ExecutionCourse executionCourse = getExecutionCourse();
+	return executionCourse == null ? new String[0] : new String[] { getExecutionCourse().getNome() };
     }
 
 }
