@@ -313,14 +313,14 @@ public class TeacherService extends TeacherService_Base {
     public void lockTeacherCredits() {
 	setTeacherServiceLock(new DateTime());
 	new TeacherServiceLog(this, BundleUtil.getStringFromResourceBundle("resources.TeacherCreditsSheetResources",
-		"label.teacher.lockTeacherCredits"));
+		"label.teacher.lockTeacherCredits", getExecutionPeriod().getQualifiedName()));
     }
 
     @Service
     public void unlockTeacherCredits() {
 	setTeacherServiceLock(null);
 	new TeacherServiceLog(this, BundleUtil.getStringFromResourceBundle("resources.TeacherCreditsSheetResources",
-		"label.teacher.unlockTeacherCredits"));
+		"label.teacher.unlockTeacherCredits", getExecutionPeriod().getQualifiedName()));
     }
 
 }

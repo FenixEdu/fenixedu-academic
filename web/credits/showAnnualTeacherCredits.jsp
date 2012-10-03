@@ -78,17 +78,18 @@ $(document).ready(function() {
 </logic:equal>
 <logic:notEqual name="areCreditsCalculated" value="true">
 	<logic:iterate id="annualTeachingCreditsByPeriodBean" name="annualTeachingCreditsBean" property="annualTeachingCreditsByPeriodBeans">
+		<bean:define id="executionPeriodQualifiedName" name="annualTeachingCreditsByPeriodBean" property="executionPeriod.qualifiedName"></bean:define>
+		<bean:define id="executionPeriodOid" name="annualTeachingCreditsByPeriodBean" property="executionPeriod.externalId"/>
 		<logic:equal name="annualTeachingCreditsByPeriodBean" property="canLockTeacherCredits" value="true">
-			<bean:define id="executionPeriodOid" name="annualTeachingCreditsByPeriodBean" property="executionPeriod.externalId"/>
 			<bean:define id="confirmationMessage"><bean:message key="label.teacher.lockTeacherCredits.confirmationMessage"  bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></bean:define>
 			<p><html:link page='<%= "/credits.do?method=lockTeacherCredits&amp;executionPeriodOid=" + executionPeriodOid + "&amp;teacherOid=" + teacherId %>' onclick="<%="return confirm('"+confirmationMessage+"')" %>">
-				<b><bean:message key="label.teacher.lockTeacherCredits"  bundle="TEACHER_CREDITS_SHEET_RESOURCES"/> <bean:write name="annualTeachingCreditsByPeriodBean" property="executionPeriod.qualifiedName"/></b>
+				<b><bean:message key="label.teacher.lockTeacherCredits"  bundle="TEACHER_CREDITS_SHEET_RESOURCES" arg0="<%=executionPeriodQualifiedName.toString()%>"/></b>
 			</html:link></p>
 		</logic:equal>
 		<logic:equal name="annualTeachingCreditsByPeriodBean" property="canUnlockTeacherCredits" value="true">
-			<bean:define id="executionPeriodOid" name="annualTeachingCreditsByPeriodBean" property="executionPeriod.externalId"/>
-			<p><html:link page='<%= "/credits.do?method=unlockTeacherCredits&amp;executionPeriodOid=" + executionPeriodOid + "&amp;teacherOid=" + teacherId %>'>
-				<bean:message key="label.teacher.unlockTeacherCredits" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/> <bean:write name="annualTeachingCreditsByPeriodBean" property="executionPeriod.qualifiedName"/>
+			<bean:define id="confirmationMessage"><bean:message key="label.teacher.unlockTeacherCredits.confirmationMessage"  bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></bean:define>
+			<p><html:link page='<%= "/credits.do?method=unlockTeacherCredits&amp;executionPeriodOid=" + executionPeriodOid + "&amp;teacherOid=" + teacherId %>' onclick="<%="return confirm('"+confirmationMessage+"')" %>">
+				<bean:message key="label.teacher.unlockTeacherCredits" bundle="TEACHER_CREDITS_SHEET_RESOURCES" arg0="<%=executionPeriodQualifiedName.toString()%>"/>
 			</html:link></p>
 		</logic:equal>
 	</logic:iterate>
