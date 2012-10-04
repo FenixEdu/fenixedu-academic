@@ -29,7 +29,9 @@
 	<logic:notEmpty name="teacherBean" property="pastTeachingCredits">
 		<fr:view name="teacherBean" property="pastTeachingCredits">
 			<fr:schema bundle="TEACHER_CREDITS_SHEET_RESOURCES" type="net.sourceforge.fenixedu.domain.credits.util.TeacherCreditsBean">
-				<fr:slot name="executionPeriod.qualifiedName" key="label.execution-period" >
+				<fr:slot name="executionPeriod.qualifiedName" key="label.execution-period" layout="link">
+					<fr:property name="useParent" value="true"/>
+  	    			<fr:property name="linkFormat" value="${teacherCreditsDocument.downloadUrl}"/>
 				</fr:slot>
 				<fr:slot name="teachingDegreeCredits" key="label.credits.lessons.simpleCode" layout="null-as-label"/>
 				<fr:slot name="supportLessonHours" key="label.credits.supportLessons.simpleCode" layout="null-as-label"/>
