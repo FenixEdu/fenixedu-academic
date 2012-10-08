@@ -132,6 +132,9 @@ hideButtons();
 		</fr:layout>
 	</fr:edit>
 	
+	<span class="warning0"><bean:message key="label.RAIDES.check.schoolLevel" bundle="STUDENT_RESOURCES"/></span>
+	
+	<br/>
 	<br/>
 
 	<h3><bean:message  key="label.personal.information" bundle="STUDENT_RESOURCES"/></h3>
