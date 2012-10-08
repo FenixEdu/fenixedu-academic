@@ -141,6 +141,8 @@ public class Professorship extends Professorship_Base implements ICreditsEventOr
 	    throw new DomainException("error.remove.professorship");
 	if (hasInquiryRegentAnswer())
 	    throw new DomainException("error.remove.professorship");
+	if (hasAnyDegreeProjectTutorialServices())
+	    throw new DomainException("error.remove.professorship");
 	return true;
     }
 
