@@ -57,11 +57,7 @@ $(document).ready(function() {
 <bean:define id="executionYearOid" name="annualTeachingCreditsBean" property="executionYear.externalId"/>
 <bean:define id="roleType" name="annualTeachingCreditsBean" property="roleType"/>
 
-<%--
-<p><html:link page='<%= "/credits.do?method=recalculateCredits&amp;executionYearOid=" + executionYearOid + "&amp;teacherOid=" + teacherId %>'>
-		recalcular
-</html:link></p>
---%>		
+
 <div class="infoop2">
 	<ul>
 		<li><a href="https://fenix.ist.utl.pt/conselhocientifico/topo/servico-docente/regulamento-de-prestacao-de-servico-dos-docentes-do-ist">Regulamento de Prestação de Serviço dos Docentes do IST</a></li>
@@ -70,6 +66,11 @@ $(document).ready(function() {
 </div>
 <bean:define id="areCreditsCalculated" name="annualTeachingCreditsBean" property="areCreditsCalculated"/>
 <logic:equal name="areCreditsCalculated" value="true">
+	<logic:equal name="roleType" value="SCIENTIFIC_COUNCIL">
+		<p><html:link page='<%= "/credits.do?method=recalculateCredits&amp;executionYearOid=" + executionYearOid + "&amp;teacherOid=" + teacherId %>'>
+		Recalcular
+		</html:link></p>
+	</logic:equal>
 	<div class="panel first">
 		<h3 class="credits-header mtop2"><b><bean:message key="label.credits.normalizedAcademicCredits"  bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></b><span><fr:view name="annualTeachingCreditsBean" property="annualTeachingLoad"><fr:layout name="decimal-format"><fr:property name="format" value="######0.00 'Créditos'"/></fr:layout></fr:view></span></h3>
 		<h3 class="credits-header mtop2"><b><bean:message key="label.credits.yearCredits"  bundle="TEACHER_CREDITS_SHEET_RESOURCES"/><logic:equal name="annualTeachingCreditsBean" property="hasAnyLimitation" value="true"><span class="tderror1"> *</span></logic:equal></b><span><fr:view name="annualTeachingCreditsBean" property="yearCredits"><fr:layout name="decimal-format"><fr:property name="format" value="######0.00 'Créditos'"/></fr:layout></fr:view></span></h3>
