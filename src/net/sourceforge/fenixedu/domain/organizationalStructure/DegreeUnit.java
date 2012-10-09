@@ -180,8 +180,8 @@ public class DegreeUnit extends DegreeUnit_Base {
 		FunctionType.DELEGATE_OF_YEAR);
 	for (PersonFunction delegateFunction : delegateFunctions) {
 	    if (delegateFunction.getCurricularYear().equals(curricularYear)
-		    && delegateFunction.belongsToPeriod(executionYear.getBeginDateYearMonthDay(), executionYear
-			    .getEndDateYearMonthDay())) {
+		    && delegateFunction.belongsToPeriod(executionYear.getBeginDateYearMonthDay(),
+			    executionYear.getEndDateYearMonthDay())) {
 		return delegateFunction;
 	    }
 	}
@@ -196,8 +196,8 @@ public class DegreeUnit extends DegreeUnit_Base {
 	PersonFunction lastDelegateFunction = null;
 	for (PersonFunction delegateFunction : delegateFunctions) {
 	    if (delegateFunction.getCurricularYear().equals(curricularYear)
-		    && delegateFunction.belongsToPeriod(executionYear.getBeginDateYearMonthDay(), executionYear
-			    .getEndDateYearMonthDay())) {
+		    && delegateFunction.belongsToPeriod(executionYear.getBeginDateYearMonthDay(),
+			    executionYear.getEndDateYearMonthDay())) {
 		if (lastDelegateFunction == null || lastDelegateFunction.getEndDate().isBefore(delegateFunction.getEndDate())) {
 		    lastDelegateFunction = delegateFunction;
 		}
@@ -238,7 +238,7 @@ public class DegreeUnit extends DegreeUnit_Base {
     // TODO: controlo de acesso?
     public PersonFunction addYearDelegatePersonFunction(Student student, CurricularYear curricularYear) {
 
-	Registration lastActiveRegistration = student.getLastActiveRegistration();
+	Registration lastActiveRegistration = student.getActiveRegistrationFor(getDegree());
 	if (lastActiveRegistration == null || !lastActiveRegistration.getDegree().equals(getDegree())) {
 	    throw new DomainException("error.delegates.studentNotBelongsToDegree");
 	}

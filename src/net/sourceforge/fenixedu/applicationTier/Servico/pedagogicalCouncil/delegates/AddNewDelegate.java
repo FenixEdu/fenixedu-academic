@@ -36,7 +36,7 @@ public class AddNewDelegate extends FenixService {
     public static void run(Student student, CurricularYear curricularYear, Degree degree) throws FenixServiceException {
 	final DegreeUnit degreeUnit = degree.getUnit();
 	final Person studentPerson = student.getPerson();
-	Registration lastActiveRegistration = student.getLastActiveRegistration();
+	Registration lastActiveRegistration = student.getActiveRegistrationFor(degree);
 	if (lastActiveRegistration == null || !lastActiveRegistration.getDegree().equals(degree)) {
 	    throw new FenixServiceException("error.delegates.studentNotBelongsToDegree");
 	}
