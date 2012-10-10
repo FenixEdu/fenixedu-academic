@@ -9,7 +9,6 @@ import java.util.ResourceBundle;
 
 import net.sourceforge.fenixedu.dataTransferObject.parking.ParkingPartyBean;
 import net.sourceforge.fenixedu.dataTransferObject.parking.VehicleBean;
-import net.sourceforge.fenixedu.domain.Department;
 import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
@@ -244,60 +243,41 @@ public class ParkingParty extends ParkingParty_Base {
 	    Person person = (Person) getParty();
 	    Teacher teacher = person.getTeacher();
 	    if (teacher != null) {
-		String employeeType = RoleType.TEACHER.getLocalizedName();
 		ExecutionSemester currentExecutionSemester = ExecutionSemester.readActualExecutionSemester();
-		if (teacher.isMonitor(currentExecutionSemester)) {
-		    employeeType = "Monitor";
-		}
-		StringBuilder stringBuilder = new StringBuilder(BundleUtil.getStringFromResourceBundle(
-			"resources.ParkingResources", "message.person.identification", new String[] { employeeType,
-				teacher.getPerson().getIstUsername() }));
-		Department currentWorkingDepartment = teacher.getCurrentWorkingDepartment();
-		if (currentWorkingDepartment != null) {
-		    stringBuilder.append(currentWorkingDepartment.getName()).append("<br/>");
-		}
+		String currentWorkingDepartmentName = teacher.getCurrentWorkingDepartment() != null ? teacher
+			.getCurrentWorkingDepartment().getName() : null;
 		PersonContractSituation currentOrLastTeacherContractSituation = teacher
 			.getCurrentOrLastTeacherContractSituation();
 		if (currentOrLastTeacherContractSituation != null) {
-		    DateTimeFormatter fmt = DateTimeFormat.forPattern("yyyy/MM/dd");
-		    stringBuilder.append("(Data inicio: ")
-			    .append(fmt.print(currentOrLastTeacherContractSituation.getBeginDate()));
-		    if (currentOrLastTeacherContractSituation.getEndDate() != null) {
-			stringBuilder.append(" - Data fim: ").append(
-				fmt.print(currentOrLastTeacherContractSituation.getEndDate()));
+		    String employeeType = RoleType.TEACHER.getLocalizedName();
+		    if (teacher.isMonitor(currentExecutionSemester)) {
+			employeeType = "Monitor";
 		    }
-		} else {
-		    ExternalTeacherAuthorization teacherAuthorization = (ExternalTeacherAuthorization) teacher
-			    .getTeacherAuthorization(currentExecutionSemester);
-		    if (teacherAuthorization != null && teacherAuthorization.getCanPark()) {
-			DateTimeFormatter fmt = DateTimeFormat.forPattern("yyyy/MM/dd");
-			stringBuilder.append("(Data inicio: ").append(
-				fmt.print(currentExecutionSemester.getBeginDateYearMonthDay()));
-			stringBuilder.append(" - Data fim: ")
-				.append(fmt.print(currentExecutionSemester.getEndDateYearMonthDay()));
-		    } else {
-			stringBuilder.append("(inactivo");
-		    }
+		    occupations.add(getOccupation(employeeType, teacher.getPerson().getEmployee().getEmployeeNumber().toString(),
+			    currentWorkingDepartmentName, currentOrLastTeacherContractSituation.getBeginDate(),
+			    currentOrLastTeacherContractSituation.getEndDate()));
 		}
-		occupations.add(stringBuilder.append(")<br/>").toString());
+
+		String employeeType = "Docente Autorizado";
+		ExternalTeacherAuthorization teacherAuthorization = (ExternalTeacherAuthorization) teacher
+			.getTeacherAuthorization(currentExecutionSemester);
+		if (teacherAuthorization != null && teacherAuthorization.getCanPark()) {
+		    occupations.add(getOccupation(employeeType, teacher.getTeacherId(), currentWorkingDepartmentName,
+			    currentExecutionSemester.getBeginDateYearMonthDay().toLocalDate(), currentExecutionSemester
+				    .getEndDateYearMonthDay().toLocalDate()));
+		} else {
+		    occupations
+			    .add(getOccupation(employeeType, teacher.getTeacherId(), currentWorkingDepartmentName, null, null));
+		}
 	    }
 	    PersonContractSituation currentEmployeeContractSituation = person.hasEmployee() ? person.getEmployee()
 		    .getCurrentEmployeeContractSituation() : null;
 	    if (currentEmployeeContractSituation != null) {
-		StringBuilder stringBuilder = new StringBuilder(
-			BundleUtil.getStringFromResourceBundle("resources.ParkingResources", "message.person.identification",
-				new String[] { RoleType.EMPLOYEE.getLocalizedName(),
-					person.getEmployee().getEmployeeNumber().toString() }));
 		Unit currentUnit = person.getEmployee().getCurrentWorkingPlace();
-		if (currentUnit != null) {
-		    stringBuilder.append(currentUnit.getName());
-		}
-		DateTimeFormatter fmt = DateTimeFormat.forPattern("yyyy/MM/dd");
-		stringBuilder.append("<br/> (Data inicio: ").append(fmt.print(currentEmployeeContractSituation.getBeginDate()));
-		if (currentEmployeeContractSituation.getEndDate() != null) {
-		    stringBuilder.append(" - Data fim: ").append(fmt.print(currentEmployeeContractSituation.getEndDate()));
-		}
-		occupations.add(stringBuilder.append(")<br/>").toString());
+		String thisOccupation = getOccupation(RoleType.EMPLOYEE.getLocalizedName(), teacher.getPerson().getEmployee()
+			.getEmployeeNumber().toString(), currentUnit == null ? null : currentUnit.getName(),
+			currentEmployeeContractSituation.getBeginDate(), currentEmployeeContractSituation.getEndDate());
+		occupations.add(thisOccupation);
 	    }
 	    GrantOwner grantOwner = person.getGrantOwner();
 	    if (grantOwner != null && person.getPersonRole(RoleType.GRANT_OWNER) != null && grantOwner.hasCurrentContract()) {
@@ -338,21 +318,11 @@ public class ParkingParty extends ParkingParty_Base {
 			.getPersonProfessionalData().getCurrentPersonContractSituationByCategoryType(CategoryType.GRANT_OWNER)
 			: null;
 		if (currentGrantOwnerContractSituation != null) {
-		    StringBuilder stringBuilder = new StringBuilder(BundleUtil.getStringFromResourceBundle(
-			    "resources.ParkingResources", "message.person.identification",
-			    new String[] { RoleType.GRANT_OWNER.getLocalizedName(),
-				    person.getEmployee().getEmployeeNumber().toString() }));
 		    Unit currentUnit = person.getEmployee().getCurrentWorkingPlace();
-		    if (currentUnit != null) {
-			stringBuilder.append(currentUnit.getName());
-		    }
-		    DateTimeFormatter fmt = DateTimeFormat.forPattern("yyyy/MM/dd");
-		    stringBuilder.append("<br/> (Data inicio: ").append(
-			    fmt.print(currentGrantOwnerContractSituation.getBeginDate()));
-		    if (currentGrantOwnerContractSituation.getEndDate() != null) {
-			stringBuilder.append(" - Data fim: ").append(fmt.print(currentGrantOwnerContractSituation.getEndDate()));
-		    }
-		    occupations.add(stringBuilder.append(")<br/>").toString());
+		    String thisOccupation = getOccupation(RoleType.GRANT_OWNER.getLocalizedName(), person.getEmployee()
+			    .getEmployeeNumber().toString(), currentUnit == null ? null : currentUnit.getName(),
+			    currentGrantOwnerContractSituation.getBeginDate(), currentGrantOwnerContractSituation.getEndDate());
+		    occupations.add(thisOccupation);
 		}
 	    }
 
@@ -406,36 +376,56 @@ public class ParkingParty extends ParkingParty_Base {
 		    }
 		}
 
+		if (stringBuilder != null) {
+		    occupations.add(stringBuilder.toString());
+		}
+
 		for (PhdIndividualProgramProcess phdIndividualProgramProcess : person.getPhdIndividualProgramProcesses()) {
 		    if (phdIndividualProgramProcess.getActiveState().isPhdActive()) {
-			if (stringBuilder == null) {
-			    stringBuilder = new StringBuilder(BundleUtil.getStringFromResourceBundle(
-				    "resources.ParkingResources", "message.person.identification", new String[] {
-					    RoleType.STUDENT.getLocalizedName(), student.getNumber().toString() }));
-			}
-			stringBuilder.append("\nPrograma Doutoral: ").append(
-				phdIndividualProgramProcess.getPhdProgram().getName());
+			String thisOccupation = getOccupation(RoleType.STUDENT.getLocalizedName(),
+				student.getNumber().toString(), "\nPrograma Doutoral: "
+					+ phdIndividualProgramProcess.getPhdProgram().getName());
+			occupations.add(thisOccupation);
+
 		    }
 
 		}
 
-		if (stringBuilder != null) {
-		    occupations.add(stringBuilder.toString());
-		}
 	    }
 	    List<Invitation> invitations = person.getActiveInvitations();
 	    if (!invitations.isEmpty()) {
-		StringBuilder stringBuilder = new StringBuilder("<strong>Convidado</strong><br/>");
 		for (Invitation invitation : invitations) {
-		    stringBuilder.append("<strong>Por:</strong> ").append(invitation.getUnit().getName()).append("<br/>");
-		    stringBuilder.append("<strong>Inicio:</strong> " + invitation.getBeginDate().toString("dd/MM/yyyy"));
-		    stringBuilder.append("&nbsp&nbsp&nbsp -&nbsp&nbsp&nbsp<strong>Fim:</strong> "
-			    + invitation.getEndDate().toString("dd/MM/yyyy"));
-		    occupations.add(stringBuilder.toString());
+		    String thisOccupation = getOccupation("Convidado", "-", invitation.getUnit().getName(), invitation
+			    .getBeginDate().toLocalDate(), invitation.getEndDate().toLocalDate());
+		    occupations.add(thisOccupation);
 		}
 	    }
 	}
 	return occupations;
+    }
+
+    private String getOccupation(String type, String identification, String workingPlace) {
+	StringBuilder stringBuilder = new StringBuilder(BundleUtil.getStringFromResourceBundle("resources.ParkingResources",
+		"message.person.identification", new String[] { type, identification }));
+	if (!StringUtils.isBlank(workingPlace)) {
+	    stringBuilder.append(workingPlace).append("<br/>");
+	}
+	return stringBuilder.toString();
+    }
+
+    private String getOccupation(String type, String identification, String workingPlace, LocalDate beginDate, LocalDate endDate) {
+	StringBuilder stringBuilder = new StringBuilder(getOccupation(type, identification, workingPlace));
+	if (beginDate != null) {
+	    DateTimeFormatter fmt = DateTimeFormat.forPattern("yyyy/MM/dd");
+	    stringBuilder.append("(Data inicio: ").append(fmt.print(beginDate));
+	    if (endDate != null) {
+		stringBuilder.append(" - Data fim: ").append(fmt.print(endDate));
+	    }
+	} else {
+	    stringBuilder.append("(inactivo");
+	}
+	stringBuilder.append(")<br/>");
+	return stringBuilder.toString();
     }
 
     public List<String> getPastOccupations() {
