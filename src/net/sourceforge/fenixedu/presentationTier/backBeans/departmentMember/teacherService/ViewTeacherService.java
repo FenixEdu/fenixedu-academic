@@ -200,7 +200,8 @@ public class ViewTeacherService extends FenixBackingBean {
 
     public String getDepartmentName() {
 	Person person = getUserView().getPerson();
-	Department currentWorkingDepartment = person.getEmployee().getCurrentDepartmentWorkingPlace();
+	Department currentWorkingDepartment = person.getEmployee() != null ? person.getEmployee()
+		.getCurrentDepartmentWorkingPlace() : null;
 	return currentWorkingDepartment == null ? null : currentWorkingDepartment.getRealName();
     }
 
