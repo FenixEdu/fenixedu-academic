@@ -62,10 +62,13 @@ hideButtons();
 
 	<fr:edit id="personalInformationBean" name="personalInformationBean" visible="false" />
 
-	<h3><bean:message  key="label.previous.degree.information" bundle="STUDENT_RESOURCES"/></h3>
+	<h3><bean:message key="label.previous.degree.information" bundle="STUDENT_RESOURCES"/></h3>
 	
-	<div><bean:message  key="label.previous.degree.information.details" bundle="STUDENT_RESOURCES"/></div>
+	<div><bean:message key="label.previous.degree.information.details" bundle="STUDENT_RESOURCES"/></div>
 	
+	<span class="warning0"><bean:message key="label.RAIDES.check.institution.and.degree" bundle="STUDENT_RESOURCES"/></span><br/>
+	<span class="warning0"><bean:message key="label.RAIDES.check.schoolLevel" bundle="STUDENT_RESOURCES"/></span>
+		
 	<fr:edit id="personalInformationBean.editPrecedentDegreeInformation" name="personalInformationBean">
 		<fr:schema bundle="APPLICATION_RESOURCES" type="net.sourceforge.fenixedu.domain.candidacy.PersonalInformationBean">
 			<fr:slot name="schoolLevel" layout="menu-select-postback" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
@@ -132,9 +135,6 @@ hideButtons();
 		</fr:layout>
 	</fr:edit>
 	
-	<span class="warning0"><bean:message key="label.RAIDES.check.schoolLevel" bundle="STUDENT_RESOURCES"/></span>
-	
-	<br/>
 	<br/>
 
 	<h3><bean:message  key="label.personal.information" bundle="STUDENT_RESOURCES"/></h3>

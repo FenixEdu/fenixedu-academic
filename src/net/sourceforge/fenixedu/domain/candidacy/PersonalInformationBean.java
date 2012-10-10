@@ -113,13 +113,17 @@ public class PersonalInformationBean implements Serializable {
 	} else {
 	    setRegistration(degreeInfo.getRegistration());
 	}
-	setDegreeDesignation(degreeInfo.getDegreeDesignation());
 	setSchoolLevel(degreeInfo.getSchoolLevel());
 	setOtherSchoolLevel(degreeInfo.getOtherSchoolLevel());
 	setConclusionGrade(degreeInfo.getConclusionGrade());
 	setConclusionYear(degreeInfo.getConclusionYear());
 	setCountryWhereFinishedPreviousCompleteDegree(degreeInfo.getCountry());
-	setInstitution(degreeInfo.getInstitution());
+
+	Unit institution = degreeInfo.getInstitution();
+	if (!isUnitFromRaidesListMandatory() || (institution != null && institution.getCode() != null)) {
+	    setInstitution(institution);
+	    setDegreeDesignation(degreeInfo.getDegreeDesignation());
+	}
 
 	setPrecedentDegreeDesignation(degreeInfo.getPrecedentDegreeDesignation());
 	setPrecedentInstitution(degreeInfo.getPrecedentInstitution());
