@@ -135,7 +135,7 @@ public class PhdFinalizationCertificate extends AdministrativeOfficeDocument {
 	    LocalDate localDate = new LocalDate();
 	    StringBuilder dayBuilder = new StringBuilder();
 	    dayBuilder.append(localDate.toString("dd")).append(SINGLE_SPACE).append("de").append(SINGLE_SPACE);
-	    dayBuilder.append(localDate.toString("MMMM")).append(SINGLE_SPACE).append("de").append(SINGLE_SPACE);
+	    dayBuilder.append(localDate.toString("MMMM", getLocale())).append(SINGLE_SPACE).append("de").append(SINGLE_SPACE);
 	    dayBuilder.append(localDate.toString("yyyy"));
 
 	    addParameter("day", dayBuilder.toString());
