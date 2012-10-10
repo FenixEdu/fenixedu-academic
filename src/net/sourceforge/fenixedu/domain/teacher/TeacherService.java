@@ -302,7 +302,8 @@ public class TeacherService extends TeacherService_Base {
     }
 
     public BigDecimal getReductionServiceCredits() {
-	return getReductionService() == null ? BigDecimal.ZERO : getReductionService().getCreditsReduction();
+	return getReductionService() == null || getReductionService().getCreditsReductionAttributed() == null ? BigDecimal.ZERO
+		: getReductionService().getCreditsReductionAttributed();
     }
 
     public SortedSet<TeacherServiceLog> getSortedLogs() {

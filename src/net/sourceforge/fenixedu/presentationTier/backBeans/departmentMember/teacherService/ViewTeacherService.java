@@ -173,7 +173,7 @@ public class ViewTeacherService extends FenixBackingBean {
 	List<InfoExecutionYear> executionYears = ReadNotClosedExecutionYears.run();
 
 	List<SelectItem> result = new ArrayList<SelectItem>(executionYears.size());
-	ExecutionSemester lastExecutionSemester = ExecutionSemester.readLastExecutionSemesterForCredits();
+	ExecutionSemester lastExecutionSemester = ExecutionSemester.readActualExecutionSemester();
 
 	for (InfoExecutionYear executionYear : executionYears) {
 	    if (executionYear.getExecutionYear().isBeforeOrEquals(lastExecutionSemester.getExecutionYear())) {

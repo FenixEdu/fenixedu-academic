@@ -58,23 +58,27 @@
 			<h:outputText value="<th>#{bundle['label.teacherService.teacher.number']}</th>" escape="false" />
 			<h:outputText value="<th>#{bundle['label.teacherService.teacher.category']}</th>" escape="false" />
 			<h:outputText value="<th>#{bundle['label.teacherService.teacher.name']}</th>" escape="false" />
+			<%--
 			<h:outputText value="<th>#{bundle['label.teacherService.teacher.hours']}</th>" escape="false" />
 			<h:outputText value="<th>#{bundle['label.teacherService.teacher.credits']}</th>" escape="false" />
 			<h:outputText value="<th>#{bundle['label.teacherService.teacher.totalLecturedHours']}</th>" escape="false" />
 			<h:outputText value="<th>#{bundle['label.teacherService.teacher.availability']}</th>" escape="false" />
 			<h:outputText value="<th>#{bundle['label.teacherService.teacher.accumulatedCredits']} <br/> #{viewTeacherService.previousExecutionYear.year}</th>" escape="false" />
+			 --%>
 		<h:outputText value="</tr>" escape="false" />
 		<f:verbatim>
 			<fc:dataRepeater value="#{viewTeacherService.teacherServiceDTO}" var="teacher">
 				<h:outputText value="<tr id=#{teacher.teacherIdInternal}>" escape="false" />
 				<h:outputText value="<td title=\"#{bundle['label.teacherService.teacher.number']}\">#{teacher.teacherId}</td>" escape="false" />					
 				<h:outputText value="<td title=\"#{bundle['label.teacherService.teacher.category']}\">#{teacher.teacherCategory}</td>" escape="false" />	
-				<h:outputText value="<td class='courses' title=\"#{bundle['label.teacherService.teacher.name']}\">#{teacher.teacherName}</td>" escape="false" />	
+				<h:outputText value="<td class='courses' title=\"#{bundle['label.teacherService.teacher.name']}\">#{teacher.teacherName}</td>" escape="false" />
+				<%--	
 				<h:outputText value="<td title=\"#{bundle['label.teacherService.teacher.hours']}\">#{teacher.teacherRequiredHours}</td>" escape="false" />	
 				<h:outputText value="<td title=\"#{bundle['label.teacherService.teacher.credits']}\">#{teacher.formattedTeacherSpentCredits}</td>" escape="false" />	
 				<h:outputText value="<td title=\"#{bundle['label.teacherService.teacher.totalLecturedHours']}\">#{teacher.totalLecturedHours}</td>" escape="false" />	
 				<h:outputText value="<td title=\"#{bundle['label.teacherService.teacher.availability']}\"> #{teacher.availability} </td>" escape="false" />
 				<h:outputText value="<td title=\"#{bundle['label.teacherService.teacher.accumulatedCredits']}\"> #{teacher.formattedTeacherAccumulatedCredits} </td>" escape="false" />
+				--%>
 				<h:outputText value="</tr>" escape="false" />
 										
 				<h:panelGroup rendered="#{viewTeacherService.viewCreditsInformation == true}">
@@ -88,14 +92,15 @@
 							 	<h:outputText value="</a></li>" escape="false"/>
 							</fc:dataRepeater>
 							<fc:dataRepeater value="#{teacher.managementFunctionList}" var="managementFunction">
-								<h:outputText value="<li>#{managementFunction.functionName} - #{managementFunction.credits}</li>" escape="false" />
+								<h:outputText value="<li>#{managementFunction.functionName}</li>" escape="false" />
+								<%--<h:outputText value="<li>#{managementFunction.functionName} - #{managementFunction.credits}</li>" escape="false" /> --%>
 							</fc:dataRepeater>
 							<fc:dataRepeater value="#{teacher.exemptionSituationList}" var="exemptionSituation">
 								<h:outputText value="<li>" escape="false"/>
 								<fc:dataRepeater value="#{exemptionSituation.exemptionTypes}" var="exemptionType">
 									<h:outputText value="#{exemptionType.contractSituation.name.content};" escape="false"/>
 								</fc:dataRepeater>								
-								<h:outputText value="- #{exemptionSituation.credits}</li>" escape="false" />
+								<%--<h:outputText value="- #{exemptionSituation.credits}</li>" escape="false" /> --%>
 							</fc:dataRepeater>
 						<h:outputText value="</ul>" escape="false" />
 					<h:outputText value="</td>" escape="false" />
