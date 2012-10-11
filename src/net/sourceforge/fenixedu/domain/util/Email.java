@@ -44,11 +44,8 @@ public class Email extends Email_Base {
 	    properties.put("mail.smtp.name", allProperties.get("mail.smtp.name"));
 	    properties.put("mailSender.max.recipients", allProperties.get("mailSender.max.recipients"));
 	    properties.put("mailingList.host.name", allProperties.get("mailingList.host.name"));
-	    properties.put("mail.debug", "true");
+	    properties.put("mail.debug", "false");
 	    final Session tempSession = Session.getDefaultInstance(properties, null);
-	    for (final Entry<Object, Object> entry : tempSession.getProperties().entrySet()) {
-		System.out.println("key: " + entry.getKey() + "   value: " + entry.getValue());
-	    }
 	    MAX_MAIL_RECIPIENTS = Integer.parseInt(properties.getProperty("mailSender.max.recipients"));
 	    SESSION = tempSession;
 	    return SESSION;
