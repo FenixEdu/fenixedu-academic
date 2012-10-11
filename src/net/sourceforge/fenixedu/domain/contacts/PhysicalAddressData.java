@@ -69,7 +69,7 @@ public class PhysicalAddressData implements Serializable {
     }
 
     public String getAreaCode() {
-	return areaCode;
+	return ifNullReturnEmpty(areaCode);
     }
 
     public PhysicalAddressData setAreaCode(final String areaCode) {
@@ -133,12 +133,12 @@ public class PhysicalAddressData implements Serializable {
     public boolean equals(final Object obj) {
 	if (obj instanceof PhysicalAddressData) {
 	    final PhysicalAddressData data = (PhysicalAddressData) obj;
-	    return address.equals(data.getAddress()) && areaCode.equals(data.getAreaCode())
-		    && areaOfAreaCode.equals(data.getAreaOfAreaCode()) && area.equals(data.getArea())
-		    && parishOfResidence.equals(data.getParishOfResidence())
-		    && districtSubdivisionOfResidence.equals(data.getDistrictSubdivisionOfResidence())
-		    && districtOfResidence.equals(data.getDistrictOfResidence())
-		    && countryOfResidence.equals(data.getCountryOfResidence());
+	    return getAddress().equals(data.getAddress()) && getAreaCode().equals(data.getAreaCode())
+		    && getAreaOfAreaCode().equals(data.getAreaOfAreaCode()) && getArea().equals(data.getArea())
+		    && getParishOfResidence().equals(data.getParishOfResidence())
+		    && getDistrictSubdivisionOfResidence().equals(data.getDistrictSubdivisionOfResidence())
+		    && getDistrictOfResidence().equals(data.getDistrictOfResidence())
+		    && getCountryOfResidence().equals(data.getCountryOfResidence());
 	} else {
 	    return false;
 	}
