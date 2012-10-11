@@ -14,7 +14,6 @@ public class MessageTask extends MessageTask_Base {
     @Override
     @Service
     public void runTask() {
-	System.out.println("Running MessageTask.");
 	Language.setLocale(Language.getDefaultLocale());
 	final RootDomainObject rootDomainObject = RootDomainObject.getInstance();
 	final Set<Sender> senders = new HashSet<Sender>();
@@ -25,10 +24,8 @@ public class MessageTask extends MessageTask_Base {
 	    sender.deleteOldMessages();
 	}
 	for (final Message message : rootDomainObject.getPendingUtilEmailMessagesSet()) {
-	    System.out.println("Sending message from: " + message.getSender().getFromName() + " - Subject: " + message.getSubject());
 	    message.dispatch();
 	}
-	System.out.println("Done running MessageTask");
     }
 
 }

@@ -16,12 +16,16 @@ public class EmailTask extends EmailTask_Base {
 
 	@Override
 	public void run() {
-	    Transaction.withTransaction(false, new TransactionalCommand() {
-		public void doIt() {
-		    final Email email = DomainObject.fromExternalId(oid);
-		    email.deliver();
-		}
-	    });
+	    try {
+		Transaction.withTransaction(false, new TransactionalCommand() {
+		    public void doIt() {
+			final Email email = DomainObject.fromExternalId(oid);
+			email.deliver();
+		    }
+		});
+	    } finally {
+		Transaction.forceFinish();
+	    }
 	}
     }
 
@@ -33,7 +37,7 @@ public class EmailTask extends EmailTask_Base {
 	    try {
 		emailDispatcher.join();
 	    } catch (final InterruptedException e) {
-//		throw new Error(e);
+		throw new Error(e);
 	    }
 	}
     }
