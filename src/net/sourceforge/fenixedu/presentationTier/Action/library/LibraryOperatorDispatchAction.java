@@ -247,7 +247,8 @@ public class LibraryOperatorDispatchAction extends FenixDispatchAction {
 	}
 	if (highestLocker < lockers) {
 	    for (int i = highestLocker + 1; i <= lockers; i++) {
-		RoomSubdivision room = new RoomSubdivision(library, StringUtils.leftPad(Integer.toString(i), 2, '0'), today, null);
+		RoomSubdivision room = new RoomSubdivision(library, StringUtils.leftPad(Integer.toString(i),
+			String.valueOf(lockers).length(), '0'), today, null);
 		setCapacity(room, 1);
 	    }
 	}
