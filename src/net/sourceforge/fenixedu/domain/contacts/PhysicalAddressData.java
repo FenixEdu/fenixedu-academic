@@ -21,7 +21,7 @@ public class PhysicalAddressData implements Serializable {
     public PhysicalAddressData() {
     }
 
-    public PhysicalAddressData(PhysicalAddress address) {
+    public PhysicalAddressData(final PhysicalAddress address) {
 	setAddress(address.getAddress());
 	setAreaCode(address.getAreaCode());
 	setAreaOfAreaCode(address.getAreaOfAreaCode());
@@ -51,19 +51,19 @@ public class PhysicalAddressData implements Serializable {
     }
 
     public String getAddress() {
-	return address;
+	return ifNullReturnEmpty(address);
     }
 
-    public PhysicalAddressData setAddress(String address) {
+    public PhysicalAddressData setAddress(final String address) {
 	this.address = address;
 	return this;
     }
 
     public String getArea() {
-	return area;
+	return ifNullReturnEmpty(area);
     }
 
-    public PhysicalAddressData setArea(String area) {
+    public PhysicalAddressData setArea(final String area) {
 	this.area = area;
 	return this;
     }
@@ -72,43 +72,50 @@ public class PhysicalAddressData implements Serializable {
 	return areaCode;
     }
 
-    public PhysicalAddressData setAreaCode(String areaCode) {
+    public PhysicalAddressData setAreaCode(final String areaCode) {
 	this.areaCode = areaCode;
 	return this;
     }
 
-    public String getAreaOfAreaCode() {
-	return areaOfAreaCode;
+    private String ifNullReturnEmpty(final String value) {
+	if (value == null) {
+	    return StringUtils.EMPTY;
+	}
+	return value;
     }
 
-    public PhysicalAddressData setAreaOfAreaCode(String areaOfAreaCode) {
+    public String getAreaOfAreaCode() {
+	return ifNullReturnEmpty(areaOfAreaCode);
+    }
+
+    public PhysicalAddressData setAreaOfAreaCode(final String areaOfAreaCode) {
 	this.areaOfAreaCode = areaOfAreaCode;
 	return this;
     }
 
     public String getDistrictOfResidence() {
-	return districtOfResidence;
+	return ifNullReturnEmpty(districtOfResidence);
     }
 
-    public PhysicalAddressData setDistrictOfResidence(String districtOfResidence) {
+    public PhysicalAddressData setDistrictOfResidence(final String districtOfResidence) {
 	this.districtOfResidence = districtOfResidence;
 	return this;
     }
 
     public String getDistrictSubdivisionOfResidence() {
-	return districtSubdivisionOfResidence;
+	return ifNullReturnEmpty(districtSubdivisionOfResidence);
     }
 
-    public PhysicalAddressData setDistrictSubdivisionOfResidence(String districtSubdivisionOfResidence) {
+    public PhysicalAddressData setDistrictSubdivisionOfResidence(final String districtSubdivisionOfResidence) {
 	this.districtSubdivisionOfResidence = districtSubdivisionOfResidence;
 	return this;
     }
 
     public String getParishOfResidence() {
-	return parishOfResidence;
+	return ifNullReturnEmpty(parishOfResidence);
     }
 
-    public PhysicalAddressData setParishOfResidence(String parishOfResidence) {
+    public PhysicalAddressData setParishOfResidence(final String parishOfResidence) {
 	this.parishOfResidence = parishOfResidence;
 	return this;
     }
@@ -117,23 +124,24 @@ public class PhysicalAddressData implements Serializable {
 	return this.countryOfResidence;
     }
 
-    public PhysicalAddressData setCountryOfResidence(Country countryOfResidence) {
+    public PhysicalAddressData setCountryOfResidence(final Country countryOfResidence) {
 	this.countryOfResidence = countryOfResidence;
 	return this;
     }
 
     @Override
-    public boolean equals(Object obj) {
+    public boolean equals(final Object obj) {
 	if (obj instanceof PhysicalAddressData) {
-	    PhysicalAddressData data = (PhysicalAddressData) obj;
+	    final PhysicalAddressData data = (PhysicalAddressData) obj;
 	    return address.equals(data.getAddress()) && areaCode.equals(data.getAreaCode())
 		    && areaOfAreaCode.equals(data.getAreaOfAreaCode()) && area.equals(data.getArea())
 		    && parishOfResidence.equals(data.getParishOfResidence())
 		    && districtSubdivisionOfResidence.equals(data.getDistrictSubdivisionOfResidence())
 		    && districtOfResidence.equals(data.getDistrictOfResidence())
 		    && countryOfResidence.equals(data.getCountryOfResidence());
-	} else
+	} else {
 	    return false;
+	}
     }
 
     public boolean isEmpty() {
