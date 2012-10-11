@@ -437,10 +437,9 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
 	    try {
 		final ExecutionSemester executionSemester = ExecutionSemester.readActualExecutionSemester();
 		if ((person.getTeacher() != null && (person.getTeacher().getTeacherAuthorization(executionSemester) != null || person
-			.hasRole(RoleType.TEACHER)))
-			|| slappedInTheFaceOneTooManyTimes(executionSemester)) {
-		    Professorship professorship = Professorship.create(false, rootDomainObject
-			    .readExecutionCourseByOID(objectCode), person, 0.0);
+			.hasRole(RoleType.TEACHER))) || slappedInTheFaceOneTooManyTimes(executionSemester)) {
+		    Professorship professorship = Professorship.create(false,
+			    rootDomainObject.readExecutionCourseByOID(objectCode), person, 0.0);
 		    request.setAttribute("teacherOID", professorship.getExternalId());
 		} else if (person.getTeacher() == null || person.getTeacher().getCategoryByPeriod(executionSemester) == null) {
 		    final ActionErrors actionErrors = new ActionErrors();
@@ -1062,6 +1061,15 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
 	}
 	List<InfoShift> shiftsList = InfoShift.getInfoShiftsByType(executionCourse, ShiftType.valueOf(shiftType));
 
+	if (shiftsList == null || shiftsList.size() == 0) {
+	    ActionErrors actionErrors = new ActionErrors();
+	    ActionError error = null;
+	    error = new ActionError("error.groupProperties.DiffCapacityNoShiftsList");
+	    actionErrors.add("error.groupProperties.DiffCapacityNoShiftsList", error);
+	    saveErrors(request, actionErrors);
+	    groupPropertiesForm.set("differentiatedCapacity", Boolean.FALSE);
+	    return prepareCreateGroupProperties(mapping, groupPropertiesForm, request, response);
+	}
 	request.setAttribute("shiftsList", shiftsList);
 
 	RenderUtils.invalidateViewState();
