@@ -36,7 +36,7 @@ public class StudentCurricularPlanStandaloneEnrolmentManager extends StudentCurr
 	    return;
 	}
 
-	if (!isResponsiblePersonAcademicAdminOffice()) {
+	if (!isResponsiblePersonAcademicAdminOffice() && !isResponsibleInternationalRelationOffice()) {
 	    throw new DomainException("error.StudentCurricularPlan.cannot.enrol.in.propaeudeutics");
 	}
 
