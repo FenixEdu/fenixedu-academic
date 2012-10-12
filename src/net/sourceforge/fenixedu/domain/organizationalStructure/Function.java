@@ -77,6 +77,10 @@ public class Function extends Function_Base {
 	return belongsToPeriod(currentDate, currentDate);
     }
 
+    public boolean isActive() {
+	return isActive(new YearMonthDay());
+    }
+
     public boolean belongsToPeriod(YearMonthDay beginDate, YearMonthDay endDate) {
 	return ((endDate == null || !getBeginDateYearMonthDay().isAfter(endDate)) && (getEndDateYearMonthDay() == null || !getEndDateYearMonthDay()
 		.isBefore(beginDate)));

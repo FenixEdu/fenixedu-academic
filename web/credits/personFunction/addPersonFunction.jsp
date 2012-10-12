@@ -42,15 +42,15 @@
 	<logic:empty name="personFunctionBean" property="unit">
 		<fr:edit id="personFunctionBean1" name="personFunctionBean" action="/managePersonFunctionsShared.do?method=prepareToAddPersonFunction">
 			<fr:schema bundle="TEACHER_CREDITS_SHEET_RESOURCES" type="net.sourceforge.fenixedu.domain.credits.util.PersonFunctionBean">
-				<fr:slot name="unitName" key="label.unit" layout="autoCompleteWithPostBack">
+				<fr:slot name="unit" key="label.unit" layout="autoCompleteWithPostBack">
 					<fr:property name="size" value="80"/>
 					<fr:property name="labelField" value="name"/>
-					<fr:property name="format" value="${unit.presentationName}"/>
+					<fr:property name="format" value="${presentationName}"/>
 					<fr:property name="indicatorShown" value="true"/>
-					<fr:property name="serviceName" value="SearchInternalUnits"/>	
+					<fr:property name="serviceName" value="SearchAllActiveInternalUnits"/>	
 					<fr:property name="serviceArgs" value="slot=name"/>		
 					<fr:property name="minChars" value="3"/>
-					<fr:property name="className" value="net.sourceforge.fenixedu.domain.organizationalStructure.UnitName"/>	
+					<fr:property name="className" value="net.sourceforge.fenixedu.domain.organizationalStructure.Unit"/>	
 					<fr:property name="errorStyleClass" value="error0"/>
 					<fr:property name="destination" value="/managePersonFunctionsShared.do?method=prepareToAddPersonFunction"/>
 					<fr:validator name="pt.ist.fenixWebFramework.rendererExtensions.validators.RequiredAutoCompleteSelectionValidator" />

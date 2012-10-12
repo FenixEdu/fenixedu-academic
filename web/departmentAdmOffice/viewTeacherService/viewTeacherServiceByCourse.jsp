@@ -136,8 +136,8 @@
 						<h:outputText value="<td title=\"#{bundle['label.teacherService.course.trainingPeriod']}\">#{course.executionCourseTrainingPeriodHours}</td>" escape="false" />
 					</h:panelGroup>
 									
-					<h:outputText value="<td title=\"#{bundle['label.teacherService.course.totalHours']}\">#{course.executionCourseTotalHours}</td>" escape="false" />
-					<h:outputText value="<td title=\"#{bundle['label.teacherService.course.availability']}\">#{course.executionCourseHoursBalance}</td>" escape="false" />
+					<h:outputText value="<td title=\"#{bundle['label.teacherService.course.totalHours']}\">#{course.totalDurationString}</td>" escape="false" />
+					<h:outputText value="<td title=\"#{bundle['label.teacherService.course.availability']}\">#{course.executionCourseDurationBalance}</td>" escape="false" />
 					
 					<h:panelGroup rendered="#{viewTeacherService.viewStudentsPerShift == true}">
 						<h:outputText value="<td title=\"#{bundle['label.teacherService.course.studentsNumberByTheoreticalShift']}\">#{course.formattedExecutionCourseStudentsNumberByTheoreticalShift}</td>" escape="false" />
@@ -160,7 +160,6 @@
 						 	<h:panelGroup rendered="#{teacherList.teacherOfDepartment == true}">
 								<h:outputText value="<li><a href='viewTeacherService.faces?selectedExecutionYearID=#{viewTeacherService.selectedExecutionYearID}##{teacherList.teacherIdInternal}'>"  escape="false"/>
 								<h:outputText value="#{teacherList.description} " escape="false" />	
-							  	<h:outputText  value="#{bundle['label.teacherService.hours']}" escape="false" />
 							 	<h:outputText value="</a></li>"  escape="false"/>
 						 	</h:panelGroup>
 						 	<h:panelGroup rendered="#{teacherList.teacherOfDepartment == false}">

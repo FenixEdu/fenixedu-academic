@@ -27,6 +27,8 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.PersonFunction;
 import net.sourceforge.fenixedu.domain.personnelSection.contracts.PersonContractSituation;
 import net.sourceforge.fenixedu.domain.personnelSection.contracts.ProfessionalCategory;
 
+import org.joda.time.Duration;
+
 /**
  * 
  * @author jpmsit, amak
@@ -103,9 +105,11 @@ public class ReadTeacherServiceDistributionByTeachers extends FenixService {
 
 		    Double hoursSpentByTeacher = StrictMath.ceil(teacher.getHoursLecturedOnExecutionCourse(executionCourse));
 
+		    Duration timeSpentByTeacher = teacher.getLecturedDurationOnExecutionCourse(executionCourse);
+
 		    returnDTO.addExecutionCourseToTeacher(teacher.getIdInternal(), executionCourse.getIdInternal(),
-			    executionCourse.getNome(), hoursSpentByTeacher.intValue(), degreeNameMap, degreeCurricularYearsMap,
-			    executionCourse.getExecutionPeriod().getName());
+			    executionCourse.getNome(), hoursSpentByTeacher.intValue(), timeSpentByTeacher, degreeNameMap,
+			    degreeCurricularYearsMap, executionCourse.getExecutionPeriod().getName());
 
 		}
 

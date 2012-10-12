@@ -26,6 +26,8 @@ import net.sourceforge.fenixedu.domain.Professorship;
 import net.sourceforge.fenixedu.domain.ShiftType;
 import net.sourceforge.fenixedu.domain.Teacher;
 
+import org.joda.time.Duration;
+
 /**
  * 
  * @author jpmsit, amak
@@ -113,7 +115,7 @@ public class ReadTeacherServiceDistributionByCourse extends FenixService {
 				campus, curricularCourseEntry.getDegreeCurricularPlan().getDegree().getSigla(),
 				curricularYearsSet, executionCourseEntry.getExecutionPeriod().getSemester(),
 				executionCourseFirstTimeEnrollementStudentNumber,
-				executionCourseSecondTimeEnrollementStudentNumber,
+				executionCourseSecondTimeEnrollementStudentNumber, executionCourseEntry.getTotalShiftsDuration(),
 				executionCourseEntry.getAllShiftUnitHours(ShiftType.TEORICA).doubleValue(), executionCourseEntry
 					.getAllShiftUnitHours(ShiftType.PRATICA).doubleValue(), executionCourseEntry
 					.getAllShiftUnitHours(ShiftType.LABORATORIAL).doubleValue(), executionCourseEntry
@@ -187,6 +189,8 @@ public class ReadTeacherServiceDistributionByCourse extends FenixService {
 	    df.setDecimalFormatSymbols(decimalFormatSymbols);
 	    Double teacherRequiredHours = new Double(df.format(teacher.getHoursLecturedOnExecutionCourse(executionCourse)));
 
+	    Duration teacherLecturedTime = teacher.getLecturedDurationOnExecutionCourse(executionCourse);
+
 	    boolean teacherBelongsToDepartment = false;
 
 	    if (teacher.getCurrentWorkingDepartment() == department) {
@@ -194,7 +198,7 @@ public class ReadTeacherServiceDistributionByCourse extends FenixService {
 	    }
 
 	    dto.addTeacherToExecutionCourse(executionCourse.getIdInternal(), teacherIdInternal, teacherName,
-		    teacherRequiredHours, teacherBelongsToDepartment);
+		    teacherRequiredHours, teacherLecturedTime, teacherBelongsToDepartment);
 	}
 
     }

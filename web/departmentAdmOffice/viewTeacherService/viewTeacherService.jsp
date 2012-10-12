@@ -88,7 +88,6 @@
 							<fc:dataRepeater value="#{teacher.executionCourseTeacherServiceList}" var="coursesList">
 								<h:outputText value="<li><a href='viewTeacherServiceByCourse.faces?selectedExecutionYearID=#{viewTeacherService.selectedExecutionYearID}##{coursesList.executionCourseIdInternal}'>" escape="false"/>
 								<h:outputText value="#{coursesList.description} " escape="false" />	
-							 	<h:outputText value="#{bundle['label.teacherService.hours']}" escape="false" />
 							 	<h:outputText value="</a></li>" escape="false"/>
 							</fc:dataRepeater>
 							<fc:dataRepeater value="#{teacher.managementFunctionList}" var="managementFunction">

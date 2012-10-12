@@ -31,6 +31,7 @@ import net.sourceforge.fenixedu.util.WeekDay;
 
 import org.apache.commons.collections.comparators.ReverseComparator;
 import org.joda.time.DateTime;
+import org.joda.time.Duration;
 import org.joda.time.Interval;
 import org.joda.time.LocalDate;
 import org.joda.time.Minutes;
@@ -307,8 +308,8 @@ public class Lesson extends Lesson_Base {
 
     public void refreshPeriodAndInstancesInSummaryCreation(YearMonthDay newBeginDate) {
 	if (!wasFinished() && newBeginDate != null && newBeginDate.isAfter(getPeriod().getStartYearMonthDay())) {
-	    SortedSet<YearMonthDay> instanceDates = getAllLessonInstancesDatesToCreate(getLessonStartDay(), newBeginDate
-		    .minusDays(1), true);
+	    SortedSet<YearMonthDay> instanceDates = getAllLessonInstancesDatesToCreate(getLessonStartDay(),
+		    newBeginDate.minusDays(1), true);
 	    YearMonthDay newEndDate = getPeriod().getLastOccupationPeriodOfNestedPeriods().getEndYearMonthDay();
 	    if (!newBeginDate.isAfter(newEndDate)) {
 		refreshPeriod(newBeginDate, getPeriod().getLastOccupationPeriodOfNestedPeriods().getEndYearMonthDay());
@@ -496,6 +497,10 @@ public class Lesson extends Lesson_Base {
 	return getUnitHours().multiply(BigDecimal.valueOf(getFinalNumberOfLessonInstances()));
     }
 
+    public Duration getTotalDuration() {
+	return Minutes.minutesBetween(getBeginHourMinuteSecond(), getEndHourMinuteSecond()).toStandardDuration();
+    }
+
     public BigDecimal getUnitHours() {
 	return BigDecimal.valueOf(getUnitMinutes())
 		.divide(BigDecimal.valueOf(NUMBER_OF_MINUTES_IN_HOUR), 2, RoundingMode.HALF_UP);
@@ -504,7 +509,7 @@ public class Lesson extends Lesson_Base {
     public String getInicioString() {
 	return String.valueOf(getInicio().get(Calendar.HOUR_OF_DAY));
     }
-    
+
     public String getFimString() {
 	return String.valueOf(getFim().get(Calendar.HOUR_OF_DAY));
     }
@@ -517,8 +522,8 @@ public class Lesson extends Lesson_Base {
 	    return getUnitHours().doubleValue();
 
 	} else if (getEndHourMinuteSecond().isAfter(afterHour)) {
-	    return BigDecimal.valueOf(Minutes.minutesBetween(afterHour, getEndHourMinuteSecond()).getMinutes()).divide(
-		    BigDecimal.valueOf(NUMBER_OF_MINUTES_IN_HOUR), 2, RoundingMode.HALF_UP).doubleValue();
+	    return BigDecimal.valueOf(Minutes.minutesBetween(afterHour, getEndHourMinuteSecond()).getMinutes())
+		    .divide(BigDecimal.valueOf(NUMBER_OF_MINUTES_IN_HOUR), 2, RoundingMode.HALF_UP).doubleValue();
 	}
 
 	return 0.0;
@@ -600,8 +605,8 @@ public class Lesson extends Lesson_Base {
     }
 
     private YearMonthDay getValidBeginDate(YearMonthDay startDate) {
-	YearMonthDay lessonBegin = startDate.toDateTimeAtMidnight().withDayOfWeek(
-		getDiaSemana().getDiaSemanaInDayOfWeekJodaFormat()).toYearMonthDay();
+	YearMonthDay lessonBegin = startDate.toDateTimeAtMidnight()
+		.withDayOfWeek(getDiaSemana().getDiaSemanaInDayOfWeekJodaFormat()).toYearMonthDay();
 	if (lessonBegin.isBefore(startDate)) {
 	    lessonBegin = lessonBegin.plusDays(NUMBER_OF_DAYS_IN_WEEK);
 	}
@@ -992,7 +997,7 @@ public class Lesson extends Lesson_Base {
 	HashMap<DateTime, LessonInstance> hashmap = new HashMap<DateTime, LessonInstance>();
 	ArrayList<EventBean> result = new ArrayList<EventBean>();
 	LocalDate lessonEndDay = null;
-	if(getLessonEndDay() != null) {
+	if (getLessonEndDay() != null) {
 	    getLessonEndDay().toLocalDate();
 	}
 	for (LessonInstance lessonInstance : getAllLessonInstancesUntil(lessonEndDay)) {
@@ -1029,8 +1034,8 @@ public class Lesson extends Lesson_Base {
 		}
 
 		bean = new EventBean(getShift().getExecutionCourse().getNome() + " : "
-			+ getShift().getShiftTypesCapitalizedPrettyPrint(), lessonInstance.getBeginDateTime(), lessonInstance
-			.getEndDateTime(), false, location, url + "/sumarios", summary);
+			+ getShift().getShiftTypesCapitalizedPrettyPrint(), lessonInstance.getBeginDateTime(),
+			lessonInstance.getEndDateTime(), false, location, url + "/sumarios", summary);
 	    } else {
 		if (getLessonSpaceOccupation() != null) {
 		    location = getLessonSpaceOccupation().getRoom().getName();
@@ -1049,33 +1054,37 @@ public class Lesson extends Lesson_Base {
 	return result;
     }
 
-	@Deprecated
-	public java.util.Date getBegin(){
-		net.sourceforge.fenixedu.util.HourMinuteSecond hms = getBeginHourMinuteSecond();
-		return (hms == null) ? null : new java.util.Date(0, 0, 1, hms.getHour(), hms.getMinuteOfHour(), hms.getSecondOfMinute());
-	}
+    @Deprecated
+    public java.util.Date getBegin() {
+	net.sourceforge.fenixedu.util.HourMinuteSecond hms = getBeginHourMinuteSecond();
+	return (hms == null) ? null : new java.util.Date(0, 0, 1, hms.getHour(), hms.getMinuteOfHour(), hms.getSecondOfMinute());
+    }
 
-	@Deprecated
-	public void setBegin(java.util.Date date){
-		if(date == null) setBeginHourMinuteSecond(null);
-		else setBeginHourMinuteSecond(net.sourceforge.fenixedu.util.HourMinuteSecond.fromDateFields(date));
-	}
+    @Deprecated
+    public void setBegin(java.util.Date date) {
+	if (date == null)
+	    setBeginHourMinuteSecond(null);
+	else
+	    setBeginHourMinuteSecond(net.sourceforge.fenixedu.util.HourMinuteSecond.fromDateFields(date));
+    }
 
-	@Deprecated
-	public java.util.Date getEnd(){
-		net.sourceforge.fenixedu.util.HourMinuteSecond hms = getEndHourMinuteSecond();
-		return (hms == null) ? null : new java.util.Date(0, 0, 1, hms.getHour(), hms.getMinuteOfHour(), hms.getSecondOfMinute());
-	}
+    @Deprecated
+    public java.util.Date getEnd() {
+	net.sourceforge.fenixedu.util.HourMinuteSecond hms = getEndHourMinuteSecond();
+	return (hms == null) ? null : new java.util.Date(0, 0, 1, hms.getHour(), hms.getMinuteOfHour(), hms.getSecondOfMinute());
+    }
 
-	@Deprecated
-	public void setEnd(java.util.Date date){
-		if(date == null) setEndHourMinuteSecond(null);
-		else setEndHourMinuteSecond(net.sourceforge.fenixedu.util.HourMinuteSecond.fromDateFields(date));
-	}
+    @Deprecated
+    public void setEnd(java.util.Date date) {
+	if (date == null)
+	    setEndHourMinuteSecond(null);
+	else
+	    setEndHourMinuteSecond(net.sourceforge.fenixedu.util.HourMinuteSecond.fromDateFields(date));
+    }
 
-	public WeekDay getWeekDay() {
-	    final DiaSemana diaSemana = getDiaSemana();
-	    return diaSemana == null ? null : WeekDay.getWeekDay(diaSemana);
-	}
+    public WeekDay getWeekDay() {
+	final DiaSemana diaSemana = getDiaSemana();
+	return diaSemana == null ? null : WeekDay.getWeekDay(diaSemana);
+    }
 
 }

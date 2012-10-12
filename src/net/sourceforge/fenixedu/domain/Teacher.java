@@ -55,6 +55,7 @@ import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
 import org.apache.commons.collections.comparators.ReverseComparator;
 import org.joda.time.DateTime;
+import org.joda.time.Duration;
 import org.joda.time.Interval;
 import org.joda.time.LocalDate;
 import org.joda.time.PeriodType;
@@ -446,6 +447,20 @@ public class Teacher extends Teacher_Base {
 	    }
 	}
 	return returnValue;
+    }
+
+    public Duration getLecturedDurationOnExecutionCourse(ExecutionCourse executionCourse) {
+	Duration duration = Duration.ZERO;
+	Professorship professorship = getProfessorshipByExecutionCourse(executionCourse);
+	TeacherService teacherService = getTeacherServiceByExecutionPeriod(executionCourse.getExecutionPeriod());
+	if (teacherService != null) {
+	    List<DegreeTeachingService> teachingServices = teacherService.getDegreeTeachingServiceByProfessorship(professorship);
+	    for (DegreeTeachingService teachingService : teachingServices) {
+		duration = duration.plus(new Duration(new Double((teachingService.getPercentage() / 100)
+			* teachingService.getShift().getTotalDuration().getMillis()).longValue()));
+	    }
+	}
+	return duration;
     }
 
     public TeacherService getTeacherServiceByExecutionPeriod(final ExecutionSemester executionSemester) {

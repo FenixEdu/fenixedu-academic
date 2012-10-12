@@ -201,7 +201,7 @@ public class PersonFunctionBean implements Serializable {
 	List<Function> result = new ArrayList<Function>();
 	if (getUnit() != null) {
 	    for (Function function : getUnit().getFunctions(true)) {
-		if (!function.isVirtual()) {
+		if (function.isActive() && !function.isVirtual()) {
 		    result.add(function);
 		}
 	    }
@@ -213,7 +213,7 @@ public class PersonFunctionBean implements Serializable {
 	List<Function> result = new ArrayList<Function>();
 	if (getUnit() != null) {
 	    for (Function function : getUnit().getFunctions(true)) {
-		if (function instanceof SharedFunction && !function.isVirtual()) {
+		if (function instanceof SharedFunction && function.isActive() && !function.isVirtual()) {
 		    result.add(function);
 		}
 	    }

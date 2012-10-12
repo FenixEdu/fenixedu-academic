@@ -12,6 +12,10 @@ import java.util.Set;
 
 import net.sourceforge.fenixedu.dataTransferObject.DataTranferObject;
 
+import org.joda.time.Duration;
+import org.joda.time.format.PeriodFormatter;
+import org.joda.time.format.PeriodFormatterBuilder;
+
 /**
  * amak, jpmsit
  * 
@@ -25,19 +29,26 @@ public class DistributionTeacherServicesByCourseDTO extends DataTranferObject {
 
 	private Double hoursSpentByTeacher;
 
+	private Duration timeSpentByTeacher;
+
 	private Boolean teacherOfDepartment;
 
 	public TeacherExecutionCourseServiceDTO(Integer teacherIdInternal, String teacherName, Double hoursSpentByTeacher,
-		Boolean teacherOfDepartment) {
+		Duration timeSpentByTeacher, Boolean teacherOfDepartment) {
 	    this.teacherIdInternal = teacherIdInternal;
 	    this.teacherName = teacherName;
 	    this.hoursSpentByTeacher = hoursSpentByTeacher;
+	    this.timeSpentByTeacher = timeSpentByTeacher;
 	    this.teacherOfDepartment = teacherOfDepartment;
 
 	}
 
 	public Double getHoursSpentByTeacher() {
 	    return hoursSpentByTeacher;
+	}
+
+	public Duration getTimeSpentByTeacher() {
+	    return timeSpentByTeacher;
 	}
 
 	public Integer getTeacherIdInternal() {
@@ -52,8 +63,9 @@ public class DistributionTeacherServicesByCourseDTO extends DataTranferObject {
 	    StringBuilder finalString = new StringBuilder(teacherName);
 
 	    finalString.append(" - ");
-	    finalString.append(hoursSpentByTeacher);
-
+	    PeriodFormatter periodFormatter = new PeriodFormatterBuilder().printZeroAlways().minimumPrintedDigits(2)
+		    .appendHours().appendSuffix(":").appendMinutes().toFormatter();
+	    finalString.append(periodFormatter.print(getTimeSpentByTeacher().toPeriod()));
 	    return finalString.toString();
 
 	}
@@ -81,6 +93,8 @@ public class DistributionTeacherServicesByCourseDTO extends DataTranferObject {
 
 	private Integer executionCourseSecondTimeEnrollementStudentNumber;
 
+	private Duration totalDuration;
+
 	private Double executionCourseTheoreticalHours;
 
 	private Double executionCoursePraticalHours;
@@ -97,6 +111,8 @@ public class DistributionTeacherServicesByCourseDTO extends DataTranferObject {
 	private Double executionCourseTrainingPeriodHours;
 
 	private Double executionCourseTotalHoursLecturedByTeachers;
+
+	private Duration executionCourseTotalTimeLecturedByTeachers;
 
 	private Double executionCourseStudentsNumberByTheoreticalShift;
 
@@ -117,9 +133,10 @@ public class DistributionTeacherServicesByCourseDTO extends DataTranferObject {
 	public ExecutionCourseDistributionServiceEntryDTO(Integer executionCourseIdInternal, String executionCourseName,
 		String executionCourseCampus, String executionCourseDegreeName, Set<String> executionCourseCurricularYearsList,
 		Integer executionCourseSemester, Integer executionCourseFirstTimeEnrollementStudentNumber,
-		Integer executionCourseSecondTimeEnrollementStudentNumber, Double executionCourseTheoreticalHours,
-		Double executionCoursePraticalHours, Double executionCourseLaboratorialHours,
-		Double executionCourseTheoPratHours, Double executionCourseSeminaryHours, Double executionCourseProblemsHours,
+		Integer executionCourseSecondTimeEnrollementStudentNumber, Duration totalDuration,
+		Double executionCourseTheoreticalHours, Double executionCoursePraticalHours,
+		Double executionCourseLaboratorialHours, Double executionCourseTheoPratHours,
+		Double executionCourseSeminaryHours, Double executionCourseProblemsHours,
 		Double executionCourseTutorialOrientationHours, Double executionCourseFieldWorkHours,
 		Double executionCourseTrainingPeriodHours, Double executionCourseStudentsNumberByTheoreticalShift,
 		Double executionCourseStudentsNumberByPraticalShift, Double executionCourseStudentsNumberByLaboratorialShift,
@@ -135,6 +152,7 @@ public class DistributionTeacherServicesByCourseDTO extends DataTranferObject {
 	    this.executionCourseFirstTimeEnrollementStudentNumber = executionCourseFirstTimeEnrollementStudentNumber;
 	    this.executionCourseSecondTimeEnrollementStudentNumber = executionCourseSecondTimeEnrollementStudentNumber;
 	    this.executionCourseTheoreticalHours = executionCourseTheoreticalHours;
+	    this.totalDuration = totalDuration;
 	    this.executionCoursePraticalHours = executionCoursePraticalHours;
 	    this.executionCourseTheoPratHours = executionCourseTheoPratHours;
 	    this.executionCourseSeminaryHours = executionCourseSeminaryHours;
@@ -150,6 +168,7 @@ public class DistributionTeacherServicesByCourseDTO extends DataTranferObject {
 	    this.executionCourseDegreeList.add(executionCourseDegreeName);
 
 	    this.executionCourseTotalHoursLecturedByTeachers = Double.valueOf(0);
+	    this.executionCourseTotalTimeLecturedByTeachers = Duration.ZERO;
 
 	    this.executionCourseLaboratorialHours = executionCourseLaboratorialHours;
 
@@ -246,6 +265,16 @@ public class DistributionTeacherServicesByCourseDTO extends DataTranferObject {
 		    + executionCourseTrainingPeriodHours;
 	}
 
+	public Duration getTotalDuration() {
+	    return totalDuration;
+	}
+
+	public String getTotalDurationString() {
+	    PeriodFormatter periodFormatter = new PeriodFormatterBuilder().printZeroAlways().minimumPrintedDigits(2)
+		    .appendHours().appendSuffix(":").appendMinutes().toFormatter();
+	    return periodFormatter.print(getTotalDuration().toPeriod());
+	}
+
 	public void addTeacher(TeacherExecutionCourseServiceDTO teacher) {
 	    teacherExecutionCourseServiceList.add(teacher);
 	}
@@ -270,12 +299,24 @@ public class DistributionTeacherServicesByCourseDTO extends DataTranferObject {
 	    this.executionCourseTotalHoursLecturedByTeachers += hoursSpentByTeacher.doubleValue();
 	}
 
+	public void updateTimeLecturedByTeachers(Duration timeSpentByTeacher) {
+	    this.executionCourseTotalTimeLecturedByTeachers = this.executionCourseTotalTimeLecturedByTeachers
+		    .plus(timeSpentByTeacher);
+	}
+
 	public Double getExecutionCourseHoursBalance() {
 	    DecimalFormat df = new DecimalFormat("#.##");
 	    DecimalFormatSymbols decimalFormatSymbols = df.getDecimalFormatSymbols();
 	    decimalFormatSymbols.setDecimalSeparator('.');
 	    df.setDecimalFormatSymbols(decimalFormatSymbols);
 	    return new Double(df.format(getExecutionCourseTotalHours() - executionCourseTotalHoursLecturedByTeachers));
+	}
+
+	public String getExecutionCourseDurationBalance() {
+	    Duration balance = getTotalDuration().minus(executionCourseTotalTimeLecturedByTeachers);
+	    PeriodFormatter periodFormatter = new PeriodFormatterBuilder().printZeroAlways().minimumPrintedDigits(2)
+		    .appendHours().appendSuffix(":").appendMinutes().toFormatter();
+	    return periodFormatter.print(balance.toPeriod());
 	}
 
 	public Double getExecutionCourseTheoPratHours() {
@@ -426,24 +467,26 @@ public class DistributionTeacherServicesByCourseDTO extends DataTranferObject {
     public void addExecutionCourse(Integer executionCourseIdInternal, String executionCourseName, String executionCourseCampus,
 	    String executionCourseDegreeName, Set<String> executionCourseCurricularYear, Integer executionCourseSemester,
 	    Integer executionCourseFirstTimeEnrollementStudentNumber, Integer executionCourseSecondTimeEnrollementStudentNumber,
-	    Double executionCourseTheoreticalHours, Double executionCoursePraticalHours, Double executionCourseLaboratorialHours,
-	    Double executionCourseTheoPratHours, Double executionCourseSeminaryHours, Double executionCourseProblemsHours,
-	    Double executionCourseTutorialOrientationHours, Double executionCourseFieldWorkHours,
-	    Double executionCourseTrainingPeriodHours, Double executionCourseStudentsNumberByTheoreticalShift,
-	    Double executionCourseStudentsNumberByPraticalShift, Double executionCourseStudentsNumberByLaboratorialShift,
-	    Double executionCourseStudentsNumberByTheoPraticalShift, Double seminaryStudentsNumberPerShift,
-	    Double problemsStudentsNumberPerShift, Double tutorialOrientationStudentsNumberPerShift,
-	    Double fieldWorkStudentsNumberPerShift, Double trainingPeriodStudentsNumberPerShift) {
+	    Duration totalDuration, Double executionCourseTheoreticalHours, Double executionCoursePraticalHours,
+	    Double executionCourseLaboratorialHours, Double executionCourseTheoPratHours, Double executionCourseSeminaryHours,
+	    Double executionCourseProblemsHours, Double executionCourseTutorialOrientationHours,
+	    Double executionCourseFieldWorkHours, Double executionCourseTrainingPeriodHours,
+	    Double executionCourseStudentsNumberByTheoreticalShift, Double executionCourseStudentsNumberByPraticalShift,
+	    Double executionCourseStudentsNumberByLaboratorialShift, Double executionCourseStudentsNumberByTheoPraticalShift,
+	    Double seminaryStudentsNumberPerShift, Double problemsStudentsNumberPerShift,
+	    Double tutorialOrientationStudentsNumberPerShift, Double fieldWorkStudentsNumberPerShift,
+	    Double trainingPeriodStudentsNumberPerShift) {
 	ExecutionCourseDistributionServiceEntryDTO t = new ExecutionCourseDistributionServiceEntryDTO(executionCourseIdInternal,
 		executionCourseName, executionCourseCampus, executionCourseDegreeName, executionCourseCurricularYear,
 		executionCourseSemester, executionCourseFirstTimeEnrollementStudentNumber,
-		executionCourseSecondTimeEnrollementStudentNumber, executionCourseTheoreticalHours, executionCoursePraticalHours,
-		executionCourseLaboratorialHours, executionCourseTheoPratHours, executionCourseSeminaryHours,
-		executionCourseProblemsHours, executionCourseTutorialOrientationHours, executionCourseFieldWorkHours,
-		executionCourseTrainingPeriodHours, executionCourseStudentsNumberByTheoreticalShift,
-		executionCourseStudentsNumberByPraticalShift, executionCourseStudentsNumberByLaboratorialShift,
-		executionCourseStudentsNumberByTheoPraticalShift, seminaryStudentsNumberPerShift, problemsStudentsNumberPerShift,
-		tutorialOrientationStudentsNumberPerShift, fieldWorkStudentsNumberPerShift, trainingPeriodStudentsNumberPerShift);
+		executionCourseSecondTimeEnrollementStudentNumber, totalDuration, executionCourseTheoreticalHours,
+		executionCoursePraticalHours, executionCourseLaboratorialHours, executionCourseTheoPratHours,
+		executionCourseSeminaryHours, executionCourseProblemsHours, executionCourseTutorialOrientationHours,
+		executionCourseFieldWorkHours, executionCourseTrainingPeriodHours,
+		executionCourseStudentsNumberByTheoreticalShift, executionCourseStudentsNumberByPraticalShift,
+		executionCourseStudentsNumberByLaboratorialShift, executionCourseStudentsNumberByTheoPraticalShift,
+		seminaryStudentsNumberPerShift, problemsStudentsNumberPerShift, tutorialOrientationStudentsNumberPerShift,
+		fieldWorkStudentsNumberPerShift, trainingPeriodStudentsNumberPerShift);
 
 	if (!executionCourseMap.containsKey(executionCourseIdInternal)) {
 	    executionCourseMap.put(executionCourseIdInternal, t);
@@ -451,12 +494,13 @@ public class DistributionTeacherServicesByCourseDTO extends DataTranferObject {
     }
 
     public void addTeacherToExecutionCourse(Integer keyExecutionCourse, Integer idInternalTeacher, String name,
-	    Double hoursSpentByTeacher, boolean teacherBelongsToDepartment) {
+	    Double hoursSpentByTeacher, Duration timeSpentByTeacher, boolean teacherBelongsToDepartment) {
 	TeacherExecutionCourseServiceDTO teacher = new TeacherExecutionCourseServiceDTO(idInternalTeacher, name,
-		hoursSpentByTeacher, teacherBelongsToDepartment);
+		hoursSpentByTeacher, timeSpentByTeacher, teacherBelongsToDepartment);
 
 	ExecutionCourseDistributionServiceEntryDTO executionCourseEntry = executionCourseMap.get(keyExecutionCourse);
 	executionCourseEntry.updateHoursLecturedByTeachers(hoursSpentByTeacher);
+	executionCourseEntry.updateTimeLecturedByTeachers(timeSpentByTeacher);
 	executionCourseEntry.addTeacher(teacher);
     }
 

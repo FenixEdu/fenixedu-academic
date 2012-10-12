@@ -27,7 +27,7 @@ public class ReductionService extends ReductionService_Base {
 	}
 	setTeacherService(teacherService);
 	setCreditsReduction(creditsReduction);
-	log("label.teacher.schedule.reductionService.create");
+	log("label.teacher.schedule.reductionService.create", getCreditsReduction());
     }
 
     public ReductionService(final BigDecimal creditsReductionAttributed, final TeacherService teacherService) {
@@ -38,7 +38,7 @@ public class ReductionService extends ReductionService_Base {
 	}
 	setTeacherService(teacherService);
 	setCreditsReductionAttributed(creditsReductionAttributed);
-	log("label.teacher.schedule.reductionService.validation");
+	log("label.teacher.schedule.reductionService.approve", getCreditsReductionAttributed());
     }
 
     @Override
@@ -53,7 +53,7 @@ public class ReductionService extends ReductionService_Base {
 		    maxCreditsFromEvaluationAndAge.toString());
 	}
 	super.setCreditsReduction(creditsReduction);
-	log("label.teacher.schedule.reductionService.edit");
+	log("label.teacher.schedule.reductionService.edit", getCreditsReduction());
     }
 
     @Override
@@ -61,7 +61,7 @@ public class ReductionService extends ReductionService_Base {
 	checkCredits(creditsReductionAttributed);
 	super.setCreditsReductionAttributed(creditsReductionAttributed);
 	setAttributionDate(new DateTime());
-	log("label.teacher.schedule.reductionService.validation");
+	log("label.teacher.schedule.reductionService.approve", getCreditsReductionAttributed());
     }
 
     private void checkCredits(BigDecimal creditsReduction) {
@@ -136,10 +136,10 @@ public class ReductionService extends ReductionService_Base {
 	return BigDecimal.ZERO;
     }
 
-    private void log(final String key) {
+    private void log(final String key, BigDecimal credits) {
 	final StringBuilder log = new StringBuilder();
 	log.append(BundleUtil.getStringFromResourceBundle("resources.TeacherCreditsSheetResources", key));
-	log.append(getCreditsReduction());
+	log.append(credits);
 	new TeacherServiceLog(getTeacherService(), log.toString());
     }
 

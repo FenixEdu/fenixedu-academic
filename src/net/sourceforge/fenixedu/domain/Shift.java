@@ -9,12 +9,10 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
-import java.util.ResourceBundle;
 import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
-import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.domain.accessControl.PersonGroup;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
@@ -30,6 +28,7 @@ import net.sourceforge.fenixedu.util.DiaSemana;
 import net.sourceforge.fenixedu.util.WeekDay;
 
 import org.apache.commons.lang.StringUtils;
+import org.joda.time.Duration;
 
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.ist.fenixWebFramework.services.Service;
@@ -253,6 +252,15 @@ public class Shift extends Shift_Base {
 	    lessonTotalHours = lessonTotalHours.add(lesson.getTotalHours());
 	}
 	return lessonTotalHours;
+    }
+
+    public Duration getTotalDuration() {
+	Duration duration = Duration.ZERO;
+	List<Lesson> lessons = getAssociatedLessons();
+	for (Lesson lesson : lessons) {
+	    duration = duration.plus(lesson.getTotalDuration());
+	}
+	return duration;
     }
 
     public BigDecimal getMaxLessonDuration() {

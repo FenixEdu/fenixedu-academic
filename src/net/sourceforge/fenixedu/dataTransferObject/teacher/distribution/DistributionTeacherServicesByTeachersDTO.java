@@ -11,6 +11,10 @@ import java.util.Set;
 import net.sourceforge.fenixedu.dataTransferObject.DataTranferObject;
 import net.sourceforge.fenixedu.domain.personnelSection.contracts.PersonContractSituation;
 
+import org.joda.time.Duration;
+import org.joda.time.format.PeriodFormatter;
+import org.joda.time.format.PeriodFormatterBuilder;
+
 /**
  * amak, jpmsit
  * 
@@ -24,18 +28,21 @@ public class DistributionTeacherServicesByTeachersDTO extends DataTranferObject 
 
 	private Integer hoursSpentByTeacher;
 
+	private Duration timeSpentByTeacher;
+
 	private Map<Integer, String> courseDegreesList;
 
 	private String executionPeriodName;
 
 	private Map<Integer, Set<String>> executionYearsSet;
 
-	public ExecutionCourseTeacherServiceDTO(Integer idInternal, String name, Integer hours,
+	public ExecutionCourseTeacherServiceDTO(Integer idInternal, String name, Integer hours, Duration timeSpentByTeacher,
 		Map<Integer, String> executionCourseDegreesNameMap, Map<Integer, Set<String>> executionYearsMap, String periodName) {
 	    super();
 
 	    this.executionCourseIdInternal = idInternal;
 	    this.hoursSpentByTeacher = hours;
+	    this.timeSpentByTeacher = timeSpentByTeacher;
 	    this.executionCourseName = name;
 	    this.executionYearsSet = executionYearsMap;
 	    this.executionPeriodName = periodName;
@@ -60,6 +67,10 @@ public class DistributionTeacherServicesByTeachersDTO extends DataTranferObject 
 
 	public String getExecutionPeriodName() {
 	    return executionPeriodName;
+	}
+
+	public Duration getTimeSpentByTeacher() {
+	    return timeSpentByTeacher;
 	}
 
 	public String getDescription() {
@@ -128,8 +139,9 @@ public class DistributionTeacherServicesByTeachersDTO extends DataTranferObject 
 	    finalString.append(executionPeriodName);
 	    finalString.append(")");
 	    finalString.append(" - ");
-	    finalString.append(hoursSpentByTeacher);
-
+	    PeriodFormatter periodFormatter = new PeriodFormatterBuilder().printZeroAlways().minimumPrintedDigits(2)
+		    .appendHours().appendSuffix(":").appendMinutes().toFormatter();
+	    finalString.append(periodFormatter.print(getTimeSpentByTeacher().toPeriod()));
 	    return finalString.toString();
 	}
 
@@ -333,10 +345,10 @@ public class DistributionTeacherServicesByTeachersDTO extends DataTranferObject 
     }
 
     public void addExecutionCourseToTeacher(Integer keyTeacher, Integer executionCourseIdInternal, String executionCourseName,
-	    Integer hours, Map<Integer, String> executionCourseDegreesNameSet, Map<Integer, Set<String>> curricularYearsSet,
-	    String periodName) {
+	    Integer hours, Duration timeSpentByTeacher, Map<Integer, String> executionCourseDegreesNameSet,
+	    Map<Integer, Set<String>> curricularYearsSet, String periodName) {
 	ExecutionCourseTeacherServiceDTO executionCourse = new ExecutionCourseTeacherServiceDTO(executionCourseIdInternal,
-		executionCourseName, hours, executionCourseDegreesNameSet, curricularYearsSet, periodName);
+		executionCourseName, hours, timeSpentByTeacher, executionCourseDegreesNameSet, curricularYearsSet, periodName);
 
 	teachersMap.get(keyTeacher).addExecutionCourse(executionCourse);
 

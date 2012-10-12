@@ -66,6 +66,7 @@ import org.apache.commons.collections.comparators.ReverseComparator;
 import org.apache.commons.lang.StringUtils;
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeFieldType;
+import org.joda.time.Duration;
 import org.joda.time.Interval;
 import org.joda.time.Period;
 import org.joda.time.YearMonthDay;
@@ -586,6 +587,14 @@ public class ExecutionCourse extends ExecutionCourse_Base {
 
     public Integer getSecondOrMoreTimeEnrolmentStudentNumber() {
 	return getTotalEnrolmentStudentNumber() - getFirstTimeEnrolmentStudentNumber();
+    }
+
+    public Duration getTotalShiftsDuration() {
+	Duration totalDuration = Duration.ZERO;
+	for (Shift shift : getAssociatedShifts()) {
+	    totalDuration = totalDuration.plus(shift.getTotalDuration());
+	}
+	return totalDuration;
     }
 
     public BigDecimal getAllShiftUnitHours(ShiftType shiftType) {
