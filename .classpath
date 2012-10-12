@@ -129,7 +129,7 @@
 	<classpathentry kind="lib" path="lib/gwt-dev.jar"/>
 	<classpathentry kind="lib" path="lib/gwt-user.jar"/>
 	<classpathentry kind="lib" path="web/WEB-INF/lib/commons-pool-1.5.4.jar"/>
-	<classpathentry kind="lib" path="web/WEB-INF/lib/json_simple-1.1.jar"/>
+	<classpathentry kind="lib" path="web/WEB-INF/lib/json_simple-1.1.jar" sourcepath="/home/pedro/.m2/repository/com/googlecode/json-simple/json-simple/1.1/json-simple-1.1-sources.jar"/>
 	<classpathentry kind="lib" path="web/WEB-INF/lib/asm-tree-3.0.jar"/>
 	<classpathentry kind="lib" path="web/WEB-INF/lib/gwt-servlet-deps.jar"/>
 	<classpathentry kind="lib" path="web/WEB-INF/lib/htmlcleaner-2.2.jar"/>
@@ -151,7 +151,7 @@
 	<classpathentry kind="lib" path="web/WEB-INF/lib/poi-contrib-3.5-FINAL-20090928.jar"/>
 	<classpathentry kind="lib" path="web/WEB-INF/lib/poi-ooxml-3.5-FINAL-20090928.jar"/>
 	<classpathentry kind="lib" path="web/WEB-INF/lib/poi-scratchpad-3.5-FINAL-20090928.jar"/>
-	<classpathentry kind="lib" path="web/WEB-INF/lib/remote-plugin-1.0-SNAPSHOT.jar"/>
+	<classpathentry kind="lib" path="web/WEB-INF/lib/remote-plugin-1.0-SNAPSHOT.jar" sourcepath="/remote-plugin"/>
 	<classpathentry kind="lib" path="web/WEB-INF/lib/scheduler-plugin-1.0-SNAPSHOT.jar"/>
 	<classpathentry kind="lib" path="web/WEB-INF/lib/xmlbeans-2.3.0.jar"/>
 	<classpathentry kind="lib" path="web/WEB-INF/lib/fenix-web-framework-1.0-SNAPSHOT.jar" sourcepath="/fenix-web-framework"/>
@@ -162,5 +162,6 @@
 	<classpathentry kind="lib" path="web/WEB-INF/lib/jersey-bundle-1.12.jar"/>
 	<classpathentry kind="lib" path="web/WEB-INF/lib/jsr311-api-1.1.jar"/>
 	<classpathentry kind="lib" path="web/WEB-INF/lib/jsoup-1.6.3.jar"/>
+	<classpathentry kind="lib" path="web/WEB-INF/lib/raven-java-0.6-SNAPSHOT.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
