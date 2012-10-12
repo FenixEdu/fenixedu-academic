@@ -133,6 +133,7 @@ public enum RegistrationAgreement {
     final public static List<RegistrationAgreement> EXEMPTED_AGREEMENTS = Arrays.asList(IST_UCP, ALMEIDA_GARRETT);
 
     final public static List<RegistrationAgreement> MOBILITY_AGREEMENTS = Arrays.asList(ERASMUS, SMILE, CLUSTER, TIME,
+	    BILATERAL_AGREEMENT, ERASMUS_MUNDUS, IBERO_SANTANDER, SCIENCE_WITHOUT_BORDERS,
 	    CHINA_AGREEMENTS, RUSSIA_AGREEMENTS, AFRICA_AGREEMENTS, BRAZIL_AGREEMENTS);
 
 }
