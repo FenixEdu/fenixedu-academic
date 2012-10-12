@@ -3,9 +3,6 @@
 <html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
-<%@ taglib uri="/WEB-INF/rssutils.tld" prefix="rss" %>
-
-<!-- index.jsp -->
 
 <h2>
 	<bean:message bundle="ALUMNI_RESOURCES" key="label.alumni.main.title"/>
@@ -132,60 +129,6 @@ ul.material li.feedback { background: url(<%= request.getContextPath() %>/images
 		</ul>
 	</div>
 </logic:notPresent>
-
-<rss:feed url="http://twitter.com/statuses/user_timeline/32443401.rss" feedId="istTwitter"/>
-<bean:define id="isOnline">Twitter online?<rss:channelTitle feedId="istTwitter"/></bean:define>
-<%
-	if(isOnline.replace("Twitter online?","").isEmpty()){
-    	request.setAttribute("displayTwitter","false");
-	} else {
-	    request.setAttribute("displayTwitter","true");
-	}
-%>
-
-<h3 class="mbottom05"><bean:message key="title.news" bundle="ALUMNI_RESOURCES"/></h3>
-<logic:equal name="displayTwitter" value="true">	
-	<p class="mtop0">
-		<bean:define id="channelTitle"><rss:channelTitle feedId="istTwitter"/></bean:define>
-		<bean:message key="message.alumni.twitter" bundle="ALUMNI_RESOURCES" arg0="<%= channelTitle  %>"/> (<rss:channelLink feedId="istTwitter" asLink="true"/>)
-	</p>
-	<ul class="mbottom2">
-	  <rss:forEachItem feedId="istTwitter" startIndex="0" endIndex="4">
-	  	<bean:define id="twitt"><rss:itemDescription feedId="istTwitter"/></bean:define>
-	  	<%  if(twitt.startsWith("istecnico: ")){
-	  	  		String newtwitt = twitt.replace("istecnico: ","");
-	  	  		String[] splittedTwitt = newtwitt.split("\n");
-	  	  		if(splittedTwitt.length > 1){
-		  			request.setAttribute("beforeUrl", splittedTwitt[0]);
-		  			request.setAttribute("twittUrl", splittedTwitt[1]);
-	  	  		} else {
-	  	  		    int index = newtwitt.lastIndexOf("http://");
-	  	  		    if(index >= 0) {
-	  	  				String twittUrl = newtwitt.substring(index);
-	  	  				splittedTwitt = newtwitt.split("http://");
-	  	  				request.setAttribute("beforeUrl", splittedTwitt[0]);
-			  			request.setAttribute("twittUrl", twittUrl);
-	  	  		    }	  	  		
-	  	  		}
-	  		}
-	  	%>
-	    <li>
-	    	<p class="mvert05">
-	    		<logic:present name="beforeUrl">
-	    			<bean:write name="beforeUrl"/>
-	    			<html:link href="<%= request.getAttribute("twittUrl").toString() %>" target="_blank">
-	    				<bean:write name="twittUrl"/>
-	    			</html:link>
-	    		</logic:present>
-	    		<logic:notPresent name="beforeUrl"><bean:write name="twitt"/></logic:notPresent>
-	    	</p>    	
-	    </li>    
-	  </rss:forEachItem>
-	</ul>
-</logic:equal>
-<logic:equal name="displayTwitter" value="false">
-	<em><bean:message key="message.alumni.twitter.noAccess" bundle="ALUMNI_RESOURCES"/></em>
-</logic:equal>
 
 <h3>Vantagens</h3>
 <div style="background: #f5f5f5; border: 1px solid #ddd; padding: 0.75em 0.5em;">
