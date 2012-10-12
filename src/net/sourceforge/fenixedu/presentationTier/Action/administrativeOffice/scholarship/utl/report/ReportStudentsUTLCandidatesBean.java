@@ -15,6 +15,7 @@ public class ReportStudentsUTLCandidatesBean implements Serializable {
     private String fileName;
     private Integer fileSize;
     private Boolean forFirstYear;
+    private Integer studentNumber;
 
     public ReportStudentsUTLCandidatesBean() {
     }
@@ -64,6 +65,14 @@ public class ReportStudentsUTLCandidatesBean implements Serializable {
 
     public void setForFirstYear(Boolean forFirstYear) {
 	this.forFirstYear = forFirstYear;
+    }
+
+    public Integer getStudentNumber() {
+	return studentNumber;
+    }
+
+    public void setStudentNumber(Integer studentNumber) {
+	this.studentNumber = studentNumber;
     }
 
 }

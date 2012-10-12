@@ -8,6 +8,8 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Locale;
+import java.util.ResourceBundle;
 import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
@@ -992,6 +994,75 @@ public class StudentLine implements IFileLine, java.io.Serializable {
 	}
 
 	return true;
+    }
+
+    public boolean fillWithStudent(final ExecutionYear forExecutionYear, Student student) {
+	this.forExecutionYear = forExecutionYear;
+
+	try {
+	    this.institutionCode = getDefaultInstitutionCode();
+	    this.institutionName = getDefaultInstitutionName();
+	    this.candidacyNumber = "";
+
+	    this.studentNumber = student.getNumber();
+
+	    this.studentName = student.getPerson().getName();
+	    this.documentTypeName = student.getPerson().getIdDocumentType().getLocalizedName();
+	    this.documentNumber = student.getPerson().getDocumentIdNumber();
+	    Registration activeRegistration = getActiveRegistration(student);
+	    
+	    this.degreeCode = activeRegistration.getDegree().getMinistryCode();
+
+	    if ("9999".equals(this.degreeCode)) {
+		this.degreeCode = "";
+	    }
+
+	    this.degreeName = activeRegistration.getDegree().getNameI18N().getContent();
+	    this.degreeTypeName = activeRegistration.getDegree().getDegreeTypeName();
+
+	    this.upperObservations = "";
+
+	    this.person = student.getPerson();
+	    this.student = student;
+	    enrolledInAnualCoursesLastYear = false;
+	} catch (Exception e) {
+	    e.printStackTrace();
+	    return false;
+	}
+
+	return true;
+    }
+
+    private String getDefaultInstitutionName() {
+	return ResourceBundle
+		.getBundle("resources.AcademicAdminOffice", Locale.getDefault())
+		.getString(
+			"label.net.sourceforge.fenixedu.presentationTier.Action.administrativeOffice.scholarship.utl.report.ReportStudentsUTLCandidates.defaultInstitutionName");
+    }
+
+    private String getDefaultInstitutionCode() {
+	return ResourceBundle
+		.getBundle("resources.AcademicAdminOffice", Locale.getDefault())
+		.getString(
+			"label.net.sourceforge.fenixedu.presentationTier.Action.administrativeOffice.scholarship.utl.report.ReportStudentsUTLCandidates.defaultInstitutionCode");
+    }
+
+    private Registration getActiveRegistration(Student student) {
+	List<Registration> activeRegistrations = student.getActiveRegistrations();
+
+	if (activeRegistrations.isEmpty()) {
+	    return student.getLastRegistration();
+	}
+
+	for (Registration registration : activeRegistrations) {
+	    if (registration.getDegree().getDegreeType().isEmpty()) {
+		continue;
+	    }
+
+	    return registration;
+	}
+
+	return student.getLastRegistration();
     }
 
 }

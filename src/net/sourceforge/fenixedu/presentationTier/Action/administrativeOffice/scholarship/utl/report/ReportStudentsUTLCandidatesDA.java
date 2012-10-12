@@ -7,6 +7,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 
 import org.apache.poi.hssf.usermodel.HSSFSheet;
@@ -23,7 +24,8 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 @Mapping(path = "/reportStudentsUTLCandidates", module = "academicAdminOffice")
 @Forwards({ @Forward(name = "prepare", path = "/academicAdminOffice/scholarship/utl/report/prepare.jsp"),
 	@Forward(name = "showReport", path = "/academicAdminOffice/scholarship/utl/report/showReport.jsp"),
-	@Forward(name = "viewDetails", path = "/academicAdminOffice/scholarship/utl/report/viewDetails.jsp") })
+	@Forward(name = "viewDetails", path = "/academicAdminOffice/scholarship/utl/report/viewDetails.jsp"),
+	@Forward(name = "prepareForOneStudent", path = "/academicAdminOffice/scholarship/utl/report/prepareForOneStudent.jsp") })
 public class ReportStudentsUTLCandidatesDA extends FenixDispatchAction {
 
     public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
@@ -95,5 +97,47 @@ public class ReportStudentsUTLCandidatesDA extends FenixDispatchAction {
 	response.flushBuffer();
 
 	return null;
+    }
+
+    public ActionForward prepareForOneStudent(final ActionMapping mapping, final ActionForm form,
+	    final HttpServletRequest request, final HttpServletResponse response) {
+	ReportStudentsUTLCandidatesBean bean = new ReportStudentsUTLCandidatesBean();
+
+	request.setAttribute("bean", bean);
+	return mapping.findForward("prepareForOneStudent");
+    }
+
+    public ActionForward showReportForOneStudent(final ActionMapping mapping, final ActionForm form,
+	    final HttpServletRequest request, final HttpServletResponse response) {
+	ReportStudentsUTLCandidatesBean bean = getRenderedObject("bean");
+
+	ReportStudentsUTLCandidates report = null;
+	if (bean.getForFirstYear()) {
+	    report = new ReportStudentsUTLCandidatesForOneStudent(bean.getExecutionYear(), Student.readStudentByNumber(bean
+		    .getStudentNumber()));
+	} else {
+	    report = new ReportStudentsUTLCandidatesForOneStudent(bean.getExecutionYear(),
+		    Student.readStudentByNumber(bean.getStudentNumber()));
+	}
+
+	request.setAttribute("report", report);
+
+	List<StudentLine> correctStudentLines = new ArrayList<StudentLine>();
+	List<StudentLine> erroneousStudentLines = new ArrayList<StudentLine>();
+
+	erroneousStudentLines.addAll(report.getErroneousStudentLines());
+
+	for (StudentLine studentLine : report.getCorrectStudentLines()) {
+	    if (studentLine.isAbleToReadAllValues()) {
+		correctStudentLines.add(studentLine);
+	    } else {
+		erroneousStudentLines.add(studentLine);
+	    }
+	}
+
+	request.setAttribute("correctStudentLines", correctStudentLines);
+	request.setAttribute("erroneousStudentLines", erroneousStudentLines);
+
+	return mapping.findForward("showReport");
     }
 }

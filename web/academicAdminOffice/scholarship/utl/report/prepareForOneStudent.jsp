@@ -8,7 +8,7 @@
 <em><bean:message key="label.academicAdminOffice" bundle="ACADEMIC_OFFICE_RESOURCES"/></em>
 <h2><bean:message key="title.academicAdminOffice.scholarship.utl.report" bundle="ACADEMIC_OFFICE_RESOURCES" /></h2>	
 
-<fr:form action="/reportStudentsUTLCandidates.do?method=showReport" encoding="multipart/form-data" >
+<fr:form action="/reportStudentsUTLCandidates.do?method=showReportForOneStudent" encoding="multipart/form-data" >
 	<fr:edit id="bean" name="bean" visible="false" />
 	
 	<fr:edit id="bean-selection-year" name="bean" >
@@ -21,10 +21,7 @@
 				<fr:property name="sortBy" value="year=desc" />
 			</fr:slot>
 			<fr:slot name="forFirstYear" />
-			<fr:slot name="xlsFile" >
-				<property name="fileNameSlot" value="fileName" />
-				<property name="fileSizeSlot" value="fileSize" />
-			</fr:slot>
+			<fr:slot name="studentNumber" required="true" />
 			
 		</fr:schema>
 	</fr:edit>
@@ -36,7 +33,3 @@
 </fr:form>
 
 </logic:present>
-
-<div>
-	<html:link action="/reportStudentsUTLCandidates.do?method=prepareForOneStudent">Relatório por aluno</html:link>
-</div>

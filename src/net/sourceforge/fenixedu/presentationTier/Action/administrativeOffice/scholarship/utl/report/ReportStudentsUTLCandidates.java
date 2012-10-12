@@ -21,20 +21,24 @@ public class ReportStudentsUTLCandidates implements java.io.Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    private ExecutionYear forExecutionYear;
-    private List<StudentLine> correctStudentLines;
-    private List<StudentLine> erroneousStudentLines;
+    protected ExecutionYear forExecutionYear;
+    protected List<StudentLine> correctStudentLines;
+    protected List<StudentLine> erroneousStudentLines;
     protected CellStyle headerStyle;
 
-    public ReportStudentsUTLCandidates(final ExecutionYear forExecutionYear, final HSSFSheet sheet) {
+    public ReportStudentsUTLCandidates(final ExecutionYear forExecutionYear) {
 	this.forExecutionYear = forExecutionYear;
 	this.correctStudentLines = new ArrayList<StudentLine>();
 	this.erroneousStudentLines = new ArrayList<StudentLine>();
+    }
+
+    public ReportStudentsUTLCandidates(final ExecutionYear forExecutionYear, final HSSFSheet sheet) {
+	this(forExecutionYear);
 
 	getStudentLines(sheet);
     }
 
-    private void getStudentLines(HSSFSheet sheet) {
+    protected void getStudentLines(HSSFSheet sheet) {
 	int i = 2;
 	HSSFRow row;
 	while ((row = sheet.getRow(i)) != null) {
