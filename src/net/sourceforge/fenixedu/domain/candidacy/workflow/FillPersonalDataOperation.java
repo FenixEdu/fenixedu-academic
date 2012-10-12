@@ -330,16 +330,16 @@ public class FillPersonalDataOperation extends CandidacyOperation {
 
     private PersonalIngressionData getOrCreatePersonalIngressionData(PrecedentDegreeInformation precedentInformation) {
 	PersonalIngressionData personalData = null;
-	if (getPerson().hasStudent()) {
+	personalData = precedentInformation.getPersonalIngressionData();
+	if (personalData == null) {
 	    personalData = getPerson().getStudent().getPersonalIngressionDataByExecutionYear(
 		    ExecutionYear.readCurrentExecutionYear());
-	    //if the student already has a PID it will have another PDI associated, it's necessary to add the new PDI
-	    personalData.addPrecedentDegreesInformations(precedentInformation);
-	} else {
-	    personalData = precedentInformation.getPersonalIngressionData();
-	}
-	if (personalData == null) {
-	    personalData = new PersonalIngressionData(ExecutionYear.readCurrentExecutionYear(), precedentInformation);
+	    if (personalData != null) {
+		//if the student already has a PID it will have another PDI associated, it's necessary to add the new PDI
+		personalData.addPrecedentDegreesInformations(precedentInformation);
+	    } else {
+		personalData = new PersonalIngressionData(ExecutionYear.readCurrentExecutionYear(), precedentInformation);
+	    }
 	}
 	return personalData;
     }
