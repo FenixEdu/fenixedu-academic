@@ -24,7 +24,9 @@
 			<bean:message bundle="RESEARCHER_RESOURCES" key="researcher.ResultPublication.backTo.link" />
 		</html:link>
 	</li>
+	<logic:present name="result" property="creator">
 	<bean:write name="result" property="creator.name"/>
+	</logic:present>
 	<logic:equal name="result" property="deletableByCurrentUser" value="true">
 		<li>
 		<html:link page="<%="/resultPublications/prepareDelete.do?"+ parameters%>"><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.ResultPublication.delete" /></html:link> 
