@@ -22,6 +22,7 @@ public class UncaughtExceptionFilter implements Filter {
     public void init(FilterConfig arg0) throws ServletException {
 	String sentryUrl = PropertiesManager.getProperty("sentry.url");
 	if (sentryUrl != null) {
+	    System.out.println("Turning on Sentry: " + sentryUrl);
 	    sentry = new RavenClient(sentryUrl);
 	}
     }
@@ -55,7 +56,7 @@ public class UncaughtExceptionFilter implements Filter {
 		try {
 		    sentry.captureException(e);
 		} catch (Throwable t) {
-		    // no problem
+		    t.printStackTrace();
 		}
 	    }
 	    e.printStackTrace();
