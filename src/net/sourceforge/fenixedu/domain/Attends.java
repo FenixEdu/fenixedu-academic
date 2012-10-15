@@ -49,11 +49,22 @@ public class Attends extends Attends_Base {
 		    for (Grouping grouping : executionCourse.getGroupings()) {
 			if (grouping.getAutomaticEnrolment() && !grouping.getStudentGroups().isEmpty()) {
 			    grouping.addAttends(attends);
-			    int groupNumber = grouping.getStudentGroupsCount() + 1;
-			    grouping.setGroupMaximumNumber(groupNumber);
+
+			    int groupNumber = 1;
+			    final List<StudentGroup> studentGroups = grouping.getStudentGroups();
+			    Collections.sort(studentGroups, StudentGroup.COMPARATOR_BY_GROUP_NUMBER);
+
+			    for (final StudentGroup studentGroup : studentGroups) {
+				if (studentGroup.getGroupNumber() > groupNumber) {
+				    break;
+				}
+				groupNumber = studentGroup.getGroupNumber() + 1;
+			    }
+
+			    grouping.setGroupMaximumNumber(grouping.getStudentGroupsCount() + 1);
 			    try {
-				GroupEnrolment.enrole(grouping.getIdInternal(), null, groupNumber, new ArrayList<String>(), attends
-					.getRegistration().getStudent().getPerson().getUsername());
+				GroupEnrolment.enrole(grouping.getIdInternal(), null, groupNumber, new ArrayList<String>(),
+					attends.getRegistration().getStudent().getPerson().getUsername());
 			    } catch (FenixServiceException e) {
 				throw new Error(e);
 			    }
@@ -76,6 +87,7 @@ public class Attends extends Attends_Base {
     };
 
     public static final Comparator<Attends> ATTENDS_COMPARATOR = new Comparator<Attends>() {
+	@Override
 	public int compare(final Attends attends1, final Attends attends2) {
 	    final ExecutionCourse executionCourse1 = attends1.getExecutionCourse();
 	    final ExecutionCourse executionCourse2 = attends2.getExecutionCourse();
@@ -116,8 +128,8 @@ public class Attends extends Attends_Base {
 	this();
 	final Student student = registration.getStudent();
 	if (student.hasAttends(executionCourse)) {
-	    throw new DomainException("error.cannot.create.multiple.enrolments.for.student.in.execution.course", executionCourse
-		    .getNome(), executionCourse.getExecutionPeriod().getQualifiedName());
+	    throw new DomainException("error.cannot.create.multiple.enrolments.for.student.in.execution.course",
+		    executionCourse.getNome(), executionCourse.getExecutionPeriod().getQualifiedName());
 	}
 	setRegistration(registration);
 	setDisciplinaExecucao(executionCourse);
