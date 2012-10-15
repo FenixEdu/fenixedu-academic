@@ -49,7 +49,7 @@
 	</logger>
 
 	<logger name="net.sourceforge.fenixedu" additivity="false">
-		<level value="info"/>
+		<level value="warn"/>
 		<appender-ref ref="ConsoleAppender"/>
 	</logger>
 
