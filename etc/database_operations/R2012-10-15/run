@@ -43,3 +43,5 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "Create FirstYearShiftsCapacityToggleLog table" createFirstYearShiftsCapacityToggleLogTable.sql
+execute "Add presidentTitle to Process table" addPresidentTitleForProcess.sql
