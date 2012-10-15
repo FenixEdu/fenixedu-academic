@@ -27,6 +27,10 @@ public class UncaughtExceptionFilter implements Filter {
 	@Override
 	public void run() {
 	    try {
+		if (exception.getCause() != null && exception instanceof ServletException) {
+		    sentry.captureException("" + exception.getCause().getMessage(), RavenUtils.getTimestampLong(), "root", 50,
+			    null, exception.getCause());
+		}
 		sentry.captureException("" + exception.getMessage(), RavenUtils.getTimestampLong(), "root", 50, null, exception);
 	    } catch (Throwable t) {
 		t.printStackTrace();
