@@ -7795,6 +7795,7 @@ class phd.thesis.PhdThesisProcess extends phd.PhdProgramProcess {
 	LocalDate conclusionDate;
 	PhdJuryElementsRatificationEntity phdJuryElementsRatificationEntity;
 	String ratificationEntityCustomMessage;
+	MultiLanguageString presidentTitle;
 }
 
 class phd.thesis.meeting.PhdMeetingSchedulingProcess extends phd.PhdProgramProcess {

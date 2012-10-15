@@ -146,6 +146,8 @@
 				<fr:property name="columns" value="60" />
 			</fr:slot>
 		<% } %>
+		
+			<fr:slot name="presidentTitle" />
 		</fr:schema>
 		
 		<fr:destination name="postback" path="<%= "/phdThesisProcess.do?method=setPhdJuryElementsRatificationEntityPostback&processId=" + processId.toString() %>"/>

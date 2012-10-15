@@ -24,6 +24,8 @@ public class SetPhdJuryElementRatificationEntity extends PhdThesisActivity {
 	    process.setRatificationEntityCustomMessage(bean.getRatificationEntityCustomMessage());
 	}
 
+	process.setPresidentTitle(bean.getPresidentTitle());
+
 	return process;
 
     }

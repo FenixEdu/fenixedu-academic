@@ -10,6 +10,8 @@ import net.sourceforge.fenixedu.domain.phd.PhdProgramDocumentUploadBean;
 import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
 
+import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
+
 public class PhdThesisProcessBean implements Serializable {
 
     static private final long serialVersionUID = 1L;
@@ -50,6 +52,8 @@ public class PhdThesisProcessBean implements Serializable {
 
     private LocalDate stateDate;
 
+    private MultiLanguageString presidentTitle;
+
     public PhdThesisProcessBean() {
 	this.documents = new ArrayList<PhdProgramDocumentUploadBean>();
     }
@@ -73,6 +77,7 @@ public class PhdThesisProcessBean implements Serializable {
 	    this.finalGrade = this.thesisProcess.getFinalGrade();
 	    this.phdJuryElementsRatificationEntity = this.thesisProcess.getPhdJuryElementsRatificationEntity();
 	    this.ratificationEntityCustomMessage = this.thesisProcess.getRatificationEntityCustomMessage();
+	    setPresidentTitle(this.thesisProcess.getPresidentTitle());
 	}
     }
 
@@ -262,5 +267,13 @@ public class PhdThesisProcessBean implements Serializable {
 
     public void setStateDate(LocalDate stateDate) {
 	this.stateDate = stateDate;
+    }
+
+    public MultiLanguageString getPresidentTitle() {
+	return presidentTitle;
+    }
+
+    public void setPresidentTitle(MultiLanguageString presidentTitle) {
+	this.presidentTitle = presidentTitle;
     }
 }

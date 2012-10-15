@@ -6,6 +6,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Locale;
 import java.util.ResourceBundle;
 import java.util.TreeSet;
 
@@ -63,6 +64,8 @@ import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
 
 import pt.ist.fenixWebFramework.services.Service;
+import pt.utl.ist.fenix.tools.util.i18n.Language;
+import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 public class PhdThesisProcess extends PhdThesisProcess_Base {
 
@@ -86,6 +89,13 @@ public class PhdThesisProcess extends PhdThesisProcess_Base {
 	    result.addDocuments(bean.getDocuments(), userView.getPerson());
 	    result.setWhenThesisDiscussionRequired(whenThesisDiscussionRequired);
 	    result.setWhenJuryRequired(bean.getWhenThesisDiscussionRequired());
+
+	    String presidentTitlePt = ResourceBundle.getBundle("resources.PhdResources", new Locale("pt", "PT")).getString(
+		    "message.phd.thesis.president.title.default");
+	    String presidentTitleEn = ResourceBundle.getBundle("resources.PhdResources", new Locale("en", "EN")).getString(
+		    "message.phd.thesis.president.title.default");
+
+	    result.setPresidentTitle(new MultiLanguageString(Language.pt, presidentTitlePt).with(Language.en, presidentTitleEn));
 
 	    if (!result.getIndividualProgramProcess().isMigratedProcess()) {
 		new PhdThesisRequestFee(bean.getProcess());
