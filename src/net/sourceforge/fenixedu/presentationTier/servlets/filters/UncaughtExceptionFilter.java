@@ -17,7 +17,24 @@ import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.presentationTier.util.ExceptionInformation;
 
 public class UncaughtExceptionFilter implements Filter {
-    private RavenClient sentry = null;
+    public class RavenCommunicator extends Thread {
+	private final Throwable exception;
+
+	public RavenCommunicator(Throwable exception) {
+	    this.exception = exception;
+	}
+
+	@Override
+	public void run() {
+	    try {
+		sentry.captureException("" + exception.getMessage(), RavenUtils.getTimestampLong(), "root", 50, null, exception);
+	    } catch (Throwable t) {
+		t.printStackTrace();
+	    }
+	}
+    }
+
+    private static RavenClient sentry = null;
 
     @Override
     public void init(FilterConfig arg0) throws ServletException {
@@ -54,11 +71,7 @@ public class UncaughtExceptionFilter implements Filter {
 	    }
 
 	    if (sentry != null) {
-		try {
-		    sentry.captureException("" + e.getMessage(), RavenUtils.getTimestampLong(), "root", 50, null, e);
-		} catch (Throwable t) {
-		    t.printStackTrace();
-		}
+		new RavenCommunicator(e).start();
 	    }
 	    e.printStackTrace();
 	    throw new RuntimeException(e);
