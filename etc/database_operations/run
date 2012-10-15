@@ -43,3 +43,4 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "Create FirstYearShiftsCapacityToggleLog table" createFirstYearShiftsCapacityToggleLogTable.sql
