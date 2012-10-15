@@ -51,6 +51,35 @@ public class ISTConnectDA extends ExternalInterfaceDispatchAction {
 	return null;
     }
 
+    public ActionForward getBasicUserData(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
+	if (doLogin(mapping, actionForm, request, response)) {
+	    final String istID = (String) getFromRequest(request, "istID");
+	    final Person person = Person.readPersonByIstUsername(istID);
+
+	    final JSONObject jsonObject = new JSONObject();
+
+	    if (person != null) {
+		jsonObject.put("externalId", person.getExternalId());
+		jsonObject.put("className", person.getClass().getName());
+
+		jsonObject.put("partyName", person.getPartyName().toString());
+		jsonObject.put("nickname", person.getNickname());
+
+		JSONArray jsonList = new JSONArray();
+		for (final net.sourceforge.fenixedu.domain.Role role : person.getPersonRolesSet()) {
+		    jsonList.add(role.getRoleType().getName());
+		}
+		jsonObject.put("roles", jsonList);
+	    }
+
+	    writeJSONObject(response, jsonObject);
+	} else {
+	    response.sendError(404, "Not authorized");
+	}
+	return null;
+    }
+
     private void writeJSONObject(HttpServletResponse response, final JSONArray jsonObject) throws IOException {
 	final ServletOutputStream outputStream = response.getOutputStream();
 	outputStream.write(jsonObject.toJSONString().getBytes());
