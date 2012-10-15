@@ -198,8 +198,9 @@ public class SendAcademicServiceRequestToExternalEntity extends FenixService {
 		final Response response = client.handle(request);
 
 		if (response.getStatus().getCode() != 200) {
-		    throw new DomainException(response.getStatus().getThrowable() != null ? response.getStatus().getThrowable()
-			    .getMessage() : "error.equivalence.externalEntity");
+		    String exceptionString = response.getStatus().getThrowable() != null ? response.getStatus().getThrowable()
+			    .getMessage() : "error.equivalence.externalEntity";
+		    throw new DomainException(exceptionString);
 		}
 	    } finally {
 		try {
@@ -264,14 +265,16 @@ public class SendAcademicServiceRequestToExternalEntity extends FenixService {
 		out.putNextEntry(new ZipEntry(filename));
 		//if (file.hasLocalContent()) {
 		out.write(file.getContents());
-		//} else {
-		//    final byte[] content = FileUtils.readFileInBytes("/tmp/tmp.tmp");
-		//    out.write(content);
-		//}
+		//		} else {
+		//		    final byte[] content = FileUtils.readFileInBytes("/tmp/tmp.tmp");
+		//		    out.write(content);
+		//		}
 		out.closeEntry();
 	    }
 
 	    //joantune: here we are exporting the curricular plan of the active degree (didn't felt pain! at all!)
+	    // when the origin degree registration is not active we must get the lastStudentCurricularPlan, 
+	    // wich is also true for the cases where the registration is active
 	    if (registration.getLastStudentCurricularPlan().hasRoot()) {
 
 		StyledExcelSpreadsheet spreadsheet = new StyledExcelSpreadsheet("Disciplinas");
@@ -317,7 +320,7 @@ public class SendAcademicServiceRequestToExternalEntity extends FenixService {
 		//		titleStyle.setBorderRight(HSSFCellStyle.BORDER_THIN);
 		//		titleStyle.setBorderLeft(HSSFCellStyle.BORDER_THIN);
 
-		RootCourseGroup rootGroup = registration.getActiveDegreeCurricularPlan().getRoot();
+		RootCourseGroup rootGroup = registration.getLastDegreeCurricularPlan().getRoot();
 		buildHeaderForCurricularGroupsFile(registration, spreadsheet, executionYear);
 		buildCurricularCoursesGroups(executionYear, rootGroup
 			.getSortedChildContextsWithCourseGroupsByExecutionYear(executionYear), spreadsheet,
@@ -416,7 +419,7 @@ public class SendAcademicServiceRequestToExternalEntity extends FenixService {
     private static void buildHeaderForCurricularGroupsFile(Registration registration, StyledExcelSpreadsheet spreadsheet,
 	    ExecutionYear executionYear) {
 	spreadsheet.newRow();
-	String degreeNameAndYear = registration.getActiveDegreeCurricularPlan().getDegree().getNameI18N().toString() + " - "
+	String degreeNameAndYear = registration.getLastDegreeCurricularPlan().getDegree().getNameI18N().toString() + " - "
 		+ executionYear.getName();
 	spreadsheet.addCell(degreeNameAndYear, spreadsheet.getExcelStyle().getTitleStyle());
 	spreadsheet.newRow();
