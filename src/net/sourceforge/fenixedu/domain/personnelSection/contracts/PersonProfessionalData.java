@@ -232,6 +232,7 @@ public class PersonProfessionalData extends PersonProfessionalData_Base {
 			    || (dominantPersonProfessionalRegimeDays == thisRegimeDays && (dominantPersonProfessionalRegime == null || regime
 				    .isAfter(dominantPersonProfessionalRegime)))) {
 			dominantPersonProfessionalRegime = regime;
+			dominantPersonProfessionalRegimeDays = thisRegimeDays;
 		    }
 		}
 	    }
