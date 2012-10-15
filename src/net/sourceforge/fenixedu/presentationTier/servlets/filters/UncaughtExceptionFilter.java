@@ -70,10 +70,14 @@ public class UncaughtExceptionFilter implements Filter {
 			ExceptionInformation.buildUncaughtExceptionInfo((HttpServletRequest) request, e));
 	    }
 
-	    if (sentry != null) {
-		new RavenCommunicator(e).start();
-	    }
 	    e.printStackTrace();
+	    if (sentry != null) {
+		try {
+		    new RavenCommunicator(e).start();
+		} catch (Throwable t) {
+		    t.printStackTrace();
+		}
+	    }
 	    throw new RuntimeException(e);
 	}
     }
