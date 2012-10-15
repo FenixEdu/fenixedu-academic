@@ -348,10 +348,22 @@ public class Receipt extends Receipt_Base {
     }
 
     private void checkRulesToAnnul() {
-	if (hasAnyCreditNotes()) {
+	if (hasAnyActiveCreditNotes()) {
 	    throw new DomainException("error.accounting.Receipt.cannot.annul.receipts.with.credit.notes");
 	}
 
+    }
+
+    private boolean hasAnyActiveCreditNotes() {
+	List<CreditNote> creditNotes = getCreditNotes();
+
+	for (CreditNote creditNote : creditNotes) {
+	    if (!creditNote.isAnnulled()) {
+		return true;
+	    }
+	}
+
+	return false;
     }
 
     public boolean isActive() {
