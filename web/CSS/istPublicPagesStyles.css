@@ -35,6 +35,7 @@ body {
 @font-face {
 	font-family: 'KlavikaBold';
 	src: url('../images/type/klavikaboldbold-webfont.eot');
+	src: url('../images/type/klavikaboldbold-webfont.eot?#iefix') format('embedded-opentype');
 	src: local('☺'), url('../images/type/klavikaboldbold-webfont.woff') format('woff'), url('../images/type/klavikaboldbold-webfont.ttf') format('truetype'), url('../images/type/klavikaboldbold-webfont.svg#webfontBUN34PZS') format('svg');
 	font-weight: bold;
 	font-style: normal;
@@ -43,6 +44,7 @@ body {
 @font-face {
 	font-family: 'KlavikaRegularPlain';
 	src: url('../images/type/klavikaregular-plain-webfont.eot');
+	src: url('../images/type/klavikaregular-plain-webfont.eot?#iefix') format('embedded-opentype');
 	src: local('☺'), url('../images/type/klavikaregular-plain-webfont.woff') format('woff'), url('../images/type/klavikaregular-plain-webfont.ttf') format('truetype'), url('../images/type/klavikaregular-plain-webfont.svg#webfontDvaJrdUe') format('svg');
 	font-weight: normal;
 	font-style: normal;
@@ -51,6 +53,7 @@ body {
 @font-face {
 	font-family: 'KlavikaLightPlain';
 	src: url('../images/type/klavikalight-plain-webfont.eot');
+	src: url('../images/type/klavikalight-plain-webfont.eot?#iefix') format('embedded-opentype');
 	src: local('☺'), url('../images/images/type/klavikalight-plain-webfont.woff') format('woff'), url('../images/type/klavikalight-plain-webfont.ttf') format('truetype'), url('../images/type/klavikalight-plain-webfont.svg#webfontpalXHmZY') format('svg');
 	font-weight: normal;
 	font-style: normal;
@@ -59,6 +62,7 @@ body {
 @font-face {
 	font-family: 'KlavikaMediumItalic';
 	src: url('../images/type/klavikamedium-italic-webfont.eot');
+	src: url('../images/type/klavikamedium-italic-webfont.eot?#iefix') format('embedded-opentype');
 	src: local('☺'), url('../images/type/klavikamedium-italic-webfont.woff') format('woff'), url('../images/type/klavikamedium-italic-webfont.ttf') format('truetype'), url('../images/type/klavikamedium-italic-webfont.svg#webfontQyMG82IJ') format('svg');
 	font-weight: normal;
 	font-style: normal;
@@ -67,6 +71,7 @@ body {
 @font-face {
 	font-family: 'KlavikaRegularItalic';
 	src: url('../images/type/klavikaregular-italic-webfont.eot');
+	src: url('../images/type/klavikaregular-italic-webfont.eot?#iefix') format('embedded-opentype');
 	src: local('☺'), url('../images/type/klavikaregular-italic-webfont.woff') format('woff'), url('../images/type/klavikaregular-italic-webfont.ttf') format('truetype'), url('../images/type/klavikaregular-italic-webfont.svg#webfontPhNFtUba') format('svg');
 	font-weight: normal;
 	font-style: normal;
