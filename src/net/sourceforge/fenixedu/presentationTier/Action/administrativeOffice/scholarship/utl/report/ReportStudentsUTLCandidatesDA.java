@@ -58,12 +58,12 @@ public class ReportStudentsUTLCandidatesDA extends FenixDispatchAction {
 	}
 
 	request.setAttribute("report", report);
-	
+
 	List<StudentLine> correctStudentLines = new ArrayList<StudentLine>();
 	List<StudentLine> erroneousStudentLines = new ArrayList<StudentLine>();
-	
+
 	erroneousStudentLines.addAll(report.getErroneousStudentLines());
-	
+
 	for (StudentLine studentLine : report.getCorrectStudentLines()) {
 	    if (studentLine.isAbleToReadAllValues()) {
 		correctStudentLines.add(studentLine);
@@ -113,11 +113,11 @@ public class ReportStudentsUTLCandidatesDA extends FenixDispatchAction {
 
 	ReportStudentsUTLCandidates report = null;
 	if (bean.getForFirstYear()) {
+	    report = new ReportStudentsUTLCandidatesForOneStudentFirstYear(bean.getExecutionYear(),
+		    Student.readStudentByNumber(bean.getStudentNumber()));
+	} else {
 	    report = new ReportStudentsUTLCandidatesForOneStudent(bean.getExecutionYear(), Student.readStudentByNumber(bean
 		    .getStudentNumber()));
-	} else {
-	    report = new ReportStudentsUTLCandidatesForOneStudent(bean.getExecutionYear(),
-		    Student.readStudentByNumber(bean.getStudentNumber()));
 	}
 
 	request.setAttribute("report", report);

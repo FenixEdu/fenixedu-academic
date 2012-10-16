@@ -3,16 +3,17 @@ package net.sourceforge.fenixedu.presentationTier.Action.administrativeOffice.sc
 import java.util.ResourceBundle;
 
 import net.sourceforge.fenixedu.domain.ExecutionYear;
+import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.util.Money;
 
 import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.joda.time.LocalDate;
 
-public class ReportStudentsUTLCandidatesForFirstYear extends ReportStudentsUTLCandidates {
+public class ReportStudentsUTLCandidatesForOneStudentFirstYear extends ReportStudentsUTLCandidatesForOneStudent {
 
-    public ReportStudentsUTLCandidatesForFirstYear(final ExecutionYear forExecutionYear, final HSSFSheet sheet) {
-	super(forExecutionYear, sheet);
+    public ReportStudentsUTLCandidatesForOneStudentFirstYear(final ExecutionYear forExecutionYear, final Student student) {
+	super(forExecutionYear, student);
     }
 
     @Override
@@ -60,22 +61,22 @@ public class ReportStudentsUTLCandidatesForFirstYear extends ReportStudentsUTLCa
 		addCellValue(row, onNullEmptyString(degreeCode), 7);
 		addCellValue(row, onNullEmptyString(degreeName), 8);
 		addCellValue(row, onNullEmptyString(degreeTypeName), 9);
-		addCellValue(row, "", 10);
-		addCellValue(row, onNullEmptyString(firstEnrolmentOnCurrentExecutionYear), 11);
-		addCellValue(row, onNullEmptyString(gratuityAmount), 12);
-		addCellValue(row, onNullEmptyString(numberOfMonthsExecutionYear), 13);
-		addCellValue(row, onNullEmptyString(firstMonthOfPayment), 14);
-		addCellValue(row, onNullEmptyString(ownerOfCETQualification), 15);
-		addCellValue(row, onNullEmptyString(degreeQualificationOwner), 16);
-		addCellValue(row, onNullEmptyString(masterQualificationOwner), 17);
-		addCellValue(row, onNullEmptyString(phdQualificationOwner), 18);
-		addCellValue(row, onNullEmptyString(ownerOfCollegeQualification), 19);
-		addCellValue(row, onNullEmptyString(observations), 20);
-		addCellValue(row, onNullEmptyString(regime), 21);
-		addCellValue(row, onNullEmptyString(numberOfDegreeCurricularYears), 22);
-		addCellValue(row, onNullEmptyString(countNumberOfEnrolmentsYearsSinceRegistrationStart), 23);
-		addCellValue(row, onNullEmptyString(numberOfEnrolledECTS), 24);
-		addCellValue(row, onNullEmptyString(nif), 25);
+		addCellValue(row, onNullEmptyString(firstEnrolmentOnCurrentExecutionYear), 10);
+		addCellValue(row, onNullEmptyString(gratuityAmount), 11);
+		addCellValue(row, onNullEmptyString(numberOfMonthsExecutionYear), 12);
+		addCellValue(row, onNullEmptyString(firstMonthOfPayment), 13);
+		addCellValue(row, onNullEmptyString(ownerOfCETQualification), 14);
+		addCellValue(row, onNullEmptyString(degreeQualificationOwner), 15);
+		addCellValue(row, onNullEmptyString(masterQualificationOwner), 16);
+		addCellValue(row, onNullEmptyString(phdQualificationOwner), 17);
+		addCellValue(row, onNullEmptyString(ownerOfCollegeQualification), 18);
+		addCellValue(row, onNullEmptyString(observations), 19);
+		addCellValue(row, onNullEmptyString(regime), 20);
+		addCellValue(row, onNullEmptyString(numberOfDegreeCurricularYears), 21);
+		addCellValue(row, onNullEmptyString(countNumberOfEnrolmentsYearsSinceRegistrationStart), 22);
+		addCellValue(row, onNullEmptyString(numberOfEnrolledECTS), 23);
+		addCellValue(row, onNullEmptyString(nif), 24);
+
 	    } catch (Exception e) {
 		e.printStackTrace();
 	    }
@@ -101,22 +102,21 @@ public class ReportStudentsUTLCandidatesForFirstYear extends ReportStudentsUTLCa
 	addHeaderCell(sheet, getHeaderInBundle(bundle, "degreeCode"), 7);
 	addHeaderCell(sheet, getHeaderInBundle(bundle, "degreeName"), 8);
 	addHeaderCell(sheet, getHeaderInBundle(bundle, "degreeTypeName"), 9);
-	addHeaderCell(sheet, getHeaderInBundle(bundle, "code"), 10);
-	addHeaderCell(sheet, getHeaderInBundle(bundle, "firstEnrolmentOnCurrentExecutionYear"), 11);
-	addHeaderCell(sheet, getHeaderInBundle(bundle, "gratuityAmount"), 12);
-	addHeaderCell(sheet, getHeaderInBundle(bundle, "numberOfMonthsExecutionYear"), 13);
-	addHeaderCell(sheet, getHeaderInBundle(bundle, "firstMonthOfPayment"), 14);
-	addHeaderCell(sheet, getHeaderInBundle(bundle, "ownerOfCETQualification"), 15);
-	addHeaderCell(sheet, getHeaderInBundle(bundle, "degreeQualificationOwner"), 16);
-	addHeaderCell(sheet, getHeaderInBundle(bundle, "masterQualificationOwner"), 17);
-	addHeaderCell(sheet, getHeaderInBundle(bundle, "phdQualificationOwner"), 18);
-	addHeaderCell(sheet, getHeaderInBundle(bundle, "ownerOfCollegeQualification"), 19);
-	addHeaderCell(sheet, getHeaderInBundle(bundle, "observations"), 20);
-	addHeaderCell(sheet, getHeaderInBundle(bundle, "regime"), 21);
-	addHeaderCell(sheet, getHeaderInBundle(bundle, "numberOfDegreeCurricularYears"), 22);
-	addHeaderCell(sheet, getHeaderInBundle(bundle, "ingression.year.on.cycle.studies.count"), 23);
-	addHeaderCell(sheet, getHeaderInBundle(bundle, "numberOfEnrolledECTS"), 24);
-	addHeaderCell(sheet, getHeaderInBundle(bundle, "nif"), 25);
+	addHeaderCell(sheet, getHeaderInBundle(bundle, "firstEnrolmentOnCurrentExecutionYear"), 10);
+	addHeaderCell(sheet, getHeaderInBundle(bundle, "gratuityAmount"), 11);
+	addHeaderCell(sheet, getHeaderInBundle(bundle, "numberOfMonthsExecutionYear"), 12);
+	addHeaderCell(sheet, getHeaderInBundle(bundle, "firstMonthOfPayment"), 13);
+	addHeaderCell(sheet, getHeaderInBundle(bundle, "ownerOfCETQualification"), 14);
+	addHeaderCell(sheet, getHeaderInBundle(bundle, "degreeQualificationOwner"), 15);
+	addHeaderCell(sheet, getHeaderInBundle(bundle, "masterQualificationOwner"), 16);
+	addHeaderCell(sheet, getHeaderInBundle(bundle, "phdQualificationOwner"), 17);
+	addHeaderCell(sheet, getHeaderInBundle(bundle, "ownerOfCollegeQualification"), 18);
+	addHeaderCell(sheet, getHeaderInBundle(bundle, "observations"), 19);
+	addHeaderCell(sheet, getHeaderInBundle(bundle, "regime"), 20);
+	addHeaderCell(sheet, getHeaderInBundle(bundle, "numberOfDegreeCurricularYears"), 21);
+	addHeaderCell(sheet, getHeaderInBundle(bundle, "ingression.year.on.cycle.studies.count"), 22);
+	addHeaderCell(sheet, getHeaderInBundle(bundle, "numberOfEnrolledECTS"), 23);
+	addHeaderCell(sheet, getHeaderInBundle(bundle, "nif"), 24);
 
     }
 
