@@ -1,0 +1,1 @@
+alter table `PROFESSIONAL_REGIME` add `CATEGORY_TYPE` text;

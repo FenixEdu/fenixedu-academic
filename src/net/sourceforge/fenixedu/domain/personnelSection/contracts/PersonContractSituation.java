@@ -3,6 +3,7 @@ package net.sourceforge.fenixedu.domain.personnelSection.contracts;
 import java.math.BigDecimal;
 
 import net.sourceforge.fenixedu.domain.RootDomainObject;
+import net.sourceforge.fenixedu.domain.teacher.CategoryType;
 
 import org.joda.time.DateTime;
 import org.joda.time.Days;
@@ -136,7 +137,7 @@ public class PersonContractSituation extends PersonContractSituation_Base {
 
     private ProfessionalRegime getDominantProfessionalRegime(Interval interval) {
 	return getGiafProfessionalData().getPersonProfessionalData().getDominantProfessionalRegime(getGiafProfessionalData(),
-		interval);
+		interval, CategoryType.TEACHER);
     }
 
     public PersonProfessionalExemption getPersonProfessionalExemption() {

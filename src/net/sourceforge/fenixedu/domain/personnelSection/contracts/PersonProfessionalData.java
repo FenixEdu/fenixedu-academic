@@ -221,12 +221,15 @@ public class PersonProfessionalData extends PersonProfessionalData_Base {
 	return lastPersonProfessionalRegime == null ? null : lastPersonProfessionalRegime.getProfessionalRegime();
     }
 
-    public ProfessionalRegime getDominantProfessionalRegime(GiafProfessionalData giafProfessionalData, Interval interval) {
+    public ProfessionalRegime getDominantProfessionalRegime(GiafProfessionalData giafProfessionalData, Interval interval,
+	    CategoryType categoryType) {
 	PersonProfessionalRegime dominantPersonProfessionalRegime = null;
 	int dominantPersonProfessionalRegimeDays = 0;
 	if (giafProfessionalData != null) {
 	    for (final PersonProfessionalRegime regime : giafProfessionalData.getValidPersonProfessionalRegimes()) {
-		if (regime.overlaps(interval)) {
+		if (regime.overlaps(interval)
+			&& (regime.getProfessionalRegime().getCategoryType() == null || regime.getProfessionalRegime()
+				.getCategoryType().equals(categoryType))) {
 		    int thisRegimeDays = regime.getDaysInInterval(interval);
 		    if (dominantPersonProfessionalRegimeDays < thisRegimeDays
 			    || (dominantPersonProfessionalRegimeDays == thisRegimeDays && (dominantPersonProfessionalRegime == null || regime

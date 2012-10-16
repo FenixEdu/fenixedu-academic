@@ -1465,7 +1465,7 @@ constructor="description, state, modifiedBy">
 <schema name="view.person.personProfessionalRegime" type="net.sourceforge.fenixedu.domain.personnelSection.contracts.PersonProfessionalRegime" bundle="CONTRACTS_RESOURCES">
 	<slot name="beginDate"/>
 	<slot name="endDate"/>
-	<slot name="professionalRegime" key="label.regime" layout="values" schema="view.professionalRegime.name"/>
+	<slot name="professionalRegime" key="label.regime" layout="values-dash" schema="view.professionalRegime.nameAndType"/>
 </schema>
 
 <schema name="view.person.personProfessionalRelation" type="net.sourceforge.fenixedu.domain.personnelSection.contracts.PersonProfessionalRelation" bundle="CONTRACTS_RESOURCES">
@@ -1526,6 +1526,11 @@ constructor="description, state, modifiedBy">
 
 <schema name="view.professionalRegime.name" type="net.sourceforge.fenixedu.domain.personnelSection.contracts.ProfessionalRegime" bundle="CONTRACTS_RESOURCES">
 	<slot name="name" key="label.regime" layout="null-as-label"/>
+</schema>
+
+<schema name="view.professionalRegime.nameAndType" type="net.sourceforge.fenixedu.domain.personnelSection.contracts.ProfessionalRegime" bundle="CONTRACTS_RESOURCES">
+	<slot name="name" key="label.regime" layout="null-as-label"/>
+	<slot name="categoryType" key="label.type" layout="null-as-label"/>
 </schema>
 
 <schema name="view.professionalCategory.name" type="net.sourceforge.fenixedu.domain.personnelSection.contracts.ProfessionalCategory" bundle="CONTRACTS_RESOURCES">

@@ -6615,6 +6615,7 @@ class personnelSection.contracts.ProfessionalRegime extends DomainObject {
     MultiLanguageString name;
     Integer weighting;
     BigDecimal fullTimeEquivalent;
+    CategoryType categoryType;
 }
 
 class personnelSection.contracts.PersonProfessionalRegime extends DomainObject {
