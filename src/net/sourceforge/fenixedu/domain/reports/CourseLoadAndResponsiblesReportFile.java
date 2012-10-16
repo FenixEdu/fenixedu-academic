@@ -6,6 +6,7 @@ import net.sourceforge.fenixedu.domain.Branch;
 import net.sourceforge.fenixedu.domain.CompetenceCourse;
 import net.sourceforge.fenixedu.domain.CourseLoad;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
+import net.sourceforge.fenixedu.domain.CurricularCourseScope.DegreeModuleScopeCurricularCourseScope;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.DegreeModuleScope;
@@ -14,7 +15,6 @@ import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.Professorship;
 import net.sourceforge.fenixedu.domain.ShiftType;
-import net.sourceforge.fenixedu.domain.CurricularCourseScope.DegreeModuleScopeCurricularCourseScope;
 import net.sourceforge.fenixedu.domain.degreeStructure.CompetenceCourseInformation;
 import net.sourceforge.fenixedu.domain.degreeStructure.CompetenceCourseLoad;
 import net.sourceforge.fenixedu.domain.degreeStructure.Context;
@@ -50,8 +50,8 @@ public class CourseLoadAndResponsiblesReportFile extends CourseLoadAndResponsibl
 	spreadsheet.setHeader("Nome Curso");
 	spreadsheet.setHeader("Sigla Curso");
 	spreadsheet.setHeader("Nome Disciplina");
-	spreadsheet.setHeader("C�digo Disciplina Compet�ncia");
-	spreadsheet.setHeader("C�digo Disciplina de Execu��o");
+	spreadsheet.setHeader("Código Disciplina Competência");
+	spreadsheet.setHeader("Código Disciplina de Execução");
 	spreadsheet.setHeader("Ano Lectivo");
 	spreadsheet.setHeader("Ano Curricular");
 	spreadsheet.setHeader("Semestre Lectivo");
@@ -59,21 +59,24 @@ public class CourseLoadAndResponsiblesReportFile extends CourseLoadAndResponsibl
 	spreadsheet.setHeader("Responsaveis");
 	spreadsheet.setHeader("Departamento");
 	spreadsheet.setHeader("Area Cientifica");
-	spreadsheet.setHeader("Cr�ditos ECTS");
+	spreadsheet.setHeader("Créditos ECTS");
 	spreadsheet.setHeader("Carga Horaria Total");
 	spreadsheet.setHeader("Carga Horaria de Contacto");
 	spreadsheet.setHeader("Carga Trabalho Autonomo");
 	spreadsheet.setHeader("Carga Horaria Teoricas");
 	spreadsheet.setHeader("Carga Horaria Praticas");
-	spreadsheet.setHeader("Carga Horaria Teorico-Pr�tica");
+	spreadsheet.setHeader("Carga Horaria Teorico-Prática");
 	spreadsheet.setHeader("Carga Horaria Laboratorial");
-	spreadsheet.setHeader("Carga Horaria Semin�rios");
+	spreadsheet.setHeader("Carga Horaria Seminários");
 	spreadsheet.setHeader("Carga Horaria Problemas");
 	spreadsheet.setHeader("Carga Horaria Trabalho de Campo");
 	spreadsheet.setHeader("Carga Horaria Estagio");
 	spreadsheet.setHeader("Carga Horaria Orientacao Tutorial");
 	spreadsheet.setHeader("OID execucao disciplina");
 	spreadsheet.setHeader("OID disciplina competencia");
+
+	spreadsheet.setHeader("Tipo disciplina");
+	spreadsheet.setHeader("Valor unitário disciplina (ck)");
 
 	for (Degree degree : Degree.readNotEmptyDegrees()) {
 	    if (degree.getDegreeType().equals(getDegreeType())) {
@@ -145,6 +148,10 @@ public class CourseLoadAndResponsiblesReportFile extends CourseLoadAndResponsibl
 	row.setCell(printBigDecimal(findCourseLoad(competenceCourseLoad, executionCourse, ShiftType.TUTORIAL_ORIENTATION)));
 	row.setCell(executionCourse != null ? executionCourse.getExternalId() : "");
 	row.setCell(curricularCourse.hasCompetenceCourse() ? curricularCourse.getCompetenceCourse().getExternalId() : "");
+
+	row.setCell(executionCourse != null ? (executionCourse.isDissertation() ? "DISS" : executionCourse
+		.getProjectTutorialCourse() ? "A" : "B") : "");
+	row.setCell(executionCourse != null ? executionCourse.getUnitCreditValue().toString() : "");
     }
 
     private CompetenceCourseLoad findCompetenceCourseLoad(final CurricularCourse curricularCourse,
