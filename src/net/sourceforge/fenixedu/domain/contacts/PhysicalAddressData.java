@@ -120,6 +120,10 @@ public class PhysicalAddressData implements Serializable {
 	return this;
     }
 
+    private String getCountryOfResidenceName() {
+	return getCountryOfResidence() == null ? StringUtils.EMPTY : getCountryOfResidence().getName();
+    }
+
     public Country getCountryOfResidence() {
 	return this.countryOfResidence;
     }
@@ -138,7 +142,7 @@ public class PhysicalAddressData implements Serializable {
 		    && getParishOfResidence().equals(data.getParishOfResidence())
 		    && getDistrictSubdivisionOfResidence().equals(data.getDistrictSubdivisionOfResidence())
 		    && getDistrictOfResidence().equals(data.getDistrictOfResidence())
-		    && getCountryOfResidence().equals(data.getCountryOfResidence());
+		    && getCountryOfResidenceName().equals(data.getCountryOfResidenceName());
 	} else {
 	    return false;
 	}
