@@ -265,16 +265,13 @@ public class ParkingParty extends ParkingParty_Base {
 		    occupations.add(getOccupation(employeeType, teacher.getTeacherId(), currentWorkingDepartmentName,
 			    currentExecutionSemester.getBeginDateYearMonthDay().toLocalDate(), currentExecutionSemester
 				    .getEndDateYearMonthDay().toLocalDate()));
-		} else {
-		    occupations
-			    .add(getOccupation(employeeType, teacher.getTeacherId(), currentWorkingDepartmentName, null, null));
 		}
 	    }
 	    PersonContractSituation currentEmployeeContractSituation = person.hasEmployee() ? person.getEmployee()
 		    .getCurrentEmployeeContractSituation() : null;
 	    if (currentEmployeeContractSituation != null) {
 		Unit currentUnit = person.getEmployee().getCurrentWorkingPlace();
-		String thisOccupation = getOccupation(RoleType.EMPLOYEE.getLocalizedName(), teacher.getPerson().getEmployee()
+		String thisOccupation = getOccupation(RoleType.EMPLOYEE.getLocalizedName(), person.getEmployee()
 			.getEmployeeNumber().toString(), currentUnit == null ? null : currentUnit.getName(),
 			currentEmployeeContractSituation.getBeginDate(), currentEmployeeContractSituation.getEndDate());
 		occupations.add(thisOccupation);
