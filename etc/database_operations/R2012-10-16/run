@@ -43,3 +43,5 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "Alter table ProfessionalRegime" alterTableProfessionalRegime.sql
+execute "Update attributed credits reduction" updateAttributedCreditsReduction.sql IST
