@@ -112,6 +112,7 @@ import net.sourceforge.fenixedu.domain.person.IdDocumentTypeObject;
 import net.sourceforge.fenixedu.domain.person.MaritalStatus;
 import net.sourceforge.fenixedu.domain.person.PersonName;
 import net.sourceforge.fenixedu.domain.person.RoleType;
+import net.sourceforge.fenixedu.domain.personnelSection.contracts.PersonContractSituation;
 import net.sourceforge.fenixedu.domain.personnelSection.contracts.PersonProfessionalData;
 import net.sourceforge.fenixedu.domain.phd.alert.PhdAlertMessage;
 import net.sourceforge.fenixedu.domain.phd.candidacy.PHDProgramCandidacy;
@@ -128,6 +129,7 @@ import net.sourceforge.fenixedu.domain.space.Space;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.RegistrationProtocol;
 import net.sourceforge.fenixedu.domain.teacher.Career;
+import net.sourceforge.fenixedu.domain.teacher.CategoryType;
 import net.sourceforge.fenixedu.domain.teacher.DegreeTeachingService;
 import net.sourceforge.fenixedu.domain.teacher.ProfessionalCareer;
 import net.sourceforge.fenixedu.domain.teacher.TeachingCareer;
@@ -1342,8 +1344,8 @@ public class Person extends Person_Base {
 	if (hasResearcher()) {
 	    getResearcher().delete();
 	}
-	
-	for(PreferredPublication preferred : getPreferredPublication()) {
+
+	for (PreferredPublication preferred : getPreferredPublication()) {
 	    preferred.delete();
 	}
 
@@ -1833,7 +1835,8 @@ public class Person extends Person_Base {
 	return people;
     }
 
-    public static Collection<Person> findPerson(final String name, final int size, final com.google.common.base.Predicate<Person> predicate) {
+    public static Collection<Person> findPerson(final String name, final int size,
+	    final com.google.common.base.Predicate<Person> predicate) {
 	final Collection<Person> people = new ArrayList<Person>();
 	for (final PersonName personName : PersonName.findPerson(name, size, predicate)) {
 	    people.add(personName.getPerson());
@@ -2461,17 +2464,19 @@ public class Person extends Person_Base {
 	    if (!teacher.isInactive(actualExecutionSemester) && !teacher.isMonitor(actualExecutionSemester)) {
 		return PartyClassification.TEACHER;
 	    }
-	    TeacherAuthorization teacherAuthorization = teacher.getTeacherAuthorization(actualExecutionSemester);
-	    if (teacherAuthorization != null && teacherAuthorization instanceof ExternalTeacherAuthorization
-		    && ((ExternalTeacherAuthorization) teacherAuthorization).getCanPark()) {
-		return PartyClassification.TEACHER;
-	    }
 	}
 	if (getEmployee() != null && getEmployee().isActive()) {
 	    return PartyClassification.EMPLOYEE;
 	}
 	if (getGrantOwner() != null && getGrantOwner().hasCurrentContract()) {
 	    return PartyClassification.GRANT_OWNER;
+	}
+	if (getPersonRole(RoleType.GRANT_OWNER) != null && getEmployee() != null) {
+	    PersonContractSituation currentGrantOwnerContractSituation = getPersonProfessionalData() != null ? getPersonProfessionalData()
+		    .getCurrentPersonContractSituationByCategoryType(CategoryType.GRANT_OWNER) : null;
+	    if (currentGrantOwnerContractSituation != null) {
+		return PartyClassification.GRANT_OWNER;
+	    }
 	}
 	if (getResearcher() != null && getResearcher().isActiveContractedResearcher()) {
 	    return PartyClassification.RESEARCHER;
