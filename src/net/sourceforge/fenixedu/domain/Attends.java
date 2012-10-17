@@ -51,7 +51,7 @@ public class Attends extends Attends_Base {
 			    grouping.addAttends(attends);
 
 			    int groupNumber = 1;
-			    final List<StudentGroup> studentGroups = grouping.getStudentGroups();
+			    final List<StudentGroup> studentGroups = new ArrayList<StudentGroup>(grouping.getStudentGroups());
 			    Collections.sort(studentGroups, StudentGroup.COMPARATOR_BY_GROUP_NUMBER);
 
 			    for (final StudentGroup studentGroup : studentGroups) {
