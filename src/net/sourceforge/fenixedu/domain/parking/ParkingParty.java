@@ -750,13 +750,13 @@ public class ParkingParty extends ParkingParty_Base {
 	    if (getParkingGroup().getGroupName().equalsIgnoreCase("Docentes")) {
 		return person.getTeacher() != null && person.getTeacher().getCurrentWorkingDepartment() != null;
 	    }
-	    if (getParkingGroup().getGroupName().equalsIgnoreCase("N�o Docentes")) {
+	    if (getParkingGroup().getGroupName().equalsIgnoreCase("Não Docentes")) {
 		return person.getEmployee() != null && person.getEmployee().getCurrentWorkingPlace() != null;
 	    }
 	    if (getParkingGroup().getGroupName().equalsIgnoreCase("Especiais")) {
 		return person.getPartyClassification() != PartyClassification.PERSON;
 	    }
-	    if (getParkingGroup().getGroupName().equalsIgnoreCase("2� ciclo")) {
+	    if (getParkingGroup().getGroupName().equalsIgnoreCase("2º ciclo")) {
 		if (person.hasStudent()) {
 		    return canRequestUnlimitedCard(person.getStudent());
 		} else {
@@ -764,9 +764,19 @@ public class ParkingParty extends ParkingParty_Base {
 		}
 	    }
 	    if (getParkingGroup().getGroupName().equalsIgnoreCase("Bolseiros")) {
-		return person.hasGrantOwner() && person.getGrantOwner().hasCurrentContract();
+		if (person.getGrantOwner() != null && person.getGrantOwner().hasCurrentContract()) {
+		    return true;
+		} else if (person.getPersonRole(RoleType.GRANT_OWNER) != null && person.getEmployee() != null) {
+		    PersonContractSituation currentGrantOwnerContractSituation = person.getPersonProfessionalData() != null ? person
+			    .getPersonProfessionalData()
+			    .getCurrentPersonContractSituationByCategoryType(CategoryType.GRANT_OWNER) : null;
+		    if (currentGrantOwnerContractSituation != null) {
+			return true;
+		    }
+		}
+		return false;
 	    }
-	    if (getParkingGroup().getGroupName().equalsIgnoreCase("3� ciclo")) {
+	    if (getParkingGroup().getGroupName().equalsIgnoreCase("3º ciclo")) {
 		if (person.hasStudent()) {
 		    Registration registration = getRegistrationByDegreeType(person.getStudent(),
 			    DegreeType.BOLONHA_ADVANCED_SPECIALIZATION_DIPLOMA);
