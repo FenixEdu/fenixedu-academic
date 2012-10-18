@@ -27,14 +27,20 @@ public class UncaughtExceptionFilter implements Filter {
 	@Override
 	public void run() {
 	    try {
-		if (exception.getCause() != null && exception instanceof ServletException) {
-		    sentry.captureException("" + exception.getCause().getMessage(), RavenUtils.getTimestampLong(), "root", 50,
-			    null, exception.getCause());
-		}
-		sentry.captureException("" + exception.getMessage(), RavenUtils.getTimestampLong(), "root", 50, null, exception);
+		Throwable e = unwrap(exception);
+		sentry.captureException("" + e.getMessage(), RavenUtils.getTimestampLong(), "root", 50, null, e);
 	    } catch (Throwable t) {
 		t.printStackTrace();
 	    }
+	}
+
+	private Throwable unwrap(Throwable exception) {
+	    if (exception.getCause() != null) {
+		if (exception instanceof ServletException) {
+		    return unwrap(exception.getCause());
+		}
+	    }
+	    return exception;
 	}
     }
 
