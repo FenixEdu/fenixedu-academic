@@ -69,6 +69,64 @@ public class ReportStudentsUTLCandidates implements java.io.Serializable {
 	return wb;
     }
 
+    public HSSFWorkbook generateErrors() {
+	HSSFWorkbook wb = new HSSFWorkbook();
+
+	headerStyle = headerBackgroundStyle(wb);
+
+	HSSFSheet sheet = wb.createSheet("Errors");
+
+	addHeadersForErrors(sheet);
+
+	addValuesForErrors(sheet);
+
+	return wb;
+    }
+
+    private void addValuesForErrors(HSSFSheet sheet) {
+	int i = 2;
+	for (StudentLine studentLine : getErroneousStudentLines()) {
+
+	    try {
+		String institutionCode = studentLine.getInstitutionCode();
+		String institutionName = studentLine.getInstitutionName();
+		String candidacyNumber = studentLine.getCandidacyNumber();
+		String studentNumberForPrint = studentLine.getStudentNumberForPrint();
+		String studentName = studentLine.getStudentName();
+		String documentTypeName = studentLine.getDocumentTypeName();
+		String documentNumber = studentLine.getDocumentNumber();
+
+		HSSFRow row = sheet.createRow(i);
+		addCellValue(row, onNullEmptyString(institutionCode), 0);
+		addCellValue(row, onNullEmptyString(institutionName), 1);
+		addCellValue(row, onNullEmptyString(candidacyNumber), 2);
+		addCellValue(row, onNullEmptyString(studentNumberForPrint), 3);
+		addCellValue(row, onNullEmptyString(studentName), 4);
+		addCellValue(row, onNullEmptyString(documentTypeName), 5);
+		addCellValue(row, onNullEmptyString(documentNumber), 6);
+	    } catch (Exception e) {
+		e.printStackTrace();
+	    }
+
+	    i++;
+	}
+    }
+
+    private void addHeadersForErrors(HSSFSheet sheet) {
+	sheet.createRow(0);
+	sheet.createRow(1);
+
+	ResourceBundle bundle = ResourceBundle.getBundle("resources.AcademicAdminOffice");
+
+	addHeaderCell(sheet, getHeaderInBundle(bundle, "institutionCode"), 0);
+	addHeaderCell(sheet, getHeaderInBundle(bundle, "institutionName"), 1);
+	addHeaderCell(sheet, getHeaderInBundle(bundle, "candidacyNumber"), 2);
+	addHeaderCell(sheet, getHeaderInBundle(bundle, "studentNumberForPrint"), 3);
+	addHeaderCell(sheet, getHeaderInBundle(bundle, "studentName"), 4);
+	addHeaderCell(sheet, getHeaderInBundle(bundle, "documentTypeName"), 5);
+	addHeaderCell(sheet, getHeaderInBundle(bundle, "documentNumber"), 6);
+    }
+
     private void fillRegimeTable(HSSFWorkbook wb) {
 	HSSFSheet sheet = wb.createSheet("Regime");
 
@@ -160,11 +218,11 @@ public class ReportStudentsUTLCandidates implements java.io.Serializable {
 		addCellValue(row, onNullEmptyString(lastEnrolmentExecutionYear), 34);
 		addCellValue(row, onNullEmptyString(nif), 35);
 		addCellValue(row, "", 36);
+
+		i++;
 	    } catch (Exception e) {
 		e.printStackTrace();
 	    }
-
-	    i++;
 	}
     }
 

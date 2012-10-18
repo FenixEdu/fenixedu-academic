@@ -48,6 +48,13 @@
 			<html:submit><bean:message key="label.export" bundle="APPLICATION_RESOURCES" /></html:submit>
 		</fr:form>
 	</p>
+	<p>
+		<fr:form action="/reportStudentsUTLCandidates.do?method=exportErrors" >
+			<fr:edit id="report" name="report" visible="false" />
+			<html:submit><bean:message key="label.errors" bundle="APPLICATION_RESOURCES" /></html:submit>
+		</fr:form>
+	</p>
+
 
 	<fr:view name="correctStudentLines">
 		<fr:schema type="net.sourceforge.fenixedu.presentationTier.Action.administrativeOffice.scholarship.utl.report.StudentLine" 

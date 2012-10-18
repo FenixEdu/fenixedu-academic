@@ -99,6 +99,22 @@ public class ReportStudentsUTLCandidatesDA extends FenixDispatchAction {
 	return null;
     }
 
+    public ActionForward exportErrors(final ActionMapping mapping, final ActionForm actionForm, final HttpServletRequest request,
+	    HttpServletResponse response) throws IOException {
+	ReportStudentsUTLCandidates report = getRenderedObject("report");
+
+	HSSFWorkbook generateReport = report.generateErrors();
+
+	response.setContentType("application/vnd.ms-excel");
+	response.setHeader("Content-Disposition", "attachment; filename=erros_bolsa_accao_social.xls");
+	generateReport.write(response.getOutputStream());
+
+	response.getOutputStream().flush();
+	response.flushBuffer();
+	
+	return null;
+    }
+
     public ActionForward prepareForOneStudent(final ActionMapping mapping, final ActionForm form,
 	    final HttpServletRequest request, final HttpServletResponse response) {
 	ReportStudentsUTLCandidatesBean bean = new ReportStudentsUTLCandidatesBean();

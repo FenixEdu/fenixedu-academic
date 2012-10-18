@@ -43,7 +43,6 @@ import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
 
 import pt.utl.ist.fenix.tools.loaders.IFileLine;
-import pt.utl.ist.fenix.tools.util.StringNormalizer;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 public class StudentLine implements IFileLine, java.io.Serializable {
@@ -101,6 +100,15 @@ public class StudentLine implements IFileLine, java.io.Serializable {
 	}
 
 	setBestMatchingStudent();
+
+	if (this.multiplePersonsFound) {
+	    return false;
+	}
+
+	if (this.person == null) {
+	    return false;
+	}
+
 	enrolledInAnualCoursesLastYear = false;
 
 	return true;
@@ -132,6 +140,15 @@ public class StudentLine implements IFileLine, java.io.Serializable {
 	    }
 
 	    setBestMatchingStudent();
+
+	    if (this.multiplePersonsFound) {
+		return false;
+	    }
+
+	    if (this.person == null) {
+		return false;
+	    }
+
 	    enrolledInAnualCoursesLastYear = false;
 
 	    return true;
@@ -535,7 +552,7 @@ public class StudentLine implements IFileLine, java.io.Serializable {
 	int count = 0;
 	for (ExecutionYear executionYear : registrationExecutionYears) {
 	    RegistrationRegimeType regimeType = getRegistration().getRegimeType(executionYear);
-	    
+
 	    count += (RegistrationRegimeType.FULL_TIME.equals(regimeType)) ? 1 : 0;
 	}
 
@@ -702,33 +719,36 @@ public class StudentLine implements IFileLine, java.io.Serializable {
 	if (partialDocumentIdPersonsCollection.size() == 1) {
 	    personByPartialDocumentId = partialDocumentIdPersonsCollection.iterator().next();
 	}
-
-	if (personByFullDocumentId != null) {
-	    this.person = personByFullDocumentId;
-	    this.student = this.person.getStudent();
-	    return;
-	}
-
-	if (personByPartialDocumentId != null) {
-	    this.person = personByPartialDocumentId;
-	    this.student = this.person.getStudent();
-	    return;
-	}
-
 	/*
 	 * We couldnt found the person with full and partial document id. Search
 	 * with with and check if the names are equals
 	 */
 	Student studentReadByNumber = this.studentNumber != null ? Student.readStudentByNumber(this.studentNumber) : null;
+	Person personFoundByStudent = null;
 	if (studentReadByNumber != null) {
-	    String studentReadByNumberName = StringNormalizer.normalize(studentReadByNumber.getPerson().getName().toLowerCase());
-	    String studentName = StringNormalizer.normalize(this.studentName.toLowerCase());
-
-	    if (studentReadByNumberName.equals(studentName)) {
-		this.student = studentReadByNumber;
-		this.person = this.student.getPerson();
-	    }
+	    personFoundByStudent = studentReadByNumber.getPerson();
 	}
+
+	if (personByFullDocumentId != null && personFoundByStudent != null && personByFullDocumentId != personFoundByStudent) {
+	    this.multiplePersonsFound = true;
+	    return;
+	} else if (personByPartialDocumentId != null && personFoundByStudent != null
+		&& personByPartialDocumentId != personFoundByStudent) {
+	    this.multiplePersonsFound = true;
+	    return;
+	}
+
+	if (personByFullDocumentId != null) {
+	    this.person = personByFullDocumentId;
+	    this.student = this.person.getStudent();
+	} else if (personByPartialDocumentId != null) {
+	    this.person = personByPartialDocumentId;
+	    this.student = this.person.getStudent();
+	} else if (personFoundByStudent != null) {
+	    this.person = personFoundByStudent;
+	    this.student = this.person.getStudent();
+	}
+
     }
 
     private static BigDecimal calculateApprovedECTS(final Collection<Enrolment> list) {
@@ -809,9 +829,9 @@ public class StudentLine implements IFileLine, java.io.Serializable {
 	    return;
 	}
 
-//	if (!isLastRegistrationEqualToSpecifiedDegree()) {
-//	    appendDegreeIsNotEqual(observationsBuilder);
-//	}
+	// if (!isLastRegistrationEqualToSpecifiedDegree()) {
+	// appendDegreeIsNotEqual(observationsBuilder);
+	// }
 
 	observations = observationsBuilder.toString();
     }
@@ -927,7 +947,7 @@ public class StudentLine implements IFileLine, java.io.Serializable {
 
 	List<ExecutionYear> enrolmentsExecutionYears = new ArrayList<ExecutionYear>(getEnrolmentsExecutionYears(getStudent()));
 	Collections.sort(enrolmentsExecutionYears, ExecutionYear.REVERSE_COMPARATOR_BY_YEAR);
-	
+
 	ExecutionYear lastEnrolledExecutionYear = null;
 
 	if (enrolmentsExecutionYears.isEmpty()) {
@@ -1010,7 +1030,7 @@ public class StudentLine implements IFileLine, java.io.Serializable {
 	    this.documentTypeName = student.getPerson().getIdDocumentType().getLocalizedName();
 	    this.documentNumber = student.getPerson().getDocumentIdNumber();
 	    Registration activeRegistration = getActiveRegistration(student);
-	    
+
 	    this.degreeCode = activeRegistration.getDegree().getMinistryCode();
 
 	    if ("9999".equals(this.degreeCode)) {
