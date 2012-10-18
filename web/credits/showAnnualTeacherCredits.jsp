@@ -385,12 +385,21 @@ $(document).ready(function() {
 							<fr:property name="param(edit)" value="externalId/personFunctionOid" />
 							<fr:property name="bundle(edit)" value="TEACHER_CREDITS_SHEET_RESOURCES" />
 							<fr:property name="visibleIf(edit)" value="canBeEditedByDepartmentAdministrativeOffice" />
+							<fr:property name="link(delete)" value="<%="/managePersonFunctionsShared.do?method=deletePersonFunctionShared&executionYearOid="+executionYearOid%>" />
+							<fr:property name="key(delete)" value="label.delete" />
+							<fr:property name="param(delete)" value="externalId/personFunctionOid" />
+							<fr:property name="bundle(delete)" value="TEACHER_CREDITS_SHEET_RESOURCES" />
+							<fr:property name="visibleIf(delete)" value="canBeEditedByDepartmentAdministrativeOffice" />
 						</logic:equal>
 						<logic:equal name="roleType" value="SCIENTIFIC_COUNCIL">
 							<fr:property name="link(edit2)" value="<%="/managePersonFunctionsShared.do?method=prepareToEditPersonFunction&executionPeriodOid="+executionPeriodOid%>" />
 							<fr:property name="key(edit2)" value="label.edit" />
 							<fr:property name="param(edit2)" value="externalId/personFunctionOid" />
 							<fr:property name="bundle(edit2)" value="TEACHER_CREDITS_SHEET_RESOURCES" />
+							<fr:property name="link(delete2)" value="<%="/managePersonFunctionsShared.do?method=deletePersonFunctionShared&executionYearOid="+executionYearOid%>" />
+							<fr:property name="key(delete2)" value="label.delete" />
+							<fr:property name="param(delete2)" value="externalId/personFunctionOid" />
+							<fr:property name="bundle(delete2)" value="TEACHER_CREDITS_SHEET_RESOURCES" />
 						</logic:equal>
 					</fr:layout>
 				</fr:view>

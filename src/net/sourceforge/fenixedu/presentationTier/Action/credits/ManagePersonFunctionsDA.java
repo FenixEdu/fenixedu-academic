@@ -19,7 +19,8 @@ import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
-@Forwards(value = { @Forward(name = "addPersonFunctionShared", path = "/credits/personFunction/addPersonFunctionShared.jsp") })
+@Forwards(value = { @Forward(name = "addPersonFunctionShared", path = "/credits/personFunction/addPersonFunctionShared.jsp"),
+	@Forward(name = "viewAnnualTeachingCredits", path = "/credits.do?method=viewAnnualTeachingCredits") })
 public class ManagePersonFunctionsDA extends FenixDispatchAction {
 
     public ActionForward prepareToAddPersonFunctionShared(ActionMapping mapping, ActionForm form, HttpServletRequest request,
@@ -57,6 +58,19 @@ public class ManagePersonFunctionsDA extends FenixDispatchAction {
 	}
 	request.setAttribute("personFunctionBean", personFunctionBean);
 	return mapping.findForward("addPersonFunctionShared");
+    }
+
+    public ActionForward deletePersonFunctionShared(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) throws NumberFormatException, FenixServiceException, Exception {
+	PersonFunction personFunction = AbstractDomainObject
+		.fromExternalId((String) getFromRequest(request, "personFunctionOid"));
+	PersonFunctionBean personFunctionBean = new PersonFunctionBean(personFunction);
+	request.setAttribute("teacherOid", personFunction.getPerson().getTeacher().getExternalId());
+	request.setAttribute("executionYearOid", getFromRequest(request, "executionYearOid"));
+	if (personFunction != null) {
+	    personFunctionBean.deletePersonFunction();
+	}
+	return mapping.findForward("viewAnnualTeachingCredits");
     }
 
 }

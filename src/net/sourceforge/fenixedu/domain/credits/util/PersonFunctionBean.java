@@ -165,6 +165,24 @@ public class PersonFunctionBean implements Serializable {
 	new TeacherServiceLog(teacherService, log.toString());
     }
 
+    @Service
+    public void deletePersonFunction() {
+	TeacherService teacherService = getTeacher().getTeacherServiceByExecutionPeriod(getExecutionSemester());
+	if (teacherService == null) {
+	    teacherService = new TeacherService(getTeacher(), getExecutionSemester());
+	}
+	if (getFunction() instanceof SharedFunction) {
+	    new TeacherServiceLog(teacherService, BundleUtil.getStringFromResourceBundle(
+		    "resources.TeacherCreditsSheetResources", "label.teacher.personFunction.delete", getFunction().getName(),
+		    getUnit().getPresentationName(), getTeacher().getPerson().getNickname(), getPercentage().toString()));
+	} else {
+	    new TeacherServiceLog(teacherService, BundleUtil.getStringFromResourceBundle(
+		    "resources.TeacherCreditsSheetResources", "label.teacher.personFunction.delete", getFunction().getName(),
+		    getUnit().getPresentationName(), getTeacher().getPerson().getNickname(), getCredits().toString()));
+	}
+	getPersonFunction().delete();
+    }
+
     public List<PersonFunctionShared> getPersonFunctionsShared() {
 	List<PersonFunctionShared> functions = new ArrayList<PersonFunctionShared>();
 	for (PersonFunction personFunction : getFunction().getPersonFunctions()) {
@@ -220,4 +238,5 @@ public class PersonFunctionBean implements Serializable {
 	}
 	return result;
     }
+
 }
