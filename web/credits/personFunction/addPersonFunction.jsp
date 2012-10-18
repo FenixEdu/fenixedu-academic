@@ -42,7 +42,7 @@
 	<logic:empty name="personFunctionBean" property="unit">
 		<fr:edit id="personFunctionBean1" name="personFunctionBean" action="/managePersonFunctionsShared.do?method=prepareToAddPersonFunction">
 			<fr:schema bundle="TEACHER_CREDITS_SHEET_RESOURCES" type="net.sourceforge.fenixedu.domain.credits.util.PersonFunctionBean">
-				<fr:slot name="unit" key="label.unit" layout="autoCompleteWithPostBack">
+				<fr:slot name="unit" key="label.departmentOrDegreeOrUnit" layout="autoCompleteWithPostBack">
 					<fr:property name="size" value="80"/>
 					<fr:property name="labelField" value="name"/>
 					<fr:property name="format" value="${presentationName}"/>
