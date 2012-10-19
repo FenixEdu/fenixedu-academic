@@ -227,14 +227,18 @@ public class Message extends Message_Base {
 
 	@Override
 	public void run() {
-	    Transaction.withTransaction(new TransactionalCommand() {
-		@Override
-		public void doIt() {
-		    for (final Recipient recipient : recipients) {
-			recipient.addDestinationEmailAddresses(emailAddresses);
+	    try {
+		Transaction.withTransaction(new TransactionalCommand() {
+		    @Override
+		    public void doIt() {
+			for (final Recipient recipient : recipients) {
+			    recipient.addDestinationEmailAddresses(emailAddresses);
+			}
 		    }
-		}
-	    });
+		});
+	    } finally {
+		Transaction.forceFinish();
+	    }
 	}
 
     }
