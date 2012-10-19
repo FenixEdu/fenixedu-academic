@@ -1,5 +1,7 @@
 package net.sourceforge.fenixedu.presentationTier.Action.publico.rss;
 
+import java.io.PrintWriter;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -20,12 +22,14 @@ import de.nava.informa.impl.basic.ItemGuid;
 
 public abstract class InformaRSSAction extends FenixAction {
 
-    public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
-	    throws Exception {
+    @Override
+    public ActionForward execute(final ActionMapping mapping, final ActionForm form, final HttpServletRequest request,
+	    final HttpServletResponse response) throws Exception {
+	final String encoding = System.getProperty("file.encoding", PropertiesManager.DEFAULT_CHARSET);
 	final ChannelIF channel = getRSSChannel(request);
-	response.setContentType("text/xml");
-	final ChannelExporterIF exporter = new RSS_2_0_Exporter(response.getWriter(), System.getProperty("file.encoding",
-		PropertiesManager.DEFAULT_CHARSET));
+	response.setContentType("text/xml; charset=" + encoding);
+	final PrintWriter writer = response.getWriter();
+	final ChannelExporterIF exporter = new RSS_2_0_Exporter(writer, encoding);
 	exporter.write(channel);
 	response.flushBuffer();
 	return null;
