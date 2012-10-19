@@ -235,7 +235,7 @@ public class Email extends Email_Base {
 
 	    if (htmlBody != null && !htmlBody.trim().isEmpty()) {
 		final BodyPart bodyPart = new MimeBodyPart();
-		bodyPart.setContent(htmlBody, "text/html");
+		bodyPart.setContent(htmlBody, "text/html; charset=utf-8");
 		mimeMultipart.addBodyPart(bodyPart);
 	    }
 
