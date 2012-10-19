@@ -1,5 +1,6 @@
 package net.sourceforge.fenixedu.presentationTier.TagLib.sop.v3.renderers;
 
+import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExam;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoGenericEvent;
@@ -9,6 +10,8 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoShowOccupation;
 import net.sourceforge.fenixedu.dataTransferObject.InfoWrittenTest;
 import net.sourceforge.fenixedu.domain.FrequencyType;
 import net.sourceforge.fenixedu.domain.Site;
+import net.sourceforge.fenixedu.domain.person.RoleType;
+import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.presentationTier.TagLib.sop.v3.LessonSlot;
 import net.sourceforge.fenixedu.presentationTier.TagLib.sop.v3.LessonSlotContentRenderer;
 
@@ -78,7 +81,7 @@ public class RoomTimeTableLessonContentRenderer implements LessonSlotContentRend
 	    }
 	    strBuffer.append(" - ");
 	    strBuffer.append(infoExam.getSeason().getSeason());
-	    strBuffer.append("� �poca");
+	    strBuffer.append("ª Época");
 
 	} else if (showOccupation instanceof InfoWrittenTest) {
 	    InfoWrittenTest infoWrittenTest = (InfoWrittenTest) showOccupation;
@@ -96,7 +99,9 @@ public class RoomTimeTableLessonContentRenderer implements LessonSlotContentRend
 
 	    InfoGenericEvent infoGenericEvent = (InfoGenericEvent) showOccupation;
 	    strBuffer.append("<span title=\"").append(infoGenericEvent.getDescription()).append("\">");
-	    if (infoGenericEvent.getGenericEvent().isActive()) {
+	    final IUserView userView = AccessControl.getUserView();
+	    if (infoGenericEvent.getGenericEvent().isActive() && userView != null
+		    && userView.hasRoleType(RoleType.RESOURCE_ALLOCATION_MANAGER)) {
 		strBuffer.append("<a href=\"");
 		strBuffer.append(context).append("/resourceAllocationManager/");
 		strBuffer.append("roomsPunctualScheduling.do?method=prepareView&genericEventID=")
