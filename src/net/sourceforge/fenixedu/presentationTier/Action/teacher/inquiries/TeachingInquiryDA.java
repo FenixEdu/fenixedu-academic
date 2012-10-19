@@ -33,7 +33,6 @@ import net.sourceforge.fenixedu.domain.inquiries.InquiryBlock;
 import net.sourceforge.fenixedu.domain.inquiries.InquiryDelegateAnswer;
 import net.sourceforge.fenixedu.domain.inquiries.InquiryResponseState;
 import net.sourceforge.fenixedu.domain.inquiries.InquiryResult;
-import net.sourceforge.fenixedu.domain.inquiries.InquiryTeacherAnswer;
 import net.sourceforge.fenixedu.domain.inquiries.RegentInquiryTemplate;
 import net.sourceforge.fenixedu.domain.inquiries.ResultPersonCategory;
 import net.sourceforge.fenixedu.domain.inquiries.TeacherInquiryTemplate;
@@ -183,10 +182,8 @@ public class TeachingInquiryDA extends FenixDispatchAction {
 
 	Professorship professorship = AbstractDomainObject.fromExternalId(getFromRequest(request, "professorshipOID").toString());
 	TeacherInquiryTemplate teacherInquiryTemplate = TeacherInquiryTemplate.getCurrentTemplate();
-	InquiryTeacherAnswer inquiryTeacherAnswer = professorship.getInquiryTeacherAnswer();
 
-	TeacherInquiryBean teacherInquiryBean = new TeacherInquiryBean(teacherInquiryTemplate, professorship,
-		inquiryTeacherAnswer);
+	TeacherInquiryBean teacherInquiryBean = new TeacherInquiryBean(teacherInquiryTemplate, professorship);
 
 	request.setAttribute("executionPeriod", professorship.getExecutionCourse().getExecutionPeriod());
 	request.setAttribute("executionCourse", professorship.getExecutionCourse());

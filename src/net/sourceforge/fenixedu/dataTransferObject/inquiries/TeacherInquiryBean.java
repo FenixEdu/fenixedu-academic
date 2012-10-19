@@ -34,23 +34,19 @@ public class TeacherInquiryBean implements Serializable {
 
     private List<TeacherShiftTypeResultsBean> teachersResults;
     private Set<InquiryBlockDTO> teacherInquiryBlocks;
-    private InquiryTeacherAnswer inquiryTeacherAnswer;
     private Professorship professorship;
 
-    public TeacherInquiryBean(TeacherInquiryTemplate teacherInquiryTemplate, Professorship professorship,
-	    InquiryTeacherAnswer inquiryTeacherAnswer) {
+    public TeacherInquiryBean(TeacherInquiryTemplate teacherInquiryTemplate, Professorship professorship) {
 	setProfessorship(professorship);
 	initTeachersResults(professorship, professorship.getPerson());
-	initTeacherInquiry(teacherInquiryTemplate, professorship, inquiryTeacherAnswer);
+	initTeacherInquiry(teacherInquiryTemplate, professorship);
 	setGroupsVisibility();
     }
 
-    private void initTeacherInquiry(TeacherInquiryTemplate teacherInquiryTemplate, Professorship professorship,
-	    InquiryTeacherAnswer inquiryTeacherAnswer) {
+    private void initTeacherInquiry(TeacherInquiryTemplate teacherInquiryTemplate, Professorship professorship) {
 	setTeacherInquiryBlocks(new TreeSet<InquiryBlockDTO>(new BeanComparator("inquiryBlock.blockOrder")));
-	setInquiryTeacherAnswer(inquiryTeacherAnswer);
 	for (InquiryBlock inquiryBlock : teacherInquiryTemplate.getInquiryBlocks()) {
-	    getTeacherInquiryBlocks().add(new InquiryBlockDTO(inquiryTeacherAnswer, inquiryBlock));
+	    getTeacherInquiryBlocks().add(new InquiryBlockDTO(getInquiryTeacherAnswer(), inquiryBlock));
 	}
 
     }
@@ -155,7 +151,7 @@ public class TeacherInquiryBean implements Serializable {
 			    questionDTO.getQuestionAnswer().getInquiryAnswer().setResponseDateTime(new DateTime());
 			} else {
 			    if (getInquiryTeacherAnswer() == null) {
-				setInquiryTeacherAnswer(new InquiryTeacherAnswer(getProfessorship()));
+				new InquiryTeacherAnswer(getProfessorship());
 			    }
 			    new QuestionAnswer(getInquiryTeacherAnswer(), questionDTO.getInquiryQuestion(), questionDTO
 				    .getFinalValue());
@@ -204,11 +200,7 @@ public class TeacherInquiryBean implements Serializable {
 	return teacherInquiryBlocks;
     }
 
-    public void setInquiryTeacherAnswer(InquiryTeacherAnswer inquiryTeacherAnswer) {
-	this.inquiryTeacherAnswer = inquiryTeacherAnswer;
-    }
-
     public InquiryTeacherAnswer getInquiryTeacherAnswer() {
-	return inquiryTeacherAnswer;
+	return getProfessorship().getInquiryTeacherAnswer();
     }
 }
