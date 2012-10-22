@@ -615,11 +615,31 @@ public class ParkingParty extends ParkingParty_Base {
 	return getFirstRequest() != null;
     }
 
+    public String getAllNumbers() {
+	List<String> result = new ArrayList<String>();
+	if (getParty().isPerson()) {
+	    final Person person = (Person) getParty();
+	    final Employee employee = person.getEmployee();
+	    final GrantOwner grantOwner = person.getGrantOwner();
+	    boolean hasCurrentContract = grantOwner != null && grantOwner.hasCurrentContract();
+	    if (employee != null
+		    && (person.hasRole(RoleType.TEACHER) || person.hasRole(RoleType.EMPLOYEE)
+			    || person.hasRole(RoleType.RESEARCHER) || (person.hasRole(RoleType.GRANT_OWNER) && (grantOwner == null || !hasCurrentContract)))) {
+		result.add(employee.getEmployeeNumber().toString());
+	    }
+	    final Student student = person.getStudent();
+	    if (person.hasRole(RoleType.STUDENT)) {
+		result.add(student.getNumber().toString());
+	    }
+	    if (grantOwner != null && hasCurrentContract) {
+		result.add(grantOwner.getNumber().toString());
+	    }
+	}
+	return StringUtils.join(result, "\n");
+    }
+
     public Integer getMostSignificantNumber() {
 	if (getParty().isPerson()) {
-	    if (getPhdNumber() != null) {
-		return getPhdNumber();
-	    }
 	    final Person person = (Person) getParty();
 	    final Teacher teacher = person.getTeacher();
 	    ExecutionSemester actualExecutionSemester = ExecutionSemester.readActualExecutionSemester();
@@ -661,6 +681,9 @@ public class ParkingParty extends ParkingParty_Base {
 	    }
 	    if (employee != null && isTeacher && isMonitor) {
 		return employee.getEmployeeNumber();
+	    }
+	    if (getPhdNumber() != null) {
+		return getPhdNumber();
 	    }
 	}
 
