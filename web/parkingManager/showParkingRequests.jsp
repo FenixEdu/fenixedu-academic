@@ -6,6 +6,10 @@
 <em><bean:message key="label.parking" /></em>
 <h2><bean:message key="label.requestList" /></h2>
 
+<script type="text/javascript">
+$(function () { $("th a label").map(function(i,e) { var el = $(e); var p = el.parent(); p.html(el.html()); }) })
+</script>
+
 <logic:present name="parkingRequestSearch">
 	<fr:form action="/parking.do?method=showParkingRequests">
 		<fr:edit id="parkingRequestSearch" name="parkingRequestSearch" schema="input.parkingRequestSearch">
