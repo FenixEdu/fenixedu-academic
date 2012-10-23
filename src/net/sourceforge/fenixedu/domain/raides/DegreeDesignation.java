@@ -5,6 +5,7 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.SchoolLevelType;
+import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 
 public class DegreeDesignation extends DegreeDesignation_Base {
 
@@ -49,6 +50,9 @@ public class DegreeDesignation extends DegreeDesignation_Base {
     }
 
     public void delete() {
+	for (Unit institution : getInstitutionUnitSet()) {
+	    removeInstitutionUnit(institution);
+	}
 	removeDegreeClassification();
 	removeRootDomainObject();
 	deleteDomainObject();

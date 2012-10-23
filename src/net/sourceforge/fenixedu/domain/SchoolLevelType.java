@@ -73,7 +73,7 @@ public enum SchoolLevelType {
 
 	@Override
 	public List<String> getEquivalentDegreeClassifications() {
-	    return Lists.newArrayList("L1", "PM");
+	    return Lists.newArrayList("L1", "PM", "LI");
 	}
     },
 
