@@ -62,7 +62,8 @@ public class ReportStudentsUTLCandidatesForFirstYear extends ReportStudentsUTLCa
 		addCellValue(row, onNullEmptyString(degreeTypeName), 9);
 		addCellValue(row, "", 10);
 		addCellValue(row, onNullEmptyString(firstEnrolmentOnCurrentExecutionYear), 11);
-		addCellValue(row, onNullEmptyString(gratuityAmount), 12);
+		addCellValue(row, onNullEmptyString(gratuityAmount != null ? gratuityAmount.toPlainString().replace('.', ',')
+			: ""), 12);
 		addCellValue(row, onNullEmptyString(numberOfMonthsExecutionYear), 13);
 		addCellValue(row, onNullEmptyString(firstMonthOfPayment), 14);
 		addCellValue(row, onNullEmptyString(ownerOfCETQualification), 15);
@@ -74,7 +75,9 @@ public class ReportStudentsUTLCandidatesForFirstYear extends ReportStudentsUTLCa
 		addCellValue(row, onNullEmptyString(regime), 21);
 		addCellValue(row, onNullEmptyString(numberOfDegreeCurricularYears), 22);
 		addCellValue(row, onNullEmptyString(countNumberOfEnrolmentsYearsSinceRegistrationStart), 23);
-		addCellValue(row, onNullEmptyString(numberOfEnrolledECTS), 24);
+		addCellValue(row,
+			onNullEmptyString(numberOfEnrolledECTS != null ? numberOfEnrolledECTS.toString().replace('.', ',')
+				: ""), 24);
 		addCellValue(row, onNullEmptyString(nif), 25);
 	    } catch (Exception e) {
 		e.printStackTrace();

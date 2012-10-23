@@ -45,6 +45,12 @@ public class ReportStudentsUTLCandidates implements java.io.Serializable {
 	    StudentLine studentLine = new StudentLine();
 	    boolean filledWithSuccess = studentLine.fillWithSpreadsheetRow(forExecutionYear, row);
 
+	    try {
+		testIt(studentLine);
+	    } catch (Exception e) {
+		filledWithSuccess = false;
+	    }
+
 	    if (filledWithSuccess) {
 		correctStudentLines.add(studentLine);
 	    } else {
@@ -137,6 +143,45 @@ public class ReportStudentsUTLCandidates implements java.io.Serializable {
 	}
     }
 
+    protected void testIt(final StudentLine studentLine) {
+	String institutionCode = studentLine.getInstitutionCode();
+	String institutionName = studentLine.getInstitutionName();
+	String candidacyNumber = studentLine.getCandidacyNumber();
+	String studentNumberForPrint = studentLine.getStudentNumberForPrint();
+	String studentName = studentLine.getStudentName();
+	String documentTypeName = studentLine.getDocumentTypeName();
+	String documentNumber = studentLine.getDocumentNumber();
+	String degreeCode = studentLine.getDegreeCode();
+	String degreeName = studentLine.getDegreeName();
+	String degreeTypeName = studentLine.getDegreeTypeName();
+	Integer countNumberOfDegreeChanges = studentLine.getCountNumberOfDegreeChanges();
+	Boolean hasMadeDegreeChange = studentLine.getHasMadeDegreeChange();
+	LocalDate firstEnrolmentOnCurrentExecutionYear = studentLine.getFirstEnrolmentOnCurrentExecutionYear();
+	String regime = studentLine.getRegime();
+	String firstRegistrationExecutionYear = studentLine.getFirstRegistrationExecutionYear();
+	Integer countNumberOfEnrolmentsYearsSinceRegistrationStart = studentLine
+		.getCountNumberOfEnrolmentsYearsSinceRegistrationStart();
+	Integer countNumberOfEnrolmentsYearsInIntegralRegime = studentLine.getCountNumberOfEnrolmentsYearsInIntegralRegime();
+	Integer numberOfDegreeCurricularYears = studentLine.getNumberOfDegreeCurricularYears();
+	Integer curricularYearOneYearAgo = studentLine.getCurricularYearOneYearAgo();
+	BigDecimal numberOfEnrolledEctsOneYearAgo = studentLine.getNumberOfEnrolledEctsOneYearAgo();
+	BigDecimal numberOfApprovedEctsOneYearAgo = studentLine.getNumberOfApprovedEctsOneYearAgo();
+	Integer curricularYearInCurrentYear = studentLine.getCurricularYearInCurrentYear();
+	Double numberOfEnrolledECTS = studentLine.getNumberOfEnrolledECTS();
+	Money gratuityAmount = studentLine.getGratuityAmount();
+	Integer numberOfMonthsExecutionYear = studentLine.getNumberOfMonthsExecutionYear();
+	String firstMonthOfPayment = studentLine.getFirstMonthOfPayment();
+	Boolean ownerOfCETQualification = studentLine.getOwnerOfCETQualification();
+	boolean degreeQualificationOwner = studentLine.isDegreeQualificationOwner();
+	boolean masterQualificationOwner = studentLine.isMasterQualificationOwner();
+	boolean phdQualificationOwner = studentLine.isPhdQualificationOwner();
+	boolean ownerOfCollegeQualification = studentLine.isOwnerOfCollegeQualification();
+	String observations = studentLine.getObservations();
+	String lastEnrolmentExecutionYear = studentLine.getLastEnrolledExecutionYear();
+	String nif = studentLine.getNif();
+
+    }
+
     protected void addValues(HSSFSheet sheet) {
 	int i = 2;
 	for (StudentLine studentLine : getCorrectStudentLines()) {
@@ -202,11 +247,15 @@ public class ReportStudentsUTLCandidates implements java.io.Serializable {
 		addCellValue(row, onNullEmptyString(countNumberOfEnrolmentsYearsInIntegralRegime), 18);
 		addCellValue(row, onNullEmptyString(numberOfDegreeCurricularYears), 19);
 		addCellValue(row, onNullEmptyString(curricularYearOneYearAgo), 20);
-		addCellValue(row, onNullEmptyString(numberOfEnrolledEctsOneYearAgo), 21);
-		addCellValue(row, onNullEmptyString(numberOfApprovedEctsOneYearAgo), 22);
+		addCellValue(row, onNullEmptyString(numberOfEnrolledEctsOneYearAgo != null ? numberOfEnrolledEctsOneYearAgo.toString().replace('.', ',') : ""), 21);
+		addCellValue(row, onNullEmptyString(numberOfApprovedEctsOneYearAgo != null ? numberOfApprovedEctsOneYearAgo
+			.toString().replace('.', ',') : ""), 22);
 		addCellValue(row, onNullEmptyString(curricularYearInCurrentYear), 23);
-		addCellValue(row, onNullEmptyString(numberOfEnrolledECTS), 24);
-		addCellValue(row, onNullEmptyString(gratuityAmount), 25);
+		addCellValue(row,
+			onNullEmptyString(numberOfEnrolledECTS != null ? numberOfEnrolledECTS.toString().replace('.', ',') : ""),
+			24);
+		addCellValue(row, onNullEmptyString(gratuityAmount != null ? gratuityAmount.toPlainString().replace('.', ',')
+			: ""), 25);
 		addCellValue(row, onNullEmptyString(numberOfMonthsExecutionYear), 26);
 		addCellValue(row, onNullEmptyString(firstMonthOfPayment), 27);
 		addCellValue(row, onNullEmptyString(ownerOfCETQualification), 28);
