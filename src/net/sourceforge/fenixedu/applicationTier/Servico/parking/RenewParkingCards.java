@@ -8,6 +8,8 @@ import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.domain.contacts.EmailAddress;
 import net.sourceforge.fenixedu.domain.parking.ParkingGroup;
 import net.sourceforge.fenixedu.domain.parking.ParkingParty;
+import net.sourceforge.fenixedu.domain.parking.ParkingRequest;
+import net.sourceforge.fenixedu.domain.parking.ParkingRequestState;
 import net.sourceforge.fenixedu.domain.util.email.ConcreteReplyTo;
 import net.sourceforge.fenixedu.domain.util.email.Message;
 import net.sourceforge.fenixedu.domain.util.email.Sender;
@@ -26,6 +28,11 @@ public class RenewParkingCards extends FenixService {
 	DateTime newBeginDate = new DateTime();
 	for (ParkingParty parkingParty : parkingParties) {
 	    parkingParty.renewParkingCard(newBeginDate, newEndDate, newParkingGroup);
+	    ParkingRequest parkingRequest = parkingParty.getLastRequest();
+	    if (parkingRequest != null && parkingRequest.getParkingRequestState() == ParkingRequestState.PENDING) {
+		parkingRequest.setParkingRequestState(ParkingRequestState.ACCEPTED);
+		parkingRequest.setNote(emailText);
+	    }
 	    String email = null;
 	    EmailAddress defaultEmailAddress = parkingParty.getParty().getDefaultEmailAddress();
 	    if (defaultEmailAddress != null) {
