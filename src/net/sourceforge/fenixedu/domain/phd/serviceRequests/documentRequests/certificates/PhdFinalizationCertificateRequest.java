@@ -49,19 +49,6 @@ public class PhdFinalizationCertificateRequest extends PhdFinalizationCertificat
 	    throw new PhdDomainOperationException("error.PhdFinalizationCertificateRequest.registry.diploma.not.requested");
 	}
 
-	PhdRegistryDiplomaRequest registryDiplomaRequest = getPhdIndividualProgramProcess().getRegistryDiplomaRequest();
-
-	RectorateSubmissionBatch rectorateSubmissionBatch = registryDiplomaRequest.getRectorateSubmissionBatch();
-
-	if (rectorateSubmissionBatch == null) {
-	    throw new PhdDomainOperationException(
-		    "error.PhdFinalizationCertificateRequest.registry.diploma.submission.batch.not.sent");
-	}
-
-	if (!rectorateSubmissionBatch.isSent()) {
-	    throw new PhdDomainOperationException(
-		    "error.PhdFinalizationCertificateRequest.registry.diploma.submission.batch.not.sent");
-	}
     }
 
     @Override
@@ -75,6 +62,20 @@ public class PhdFinalizationCertificateRequest extends PhdFinalizationCertificat
 
 	super.internalChangeState(academicServiceRequestBean);
 	if (academicServiceRequestBean.isToProcess()) {
+	    PhdRegistryDiplomaRequest registryDiplomaRequest = getPhdIndividualProgramProcess().getRegistryDiplomaRequest();
+
+	    RectorateSubmissionBatch rectorateSubmissionBatch = registryDiplomaRequest.getRectorateSubmissionBatch();
+
+	    if (rectorateSubmissionBatch == null) {
+		throw new PhdDomainOperationException(
+			"error.PhdFinalizationCertificateRequest.registry.diploma.submission.batch.not.sent");
+	    }
+
+	    if (!rectorateSubmissionBatch.isSent()) {
+		throw new PhdDomainOperationException(
+			"error.PhdFinalizationCertificateRequest.registry.diploma.submission.batch.not.sent");
+	    }
+
 	    if (!getPhdIndividualProgramProcess().isConcluded()) {
 		throw new PhdDomainOperationException(
 			"error.PhdFinalizationCertificateRequest.phd.process.not.submited.to.conclusion.process");
