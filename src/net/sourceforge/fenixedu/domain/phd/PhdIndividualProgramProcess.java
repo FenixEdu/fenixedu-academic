@@ -111,6 +111,7 @@ import net.sourceforge.fenixedu.injectionCode.AccessControl;
 
 import org.apache.commons.lang.StringUtils;
 import org.joda.time.DateTime;
+import org.joda.time.Interval;
 import org.joda.time.LocalDate;
 
 import pt.utl.ist.fenix.tools.predicates.Predicate;
@@ -231,7 +232,8 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
 		    result = bean.getPersonBean().getPerson();
 		} else {
 		    /*
-		     * if person never had any identity in the system then let edit information
+		     * if person never had any identity in the system then let
+		     * edit information
 		     */
 		    result = bean.getPersonBean().getPerson().edit(bean.getPersonBean());
 		}
@@ -279,8 +281,9 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
 
     /*
      * 
-     * TODO: Refactor -> Participants should be shared at PhdProcessesManager level, and each PhdProgram should also have
-     * phdparticipants as coordinators
+     * TODO: Refactor -> Participants should be shared at PhdProcessesManager
+     * level, and each PhdProgram should also have phdparticipants as
+     * coordinators
      */
     private void updatePhdParticipantsWithCoordinators() {
 	for (final Person person : getCoordinatorsFor(getExecutionYear())) {
@@ -584,8 +587,8 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
     }
 
     public PrecedentDegreeInformation getLatestPrecedentDegreeInformation() {
-	TreeSet<PrecedentDegreeInformation> degreeInformations = new TreeSet<PrecedentDegreeInformation>(Collections
-		.reverseOrder(PrecedentDegreeInformation.COMPARATOR_BY_EXECUTION_YEAR));
+	TreeSet<PrecedentDegreeInformation> degreeInformations = new TreeSet<PrecedentDegreeInformation>(
+		Collections.reverseOrder(PrecedentDegreeInformation.COMPARATOR_BY_EXECUTION_YEAR));
 	ExecutionYear currentExecutionYear = ExecutionYear.readCurrentExecutionYear();
 	for (PrecedentDegreeInformation pdi : getPrecedentDegreeInformations()) {
 	    if (!pdi.getExecutionYear().isAfter(currentExecutionYear)) {
@@ -605,6 +608,28 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
     @Override
     public PhdIndividualProgramProcessState getActiveState() {
 	return (PhdIndividualProgramProcessState) super.getActiveState();
+    }
+
+    public boolean isActive(Interval interval) {
+	List<Interval> activeStatesIntervals = new ArrayList<Interval>();
+	Set<PhdProgramProcessState> states = new TreeSet<PhdProgramProcessState>(PhdProgramProcessState.COMPARATOR_BY_DATE);
+	states.addAll(getStates());
+	DateTime beginActiveDate = null;
+	for (PhdProgramProcessState state : states) {
+	    if (state.getType().isActive() && beginActiveDate == null) {
+		beginActiveDate = state.getStateDate();
+	    }
+	    if ((!state.getType().isActive()) && beginActiveDate != null) {
+		activeStatesIntervals.add(new Interval(beginActiveDate, state.getStateDate()));
+		beginActiveDate = null;
+	    }
+	}
+	for (Interval activeInterval : activeStatesIntervals) {
+	    if (interval.overlaps(activeInterval)) {
+		return true;
+	    }
+	}
+	return false;
     }
 
     public Student getStudent() {
@@ -939,7 +964,8 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
 			result = bean.getPersonBean().getPerson();
 		    } else {
 			/*
-			 * if person never had any identity in the system then let edit information
+			 * if person never had any identity in the system then
+			 * let edit information
 			 */
 			result = bean.getPersonBean().getPerson().editByPublicCandidate(bean.getPersonBean());
 		    }
@@ -953,8 +979,8 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
 		final PhdProgramCandidacyProcessBean bean = (PhdProgramCandidacyProcessBean) object;
 
 		if (bean.getPersonBean().hasPerson()) {
-		    if (PhdProgramCandidacyProcess.hasOnlineApplicationForPeriod(bean.getPersonBean().getPerson(), bean
-			    .getPhdCandidacyPeriod())) {
+		    if (PhdProgramCandidacyProcess.hasOnlineApplicationForPeriod(bean.getPersonBean().getPerson(),
+			    bean.getPhdCandidacyPeriod())) {
 			throw new DomainException("error.phd.public.candidacy.fill.personal.information.and.institution.id");
 		    }
 		}

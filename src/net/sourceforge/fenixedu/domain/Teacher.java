@@ -742,6 +742,13 @@ public class Teacher extends Teacher_Base {
 	return activeDays >= minimumWorkingDays;
     }
 
+    public boolean isActiveOrHasAuthorizationForSemester(ExecutionSemester executionSemester) {
+	if (isActiveForSemester(executionSemester) || getTeacherAuthorization(executionSemester) != null) {
+	    return true;
+	}
+	return false;
+    }
+
     public boolean isInactive(ExecutionSemester executionSemester) {
 	return !isActiveForSemester(executionSemester);
     }

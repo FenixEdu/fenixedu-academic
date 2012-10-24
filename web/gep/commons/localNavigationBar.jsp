@@ -35,6 +35,12 @@
             <bean:message key="link.ects.management" bundle="GEP_RESOURCES" />
         </html:link>
     </li>
+    <li>
+        <html:link page="/a3es.do?method=chooseDegreeAndSemesters">
+            A3ES
+        </html:link>
+    </li>
+    
     
     <li class="navheader">
 		<bean:message key="label.listings" bundle="GEP_RESOURCES"/>
