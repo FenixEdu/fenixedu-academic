@@ -35,6 +35,7 @@ public class PhdThesisJuryElementsDocument extends FenixReport {
 
 	final Employee employee = AccessControl.getPerson().getEmployee();
 
+	addParameter("presidentTitle", this.process.getPresidentTitle().getContent(getLanguage()));
 	addParameter("administrativeOfficeCoordinator", employee.getCurrentWorkingPlace().getActiveUnitCoordinator().getName());
 	addParameter("administrativeOfficeName", employee.getCurrentWorkingPlace().getPartyName().getContent());
 	addParameter("ratificationEntityMessage",
