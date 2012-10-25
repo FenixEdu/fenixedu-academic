@@ -15,6 +15,7 @@ import java.util.TreeSet;
 import net.sourceforge.fenixedu.domain.CourseLoad;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.Department;
+import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.Professorship;
 import net.sourceforge.fenixedu.domain.Qualification;
@@ -317,11 +318,14 @@ public class TeacherCurricularInformation implements Serializable {
 	    }
 	    for (ThesisEvaluationParticipant thesisEvaluationParticipant : teacher.getPerson().getThesisEvaluationParticipants(
 		    executionSemester)) {
-		if (thesisEvaluationParticipant.getThesis().getEnrolment().getExecutionCourseFor(executionSemester)
-			.getDegreesSortedByDegreeName().contains(degree)) {
-		    lecturedUCsOnCycle.add(new LecturedCurricularUnit("Dissertação", null, null));
-		} else {
-		    lecturedUCsOnOtherCycles.add(new LecturedCurricularUnit("Dissertação", null, null));
+		ExecutionCourse executionCourse = thesisEvaluationParticipant.getThesis().getEnrolment()
+			.getExecutionCourseFor(executionSemester);
+		if (executionCourse != null) {
+		    if (executionCourse.getDegreesSortedByDegreeName().contains(degree)) {
+			lecturedUCsOnCycle.add(new LecturedCurricularUnit("Dissertação", null, null));
+		    } else {
+			lecturedUCsOnOtherCycles.add(new LecturedCurricularUnit("Dissertação", null, null));
+		    }
 		}
 	    }
 
