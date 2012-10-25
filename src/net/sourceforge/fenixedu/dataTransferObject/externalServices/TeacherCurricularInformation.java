@@ -43,6 +43,7 @@ import net.sourceforge.fenixedu.domain.teacher.Career;
 import net.sourceforge.fenixedu.domain.teacher.DegreeTeachingService;
 import net.sourceforge.fenixedu.domain.teacher.ProfessionalCareer;
 import net.sourceforge.fenixedu.domain.teacher.TeacherService;
+import net.sourceforge.fenixedu.domain.thesis.ThesisEvaluationParticipant;
 
 import org.apache.commons.collections.comparators.ReverseComparator;
 import org.apache.commons.lang.StringUtils;
@@ -73,6 +74,9 @@ public class TeacherCurricularInformation implements Serializable {
 		}
 	    }));
 
+    protected List<LecturedCurricularUnit> lecturedUCsOnCycle;
+    protected List<LecturedCurricularUnit> lecturedUCsOnOtherCycles;
+
     public TeacherCurricularInformation(Teacher teacher, Degree degree, List<ExecutionSemester> executionSemester) {
 	super();
 	this.teacher = teacher;
@@ -87,6 +91,7 @@ public class TeacherCurricularInformation implements Serializable {
 		this.qualificationBeans.add(new QualificationBean(qualification));
 	    }
 	}
+	setlecturedUCs();
     }
 
     public Teacher getTeacher() {
@@ -299,52 +304,51 @@ public class TeacherCurricularInformation implements Serializable {
 	}
     }
 
-    public List<LecturedCurricularUnit> getLecturedUCsOnCycle() {
-	List<LecturedCurricularUnit> result = new ArrayList<LecturedCurricularUnit>();
+    public void setlecturedUCs() {
+	lecturedUCsOnCycle = new ArrayList<LecturedCurricularUnit>();
+	lecturedUCsOnOtherCycles = new ArrayList<LecturedCurricularUnit>();
 	for (ExecutionSemester executionSemester : executionSemesters) {
 	    for (Professorship professorship : teacher.getProfessorships(executionSemester)) {
 		if (professorship.getExecutionCourse().getDegreesSortedByDegreeName().contains(degree)) {
-		    result.addAll(getLecturedCurricularUnitForProfessorship(professorship, executionSemester));
+		    lecturedUCsOnCycle.addAll(getLecturedCurricularUnitForProfessorship(professorship, executionSemester));
+		} else {
+		    lecturedUCsOnOtherCycles.addAll(getLecturedCurricularUnitForProfessorship(professorship, executionSemester));
 		}
 	    }
-	    if (degree.getPhdProgram() != null) {
-		for (PhdIndividualProgramProcess phdIndividualProgramProcess : degree.getPhdProgram()
-			.getIndividualProgramProcesses()) {
-		    if (phdIndividualProgramProcess.isActive(executionSemester.getAcademicInterval().toInterval())) {
-			if (phdIndividualProgramProcess.isActive(executionSemester.getAcademicInterval().toInterval())
-				&& phdIndividualProgramProcess.isGuiderOrAssistentGuider(teacher.getPerson())
-				&& teacher.isActiveOrHasAuthorizationForSemester(executionSemester)) {
-			    result.add(new LecturedCurricularUnit("Dissertação", null, null));
-			}
-		    }
-		}
-	    }
-	}
-	return result;
-    }
-
-    public List<LecturedCurricularUnit> getLecturedUCsOnOtherCycles() {
-	List<LecturedCurricularUnit> result = new ArrayList<LecturedCurricularUnit>();
-	for (ExecutionSemester executionSemester : executionSemesters) {
-	    for (Professorship professorship : teacher.getProfessorships(executionSemester)) {
-		if (!professorship.getExecutionCourse().getDegreesSortedByDegreeName().contains(degree)) {
-		    result.addAll(getLecturedCurricularUnitForProfessorship(professorship, executionSemester));
+	    for (ThesisEvaluationParticipant thesisEvaluationParticipant : teacher.getPerson().getThesisEvaluationParticipants(
+		    executionSemester)) {
+		if (thesisEvaluationParticipant.getThesis().getEnrolment().getExecutionCourseFor(executionSemester)
+			.getDegreesSortedByDegreeName().contains(degree)) {
+		    lecturedUCsOnCycle.add(new LecturedCurricularUnit("Dissertação", null, null));
+		} else {
+		    lecturedUCsOnOtherCycles.add(new LecturedCurricularUnit("Dissertação", null, null));
 		}
 	    }
 
 	    if (degree.getPhdProgram() != null) {
 		for (PhdIndividualProgramProcess phdIndividualProgramProcess : teacher.getPerson()
 			.getPhdIndividualProgramProcesses()) {
-		    if ((!phdIndividualProgramProcess.getPhdProgram().equals(degree.getPhdProgram()))
-			    && phdIndividualProgramProcess.isActive(executionSemester.getAcademicInterval().toInterval())
+		    if (phdIndividualProgramProcess.isActive(executionSemester.getAcademicInterval().toInterval())
 			    && phdIndividualProgramProcess.isGuiderOrAssistentGuider(teacher.getPerson())
 			    && teacher.isActiveOrHasAuthorizationForSemester(executionSemester)) {
-			result.add(new LecturedCurricularUnit("Dissertação", null, null));
+			if (phdIndividualProgramProcess.getPhdProgram().equals(degree.getPhdProgram())) {
+			    lecturedUCsOnCycle.add(new LecturedCurricularUnit("Dissertação", null, null));
+			} else {
+			    lecturedUCsOnOtherCycles.add(new LecturedCurricularUnit("Dissertação", null, null));
+			}
 		    }
 		}
 	    }
 	}
-	return result;
+	return;
+    }
+
+    public List<LecturedCurricularUnit> getLecturedUCsOnCycle() {
+	return lecturedUCsOnCycle;
+    }
+
+    public List<LecturedCurricularUnit> getLecturedUCsOnOtherCycles() {
+	return lecturedUCsOnOtherCycles;
     }
 
     protected List<LecturedCurricularUnit> getLecturedCurricularUnitForProfessorship(Professorship professorship,
