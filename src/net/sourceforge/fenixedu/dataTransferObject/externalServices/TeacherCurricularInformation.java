@@ -195,7 +195,7 @@ public class TeacherCurricularInformation implements Serializable {
 	    System.out.println("Invalid regime: " + regime);
 	    return lastProfessionalRegime == null ? null : lastProfessionalRegime.getName().getContent();
 	}
-	return null;
+	return "Tempo Parcial";
     }
 
     public List<String> getTop5ResultParticipation() {
