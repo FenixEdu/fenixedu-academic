@@ -38,7 +38,9 @@ public class DegreeDesignation extends DegreeDesignation_Base {
 	
 	List<DegreeDesignation> possibleDesignations = new ArrayList<DegreeDesignation>();
 	for (DegreeClassification classification : possibleClassifications) {
-	    possibleDesignations.addAll(classification.getDegreeDesignations());
+	    if (classification.hasAnyDegreeDesignations()) {
+		possibleDesignations.addAll(classification.getDegreeDesignations());
+	    }
 	}
 	
 	for (DegreeDesignation degreeDesignation : possibleDesignations) {
