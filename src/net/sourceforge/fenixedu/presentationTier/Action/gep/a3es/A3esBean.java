@@ -181,6 +181,7 @@ public class A3esBean implements Serializable {
 		teacherCurricularInformationList) {
 	    @Override
 	    protected void makeLine(TeacherCurricularInformation teacherCurricularInformation) {
+		addCell("IstId", teacherCurricularInformation.getTeacher().getPerson().getUsername());
 		addCell("Nome", teacherCurricularInformation.getTeacher().getPerson().getName());
 		addCell("Instituição", "Instituto Superior Técnico");
 		addCell("Unidade Orgânica", teacherCurricularInformation.getUnitName());

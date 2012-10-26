@@ -13,6 +13,7 @@ import java.util.SortedSet;
 import java.util.TreeSet;
 
 import net.sourceforge.fenixedu.domain.CourseLoad;
+import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.Department;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
@@ -75,8 +76,8 @@ public class TeacherCurricularInformation implements Serializable {
 		}
 	    }));
 
-    protected List<LecturedCurricularUnit> lecturedUCsOnCycle;
-    protected List<LecturedCurricularUnit> lecturedUCsOnOtherCycles;
+    protected Set<LecturedCurricularUnit> lecturedUCsOnCycle;
+    protected Set<LecturedCurricularUnit> lecturedUCsOnOtherCycles;
 
     public TeacherCurricularInformation(Teacher teacher, Degree degree, List<ExecutionSemester> executionSemester) {
 	super();
@@ -306,8 +307,8 @@ public class TeacherCurricularInformation implements Serializable {
     }
 
     public void setlecturedUCs() {
-	lecturedUCsOnCycle = new ArrayList<LecturedCurricularUnit>();
-	lecturedUCsOnOtherCycles = new ArrayList<LecturedCurricularUnit>();
+	lecturedUCsOnCycle = new HashSet<LecturedCurricularUnit>();
+	lecturedUCsOnOtherCycles = new HashSet<LecturedCurricularUnit>();
 	for (ExecutionSemester executionSemester : executionSemesters) {
 	    for (Professorship professorship : teacher.getProfessorships(executionSemester)) {
 		if (professorship.getExecutionCourse().getDegreesSortedByDegreeName().contains(degree)) {
@@ -324,11 +325,10 @@ public class TeacherCurricularInformation implements Serializable {
 		    if (executionCourse.getDegreesSortedByDegreeName().contains(degree)) {
 			lecturedUCsOnCycle.add(new LecturedCurricularUnit("Dissertação", null, null));
 		    } else {
-			lecturedUCsOnOtherCycles.add(new LecturedCurricularUnit("Dissertação", null, null));
+			lecturedUCsOnOtherCycles.add(new LecturedCurricularUnit("Dissertação " + degree.getName(), null, null));
 		    }
 		}
 	    }
-
 	    if (degree.getPhdProgram() != null) {
 		for (PhdIndividualProgramProcess phdIndividualProgramProcess : teacher.getPerson()
 			.getPhdIndividualProgramProcesses()) {
@@ -338,7 +338,8 @@ public class TeacherCurricularInformation implements Serializable {
 			if (phdIndividualProgramProcess.getPhdProgram().equals(degree.getPhdProgram())) {
 			    lecturedUCsOnCycle.add(new LecturedCurricularUnit("Dissertação", null, null));
 			} else {
-			    lecturedUCsOnOtherCycles.add(new LecturedCurricularUnit("Dissertação", null, null));
+			    lecturedUCsOnOtherCycles
+				    .add(new LecturedCurricularUnit("Dissertação " + degree.getName(), null, null));
 			}
 		    }
 		}
@@ -347,12 +348,20 @@ public class TeacherCurricularInformation implements Serializable {
 	return;
     }
 
-    public List<LecturedCurricularUnit> getLecturedUCsOnCycle() {
+    public Set<LecturedCurricularUnit> getLecturedUCsOnCycle() {
 	return lecturedUCsOnCycle;
     }
 
-    public List<LecturedCurricularUnit> getLecturedUCsOnOtherCycles() {
+    public Set<LecturedCurricularUnit> getLecturedUCsOnOtherCycles() {
 	return lecturedUCsOnOtherCycles;
+    }
+
+    public String getDegreeSiglas(ExecutionCourse executionCourse) {
+	Set<String> degreeSiglas = new HashSet<String>();
+	for (CurricularCourse curricularCourse : executionCourse.getAssociatedCurricularCourses()) {
+	    degreeSiglas.add(curricularCourse.getDegreeCurricularPlan().getDegree().getSigla());
+	}
+	return StringUtils.join(degreeSiglas, ", ");
     }
 
     protected List<LecturedCurricularUnit> getLecturedCurricularUnitForProfessorship(Professorship professorship,
@@ -466,6 +475,32 @@ public class TeacherCurricularInformation implements Serializable {
 
 	public String getHours() {
 	    return hours;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+	    if (obj instanceof LecturedCurricularUnit) {
+		LecturedCurricularUnit o = (LecturedCurricularUnit) obj;
+		return equal(getName(), o.getName()) && equal(getShiftType(), o.getShiftType())
+			&& equal(getHours(), o.getHours());
+	    }
+	    return false;
+	}
+
+	protected boolean equal(String obj1, String obj2) {
+	    if (obj1 == null && obj2 == null) {
+		return true;
+	    }
+	    if (obj1 == null || obj2 == null) {
+		return false;
+	    }
+	    return obj1.equals(obj2);
+	}
+
+	@Override
+	public int hashCode() {
+	    return getName().hashCode() + (getShiftType() != null ? getShiftType().hashCode() : 0)
+		    + (getHours() != null ? getHours().hashCode() : 0);
 	}
     }
 
