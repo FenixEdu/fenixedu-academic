@@ -7,11 +7,12 @@ import java.util.TreeSet;
 import net.sourceforge.fenixedu.domain.candidacy.StudentCandidacy;
 import net.sourceforge.fenixedu.domain.inquiries.InquiryBlock;
 import net.sourceforge.fenixedu.domain.inquiries.InquiryQuestion;
-import net.sourceforge.fenixedu.domain.inquiries.InquiryStudent1rstCycleAnswer;
+import net.sourceforge.fenixedu.domain.inquiries.InquiryStudentCycleAnswer;
 import net.sourceforge.fenixedu.domain.inquiries.MandatoryCondition;
 import net.sourceforge.fenixedu.domain.inquiries.QuestionAnswer;
 import net.sourceforge.fenixedu.domain.inquiries.QuestionCondition;
 import net.sourceforge.fenixedu.domain.inquiries.StudentCycleInquiryTemplate;
+import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess;
 import net.sourceforge.fenixedu.domain.student.Registration;
 
 import org.apache.commons.beanutils.BeanComparator;
@@ -26,15 +27,26 @@ public class StudentFirstTimeCycleInquiryBean implements Serializable {
 
     private Set<InquiryBlockDTO> studentInquiryBlocks;
     private Registration registration;
+    private PhdIndividualProgramProcess phdProcess;
     private StudentCandidacy candidacy;
+    private StudentCycleInquiryTemplate studentInquiryTemplate;
 
     public StudentFirstTimeCycleInquiryBean(StudentCycleInquiryTemplate studentInquiryTemplate, Registration registration) {
-	initStudentInquiry(studentInquiryTemplate, registration);
+	initStudentInquiry(studentInquiryTemplate, registration, null);
 	setGroupsVisibility();
     }
 
-    private void initStudentInquiry(StudentCycleInquiryTemplate studentInquiryTemplate, Registration registration) {
+    public StudentFirstTimeCycleInquiryBean(StudentCycleInquiryTemplate studentInquiryTemplate,
+	    PhdIndividualProgramProcess phdProcess) {
+	initStudentInquiry(studentInquiryTemplate, null, phdProcess);
+	setGroupsVisibility();
+    }
+
+    private void initStudentInquiry(StudentCycleInquiryTemplate studentInquiryTemplate, Registration registration,
+	    PhdIndividualProgramProcess phdProcess) {
 	setRegistration(registration);
+	setPhdProcess(phdProcess);
+	setStudentInquiryTemplate(studentInquiryTemplate);
 	setStudentInquiryBlocks(new TreeSet<InquiryBlockDTO>(new BeanComparator("inquiryBlock.blockOrder")));
 	for (InquiryBlock inquiryBlock : studentInquiryTemplate.getInquiryBlocks()) {
 	    getStudentInquiryBlocks().add(new InquiryBlockDTO(inquiryBlock));
@@ -97,20 +109,28 @@ public class StudentFirstTimeCycleInquiryBean implements Serializable {
 
     @Service
     public void saveAnswers() {
-	InquiryStudent1rstCycleAnswer inquiryStudent1rstCycleAnswer = null;
+	InquiryStudentCycleAnswer inquiryStudentCycleAnswer = null;
 	for (InquiryBlockDTO blockDTO : getStudentInquiryBlocks()) {
 	    for (InquiryGroupQuestionBean groupQuestionBean : blockDTO.getInquiryGroups()) {
 		for (InquiryQuestionDTO questionDTO : groupQuestionBean.getInquiryQuestions()) {
 		    if (!StringUtils.isEmpty(questionDTO.getResponseValue()) || questionDTO.getQuestionAnswer() != null) {
-			if (inquiryStudent1rstCycleAnswer == null) {
-			    inquiryStudent1rstCycleAnswer = new InquiryStudent1rstCycleAnswer(getRegistration());
-			    inquiryStudent1rstCycleAnswer.setResponseDateTime(new DateTime());
+			if (inquiryStudentCycleAnswer == null) {
+			    inquiryStudentCycleAnswer = createInquiryStudentCycleAnswer();
+			    inquiryStudentCycleAnswer.setResponseDateTime(new DateTime());
 			}
-			new QuestionAnswer(inquiryStudent1rstCycleAnswer, questionDTO.getInquiryQuestion(),
+			new QuestionAnswer(inquiryStudentCycleAnswer, questionDTO.getInquiryQuestion(),
 				questionDTO.getFinalValue());
 		    }
 		}
 	    }
+	}
+    }
+
+    private InquiryStudentCycleAnswer createInquiryStudentCycleAnswer() {
+	if (getRegistration() != null) {
+	    return new InquiryStudentCycleAnswer(getRegistration());
+	} else {
+	    return new InquiryStudentCycleAnswer(getPhdProcess());
 	}
     }
 
@@ -136,5 +156,21 @@ public class StudentFirstTimeCycleInquiryBean implements Serializable {
 
     public StudentCandidacy getCandidacy() {
 	return candidacy;
+    }
+
+    public PhdIndividualProgramProcess getPhdProcess() {
+	return phdProcess;
+    }
+
+    public void setPhdProcess(PhdIndividualProgramProcess phdProcess) {
+	this.phdProcess = phdProcess;
+    }
+
+    public void setStudentInquiryTemplate(StudentCycleInquiryTemplate studentInquiryTemplate) {
+	this.studentInquiryTemplate = studentInquiryTemplate;
+    }
+
+    public StudentCycleInquiryTemplate getStudentInquiryTemplate() {
+	return studentInquiryTemplate;
     }
 }

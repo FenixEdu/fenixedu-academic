@@ -6,20 +6,21 @@ import net.sourceforge.fenixedu.domain.RootDomainObject;
 
 import org.joda.time.DateTime;
 
-public class StudentOtherCycleInquiryTemplate extends StudentOtherCycleInquiryTemplate_Base {
+public class Student2ndCycleInquiryTemplate extends Student2ndCycleInquiryTemplate_Base {
     
-    public StudentOtherCycleInquiryTemplate(DateTime begin, DateTime end) {
+    public Student2ndCycleInquiryTemplate(DateTime begin, DateTime end) {
         super();
 	init(begin, end);
     }
-    
-    public static StudentOtherCycleInquiryTemplate getCurrentTemplate() {
+
+    public static Student2ndCycleInquiryTemplate getCurrentTemplate() {
 	final List<InquiryTemplate> inquiryTemplates = RootDomainObject.getInstance().getInquiryTemplates();
 	for (final InquiryTemplate inquiryTemplate : inquiryTemplates) {
-	    if (inquiryTemplate instanceof StudentOtherCycleInquiryTemplate && inquiryTemplate.isOpen()) {
-		return (StudentOtherCycleInquiryTemplate) inquiryTemplate;
+	    if (inquiryTemplate instanceof Student2ndCycleInquiryTemplate && inquiryTemplate.isOpen()) {
+		return (Student2ndCycleInquiryTemplate) inquiryTemplate;
 	    }
 	}
 	return null;
     }
+
 }

@@ -8252,13 +8252,13 @@ class inquiries.InquiryTemplate extends DomainObject {
 	class inquiries.StudentRegistrationInquiryTemplate extends inquiries.InquiryTemplate {
 	}
 	
-	class inquiries.StudentCycleInquiryTemplate extends inquiries.InquiryTemplate {	
+	class inquiries.StudentCycleInquiryTemplate extends inquiries.InquiryTemplate {		
 	}
 	
 		class inquiries.Student1rstCycleInquiryTemplate extends inquiries.StudentCycleInquiryTemplate {	
 		}
 		
-		class inquiries.Student1rstAnd2ndCycleInquiryTemplate extends inquiries.StudentCycleInquiryTemplate {	
+		class inquiries.Student2ndCycleInquiryTemplate extends inquiries.StudentCycleInquiryTemplate {	
 		}
 		
 		class inquiries.StudentOtherCycleInquiryTemplate extends inquiries.StudentCycleInquiryTemplate {	
@@ -8365,23 +8365,14 @@ class inquiries.InquiryAnswer extends DomainObject {
 		Boolean allowAcademicPublicizing;
 	}
 	
-	class inquiries.InquiryRegentAnswer extends inquiries.InquiryAnswer {		
+	class inquiries.InquiryRegentAnswer extends inquiries.InquiryAnswer {
 	}
 	
 	class inquiries.InquiryCoordinatorAnswer extends inquiries.InquiryAnswer {	
 	}
 	
-	class inquiries.InquiryStudentCycleAnswer extends inquiries.InquiryAnswer {	
+	class inquiries.InquiryStudentCycleAnswer extends inquiries.InquiryAnswer {
 	}
-	
-		class inquiries.InquiryStudent1rstCycleAnswer extends inquiries.InquiryStudentCycleAnswer {	
-		}
-		
-		class inquiries.InquiryStudent1rstAnd2ndCycleAnswer extends inquiries.InquiryStudentCycleAnswer {	
-		}
-		
-		class inquiries.InquiryStudentOtherCycleAnswer extends inquiries.InquiryStudentCycleAnswer {	
-		}
 
 class inquiries.QuestionAnswer extends DomainObject {
 	String answer;    
@@ -8924,9 +8915,12 @@ relation InquiryRegentAnswerProfessorship {
 }
 
 relation InquiryStudentCycleAnswerRegistration {
-	student.Registration playsRole registration {
-        multiplicity 1..1;
-    }
+	student.Registration playsRole registration;
+	inquiries.InquiryStudentCycleAnswer playsRole inquiryStudentCycleAnswer;
+}
+
+relation InquiryStudentCycleAnswerPhdIndividualProgramProcess {
+	phd.PhdIndividualProgramProcess playsRole phdProcess;
 	inquiries.InquiryStudentCycleAnswer playsRole inquiryStudentCycleAnswer;
 }
 

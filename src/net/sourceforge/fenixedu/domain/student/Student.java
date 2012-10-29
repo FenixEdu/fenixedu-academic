@@ -1818,7 +1818,7 @@ public class Student extends Student_Base {
 	}
 
 	for (final PhdIndividualProgramProcess phdProcess : getPerson().getPhdIndividualProgramProcesses()) {
-	    if (isValidPhdProcessForRAIDES(phdProcess) && phdProcess.hasMissingPersonalInformation(currentExecutionYear)) {
+	    if (isValidAndActivePhdProcess(phdProcess) && phdProcess.hasMissingPersonalInformation(currentExecutionYear)) {
 		return true;
 	    }
 	}
@@ -1830,7 +1830,7 @@ public class Student extends Student_Base {
 		&& !RegistrationAgreement.MOBILITY_AGREEMENTS.contains(registration.getRegistrationAgreement());
     }
 
-    public boolean isValidPhdProcessForRAIDES(PhdIndividualProgramProcess phdProcess) {
+    public boolean isValidAndActivePhdProcess(PhdIndividualProgramProcess phdProcess) {
 	return phdProcess.isProcessActive() && hasValidInsuranceEvent();
     }
 
@@ -1850,7 +1850,7 @@ public class Student extends Student_Base {
 	}
 
 	for (final PhdIndividualProgramProcess phdProcess : getPerson().getPhdIndividualProgramProcesses()) {
-	    if (isValidPhdProcessForRAIDES(phdProcess) && phdProcess.hasMissingPersonalInformation(currentExecutionYear)) {
+	    if (isValidAndActivePhdProcess(phdProcess) && phdProcess.hasMissingPersonalInformation(currentExecutionYear)) {
 		result.add(phdProcess.getPersonalInformationBean(currentExecutionYear));
 	    }
 	}
@@ -2121,5 +2121,14 @@ public class Student extends Student_Base {
 	}
 
 	return null;
+    }
+
+    public boolean hasFirstTimeCycleInquiryToRespond() {
+	for (Registration registration : getActiveRegistrations()) {
+	    if (!registration.hasInquiryStudentCycleAnswer() && registration.isFirstTime()) {
+		return true;
+	    }
+	}
+	return false;
     }
 }

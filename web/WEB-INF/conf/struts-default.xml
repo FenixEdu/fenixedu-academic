@@ -113,6 +113,9 @@
             <action path="/respondToYearDelegateInquiriesQuestion" parameter="method" type="net.sourceforge.fenixedu.presentationTier.Action.RespondToYearDelegateInquiriesQuestion">
                   <forward name="respondToYearDelegateInquiriesQuestion" path="/respondToYearDelegateInquiriesQuestion.jsp"></forward>
             </action>
+            <action path="/respondToFirstTimeCycleInquiry" parameter="method" type="net.sourceforge.fenixedu.presentationTier.Action.RespondToFirstTimeCycleInquiry">
+                  <forward name="inquiryNotice" path="/firstTimeCycleInquiryWarning.jsp"></forward>
+            </action>            
       </action-mappings>
       <!-- ========== Controller Configuration ================================ -->
       <controller processorClass="net.sourceforge.fenixedu.presentationTier.processor.FenixRequestProcessorWithTiles"></controller>

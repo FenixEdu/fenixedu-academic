@@ -4097,5 +4097,4 @@ public class Registration extends Registration_Base {
 	}
 	return false;
     }
-
 }

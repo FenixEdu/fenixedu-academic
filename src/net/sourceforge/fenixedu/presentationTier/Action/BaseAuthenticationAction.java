@@ -79,8 +79,8 @@ public abstract class BaseAuthenticationAction extends FenixAction {
 		return handleSessionCreationAndForwardToRAIDESInquiriesResponseQuestion(request, userView, session);
 	    } else if (isAlumniAndHasInquiriesToResponde(userView)) {
 		return handleSessionCreationAndForwardToAlumniInquiriesResponseQuestion(request, userView, session);
-	    } else if (isStudentAndHasInquiriesToRespond(userView)) {
-		return handleSessionCreationAndForwardToInquiriesResponseQuestion(request, userView, session);
+	    } else if (isStudentAndHasQucInquiriesToRespond(userView)) {
+		return handleSessionCreationAndForwardToQucInquiriesResponseQuestion(request, userView, session);
 	    } else if (isDelegateAndHasInquiriesToRespond(userView)) {
 		return handleSessionCreationAndForwardToDelegateInquiriesResponseQuestion(request, userView, session);
 	    } else if (isTeacherAndHasInquiriesToRespond(userView)) {
@@ -95,12 +95,29 @@ public abstract class BaseAuthenticationAction extends FenixAction {
 		return handleSessionCreationAndForwardToAlumniReminder(request, userView, session);
 	    } else if (hasPendingPartyContactValidationRequests(userView)) {
 		return handlePartyContactValidationRequests(request, userView, session);
+	    } else if (isStudentAndHasFirstTimeCycleInquiryToRespond(userView)) {
+		return handleSessionCreationAndForwardToFirstTimeCycleInquiry(request, userView, session);
 	    } else {
 		return handleSessionCreationAndGetForward(mapping, request, userView, session);
 	    }
 	} catch (ExcepcaoAutenticacao e) {
 	    return getAuthenticationFailedForward(mapping, request, "invalidAuthentication", "errors.invalidAuthentication");
 	}
+    }
+
+    private ActionForward handleSessionCreationAndForwardToFirstTimeCycleInquiry(HttpServletRequest request, IUserView userView,
+	    HttpSession session) {
+	createNewSession(request, session, userView);
+	return new ActionForward("/respondToFirstTimeCycleInquiry.do?method=showQuestion");
+    }
+
+    private boolean isStudentAndHasFirstTimeCycleInquiryToRespond(IUserView userView) {
+	//TODO remove after testing is complete
+	//	if (userView.hasRoleType(RoleType.STUDENT)) {
+	//	    final Student student = userView.getPerson().getStudent();
+	//	    return student != null && student.hasFirstTimeCycleInquiryToRespond();
+	//	}
+	return false;
     }
 
     private boolean hasMissingTeacherService(IUserView userView) {
@@ -213,7 +230,7 @@ public abstract class BaseAuthenticationAction extends FenixAction {
 	return false;
     }
 
-    private boolean isStudentAndHasInquiriesToRespond(final IUserView userView) {
+    private boolean isStudentAndHasQucInquiriesToRespond(final IUserView userView) {
 	if (userView.hasRoleType(RoleType.STUDENT)) {
 	    final Student student = userView.getPerson().getStudent();
 	    return student != null && student.hasInquiriesToRespond();
@@ -313,7 +330,7 @@ public abstract class BaseAuthenticationAction extends FenixAction {
 	return new ActionForward("/respondToInquiriesQuestion.do?method=showTeacherQuestion");
     }
 
-    private ActionForward handleSessionCreationAndForwardToInquiriesResponseQuestion(HttpServletRequest request,
+    private ActionForward handleSessionCreationAndForwardToQucInquiriesResponseQuestion(HttpServletRequest request,
 	    IUserView userView, HttpSession session) {
 	createNewSession(request, session, userView);
 	return new ActionForward("/respondToInquiriesQuestion.do?method=showQuestion");
