@@ -31,7 +31,7 @@ public enum AcademicServiceRequestType {
 
     PHD_STUDENT_REINGRESSION(true),
 
-    DUPLICATE_REQUEST(false);
+    DUPLICATE_REQUEST(true);
 
     private boolean isServiceRequest;
 
