@@ -80,7 +80,8 @@ public class PersonProfessionalData extends PersonProfessionalData_Base {
 	if (giafProfessionalData != null) {
 	    for (final PersonContractSituation situation : giafProfessionalData.getValidPersonContractSituations()) {
 		if ((dateInterval == null || situation.overlaps(dateInterval))
-			&& (categoryType == null || situation.getProfessionalCategory().getCategoryType().equals(categoryType))
+			&& (categoryType == null || (situation.getProfessionalCategory() != null 
+							&& situation.getProfessionalCategory().getCategoryType().equals(categoryType)))
 			&& (lastPersonContractSituation == null || situation.isAfter(lastPersonContractSituation))) {
 		    lastPersonContractSituation = situation;
 		}
