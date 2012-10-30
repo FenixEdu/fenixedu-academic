@@ -95,7 +95,8 @@ public class PropertiesManager extends pt.utl.ist.fenix.tools.util.PropertiesMan
 		appContext = getProperty("app.context");
 		filterRequestWithDigest = getBooleanProperty("filter.request.with.digest");
 		tamperingRedirect = getProperty("login.page");
-		errorIfChangingDeletedObject = getBooleanProperty("error.if.changing.deleted.object");
+		errorIfChangingDeletedObject = true;
+		errorfIfDeletingObjectNotDisconnected = true;
 		defaultLanguage = getProperty("language");
 		defaultLocation = getProperty("location");
 		defaultVariant = getProperty("variant");
