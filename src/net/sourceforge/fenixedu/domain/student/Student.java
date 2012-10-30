@@ -2030,7 +2030,7 @@ public class Student extends Student_Base {
 	    final RegistrationStateType stateType = registration.getLastStateType();
 	    if (stateType != null
 		    && ((stateType.isActive() && stateType != RegistrationStateType.SCHOOLPARTCONCLUDED)
-			    || stateType == RegistrationStateType.FLUNKED
+			    || stateType == RegistrationStateType.FLUNKED 
 			    || stateType == RegistrationStateType.INTERRUPTED || stateType == RegistrationStateType.MOBILITY)) {
 		return true;
 	    }
@@ -2126,7 +2126,29 @@ public class Student extends Student_Base {
     public boolean hasFirstTimeCycleInquiryToRespond() {
 	for (Registration registration : getActiveRegistrations()) {
 	    if (!registration.hasInquiryStudentCycleAnswer() && registration.isFirstTime()) {
+		if (registration.hasPhdIndividualProgramProcess()
+			&& registration.getPhdIndividualProgramProcess().hasInquiryStudentCycleAnswer()) {
+		    return false;
+		}
 		return true;
+	    }
+	}
+	ExecutionYear currentExecutionYear = ExecutionYear.readCurrentExecutionYear();
+	for (final PhdIndividualProgramProcess phdProcess : getPerson().getPhdIndividualProgramProcesses()) {
+	    if (!phdProcess.hasInquiryStudentCycleAnswer() && isValidAndActivePhdProcess(phdProcess)) {
+		if (phdProcess.hasRegistration()) {
+		    if (phdProcess.getRegistration().hasInquiryStudentCycleAnswer()) {
+			return false;
+		    } else {
+			if (currentExecutionYear.containsDate(phdProcess.getWhenStartedStudies())) {
+			    return true;
+			}
+		    }
+		} else {
+		    if (currentExecutionYear.containsDate(phdProcess.getWhenStartedStudies())) {
+			return true;
+		    }
+		}
 	    }
 	}
 	return false;
