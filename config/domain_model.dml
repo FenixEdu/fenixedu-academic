@@ -757,6 +757,33 @@ class DomainObject {
         Boolean withAccountInformation;
         String linePrefix;
     }
+    
+    class cardGeneration.SantanderBatch extends DomainObject {
+    	DateTime created;
+    	DateTime generated;
+    	DateTime sent;
+    	Integer sequenceNumber;
+    }
+    
+    class cardGeneration.SantanderBatchRequester extends DomainObject {
+    }
+    
+    class cardGeneration.SantanderBatchSender extends DomainObject {
+    }
+    
+    class cardGeneration.SantanderSequenceNumberGenerator extends DomainObject {
+    	Integer sequenceNumber;
+    }
+    
+    class cardGeneration.SantanderEntry extends DomainObject {
+    	String line;
+    	DateTime created;
+    }
+    
+    class cardGeneration.SantanderProblem extends DomainObject {
+    	String descriptionKey;
+        String arg;
+    }
 
     class CompetenceCourse extends DomainObject {
         String code;
@@ -18608,6 +18635,103 @@ relation PersonCardGenerationRegister {
         cardGeneration.CardGenerationRegister playsRole cardGenerationRegister {
         multiplicity *;
     }
+}
+
+relation RootDomainObjectSantanderBatch {
+	RootDomainObject playsRole rootDomainObject;
+	cardGeneration.SantanderBatch playsRole santanderBatches {
+		multiplicity *;
+	}
+}
+    
+relation RootDomainObjectSantanderBatchRequester {
+	RootDomainObject playsRole rootDomainObject;
+	cardGeneration.SantanderBatchRequester playsRole santanderBatchRequesters {
+		multiplicity *;
+	}
+}
+
+relation RootDomainObjectSantanderBatchSender {
+	RootDomainObject playsRole rootDomainObject;
+	cardGeneration.SantanderBatchSender playsRole santanderBatchSenders {
+		multiplicity *;
+	}
+}
+
+relation RootDomainObjectSantanderSequenceNumberGenerator {
+	RootDomainObject playsRole rootDomainObject;
+	cardGeneration.SantanderSequenceNumberGenerator playsRole santanderSequenceNumberGenerators {
+		multiplicity *;
+	}
+}	
+
+relation RootDomainObjectSantanderEntry {
+	RootDomainObject playsRole rootDomainObject;
+	cardGeneration.SantanderEntry playsRole santanderEntries {
+		multiplicity *;
+	}
+}
+
+relation RootDomainObjectSantanderProblem {
+	RootDomainObject playsRole rootDomainObject;
+	cardGeneration.SantanderProblem playsRole santanderProblem {
+		multiplicity *;
+	}
+}
+
+relation ExecutionYearSantanderBatch {
+	ExecutionYear playsRole executionYear;
+	cardGeneration.SantanderBatch playsRole santanderBatches {
+		multiplicity *;
+	}
+}
+
+relation SantanderBatchSantanderEntry {
+	cardGeneration.SantanderBatch playsRole santanderBatch;
+	cardGeneration.SantanderEntry playsRole santanderEntries {
+		multiplicity *;
+	}
+}
+
+relation SantanderBatchSantanderSequenceNumberGenerator {
+	cardGeneration.SantanderBatch playsRole santanderBatches {
+		multiplicity *;
+	}
+	cardGeneration.SantanderSequenceNumberGenerator playsRole santanderSequenceNumberGenerator;
+}
+
+relation SantanderBatchSantanderBatchRequester {
+	cardGeneration.SantanderBatch playsRole santanderBatch;
+	cardGeneration.SantanderBatchRequester playsRole santanderBatchRequester;
+}
+
+relation SantanderBatchSantanderBatchSender {
+	cardGeneration.SantanderBatch playsRole santanderBatch;
+	cardGeneration.SantanderBatchSender playsRole santanderBatchSender;
+}
+
+relation SantanderBatchSantanderProblem {
+	cardGeneration.SantanderBatch playsRole santanderBatch;
+    cardGeneration.SantanderProblem playsRole santanderProblems {
+		multiplicity *;
+	}
+}
+
+relation PersonSantanderBatchRequester {
+	Person playsRole person;
+	cardGeneration.SantanderBatchRequester playsRole santanderBatchRequester;
+}
+
+relation PersonSantanderBatchSender {
+	Person playsRole person;
+	cardGeneration.SantanderBatchSender playsRole santanderBatchSender;
+}
+
+relation PersonSantanderEntry {
+	Person playsRole person;
+	cardGeneration.SantanderEntry playsRole santanderEntries {
+		multiplicity *;
+	}
 }
 
 relation MetaDomainObjectRootDomainObject {

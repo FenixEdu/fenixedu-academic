@@ -43,4 +43,5 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "Creating SantanderCard entities" santanderCardEntities.sql
 execute "Updating the InquiryStudentCyleAnswer hierarchy" updateInquiryStudentCycleAnswerHierarchy.sql
