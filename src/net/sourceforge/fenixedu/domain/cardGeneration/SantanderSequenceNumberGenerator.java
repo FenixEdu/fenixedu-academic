@@ -9,6 +9,7 @@ public class SantanderSequenceNumberGenerator extends SantanderSequenceNumberGen
     
     private  SantanderSequenceNumberGenerator() {
         super();
+        setRootDomainObject(RootDomainObject.getInstance());
         setSequenceNumber(0);
     }
     

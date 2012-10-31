@@ -10,6 +10,7 @@ import net.sourceforge.fenixedu.domain.Coordinator;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
 public class SantanderBatch extends SantanderBatch_Base {
@@ -24,6 +25,7 @@ public class SantanderBatch extends SantanderBatch_Base {
     
     private  SantanderBatch() {
         super();
+        setRootDomainObject(RootDomainObject.getInstance());
     }
     
     public SantanderBatch(Person requester, ExecutionYear executionYear) {
