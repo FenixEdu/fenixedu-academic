@@ -31,6 +31,16 @@ public class PhdFinalizationCertificateRequest extends PhdFinalizationCertificat
 	this();
 
 	this.init(bean);
+
+	PhdRegistryDiplomaRequest registryDiplomaRequest = getPhdIndividualProgramProcess().getRegistryDiplomaRequest();
+
+	RectorateSubmissionBatch rectorateSubmissionBatch = registryDiplomaRequest.getRectorateSubmissionBatch();
+
+	if (rectorateSubmissionBatch == null) {
+	    throw new PhdDomainOperationException(
+		    "error.PhdFinalizationCertificateRequest.registry.diploma.submission.batch.not.sent");
+	}
+
     }
 
     @Override
