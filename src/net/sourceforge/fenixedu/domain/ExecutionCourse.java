@@ -1337,15 +1337,17 @@ public class ExecutionCourse extends ExecutionCourse_Base {
 	for (final CurricularCourse curricularCourse : getAssociatedCurricularCoursesSet()) {
 	    if (curricularCourse.isBolonhaDegree()) {
 		final CompetenceCourse competenceCourse = curricularCourse.getCompetenceCourse();
-		final Set<CurricularCourse> curricularCourses;
-		if (curricularCourseMap.containsKey(competenceCourse)) {
-		    curricularCourses = curricularCourseMap.get(competenceCourse);
-		} else {
-		    curricularCourses = new TreeSet<CurricularCourse>(
-			    CurricularCourse.CURRICULAR_COURSE_COMPARATOR_BY_DEGREE_AND_NAME);
-		    curricularCourseMap.put(competenceCourse, curricularCourses);
+		if (competenceCourse != null) {
+		    final Set<CurricularCourse> curricularCourses;
+		    if (curricularCourseMap.containsKey(competenceCourse)) {
+			curricularCourses = curricularCourseMap.get(competenceCourse);
+		    } else {
+			curricularCourses = new TreeSet<CurricularCourse>(
+				CurricularCourse.CURRICULAR_COURSE_COMPARATOR_BY_DEGREE_AND_NAME);
+			curricularCourseMap.put(competenceCourse, curricularCourses);
+		    }
+		    curricularCourses.add(curricularCourse);
 		}
-		curricularCourses.add(curricularCourse);
 	    }
 	}
 	return curricularCourseMap;
