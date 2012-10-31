@@ -53,6 +53,8 @@
 <script id="ist-bar" data-logout="https://fenix.ist.utl.pt/logoff.do" data-login="https://fenix.ist.utl.pt/loginPage.jsp" data-fluid="true" <% if(AccessControl.getUserView() == null) {%> data-use-offline="true" <%} %> data-next-param="service" src="https://barra.ist.utl.pt/site_media/static/js/barra.js"></script>
 <% } %>
 <jsp:include page="deployWarning.jsp" flush="true"/>
+<jsp:include page="devMode.jsp" flush="true"/>
+
 <!-- BEGIN BROWSER UPGRADE MESSAGE -->
 <div class="browser_upgrade">
 <p><strong>Aviso:</strong> Se est&aacute; a ler esta mensagem,

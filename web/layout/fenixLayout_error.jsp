@@ -34,6 +34,7 @@
 
 <body>
 <jsp:include page="deployWarning.jsp" flush="true"/>
+<jsp:include page="devMode.jsp" flush="true"/>
 
 <%-- Layout component parameters : title, context, header, navGeral, navLocal, body, footer --%>
 

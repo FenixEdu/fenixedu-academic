@@ -117,5 +117,3 @@
 
 <script type="text/javascript" language="javascript">switchGlobal();</script>
 </logic:present>
-
-<jsp:include page="devMode.jsp" flush="true"/>
