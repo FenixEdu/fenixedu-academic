@@ -2,7 +2,7 @@ create table `SANTANDER_BATCH_REQUESTER` (`OID_SANTANDER_BATCH` bigint unsigned,
 
 create table `SANTANDER_ENTRY` (`OID` bigint unsigned, `OID_SANTANDER_BATCH` bigint unsigned, `OID_PERSON` bigint unsigned, `LINE` text, `CREATED` timestamp NULL default NULL, `OID_ROOT_DOMAIN_OBJECT` bigint unsigned, `ID_INTERNAL` int(11) NOT NULL auto_increment, primary key (ID_INTERNAL), index (OID), index (OID_SANTANDER_BATCH), index (OID_PERSON), index (OID_ROOT_DOMAIN_OBJECT)) ENGINE=InnoDB, character set utf8;
 
-alter table `PARTY` add `OID_SANTANDER_BATCH_REQUESTERS` bigint unsigned, add `OID_SANTANDER_BATCH_SENDERS` bigint unsigned;
+alter table `PARTY` add `OID_SANTANDER_BATCH_REQUESTER` bigint unsigned, add `OID_SANTANDER_BATCH_SENDER` bigint unsigned;
 
 create table `SANTANDER_BATCH_SENDER` (`OID_SANTANDER_BATCH` bigint unsigned, `OID` bigint unsigned, `OID_PERSON` bigint unsigned, `OID_ROOT_DOMAIN_OBJECT` bigint unsigned, `ID_INTERNAL` int(11) NOT NULL auto_increment, primary key (ID_INTERNAL), index (OID), index (OID_ROOT_DOMAIN_OBJECT)) ENGINE=InnoDB, character set utf8;
 
