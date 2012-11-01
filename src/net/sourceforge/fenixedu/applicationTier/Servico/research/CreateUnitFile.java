@@ -1,8 +1,9 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.research;
 
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.InputStream;
+import java.io.File;
+import java.io.IOException;
+import java.util.Collection;
+import java.util.Collections;
 
 import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
@@ -13,31 +14,31 @@ import net.sourceforge.fenixedu.domain.accessControl.Group;
 import net.sourceforge.fenixedu.domain.accessControl.GroupUnion;
 import net.sourceforge.fenixedu.domain.accessControl.PersonGroup;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
+
+import org.apache.commons.io.FileUtils;
+
 import pt.ist.fenixWebFramework.services.Service;
-import pt.utl.ist.fenix.tools.file.FileDescriptor;
-import pt.utl.ist.fenix.tools.file.FileManagerFactory;
+import pt.utl.ist.fenix.tools.file.FileSetMetaData;
 import pt.utl.ist.fenix.tools.file.VirtualPath;
 import pt.utl.ist.fenix.tools.file.VirtualPathNode;
 
 public class CreateUnitFile extends FenixService {
 
+    private static byte[] read(final File file) {
+	try {
+	    return FileUtils.readFileToByteArray(file);
+	} catch (IOException e) {
+	    throw new Error(e);
+	}
+    }
+
     @Service
     public static void run(java.io.File file, String originalFilename, String displayName, String description, String tags,
 	    Group permittedGroup, Unit unit, Person person) throws FenixServiceException {
 
-	InputStream is = null;
-	try {
-	    is = new FileInputStream(file);
-	} catch (FileNotFoundException e) {
-	    throw new FenixServiceException(e.getMessage());
-	}
-
-	final FileDescriptor fileDescriptor = FileManagerFactory.getFactoryInstance().getSimpleFileManager().saveFile(
-		getVirtualPath(unit), originalFilename, !isPublic(permittedGroup), person.getName(), displayName, is);
-
-	new UnitFile(unit, person, description, tags, fileDescriptor.getFilename(), pt.utl.ist.fenix.tools.util.FileUtils
-		.getFilenameOnly(displayName), fileDescriptor.getMimeType(), fileDescriptor.getChecksum(), fileDescriptor
-		.getChecksumAlgorithm(), fileDescriptor.getSize(), fileDescriptor.getUniqueId(),
+	final Collection<FileSetMetaData> metaData = Collections.emptySet();
+	final byte[] content = read(file);
+	new UnitFile(unit, person, description, tags, getVirtualPath(unit), originalFilename, displayName, metaData, content,
 		!isPublic(permittedGroup) ? new GroupUnion(permittedGroup, new PersonGroup(person)) : permittedGroup);
     }
 

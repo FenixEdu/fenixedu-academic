@@ -1,10 +1,14 @@
 package net.sourceforge.fenixedu.domain.space;
 
+import java.util.Collection;
+
 import net.sourceforge.fenixedu.domain.DeleteFileRequest;
 import net.sourceforge.fenixedu.domain.accessControl.Group;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import pt.utl.ist.fenix.tools.file.FileManagerFactory;
+import pt.utl.ist.fenix.tools.file.FileSetMetaData;
+import pt.utl.ist.fenix.tools.file.VirtualPath;
 
 public class BlueprintFile extends BlueprintFile_Base {
 
@@ -12,12 +16,12 @@ public class BlueprintFile extends BlueprintFile_Base {
 	BlueprintBlueprintFile.addListener(new BlueprintBlueprintFileListener());
     }
 
-    public BlueprintFile(Blueprint blueprint, String filename, String displayName, String mimeType, String checksum,
-	    String checksumAlgorithm, Integer size, String externalStorageIdentification, Group permittedGroup) {
+    public BlueprintFile(VirtualPath path, Blueprint blueprint, String filename, String displayName, Group permittedGroup,
+	    byte[] content, Collection<FileSetMetaData> metadata) {
 
 	super();
 	setBlueprint(blueprint);
-	init(filename, displayName, mimeType, checksum, checksumAlgorithm, size, externalStorageIdentification, permittedGroup);
+	init(path, filename, displayName, metadata, content, permittedGroup);
     }
 
     @Override

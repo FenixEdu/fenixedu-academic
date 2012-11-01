@@ -17,6 +17,9 @@ import net.sourceforge.fenixedu.domain.UnitSiteBanner;
 import net.sourceforge.fenixedu.domain.UnitSiteBannerFile;
 import net.sourceforge.fenixedu.domain.UnitSiteBannerRepeatType;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
+
+import org.apache.commons.io.FileUtils;
+
 import pt.utl.ist.fenix.tools.file.FileDescriptor;
 import pt.utl.ist.fenix.tools.file.FileManagerFactory;
 import pt.utl.ist.fenix.tools.file.FileSetMetaData;
@@ -35,17 +38,7 @@ public class UnitSiteBannerFileService extends FenixService {
 	VirtualPath filePath = getVirtualPath(site);
 	Collection<FileSetMetaData> metaData = createMetaData(site, name);
 
-	FileDescriptor descriptor = saveFile(filePath, name, false, metaData, fileToUpload);
-
-	UnitSiteBannerFile file = new UnitSiteBannerFile(descriptor.getUniqueId(), name);
-	file.setSize(descriptor.getSize());
-	file.setMimeType(descriptor.getMimeType());
-	file.setChecksum(descriptor.getChecksum());
-	file.setChecksumAlgorithm(descriptor.getChecksumAlgorithm());
-
-	file.setPermittedGroup(null);
-
-	return file;
+	return new UnitSiteBannerFile(filePath, name, name, metaData, FileUtils.readFileToByteArray(fileToUpload), null);
     }
 
     protected VirtualPath getVirtualPath(UnitSite site) {

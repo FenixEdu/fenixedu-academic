@@ -27,11 +27,12 @@ import net.sourceforge.fenixedu.domain.accessControl.ProjectDepartmentAccessGrou
 import net.sourceforge.fenixedu.domain.accessControl.StudentGroupStudentsGroup;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.presentationTier.Action.manager.FileContentCreationBean.EducationalResourceType;
+
+import org.apache.commons.io.IOUtils;
+
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.ist.fenixWebFramework.services.Service;
-import pt.utl.ist.fenix.tools.file.FileDescriptor;
 import pt.utl.ist.fenix.tools.file.FileManagerException;
-import pt.utl.ist.fenix.tools.file.FileManagerFactory;
 import pt.utl.ist.fenix.tools.file.FileSetMetaData;
 import pt.utl.ist.fenix.tools.file.VirtualPath;
 import pt.utl.ist.fenix.tools.file.VirtualPathNode;
@@ -75,6 +76,14 @@ public class CreateProjectSubmission extends FenixService {
 	}
     }
 
+    private static byte[] read(final InputStream stream) {
+	try {
+	    return IOUtils.toByteArray(stream);
+	} catch (IOException e) {
+	    throw new Error(e);
+	}
+    }
+
     private static ProjectSubmission createProjectSubmission(InputStream inputStream, String filename, Attends attends,
 	    Project project, StudentGroup studentGroup, final Group permittedGroup) throws FenixServiceException,
 	    FileManagerException {
@@ -87,15 +96,13 @@ public class CreateProjectSubmission extends FenixService {
 	metaData.add(FileSetMetaData.createTitleMeta(filename));
 	metaData.add(new FileSetMetaData("type", null, null, EducationalResourceType.PROJECT_SUBMISSION.toString()));
 
-	final FileDescriptor fileDescriptor = FileManagerFactory.getFactoryInstance().getFileManager().saveFile(filePath,
-		filename, (permittedGroup != null) ? true : false, metaData, inputStream);
-	final ProjectSubmissionFile projectSubmissionFile = new ProjectSubmissionFile(filename, filename, fileDescriptor
-		.getMimeType(), fileDescriptor.getChecksum(), fileDescriptor.getChecksumAlgorithm(), fileDescriptor.getSize(),
-		fileDescriptor.getUniqueId(), permittedGroup);
+	final byte[] bs = read(inputStream);
+	final ProjectSubmissionFile projectSubmissionFile = new ProjectSubmissionFile(filePath, filename, filename, metaData, bs, permittedGroup);
+
 	final ProjectSubmission projectSubmission = new ProjectSubmission(project, studentGroup, attends, projectSubmissionFile);
 
-	new ProjectSubmissionLog(projectSubmission.getSubmissionDateTime(), filename, fileDescriptor.getMimeType(),
-		fileDescriptor.getChecksum(), fileDescriptor.getChecksumAlgorithm(), fileDescriptor.getSize(), studentGroup,
+	new ProjectSubmissionLog(projectSubmission.getSubmissionDateTime(), filename, null,
+		null, null, bs.length, studentGroup,
 		attends, project);
 
 	if (fileToDeleteExternalId != null) {

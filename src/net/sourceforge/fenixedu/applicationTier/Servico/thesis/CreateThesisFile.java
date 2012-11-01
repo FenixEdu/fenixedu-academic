@@ -21,6 +21,9 @@ import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.thesis.Thesis;
 import net.sourceforge.fenixedu.domain.thesis.ThesisFile;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
+
+import org.apache.commons.io.FileUtils;
+
 import pt.utl.ist.fenix.tools.file.FileDescriptor;
 import pt.utl.ist.fenix.tools.file.FileManagerFactory;
 import pt.utl.ist.fenix.tools.file.FileSetMetaData;
@@ -51,21 +54,16 @@ public abstract class CreateThesisFile extends FenixService {
 	VirtualPath filePath = getVirtualPath(thesis);
 	Collection<FileSetMetaData> metaData = createMetaData(thesis, fileName);
 
-	FileDescriptor descriptor = saveFile(filePath, fileName, true, metaData, fileToUpload);
-
-	ThesisFile file = new ThesisFile(descriptor.getUniqueId(), fileName);
-	file.setSize(descriptor.getSize());
-	file.setMimeType(descriptor.getMimeType());
-	file.setChecksum(descriptor.getChecksum());
-	file.setChecksumAlgorithm(descriptor.getChecksumAlgorithm());
-
 	RoleTypeGroup scientificCouncil = new RoleTypeGroup(RoleType.SCIENTIFIC_COUNCIL);
 	CurrentDegreeScientificCommissionMembersGroup commissionMembers = new CurrentDegreeScientificCommissionMembersGroup(
 		thesis.getDegree());
 	PersonGroup student = thesis.getStudent().getPerson().getPersonGroup();
 	ThesisFileReadersGroup thesisGroup = new ThesisFileReadersGroup(thesis);
+	final GroupUnion permittedGroup = new GroupUnion(scientificCouncil, commissionMembers, student, thesisGroup);
 
-	file.setPermittedGroup(new GroupUnion(scientificCouncil, commissionMembers, student, thesisGroup));
+	byte[] content = FileUtils.readFileToByteArray(fileToUpload);
+
+	ThesisFile file = new ThesisFile(filePath, fileName, fileName, metaData, content, permittedGroup);
 
 	updateThesis(thesis, file, title, subTitle, language, fileName, fileToUpload);
 

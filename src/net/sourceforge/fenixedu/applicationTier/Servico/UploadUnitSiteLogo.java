@@ -15,6 +15,9 @@ import net.sourceforge.fenixedu.domain.File;
 import net.sourceforge.fenixedu.domain.UnitSite;
 import net.sourceforge.fenixedu.domain.UnitSiteFile;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
+
+import org.apache.commons.io.FileUtils;
+
 import pt.utl.ist.fenix.tools.file.FileDescriptor;
 import pt.utl.ist.fenix.tools.file.FileManagerFactory;
 import pt.utl.ist.fenix.tools.file.FileSetMetaData;
@@ -40,13 +43,7 @@ public class UploadUnitSiteLogo extends FenixService {
 	VirtualPath filePath = getVirtualPath(site);
 	Collection<FileSetMetaData> metaData = createMetaData(site, name);
 
-	FileDescriptor descriptor = saveFile(filePath, name, false, metaData, fileToUpload);
-
-	UnitSiteFile file = new UnitSiteFile(descriptor.getUniqueId(), name);
-	file.setSize(descriptor.getSize());
-	file.setMimeType(descriptor.getMimeType());
-	file.setChecksum(descriptor.getChecksum());
-	file.setChecksumAlgorithm(descriptor.getChecksumAlgorithm());
+	UnitSiteFile file = new UnitSiteFile(filePath, name, name, metaData, FileUtils.readFileToByteArray(fileToUpload), null);
 
 	file.setPermittedGroup(null);
 

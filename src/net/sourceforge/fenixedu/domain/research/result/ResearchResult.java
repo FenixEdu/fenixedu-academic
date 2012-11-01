@@ -25,6 +25,8 @@ import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import org.joda.time.DateTime;
 
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
+import pt.utl.ist.fenix.tools.file.FileSetMetaData;
+import pt.utl.ist.fenix.tools.file.VirtualPath;
 
 public abstract class ResearchResult extends ResearchResult_Base {
 
@@ -120,19 +122,20 @@ public abstract class ResearchResult extends ResearchResult_Base {
     }
 
     @Checked("ResultPredicates.writePredicate")
-    public ResearchResultDocumentFile addDocumentFile(String filename, String displayName,
-	    FileResultPermittedGroupType permittedGroupType, String mimeType, String checksum, String checksumAlgorithm,
-	    Integer size, String externalStorageId, Group permittedGroup) {
-	return addDocumentFile(filename, displayName, permittedGroupType, mimeType, checksum, checksumAlgorithm, size,
-		externalStorageId, permittedGroup, Boolean.TRUE);
+    public ResearchResultDocumentFile addDocumentFile(
+	    final VirtualPath path, Collection<FileSetMetaData> metadata, byte[] content,
+	    String filename, String displayName,
+	    FileResultPermittedGroupType permittedGroupType, Group permittedGroup) {
+	return addDocumentFile(path, metadata, content, filename, displayName, permittedGroupType, permittedGroup, Boolean.TRUE);
     }
 
     @Checked("ResultPredicates.writePredicate")
-    public ResearchResultDocumentFile addDocumentFile(String filename, String displayName,
-	    FileResultPermittedGroupType permittedGroupType, String mimeType, String checksum, String checksumAlgorithm,
-	    Integer size, String externalStorageId, Group permittedGroup, Boolean isVisible) {
-	final ResearchResultDocumentFile documentFile = new ResearchResultDocumentFile(this, filename, displayName,
-		permittedGroupType, mimeType, checksum, checksumAlgorithm, size, externalStorageId, permittedGroup);
+    public ResearchResultDocumentFile addDocumentFile(
+	    final VirtualPath path, Collection<FileSetMetaData> metadata, byte[] content, 
+	    String filename, String displayName,
+	    FileResultPermittedGroupType permittedGroupType, Group permittedGroup, Boolean isVisible) {
+	final ResearchResultDocumentFile documentFile = new ResearchResultDocumentFile(
+		path, metadata, content, this, filename, displayName, permittedGroupType, permittedGroup);
 	documentFile.setVisible(isVisible);
 	updateModifiedByAndDate();
 	return documentFile;

@@ -1,5 +1,8 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.research.result;
 
+import java.util.Collection;
+import java.util.Collections;
+
 import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.dataTransferObject.research.result.ResultDocumentFileSubmissionBean;
 import net.sourceforge.fenixedu.domain.accessControl.Group;
@@ -8,8 +11,7 @@ import net.sourceforge.fenixedu.domain.research.result.ResearchResultDocumentFil
 import net.sourceforge.fenixedu.domain.research.result.patent.ResearchResultPatent;
 import net.sourceforge.fenixedu.domain.research.result.publication.ResearchResultPublication;
 import pt.ist.fenixWebFramework.services.Service;
-import pt.utl.ist.fenix.tools.file.FileDescriptor;
-import pt.utl.ist.fenix.tools.file.FileManagerFactory;
+import pt.utl.ist.fenix.tools.file.FileSetMetaData;
 import pt.utl.ist.fenix.tools.file.VirtualPath;
 import pt.utl.ist.fenix.tools.file.VirtualPathNode;
 
@@ -18,17 +20,12 @@ public class CreateResultDocumentFile extends FenixService {
     public static void run(ResultDocumentFileSubmissionBean bean) {
 	final ResearchResult result = bean.getResult();
 	final String displayName = bean.getDisplayName();
-
 	final Group permittedGroup = ResearchResultDocumentFile.getPermittedGroup(bean.getPermission());
-	String itemHandle = result.getUniqueStorageId();
-
-	final FileDescriptor fileDescriptor = FileManagerFactory.getFactoryInstance().getContentFileManager().addFileToItem(
-		getVirtualPath(result), bean.getFileName(), itemHandle, (permittedGroup != null) ? true : false,
-		bean.getInputStream());
-
-	result.addDocumentFile(fileDescriptor.getFilename(), displayName, bean.getPermission(), fileDescriptor.getMimeType(),
-		fileDescriptor.getChecksum(), fileDescriptor.getChecksumAlgorithm(), fileDescriptor.getSize(), fileDescriptor
-			.getUniqueId(), permittedGroup);
+	final VirtualPath virtualPath = getVirtualPath(result);
+	final String filename = bean.getFileName();
+	final Collection<FileSetMetaData> metaData = Collections.emptySet();
+	final byte[] content = bean.readStream();
+	result.addDocumentFile(virtualPath, metaData, content, filename, displayName, bean.getPermission(), permittedGroup);
     }
 
     /**

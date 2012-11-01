@@ -1,9 +1,10 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.space;
 
-import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Collection;
+import java.util.Collections;
 
 import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
@@ -17,8 +18,7 @@ import net.sourceforge.fenixedu.domain.space.BlueprintFile;
 import net.sourceforge.fenixedu.domain.space.Space;
 import net.sourceforge.fenixedu.domain.space.SpaceInformation;
 import net.sourceforge.fenixedu.util.ByteArray;
-import pt.utl.ist.fenix.tools.file.FileDescriptor;
-import pt.utl.ist.fenix.tools.file.FileManagerFactory;
+import pt.utl.ist.fenix.tools.file.FileSetMetaData;
 import pt.utl.ist.fenix.tools.file.VirtualPath;
 import pt.utl.ist.fenix.tools.file.VirtualPathNode;
 import pt.utl.ist.fenix.tools.util.FileUtils;
@@ -40,16 +40,12 @@ public abstract class BlueprintVersionManagmentService extends FenixService {
 	final String filename = blueprintSubmissionBean.getSpaceInformation().getIdInternal()
 		+ String.valueOf(System.currentTimeMillis());
 	final byte[] contents = readInputStream(blueprintSubmissionBean.getInputStream());
-	final ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(contents);
-
-	final FileDescriptor fileDescriptor = FileManagerFactory.getFactoryInstance().getFileManager().saveFile(
-		getVirtualPath(space.getMostRecentSpaceInformation()), filename, true, person.getName(), filename,
-		byteArrayInputStream);
 
 	final String displayName = blueprintSubmissionBean.getFilename();
-	final BlueprintFile blueprintFile = new BlueprintFile(blueprint, filename, displayName, fileDescriptor.getMimeType(),
-		fileDescriptor.getChecksum(), fileDescriptor.getChecksumAlgorithm(), fileDescriptor.getSize(), fileDescriptor
-			.getUniqueId(), new RoleGroup(Role.getRoleByRoleType(RoleType.SPACE_MANAGER)));
+	final Collection<FileSetMetaData> metadata = Collections.emptySet();
+
+	final BlueprintFile blueprintFile = new BlueprintFile(getVirtualPath(space.getMostRecentSpaceInformation()),
+		blueprint, filename, displayName, new RoleGroup(Role.getRoleByRoleType(RoleType.SPACE_MANAGER)), contents, metadata);
 	blueprintFile.setContent(new ByteArray(contents));
     }
 

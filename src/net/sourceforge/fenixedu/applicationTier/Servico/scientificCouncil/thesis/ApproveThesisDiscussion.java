@@ -1,5 +1,6 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.scientificCouncil.thesis;
 
+import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -23,14 +24,15 @@ import net.sourceforge.fenixedu.domain.research.result.publication.Thesis.Thesis
 import net.sourceforge.fenixedu.domain.thesis.Thesis;
 import net.sourceforge.fenixedu.domain.thesis.ThesisFile;
 import net.sourceforge.fenixedu.domain.thesis.ThesisSite;
-import net.sourceforge.fenixedu.domain.thesis.ThesisVisibilityType;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.util.BundleUtil;
 import net.sourceforge.fenixedu.util.Month;
+
+import org.apache.commons.io.IOUtils;
+
 import pt.ist.fenixWebFramework.services.Service;
 import pt.ist.fenixframework.pstm.Transaction;
 import pt.utl.ist.fenix.tools.file.DSpaceFileManagerFactory;
-import pt.utl.ist.fenix.tools.file.FileDescriptor;
 import pt.utl.ist.fenix.tools.file.FileSetMetaData;
 import pt.utl.ist.fenix.tools.file.IFileManager;
 import pt.utl.ist.fenix.tools.file.VirtualPath;
@@ -97,6 +99,14 @@ public class ApproveThesisDiscussion extends ThesisServiceWithMailNotification {
 	thread.start();
     }
 
+    public static byte[] readStream(final InputStream inputStream) {
+	try {
+	    return IOUtils.toByteArray(inputStream);
+	} catch (final IOException e) {
+	    throw new Error(e);
+	}
+    }
+
     public static void createResult(final Thesis thesis) {
 	ThesisFile dissertation = thesis.getDissertation();
 	Person author = thesis.getStudent().getPerson();
@@ -104,8 +114,6 @@ public class ApproveThesisDiscussion extends ThesisServiceWithMailNotification {
 	IFileManager fileManager = DSpaceFileManagerFactory.getFactoryInstance().getSimpleFileManager();
 	InputStream stream = fileManager.retrieveFile(dissertation.getExternalStorageIdentification());
 
-	FileDescriptor descriptor = fileManager.saveFile(getVirtualPath(thesis), dissertation.getFilename(), thesis
-		.getVisibility().equals(ThesisVisibilityType.INTRANET), getMetadata(thesis), stream);
 	final MultiLanguageString title = thesis.getFinalFullTitle();
 	String titleForFile = title.getContent(thesis.getLanguage());
 	if (titleForFile == null) {
@@ -140,9 +148,7 @@ public class ApproveThesisDiscussion extends ThesisServiceWithMailNotification {
 	}
 
 	Group group = ResearchResultDocumentFile.getPermittedGroup(groupType);
-	publication.addDocumentFile(descriptor.getFilename(), descriptor.getFilename(), groupType, descriptor.getMimeType(),
-		descriptor.getChecksum(), descriptor.getChecksumAlgorithm(), descriptor.getSize(), descriptor.getUniqueId(),
-		group);
+	publication.addDocumentFile(getVirtualPath(thesis), getMetadata(thesis), readStream(stream), dissertation.getFilename(), dissertation.getDisplayName(), groupType, group);
 
 	publication.setThesis(thesis);
 	author.addPersonRoleByRoleType(RoleType.RESEARCHER);

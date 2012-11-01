@@ -17,7 +17,9 @@ import net.sourceforge.fenixedu.domain.contents.Container;
 import net.sourceforge.fenixedu.domain.contents.Content;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.presentationTier.Action.manager.FileContentCreationBean.EducationalResourceType;
-import pt.utl.ist.fenix.tools.file.FileDescriptor;
+
+import org.apache.commons.io.FileUtils;
+
 import pt.utl.ist.fenix.tools.file.FileSetMetaData;
 import pt.utl.ist.fenix.tools.file.VirtualPath;
 import pt.utl.ist.fenix.tools.file.VirtualPathNode;
@@ -34,13 +36,11 @@ public class CreateFileContent extends FileContentService {
 
 	Collection<FileSetMetaData> metaData = createMetaData(person.getName(), displayName, site.getAuthorName(), type);
 
-	final FileDescriptor fileDescriptor = saveFile(filePath, originalFilename, !isPublic(permittedGroup), metaData, file);
+	final byte[] bs = FileUtils.readFileToByteArray(file);
 
-	checkSiteQuota(site, fileDescriptor.getSize());
+	checkSiteQuota(site, bs.length);
 
-	FileContent fileContent = new FileContent(fileDescriptor.getFilename(), displayName, fileDescriptor.getMimeType(),
-		fileDescriptor.getChecksum(), fileDescriptor.getChecksumAlgorithm(), fileDescriptor.getSize(), fileDescriptor
-			.getUniqueId(), permittedGroup);
+	FileContent fileContent = new FileContent(filePath, originalFilename, displayName, metaData, bs, permittedGroup);
 
 	container.addFile(fileContent);
     }

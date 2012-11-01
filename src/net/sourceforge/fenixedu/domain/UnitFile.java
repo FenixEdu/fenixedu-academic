@@ -4,6 +4,9 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+import pt.utl.ist.fenix.tools.file.FileSetMetaData;
+import pt.utl.ist.fenix.tools.file.VirtualPath;
+
 import net.sourceforge.fenixedu.domain.accessControl.EveryoneGroup;
 import net.sourceforge.fenixedu.domain.accessControl.Group;
 import net.sourceforge.fenixedu.domain.accessControl.GroupUnion;
@@ -30,8 +33,8 @@ public class UnitFile extends UnitFile_Base {
 	});
     }
 
-    public UnitFile(Unit unit, Person person, String description, String tags, String filename, String displayName,
-	    String mimeType, String checksum, String checksumAlgorithm, int size, String uniqueId, Group permittedGroup) {
+    public UnitFile(Unit unit, Person person, String description, String tags, VirtualPath path, String filename, String displayName, Collection<FileSetMetaData> metadata,
+	    byte[] content, Group group) {
 	super();
 	setUnit(unit);
 	setUploader(person);
@@ -39,7 +42,7 @@ public class UnitFile extends UnitFile_Base {
 	if (tags != null && tags.length() > 0) {
 	    setUnitFileTags(tags);
 	}
-	init(filename, displayName, mimeType, checksum, checksumAlgorithm, size, uniqueId, permittedGroup);
+	init(path, filename, displayName, metadata, content, group);
     }
 
     public void setUnitFileTags(String tag) {

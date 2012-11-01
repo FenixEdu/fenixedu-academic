@@ -11,6 +11,7 @@ import java.util.Collection;
 
 import javax.activation.MimetypesFileTypeMap;
 
+import net.sourceforge.fenixedu._development.PropertiesManager;
 import net.sourceforge.fenixedu.domain.accessControl.EveryoneGroup;
 import net.sourceforge.fenixedu.domain.accessControl.Group;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
@@ -91,7 +92,12 @@ public abstract class File extends File_Base {
 	}
     }
 
-    private static final String ACTION_PATH = "/conteudos-publicos/ficheiros?oid=";
+    private static final String ACTION_PATH;
+    static {
+	final String context = PropertiesManager.getProperty("app.context");
+	ACTION_PATH = context == null || context.isEmpty() ? 
+		"/conteudos-publicos/ficheiros?oid=" : "/" + context + "/conteudos-publicos/ficheiros?oid=";
+    }
 
     /**
      * @return returns a public url that can be used by a client to download the
@@ -157,25 +163,6 @@ public abstract class File extends File_Base {
 		}
 	    }
 	}
-    }
-
-    // OLD PORTIONS
-
-    /**
-     * @use {@link File#init(VirtualPath, String, String, Collection, byte[], Group)}
-     */
-    @Deprecated
-    protected void init(String filename, String displayName, String mimeType, String checksum, String checksumAlgorithm,
-	    Integer size, String externalStorageIdentification, Group permittedGroup) {
-	setFilename(FileUtils.getFilenameOnly(filename));
-	setDisplayName(FileUtils.getFilenameOnly(displayName));
-	setMimeType(mimeType);
-	setChecksum(checksum);
-	setChecksumAlgorithm(checksumAlgorithm);
-	setSize(size);
-	setExternalStorageIdentification(externalStorageIdentification);
-	setPermittedGroup(permittedGroup);
-	setUploadTime(new DateTime());
     }
 
     @Override

@@ -14,9 +14,9 @@ import net.sourceforge.fenixedu.domain.accessControl.Group;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.messaging.AnnouncementBoard;
 
+import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang.StringUtils;
 
-import pt.utl.ist.fenix.tools.file.FileDescriptor;
 import pt.utl.ist.fenix.tools.file.FileSetMetaData;
 import pt.utl.ist.fenix.tools.file.VirtualPath;
 import pt.utl.ist.fenix.tools.file.VirtualPathNode;
@@ -38,11 +38,8 @@ public class CreateFileContentForBoard extends FileContentService {
 
 	Collection<FileSetMetaData> metaData = createMetaData(person.getName(), displayName);
 
-	final FileDescriptor fileDescriptor = saveFile(filePath, originalFilename, !isPublic(permittedGroup), metaData, file);
-
-	FileContent fileContent = new FileContent(fileDescriptor.getFilename(), pt.utl.ist.fenix.tools.util.FileUtils
-		.getFilenameOnly(displayName), fileDescriptor.getMimeType(), fileDescriptor.getChecksum(), fileDescriptor
-		.getChecksumAlgorithm(), fileDescriptor.getSize(), fileDescriptor.getUniqueId(), permittedGroup);
+	final byte[] bs = FileUtils.readFileToByteArray(file);
+	FileContent fileContent = new FileContent(filePath, originalFilename, displayName, metaData, bs, permittedGroup);
 
 	board.addFile(fileContent);
     }

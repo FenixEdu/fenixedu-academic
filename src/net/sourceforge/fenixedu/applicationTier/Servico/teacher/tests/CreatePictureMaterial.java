@@ -1,10 +1,9 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.teacher.tests;
 
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.InputStream;
+import java.util.Collection;
+import java.util.Collections;
 
 import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
@@ -13,10 +12,11 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.tests.NewPictureMaterial;
 import net.sourceforge.fenixedu.domain.tests.NewTestElement;
 import net.sourceforge.fenixedu.domain.tests.PictureMaterialFile;
+
+import org.apache.commons.io.FileUtils;
+
 import pt.ist.fenixWebFramework.services.Service;
-import pt.utl.ist.fenix.tools.file.FileDescriptor;
-import pt.utl.ist.fenix.tools.file.FileManagerFactory;
-import pt.utl.ist.fenix.tools.file.IFileManager;
+import pt.utl.ist.fenix.tools.file.FileSetMetaData;
 import pt.utl.ist.fenix.tools.file.VirtualPath;
 import pt.utl.ist.fenix.tools.file.VirtualPathNode;
 
@@ -26,25 +26,11 @@ public class CreatePictureMaterial extends FenixService {
     public static NewPictureMaterial run(Teacher teacher, NewTestElement testElement, Boolean inline, File mainFile,
 	    String originalFilename, String displayName) throws FenixServiceException, DomainException, IOException {
 
-	final IFileManager fileManager = FileManagerFactory.getFactoryInstance().getFileManager();
 	final VirtualPath filePath = getVirtualPath();
 
-	InputStream is = null;
-	final FileDescriptor fileDescriptor;
-	try {
-	    is = new FileInputStream(mainFile);
-	    fileDescriptor = fileManager.saveFile(filePath, originalFilename, false, teacher.getPerson().getName(),
-		    displayName == null ? originalFilename : displayName, is);
-	} catch (FileNotFoundException e) {
-	    throw new FenixServiceException(e.getMessage());
-	} finally {
-	    if (is != null) {
-		is.close();
-	    }
-	}
-	final PictureMaterialFile pictureMaterialFile = new PictureMaterialFile(fileDescriptor.getFilename(), displayName,
-		fileDescriptor.getMimeType(), fileDescriptor.getChecksum(), fileDescriptor.getChecksumAlgorithm(), fileDescriptor
-			.getSize(), fileDescriptor.getUniqueId(), null);
+	final Collection<FileSetMetaData> metadata = Collections.emptySet();
+	final PictureMaterialFile pictureMaterialFile = new PictureMaterialFile(filePath, originalFilename, displayName, 
+		metadata , FileUtils.readFileToByteArray(mainFile), null);
 
 	return new NewPictureMaterial(testElement, inline, pictureMaterialFile);
 

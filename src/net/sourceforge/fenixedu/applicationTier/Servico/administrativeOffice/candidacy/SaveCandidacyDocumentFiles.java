@@ -3,6 +3,10 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Servico.administrativeOffice.candidacy;
 
+import java.io.File;
+import java.io.IOException;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.FenixService;
@@ -17,9 +21,11 @@ import net.sourceforge.fenixedu.domain.candidacy.Candidacy;
 import net.sourceforge.fenixedu.domain.candidacy.CandidacyDocument;
 import net.sourceforge.fenixedu.domain.candidacy.CandidacyDocumentFile;
 import net.sourceforge.fenixedu.domain.person.RoleType;
+
+import org.apache.commons.io.FileUtils;
+
 import pt.ist.fenixWebFramework.services.Service;
-import pt.utl.ist.fenix.tools.file.FileDescriptor;
-import pt.utl.ist.fenix.tools.file.FileManagerFactory;
+import pt.utl.ist.fenix.tools.file.FileSetMetaData;
 import pt.utl.ist.fenix.tools.file.VirtualPath;
 import pt.utl.ist.fenix.tools.file.VirtualPathNode;
 
@@ -45,21 +51,27 @@ public class SaveCandidacyDocumentFiles extends FenixService {
 		Candidacy candidacy = candidacyDocument.getCandidacy();
 		Person person = candidacy.getPerson();
 
-		final FileDescriptor fileDescriptor = FileManagerFactory.getFactoryInstance().getFileManager().saveFile(
-			getVirtualPath(candidacy), filename, true, person.getName(), filename,
-			candidacyDocumentUploadBean.getTemporaryFile());
+		final Collection<FileSetMetaData> metadata = Collections.emptySet();
+		final byte[] content = read(candidacyDocumentUploadBean.getTemporaryFile());
 
 		if (candidacyDocument.getFile() != null) {
 		    candidacyDocument.getFile().delete();
 		}
 
-		candidacyDocument.setFile(new CandidacyDocumentFile(filename, filename, fileDescriptor.getMimeType(),
-			fileDescriptor.getChecksum(), fileDescriptor.getChecksumAlgorithm(), fileDescriptor.getSize(),
-			fileDescriptor.getUniqueId(), new GroupUnion(permittedGroup, new PersonGroup(person))));
-
+		final CandidacyDocumentFile candidacyDocumentFile = new CandidacyDocumentFile(getVirtualPath(candidacy), filename, 
+			filename, metadata, content, new GroupUnion(permittedGroup, new PersonGroup(person)));
+		candidacyDocument.setFile(candidacyDocumentFile);
 	    }
 	}
 
+    }
+
+    private static byte[] read(final File file) {
+	try {
+	    return FileUtils.readFileToByteArray(file);
+	} catch (IOException e) {
+	    throw new Error(e);
+	}
     }
 
     private static VirtualPath getVirtualPath(Candidacy candidacy) {

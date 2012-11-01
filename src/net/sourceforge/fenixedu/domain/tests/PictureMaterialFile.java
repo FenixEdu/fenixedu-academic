@@ -1,6 +1,10 @@
 package net.sourceforge.fenixedu.domain.tests;
 
+import java.util.Collection;
+
 import net.sourceforge.fenixedu.domain.accessControl.Group;
+import pt.utl.ist.fenix.tools.file.FileSetMetaData;
+import pt.utl.ist.fenix.tools.file.VirtualPath;
 
 public class PictureMaterialFile extends PictureMaterialFile_Base {
 
@@ -8,11 +12,10 @@ public class PictureMaterialFile extends PictureMaterialFile_Base {
 	super();
     }
 
-    public PictureMaterialFile(String filename, String displayName, String mimeType, String checksum, String checksumAlgorithm,
-	    Integer size, String externalStorageIdentification, Group permittedGroup) {
+    public PictureMaterialFile(final VirtualPath virtualPath, String filename, String displayName,
+	    Collection<FileSetMetaData> metadata, byte[] content, Group permittedGroup) {
 	this();
-	init(filename, displayName == null ? filename : filename, mimeType, checksum, checksumAlgorithm, size,
-		externalStorageIdentification, permittedGroup);
+	init(virtualPath, filename, displayName, metadata, content, permittedGroup);
     }
 
     public void delete(NewPictureMaterial pictureMaterial) {

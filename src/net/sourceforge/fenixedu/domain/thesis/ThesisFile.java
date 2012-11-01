@@ -1,5 +1,9 @@
 package net.sourceforge.fenixedu.domain.thesis;
 
+import java.util.Collection;
+
+import pt.utl.ist.fenix.tools.file.FileSetMetaData;
+import pt.utl.ist.fenix.tools.file.VirtualPath;
 import net.sourceforge.fenixedu.domain.accessControl.Group;
 import net.sourceforge.fenixedu.domain.accessControl.GroupUnion;
 import net.sourceforge.fenixedu.domain.accessControl.ThesisFileReadersGroup;
@@ -8,10 +12,9 @@ import net.sourceforge.fenixedu.injectionCode.IGroup;
 
 public class ThesisFile extends ThesisFile_Base {
 
-    public ThesisFile(String uniqueId, String name) {
+    public ThesisFile(VirtualPath path, String filename, String displayName, Collection<FileSetMetaData> metadata, byte[] content, Group group) {
 	super();
-
-	init(name, name, null, null, null, null, uniqueId, null);
+	init(path, filename, displayName, metadata, content, group);
     }
 
     public void delete() {

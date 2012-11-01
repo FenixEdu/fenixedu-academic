@@ -1,10 +1,13 @@
 package net.sourceforge.fenixedu.domain;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.accessControl.Group;
 import net.sourceforge.fenixedu.domain.contents.Attachment;
+import pt.utl.ist.fenix.tools.file.FileSetMetaData;
+import pt.utl.ist.fenix.tools.file.VirtualPath;
 
 public class FileContent extends FileContent_Base {
 
@@ -20,17 +23,15 @@ public class FileContent extends FileContent_Base {
 	setAttachment(attachment);
     }
 
-    public FileContent(Attachment attachment, String filename, String displayName, String mimeType, String checksum,
-	    String checksumAlgorithm, Integer size, String externalStorageIdentification, Group permittedGroup) {
+    public FileContent(Attachment attachment, VirtualPath path, String filename, String displayName, Collection<FileSetMetaData> metadata,
+	    byte[] content, Group group) {
 	this(attachment);
-	init(filename, processDisplayName(displayName), mimeType, checksum, checksumAlgorithm, size,
-		externalStorageIdentification, permittedGroup);
+	init(path, filename, displayName, metadata, content, group);
     }
 
-    public FileContent(String filename, String displayName, String mimeType, String checksum, String checksumAlgorithm,
-	    Integer size, String externalStorageIdentification, Group permittedGroup) {
-	init(filename, processDisplayName(displayName), mimeType, checksum, checksumAlgorithm, size,
-		externalStorageIdentification, permittedGroup);
+    public FileContent(VirtualPath path, String filename, String displayName, Collection<FileSetMetaData> metadata,
+	    byte[] content, Group group) {
+	init(path, filename, displayName, metadata, content, group);
     }
 
     @Override

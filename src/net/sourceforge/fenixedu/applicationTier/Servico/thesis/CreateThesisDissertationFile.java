@@ -13,7 +13,9 @@ import net.sourceforge.fenixedu.domain.research.result.ResearchResultDocumentFil
 import net.sourceforge.fenixedu.domain.thesis.Thesis;
 import net.sourceforge.fenixedu.domain.thesis.ThesisFile;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
-import pt.utl.ist.fenix.tools.file.FileDescriptor;
+
+import org.apache.commons.io.FileUtils;
+
 import pt.utl.ist.fenix.tools.file.FileSetMetaData;
 import pt.utl.ist.fenix.tools.file.VirtualPath;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
@@ -56,10 +58,9 @@ public class CreateThesisDissertationFile extends CreateThesisFile {
 
 	    Collection<FileSetMetaData> metaData = createMetaData(thesis, fileName);
 	    VirtualPath filePath = getVirtualPath(thesis);
-	    FileDescriptor descriptor = saveFile(filePath, fileName, true, metaData, fileToUpload);
+	    byte[] content = FileUtils.readFileToByteArray(fileToUpload);
 
-	    publication.addDocumentFile(file.getFilename(), file.getFilename(), permittedGroupType, file.getMimeType(), file
-		    .getChecksum(), file.getChecksumAlgorithm(), file.getSize(), descriptor.getUniqueId(), permittedGroup);
+	    publication.addDocumentFile(filePath, metaData, content, fileName, file.getDisplayName(), permittedGroupType, permittedGroup);
 	    publication.setThesis(thesis);
 
 	}

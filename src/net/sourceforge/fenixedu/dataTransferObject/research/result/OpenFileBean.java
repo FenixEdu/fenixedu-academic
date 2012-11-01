@@ -1,7 +1,10 @@
 package net.sourceforge.fenixedu.dataTransferObject.research.result;
 
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.Serializable;
+
+import org.apache.commons.io.IOUtils;
 
 public class OpenFileBean implements Serializable {
 
@@ -24,4 +27,13 @@ public class OpenFileBean implements Serializable {
     public void setInputStream(InputStream inputStream) {
 	this.inputStream = inputStream;
     }
+
+    public byte[] readStream() {
+	try {
+	    return IOUtils.toByteArray(inputStream);
+	} catch (final IOException e) {
+	    throw new Error(e);
+	}
+    }
+
 }

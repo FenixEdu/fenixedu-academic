@@ -1,5 +1,6 @@
 package net.sourceforge.fenixedu.util.researcher;
 
+import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -11,17 +12,17 @@ import net.sourceforge.fenixedu.domain.accessControl.Group;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.research.result.ResearchResult;
 import net.sourceforge.fenixedu.domain.research.result.ResearchResultDocumentFile;
+import net.sourceforge.fenixedu.domain.research.result.ResearchResultDocumentFile.FileResultPermittedGroupType;
 import net.sourceforge.fenixedu.domain.research.result.ResultParticipation;
 import net.sourceforge.fenixedu.domain.research.result.ResultTeacher;
 import net.sourceforge.fenixedu.domain.research.result.ResultUnitAssociation;
-import net.sourceforge.fenixedu.domain.research.result.ResearchResultDocumentFile.FileResultPermittedGroupType;
 import net.sourceforge.fenixedu.domain.research.result.patent.ResearchResultPatent;
 import net.sourceforge.fenixedu.domain.research.result.publication.ResearchResultPublication;
 import net.sourceforge.fenixedu.util.Month;
 
+import org.apache.commons.io.IOUtils;
 import org.apache.tools.ant.filters.StringInputStream;
 
-import pt.utl.ist.fenix.tools.file.FileDescriptor;
 import pt.utl.ist.fenix.tools.file.FileManagerFactory;
 import pt.utl.ist.fenix.tools.file.FileSetMetaData;
 import pt.utl.ist.fenix.tools.file.IContentFileManager;
@@ -101,20 +102,21 @@ public class ResearchResultMetaDataManager {
 	fileManager.changeItemMetaData(publication.getUniqueStorageId(), createMetaData(publication));
     }
 
+    public static byte[] readStream(final InputStream inputStream) {
+	try {
+	    return IOUtils.toByteArray(inputStream);
+	} catch (final IOException e) {
+	    throw new Error(e);
+	}
+    }
+
     public static ResearchResult addDefaultDocument(ResearchResult result) {
-	InputStream inputStream;
-
-	inputStream = new StringInputStream("For index purpose only!");
-	FileDescriptor fileDescriptor = fileManager.createItemWithFile(getVirtualPath(result), "default.txt", false,
-		ResearchResultMetaDataManager.createMetaData(result), inputStream);
-
-	result.setUniqueStorageId(fileDescriptor.getItemStorageId());
+	InputStream inputStream = new StringInputStream("For index purpose only!");
 
 	final Group permittedGroup = ResearchResultDocumentFile.getPermittedGroup(FileResultPermittedGroupType.PUBLIC);
 
-	result.addDocumentFile(fileDescriptor.getFilename(), "default.txt", FileResultPermittedGroupType.PUBLIC, fileDescriptor
-		.getMimeType(), fileDescriptor.getChecksum(), fileDescriptor.getChecksumAlgorithm(), fileDescriptor.getSize(),
-		fileDescriptor.getUniqueId(), permittedGroup, Boolean.FALSE);
+	result.addDocumentFile(getVirtualPath(result), ResearchResultMetaDataManager.createMetaData(result), readStream(inputStream),
+		"default.txt", "default.txt", FileResultPermittedGroupType.PUBLIC, permittedGroup);
 
 	return result;
     }

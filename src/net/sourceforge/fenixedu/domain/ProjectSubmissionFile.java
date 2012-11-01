@@ -1,5 +1,9 @@
 package net.sourceforge.fenixedu.domain;
 
+import java.util.Collection;
+
+import pt.utl.ist.fenix.tools.file.FileSetMetaData;
+import pt.utl.ist.fenix.tools.file.VirtualPath;
 import net.sourceforge.fenixedu.domain.accessControl.Group;
 
 public class ProjectSubmissionFile extends ProjectSubmissionFile_Base {
@@ -8,10 +12,10 @@ public class ProjectSubmissionFile extends ProjectSubmissionFile_Base {
 	super();
     }
 
-    public ProjectSubmissionFile(String filename, String displayName, String mimeType, String checksum, String checksumAlgorithm,
-	    Integer size, String externalStorageIdentification, Group permittedGroup) {
+    public ProjectSubmissionFile(VirtualPath path, String filename, String displayName, Collection<FileSetMetaData> metadata,
+	    byte[] content, Group group) {
 	this();
-	init(filename, displayName, mimeType, checksum, checksumAlgorithm, size, externalStorageIdentification, permittedGroup);
+	init(path, filename, displayName, metadata, content, group);
 
     }
 
