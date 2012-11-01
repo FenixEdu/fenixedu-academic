@@ -92,12 +92,7 @@ public abstract class File extends File_Base {
 	}
     }
 
-    private static final String ACTION_PATH;
-    static {
-	final String context = PropertiesManager.getProperty("app.context");
-	ACTION_PATH = context == null || context.isEmpty() ? 
-		"/conteudos-publicos/ficheiros?oid=" : "/" + context + "/conteudos-publicos/ficheiros?oid=";
-    }
+    private static final String ACTION_PATH = PropertiesManager.getProperty("file.download.url.local.content");
 
     /**
      * @return returns a public url that can be used by a client to download the
