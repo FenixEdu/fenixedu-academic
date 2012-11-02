@@ -122,6 +122,7 @@ public abstract class File extends File_Base {
 	    createDeleteFileRequest();
 	}
 	removeRootDomainObject();
+	deleteDomainObject();
     }
 
     protected void createDeleteFileRequest() {

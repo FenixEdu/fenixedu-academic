@@ -41,8 +41,7 @@ public class FileContent extends FileContent_Base {
 	    setAttachment(null);
 	    attachment.delete();
 	}
-	removeRootDomainObject();
-	super.deleteDomainObject();
+	super.delete();
     }
 
     public static FileContent readByOID(Integer idInternal) {
