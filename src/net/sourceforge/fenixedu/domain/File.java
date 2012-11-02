@@ -17,6 +17,7 @@ import net.sourceforge.fenixedu.domain.accessControl.Group;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.util.ByteArray;
 
+import org.apache.commons.codec.digest.DigestUtils;
 import org.joda.time.DateTime;
 
 import pt.ist.fenixframework.pstm.Transaction;
@@ -42,6 +43,8 @@ public abstract class File extends File_Base {
 	setSize(content == null ? 0 : content.length);
 	setPermittedGroup(group);
 	setUploadTime(new DateTime());
+	setChecksum(DigestUtils.shaHex(content));
+	setChecksumAlgorithm("SHA");
     }
 
     public void storeToContentManager() {

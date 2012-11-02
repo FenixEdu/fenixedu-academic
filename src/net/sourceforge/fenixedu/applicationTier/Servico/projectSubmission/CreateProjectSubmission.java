@@ -101,8 +101,8 @@ public class CreateProjectSubmission extends FenixService {
 
 	final ProjectSubmission projectSubmission = new ProjectSubmission(project, studentGroup, attends, projectSubmissionFile);
 
-	new ProjectSubmissionLog(projectSubmission.getSubmissionDateTime(), filename, null,
-		null, null, bs.length, studentGroup,
+	new ProjectSubmissionLog(projectSubmission.getSubmissionDateTime(), filename, projectSubmissionFile.getMimeType(),
+		projectSubmissionFile.getChecksum(), projectSubmissionFile.getChecksumAlgorithm(), bs.length, studentGroup,
 		attends, project);
 
 	if (fileToDeleteExternalId != null) {
