@@ -2,14 +2,12 @@ package net.sourceforge.fenixedu.domain.research.result;
 
 import java.util.Collection;
 
-import net.sourceforge.fenixedu.domain.DeleteFileRequest;
 import net.sourceforge.fenixedu.domain.Role;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.accessControl.Group;
 import net.sourceforge.fenixedu.domain.accessControl.RoleGroup;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.person.RoleType;
-import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.utl.ist.fenix.tools.file.FileManagerFactory;
 import pt.utl.ist.fenix.tools.file.FileSetMetaData;
@@ -48,9 +46,12 @@ public class ResearchResultDocumentFile extends ResearchResultDocumentFile_Base 
 
     public final void delete() {
 	super.setResult(null);
-	removeRootDomainObject();
-	deleteDomainObject();
-	deleteFile();
+	super.delete();
+    }
+
+    @Override
+    protected Boolean deletItemOnDelete() {
+        return Boolean.FALSE;
     }
 
     public final static Group getPermittedGroup(FileResultPermittedGroupType permissionType) {
@@ -77,10 +78,6 @@ public class ResearchResultDocumentFile extends ResearchResultDocumentFile_Base 
 	    throw new DomainException("error.researcher.ResultDocumentFile.null");
 
 	return documentFile;
-    }
-
-    private void deleteFile() {
-	new DeleteFileRequest(AccessControl.getPerson(), getExternalStorageIdentification(), Boolean.FALSE);
     }
 
     private void checkParameters(ResearchResult result, String filename, String displayName,

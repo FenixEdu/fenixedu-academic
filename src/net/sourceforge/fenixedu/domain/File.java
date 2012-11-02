@@ -126,7 +126,11 @@ public abstract class File extends File_Base {
     }
 
     protected void createDeleteFileRequest() {
-	new DeleteFileRequest(AccessControl.getPerson(), getExternalStorageIdentification());
+	new DeleteFileRequest(AccessControl.getPerson(), getExternalStorageIdentification(), deletItemOnDelete());
+    }
+
+    protected Boolean deletItemOnDelete() {
+	return Boolean.TRUE;
     }
 
     public boolean isPersonAllowedToAccess(Person person) {
