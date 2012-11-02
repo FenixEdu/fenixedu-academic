@@ -28,7 +28,7 @@
 	font-family: 'KlavikaLightPlain';
 	src: url('../images/type/klavikalight-plain-webfont.eot');
 	src: url('../images/type/klavikalight-plain-webfont.eot?#iefix') format('embedded-opentype');
-	src: local('☺'), url('../images/images/type/klavikalight-plain-webfont.woff') format('woff'), url('../images/type/klavikalight-plain-webfont.ttf') format('truetype'), url('../images/type/klavikalight-plain-webfont.svg#webfontpalXHmZY') format('svg');
+	src: local('☺'), url('../images/type/klavikalight-plain-webfont.woff') format('woff'), url('../images/type/klavikalight-plain-webfont.ttf') format('truetype'), url('../images/type/klavikalight-plain-webfont.svg#webfontpalXHmZY') format('svg');
 	font-weight: normal;
 	font-style: normal;
 }
