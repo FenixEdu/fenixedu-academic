@@ -22,4 +22,12 @@ public class EventReportQueueJobFile extends EventReportQueueJobFile_Base {
 	return filePath;
     }
 
+    @Override
+    public void delete() {
+	removeEventReportQueueJobForExemptions();
+	removeEventReportQueueJobForTransactions();
+	removeEventReportQueueJobForDebts();
+        super.delete();
+    }
+
 }
