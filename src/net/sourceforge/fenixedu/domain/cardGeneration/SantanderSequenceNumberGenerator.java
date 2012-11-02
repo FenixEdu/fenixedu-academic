@@ -22,7 +22,7 @@ public class SantanderSequenceNumberGenerator extends SantanderSequenceNumberGen
 	if (instances.size() == 0) {
 	    instance = new SantanderSequenceNumberGenerator();
 	} else {
-	    instance = instances.get(0);
+	    instance = instances.iterator().next();
 	}
 	return instance;
     }

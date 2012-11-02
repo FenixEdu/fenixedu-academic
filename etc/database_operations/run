@@ -43,3 +43,4 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "Correcting the cardinality of some relations: SantanderBatchRequester/Sender<->Person" santanderBatchesFix.sql

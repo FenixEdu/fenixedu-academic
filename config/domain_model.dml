@@ -18719,12 +18719,16 @@ relation SantanderBatchSantanderProblem {
 
 relation PersonSantanderBatchRequester {
 	Person playsRole person;
-	cardGeneration.SantanderBatchRequester playsRole santanderBatchRequester;
+	cardGeneration.SantanderBatchRequester playsRole santanderBatchRequesters {
+		multiplicity *;
+	}
 }
 
 relation PersonSantanderBatchSender {
 	Person playsRole person;
-	cardGeneration.SantanderBatchSender playsRole santanderBatchSender;
+	cardGeneration.SantanderBatchSender playsRole santanderBatchSenders {
+		multiplicity *;
+	}
 }
 
 relation PersonSantanderEntry {
