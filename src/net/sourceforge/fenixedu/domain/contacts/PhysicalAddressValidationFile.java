@@ -18,6 +18,7 @@ public class PhysicalAddressValidationFile extends PhysicalAddressValidationFile
     private VirtualPath obtainVirtualPath() {
 	final VirtualPath filePath = new VirtualPath();
 	filePath.addNode(new VirtualPathNode("PhysicalAddressValidationFile", "PhysicalAddressValidationFile files"));
+	filePath.addNode(new VirtualPathNode("PhysicalAddressValidationFile" + getExternalId(), "PhysicalAddressValidationFile files" + getExternalId()));
 	return filePath;
     }
 
