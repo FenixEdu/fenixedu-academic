@@ -2,9 +2,9 @@ package net.sourceforge.fenixedu.domain;
 
 import java.util.Collection;
 
+import net.sourceforge.fenixedu.domain.accessControl.Group;
 import pt.utl.ist.fenix.tools.file.FileSetMetaData;
 import pt.utl.ist.fenix.tools.file.VirtualPath;
-import net.sourceforge.fenixedu.domain.accessControl.Group;
 
 public class ProjectSubmissionFile extends ProjectSubmissionFile_Base {
 
@@ -21,8 +21,7 @@ public class ProjectSubmissionFile extends ProjectSubmissionFile_Base {
 
     public void delete() {
 	removeProjectSubmission();
-	removeRootDomainObject();
-	super.deleteDomainObject();
+	super.delete();
     }
 
 }
