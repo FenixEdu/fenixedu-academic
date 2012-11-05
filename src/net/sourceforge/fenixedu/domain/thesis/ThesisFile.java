@@ -36,11 +36,10 @@ public class ThesisFile extends ThesisFile_Base {
 	    thesis = getAbstractThesis();
 	}
 
-	removeRootDomainObject();
 	removeDissertationThesis();
 	removeAbstractThesis();
 
-	deleteDomainObject();
+	super.delete();
     }
 
     boolean areThesisFilesReadable() {
