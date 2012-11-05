@@ -6,7 +6,6 @@ import net.sourceforge.fenixedu.domain.Site;
 import net.sourceforge.fenixedu.domain.accessControl.Group;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import pt.utl.ist.fenix.tools.file.FileManagerException;
-import pt.utl.ist.fenix.tools.file.FileManagerFactory;
 
 /**
  * Changes the group of people that is allowed to access the file.
@@ -17,11 +16,7 @@ public class EditFilePermissions extends FileContentService {
 
     public void run(Site site, FileContent fileContent, Group group) throws FenixServiceException, DomainException,
 	    FileManagerException {
-
 	fileContent.setPermittedGroup(group);
-	FileManagerFactory.getFactoryInstance().getFileManager().changeFilePermissions(
-		fileContent.getExternalStorageIdentification(), !isPublic(group));
-
     }
 
 }
