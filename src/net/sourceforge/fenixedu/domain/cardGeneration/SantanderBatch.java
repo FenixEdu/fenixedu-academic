@@ -4,10 +4,6 @@ import java.util.Comparator;
 
 import org.joda.time.DateTime;
 
-import sun.reflect.ReflectionFactory.GetReflectionFactoryAction;
-
-import net.sourceforge.fenixedu.domain.Coordinator;
-import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
