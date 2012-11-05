@@ -15,7 +15,7 @@ app.name=ciapl
 app.context=ciapl
 manager.filter.pattern=nothing
 
-file.download.url.local.content=http://localhost:8080/ciaplt/conteudos-publicos/ficheiros?oid=
+file.download.url.local.content=http://localhost:8080/ciapl/conteudos-publicos/ficheiros?oid=
 
 index.html.link.localhost=siteMap.do
 #index.html.link.<cidhcp000>=siteMap.do
