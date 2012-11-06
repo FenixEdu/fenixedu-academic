@@ -37,7 +37,7 @@ import pt.ist.fenixWebFramework.services.Service;
 
 public class PersonalInformationBean implements Serializable {
 
-    static private final LocalDate limitDate = new LocalDate(2012, 10, 1);
+    static private final LocalDate limitDate = new LocalDate(2012, 11, 21);
 
     static public boolean isPastLimitDate() {
 	return new LocalDate().isAfter(limitDate);
