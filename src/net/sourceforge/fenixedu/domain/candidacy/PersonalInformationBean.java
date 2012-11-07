@@ -120,7 +120,7 @@ public class PersonalInformationBean implements Serializable {
 	setCountryWhereFinishedPreviousCompleteDegree(degreeInfo.getCountry());
 
 	Unit institution = degreeInfo.getInstitution();
-	if (!isUnitFromRaidesListMandatory() || (institution != null && institution.getCode() != null)) {
+	if (!isUnitFromRaidesListMandatory() || (institution != null && !StringUtils.isEmpty(institution.getCode()))) {
 	    setInstitution(institution);
 	    setDegreeDesignation(degreeInfo.getDegreeDesignation());
 	}
