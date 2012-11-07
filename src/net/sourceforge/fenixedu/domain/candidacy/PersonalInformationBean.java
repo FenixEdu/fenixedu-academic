@@ -137,7 +137,7 @@ public class PersonalInformationBean implements Serializable {
 	    setDegreeChangeOrTransferOrErasmusStudent(true);
 	}
 	if (isUnitFromRaidesListMandatory()) {
-	    setRaidesDegreeDesignation(DegreeDesignation.readByName(this.degreeDesignation));
+	    setRaidesDegreeDesignation(DegreeDesignation.readByNameAndSchoolLevel(degreeDesignation, schoolLevel));
 	}
 
 	initFromLatestPersonalIngressionData();
