@@ -1,7 +1,6 @@
 package net.sourceforge.fenixedu.presentationTier.Action.publico;
 
 import java.io.DataOutputStream;
-import java.io.IOException;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -15,26 +14,25 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
-@Mapping(module = "publico", path = "/files", scope = "session")
+@Mapping(module = "publico", path = "/files")
 public class FileDownload extends FenixAction {
 
     @Override
-    public ActionForward execute(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-	    HttpServletResponse response) throws Exception {
-	String oid = request.getParameter("oid");
-	File file = rootDomainObject.readFileByOID(Integer.parseInt(oid));
+    public ActionForward execute(final ActionMapping mapping, final ActionForm actionForm, final HttpServletRequest request,
+	    final HttpServletResponse response) throws Exception {
+	final String oid = request.getParameter("oid");
+	final File file = AbstractDomainObject.fromExternalId(oid);
 	if (!file.isPrivate() || file.isPersonAllowedToAccess(AccessControl.getPerson())) {
-	    try {
-		response.setContentType(file.getMimeType());
-		final DataOutputStream dos = new DataOutputStream(response.getOutputStream());
-		response.addHeader("Content-Disposition", "attachment; filename=" + file.getFilename());
-		response.setContentLength(file.getSize());
-		dos.write(file.getContents());
-		dos.close();
-	    } catch (IOException e) {
-	    }
+	    response.setContentType(file.getMimeType());
+	    response.addHeader("Content-Disposition", "attachment; filename=" + file.getFilename());
+	    response.setContentLength(file.getSize());
+	    final DataOutputStream dos = new DataOutputStream(response.getOutputStream());
+	    dos.write(file.getContents());
+	    dos.close();
 	}
 	return null;
     }
+
 }

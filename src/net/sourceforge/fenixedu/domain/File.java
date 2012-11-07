@@ -103,7 +103,7 @@ public abstract class File extends File_Base {
      */
     public String getDownloadUrl() {
 	if (hasLocalContent()) {
-	    return ACTION_PATH + getIdInternal();
+	    return ACTION_PATH + getExternalId();
 	}
 
 	return FileManagerFactory.getFactoryInstance().getFileManager().formatDownloadUrl(getExternalStorageIdentification(),
