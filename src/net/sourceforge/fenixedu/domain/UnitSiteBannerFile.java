@@ -19,11 +19,9 @@ public class UnitSiteBannerFile extends UnitSiteBannerFile_Base {
     }
 
     public void delete() {
-	removeRootDomainObject();
 	removeBackgroundBanner();
 	removeMainBanner();
-
-	deleteDomainObject();
+	super.delete();
     }
 
 }
