@@ -26,10 +26,16 @@ public final class GroupUnion extends NodeGroup {
     @Override
     public Group with(final Group... groups) {
 	final List<IGroup> resultGroups = new ArrayList<IGroup>();
-	resultGroups.addAll(getChildren());
-	resultGroups.addAll(Arrays.asList(groups));
 
-	for (final IGroup iter : resultGroups) {
+	for (final IGroup iter : getChildren()) {
+	    if (iter instanceof GroupUnion) {
+		resultGroups.addAll(((GroupUnion) iter).getChildren());
+	    } else {
+		resultGroups.add(iter);
+	    }
+	}
+
+	for (final IGroup iter : Arrays.asList(groups)) {
 	    if (iter instanceof GroupUnion) {
 		resultGroups.addAll(((GroupUnion) iter).getChildren());
 	    } else {
