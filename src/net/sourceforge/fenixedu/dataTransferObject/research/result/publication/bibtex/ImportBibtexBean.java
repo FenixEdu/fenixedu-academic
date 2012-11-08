@@ -2,6 +2,7 @@ package net.sourceforge.fenixedu.dataTransferObject.research.result.publication.
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import net.sourceforge.fenixedu.dataTransferObject.research.result.publication.ResultPublicationBean;
@@ -205,14 +206,16 @@ public class ImportBibtexBean implements Serializable {
 	currentAuthorPosition = 0;
 	currentEditorPosition = 0;
 	List<BibtexParticipatorBean> beans = this.getCurrentParticipators();
-	for (BibtexParticipatorBean bean : beans) {
-	    bean.reset();
+	if (beans != null) {
+	    for (BibtexParticipatorBean bean : beans) {
+		bean.reset();
+	    }
 	}
     }
 
     public List<BibtexParticipatorBean> getProcessedBeans() {
 	List<BibtexParticipatorBean> beans = this.getCurrentParticipators();
-	return beans.subList(0, currentAuthorPosition + currentEditorPosition);
+	return beans == null ? Collections.EMPTY_LIST : beans.subList(0, currentAuthorPosition + currentEditorPosition);
     }
 
     public void resetParticipationBean(Integer index) {
