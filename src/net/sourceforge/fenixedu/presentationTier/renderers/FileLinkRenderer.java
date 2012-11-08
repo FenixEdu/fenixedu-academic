@@ -56,11 +56,11 @@ public class FileLinkRenderer extends OutputRenderer {
 	    private HtmlLink getLink(File file) {
 		HtmlLink link = new HtmlLinkWithPreprendedComment(
 			pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX);
-		if (file.hasLocalContent()) {
-		    link.setContextRelative(true);
-		} else {
+//		if (file.hasLocalContent()) {
+//		    link.setContextRelative(true);
+//		} else {
 		    link.setContextRelative(false);
-		}
+//		}
 		link.setModuleRelative(false);
 		link.setUrl(file.getDownloadUrl());
 		return link;

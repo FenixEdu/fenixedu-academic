@@ -174,7 +174,7 @@
 		<td>
 			<logic:present name="individualCandidacyProcess" property="photo">
 			<bean:define id="photo" name="individualCandidacyProcess" property="photo"/>
-			<%= pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX %><img src="<%= request.getContextPath() + ((IndividualCandidacyDocumentFile) photo).getDownloadUrl() %>" id="photo"/>
+			<%= pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX %><img src="<%= ((IndividualCandidacyDocumentFile) photo).getDownloadUrl() %>" id="photo"/>
 			</logic:present>
 			
 			<logic:notPresent name="individualCandidacyProcess" property="photo">

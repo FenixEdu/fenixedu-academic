@@ -8,16 +8,17 @@ import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.Queue;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import net.sourceforge.fenixedu.domain.File;
 import net.sourceforge.fenixedu.domain.functionalities.FunctionalityContext;
 import net.sourceforge.fenixedu.presentationTier.Action.teacher.siteArchive.streams.FetcherRequestWrapper;
 import net.sourceforge.fenixedu.presentationTier.Action.teacher.siteArchive.streams.FetcherServletResponseWrapper;
 import net.sourceforge.fenixedu.presentationTier.servlets.filters.functionalities.FilterFunctionalityContext;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 import pt.utl.ist.fenix.tools.file.FileManagerFactory;
 import pt.utl.ist.fenix.tools.file.IFileManager;
 
@@ -144,18 +145,21 @@ public class Fetcher {
 	markAsFetched(resource);
 
 	String url = prepareUrl(resource);
-	if (isDspaceFile(url)) {
-	    getFile(stream, url);
+	if (url.indexOf("dspace") >= 0) {
+	    getDspaceFile(stream, url);	    
 	} else {
-	    RequestDispatcher dispatcher = this.request.getRequestDispatcher(url);
-	    ServletRequest request = this.requestContext == null ? createForwardRequest() : createForwardRequest(requestContext);
-	    FetcherServletResponseWrapper response = createForwardResponse(resource, stream);
-
-	    dispatcher.forward(request, response);
+	    getLocalFile(stream, url);
 	}
     }
 
-    private void getFile(OutputStream stream, String url) throws IOException {
+    private void getLocalFile(final OutputStream stream, final String url) throws IOException {
+	final File file = getFileFromUrl(url);
+	final byte[] contents = file.getContents();
+	stream.write(contents);
+	stream.close();
+    }
+
+    private void getDspaceFile(OutputStream stream, String url) throws IOException {
 	IFileManager fileManager = FileManagerFactory.getFactoryInstance().getFileManager();
 	InputStream fileStream = fileManager.retrieveFile(getDspaceFileId(url));
 
@@ -168,6 +172,12 @@ public class Fetcher {
 
 	fileStream.close();
 	stream.close();
+    }
+
+    private File getFileFromUrl(final String url) {
+	final int i = url.lastIndexOf('=');
+	final String oid = url.substring(i + 1);
+	return AbstractDomainObject.fromExternalId(oid);
     }
 
     private String getDspaceFileId(String url) {
