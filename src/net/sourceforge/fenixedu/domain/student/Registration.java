@@ -3966,10 +3966,11 @@ public class Registration extends Registration_Base {
 
 	Formatter formatter = new Formatter(result);
 	final Student student = getStudent();
-	formatter.format("%s: %s\n", bundle.getString("label.ingression"), getIngression().getFullDescription());
+	formatter.format("%s: %s\n", bundle.getString("label.ingression"), getIngression() == null ? " - " : getIngression().getFullDescription());
 	formatter.format("%s: %d\n", bundle.getString("label.studentNumber"), student.getNumber());
 	formatter.format("%s: %s\n", bundle.getString("label.Student.Person.name"), student.getPerson().getName());
 	formatter.format("%s: %s\n", bundle.getString("label.degree"), getDegree().getPresentationName());
+	formatter.close();
     }
 
     public RegistrationState getLastActiveState() {
