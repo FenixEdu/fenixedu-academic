@@ -34,6 +34,11 @@ public class PhdFinalizationCertificateRequest extends PhdFinalizationCertificat
 
 	PhdRegistryDiplomaRequest registryDiplomaRequest = getPhdIndividualProgramProcess().getRegistryDiplomaRequest();
 
+	if (registryDiplomaRequest == null) {
+	    throw new PhdDomainOperationException(
+		    "error.PhdFinalizationCertificateRequest.registry.diploma.request.none");		
+	}
+
 	RectorateSubmissionBatch rectorateSubmissionBatch = registryDiplomaRequest.getRectorateSubmissionBatch();
 
 	if (rectorateSubmissionBatch == null) {
