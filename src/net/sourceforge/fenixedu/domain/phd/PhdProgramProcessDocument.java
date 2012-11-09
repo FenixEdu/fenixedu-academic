@@ -114,9 +114,9 @@ public class PhdProgramProcessDocument extends PhdProgramProcessDocument_Base {
 
     @Override
     protected void disconnect() {
-	super.disconnect();
 	removeUploader();
 	removePhdProgramProcess();
+	super.disconnect();
     }
 
     /*
@@ -208,4 +208,5 @@ public class PhdProgramProcessDocument extends PhdProgramProcessDocument_Base {
 	    version.setDocumentAccepted(false);
 	}
     }
+
 }
