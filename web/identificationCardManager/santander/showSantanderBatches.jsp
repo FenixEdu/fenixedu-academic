@@ -27,9 +27,9 @@ a {border-bottom: none !important;}
 
 <html:xhtml />
 
-<em>Cartões de Identificação</em>
-<h2 class="santanderTitle">Cartões Santander</h2>
-<p class="santanderSubtitle"><strong>Geração de ficheiros TUI</strong></p>
+<em><bean:message bundle="CARD_GENERATION_RESOURCES" key="title.card.generation"/></em>
+<h2 class="santanderTitle"><bean:message bundle="CARD_GENERATION_RESOURCES" key="subtitle.santander.cards"/></h2>
+<p class="santanderSubtitle"><strong><bean:message bundle="CARD_GENERATION_RESOURCES" key="subtitle.santander.cards.tui.generation"/></strong></p>
 
 	
 <logic:messagesPresent message="true" property="error">
@@ -60,7 +60,7 @@ a {border-bottom: none !important;}
 		<bean:define id="executionYearEid" name="santanderBean" property="executionYear.externalId"></bean:define>
 		<a href='<%= request.getContextPath() + "/identificationCardManager/manageSantander.do?method=createBatch&amp;executionYearEid=" + executionYearEid %>'>
 			<button type="button">
-				<img class="santanderButtonIcon" src="<%=request.getContextPath()%>/images/santander_add.png"/> <strong>Criar novo lote</strong>
+				<img class="santanderButtonIcon" src="<%=request.getContextPath()%>/images/santander_add.png"/> <strong><bean:message bundle="CARD_GENERATION_RESOURCES" key="button.santander.create.new.batch"/></strong>
 			</button>
 		</a>
 	</logic:equal>
@@ -68,7 +68,7 @@ a {border-bottom: none !important;}
 
 <logic:present name="santanderBean" property="santanderBatches">
 	<logic:empty name="santanderBean" property="santanderBatches">
-		<p><em>Não existem lotes criados neste ano.</em></p>
+		<p><em><bean:message bundle="CARD_GENERATION_RESOURCES" key="label.santander.no.available.bacthes.for.this.year"/></em></p>
 	</logic:empty>
 	<logic:notEmpty name="santanderBean" property="santanderBatches">
 	
@@ -82,61 +82,48 @@ a {border-bottom: none !important;}
 				<tr>
 					<jsp:include page="santanderBatchListRow.jsp"></jsp:include>
 			   		<td>
-			   			<% 	SantanderBatch santanderBatch = ((SantanderBatch) batch);
-				   			if (santanderBatch.getGenerated() != null && santanderBatch.getSent() == null && santanderBatch.getSantanderProblemsCount() == 0) { %>
-				   				<bean:define id="urlPreview" type="java.lang.String">/manageSantander.do?method=previewBatch&amp;executionYearEid=<bean:write name="santanderBean" property="executionYear.externalId"/>&amp;santanderBatchEid=<bean:write name="batch" property="externalId"/></bean:define>
-								<html:link page="<%= urlPreview %>">
-									<bean:message bundle="CARD_GENERATION_RESOURCES" key="link.manage.card.generation.santanderBatch.preview"/>
-								</html:link>
-								|
-								<bean:define id="urlSend" type="java.lang.String">/manageSantander.do?method=previewBatch&amp;executionYearEid=<bean:write name="santanderBean" property="executionYear.externalId"/>&amp;santanderBatchEid=<bean:write name="batch" property="externalId"/></bean:define>
-								<html:link page="<%= urlSend %>">
-									<bean:message bundle="CARD_GENERATION_RESOURCES" key="link.manage.card.generation.santanderBatch.send"/>
+			   			<% 	SantanderBatch santanderBatch = ((SantanderBatch) batch); %>
+			   			<%	if (santanderBatch.getGenerated() != null) { %>
+				   				<bean:define id="urlDownload" type="java.lang.String">/manageSantander.do?method=downloadBatch&amp;executionYearEid=<bean:write name="santanderBean" property="executionYear.externalId"/>&amp;santanderBatchEid=<bean:write name="batch" property="externalId"/></bean:define>
+								<html:link page="<%= urlDownload %>">
+									<button type="button">
+										<bean:message bundle="CARD_GENERATION_RESOURCES" key="link.manage.card.generation.santanderBatch.download"/>
+									</button>
 								</html:link>
 				   		<%	} else { %>
-					   			<bean:message bundle="CARD_GENERATION_RESOURCES" key="link.manage.card.generation.santanderBatch.preview"/>
-					   			|
-					   			<bean:message bundle="CARD_GENERATION_RESOURCES" key="link.manage.card.generation.santanderBatch.send"/>
+				   				<button type="button" disabled="disabled" >
+					   				<bean:message bundle="CARD_GENERATION_RESOURCES" key="link.manage.card.generation.santanderBatch.download"/>
+					   			</button>
+				   		<%	} %>
+				   		<%	if (santanderBatch.getGenerated() != null && santanderBatch.getSent() == null && santanderBatch.getSantanderProblemsCount() == 0) { %>
+								<bean:define id="urlSend" type="java.lang.String">/manageSantander.do?method=sendBatch&amp;executionYearEid=<bean:write name="santanderBean" property="executionYear.externalId"/>&amp;santanderBatchEid=<bean:write name="batch" property="externalId"/></bean:define>
+								<html:link page="<%= urlSend %>">
+									<button type="button">
+										<bean:message bundle="CARD_GENERATION_RESOURCES" key="link.manage.card.generation.santanderBatch.send"/>
+									</button>
+								</html:link>
+				   		<%	} else { %>
+				   				<button type="button" disabled="disabled" >
+					   				<bean:message bundle="CARD_GENERATION_RESOURCES" key="link.manage.card.generation.santanderBatch.send"/>
+					   			</button>
 				   		<%	} %>
 						<logic:present role="MANAGER">
 							<% 	if (santanderBatch.getSent() == null) { %>
-								| 
 								<bean:define id="urlDelete" type="java.lang.String">/manageSantander.do?method=deleteBatch&amp;executionYearEid=<bean:write name="santanderBean" property="executionYear.externalId"/>&amp;santanderBatchEid=<bean:write name="batch" property="externalId"/></bean:define>
 								<html:link page="<%= urlDelete %>" >
-									<bean:message bundle="CARD_GENERATION_RESOURCES" key="link.manage.card.generation.batch.delete"/>
+									<button type="button">
+										<bean:message bundle="CARD_GENERATION_RESOURCES" key="link.manage.card.generation.batch.delete"/>
+									</button>
 								</html:link>
-							<% } %>
+							<%	} else { %>
+								<button type="button" disabled="disabled" >
+					   				<bean:message bundle="CARD_GENERATION_RESOURCES" key="link.manage.card.generation.batch.delete"/>
+					   			</button>
+				   			<%	} %>
 						</logic:present>
 					</td>
 				</tr>
 			</logic:iterate>
-		</table>
-	
-		
-		
-		<%-- 
-		<fr:view name="santanderBean" property="santanderBatches">
-			<fr:layout name="tabular">
-		
-				<fr:property name="linkGroupSeparator" value="&nbsp&nbsp|&nbsp&nbsp" />
-		
-				<fr:property name="linkFormat(edit)" value="<%="/manageSantander.do?method=selectExecutionYearPostback" %>" />
-				<fr:property name="order(edit)" value="2" />
-				<fr:property name="key(edit)" value="label.santander.send" />
-				<fr:property name="bundle(edit)" value="CARD_GENERATION_RESOURCES" />		
-			
-				<fr:property name="classes" value="tstyle1 thleft" />
-				<fr:property name="columnClasses" value=",,,tdclear tderror1" />
-		
-			</fr:layout>
-		
-			<fr:schema type="net.sourceforge.fenixedu.domain.ExecutionCourse" bundle="CARD_GENERATION_RESOURCES">
-				<fr:slot name="created" key="label.santander.creationDate" />
-				<fr:slot name="requester.person.name" key="label.santander.requester" />
-			</fr:schema>
-		</fr:view>
-		--%>
-		
-		
+		</table>		
 	</logic:notEmpty>
 </logic:present>

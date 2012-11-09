@@ -5,16 +5,20 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
+import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.joda.time.DateTime;
 
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.cardGeneration.SantanderBatch;
+import net.sourceforge.fenixedu.domain.cardGeneration.SantanderBatchSender;
+import net.sourceforge.fenixedu.domain.cardGeneration.SantanderSequenceNumberGenerator;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import pt.ist.fenixWebFramework.services.Service;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
@@ -64,6 +68,43 @@ public class ManageSantanderCardGenerationDA extends FenixDispatchAction {
 	return mapping.findForward("entryPoint");
     }
     
+    /*
+     * Download | Send | Delete
+     */
+    
+    public ActionForward downloadBatch(final ActionMapping mapping, final ActionForm actionForm, final HttpServletRequest request,
+	    final HttpServletResponse response) throws Exception {
+	SantanderBatch santanderBatch = AbstractDomainObject.fromExternalId(request.getParameter("santanderBatchEid"));
+	ExecutionYear executionYear = AbstractDomainObject.fromExternalId(request.getParameter("executionYearEid"));
+	ManageSantanderCardGenerationBean santanderBean;
+	
+	try {
+	    String fileString = santanderBatch.generateTUI();
+	    response.setContentType("text/plain");
+	    response.setHeader("Content-disposition", "attachment; filename=SantanderTecnico_TUI_" + (new DateTime()).toString("yyyyMMddHHmm") + ".txt");
+	    final ServletOutputStream writer = response.getOutputStream();
+	    writer.write(fileString.getBytes("Cp1252"));
+	    writer.flush();
+	    response.flushBuffer();
+	} catch (Exception e) {
+	    addErrorMessage(request, "errors", "error.generatingTUIFailed " + e.getMessage());
+	    santanderBean = new ManageSantanderCardGenerationBean(executionYear);
+	    refreshBeanState(santanderBean);
+	    request.setAttribute("santanderBean", santanderBean);
+	    return mapping.findForward("entryPoint");
+	}
+	
+	return null;
+    }
+    
+    public ActionForward sendBatch(final ActionMapping mapping, final ActionForm actionForm, final HttpServletRequest request,
+	    final HttpServletResponse response) throws Exception {
+	SantanderBatch santanderBatch = AbstractDomainObject.fromExternalId(request.getParameter("santanderBatchEid"));
+	Person requester = getUserView(request).getPerson();
+	sealBatch(santanderBatch, requester);
+	return downloadBatch(mapping, actionForm, request, response);
+    }
+    
     public ActionForward deleteBatch(final ActionMapping mapping, final ActionForm actionForm, final HttpServletRequest request,
 	    final HttpServletResponse response) throws Exception {
 	SantanderBatch santanderBatch = AbstractDomainObject.fromExternalId(request.getParameter("santanderBatchEid"));
@@ -73,7 +114,7 @@ public class ManageSantanderCardGenerationDA extends FenixDispatchAction {
 	destroyBatch(santanderBatch);
 	
 	if (executionYear == null) {
-	    addErrorMessage(request, "errors", "error.cantCreateNewBatchForExecutionYearNull");
+	    addErrorMessage(request, "errors", "error.lostTrackOfExecutionYear");
 	    santanderBean = new ManageSantanderCardGenerationBean();
 	} else {
 	    santanderBean = new ManageSantanderCardGenerationBean(executionYear);
@@ -112,6 +153,13 @@ public class ManageSantanderCardGenerationDA extends FenixDispatchAction {
     private void refreshBeanState (ManageSantanderCardGenerationBean santanderBean) {
 	santanderBean.setSantanderBatches(retrieveBatches(santanderBean.getExecutionYear()));
 	santanderBean.setAllowNewCreation(canCreateNewBatch(santanderBean.getExecutionYear()));
+    }
+    
+    @Service
+    private void sealBatch(SantanderBatch santanderBatch, Person requester) {
+	santanderBatch.setSequenceNumber(SantanderSequenceNumberGenerator.getNewSequenceNumber());
+	santanderBatch.setSent(new DateTime());
+	santanderBatch.setSantanderBatchSender(new SantanderBatchSender(requester));
     }
 
 }
