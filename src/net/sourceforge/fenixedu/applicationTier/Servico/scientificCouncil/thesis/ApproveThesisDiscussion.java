@@ -32,9 +32,7 @@ import org.apache.commons.io.IOUtils;
 
 import pt.ist.fenixWebFramework.services.Service;
 import pt.ist.fenixframework.pstm.Transaction;
-import pt.utl.ist.fenix.tools.file.DSpaceFileManagerFactory;
 import pt.utl.ist.fenix.tools.file.FileSetMetaData;
-import pt.utl.ist.fenix.tools.file.IFileManager;
 import pt.utl.ist.fenix.tools.file.VirtualPath;
 import pt.utl.ist.fenix.tools.file.VirtualPathNode;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
@@ -111,9 +109,6 @@ public class ApproveThesisDiscussion extends ThesisServiceWithMailNotification {
 	ThesisFile dissertation = thesis.getDissertation();
 	Person author = thesis.getStudent().getPerson();
 
-	IFileManager fileManager = DSpaceFileManagerFactory.getFactoryInstance().getSimpleFileManager();
-	InputStream stream = fileManager.retrieveFile(dissertation.getExternalStorageIdentification());
-
 	final MultiLanguageString title = thesis.getFinalFullTitle();
 	String titleForFile = title.getContent(thesis.getLanguage());
 	if (titleForFile == null) {
@@ -148,7 +143,7 @@ public class ApproveThesisDiscussion extends ThesisServiceWithMailNotification {
 	}
 
 	Group group = ResearchResultDocumentFile.getPermittedGroup(groupType);
-	publication.addDocumentFile(getVirtualPath(thesis), getMetadata(thesis), readStream(stream), dissertation.getFilename(), dissertation.getDisplayName(), groupType, group);
+	publication.addDocumentFile(getVirtualPath(thesis), getMetadata(thesis), dissertation.getContents(), dissertation.getFilename(), dissertation.getDisplayName(), groupType, group);
 
 	publication.setThesis(thesis);
 	author.addPersonRoleByRoleType(RoleType.RESEARCHER);
