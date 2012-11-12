@@ -980,16 +980,20 @@ public class TestsManagementAction extends FenixDispatchAction {
 	    throw new FenixActionException();
 	}
 
-	final String dateString = request.getParameter("date");
-	final DateTimeFormatter dateTimeFormat = DateTimeFormat.forPattern("dd/MM/yyyy HH:mm:ss");
-	final DateTime datetime = dateTimeFormat.parseDateTime(dateString);
-
-	String checksum = StudentTestLog.getChecksum(distributedTest, student, datetime);
-
-	request.setAttribute("checksum", checksum);
 	request.setAttribute("objectCode", objectCode);
 	request.setAttribute("registration", student);
 	request.setAttribute("distributedTest", distributedTest);
+
+	final String dateString = request.getParameter("date");
+	final DateTimeFormatter dateTimeFormat = DateTimeFormat.forPattern("dd/MM/yyyy HH:mm:ss");
+	try {
+	    final DateTime datetime = dateTimeFormat.parseDateTime(dateString);
+	    final String checksum = StudentTestLog.getChecksum(distributedTest, student, datetime);
+	    request.setAttribute("checksum", checksum);
+	} catch (final IllegalArgumentException ex) {
+	    error(request, "date", "error.date.invalid");
+	    return mapping.findForward("validateStudentTestChecksum");
+	}
 	return mapping.findForward("validateStudentTestChecksum");
     }
 
