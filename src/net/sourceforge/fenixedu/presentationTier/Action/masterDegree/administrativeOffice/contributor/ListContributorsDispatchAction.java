@@ -54,6 +54,9 @@ public class ListContributorsDispatchAction extends FenixDispatchAction {
 	    final HttpServletResponse response) throws Exception {
 
 	final Integer contributorNumber = getIntegerFromRequestOrForm(request, (DynaActionForm) form, "contributorNumber");
+	if (contributorNumber == null) {
+	    return prepare(mapping, form, request, response);
+	}
 	final InfoContributor infoContributor = InfoContributor.newInfoFromDomain(Party.readByContributorNumber(contributorNumber
 		.toString()));
 
