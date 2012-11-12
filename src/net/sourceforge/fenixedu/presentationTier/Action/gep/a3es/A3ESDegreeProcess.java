@@ -16,6 +16,7 @@ import net.sourceforge.fenixedu.dataTransferObject.externalServices.TeacherCurri
 import net.sourceforge.fenixedu.dataTransferObject.externalServices.TeacherCurricularInformation.QualificationBean;
 import net.sourceforge.fenixedu.domain.Attends;
 import net.sourceforge.fenixedu.domain.CompetenceCourse;
+import net.sourceforge.fenixedu.domain.CourseLoad;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
@@ -333,8 +334,11 @@ public class A3ESDegreeProcess implements Serializable {
 	if (teacherService != null) {
 	    for (DegreeTeachingService degreeTeachingService : teacherService.getDegreeTeachingServices()) {
 		if (degreeTeachingService.getProfessorship().getExecutionCourse().equals(professorhip.getExecutionCourse())) {
-		    double hours = degreeTeachingService.getShift().getUnitHours().doubleValue();
-		    result = result + (hours * (degreeTeachingService.getPercentage().doubleValue() / 100));
+		    for (CourseLoad courseLoad : degreeTeachingService.getShift().getCourseLoads()) {
+			result = result
+				+ (courseLoad.getTotalQuantity().doubleValue() * (degreeTeachingService.getPercentage()
+					.doubleValue() / 100));
+		    }
 		}
 	    }
 	}
