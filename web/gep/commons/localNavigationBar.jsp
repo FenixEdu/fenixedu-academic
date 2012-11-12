@@ -36,8 +36,8 @@
         </html:link>
     </li>
     <li>
-        <html:link page="/a3es.do?method=chooseDegreeAndSemesters">
-            A3ES
+        <html:link page="/a3es.do?method=prepare">
+            <bean:message key="link.gep.a3es" bundle="GEP_RESOURCES" />
         </html:link>
     </li>
     

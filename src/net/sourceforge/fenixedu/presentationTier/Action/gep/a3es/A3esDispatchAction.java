@@ -13,7 +13,6 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
-import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
@@ -21,32 +20,48 @@ import pt.utl.ist.fenix.tools.spreadsheet.SpreadsheetBuilder;
 import pt.utl.ist.fenix.tools.spreadsheet.WorkbookExportFormat;
 
 @Mapping(module = "gep", path = "/a3es", scope = "request", parameter = "method")
-@Forwards(value = { @Forward(name = "chooseDegreeAndSemesters", path = "/gep/a3es/chooseDegreeAndSemesters.jsp") })
+@Forwards(value = { @Forward(name = "chooseDegreeAndSemesters", path = "/gep/a3es/chooseDegreeAndSemesters.jsp"),
+	@Forward(name = "listProcesses", path = "/gep/a3es/listProcesses.jsp") })
 public class A3esDispatchAction extends FenixDispatchAction {
-
-    public ActionForward chooseDegreeAndSemesters(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-	    HttpServletResponse response) throws FenixFilterException, FenixServiceException {
-	A3esBean a3esBean = getRenderedObject();
-	if (a3esBean == null) {
-	    a3esBean = new A3esBean();
-	}
-	RenderUtils.invalidateViewState();
-	request.setAttribute("a3esBean", a3esBean);
-	return mapping.findForward("chooseDegreeAndSemesters");
+    public ActionForward prepare(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) {
+	request.setAttribute("process", new A3ESDegreeProcess());
+	request.setAttribute("selection", true);
+	return mapping.findForward("listProcesses");
     }
 
-    public ActionForward exportA3es(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+    public ActionForward select(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) {
+	A3ESDegreeProcess process = getRenderedObject("process");
+	process.initialize();
+	request.setAttribute("process", process);
+	return mapping.findForward("listProcesses");
+    }
+
+    public ActionForward uploadCompetenceCourses(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) {
+	A3ESDegreeProcess process = getRenderedObject("process");
+	request.setAttribute("process", process);
+	request.setAttribute("output", process.uploadCompetenceCourses());
+	return mapping.findForward("listProcesses");
+    }
+
+    public ActionForward uploadTeacherCurriculum(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) {
+	A3ESDegreeProcess process = getRenderedObject("process");
+	request.setAttribute("process", process);
+	request.setAttribute("output", process.uploadTeacherCurriculum());
+	return mapping.findForward("listProcesses");
+    }
+
+    public ActionForward exportTeacherCurriculum(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws FenixFilterException, FenixServiceException, IOException {
-	A3esBean a3esBean = getRenderedObject();
-	if (a3esBean == null) {
-	    return chooseDegreeAndSemesters(mapping, actionForm, request, response);
-	}
-	SpreadsheetBuilder spreadsheetBuilder = a3esBean.getTeacherCurricularInformation();
+	A3ESDegreeProcess process = getRenderedObject("process");
+	SpreadsheetBuilder spreadsheetBuilder = process.exportTeacherCurriculum();
 	response.setContentType("text/plain");
 	response.setHeader("Content-disposition", "attachment; filename=a3es.xls");
 	spreadsheetBuilder.build(WorkbookExportFormat.EXCEL, response.getOutputStream());
 	response.flushBuffer();
 	return null;
     }
-
 }
