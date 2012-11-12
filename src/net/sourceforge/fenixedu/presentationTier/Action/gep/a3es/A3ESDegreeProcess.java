@@ -14,13 +14,14 @@ import javax.ws.rs.core.MediaType;
 import net.sourceforge.fenixedu.dataTransferObject.externalServices.TeacherCurricularInformation;
 import net.sourceforge.fenixedu.dataTransferObject.externalServices.TeacherCurricularInformation.LecturedCurricularUnit;
 import net.sourceforge.fenixedu.dataTransferObject.externalServices.TeacherCurricularInformation.QualificationBean;
+import net.sourceforge.fenixedu.domain.Attends;
 import net.sourceforge.fenixedu.domain.CompetenceCourse;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
-import net.sourceforge.fenixedu.domain.DegreeModuleScope;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
+import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Professorship;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.Teacher;
@@ -31,7 +32,8 @@ import net.sourceforge.fenixedu.domain.phd.InternalPhdParticipant;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess;
 import net.sourceforge.fenixedu.domain.phd.PhdParticipant;
 import net.sourceforge.fenixedu.domain.phd.PhdProgram;
-import net.sourceforge.fenixedu.domain.thesis.Thesis;
+import net.sourceforge.fenixedu.domain.teacher.DegreeTeachingService;
+import net.sourceforge.fenixedu.domain.teacher.TeacherService;
 import net.sourceforge.fenixedu.domain.thesis.ThesisEvaluationParticipant;
 
 import org.apache.commons.codec.binary.Base64;
@@ -178,6 +180,15 @@ public class A3ESDegreeProcess implements Serializable {
 	return result;
     }
 
+    private Set<ExecutionYear> getSelectedExecutionYears() {
+	Set<ExecutionYear> result = new HashSet<ExecutionYear>();
+	if (getExecutionSemester() != null) {
+	    result.add(getExecutionSemester().getExecutionYear());
+	    result.add(getExecutionSemester().getPreviousExecutionPeriod().getExecutionYear());
+	}
+	return result;
+    }
+
     public List<String> uploadCompetenceCourses() {
 	List<String> output = new ArrayList<String>();
 	for (Object object : invoke(webResource().path(API_FOLDER).queryParam("formId", formId))) {
@@ -245,14 +256,12 @@ public class A3ESDegreeProcess implements Serializable {
 	    CompetenceCourse competence = course.getCompetenceCourse();
 	    json.put("q-6.2.1.1", competence.getName(executionSemester));
 
-	    JSONObject q6212 = new JSONObject();
-	    q6212.put("en", "responsible");
-	    q6212.put("pt", "responsavel");
-	    json.put("q-6.2.1.2", q6212);
+	    json.put("q-6.2.1.2", getTeachersAndTeachingHours(course, executionSemester, true));
 
 	    JSONObject q6213 = new JSONObject();
-	    q6213.put("en", "other teachers");
-	    q6213.put("pt", "outros docentes");
+	    String teachersAndTeachingHours = getTeachersAndTeachingHours(course, executionSemester, false);
+	    q6213.put("en", teachersAndTeachingHours);
+	    q6213.put("pt", teachersAndTeachingHours);
 	    json.put("q-6.2.1.3", q6213);
 
 	    JSONObject q6214 = new JSONObject();
@@ -291,30 +300,78 @@ public class A3ESDegreeProcess implements Serializable {
 	return jsons;
     }
 
-    protected List<TeacherCurricularInformation> getTeacherCurricularInformation() {
-	Set<Teacher> teachers = new HashSet<Teacher>();
-	List<ExecutionSemester> executionSemesters = getSelectedExecutionSemesters();
-	for (ExecutionSemester executionSemester : executionSemesters) {
-	    for (ExecutionCourse executionCourse : getExecutionCourses(degree, executionSemester)) {
+    private String getTeachersAndTeachingHours(CurricularCourse course, ExecutionSemester executionSemester,
+	    boolean responsibleTeacher) {
+	Map<Teacher, Double> responsiblesMap = new HashMap<Teacher, Double>();
+	for (final ExecutionCourse executionCourse : course.getAssociatedExecutionCourses()) {
+	    if (executionSemester == executionCourse.getExecutionPeriod()) {
 		for (Professorship professorhip : executionCourse.getProfessorshipsSet()) {
-		    if (professorhip.getPerson().getTeacher().isActiveOrHasAuthorizationForSemester(executionSemester)) {
-			teachers.add(professorhip.getPerson().getTeacher());
+		    if (professorhip.isResponsibleFor() == responsibleTeacher
+			    && professorhip.getPerson().getTeacher().isActiveOrHasAuthorizationForSemester(executionSemester)) {
+			Double hours = responsiblesMap.get(professorhip.getTeacher());
+			if (hours == null) {
+			    hours = 0.0;
+			}
+			hours = hours + getHours(professorhip);
+			responsiblesMap.put(professorhip.getTeacher(), hours);
 		    }
 		}
 	    }
-	    for (Thesis thesis : degree.getThesis()) {
-		if (executionSemesters.contains(thesis.getEnrolment().getExecutionPeriod())) {
-		    for (ThesisEvaluationParticipant thesisEvaluationParticipant : thesis.getOrientation()) {
-			if (thesisEvaluationParticipant.getPerson().getTeacher() != null
-				&& thesisEvaluationParticipant.getPerson().getTeacher()
-					.isActiveOrHasAuthorizationForSemester(executionSemester)) {
-			    teachers.add(thesisEvaluationParticipant.getPerson().getTeacher());
+	}
+	List<String> responsibles = new ArrayList<String>();
+	for (Teacher teacher : responsiblesMap.keySet()) {
+	    responsibles.add(teacher.getPerson().getName() + " (" + responsiblesMap.get(teacher) + ")");
+	}
+	return StringUtils.join(responsibles, ", ");
+    }
+
+    private Double getHours(Professorship professorhip) {
+	Teacher teacher = professorhip.getPerson().getTeacher();
+	TeacherService teacherService = teacher.getTeacherServiceByExecutionPeriod(professorhip.getExecutionCourse()
+		.getExecutionPeriod());
+	Double result = 0.0;
+	if (teacherService != null) {
+	    for (DegreeTeachingService degreeTeachingService : teacherService.getDegreeTeachingServices()) {
+		if (degreeTeachingService.getProfessorship().getExecutionCourse().equals(professorhip.getExecutionCourse())) {
+		    double hours = degreeTeachingService.getShift().getUnitHours().doubleValue();
+		    result = result + (hours * (degreeTeachingService.getPercentage().doubleValue() / 100));
+		}
+	    }
+	}
+	return result;
+    }
+
+    protected List<TeacherCurricularInformation> getTeacherCurricularInformation() {
+	Set<Teacher> teachers = new HashSet<Teacher>();
+	for (final DegreeCurricularPlan degreeCurricularPlan : degree.getDegreeCurricularPlansSet()) {
+	    for (final CurricularCourse course : degreeCurricularPlan.getCurricularCourses()) {
+		for (final ExecutionCourse executionCourse : course.getAssociatedExecutionCourses()) {
+		    if (isInScope(course, executionCourse)) {
+			for (Professorship professorhip : executionCourse.getProfessorshipsSet()) {
+			    if (professorhip.getPerson().getTeacher().isActiveOrHasAuthorizationForSemester(executionSemester)) {
+				teachers.add(professorhip.getPerson().getTeacher());
+			    }
+			}
+			if (executionCourse.isDissertation()) {
+			    for (Attends attends : executionCourse.getAttends()) {
+				if (attends.hasEnrolment() || attends.getEnrolment().getThesis() != null) {
+				    for (ThesisEvaluationParticipant thesisEvaluationParticipant : attends.getEnrolment()
+					    .getThesis().getOrientation()) {
+					if (thesisEvaluationParticipant.getPerson().getTeacher() != null
+						&& thesisEvaluationParticipant.getPerson().getTeacher()
+							.isActiveOrHasAuthorizationForSemester(executionSemester)) {
+					    teachers.add(thesisEvaluationParticipant.getPerson().getTeacher());
+					}
+				    }
+				}
+			    }
 			}
 		    }
 		}
 	    }
 	}
 
+	List<ExecutionSemester> executionSemesters = getSelectedExecutionSemesters();
 	PhdProgram phdProgram = degree.getPhdProgram();
 	if (phdProgram != null) {
 	    for (PhdIndividualProgramProcess phdIndividualProgramProcess : phdProgram.getIndividualProgramProcesses()) {
@@ -342,6 +399,13 @@ public class A3ESDegreeProcess implements Serializable {
 	    teacherCurricularInformationList.add(teacherCurricularInformation);
 	}
 	return teacherCurricularInformationList;
+    }
+
+    private boolean isInScope(CurricularCourse course, ExecutionCourse executionCourse) {
+	List<ExecutionSemester> selectedExecutionSemesters = getSelectedExecutionSemesters();
+	Set<ExecutionYear> selectedExecutionYears = getSelectedExecutionYears();
+	return selectedExecutionSemesters.contains(executionCourse.getExecutionPeriod())
+		|| (course.isAnual() && selectedExecutionYears.contains(executionCourse.getExecutionPeriod().getExecutionYear()));
     }
 
     protected List<String> buildTeacherCurriculumJson() {
@@ -436,25 +500,6 @@ public class A3ESDegreeProcess implements Serializable {
 	    jsons.add(toplevel.toJSONString());
 	}
 	return jsons;
-    }
-
-    protected List<ExecutionCourse> getExecutionCourses(final Degree degree, final ExecutionSemester executionSemester) {
-	final List<ExecutionCourse> result = new ArrayList<ExecutionCourse>();
-	for (final DegreeCurricularPlan degreeCurricularPlan : degree.getDegreeCurricularPlansSet()) {
-	    for (final CurricularCourse course : degreeCurricularPlan.getCurricularCourses()) {
-		for (final ExecutionCourse executionCourse : course.getAssociatedExecutionCourses()) {
-		    if (executionSemester == executionCourse.getExecutionPeriod()) {
-			for (final DegreeModuleScope scope : course.getDegreeModuleScopes()) {
-			    if (scope.isActiveForExecutionPeriod(executionSemester)
-				    && scope.getCurricularSemester() == executionSemester.getSemester()) {
-				result.add(executionCourse);
-			    }
-			}
-		    }
-		}
-	    }
-	}
-	return result;
     }
 
     public SpreadsheetBuilder exportTeacherCurriculum() {

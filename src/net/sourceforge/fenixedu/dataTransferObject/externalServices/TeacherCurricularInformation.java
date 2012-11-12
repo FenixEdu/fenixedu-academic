@@ -192,8 +192,6 @@ public class TeacherCurricularInformation implements Serializable {
 	    } else if (regime.matches(".*?" + StringNormalizer.normalize("Exclusividade") + ".*?")) {
 		return "Exclusividade";
 	    }
-	    System.out.println("Invalid regime: " + regime);
-	    return lastProfessionalRegime == null ? null : lastProfessionalRegime.getName().getContent();
 	}
 	return "Tempo Parcial";
     }
