@@ -18,10 +18,12 @@ import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.Department;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
+import net.sourceforge.fenixedu.domain.ExternalTeacherAuthorization;
 import net.sourceforge.fenixedu.domain.Professorship;
 import net.sourceforge.fenixedu.domain.Qualification;
 import net.sourceforge.fenixedu.domain.QualificationType;
 import net.sourceforge.fenixedu.domain.Teacher;
+import net.sourceforge.fenixedu.domain.TeacherAuthorization;
 import net.sourceforge.fenixedu.domain.personnelSection.contracts.GiafProfessionalData;
 import net.sourceforge.fenixedu.domain.personnelSection.contracts.PersonProfessionalData;
 import net.sourceforge.fenixedu.domain.personnelSection.contracts.ProfessionalCategory;
@@ -134,7 +136,6 @@ public class TeacherCurricularInformation implements Serializable {
 	ProfessionalCategory lastCategory = getTeacher().getLastCategory(
 		executionSemesters.first().getBeginDateYearMonthDay().toLocalDate(),
 		executionSemesters.last().getEndDateYearMonthDay().toLocalDate());
-
 	if (lastCategory != null) {
 	    if (lastCategory.getName().getContent().equalsIgnoreCase("Assistente")) {
 		return "Assistente";
@@ -172,7 +173,8 @@ public class TeacherCurricularInformation implements Serializable {
 	return lastCategory == null ? null : lastCategory.getName().getContent();
     }
 
-    public String getProfessionalRegimeName() {
+    public Double getProfessionalRegimeTime() {
+	double maxRegimeTime = 100.0;
 	PersonProfessionalData personProfessionalData = getTeacher().getPerson().getPersonProfessionalData();
 	ProfessionalRegime lastProfessionalRegime = null;
 	if (personProfessionalData != null) {
@@ -186,14 +188,31 @@ public class TeacherCurricularInformation implements Serializable {
 	if (lastProfessionalRegime != null) {
 	    String regime = StringNormalizer.normalize(lastProfessionalRegime.getName().getContent());
 	    if (regime.matches(".*?" + StringNormalizer.normalize("Tempo Integral") + ".*?")) {
-		return "Tempo Integral";
-	    } else if (regime.matches(".*?" + StringNormalizer.normalize("Tempo Parcial") + ".*?")) {
-		return "Tempo Parcial";
+		return maxRegimeTime;
 	    } else if (regime.matches(".*?" + StringNormalizer.normalize("Exclusividade") + ".*?")) {
-		return "Exclusividade";
+		return maxRegimeTime;
+	    } else if (regime.matches(".*?" + StringNormalizer.normalize("Tempo Parcial") + ".*?")) {
+		Integer weighting = lastProfessionalRegime.getWeighting();
+		if (weighting != null) {
+		    return Math.min(maxRegimeTime, weighting);
+		}
 	    }
 	}
-	return "Tempo Parcial";
+	Double authorizationRegimeTime = getAuthorizationRegimeTime(executionSemesters.last());
+	if (authorizationRegimeTime == 0.0) {
+	    authorizationRegimeTime = getAuthorizationRegimeTime(executionSemesters.first());
+	}
+
+	return authorizationRegimeTime;
+    }
+
+    protected Double getAuthorizationRegimeTime(ExecutionSemester executionSemester) {
+	TeacherAuthorization teacherAuthorization = getTeacher().getTeacherAuthorization(executionSemester);
+	if (teacherAuthorization != null) {
+	    Double lessonHours = ((ExternalTeacherAuthorization) teacherAuthorization).getLessonHours();
+	    return new Double(Math.round((lessonHours * 100) / 12));
+	}
+	return 0.0;
     }
 
     public List<String> getTop5ResultParticipation() {
@@ -321,9 +340,11 @@ public class TeacherCurricularInformation implements Serializable {
 			.getExecutionCourseFor(executionSemester);
 		if (executionCourse != null) {
 		    if (executionCourse.getDegreesSortedByDegreeName().contains(degree)) {
-			lecturedUCsOnCycle.add(new LecturedCurricularUnit("Dissertação", null, null));
+			lecturedUCsOnCycle.add(new LecturedCurricularUnit(executionCourse.getDegreePresentationString(),
+				"Dissertação", null, null));
 		    } else {
-			lecturedUCsOnOtherCycles.add(new LecturedCurricularUnit("Dissertação " + degree.getName(), null, null));
+			lecturedUCsOnOtherCycles.add(new LecturedCurricularUnit(executionCourse.getDegreePresentationString(),
+				"Dissertação " + degree.getName(), null, null));
 		    }
 		}
 	    }
@@ -334,10 +355,11 @@ public class TeacherCurricularInformation implements Serializable {
 			    && phdIndividualProgramProcess.isGuiderOrAssistentGuider(teacher.getPerson())
 			    && teacher.isActiveOrHasAuthorizationForSemester(executionSemester)) {
 			if (phdIndividualProgramProcess.getPhdProgram().equals(degree.getPhdProgram())) {
-			    lecturedUCsOnCycle.add(new LecturedCurricularUnit("Dissertação", null, null));
+			    lecturedUCsOnCycle.add(new LecturedCurricularUnit(phdIndividualProgramProcess.getPhdProgram()
+				    .getName().getContent(), "Dissertação", null, null));
 			} else {
-			    lecturedUCsOnOtherCycles
-				    .add(new LecturedCurricularUnit("Dissertação " + degree.getName(), null, null));
+			    lecturedUCsOnOtherCycles.add(new LecturedCurricularUnit(phdIndividualProgramProcess.getPhdProgram()
+				    .getName().getContent(), "Dissertação " + degree.getName(), null, null));
 			}
 		    }
 		}
@@ -380,12 +402,14 @@ public class TeacherCurricularInformation implements Serializable {
 		}
 	    }
 	}
-	String name = professorship.getExecutionCourse().getName() + " (" + professorship.getDegreeSiglas() + ")";
+	String name = professorship.getExecutionCourse().getName();
 	if (hoursByTypeMap.isEmpty()) {
-	    result.add(new LecturedCurricularUnit(name, null, null));
+	    result.add(new LecturedCurricularUnit(professorship.getExecutionCourse().getDegreePresentationString(), name, null,
+		    null));
 	} else {
 	    for (String shiftType : hoursByTypeMap.keySet()) {
-		result.add(new LecturedCurricularUnit(name, shiftType, hoursByTypeMap.get(shiftType)));
+		result.add(new LecturedCurricularUnit(professorship.getExecutionCourse().getDegreePresentationString(), name,
+			shiftType, hoursByTypeMap.get(shiftType)));
 	    }
 	}
 	return result;
@@ -438,14 +462,16 @@ public class TeacherCurricularInformation implements Serializable {
     }
 
     public class LecturedCurricularUnit {
+	protected String degree;
 	protected String name;
 	protected String shiftType;
-	protected String hours;
+	protected Double hours;
 
-	public LecturedCurricularUnit(String name, String shiftType, Double hoursValue) {
+	public LecturedCurricularUnit(String degree, String name, String shiftType, Double hoursValue) {
+	    this.degree = degree;
 	    this.name = name;
 	    this.shiftType = getShiftType(shiftType);
-	    this.hours = hoursValue == null ? "0" : new Double(Math.round(hoursValue * 100.0) / 100.0).toString();
+	    this.hours = hoursValue == null ? 0.0 : new Double(Math.round(hoursValue * 100.0) / 100.0);
 	}
 
 	private String getShiftType(String shiftType) {
@@ -471,21 +497,25 @@ public class TeacherCurricularInformation implements Serializable {
 	    return shiftType;
 	}
 
-	public String getHours() {
+	public Double getHours() {
 	    return hours;
+	}
+
+	public String getDegree() {
+	    return degree;
 	}
 
 	@Override
 	public boolean equals(Object obj) {
 	    if (obj instanceof LecturedCurricularUnit) {
 		LecturedCurricularUnit o = (LecturedCurricularUnit) obj;
-		return equal(getName(), o.getName()) && equal(getShiftType(), o.getShiftType())
-			&& equal(getHours(), o.getHours());
+		return equal(getDegree(), o.getDegree()) && equal(getName(), o.getName())
+			&& equal(getShiftType(), o.getShiftType()) && equal(getHours(), o.getHours());
 	    }
 	    return false;
 	}
 
-	protected boolean equal(String obj1, String obj2) {
+	protected boolean equal(Object obj1, Object obj2) {
 	    if (obj1 == null && obj2 == null) {
 		return true;
 	    }
@@ -497,7 +527,7 @@ public class TeacherCurricularInformation implements Serializable {
 
 	@Override
 	public int hashCode() {
-	    return getName().hashCode() + (getShiftType() != null ? getShiftType().hashCode() : 0)
+	    return getDegree().hashCode() + getName().hashCode() + (getShiftType() != null ? getShiftType().hashCode() : 0)
 		    + (getHours() != null ? getHours().hashCode() : 0);
 	}
     }

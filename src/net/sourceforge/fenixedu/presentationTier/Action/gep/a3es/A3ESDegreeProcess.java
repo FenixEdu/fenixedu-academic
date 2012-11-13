@@ -512,7 +512,7 @@ public class A3ESDegreeProcess implements Serializable {
 		    lecture.put("curricularUnit", lecturedCurricularUnit.getName());
 		    lecture.put("studyCyle", lecturedCurricularUnit.getName());
 		    lecture.put("type", lecturedCurricularUnit.getShiftType());
-		    lecture.put("hoursPerWeek", Float.parseFloat(lecturedCurricularUnit.getHours()));
+		    lecture.put("hoursPerWeek", lecturedCurricularUnit.getHours());
 		    insideLectures.add(lecture);
 		}
 		file.put("form-unit", insideLectures);
@@ -556,7 +556,7 @@ public class A3ESDegreeProcess implements Serializable {
 		addCell("Área científica", qualification != null ? qualification.getScientificArea() : null);
 		addCell("Ano", qualification != null ? qualification.getYear() : null);
 		addCell("Instituição", qualification != null ? qualification.getInstitution() : null);
-		addCell("Regime", teacherCurricularInformation.getProfessionalRegimeName());
+		addCell("Regime", teacherCurricularInformation.getProfessionalRegimeTime());
 		SortedSet<QualificationBean> otherQualifications = teacherCurricularInformation.getOtherQualifications();
 		List<String> otherQualificationStrings = new ArrayList<String>();
 		for (QualificationBean otherQualification : otherQualifications) {
@@ -576,6 +576,7 @@ public class A3ESDegreeProcess implements Serializable {
 		List<String> lectured = new ArrayList<String>();
 		for (LecturedCurricularUnit lecturedCurricularUnit : teacherCurricularInformation.getLecturedUCsOnCycle()) {
 		    StringBuilder lecturedString = new StringBuilder();
+		    lecturedString.append(lecturedCurricularUnit.getDegree()).append(",");
 		    lecturedString.append(lecturedCurricularUnit.getName()).append(",");
 		    lecturedString.append(lecturedCurricularUnit.getShiftType()).append(",");
 		    lecturedString.append(lecturedCurricularUnit.getHours());
@@ -586,6 +587,7 @@ public class A3ESDegreeProcess implements Serializable {
 		lectured = new ArrayList<String>();
 		for (LecturedCurricularUnit lecturedCurricularUnit : teacherCurricularInformation.getLecturedUCsOnOtherCycles()) {
 		    StringBuilder lecturedString = new StringBuilder();
+		    lecturedString.append(lecturedCurricularUnit.getDegree()).append(",");
 		    lecturedString.append(lecturedCurricularUnit.getName()).append(",");
 		    lecturedString.append(lecturedCurricularUnit.getShiftType()).append(",");
 		    lecturedString.append(lecturedCurricularUnit.getHours());
