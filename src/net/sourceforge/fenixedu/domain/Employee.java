@@ -84,7 +84,7 @@ public class Employee extends Employee_Base {
     private void checkEmployeeNumber(Integer employeeNumber) {
 	Employee employee = readByNumber(employeeNumber);
 	if (employee != null && !employee.equals(this)) {
-	    throw new DomainException("error.employee.already.exists.one.employee.with.same.number");
+	    throw new DomainException("error.employee.already.exists.one.employee.with.same.number", employeeNumber.toString());
 	}
     }
 
