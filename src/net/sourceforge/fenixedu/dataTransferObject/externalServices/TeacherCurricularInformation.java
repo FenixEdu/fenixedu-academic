@@ -137,35 +137,35 @@ public class TeacherCurricularInformation implements Serializable {
 
 	if (lastCategory != null) {
 	    if (lastCategory.getName().getContent().equalsIgnoreCase("Assistente")) {
-		return "Assistente ou equivalente";
+		return "Assistente";
 	    } else if (lastCategory.getName().getContent().equalsIgnoreCase("Assistente Convidado")) {
-		return "Assistente convidado ou equivalente";
+		return "Assistente convidado";
 	    } else if (lastCategory.getName().getContent().equalsIgnoreCase("Equip. Assistente")
 		    || lastCategory.getName().getContent().equalsIgnoreCase("Equiparado Assistente")) {
-		return "Equiparado a Assistente ou equivalente";
+		return "Equiparado a Assistente";
 	    } else if (lastCategory.getName().getContent().equalsIgnoreCase("Equip. Assistente Convidado")) {
-		return "Equiparado a Assistente convidado ou equivalente";
+		return "Equiparado a Assistente";
 	    } else if (lastCategory.getName().getContent().equalsIgnoreCase("Equip. Prof. Auxiliar")
 		    || lastCategory.getName().getContent().equalsIgnoreCase("Equiparado Professor Auxiliar")
 		    || lastCategory.getName().getContent().equalsIgnoreCase("Professor Auxiliar")) {
-		return "Professor Auxiliar ou equivalente";
+		return "Professor Auxiliar";
 	    } else if (lastCategory.getName().getContent().equalsIgnoreCase("Equip.Assistente Estagiario")) {
-		return "Assistente Estagiário ou equivalente";
+		return "Assistente Estagiário";
 	    } else if (lastCategory.getName().getContent().equalsIgnoreCase("Equip.Monitor S/Lic")
 		    || lastCategory.getName().getContent().equalsIgnoreCase("Monitor-E.C.D.U. c/Licenciatura")
 		    || lastCategory.getName().getContent().equalsIgnoreCase("Monitor-E.C.D.U.s/Licenciatura")) {
-		return "Monitor ou equivalente";
+		return "Monitor";
 	    } else if (lastCategory.getName().getContent().equalsIgnoreCase("Equip.Prof.Auxiliar Convidado")
 		    || lastCategory.getName().getContent().equalsIgnoreCase("Prof Auxiliar Convidado")) {
-		return "Professor Auxiliar convidado ou equivalente";
+		return "Professor Auxiliar convidado";
 	    } else if (lastCategory.getName().getContent().equalsIgnoreCase("Professor Associado")) {
-		return "Professor Associado ou equivalente";
+		return "Professor Associado";
 	    } else if (lastCategory.getName().getContent().equalsIgnoreCase("Professor Associado Convidado")) {
-		return "Professor Associado convidado ou equivalente";
+		return "Professor Associado convidado";
 	    } else if (lastCategory.getName().getContent().equalsIgnoreCase("Professor Catedrático")) {
-		return "Professor Catedrático ou equivalente";
+		return "Professor Catedrático";
 	    } else if (lastCategory.getName().getContent().equalsIgnoreCase("Professor Catedrático Convidado")) {
-		return "Professor Catedrático convidado ou equivalente";
+		return "Professor Catedrático convidado";
 	    }
 	}
 	System.out.println("Invalid category: " + lastCategory.getName().getContent());
@@ -373,8 +373,8 @@ public class TeacherCurricularInformation implements Serializable {
 	    for (DegreeTeachingService degreeTeachingService : degreeTeachingServices) {
 		for (CourseLoad courseLoad : degreeTeachingService.getShift().getCourseLoads()) {
 		    Double duration = hoursByTypeMap.get(courseLoad.getType().getSiglaTipoAula());
-		    Double weeklyHours = (courseLoad.getTotalQuantity().doubleValue() * (degreeTeachingService.getPercentage()
-			    .doubleValue() / 100));
+		    Double weeklyHours = courseLoad.getTotalQuantity().doubleValue()
+			    * (degreeTeachingService.getPercentage().doubleValue() / 100);
 		    hoursByTypeMap.put(courseLoad.getType().getSiglaTipoAula(), duration == null ? weeklyHours : duration
 			    + weeklyHours);
 		}
@@ -395,20 +395,20 @@ public class TeacherCurricularInformation implements Serializable {
 	protected QualificationType type;
 	protected String degree;
 	protected String scientificArea;
-	protected String year;
+	protected Integer year;
 	protected String institution;
 	protected String classification;
 
 	public QualificationBean(Qualification qualification) {
-	    type = qualification != null ? qualification.getType() : null;
-	    degree = qualification != null && qualification.getType() != null ? qualification.getType().getLocalizedName() : "";
+	    type = qualification.getType();
+	    degree = qualification.getType() != null ? qualification.getType().getLocalizedName() : "Sem Grau";
 	    if (qualification.getType().name().startsWith("DOCTORATE_DEGREE")) {
 		degree = QualificationType.DOCTORATE_DEGREE.getLocalizedName();
 	    }
-	    scientificArea = qualification != null ? qualification.getDegree() : "";
-	    year = qualification != null ? qualification.getYear() : "";
-	    institution = qualification != null ? qualification.getSchool() : "";
-	    classification = qualification != null ? qualification.getMark() : "";
+	    scientificArea = qualification.getDegree();
+	    year = qualification.getYear() != null ? Integer.parseInt(qualification.getYear()) : null;
+	    institution = qualification.getSchool();
+	    classification = qualification.getMark();
 	}
 
 	public QualificationType getType() {
@@ -423,7 +423,7 @@ public class TeacherCurricularInformation implements Serializable {
 	    return scientificArea;
 	}
 
-	public String getYear() {
+	public Integer getYear() {
 	    return year;
 	}
 
@@ -445,7 +445,7 @@ public class TeacherCurricularInformation implements Serializable {
 	public LecturedCurricularUnit(String name, String shiftType, Double hoursValue) {
 	    this.name = name;
 	    this.shiftType = getShiftType(shiftType);
-	    this.hours = hoursValue == null ? null : new Double(Math.round((hoursValue * 100.0)) / 100.0).toString();
+	    this.hours = hoursValue == null ? "0" : new Double(Math.round(hoursValue * 100.0) / 100.0).toString();
 	}
 
 	private String getShiftType(String shiftType) {

@@ -61,11 +61,13 @@
 </logic:notPresent>
 
 <logic:present name="output">
-	<bean:message bundle="GEP_RESOURCES" key="label.gep.a3es.output" />
+	<h3>
+		<bean:message bundle="GEP_RESOURCES" key="label.gep.a3es.output" />
+	</h3>
 	<div style="margin: 15px 0px; overflow-y: scroll; height: 300px;">
 		<logic:iterate id="line" name="output">
 			<div>
-				<bean:write name="line" />
+				<bean:write name="line"/>
 			</div>
 		</logic:iterate>
 	</div>
