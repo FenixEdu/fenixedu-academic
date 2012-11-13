@@ -108,6 +108,14 @@
 					</fr:layout>	
 				</fr:edit>
 			</logic:equal>
+			
+			<!-- Internationalization -->
+			<fr:edit id="languageEdit" name="documentRequestCreateBean" schema="DocumentRequestCreateBean.language" type="net.sourceforge.fenixedu.dataTransferObject.serviceRequests.DocumentRequestCreateBean">
+				<fr:layout name="tabular">
+					<fr:property name="classes" value="tstyle5 thright thlight mvert0 thmiddle"/>
+					<fr:property name="columnClasses" value="width14em,width40em,tdclear tderror1"/>
+				</fr:layout>	
+			</fr:edit>
 	
 			<!-- Mobility Program -->
 			<logic:equal name="documentRequestCreateBean" property="hasMobilityProgramDependency" value="true">

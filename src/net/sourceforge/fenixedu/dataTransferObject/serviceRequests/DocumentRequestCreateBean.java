@@ -126,6 +126,8 @@ public class DocumentRequestCreateBean extends RegistrationAcademicServiceReques
 
 	if (RegistrationAgreement.MOBILITY_AGREEMENTS.contains(registrationAgreement)) {
 	    setLanguage(Language.en);
+	} else {
+	    setLanguage(Language.pt);
 	}
     }
 

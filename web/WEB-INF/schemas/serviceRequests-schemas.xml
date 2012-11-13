@@ -308,9 +308,6 @@
 <schema name="DocumentRequestCreateBean.APPROVEMENT_CERTIFICATE.AdditionalInformation"
 	type="net.sourceforge.fenixedu.dataTransferObject.serviceRequests.DocumentRequestCreateBean" bundle="ACADEMIC_OFFICE_RESOURCES">
 	<slot name="urgentRequest" key="label.documentRequestsManagement.searchDocumentRequests.urgent"></slot>
-    <slot name="language" layout="null-as-label">
-        <property name="label" value="-"/>
-    </slot>
 </schema>
 
 <schema name="DocumentRequestCreateBean.APPROVEMENT_CERTIFICATE.AdditionalInformation.view"
@@ -321,17 +318,11 @@
 <schema name="DocumentRequestCreateBean.APPROVEMENT_MOBILITY_CERTIFICATE.AdditionalInformation"
 	type="net.sourceforge.fenixedu.dataTransferObject.serviceRequests.DocumentRequestCreateBean" bundle="ACADEMIC_OFFICE_RESOURCES">
     <slot name="urgentRequest" key="label.documentRequestsManagement.searchDocumentRequests.urgent"></slot>
-    <slot name="language" layout="null-as-label">
-        <property name="label" value="-"/>
-    </slot>
 </schema>
 
 <schema name="DocumentRequestCreateBean.APPROVEMENT_MOBILITY_CERTIFICATE_mobility.AdditionalInformation"
 	type="net.sourceforge.fenixedu.dataTransferObject.serviceRequests.DocumentRequestCreateBean" bundle="ACADEMIC_OFFICE_RESOURCES">
     <slot name="urgentRequest" key="label.documentRequestsManagement.searchDocumentRequests.urgent"></slot>
-    <slot name="language" layout="null-as-label">
-        <property name="label" value="-"/>
-    </slot>
 </schema>
 
 <schema name="DocumentRequestCreateBean.APPROVEMENT_MOBILITY_CERTIFICATE_mobility.AdditionalInformation.view"
@@ -706,6 +697,14 @@
 			value="net.sourceforge.fenixedu.dataTransferObject.serviceRequests.DocumentRequestCreateBean$CycleTypeProvider" />
 		<property name="eachLayout" value="" />
 	</slot>
+</schema>
+
+<schema name="DocumentRequestCreateBean.language"
+	type="net.sourceforge.fenixedu.dataTransferObject.serviceRequests.DocumentRequestCreateBean"
+	bundle="ACADEMIC_OFFICE_RESOURCES">
+	<slot name="language" layout="null-as-label">
+        <property name="label" value="-"/>
+    </slot>
 </schema>
 
 <schema name="DocumentRequestCreateBean.mobilityProgram"
