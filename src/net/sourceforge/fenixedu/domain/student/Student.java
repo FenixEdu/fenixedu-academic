@@ -47,7 +47,6 @@ import net.sourceforge.fenixedu.domain.candidacy.PersonalInformationBean;
 import net.sourceforge.fenixedu.domain.careerWorkshop.CareerWorkshopApplication;
 import net.sourceforge.fenixedu.domain.careerWorkshop.CareerWorkshopConfirmationEvent;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
-import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
 import net.sourceforge.fenixedu.domain.elections.DelegateElection;
 import net.sourceforge.fenixedu.domain.elections.DelegateElectionVotingPeriod;
 import net.sourceforge.fenixedu.domain.elections.YearDelegateElection;
@@ -2052,9 +2051,7 @@ public class Student extends Student_Base {
 		if (registration.hasAnyActiveState(currentExecutionYear)) {
 		    registrations.add(registration);
 		} else {
-		    CycleType lastConcludedCycleType = registration.getLastConcludedCycleType();
-		    RegistrationConclusionBean registrationConclusionBean = new RegistrationConclusionBean(registration,
-			    lastConcludedCycleType);
+		    RegistrationConclusionBean registrationConclusionBean = new RegistrationConclusionBean(registration);
 		    if (registrationConclusionBean.isConcluded()) {
 			YearMonthDay conclusionDate = registrationConclusionBean.getConclusionDate();
 			if (conclusionDate != null && !conclusionDate.plusYears(1).isBefore(today)) {

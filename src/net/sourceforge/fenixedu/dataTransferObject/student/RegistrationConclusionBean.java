@@ -40,6 +40,10 @@ public class RegistrationConclusionBean implements Serializable, IRegistrationBe
     private String observations;
 
     public RegistrationConclusionBean(final Registration registration) {
+	if (registration.getDegreeType().getCycleTypes().size() > 1) {
+	    setCycleCurriculumGroup(registration.getLastStudentCurricularPlan()
+		    .getCycle(registration.getLastConcludedCycleType()));
+	}
 	setRegistration(registration);
     }
 
