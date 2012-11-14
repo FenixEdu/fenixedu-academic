@@ -101,13 +101,9 @@ public class UnitSiteBannerFileService extends FenixService {
     }
 
     protected void deleteFile(UnitSiteBannerFile bannerFile) {
-	if (bannerFile == null) {
-	    return;
+	if (bannerFile != null) {
+	    bannerFile.delete();
 	}
-
-	bannerFile.delete();
-
-	new DeleteFileRequest(AccessControl.getPerson(), bannerFile.getExternalStorageIdentification());
-
     }
+
 }
