@@ -99,7 +99,9 @@ public class ResearchResultMetaDataManager {
 	if (publication.getUniqueStorageId() == null) {
 	    addDefaultDocument(publication);
 	}
-	fileManager.changeItemMetaData(publication.getUniqueStorageId(), createMetaData(publication));
+	if (publication.getUniqueStorageId() != null) {
+	    fileManager.changeItemMetaData(publication.getUniqueStorageId(), createMetaData(publication));
+	}
     }
 
     public static byte[] readStream(final InputStream inputStream) {
