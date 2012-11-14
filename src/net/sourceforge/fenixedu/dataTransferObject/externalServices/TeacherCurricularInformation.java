@@ -39,6 +39,7 @@ import net.sourceforge.fenixedu.domain.research.result.publication.BookPart;
 import net.sourceforge.fenixedu.domain.research.result.publication.Inproceedings;
 import net.sourceforge.fenixedu.domain.research.result.publication.Manual;
 import net.sourceforge.fenixedu.domain.research.result.publication.OtherPublication;
+import net.sourceforge.fenixedu.domain.research.result.publication.PreferredPublication.PreferredComparator;
 import net.sourceforge.fenixedu.domain.research.result.publication.Proceedings;
 import net.sourceforge.fenixedu.domain.research.result.publication.ResearchResultPublication;
 import net.sourceforge.fenixedu.domain.research.result.publication.TechnicalReport;
@@ -204,16 +205,25 @@ public class TeacherCurricularInformation implements Serializable {
     }
 
     public List<String> getTop5ResultParticipation() {
-	List<String> resultParticipations = new ArrayList<String>();
+	SortedSet<ResearchResultPublication> results = new TreeSet<ResearchResultPublication>(new PreferredComparator(
+		getTeacher().getPerson()));
 	for (ResultParticipation participation : getTeacher().getPerson().getResultParticipationsSet()) {
 	    ResearchResult result = participation.getResult();
 	    if (participation.getRole().equals(ResultParticipationRole.Author) && result instanceof ResearchResultPublication) {
 		if (!(result instanceof Manual || result instanceof TechnicalReport || result instanceof OtherPublication || result instanceof Unstructured)) {
-		    resultParticipations.add(getResearchDescription(participation));
+		    results.add((ResearchResultPublication) result);
 		}
 	    }
 	}
-	return resultParticipations.subList(0, Math.min(5, resultParticipations.size()));
+	List<String> top5 = new ArrayList<String>();
+	int count = 5;
+	for (ResearchResultPublication publication : results) {
+	    if (count-- == 0) {
+		break;
+	    }
+	    top5.add(getResearchDescription(publication, false));
+	}
+	return top5;
     }
 
     public List<String> getTop5ProfessionalCareer() {
@@ -233,16 +243,18 @@ public class TeacherCurricularInformation implements Serializable {
 	return result;
     }
 
-    public String getResearchDescription(ResultParticipation participation) {
+    public String getResearchDescription(ResearchResultPublication publication, boolean shortestPossible) {
 	List<String> resultDescription = new ArrayList<String>();
-
-	ResearchResultPublication publication = (ResearchResultPublication) participation.getResult();
 	resultDescription.add(filter(publication.getTitle()));
-	List<String> parts = new ArrayList<String>();
-	for (ResultParticipation participant : publication.getOrderedAuthorsResultParticipations()) {
-	    parts.add(participant.getPerson().getNickname());
+	if (shortestPossible) {
+	    resultDescription.add(formatParticipant(getTeacher().getPerson().getName() + " et. al."));
+	} else {
+	    List<String> parts = new ArrayList<String>();
+	    for (ResultParticipation participant : publication.getOrderedAuthorsResultParticipations()) {
+		parts.add(formatParticipant(participant.getPerson().getNickname()));
+	    }
+	    resultDescription.add(filter(StringUtils.join(parts, ", ")));
 	}
-	resultDescription.add(filter(StringUtils.join(parts, ", ")));
 	if (publication instanceof Article) {
 	    JournalIssue issue = ((Article) publication).getArticleAssociation().getJournalIssue();
 	    String journal = filter(issue.getScientificJournal().getName());
@@ -271,7 +283,16 @@ public class TeacherCurricularInformation implements Serializable {
 	    insert(resultDescription, filter(((Proceedings) publication).getEventEdition().getFullName()));
 	}
 
-	return StringUtils.join(resultDescription, ", ");
+	String output = StringUtils.join(resultDescription, ", ");
+	if (output.length() > 300 && !shortestPossible) {
+	    return getResearchDescription(publication, true);
+	}
+	return output;
+    }
+
+    private static String formatParticipant(String name) {
+	String[] parts = name.split("\\s+");
+	return name.charAt(0) + ". " + parts[parts.length - 1];
     }
 
     private String filter(String... text) {
