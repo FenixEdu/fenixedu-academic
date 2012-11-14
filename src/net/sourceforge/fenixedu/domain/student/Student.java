@@ -47,6 +47,7 @@ import net.sourceforge.fenixedu.domain.candidacy.PersonalInformationBean;
 import net.sourceforge.fenixedu.domain.careerWorkshop.CareerWorkshopApplication;
 import net.sourceforge.fenixedu.domain.careerWorkshop.CareerWorkshopConfirmationEvent;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
+import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
 import net.sourceforge.fenixedu.domain.elections.DelegateElection;
 import net.sourceforge.fenixedu.domain.elections.DelegateElectionVotingPeriod;
 import net.sourceforge.fenixedu.domain.elections.YearDelegateElection;
@@ -1902,20 +1903,16 @@ public class Student extends Student_Base {
     }
 
     public boolean isEligibleForCareerWorkshopApplication() {
-	/* RULE TO FILTER 2nd CYCLE STUDENTS ONLY - Prior to Sep2012
-	for (Registration registration : getActiveRegistrations()) {
-
-	    if (isMasterDegreeOnly(registration))
-		return true;
-
-	    if (isIntegratedMasterDegree(registration)) {
-		if (isEnroledOnSecondCycle(registration)) {
-		    return true;
-		}
-	    }
-	}
-	return false;
-	*/
+	/*
+	 * RULE TO FILTER 2nd CYCLE STUDENTS ONLY - Prior to Sep2012 for
+	 * (Registration registration : getActiveRegistrations()) {
+	 * 
+	 * if (isMasterDegreeOnly(registration)) return true;
+	 * 
+	 * if (isIntegratedMasterDegree(registration)) { if
+	 * (isEnroledOnSecondCycle(registration)) { return true; } } } return
+	 * false;
+	 */
 	return true;
     }
 
@@ -2030,8 +2027,7 @@ public class Student extends Student_Base {
 	    final RegistrationStateType stateType = registration.getLastStateType();
 	    if (stateType != null
 		    && ((stateType.isActive() && stateType != RegistrationStateType.SCHOOLPARTCONCLUDED)
-			    || stateType == RegistrationStateType.FLUNKED 
-			    || stateType == RegistrationStateType.INTERRUPTED || stateType == RegistrationStateType.MOBILITY)) {
+			    || stateType == RegistrationStateType.FLUNKED || stateType == RegistrationStateType.INTERRUPTED || stateType == RegistrationStateType.MOBILITY)) {
 		return true;
 	    }
 	}
@@ -2052,13 +2048,19 @@ public class Student extends Student_Base {
 	Set<Registration> registrations = new HashSet<Registration>();
 	LocalDate today = new LocalDate();
 	for (Registration registration : getRegistrations()) {
-	    if (registration.hasAnyActiveState(currentExecutionYear) && registration.isBolonha()
-		    && !registration.getDegreeType().equals(DegreeType.EMPTY)) {
-		registrations.add(registration);
-	    } else if (registration.isConcluded()) {
-		YearMonthDay conclusionDate = new RegistrationConclusionBean(registration).getConclusionDate();
-		if (conclusionDate != null && !conclusionDate.plusYears(1).isBefore(today)) {
+	    if (registration.isBolonha() && !registration.getDegreeType().equals(DegreeType.EMPTY)) {
+		if (registration.hasAnyActiveState(currentExecutionYear)) {
 		    registrations.add(registration);
+		} else {
+		    CycleType lastConcludedCycleType = registration.getLastConcludedCycleType();
+		    RegistrationConclusionBean registrationConclusionBean = new RegistrationConclusionBean(registration,
+			    lastConcludedCycleType);
+		    if (registrationConclusionBean.isConcluded()) {
+			YearMonthDay conclusionDate = registrationConclusionBean.getConclusionDate();
+			if (conclusionDate != null && !conclusionDate.plusYears(1).isBefore(today)) {
+			    registrations.add(registration);
+			}
+		    }
 		}
 	    }
 	}
