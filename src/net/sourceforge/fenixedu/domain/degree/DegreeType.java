@@ -631,8 +631,8 @@ public enum DegreeType {
 
     private static final Set<CycleType> SPECIALIZATION_CYCLE_TYPE = Collections.singleton(CycleType.SPECIALIZATION_CYCLE);
 
-    private static final List<CycleType> FIRST_AND_SECOND_CYCLE_TYPE = Arrays.asList(new CycleType[] { CycleType.FIRST_CYCLE,
-	    CycleType.SECOND_CYCLE });
+    private static final List<CycleType> FIRST_AND_SECOND_CYCLE_TYPE = Collections.unmodifiableList(
+	    Arrays.asList(new CycleType[] { CycleType.FIRST_CYCLE, CycleType.SECOND_CYCLE }));
 
     private GradeScale gradeScale;
 
