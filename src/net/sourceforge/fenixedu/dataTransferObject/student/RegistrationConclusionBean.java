@@ -5,6 +5,8 @@ import java.math.BigDecimal;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
+import java.util.Set;
+import java.util.TreeSet;
 
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
@@ -40,9 +42,10 @@ public class RegistrationConclusionBean implements Serializable, IRegistrationBe
     private String observations;
 
     public RegistrationConclusionBean(final Registration registration) {
-	if (registration.getDegreeType().getCycleTypes().size() > 1) {
-	    setCycleCurriculumGroup(registration.getLastStudentCurricularPlan()
-		    .getCycle(registration.getLastConcludedCycleType()));
+	Set<CycleType> cycleTypes = new TreeSet<CycleType>(CycleType.COMPARATOR_BY_GREATER_WEIGHT);
+	cycleTypes.addAll(registration.getDegreeType().getCycleTypes());
+	if (cycleTypes.size() > 0) {
+	    setCycleCurriculumGroup(registration.getLastStudentCurricularPlan().getCycle(cycleTypes.iterator().next()));
 	}
 	setRegistration(registration);
     }
