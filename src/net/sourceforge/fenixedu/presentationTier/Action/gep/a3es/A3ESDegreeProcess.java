@@ -4,10 +4,10 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.SortedSet;
 
 import javax.ws.rs.core.MediaType;
 
@@ -457,38 +457,43 @@ public class A3ESDegreeProcess implements Serializable {
 	    toplevel.put("q-cf-ies", RootDomainObject.getInstance().getInstitutionUnit().getName());
 	    toplevel.put("q-cf-uo", info.getUnitName());
 	    toplevel.put("q-cf-cat", info.getProfessionalCategoryName());
-	    toplevel.put("q-cf-time", 50f);
+	    toplevel.put("q-cf-time", info.getProfessionalRegimeTime());
 	    JSONObject file = new JSONObject();
 	    {
 		file.put("name", info.getTeacher().getPerson().getName());
 		file.put("ies", RootDomainObject.getInstance().getInstitutionUnit().getName());
 		file.put("uo", info.getUnitName());
 		file.put("cat", info.getProfessionalCategoryName());
-		QualificationBean qualification = info.getCurrentQualification();
-		file.put("deg", qualification.getDegree());
-		file.put("degarea", qualification.getScientificArea());
-		file.put("ano_grau", qualification.getYear());
-		file.put("instituicao_conferente", qualification.getInstitution());
-		file.put("regime", 50f); // info.getProfessionalRegimeName());
 
-		if (!info.getOtherQualifications().isEmpty()) {
+		Iterator<QualificationBean> qualifications = info.getQualifications().iterator();
+		if (qualifications.hasNext()) {
+		    QualificationBean qualification = qualifications.next();
+		    file.put("deg", "Licenciado");// qualification.getDegree());
+		    file.put("degarea", qualification.getScientificArea());
+		    file.put("ano_grau", qualification.getYear());
+		    file.put("instituicao_conferente", qualification.getInstitution());
+		}
+		file.put("regime", info.getProfessionalRegimeTime());
+
+		if (qualifications.hasNext()) {
 		    JSONArray academicArray = new JSONArray();
-		    SortedSet<QualificationBean> otherQualifications = info.getOtherQualifications();
-		    for (QualificationBean otherQualification : otherQualifications) {
+		    while (qualifications.hasNext()) {
 			JSONObject academic = new JSONObject();
-			academic.put("year", otherQualification.getYear());
-			academic.put("degree", otherQualification.getDegree());
-			academic.put("area", otherQualification.getScientificArea());
-			academic.put("ies", otherQualification.getInstitution());
-			academic.put("rank", otherQualification.getClassification());
+			QualificationBean qualification = qualifications.next();
+			academic.put("year", qualification.getYear());
+			academic.put("degree", qualification.getDegree());
+			academic.put("area", qualification.getScientificArea());
+			academic.put("ies", qualification.getInstitution());
+			academic.put("rank", qualification.getClassification());
 			academicArray.add(academic);
 		    }
 		    file.put("form-academic", academicArray);
 		}
 
-		if (!info.getTop5ResultParticipation().isEmpty()) {
+		List<String> participations = info.getTop5ResultParticipation();
+		if (!participations.isEmpty()) {
 		    JSONArray researchArray = new JSONArray();
-		    for (String publication : info.getTop5ResultParticipation()) {
+		    for (String publication : participations) {
 			JSONObject research = new JSONObject();
 			research.put("investigation", publication);
 			researchArray.add(research);
@@ -496,9 +501,10 @@ public class A3ESDegreeProcess implements Serializable {
 		    file.put("form-investigation", researchArray);
 		}
 
-		if (!info.getTop5ProfessionalCareer().isEmpty()) {
+		List<String> career = info.getTop5ProfessionalCareer();
+		if (!career.isEmpty()) {
 		    JSONArray professionalArray = new JSONArray();
-		    for (String profession : info.getTop5ProfessionalCareer()) {
+		    for (String profession : career) {
 			JSONObject pro = new JSONObject();
 			pro.put("profession", profession);
 			professionalArray.add(pro);
@@ -507,32 +513,15 @@ public class A3ESDegreeProcess implements Serializable {
 		}
 
 		JSONArray insideLectures = new JSONArray();
-		for (LecturedCurricularUnit lecturedCurricularUnit : info.getLecturedUCsOnCycle()) {
+		for (LecturedCurricularUnit lecturedCurricularUnit : info.getLecturedUCs()) {
 		    JSONObject lecture = new JSONObject();
 		    lecture.put("curricularUnit", lecturedCurricularUnit.getName());
-		    lecture.put("studyCyle", lecturedCurricularUnit.getName());
+		    lecture.put("studyCyle", lecturedCurricularUnit.getDegree());
 		    lecture.put("type", lecturedCurricularUnit.getShiftType());
 		    lecture.put("hoursPerWeek", lecturedCurricularUnit.getHours());
 		    insideLectures.add(lecture);
 		}
 		file.put("form-unit", insideLectures);
-		//
-		// JSONArray outsideLectures = new JSONArray();
-		// for (LecturedCurricularUnit lecturedCurricularUnit :
-		// info.getLecturedUCsOnOtherCycles()) {
-		// JSONObject lecture = new JSONObject();
-		// lecture.put("curricularUnit",
-		// StringUtils.defaultIfEmpty(lecturedCurricularUnit.getName(),
-		// "0"));
-		// lecture.put("type",
-		// StringUtils.defaultIfEmpty(lecturedCurricularUnit.getShiftType(),
-		// "0"));
-		// lecture.put("hoursPerWeek",
-		// StringUtils.defaultIfEmpty(lecturedCurricularUnit.getHours(),
-		// "0"));
-		// outsideLectures.add(lecture);
-		// }
-		// file.put("form-unit", outsideLectures);
 	    }
 	    toplevel.put("q-cf-cfile", file);
 
@@ -551,21 +540,26 @@ public class A3ESDegreeProcess implements Serializable {
 		addCell("Instituição", "Instituto Superior Técnico");
 		addCell("Unidade Orgânica", teacherCurricularInformation.getUnitName());
 		addCell("Categoria", teacherCurricularInformation.getProfessionalCategoryName());
-		QualificationBean qualification = teacherCurricularInformation.getCurrentQualification();
-		addCell("Grau", qualification != null ? qualification.getDegree() : null);
-		addCell("Área científica", qualification != null ? qualification.getScientificArea() : null);
-		addCell("Ano", qualification != null ? qualification.getYear() : null);
-		addCell("Instituição", qualification != null ? qualification.getInstitution() : null);
+		Iterator<QualificationBean> qualifications = teacherCurricularInformation.getQualifications().iterator();
+
+		if (qualifications.hasNext()) {
+		    QualificationBean qualification = qualifications.next();
+		    addCell("Grau", qualification.getDegree());
+		    addCell("Área científica", qualification.getScientificArea());
+		    addCell("Ano", qualification.getYear());
+		    addCell("Instituição", qualification.getInstitution());
+		}
 		addCell("Regime", teacherCurricularInformation.getProfessionalRegimeTime());
-		SortedSet<QualificationBean> otherQualifications = teacherCurricularInformation.getOtherQualifications();
+
 		List<String> otherQualificationStrings = new ArrayList<String>();
-		for (QualificationBean otherQualification : otherQualifications) {
+		while (qualifications.hasNext()) {
+		    QualificationBean qualification = qualifications.next();
 		    StringBuilder qualificationString = new StringBuilder();
-		    qualificationString.append(otherQualification.getYear()).append(",");
-		    qualificationString.append(otherQualification.getDegree()).append(",");
-		    qualificationString.append(otherQualification.getScientificArea()).append(",");
-		    qualificationString.append(otherQualification.getInstitution()).append(",");
-		    qualificationString.append(otherQualification.getClassification());
+		    qualificationString.append(qualification.getYear()).append(",");
+		    qualificationString.append(qualification.getDegree()).append(",");
+		    qualificationString.append(qualification.getScientificArea()).append(",");
+		    qualificationString.append(qualification.getInstitution()).append(",");
+		    qualificationString.append(qualification.getClassification());
 		    otherQualificationStrings.add(qualificationString.toString());
 		}
 		addCell("Outras Qualificações", StringUtils.join(otherQualificationStrings, "\n"));
@@ -574,7 +568,7 @@ public class A3ESDegreeProcess implements Serializable {
 			StringUtils.join(teacherCurricularInformation.getTop5ProfessionalCareer(), "\n"));
 
 		List<String> lectured = new ArrayList<String>();
-		for (LecturedCurricularUnit lecturedCurricularUnit : teacherCurricularInformation.getLecturedUCsOnCycle()) {
+		for (LecturedCurricularUnit lecturedCurricularUnit : teacherCurricularInformation.getLecturedUCs()) {
 		    StringBuilder lecturedString = new StringBuilder();
 		    lecturedString.append(lecturedCurricularUnit.getDegree()).append(",");
 		    lecturedString.append(lecturedCurricularUnit.getName()).append(",");
@@ -582,18 +576,7 @@ public class A3ESDegreeProcess implements Serializable {
 		    lecturedString.append(lecturedCurricularUnit.getHours());
 		    lectured.add(lecturedString.toString());
 		}
-		addCell("UCs no ciclo proposto", StringUtils.join(lectured, "\n"));
-
-		lectured = new ArrayList<String>();
-		for (LecturedCurricularUnit lecturedCurricularUnit : teacherCurricularInformation.getLecturedUCsOnOtherCycles()) {
-		    StringBuilder lecturedString = new StringBuilder();
-		    lecturedString.append(lecturedCurricularUnit.getDegree()).append(",");
-		    lecturedString.append(lecturedCurricularUnit.getName()).append(",");
-		    lecturedString.append(lecturedCurricularUnit.getShiftType()).append(",");
-		    lecturedString.append(lecturedCurricularUnit.getHours());
-		    lectured.add(lecturedString.toString());
-		}
-		addCell("UCs outros ciclos", StringUtils.join(lectured, "\n"));
+		addCell("UCs", StringUtils.join(lectured, "\n"));
 	    }
 	};
 	return new SpreadsheetBuilder().addSheet(degree.getSigla(), sheet);

@@ -78,8 +78,7 @@ public class TeacherCurricularInformation implements Serializable {
 		}
 	    }));
 
-    protected Set<LecturedCurricularUnit> lecturedUCsOnCycle;
-    protected Set<LecturedCurricularUnit> lecturedUCsOnOtherCycles;
+    protected List<LecturedCurricularUnit> lecturedUCs = new ArrayList<LecturedCurricularUnit>();
 
     public TeacherCurricularInformation(Teacher teacher, Degree degree, List<ExecutionSemester> executionSemester) {
 	super();
@@ -114,18 +113,6 @@ public class TeacherCurricularInformation implements Serializable {
 	this.qualificationBeans = qualificationBeans;
     }
 
-    public QualificationBean getCurrentQualification() {
-	return qualificationBeans.size() != 0 ? qualificationBeans.first() : null;
-    }
-
-    public SortedSet<QualificationBean> getOtherQualifications() {
-	SortedSet<QualificationBean> otherQualifications = new TreeSet<QualificationBean>(qualificationBeans);
-	if (qualificationBeans.size() != 0) {
-	    otherQualifications.remove(qualificationBeans.first());
-	}
-	return otherQualifications;
-    }
-
     public String getUnitName() {
 	Department lastWorkingDepartment = getTeacher().getLastWorkingDepartment(
 		executionSemesters.first().getBeginDateYearMonthDay(), executionSemesters.last().getEndDateYearMonthDay());
@@ -136,6 +123,7 @@ public class TeacherCurricularInformation implements Serializable {
 	ProfessionalCategory lastCategory = getTeacher().getLastCategory(
 		executionSemesters.first().getBeginDateYearMonthDay().toLocalDate(),
 		executionSemesters.last().getEndDateYearMonthDay().toLocalDate());
+
 	if (lastCategory != null) {
 	    if (lastCategory.getName().getContent().equalsIgnoreCase("Assistente")) {
 		return "Assistente";
@@ -173,8 +161,8 @@ public class TeacherCurricularInformation implements Serializable {
 	return lastCategory == null ? null : lastCategory.getName().getContent();
     }
 
-    public Double getProfessionalRegimeTime() {
-	double maxRegimeTime = 100.0;
+    public Float getProfessionalRegimeTime() {
+	float maxRegimeTime = 100f;
 	PersonProfessionalData personProfessionalData = getTeacher().getPerson().getPersonProfessionalData();
 	ProfessionalRegime lastProfessionalRegime = null;
 	if (personProfessionalData != null) {
@@ -198,21 +186,21 @@ public class TeacherCurricularInformation implements Serializable {
 		}
 	    }
 	}
-	Double authorizationRegimeTime = getAuthorizationRegimeTime(executionSemesters.last());
-	if (authorizationRegimeTime == 0.0) {
+	Float authorizationRegimeTime = getAuthorizationRegimeTime(executionSemesters.last());
+	if (authorizationRegimeTime == 0f) {
 	    authorizationRegimeTime = getAuthorizationRegimeTime(executionSemesters.first());
 	}
 
 	return authorizationRegimeTime;
     }
 
-    protected Double getAuthorizationRegimeTime(ExecutionSemester executionSemester) {
+    protected Float getAuthorizationRegimeTime(ExecutionSemester executionSemester) {
 	TeacherAuthorization teacherAuthorization = getTeacher().getTeacherAuthorization(executionSemester);
 	if (teacherAuthorization != null) {
 	    Double lessonHours = ((ExternalTeacherAuthorization) teacherAuthorization).getLessonHours();
-	    return new Double(Math.round((lessonHours * 100) / 12));
+	    return new Float(Math.round(lessonHours * 100 / 12));
 	}
-	return 0.0;
+	return 0f;
     }
 
     public List<String> getTop5ResultParticipation() {
@@ -230,7 +218,6 @@ public class TeacherCurricularInformation implements Serializable {
 
     public List<String> getTop5ProfessionalCareer() {
 	List<String> result = new ArrayList<String>();
-
 	List<ProfessionalCareer> sorted = new ArrayList<ProfessionalCareer>();
 	for (Career career : teacher.getPerson().getAssociatedCareersSet()) {
 	    if (career instanceof ProfessionalCareer) {
@@ -324,27 +311,19 @@ public class TeacherCurricularInformation implements Serializable {
     }
 
     public void setlecturedUCs() {
-	lecturedUCsOnCycle = new HashSet<LecturedCurricularUnit>();
-	lecturedUCsOnOtherCycles = new HashSet<LecturedCurricularUnit>();
 	for (ExecutionSemester executionSemester : executionSemesters) {
 	    for (Professorship professorship : teacher.getProfessorships(executionSemester)) {
-		if (professorship.getExecutionCourse().getDegreesSortedByDegreeName().contains(degree)) {
-		    lecturedUCsOnCycle.addAll(getLecturedCurricularUnitForProfessorship(professorship, executionSemester));
-		} else {
-		    lecturedUCsOnOtherCycles.addAll(getLecturedCurricularUnitForProfessorship(professorship, executionSemester));
-		}
+		lecturedUCs.addAll(getLecturedCurricularUnitForProfessorship(professorship, executionSemester));
 	    }
 	    for (ThesisEvaluationParticipant thesisEvaluationParticipant : teacher.getPerson().getThesisEvaluationParticipants(
 		    executionSemester)) {
 		ExecutionCourse executionCourse = thesisEvaluationParticipant.getThesis().getEnrolment()
 			.getExecutionCourseFor(executionSemester);
 		if (executionCourse != null) {
-		    if (executionCourse.getDegreesSortedByDegreeName().contains(degree)) {
-			lecturedUCsOnCycle.add(new LecturedCurricularUnit(executionCourse.getDegreePresentationString(),
-				"Dissertação", null, null));
-		    } else {
-			lecturedUCsOnOtherCycles.add(new LecturedCurricularUnit(executionCourse.getDegreePresentationString(),
-				"Dissertação " + degree.getName(), null, null));
+		    LecturedCurricularUnit lecture = new LecturedCurricularUnit(executionCourse.getDegreePresentationString(),
+			    executionCourse.getName(), "O", 0);
+		    if (lecturedUCs.contains(lecture)) {
+			lecturedUCs.add(lecture);
 		    }
 		}
 	    }
@@ -354,12 +333,10 @@ public class TeacherCurricularInformation implements Serializable {
 		    if (phdIndividualProgramProcess.isActive(executionSemester.getAcademicInterval().toInterval())
 			    && phdIndividualProgramProcess.isGuiderOrAssistentGuider(teacher.getPerson())
 			    && teacher.isActiveOrHasAuthorizationForSemester(executionSemester)) {
-			if (phdIndividualProgramProcess.getPhdProgram().equals(degree.getPhdProgram())) {
-			    lecturedUCsOnCycle.add(new LecturedCurricularUnit(phdIndividualProgramProcess.getPhdProgram()
-				    .getName().getContent(), "Dissertação", null, null));
-			} else {
-			    lecturedUCsOnOtherCycles.add(new LecturedCurricularUnit(phdIndividualProgramProcess.getPhdProgram()
-				    .getName().getContent(), "Dissertação " + degree.getName(), null, null));
+			LecturedCurricularUnit lecture = new LecturedCurricularUnit(phdIndividualProgramProcess.getPhdProgram()
+				.getName().getContent(), "Dissertação", "O", 0);
+			if (lecturedUCs.contains(lecture)) {
+			    lecturedUCs.add(lecture);
 			}
 		    }
 		}
@@ -368,12 +345,8 @@ public class TeacherCurricularInformation implements Serializable {
 	return;
     }
 
-    public Set<LecturedCurricularUnit> getLecturedUCsOnCycle() {
-	return lecturedUCsOnCycle;
-    }
-
-    public Set<LecturedCurricularUnit> getLecturedUCsOnOtherCycles() {
-	return lecturedUCsOnOtherCycles;
+    public List<LecturedCurricularUnit> getLecturedUCs() {
+	return lecturedUCs.subList(0, Math.min(10, lecturedUCs.size()));
     }
 
     public String getDegreeSiglas(ExecutionCourse executionCourse) {
@@ -387,16 +360,16 @@ public class TeacherCurricularInformation implements Serializable {
     protected List<LecturedCurricularUnit> getLecturedCurricularUnitForProfessorship(Professorship professorship,
 	    ExecutionSemester executionSemester) {
 	List<LecturedCurricularUnit> result = new ArrayList<LecturedCurricularUnit>();
-	Map<String, Double> hoursByTypeMap = new HashMap<String, Double>();
+	Map<String, Float> hoursByTypeMap = new HashMap<String, Float>();
 	TeacherService teacherService = teacher.getTeacherServiceByExecutionPeriod(executionSemester);
 	if (teacherService != null) {
 	    List<DegreeTeachingService> degreeTeachingServices = teacherService
 		    .getDegreeTeachingServiceByProfessorship(professorship);
 	    for (DegreeTeachingService degreeTeachingService : degreeTeachingServices) {
 		for (CourseLoad courseLoad : degreeTeachingService.getShift().getCourseLoads()) {
-		    Double duration = hoursByTypeMap.get(courseLoad.getType().getSiglaTipoAula());
-		    Double weeklyHours = courseLoad.getTotalQuantity().doubleValue()
-			    * (degreeTeachingService.getPercentage().doubleValue() / 100);
+		    Float duration = hoursByTypeMap.get(courseLoad.getType().getSiglaTipoAula());
+		    Float weeklyHours = courseLoad.getTotalQuantity().floatValue()
+			    * (degreeTeachingService.getPercentage().floatValue() / 100);
 		    hoursByTypeMap.put(courseLoad.getType().getSiglaTipoAula(), duration == null ? weeklyHours : duration
 			    + weeklyHours);
 		}
@@ -404,8 +377,7 @@ public class TeacherCurricularInformation implements Serializable {
 	}
 	String name = professorship.getExecutionCourse().getName();
 	if (hoursByTypeMap.isEmpty()) {
-	    result.add(new LecturedCurricularUnit(professorship.getExecutionCourse().getDegreePresentationString(), name, null,
-		    null));
+	    result.add(new LecturedCurricularUnit(professorship.getExecutionCourse().getDegreePresentationString(), name, "O", 0));
 	} else {
 	    for (String shiftType : hoursByTypeMap.keySet()) {
 		result.add(new LecturedCurricularUnit(professorship.getExecutionCourse().getDegreePresentationString(), name,
@@ -432,7 +404,7 @@ public class TeacherCurricularInformation implements Serializable {
 	    scientificArea = qualification.getDegree();
 	    year = qualification.getYear() != null ? Integer.parseInt(qualification.getYear()) : null;
 	    institution = qualification.getSchool();
-	    classification = qualification.getMark();
+	    classification = qualification.getMark() != null ? qualification.getMark() : "-";
 	}
 
 	public QualificationType getType() {
@@ -465,13 +437,13 @@ public class TeacherCurricularInformation implements Serializable {
 	protected String degree;
 	protected String name;
 	protected String shiftType;
-	protected Double hours;
+	protected float hours;
 
-	public LecturedCurricularUnit(String degree, String name, String shiftType, Double hoursValue) {
+	public LecturedCurricularUnit(String degree, String name, String shiftType, float hoursValue) {
 	    this.degree = degree;
 	    this.name = name;
 	    this.shiftType = getShiftType(shiftType);
-	    this.hours = hoursValue == null ? 0.0 : new Double(Math.round(hoursValue * 100.0) / 100.0);
+	    this.hours = hoursValue;
 	}
 
 	private String getShiftType(String shiftType) {
@@ -485,7 +457,6 @@ public class TeacherCurricularInformation implements Serializable {
 	    } else if (shiftType.equals("PB")) {
 		return "TP";
 	    }
-	    System.out.println("Invalid shift type: " + shiftType);
 	    return "O";
 	}
 
@@ -497,7 +468,7 @@ public class TeacherCurricularInformation implements Serializable {
 	    return shiftType;
 	}
 
-	public Double getHours() {
+	public float getHours() {
 	    return hours;
 	}
 
@@ -528,7 +499,7 @@ public class TeacherCurricularInformation implements Serializable {
 	@Override
 	public int hashCode() {
 	    return getDegree().hashCode() + getName().hashCode() + (getShiftType() != null ? getShiftType().hashCode() : 0)
-		    + (getHours() != null ? getHours().hashCode() : 0);
+		    + (int) getHours();
 	}
     }
 
