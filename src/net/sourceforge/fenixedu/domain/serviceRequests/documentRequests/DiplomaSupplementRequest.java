@@ -47,7 +47,13 @@ IRectorateSubmissionBatchDocumentEntry {
 		super.setRequestedCycle(bean.getRegistration().getDegreeType().getCycleType());
 	    }
 	}
-	if (!getRegistration().getStudent().getPerson().getName().equals(bean.getGivenNames() + " " + bean.getFamilyNames())) {
+
+	final String fullName = getRegistration().getStudent().getPerson().getName();
+	final String familyName = bean.getFamilyNames();
+	final String composedName = familyName == null || familyName.isEmpty() ?
+		bean.getGivenNames() : bean.getGivenNames() + " " + familyName;
+
+	if (!fullName.equals(composedName)) {
 	    throw new DomainException("error.diplomaSupplementRequest.splittedNamesDoNotMatch");
 	}
 	getRegistration().getPerson().setGivenNames(bean.getGivenNames());

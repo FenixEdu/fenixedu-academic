@@ -334,7 +334,11 @@ public class PublicEPFLPhdProgramsCandidacyProcessDA extends PublicPhdProgramCan
 	    return checkPersonalDataForward;
 	}
 	PersonBean personBean = getCandidacyBean().getPersonBean();
-	personBean.setName(personBean.getGivenNames() + " " + personBean.getFamilyNames());
+
+	final String familyName = personBean.getFamilyNames();
+	final String composedName = familyName == null || familyName.isEmpty() ?
+		personBean.getGivenNames() : personBean.getGivenNames() + " " + familyName;
+	personBean.setName(composedName);
 
 	request.setAttribute("candidacyBean", getCandidacyBean());
 	RenderUtils.invalidateViewState();
@@ -835,7 +839,10 @@ public class PublicEPFLPhdProgramsCandidacyProcessDA extends PublicPhdProgramCan
 	canEditPersonalInformation(request, person);
 
 	PersonBean personBean = bean.getPersonBean();
-	personBean.setName(personBean.getGivenNames() + " " + personBean.getFamilyNames());
+	final String familyName = personBean.getFamilyNames();
+	final String composedName = familyName == null || familyName.isEmpty() ?
+		personBean.getGivenNames() : personBean.getGivenNames() + " " + familyName;
+	personBean.setName(composedName);
 
 	try {
 	    ExecuteProcessActivity.run(createMockUserView(person), individualProgramProcess, EditPersonalInformation.class,

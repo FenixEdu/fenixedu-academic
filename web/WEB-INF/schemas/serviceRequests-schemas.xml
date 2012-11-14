@@ -627,8 +627,7 @@
     bundle="ACADEMIC_OFFICE_RESOURCES">
     <slot name="givenNames" key="label.givenNames"
         validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" />
-    <slot name="familyNames" key="label.familyNames"
-        validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" />
+    <slot name="familyNames" key="label.familyNames" />
 </schema>
 
 <schema

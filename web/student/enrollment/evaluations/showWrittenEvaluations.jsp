@@ -108,6 +108,7 @@
  				<h:panelGroup rendered="#{!manageEvaluationsForStudent.enroledEvaluationsForStudent[evaluation.idInternal]}">
 					<h:outputText value="<td class='eval_green'>#{bundle['label.notEnroled']}</td>" escape="false"/>
 					<h:outputText value="<td>" escape="false"/>
+					<h:outputText value="#{executionCourse.externalId} #{evaluation.externalId}" escape="false"/>
 					<fc:commandLink value="#{bundle['label.enroll']}" action="#{manageEvaluationsForStudent.enrolStudent}">
 						<f:param id="evaluationIDToEnrol" name="evaluationID" value="#{evaluation.idInternal}"/> 
 					</fc:commandLink>

@@ -313,7 +313,11 @@ public class DocumentRequestCreateBean extends RegistrationAcademicServiceReques
     }
 
     public void validateNames() {
-	if (!getRegistration().getStudent().getPerson().getName().equals(getGivenNames() + " " + getFamilyNames()))
+	final String fullName = getRegistration().getStudent().getPerson().getName();
+	final String familyName = getFamilyNames();
+	final String composedName = familyName == null || familyName.isEmpty() ?
+		getGivenNames() : getGivenNames() + " " + familyName;
+	if (!fullName.equals(composedName))
 	    throw new DomainException("error.serviceRequests.diplomaRequest.name.split.not.matching.fullname");
     }
 

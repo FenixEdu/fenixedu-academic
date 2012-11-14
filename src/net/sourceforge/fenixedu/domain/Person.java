@@ -1033,13 +1033,19 @@ public class Person extends Person_Base {
     }
 
     private void setProperties(final PersonBean personBean) {
-	setName(personBean.getName());
-	setGivenNames(personBean.getGivenNames());
-	setFamilyNames(personBean.getFamilyNames());
-	if ((!StringUtils.isEmpty(getGivenNames()) || !StringUtils.isEmpty(getFamilyNames()))
-		&& !getName().equals(getGivenNames() + " " + getFamilyNames())) {
-	    throw new DomainException("error.person.splittedNamesDoNotMatch");
+	final String fullName = personBean.getName();
+	final String familyName = personBean.getFamilyNames();
+	final String composedName = familyName == null || familyName.isEmpty() ?
+		personBean.getGivenNames() : personBean.getGivenNames() + " " + familyName;
+
+	if (!fullName.equals(composedName)) {
+	    throw new DomainException("error.person.splittedNamesDoNotMatch");	    
 	}
+
+	setName(fullName);
+	setGivenNames(personBean.getGivenNames());
+	setFamilyNames(familyName);
+
 	setGender(personBean.getGender());
 	setIdentification(personBean.getDocumentIdNumber(), personBean.getIdDocumentType());
 	setEmissionLocationOfDocumentId(personBean.getDocumentIdEmissionLocation());
@@ -4149,10 +4155,13 @@ public class Person extends Person_Base {
 	if (StringUtils.isEmpty(getGivenNames())) {
 	    return false;
 	}
-	if (StringUtils.isEmpty(getFamilyNames())) {
-	    return false;
-	}
-	return (getGivenNames() + " " + getFamilyNames()).equals(getName());
+
+	final String fullName = getName();
+	final String familyName = getFamilyNames();
+	final String composedName = familyName == null || familyName.isEmpty() ?
+		getGivenNames() : getGivenNames() + " " + familyName;
+
+	return fullName.equals(composedName);
     }
 
     public ArrayList<RoleOperationLog> getPersonRoleOperationLogArrayListOrderedByDate() {
