@@ -1035,10 +1035,11 @@ public class Person extends Person_Base {
     private void setProperties(final PersonBean personBean) {
 	final String fullName = personBean.getName();
 	final String familyName = personBean.getFamilyNames();
-	final String composedName = familyName == null || familyName.isEmpty() ?
-		personBean.getGivenNames() : personBean.getGivenNames() + " " + familyName;
+	final String givenNames = personBean.getGivenNames();
+	final String composedName = familyName == null || familyName.isEmpty()
+		? givenNames : givenNames + " " + familyName;
 
-	if (!fullName.equals(composedName)) {
+	if ((givenNames != null || familyName != null) && !fullName.equals(composedName)) {
 	    throw new DomainException("error.person.splittedNamesDoNotMatch");	    
 	}
 
