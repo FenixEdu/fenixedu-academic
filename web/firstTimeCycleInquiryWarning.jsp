@@ -21,7 +21,7 @@
 			<div id="txt">
 				<h1><bean:message key="message.inquiries.firstTimeCycle.title" bundle="INQUIRIES_RESOURCES"/></h1>
 				<div class="mtop1">
-					<p>Mensagem</p>
+					<p><bean:message key="message.inquiries.firstTimeCycle.body" bundle="INQUIRIES_RESOURCES"/></p>
 				</div>
 			</div>
 			<br />
