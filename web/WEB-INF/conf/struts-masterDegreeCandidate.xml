@@ -118,9 +118,7 @@
             <action type="net.sourceforge.fenixedu.presentationTier.Action.masterDegree.candidate.ShowStudyPlanForCandidateAction" scope="request" validate="true" input="/showStudyPlanForCandidate.do" path="/showStudyPlanForCandidate">
                   <forward path="/showStudyPlanForCandidate.jsp" name="Sucess"></forward>
             </action>
-      </action-mappings>
-      <!-- ========== Controller Configuration ================================ -->
-      <controller processorClass="net.sourceforge.fenixedu.presentationTier.processor.FenixRequestProcessor"></controller>
+      </action-mappings>      
       <!-- ========== Message Resources Definitions ============================ -->
       <message-resources null="false" key="APPLICATION_RESOURCES" parameter="resources.ApplicationResources"></message-resources>
       <message-resources null="false" key="GLOBAL_RESOURCES" parameter="resources.GlobalResources"></message-resources>
@@ -128,4 +126,10 @@
       <plug-in className="org.apache.struts.validator.ValidatorPlugIn">
             <set-property value="/WEB-INF/validator-rules.xml,/WEB-INF/fenix-validator-rules.xml,/WEB-INF/conf/validation-masterDegreeCandidate.xml" property="pathnames"></set-property>
       </plug-in>
+      <plug-in className="pt.ist.fenixWebFramework.struts.tiles.FenixTilesPlugin">
+            <set-property value="/WEB-INF/tiles/layouts/tiles-layout-definitions.xml" property="definitions-config"></set-property>
+            <set-property value="true" property="moduleAware"></set-property>
+            <set-property value="true" property="definitions-parser-validate"></set-property>
+            <set-property value="pt.ist.fenixWebFramework.struts.tiles.FenixDefinitionsFactory" property="factoryClassname"></set-property>
+      </plug-in>      
 </struts-config>
