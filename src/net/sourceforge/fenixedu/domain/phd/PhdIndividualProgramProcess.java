@@ -3,6 +3,7 @@ package net.sourceforge.fenixedu.domain.phd;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
@@ -612,15 +613,24 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
 
     public boolean isActive(Interval interval) {
 	List<Interval> activeStatesIntervals = new ArrayList<Interval>();
-	Set<PhdProgramProcessState> states = new TreeSet<PhdProgramProcessState>(PhdProgramProcessState.COMPARATOR_BY_DATE);
+	Set<PhdProgramProcessState> states = new TreeSet<PhdProgramProcessState>(new Comparator<PhdProcessState>() {
+	    @Override
+	    public int compare(PhdProcessState o1, PhdProcessState o2) {
+		DateTime o1StateDate = o1.getStateDate() == null ? o1.getWhenCreated() : o1.getStateDate();
+		DateTime o2StateDate = o2.getStateDate() == null ? o2.getWhenCreated() : o2.getStateDate();
+		int result = o1StateDate.compareTo(o2StateDate);
+		return result != 0 ? result : o1.getIdInternal().compareTo(o2.getIdInternal());
+	    }
+	});
 	states.addAll(getStates());
 	DateTime beginActiveDate = null;
 	for (PhdProgramProcessState state : states) {
 	    if (state.getType().isActive() && beginActiveDate == null) {
-		beginActiveDate = state.getStateDate();
+		beginActiveDate = state.getStateDate() == null ? state.getWhenCreated() : state.getStateDate();
 	    }
 	    if ((!state.getType().isActive()) && beginActiveDate != null) {
-		activeStatesIntervals.add(new Interval(beginActiveDate, state.getStateDate()));
+		activeStatesIntervals.add(new Interval(beginActiveDate, state.getStateDate() == null ? state.getWhenCreated()
+			: state.getStateDate()));
 		beginActiveDate = null;
 	    }
 	}
