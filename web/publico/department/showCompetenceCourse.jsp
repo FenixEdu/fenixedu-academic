@@ -120,7 +120,7 @@
 		<h:outputText rendered="#{competenceCourseLoad.autonomousWorkHours != 0.0}" value="<p style='margin-left: 0px;'>#{bolonhaBundle['autonomousWork']}: " escape="false"/>
 		<h:outputText rendered="#{competenceCourseLoad.autonomousWorkHours != 0.0}" value="#{competenceCourseLoad.autonomousWorkHours} h/#{bolonhaBundle['lowerCase.semester']}</p>" escape="false"/>
 
-		<h:outputText value="<p style='margin-left: 0px;'><strong>#{bolonhaBundle['ectsCredits']}: "escape="false"/>
+		<h:outputText value="<p style='margin-left: 0px;'><strong>#{bolonhaBundle['ectsCredits']}: " escape="false"/>
 		<h:outputText value="#{competenceCourseLoad.ectsCredits}</strong></p>" escape="false"/>
 	</fc:dataRepeater>	
 
