@@ -334,18 +334,15 @@ public class TeacherCurricularInformation implements Serializable {
     public void setlecturedUCs() {
 	for (ExecutionSemester executionSemester : executionSemesters) {
 	    for (Professorship professorship : teacher.getProfessorships(executionSemester)) {
-		lecturedUCs.addAll(getLecturedCurricularUnitForProfessorship(professorship, executionSemester));
+		getLecturedCurricularUnitForProfessorship(professorship, executionSemester);
 	    }
 	    for (ThesisEvaluationParticipant thesisEvaluationParticipant : teacher.getPerson().getThesisEvaluationParticipants(
 		    executionSemester)) {
 		ExecutionCourse executionCourse = thesisEvaluationParticipant.getThesis().getEnrolment()
 			.getExecutionCourseFor(executionSemester);
 		if (executionCourse != null) {
-		    LecturedCurricularUnit lecture = new LecturedCurricularUnit(executionCourse.getDegreePresentationString(),
-			    executionCourse.getName(), "O", 0);
-		    if (lecturedUCs.contains(lecture)) {
-			lecturedUCs.add(lecture);
-		    }
+		    addLecturedCurricularUnit(executionCourse.getDegreePresentationString(), executionCourse.getName(), "O",
+			    (float) 0);
 		}
 	    }
 	    if (degree.getPhdProgram() != null) {
@@ -354,11 +351,8 @@ public class TeacherCurricularInformation implements Serializable {
 		    if (phdIndividualProgramProcess.isActive(executionSemester.getAcademicInterval().toInterval())
 			    && phdIndividualProgramProcess.isGuiderOrAssistentGuider(teacher.getPerson())
 			    && teacher.isActiveOrHasAuthorizationForSemester(executionSemester)) {
-			LecturedCurricularUnit lecture = new LecturedCurricularUnit(phdIndividualProgramProcess.getPhdProgram()
-				.getName().getContent(), "Dissertação", "O", 0);
-			if (lecturedUCs.contains(lecture)) {
-			    lecturedUCs.add(lecture);
-			}
+			addLecturedCurricularUnit(phdIndividualProgramProcess.getPhdProgram().getName().getContent(),
+				"Dissertação", "O", (float) 0);
 		    }
 		}
 	    }
@@ -367,7 +361,8 @@ public class TeacherCurricularInformation implements Serializable {
     }
 
     public List<LecturedCurricularUnit> getLecturedUCs() {
-	return lecturedUCs.subList(0, Math.min(10, lecturedUCs.size()));
+	Collections.sort(lecturedUCs);
+	return lecturedUCs;
     }
 
     public String getDegreeSiglas(ExecutionCourse executionCourse) {
@@ -378,9 +373,7 @@ public class TeacherCurricularInformation implements Serializable {
 	return StringUtils.join(degreeSiglas, ", ");
     }
 
-    protected List<LecturedCurricularUnit> getLecturedCurricularUnitForProfessorship(Professorship professorship,
-	    ExecutionSemester executionSemester) {
-	List<LecturedCurricularUnit> result = new ArrayList<LecturedCurricularUnit>();
+    protected void getLecturedCurricularUnitForProfessorship(Professorship professorship, ExecutionSemester executionSemester) {
 	Map<String, Float> hoursByTypeMap = new HashMap<String, Float>();
 	TeacherService teacherService = teacher.getTeacherServiceByExecutionPeriod(executionSemester);
 	if (teacherService != null) {
@@ -398,14 +391,26 @@ public class TeacherCurricularInformation implements Serializable {
 	}
 	String name = professorship.getExecutionCourse().getName();
 	if (hoursByTypeMap.isEmpty()) {
-	    result.add(new LecturedCurricularUnit(professorship.getExecutionCourse().getDegreePresentationString(), name, "O", 0));
+	    addLecturedCurricularUnit(professorship.getExecutionCourse().getDegreePresentationString(), name, "O", (float) 0);
 	} else {
 	    for (String shiftType : hoursByTypeMap.keySet()) {
-		result.add(new LecturedCurricularUnit(professorship.getExecutionCourse().getDegreePresentationString(), name,
-			shiftType, hoursByTypeMap.get(shiftType)));
+		addLecturedCurricularUnit(professorship.getExecutionCourse().getDegreePresentationString(), name, shiftType,
+			hoursByTypeMap.get(shiftType));
 	    }
 	}
-	return result;
+    }
+
+    private void addLecturedCurricularUnit(String degree, String name, String shiftType, Float hours) {
+	for (LecturedCurricularUnit lecturedCurricularUnit : lecturedUCs) {
+	    if (lecturedCurricularUnit.getDegree().equals(degree) && lecturedCurricularUnit.getName().equals(name)
+		    && lecturedCurricularUnit.getOriginalShiftType().equals(shiftType)) {
+		lecturedUCs.remove(lecturedCurricularUnit);
+		lecturedCurricularUnit.addHours(hours);
+		lecturedUCs.add(lecturedCurricularUnit);
+		return;
+	    }
+	}
+	lecturedUCs.add(new LecturedCurricularUnit(degree, name, shiftType, hours));
     }
 
     public class QualificationBean {
@@ -454,7 +459,7 @@ public class TeacherCurricularInformation implements Serializable {
 
     }
 
-    public class LecturedCurricularUnit {
+    public class LecturedCurricularUnit implements Comparable<LecturedCurricularUnit> {
 	protected String degree;
 	protected String name;
 	protected String shiftType;
@@ -463,11 +468,19 @@ public class TeacherCurricularInformation implements Serializable {
 	public LecturedCurricularUnit(String degree, String name, String shiftType, float hoursValue) {
 	    this.degree = degree;
 	    this.name = name;
-	    this.shiftType = getShiftType(shiftType);
+	    this.shiftType = shiftType;
 	    this.hours = hoursValue;
 	}
 
-	private String getShiftType(String shiftType) {
+	public void addHours(Float hours) {
+	    this.hours = this.hours + hours;
+	}
+
+	protected String getOriginalShiftType() {
+	    return shiftType;
+	}
+
+	public String getShiftType() {
 	    if (shiftType == null) {
 		return null;
 	    } else if (shiftType.equals("T") || shiftType.equals("TP") || shiftType.equals("TC") || shiftType.equals("S")
@@ -483,10 +496,6 @@ public class TeacherCurricularInformation implements Serializable {
 
 	public String getName() {
 	    return name;
-	}
-
-	public String getShiftType() {
-	    return shiftType;
 	}
 
 	public float getHours() {
@@ -521,6 +530,18 @@ public class TeacherCurricularInformation implements Serializable {
 	public int hashCode() {
 	    return getDegree().hashCode() + getName().hashCode() + (getShiftType() != null ? getShiftType().hashCode() : 0)
 		    + (int) getHours();
+	}
+
+	@Override
+	public int compareTo(LecturedCurricularUnit o) {
+	    String sigla = TeacherCurricularInformation.this.degree.getSigla();
+	    if (getDegree().matches("(.*, )*" + sigla + "(, .*)*") && !o.getDegree().matches("(.*, )*" + sigla + "(, .*)*")) {
+		return -1;
+	    } else if ((!getDegree().matches("(.*, )*" + sigla + "(, .*)*"))
+		    && o.getDegree().matches("(.*, )*" + sigla + "(, .*)*")) {
+		return 1;
+	    }
+	    return ((Float) o.getHours()).compareTo(getHours());
 	}
     }
 

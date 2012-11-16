@@ -518,7 +518,11 @@ public class A3ESDegreeProcess implements Serializable {
 		}
 
 		JSONArray insideLectures = new JSONArray();
-		for (LecturedCurricularUnit lecturedCurricularUnit : info.getLecturedUCs()) {
+		List<LecturedCurricularUnit> lecturedUCs = info.getLecturedUCs();
+		if (lecturedUCs.size() > 10) {
+		    output.append(" UC leccionadas cortadas " + (lecturedUCs.size() - 10) + " entradas.");
+		}
+		for (LecturedCurricularUnit lecturedCurricularUnit : lecturedUCs.subList(0, Math.min(10, lecturedUCs.size()))) {
 		    JSONObject lecture = new JSONObject();
 		    lecture.put("curricularUnit", cut("unidade curricular", lecturedCurricularUnit.getName(), output, 100));
 		    // lecture.put("studyCyle", cut("ciclo de estudos",
