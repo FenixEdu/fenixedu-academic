@@ -18,10 +18,8 @@ public class UnitSiteFile extends UnitSiteFile_Base {
     }
 
     public void delete() {
-	removeRootDomainObject();
 	removeUnitSite();
-
-	deleteDomainObject();
+	super.delete();
     }
 
 }

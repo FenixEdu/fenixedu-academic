@@ -2,10 +2,8 @@ package net.sourceforge.fenixedu.domain.space;
 
 import java.util.Collection;
 
-import net.sourceforge.fenixedu.domain.DeleteFileRequest;
 import net.sourceforge.fenixedu.domain.accessControl.Group;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import pt.utl.ist.fenix.tools.file.FileManagerFactory;
 import pt.utl.ist.fenix.tools.file.FileSetMetaData;
 import pt.utl.ist.fenix.tools.file.VirtualPath;
@@ -35,13 +33,7 @@ public class BlueprintFile extends BlueprintFile_Base {
     @Override
     public void delete() {
 	super.setBlueprint(null);
-	removeRootDomainObject();
-	deleteDomainObject();
-	deleteFile();
-    }
-
-    private void deleteFile() {
-	new DeleteFileRequest(AccessControl.getPerson(), getExternalStorageIdentification());
+	super.delete();
     }
 
     public String getDirectDownloadUrlFormat() {
