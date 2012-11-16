@@ -356,9 +356,6 @@
 		<property name="rawSlotName" value="branch"/>
 	</slot>
 	<slot name="exceptionalConclusionDate" key="label.documentRequestsManagement.searchDocumentRequests.exceptionalConclusionDate"></slot>
-    <slot name="language" layout="null-as-label">
-        <property name="label" value="-"/>
-    </slot>
 </schema>
 
 <schema name="DocumentRequestCreateBean.DEGREE_FINALIZATION_CERTIFICATE_WithBranch.AdditionalInformation.view"
@@ -384,7 +381,6 @@
 	<slot name="internshipApproved" key="label.documentRequestsManagement.searchDocumentRequests.internshipApproved"></slot>
 	<slot name="studyPlan" key="label.documentRequestsManagement.searchDocumentRequests.studyPlan"></slot>
 	<slot name="exceptionalConclusionDate" key="label.documentRequestsManagement.searchDocumentRequests.exceptionalConclusionDate"></slot>
-    <slot name="language" layout="null-as-label"></slot>
 </schema>
 
 <schema name="DocumentRequestCreateBean.DEGREE_FINALIZATION_CERTIFICATE.AdditionalInformation.view"
