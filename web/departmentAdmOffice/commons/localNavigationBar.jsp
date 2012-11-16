@@ -178,6 +178,7 @@
 
 		<li><html:link  page="/vigilancy/examCoordinatorManagement.do?method=prepareExamCoordinator"><bean:message bundle="VIGILANCY_RESOURCES" key="label.vigilancy.manageExamCoordinator"/></html:link></li>
 
+<logic:present name="userView" property="person.employee.currentDepartmentWorkingPlace">
     <li class="navheader">
         <bean:message key="label.site.title"/>
     </li>
@@ -195,6 +196,7 @@
             <bean:message key="link.site.managers.choose"/>
         </html:link>
     </li>
+</logic:present>
     
 	</ul>
 	
