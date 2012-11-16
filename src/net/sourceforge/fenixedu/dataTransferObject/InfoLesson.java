@@ -131,7 +131,7 @@ public class InfoLesson extends InfoShowOccupation implements Comparable<InfoLes
 	return resultado;
     }
 
-    private Lesson getLesson() {
+    public Lesson getLesson() {
 	return lesson;
     }
 }
