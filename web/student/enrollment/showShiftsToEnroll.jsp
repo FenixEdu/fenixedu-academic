@@ -28,7 +28,7 @@
 
 <div class="infoop2">		
 	<ul>
-		<li><bean:message bundle="STUDENT_RESOURCES" key="message.showShiftsToEnroll.instructions1"/> <img src="<%= request.getContextPath() + "/images/add1.gif" %>" alt="<bean:message bundle="STUDENT_RESOURCES"  key="add1" bundle="IMAGE_RESOURCES" />" /> <bean:message bundle="STUDENT_RESOURCES"  key="message.showShiftsToEnroll.instructions2" /> <img src="<%= request.getContextPath() + "/images/remove1.gif" %>" alt="<bean:message bundle="STUDENT_RESOURCES"  key="remove1" bundle="IMAGE_RESOURCES" />" /> <bean:message bundle="STUDENT_RESOURCES"  key="message.showShiftsToEnroll.instructions3" /></li>
+		<li><bean:message bundle="STUDENT_RESOURCES" key="message.showShiftsToEnroll.instructions1"/> <img src="<%= request.getContextPath() + "/images/add1.gif" %>" alt="<bean:message bundle="STUDENT_RESOURCES"  key="add1" />" /> <bean:message bundle="STUDENT_RESOURCES"  key="message.showShiftsToEnroll.instructions2" /> <img src="<%= request.getContextPath() + "/images/remove1.gif" %>" alt="<bean:message bundle="STUDENT_RESOURCES"  key="remove1" />" /> <bean:message bundle="STUDENT_RESOURCES"  key="message.showShiftsToEnroll.instructions3" /></li>
 		<li><bean:message bundle="STUDENT_RESOURCES" key="message.showShiftsToEnroll.instructions4"/></li>
 	</ul>
 </div>
