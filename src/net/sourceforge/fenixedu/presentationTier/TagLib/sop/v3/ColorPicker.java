@@ -20,47 +20,43 @@ public abstract class ColorPicker {
     private int colorIndex = 0;
 
     private String[] colorPallete = {
+	    "#A8FFFF",
+	    "#AFEEEE",
+	    "#00FFFF",
+	    "#87CEFA",
+	    "#A8D4FF",
+	    "#B0C4DE",
+	    "#BAEDD3",
+	    "#7FFFD4",
+	    "#51FFA9",
+	    "#40E0D0",
+	    "#D8BAED",
+	    "#ADFF2F",
+	    "#32CD32",
+	    "#00FF7F",
+	    "#F9A8FF",
+	    "#FFBA51",
+	    "#FF9A00",
+	    "#FFA07A",
 	    "#F7AFB3",
 	    "#FFC0A8",
-	    "#FFDCA8",
-	    "#BAEDD3",
-	    "#BAEDED",
-	    "#A8FFFF",
-	    "#A8D4FF",
-	    "#51FFA9",
+	    "#FFC0CB",
+	    "#FFD700",
+	    "#FFDEAD",
 	    "#FFECA8",
-	    "#F9A8FF",
-	    "#D8BAED",
+	    "#F0E68C",
+	    "#FFFFFF",
 	    "#F0FFF0",
 	    "#F0FFFF",
 	    "#F8F8FF",
 	    "#F5F5F5",
 	    "#FFF5EE",
 	    "#F5F5DC",
-	    "#FDF5E6",
 	    "#FFFFF0",
+	    "#FDF5E6",
 	    "#FAEBD7",
-	    "#FAF0E6",
-	    "#FFF0F5",
 	    "#FFE4E1",
-	    "#00FFFF",
-	    "#7FFFD4",
-	    "#40E0D0",
-	    "#B0C4DE",
-	    "#87CEFA",
-	    "#ADFF2F",
-	    "#32CD32",
-	    "#00FF7F",
-	    "#FFC0CB",
-	    "#FFA07A",
-	    "#FFD700",
-	    "#F0E68C",
-	    "#FFEBCD",
-	    "#FFDEAD",
-	    "#FFFFFF",
-	    "#FF9A00",
-	    "#FFBA51",
-	    "#AFEEEE"
+	    "#FAF0E6"
     };
 
     public ColorPicker() {
@@ -76,7 +72,8 @@ public abstract class ColorPicker {
 	final InfoShowOccupation infoShowOccupation = infoLessonWrapper.getInfoShowOccupation();
 	final String colorKeyInfoLesson = getColorKeyFromInfoLesson(infoShowOccupation);
 	final String color = (String) lessonColors.get(colorKeyInfoLesson);
-	return color == null ? getNextColor(colorKeyInfoLesson) : color;
+	final String result = color == null ? getNextColor(colorKeyInfoLesson) : color;
+	return result;
     }
 
     private String getNextColor(final String key) {
