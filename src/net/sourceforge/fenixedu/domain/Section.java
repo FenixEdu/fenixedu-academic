@@ -48,6 +48,7 @@ public class Section extends Section_Base {
 	super();
 
 	setCreationDate(new DateTime());
+	setShowSubSections(true);
 	setRootDomainObject(RootDomainObject.getInstance());
     }
 
@@ -158,6 +159,20 @@ public class Section extends Section_Base {
 	final SortedSet<Section> sections = new TreeSet<Section>(Section.COMPARATOR_BY_ORDER);
 	sections.addAll(getAssociatedSections());
 	return sections;
+    }
+    
+    public SortedSet<Section> getOrderedVisibleSubSections() {
+	final SortedSet<Section> sections = new TreeSet<Section>(Section.COMPARATOR_BY_ORDER);
+	for (Section section : getAssociatedSections()) {
+	    if (section.getVisible()) {
+		sections.add(section);
+	    }
+	}
+	return sections;
+    }
+    
+    public boolean getShowSubSectionTree() {
+	return getShowSubSections() != null && getShowSubSections() && !getOrderedVisibleSubSections().isEmpty();
     }
 
     public SortedSet<Item> getOrderedItems() {

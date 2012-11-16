@@ -6952,6 +6952,7 @@ class elections.DelegateElectionVotingPeriod extends elections.DelegateElectionP
     class Section extends contents.Container {
         Boolean enabled;
         YearMonthDay modificationDate;
+        Boolean showSubSections;
     }
 
     class Site extends contents.Portal {

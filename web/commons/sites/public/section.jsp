@@ -83,9 +83,9 @@
 			</table>       	
 		</logic:notEmpty>
 
-		<logic:notEmpty name="section" property="orderedSubSections">
+		<logic:equal name="section" property="showSubSectionTree" value="true">
 				<ul>
-					<logic:iterate id="section" name="section" property="orderedSubSections" type="net.sourceforge.fenixedu.domain.Section">		
+					<logic:iterate id="section" name="section" property="orderedVisibleSubSections" type="net.sourceforge.fenixedu.domain.Section">		
 							<li>
 							<app:contentLink name="section">
 							<fr:view name="section" property="name"/>
@@ -93,7 +93,7 @@
 							</li>
 						</logic:iterate>
 				</ul>
-		</logic:notEmpty>
+		</logic:equal>
 			
 			
     <logic:notEmpty name="protectedItems">

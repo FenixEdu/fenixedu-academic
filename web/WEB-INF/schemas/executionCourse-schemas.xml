@@ -258,6 +258,7 @@
         <property name="key" value="true"/>
 	</slot>
     <slot name="visible" bundle="SITE_RESOURCES"/>
+    <slot name="showSubSections" bundle="SITE_RESOURCES"/>
     <slot name="permittedGroup" layout="radio-select" bundle="SITE_RESOURCES" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
         <property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.executionCourse.SectionGroupProvider" />
         <property name="eachSchema" value="permittedGroup.class.text"/>
