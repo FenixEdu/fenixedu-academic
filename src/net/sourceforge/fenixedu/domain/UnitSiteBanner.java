@@ -53,17 +53,14 @@ public class UnitSiteBanner extends UnitSiteBanner_Base {
     }
 
     public void delete() {
-	removeRootDomainObject();
-	removeSite();
-
 	if (getMainImage() != null) {
 	    getMainImage().delete();
 	}
-
 	if (getBackgroundImage() != null) {
 	    getBackgroundImage().delete();
 	}
-
+	removeSite();
+	removeRootDomainObject();
 	deleteDomainObject();
     }
 
