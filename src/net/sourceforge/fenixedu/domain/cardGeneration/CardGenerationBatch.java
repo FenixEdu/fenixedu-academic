@@ -169,7 +169,7 @@ public class CardGenerationBatch extends CardGenerationBatch_Base {
 	return null;
     }
 
-    public Set<StudentCurricularPlan> getStudentCurricularPlans(final DateTime begin, final DateTime end, final Student student) {
+    public static Set<StudentCurricularPlan> getStudentCurricularPlans(final DateTime begin, final DateTime end, final Student student) {
 	final Set<StudentCurricularPlan> studentCurricularPlans = new HashSet<StudentCurricularPlan>();
 
 	for (final Registration registration : student.getRegistrationsSet()) {
