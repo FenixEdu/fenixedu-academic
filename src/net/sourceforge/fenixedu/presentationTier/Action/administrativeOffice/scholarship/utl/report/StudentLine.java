@@ -253,7 +253,8 @@ public class StudentLine implements IFileLine, java.io.Serializable {
     }
 
     public StudentCurricularPlan getStudentCurricularPlan() {
-	return getRegistration().getLastStudentCurricularPlan();
+	final Registration registration = getRegistration();
+	return registration == null ? null : registration.getLastStudentCurricularPlan();
     }
 
     public boolean isDocumentIdentificationEqual() {
@@ -933,7 +934,7 @@ public class StudentLine implements IFileLine, java.io.Serializable {
     }
 
     public Boolean getOwnerOfCETQualification() {
-	return STUDENTS_WITH_CET.contains(getStudent().getNumber());
+	return isStudentFound() && STUDENTS_WITH_CET.contains(getStudent().getNumber());
     }
 
     public String getRegimeCode() {
@@ -956,7 +957,7 @@ public class StudentLine implements IFileLine, java.io.Serializable {
 
 	if (enrolmentsExecutionYears.size() == 1
 		&& ExecutionYear.readCurrentExecutionYear().equals(enrolmentsExecutionYears.get(0))) {
-	    lastEnrolledExecutionYear = null;
+	    return "";
 	} else if (ExecutionYear.readCurrentExecutionYear().equals(enrolmentsExecutionYears.get(0))) {
 	    lastEnrolledExecutionYear = enrolmentsExecutionYears.get(1);
 	} else {
