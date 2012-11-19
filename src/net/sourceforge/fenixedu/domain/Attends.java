@@ -203,6 +203,9 @@ public class Attends extends Attends_Base {
 	if (hasAnyProjectSubmissions()) {
 	    throw new DomainException("error.attends.cant.delete.has.project.submissions");
 	}
+	if (hasAnyDegreeProjectTutorialServices()) {
+	    throw new DomainException("error.attends.cant.delete.has.degree.project.tutorial.services");
+	}
 
 	return true;
     }
