@@ -9,7 +9,12 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="pt-PT" xml:lang="pt-PT">
 <head>
-	<title>.IST</title>
+	<title>
+		<bean:message key="public.QUC.teacherResults" bundle="TITLES_RESOURCES" /> -
+		<bean:write name="inquiryResult" property="professorship.executionCourse.nome"/> -
+		<bean:write name="inquiryResult" property="executionDegree.degree.presentationName"/> -
+		<bean:message key="institution.name" bundle="GLOBAL_RESOURCES" />
+	</title>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 	<link rel="stylesheet" type="text/css" href="<%= request.getContextPath() %>/CSS/layout.css"  media="screen"  />
 	<link rel="stylesheet" type="text/css" href="<%= request.getContextPath() %>/CSS/general.css" media="screen" />

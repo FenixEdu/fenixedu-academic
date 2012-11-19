@@ -10,7 +10,11 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="pt-PT" xml:lang="pt-PT">
 
 <head>
-	<title>.IST</title>
+	<title>
+		<bean:message key="public.QUC.teacherReport" bundle="TITLES_RESOURCES" /> -
+		<bean:write name="teachingInquiry" property="professorship.executionCourse.nome"/> -
+		<bean:message key="institution.name" bundle="GLOBAL_RESOURCES" />
+	</title>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 	<link rel="stylesheet" type="text/css" href="<%= request.getContextPath() %>/CSS/layout.css"  media="screen"  />
 	<link rel="stylesheet" type="text/css" href="<%= request.getContextPath() %>/CSS/general.css" media="screen" />

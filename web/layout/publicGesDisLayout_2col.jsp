@@ -5,8 +5,9 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
-<%@ page
-	import="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants"%>
+<%@ page import="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants"%>
+<%@page import="net.sourceforge.fenixedu.presentationTier.servlets.filters.functionalities.FilterFunctionalityContext"%>
+
 <html:html xhtml="true">
 
 <head>
@@ -28,7 +29,31 @@
 <script type="text/javascript" src="<%= request.getContextPath() %>/CSS/scripts/hideButtons.js"></script>
 <jsp:include page="/includeMathJax.jsp" />
 
-<title><bean:message key="dot.title" bundle="GLOBAL_RESOURCES"/></title>
+<title>
+<tiles:useAttribute name="title" id="titleK" ignore="true" />
+<tiles:useAttribute name="bundle" id="bundleT" ignore="true" />
+<logic:present name="bundleT">
+	<logic:present name="titleK">
+		<bean:message name="titleK" bundle="<%= (String)bundleT %>" /> -
+	</logic:present>
+	<logic:present name="<%= FilterFunctionalityContext.CONTEXT_KEY %>">
+		<bean:define id="contentContext" name="<%= FilterFunctionalityContext.CONTEXT_KEY %>" property="selectedContainer" type="net.sourceforge.fenixedu.domain.contents.Content"/>
+		<logic:equal name="contentContext" property="unitSite" value="true">
+			<bean:write name="contentContext" property="unit.partyName"/> -
+		</logic:equal>
+	</logic:present>
+</logic:present>
+<logic:notPresent name="bundleT">
+	<tiles:getAsString name="title" ignore="true"/> -
+	<logic:present name="<%= FilterFunctionalityContext.CONTEXT_KEY %>">
+		<bean:define id="contentContext" name="<%= FilterFunctionalityContext.CONTEXT_KEY %>" property="selectedContainer" type="net.sourceforge.fenixedu.domain.contents.Content"/>
+		<logic:equal name="contentContext" property="unitSite" value="true">
+			<bean:write name="contentContext" property="unit.partyName"/> -
+		</logic:equal>
+	</logic:present>
+</logic:notPresent>
+<bean:message key="institution.name" bundle="GLOBAL_RESOURCES" />
+</title>
 <%-- TITLE --%>
 
 <!-- Link -->

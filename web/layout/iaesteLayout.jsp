@@ -9,7 +9,19 @@
 <html:html xhtml="true">
 <head>
 
-<title><tiles:getAsString name="title" ignore="true" /></title> <%-- TITLE --%>
+<title>
+<tiles:useAttribute name="title" id="titleK" ignore="true" />
+<tiles:useAttribute name="bundle" id="bundleT" ignore="true" />
+<logic:present name="bundleT">
+	<logic:present name="titleK">
+		<bean:message name="titleK" bundle="<%= (String)bundleT %>" /> -
+	</logic:present>
+</logic:present>
+<logic:notPresent name="bundleT">
+	<tiles:getAsString name="title" ignore="true" />
+</logic:notPresent>
+<bean:message key="institution.name" bundle="GLOBAL_RESOURCES" />
+</title> <%-- TITLE --%>
 
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <link rel="stylesheet" type="text/css" media="screen" href="<%= request.getContextPath() %>/CSS/iststyle.css" />

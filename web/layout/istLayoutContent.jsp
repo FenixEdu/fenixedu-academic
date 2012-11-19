@@ -9,24 +9,32 @@
 <html:html xhtml="true">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<meta name="description" content="" />
-<link rel="stylesheet" type="text/css" media="print" href="<%= request.getContextPath() %>/CSS/dotist_print.css" />
-<link rel="stylesheet" type="text/css" media="print" href="<%= request.getContextPath() %>/CSS/print.css" />
-<link rel="stylesheet" type="text/css" media="screen" href="<%= request.getContextPath() %>/CSS/general.css" />
+<meta name="keywords" content="<bean:message key="meta.keywords" bundle="GLOBAL_RESOURCES"/>" />
+<meta name="description" content="<bean:message key="meta.description" bundle="GLOBAL_RESOURCES"/>" />
+<logic:present name="dont-cache-pages-in-search-engines">
+	<logic:equal name="dont-cache-pages-in-search-engines" value="true">
+		<meta name="ROBOTS" content="NOINDEX, NOFOLLOW"/>
+	</logic:equal>
+</logic:present>
+
 <%-- <link rel="stylesheet" type="text/css" media="screen" href="<%= request.getContextPath() %>/CSS/iststyle.css"/> --%>
 <link rel="stylesheet" type="text/css" media="screen" href="<%= request.getContextPath() %>/CSS/istPublicPagesStyles.css"/>
+<link rel="stylesheet" type="text/css" media="print" href="<%= request.getContextPath() %>/CSS/iststyle_print.css"/>
 <link href='http://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic' rel='stylesheet' type='text/css' />
+<tiles:insert attribute="css-headers" ignore="true" />
+
 <script type="text/javascript" src="<%= request.getContextPath() %>/CSS/scripts/expmenu.js"></script>
 <script type="text/javascript" src="<%= request.getContextPath() %>/CSS/scripts/hideButtons.js"></script>
+<script src="<%= request.getContextPath() %>/javaScript/jquery/jquery.js" type="text/javascript" >
+</script>
+<script src="<%= request.getContextPath() %>/javaScript/jquery/jquery-ui.js" type="text/javascript">
+</script>
 <jsp:include page="/includeMathJax.jsp" />
 
 <title>
-<tiles:getAsString name="title" ignore="true" />
-<logic:present name="<%= FilterFunctionalityContext.CONTEXT_KEY %>" property="selectedContainer">
-	<bean:write name="<%= FilterFunctionalityContext.CONTEXT_KEY %>" property="selectedContainer.unit.partyName"/> - 
-</logic:present>
-<bean:message key="institution.name" bundle="GLOBAL_RESOURCES" />
-</title>
+	<tiles:insert name="title" ignore="true" />
+	<bean:message key="institution.name" bundle="GLOBAL_RESOURCES" />
+</title> <%-- TITLE --%>
 
 <!-- Link -->
 <link rel="shortcut icon" href="<%= request.getContextPath() %>/images/newImage2012/favicon.png" type="image/x-icon" />
@@ -47,12 +55,10 @@
 
 <body>
 <% if (PropertiesManager.useBarraAsAuthenticationBroker()) { %>
-<script id="ist-bar" data-logout="https://fenix.ist.utl.pt/logoff.do" data-login="https://fenix.ist.utl.pt/loginPage.jsp" data-fluid="true" <% if(AccessControl.getUserView() == null) {%> data-use-offline="true" <%} %> data-next-param="service" src="https://barra.ist.utl.pt/site_media/static/js/barra.js"></script>
+<script id="ist-bar" data-login="https://fenix.ist.utl.pt/loginPage.jsp" data-fluid="true" <% if(AccessControl.getUserView() == null) {%> data-use-offline="true" <%} %> data-next-param="service" src="https://barra.ist.utl.pt/site_media/static/js/barra.js"></script>
 <% } %>
 <jsp:include page="deployWarning.jsp" flush="true"/>
-<jsp:include page="devMode.jsp" flush="true"/>
-
-	<tiles:insert attribute="page-context" ignore="true"/>
+<tiles:insert attribute="page-context" ignore="true"/>
 
 <!-- BEGIN BROWSER UPGRADE MESSAGE -->
 <div class="browser_upgrade">
@@ -69,7 +75,6 @@
 </div>
 <!-- END BROWSER UPGRADE MESSAGE -->
 
-
 <!-- SYMBOLSROW -->
 <div id="header">
 	<tiles:insert attribute="symbols_row" ignore="true"/>
@@ -80,44 +85,35 @@
 	<tiles:insert attribute="profile_navigation" ignore="true"/>
 </div>
 
-
-
-
 <div id="holder">
 <table id="bigtable" width="100%" border="0" cellpadding="0" cellspacing="0">
+<tr>
 
-	<tr>
-	
-		<td rowspan="3" id="latnav_container">
-			<!--MAIN NAVIGATION -->   
-			<div id="latnav">
-				<tiles:insert attribute="main_navigation" ignore="true"/>
-			</div>
-		</td>
-	
-		<!-- DEGREE SITE -->
-			<td width="100%" colspan="3" id="main" class="usitemain">
-				<bean:define id="useFlags" toScope="request">
-					<tiles:getAsString name="useFlags" ignore="true"/>
-				</bean:define>
-			
-				<tiles:insert attribute="body-context" ignore="true"/>
-				<tiles:insert attribute="banner" ignore="true"/>
-				<tiles:getAsString name="body-inline" ignore="true"/>
-			</td>
-	</tr>
+<td id="latnav_container">
+<!--MAIN NAVIGATION -->   
+<div id="latnav">
+	<tiles:insert attribute="main_navigation" ignore="true"/>
+</div>
+</td>
 
-	<tiles:insert attribute="body" ignore="true"/>
+<!-- DEGREE SITE -->
+<td width="100%" colspan="3" id="main">
 
+<tiles:useAttribute id="hideLanguage" name="hideLanguage" ignore="true"/>
+<logic:notPresent name="hideLanguage">
+	<jsp:include page="../i18n.jsp"/>
+</logic:notPresent>
+
+<tiles:insert attribute="body-context" ignore="true"/>
+<tiles:insert attribute="body" ignore="true"/>
+<tiles:getAsString name="body-inline" ignore="true"/>
+
+</td>
+
+</tr>
 </table>
 </div>
-
-
-
-
-
 <!-- FOOTER --> 
-
 <div id="footer">
 <tiles:insert attribute="footer" ignore="true"/>
 </div>

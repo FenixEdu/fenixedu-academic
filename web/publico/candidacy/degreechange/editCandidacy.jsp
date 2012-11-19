@@ -6,7 +6,6 @@
 <%@ page import="pt.utl.ist.fenix.tools.util.i18n.Language"%>
 <%@ page import="java.util.Locale"%>
 
-
 <html:xhtml/>
 
 <bean:define id="mappingPath" name="mappingPath"/>

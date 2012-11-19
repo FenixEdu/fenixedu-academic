@@ -1,4 +1,9 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<%@page import="org.apache.struts.taglib.tiles.GetAttributeTag"%>
+<%@page import="net.sourceforge.fenixedu.domain.Section"%>
+<%@page import="net.sourceforge.fenixedu.domain.contents.Node"%>
+<%@page import="net.sourceforge.fenixedu.presentationTier.servlets.filters.functionalities.FilterFunctionalityContext"%>
+<%@page import="net.sourceforge.fenixedu.domain.ExecutionCourse"%>
 <%@page import="net.sourceforge.fenixedu._development.PropertiesManager"%>
 <%@page import="net.sourceforge.fenixedu.injectionCode.AccessControl"%>
 <%@ taglib uri="/WEB-INF/struts-tiles.tld" prefix="tiles"%>
@@ -33,12 +38,19 @@
 		<tiles:insert attribute="rss" ignore="true" />
 		<tiles:insert attribute="keywords" ignore="true" />
 
-		<logic:present name="executionCourse">
-			<title><bean:write name="executionCourse" property="nome"/></title>
+		<title>
+		<logic:present name="<%= FilterFunctionalityContext.CONTEXT_KEY %>">
+			<bean:define id="funcContext" name="<%= FilterFunctionalityContext.CONTEXT_KEY %>" property="selectedContent" type="net.sourceforge.fenixedu.domain.contents.Content"/>
+			<bean:write name="funcContext" property="name" /> -
 		</logic:present>
-		<logic:notPresent name="executionCourse">
-			<title><%=net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionName()%></title>
+		<logic:notPresent name="<%= FilterFunctionalityContext.CONTEXT_KEY %>">
+			<tiles:getAsString name="title" ignore="true" />
 		</logic:notPresent>
+		<logic:present name="executionCourse">
+			<bean:write name="executionCourse" property="name"/> -
+		</logic:present>
+		<%=net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionName()%>
+		</title>
 		
 		<!-- Link -->
 		<link rel="shortcut icon" href="<%= request.getContextPath() %>/images/newImage2012/favicon.png" type="image/x-icon" />

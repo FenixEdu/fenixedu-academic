@@ -31,17 +31,27 @@
 </script>
 <jsp:include page="/includeMathJax.jsp" />
 
-
 <title>
-<logic:present name="<%= FilterFunctionalityContext.CONTEXT_KEY %>">
-<bean:define id="contentContext" name="<%= FilterFunctionalityContext.CONTEXT_KEY %>" property="selectedContainer" type="net.sourceforge.fenixedu.domain.contents.Content"/> 
-	<logic:equal name="contentContext" property="unitSite" value="true">
-		<bean:write name="contentContext" property="unit.partyName"/> -
-	</logic:equal>
+<tiles:useAttribute name="title" id="titleK" ignore="true" />
+<tiles:useAttribute name="bundle" id="bundleT" ignore="true" />
+<logic:present name="bundleT">
+	<logic:present name="titleK">
+		<bean:message name="titleK" bundle="<%= (String)bundleT %>" /> -
+		<bean:message key="institution.name" bundle="GLOBAL_RESOURCES" />
+	</logic:present>
 </logic:present>
-
-<tiles:getAsString name="title" ignore="true" />
-
+<logic:notPresent name="bundleT">
+	<logic:present name="<%= FilterFunctionalityContext.CONTEXT_KEY %>">
+		<bean:define id="funcContext" name="<%= FilterFunctionalityContext.CONTEXT_KEY %>" property="selectedContent" type="net.sourceforge.fenixedu.domain.contents.Content"/>
+		<bean:define id="contentContext" name="<%= FilterFunctionalityContext.CONTEXT_KEY %>" property="selectedContainer" type="net.sourceforge.fenixedu.domain.contents.Content"/>
+		<logic:equal name="contentContext" property="unitSite" value="true">
+			<bean:write name="funcContext" property="name" /> -
+			<bean:write name="contentContext" property="unit.partyName"/> -
+		</logic:equal>
+	</logic:present>
+	<tiles:getAsString name="title" ignore="true" />
+	<bean:message key="institution.name" bundle="GLOBAL_RESOURCES" />
+</logic:notPresent>
 </title> <%-- TITLE --%>
 
 <!-- Link -->

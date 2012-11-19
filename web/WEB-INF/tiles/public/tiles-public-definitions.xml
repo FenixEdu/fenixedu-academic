@@ -6,7 +6,7 @@
 	<definition name="definition.publico.executionCourseSitePage" 
 		controllerClass="net.sourceforge.fenixedu.presentationTier.tiles.controller.PublicTilesComponentController" 
 		extends="definition.public.mainPage" >
-		<put name="title" value=".Instituto Superior Técnico" />	
+		<put name="title" value="Instituto Superior Técnico" />	
 	 	<put name="rss" value="/commons/blank.jsp"/>
 	  	<put name="serviceName" value="Instituto Superior Técnico" />
 		<put name="profile_navigation" value="/publico/degreeSite/profileNavigation.jsp" />
@@ -19,7 +19,7 @@
 		<put name="footer" value="/publico/degreeSite/footer.jsp" />
 	</definition>
 	<definition name="definition.publico.executionCourseSitePage.without.stupid.controller" extends="definition.public.mainPage" >
-		<put name="title" value=".Instituto Superior Técnico" />	
+		<put name="title" value="Instituto Superior Técnico" />	
 	 	<put name="rss" value="/messaging/announcements/rssHeader.jsp"/>
 	 	<put name="keywords" value="/messaging/announcements/keywordsHeader.jsp"/>	 	
 	  	<put name="serviceName" value="Instituto Superior Técnico" />
@@ -45,7 +45,7 @@
 	<definition name="definition.publico.executionCourseSitePage1" 
 		controllerClass="net.sourceforge.fenixedu.presentationTier.tiles.controller.PublicTilesComponentController" 
 		extends="definition.public.mainPageIST" >
-			<put name="title" value=".Instituto Superior Técnico" />	
+			<put name="title" value="Instituto Superior Técnico" />	
             <put name="serviceName" value="Instituto Superior Técnico" /> 
             <put name="executionCourseName" value="/publico/executionCourseName.jsp"  />
             <put name="degrees" value="/publico/associatedDegrees.jsp" />		
@@ -55,31 +55,37 @@
   		<put name="footer" value="/publico/degreeSite/footer.jsp" />
 	</definition>
 	<definition name="definition.public.mainPage" page="/layout/publicGesDisLayout_2col.jsp" >
-  		<put name="title" value=".Instituto Superior Técnico" /> 
+  		<put name="title" value="Instituto Superior Técnico" />
 		<put name="serviceName" value="Instituto Superior Técnico" />
 	    <put name="navGeral" value="/commons/blank.jsp" />
 		<put name="body" value="/commons/blank.jsp" />
   		<put name="footer" value="/commons/blank.jsp" />
 	</definition>	
 	<definition name="definition.public.mainPageWithPeriodSelection" extends="definition.public.mainPage" >
-  	<put name="title" value=".Instituto Superior Técnico" /> 
+  		<put name="title" value="Instituto Superior Técnico" /> 
 		<put name="serviceName" value="Instituto Superior Técnico" />
-	   <put name="navGeral" value="/commons/blank.jsp" />
+		<put name="navGeral" value="/commons/blank.jsp" />
 		<put name="navbarGeral" value="/publico/commonNavLocalPubWithExecutionPeriodSelection.jsp" />
 		<put name="body" value="/commons/blank.jsp" />
   	<put name="footer" value="/commons/blank.jsp" />
 	</definition>	
 	<definition name="definition.public.mainPageIST" page="/layout/istLayout.jsp" >
-            <put name="title" value="Instituto Superior Técnico" /> 
-			<put name="symbols_row" value="/publico/degreeSite/symbolsRow.jsp" />
-            <put name="profile_navigation" value="/publico/degreeSite/profileNavigation.jsp" />
-			<put name="main_navigation" value="/publico/degreeSite/degreeSiteMainNavigation.jsp" />
-			<put name="body" value="/commons/blank.jsp" />
+        <put name="symbols_row" value="/publico/degreeSite/symbolsRow.jsp" />
+        <put name="profile_navigation" value="/publico/degreeSite/profileNavigation.jsp" />
+		<put name="main_navigation" value="/publico/degreeSite/degreeSiteMainNavigation.jsp" />
+		<put name="body" value="/commons/blank.jsp" />
+  		<put name="footer" value="/publico/degreeSite/footer.jsp" />
+	</definition>
+	<definition name="definition.public.mainPageISTcontent" page="/layout/istLayoutContent.jsp" >
+        <put name="title" value="/commons/blank.jsp" /> 
+		<put name="symbols_row" value="/publico/degreeSite/symbolsRow.jsp" />
+        <put name="profile_navigation" value="/publico/degreeSite/profileNavigation.jsp" />
+		<put name="main_navigation" value="/publico/degreeSite/degreeSiteMainNavigation.jsp" />
+		<put name="body" value="/commons/blank.jsp" />
   		<put name="footer" value="/publico/degreeSite/footer.jsp" />
 	</definition>
 	<definition name="definition.public.secondaryMainPageIST" page="/layout/secondaryIstLayout.jsp" />
-	<definition name="definition.public.degree.site" 
-		extends="definition.public.mainPageIST" >
+	<definition name="definition.public.degree.site" extends="definition.public.mainPageIST" >
             <put name="title" value="Instituto Superior Técnico" /> 
 			<put name="symbols_row" value="/publico/degreeSite/symbolsRow.jsp" />
             <put name="profile_navigation" value="/publico/degreeSite/profileNavigation.jsp" />
@@ -96,8 +102,8 @@
 			<put name="body" value="/commons/blank.jsp" />
   		<put name="footer" value="/publico/degreeSite/footer.jsp" />
 	</definition>	
-	<definition name="definition.public.homepage" extends="definition.public.mainPageIST">
-		<put name="title" value="Instituto Superior Técnico" /> 
+	<definition name="definition.public.homepage" extends="definition.public.mainPageISTcontent">
+		<put name="title" value="/commons/functionalities/title.jsp" /> 
 		<put name="symbols_row" value="/publico/homepage/symbolsRow.jsp" />
 		<put name="profile_navigation" value="/publico/homepage/profileNavigation.jsp" />
 		<put name="main_navigation" value="/publico/homepage/mainNavigation.jsp" />
@@ -115,7 +121,6 @@
 	</definition>	
 	<definition name="definition.public.noPaddingLayout" page="/layout/unitSiteLayout.jsp">
 			<put name="useFlags" value="true"/>
-			<put name="title" value="Instituto Superior Técnico" />
 			<put name="page-context" value="/publico/customized/pageContext.jsp"/>
 			<put name="symbols_row" value="/publico/customized/symbolsRow.jsp" />
 			<put name="main_navigation" value="/commons/blank.jsp"/>
@@ -125,7 +130,6 @@
 			<put name="analytics" value="/publico/unitSite/analytics.jsp" />
 	</definition>
     <definition name="definition.public.paddingLayout" extends="definition.public.mainPageIST">
-           <put name="title" value="Instituto Superior Técnico" />
             <put name="symbols_row" value="/publico/customized/symbolsRow.jsp" />
             <put name="main_navigation" value="/customized/mainNavigation.jsp" />
             <put name="body" value="/commons/blank.jsp" />
@@ -187,7 +191,8 @@
     </definition>
        
     <definition name="definition.public.findSpaces" extends="definition.public.mainPageIST" >
-		<put name="title" value=".Instituto Superior Técnico" />	
+		<put name="title" value="public.general.searchSpaces" />
+		<put name="bundle" value="TITLES_RESOURCES" />	
         <put name="serviceName" value="Instituto Superior Técnico" />                 	
         <put name="profile_navigation" value="/publico/degreeSite/profileNavigation.jsp" />
         <put name="main_navigation" value="/publico/commonNavLocalPub.jsp" />
@@ -209,22 +214,32 @@
 	</definition>
 	
 	<definition name="show-result" extends="definition.public.secondaryMainPageIST">
+		<put name="title" value="public.general.viewResearchPublication" />
+		<put name="bundle" value="TITLES_RESOURCES" />
 		<put name="body" value="/publico/researcher/showResearchResult.jsp" />
 	</definition>
 	
-	 <definition name="show.journal" extends="definition.public.secondaryMainPageIST">
-       <put name="body" value="/publico/researcher/showJournal.jsp"/>  
+	<definition name="show.journal" extends="definition.public.secondaryMainPageIST">
+		<put name="title" value="public.general.viewJournalOrMagazine" />
+		<put name="bundle" value="TITLES_RESOURCES" />
+       	<put name="body" value="/publico/researcher/showJournal.jsp"/>  
     </definition>
 
     <definition name="show.event" extends="definition.public.secondaryMainPageIST">
-       <put name="body" value="/publico/researcher/showEvent.jsp"/>  
+    	<put name="title" value="public.general.showEvents" />
+		<put name="bundle" value="TITLES_RESOURCES" />
+       	<put name="body" value="/publico/researcher/showEvent.jsp"/>  
     </definition>    
     
     <definition name="show-participationDetails" extends="definition.public.secondaryMainPageIST">
+    	<put name="title" value="public.general.eventDetails" />
+		<put name="bundle" value="TITLES_RESOURCES" />
 		<put name="body" value="/publico/researcher/participationDetails.jsp"/>
 	</definition>	
 	
     <definition name="showThesisDetails" extends="definition.public.secondaryMainPageIST">
+    	<put name="title" value="public.general.showThesisDetails" />
+		<put name="bundle" value="TITLES_RESOURCES" />
         <put name="body" value="/publico/showDirectThesisDetails.jsp"/>
     </definition>
 
@@ -242,18 +257,26 @@
 	</definition>
     -->
     <definition name="definition.public.internship" page="/layout/iaesteLayout.jsp">
+    	<put name="title" value="public.internship.main" />
+    	<put name="bundle" value="TITLES_RESOURCES" />
     </definition>
     
     <definition name="internship.candidacy" extends="definition.public.internship">
-       <put name="body" value="/publico/internship/candidacy.jsp"/>
+    	<put name="title" value="public.internship.candidacy" />
+    	<put name="bundle" value="TITLES_RESOURCES" />
+    	<put name="body" value="/publico/internship/candidacy.jsp"/>
     </definition>
 
     <definition name="internship.candidacy.rules" extends="definition.public.internship">
-       <put name="body" value="/publico/internship/candidacyRules.jsp"/>
+        <put name="title" value="public.internship.rules" />
+    	<put name="bundle" value="TITLES_RESOURCES" />
+    	<put name="body" value="/publico/internship/candidacyRules.jsp"/>
     </definition>
 
     <definition name="internship.candidacy.final" extends="definition.public.internship">
-       <put name="body" value="/publico/internship/candidacyFinal.jsp"/>
+        <put name="title" value="public.internship.final" />
+    	<put name="bundle" value="TITLES_RESOURCES" />
+    	<put name="body" value="/publico/internship/candidacyFinal.jsp"/>
     </definition>
 
     <definition name="definition.candidacy.process" extends="definition.public.mainPageIST" >
