@@ -280,64 +280,70 @@ public class A3ESDegreeProcess implements Serializable {
 	Map<JSONObject, String> jsons = new HashMap<JSONObject, String>();
 	RootCourseGroup root = degree.getLastActiveDegreeCurricularPlan().getRoot();
 	for (CurricularCourse course : root.getAllCurricularCourses(executionSemester)) {
-	    JSONObject json = new JSONObject();
-	    StringBuilder output = new StringBuilder();
 	    CompetenceCourse competence = course.getCompetenceCourse();
-	    json.put("q-6.2.1.1", competence.getName(executionSemester));
+	    if (competence != null) {
+		JSONObject json = new JSONObject();
+		StringBuilder output = new StringBuilder();
 
-	    json.put("q-6.2.1.2", getTeachersAndTeachingHours(course, executionSemester, true));
+		json.put("q-6.2.1.1", competence.getName(executionSemester));
 
-	    JSONObject q6213 = new JSONObject();
-	    String teachersAndTeachingHours = getTeachersAndTeachingHours(course, executionSemester, false);
-	    q6213.put("en", teachersAndTeachingHours);
-	    q6213.put("pt", teachersAndTeachingHours);
-	    json.put("q-6.2.1.3", q6213);
+		json.put("q-6.2.1.2", getTeachersAndTeachingHours(course, executionSemester, true));
 
-	    JSONObject q6214 = new JSONObject();
-	    MultiLanguageString objectives = competence.getObjectivesI18N(executionSemester);
-	    q6214.put("en", cut("objectivos em ingles", objectives.getContent(Language.en), output, 1000));
-	    q6214.put("pt", cut("objectivos em portugues", objectives.getContent(Language.pt), output, 1000));
-	    json.put("q-6.2.1.4", q6214);
+		JSONObject q6213 = new JSONObject();
+		String teachersAndTeachingHours = getTeachersAndTeachingHours(course, executionSemester, false);
+		q6213.put("en", teachersAndTeachingHours);
+		q6213.put("pt", teachersAndTeachingHours);
+		json.put("q-6.2.1.3", q6213);
 
-	    JSONObject q6215 = new JSONObject();
-	    MultiLanguageString program = competence.getProgramI18N(executionSemester);
-	    q6215.put("en", cut("programa em ingles", program.getContent(Language.en), output, 1000));
-	    q6215.put("pt", cut("programa em portugues", program.getContent(Language.pt), output, 1000));
-	    json.put("q-6.2.1.5", q6215);
+		JSONObject q6214 = new JSONObject();
+		MultiLanguageString objectives = competence.getObjectivesI18N(executionSemester);
+		q6214.put("en", cut("objectivos em ingles", objectives.getContent(Language.en), output, 1000));
+		q6214.put("pt", cut("objectivos em portugues", objectives.getContent(Language.pt), output, 1000));
+		json.put("q-6.2.1.4", q6214);
 
-	    JSONObject q6216 = new JSONObject();
-	    q6216.put("en", "coherence");
-	    q6216.put("pt", "coerencia");
-	    json.put("q-6.2.1.6", q6216);
+		JSONObject q6215 = new JSONObject();
+		MultiLanguageString program = competence.getProgramI18N(executionSemester);
+		q6215.put("en", cut("programa em ingles", program.getContent(Language.en), output, 1000));
+		q6215.put("pt", cut("programa em portugues", program.getContent(Language.pt), output, 1000));
+		json.put("q-6.2.1.5", q6215);
 
-	    JSONObject q6217 = new JSONObject();
-	    q6217.put("en", cut("avaliação em ingles", competence.getEvaluationMethodEn(executionSemester), output, 1000));
-	    q6217.put("pt", cut("avaliação em portugues", competence.getEvaluationMethod(executionSemester), output, 1000));
-	    json.put("q-6.2.1.7", q6217);
+		JSONObject q6216 = new JSONObject();
+		q6216.put("en", "coherence");
+		q6216.put("pt", "coerencia");
+		json.put("q-6.2.1.6", q6216);
 
-	    JSONObject q6218 = new JSONObject();
-	    q6218.put("en", "coherence");
-	    q6218.put("pt", "coerencia");
-	    json.put("q-6.2.1.8", q6218);
+		JSONObject q6217 = new JSONObject();
+		q6217.put("en", cut("avaliação em ingles", competence.getEvaluationMethodEn(executionSemester), output, 1000));
+		q6217.put("pt", cut("avaliação em portugues", competence.getEvaluationMethod(executionSemester), output, 1000));
+		json.put("q-6.2.1.7", q6217);
 
-	    List<String> references = new ArrayList<String>();
-	    for (BibliographicReference reference : competence.getBibliographicReferences(executionSemester)
-		    .getMainBibliographicReferences()) {
-		references.add(reference.getReference());
+		JSONObject q6218 = new JSONObject();
+		q6218.put("en", "coherence");
+		q6218.put("pt", "coerencia");
+		json.put("q-6.2.1.8", q6218);
+
+		List<String> references = new ArrayList<String>();
+		for (BibliographicReference reference : competence.getBibliographicReferences(executionSemester)
+			.getMainBibliographicReferences()) {
+		    references.add(reference.getReference());
+		}
+		json.put("q-6.2.1.9", StringUtils.join(references, "; "));
+		jsons.put(json, output.toString());
 	    }
-	    json.put("q-6.2.1.9", StringUtils.join(references, "; "));
-	    jsons.put(json, output.toString());
 	}
 	return jsons;
     }
 
     private String cut(String field, String content, StringBuilder output, int size) {
-	int escapedLength = JSONObject.escape(content).getBytes().length;
-	if (escapedLength > size) {
-	    output.append(" " + field + " cortado a " + size + " caracteres.");
-	    return content.substring(0, size - 4 - (escapedLength - content.length())) + " ...";
+	if (content == null) {
+	    output.append(" " + field + " vazio.");
+	} else {
+	    int escapedLength = JSONObject.escape(content).getBytes().length;
+	    if (escapedLength > size) {
+		output.append(" " + field + " cortado a " + size + " caracteres.");
+		return content.substring(0, size - 4 - (escapedLength - content.length())) + " ...";
+	    }
 	}
-
 	return content;
     }
 
@@ -386,23 +392,31 @@ public class A3ESDegreeProcess implements Serializable {
 
     protected List<TeacherCurricularInformation> getTeacherCurricularInformation() {
 	Set<Teacher> teachers = new HashSet<Teacher>();
+	List<ExecutionSemester> executionSemesters = getSelectedExecutionSemesters();
+	ExecutionYear previousExecutionYear = executionSemester.getExecutionYear().getPreviousExecutionYear();
 	for (final DegreeCurricularPlan degreeCurricularPlan : degree.getDegreeCurricularPlansSet()) {
 	    for (final CurricularCourse course : degreeCurricularPlan.getCurricularCourses()) {
 		for (final ExecutionCourse executionCourse : course.getAssociatedExecutionCourses()) {
-		    if (isInScope(course, executionCourse)) {
+		    if (executionSemesters.contains(executionCourse.getExecutionPeriod())) {
 			for (Professorship professorhip : executionCourse.getProfessorshipsSet()) {
-			    if (professorhip.getPerson().getTeacher().isActiveOrHasAuthorizationForSemester(executionSemester)) {
+			    if (professorhip.getPerson().getTeacher()
+				    .isActiveOrHasAuthorizationForSemester(executionCourse.getExecutionPeriod())) {
 				teachers.add(professorhip.getPerson().getTeacher());
 			    }
 			}
+		    }
+		    if (previousExecutionYear.equals(executionCourse.getExecutionPeriod().getExecutionYear())) {
 			if (executionCourse.isDissertation()) {
 			    for (Attends attends : executionCourse.getAttends()) {
 				if (attends.hasEnrolment() || attends.getEnrolment().getThesis() != null) {
 				    for (ThesisEvaluationParticipant thesisEvaluationParticipant : attends.getEnrolment()
 					    .getThesis().getOrientation()) {
 					if (thesisEvaluationParticipant.getPerson().getTeacher() != null
-						&& thesisEvaluationParticipant.getPerson().getTeacher()
-							.isActiveOrHasAuthorizationForSemester(executionSemester)) {
+						&& thesisEvaluationParticipant
+							.getPerson()
+							.getTeacher()
+							.isActiveOrHasAuthorizationForSemester(
+								executionCourse.getExecutionPeriod())) {
 					    teachers.add(thesisEvaluationParticipant.getPerson().getTeacher());
 					}
 				    }
@@ -414,7 +428,6 @@ public class A3ESDegreeProcess implements Serializable {
 	    }
 	}
 
-	List<ExecutionSemester> executionSemesters = getSelectedExecutionSemesters();
 	PhdProgram phdProgram = degree.getPhdProgram();
 	if (phdProgram != null) {
 	    for (PhdIndividualProgramProcess phdIndividualProgramProcess : phdProgram.getIndividualProgramProcesses()) {
@@ -444,13 +457,6 @@ public class A3ESDegreeProcess implements Serializable {
 	return teacherCurricularInformationList;
     }
 
-    private boolean isInScope(CurricularCourse course, ExecutionCourse executionCourse) {
-	List<ExecutionSemester> selectedExecutionSemesters = getSelectedExecutionSemesters();
-	Set<ExecutionYear> selectedExecutionYears = getSelectedExecutionYears();
-	return selectedExecutionSemesters.contains(executionCourse.getExecutionPeriod()) || course.isAnual()
-		&& selectedExecutionYears.contains(executionCourse.getExecutionPeriod().getExecutionYear());
-    }
-
     protected Map<JSONObject, String> buildTeacherCurriculumJson() {
 	Map<JSONObject, String> jsons = new HashMap<JSONObject, String>();
 	for (TeacherCurricularInformation info : getTeacherCurricularInformation()) {
@@ -474,9 +480,21 @@ public class A3ESDegreeProcess implements Serializable {
 		    QualificationBean qualification = qualifications.next();
 		    // file.put("deg", "Licenciado");//
 		    // qualification.getDegree());
-		    file.put("degarea", cut("area cientifica", qualification.getScientificArea(), output, 200));
-		    file.put("ano_grau", qualification.getYear());
-		    file.put("instituicao_conferente", cut("instituição", qualification.getInstitution(), output, 200));
+		    if (qualification.getScientificArea() != null) {
+			file.put("degarea", cut("area cientifica", qualification.getScientificArea(), output, 200));
+		    } else {
+			output.append(" Última Qualificação: degarea vazio.");
+		    }
+		    if (qualification.getYear() != null) {
+			file.put("ano_grau", qualification.getYear());
+		    } else {
+			output.append(" Última Qualificação: ano_grau vazio.");
+		    }
+		    if (qualification.getInstitution() != null) {
+			file.put("instituicao_conferente", cut("instituição", qualification.getInstitution(), output, 200));
+		    } else {
+			output.append(" Última Qualificação: instituicao_conferente vazio.");
+		    }
 		}
 		file.put("regime", info.getProfessionalRegimeTime());
 
@@ -485,11 +503,31 @@ public class A3ESDegreeProcess implements Serializable {
 		    while (qualifications.hasNext()) {
 			JSONObject academic = new JSONObject();
 			QualificationBean qualification = qualifications.next();
-			academic.put("year", qualification.getYear());
-			academic.put("degree", cut("grau", qualification.getDegree(), output, 30));
-			academic.put("area", cut("area", qualification.getScientificArea(), output, 100));
-			academic.put("ies", cut("ies", qualification.getInstitution(), output, 100));
-			academic.put("rank", cut("classificação", qualification.getClassification(), output, 30));
+			if (qualification.getYear() != null) {
+			    academic.put("year", qualification.getYear());
+			} else {
+			    output.append(" Qualificações: year vazio.");
+			}
+			if (qualification.getDegree() != null) {
+			    academic.put("degree", cut("grau", qualification.getDegree(), output, 30));
+			} else {
+			    output.append(" Qualificações: degree vazio.");
+			}
+			if (qualification.getScientificArea() != null) {
+			    academic.put("area", cut("area", qualification.getScientificArea(), output, 100));
+			} else {
+			    output.append(" Qualificações: area vazio.");
+			}
+			if (qualification.getInstitution() != null) {
+			    academic.put("ies", cut("ies", qualification.getInstitution(), output, 100));
+			} else {
+			    output.append(" Qualificações: ies vazio.");
+			}
+			if (qualification.getClassification() != null) {
+			    academic.put("rank", cut("classificação", qualification.getClassification(), output, 30));
+			} else {
+			    output.append(" Qualificações: rank vazio.");
+			}
 			academicArray.add(academic);
 		    }
 		    file.put("form-academic", academicArray);
