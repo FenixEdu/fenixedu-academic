@@ -535,10 +535,11 @@ public class TeacherCurricularInformation implements Serializable {
 	@Override
 	public int compareTo(LecturedCurricularUnit o) {
 	    String sigla = TeacherCurricularInformation.this.degree.getSigla();
-	    if (getDegree().matches("(.*, )*" + sigla + "(, .*)*") && !o.getDegree().matches("(.*, )*" + sigla + "(, .*)*")) {
+	    if (getDegree().matches("(.*, )*" + sigla + "(, .*)*") && !o.getDegree().matches("(.*, )*" + sigla + "(, .*)*")
+		    && getHours() != 0) {
 		return -1;
 	    } else if ((!getDegree().matches("(.*, )*" + sigla + "(, .*)*"))
-		    && o.getDegree().matches("(.*, )*" + sigla + "(, .*)*")) {
+		    && o.getDegree().matches("(.*, )*" + sigla + "(, .*)*") && o.getHours() != 0) {
 		return 1;
 	    }
 	    return ((Float) o.getHours()).compareTo(getHours());
