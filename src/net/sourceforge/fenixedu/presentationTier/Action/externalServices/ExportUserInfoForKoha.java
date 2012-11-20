@@ -282,10 +282,16 @@ public class ExportUserInfoForKoha extends ExternalInterfaceDispatchAction {
 	    if (partyContact.isActiveAndValid() && isVisible(partyContact)) {
 		if (partyContact.isPhone()) {
 		    final Phone phone = (Phone) partyContact;
-		    phone.getNumber();
+		    if (builder.length() > 0) {
+			builder.append(", ");
+		    }
+		    builder.append(phone.getNumber());
 		} else if (partyContact.isMobile()) {
 		    final MobilePhone mobilePhone = (MobilePhone) partyContact;
-		    mobilePhone.getNumber();
+		    if (builder.length() > 0) {
+			builder.append(", ");
+		    }
+		    builder.append(mobilePhone.getNumber());
 		}
 	    }
 	}
