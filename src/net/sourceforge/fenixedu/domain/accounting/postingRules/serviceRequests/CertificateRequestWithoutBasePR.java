@@ -27,13 +27,16 @@ public class CertificateRequestWithoutBasePR extends CertificateRequestWithoutBa
     @Override
     protected Money doCalculationForAmountToPay(Event event, DateTime when, boolean applyDiscount) {
 	final CertificateRequestEvent certificateRequestEvent = (CertificateRequestEvent) event;
-	Money amountForUnits = getAmountForUnits(event);
+	final Money amountForUnits = getAmountForUnits(event);
+	return isUrgent(certificateRequestEvent) ? amountForUnits.multiply(2) : amountForUnits;
+    }
 
-	if (isUrgent(certificateRequestEvent)) {
-	    amountForUnits = amountForUnits.multiply(2);
-	}
-
-	return amountForUnits;
+    @Override
+    public Money getAmountForUnits(Event event) {
+        final Money money = super.getAmountForUnits(event);
+        final Money maximumAmount = getMaximumAmount();
+        return maximumAmount == null || maximumAmount.isZero() || money.lessThan(maximumAmount)
+        	? money : maximumAmount;
     }
 
     @Checked("PostingRulePredicates.editPredicate")
