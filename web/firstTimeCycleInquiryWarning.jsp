@@ -2,6 +2,8 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr"%>
+<%@ page language="java" %>
+<%@ page import="org.joda.time.LocalDate" %>
 <html:html xhtml="true">
 	<head>
 		<title>
@@ -14,6 +16,10 @@
 	</head>
 	<body>
 		<div id="container">
+			<% 
+				LocalDate now = new LocalDate();
+				LocalDate limitDate = new LocalDate(2012, 12, 1);
+			%>
 			<div id="dotist_id">
 				<img alt="<bean:message key="institution.logo" bundle="IMAGE_RESOURCES" />"
 						src="<bean:message key="dot.logo" bundle="GLOBAL_RESOURCES" arg0="<%= request.getContextPath() %>"/>" />
@@ -22,10 +28,9 @@
 				<h1><bean:message key="message.inquiries.firstTimeCycle.title" bundle="INQUIRIES_RESOURCES"/></h1>
 				<div class="mtop1">
 					<p><bean:message key="message.inquiries.firstTimeCycle.body" bundle="INQUIRIES_RESOURCES"/></p>
+					<p><span style="background-color: #fbf8cc; color: #805500;" ><bean:message key="message.inquiries.firstTimeCycle.warningDate" arg0="<%= limitDate.toString() %>" bundle="INQUIRIES_RESOURCES"/></span></p>
 				</div>
 			</div>
-			<br />
-
 			<div align="center">
 				<table>
 					<tr>
@@ -38,15 +43,19 @@
 								</html:submit>
 							</form>
 						</td>
-						<td>
-							<form method="post" action="<%= request.getContextPath() %>/respondToFirstTimeCycleInquiry.do">
-								<html:hidden property="method" value="registerStudentResponseRespondLater"/>
-								<html:hidden property="<%=net.sourceforge.fenixedu.presentationTier.servlets.filters.ContentInjectionRewriter.CONTEXT_ATTRIBUTE_NAME%>" value="/comunicacao/comunicacao"/>
-								<html:submit bundle="HTMLALT_RESOURCES" altKey="inquiries.respond.later" property="ok">
-									<bean:message key="button.inquiries.respond.later" />
-								</html:submit>
-							</form>
-						</td>
+						<% 
+							if(now.isBefore(limitDate)) {
+						%>
+								<td>
+									<form method="post" action="<%= request.getContextPath() %>/respondToFirstTimeCycleInquiry.do">
+										<html:hidden property="method" value="registerStudentResponseRespondLater"/>
+										<html:hidden property="<%=net.sourceforge.fenixedu.presentationTier.servlets.filters.ContentInjectionRewriter.CONTEXT_ATTRIBUTE_NAME%>" value="/comunicacao/comunicacao"/>
+										<html:submit bundle="HTMLALT_RESOURCES" altKey="inquiries.respond.later" property="ok">
+											<bean:message key="button.inquiries.respond.later" />
+										</html:submit>
+									</form>
+								</td>
+						<% } %>
 					</tr>
 				</table>
 			</div>

@@ -52,8 +52,8 @@
 	<logic:equal name="<%= pt.ist.fenixWebFramework.servlets.filters.SetUserViewFilter.USER_SESSION_ATTRIBUTE %>" property="person.student.eligibleForCareerWorkshopApplication" value="true">
 		<li><html:link page="/careerWorkshopApplication.do?method=prepare" titleKey="link.title.careerWorkshop"><bean:message key="link.student.careerWorkshop"/></html:link></li>
 	</logic:equal>
-<%--	<li><html:link page="/studentCycleInquiry.do?method=prepare" titleKey="link.title.inquiry.students.firstTimeCycle"><bean:message key="link.inquiries.firstTimeCycle" bundle="INQUIRIES_RESOURCES"/></html:link></li>	
---%>	
+	<li><html:link page="/studentCycleInquiry.do?method=prepare" titleKey="link.title.inquiry.students.firstTimeCycle"><bean:message key="link.inquiries.firstTimeCycle" bundle="INQUIRIES_RESOURCES"/></html:link></li>	
+	
 	<li class="navheader"><bean:message key="submit"/></li>
 	<li><html:link page="/studentTests.do?method=viewStudentExecutionCoursesWithTests" titleKey="link.testsSubmissions"><bean:message key="link.tests"/></html:link></li>
 	<li><html:link page="/projectSubmission.do?method=viewProjectsWithOnlineSubmission" titleKey="link.projectSubmissions"><bean:message key="projects"/></html:link></li>

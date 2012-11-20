@@ -111,12 +111,11 @@ public abstract class BaseAuthenticationAction extends FenixAction {
 	return new ActionForward("/respondToFirstTimeCycleInquiry.do?method=showQuestion");
     }
 
-    private boolean isStudentAndHasFirstTimeCycleInquiryToRespond(IUserView userView) {
-	//TODO remove after testing is complete
-	//	if (userView.hasRoleType(RoleType.STUDENT)) {
-	//	    final Student student = userView.getPerson().getStudent();
-	//	    return student != null && student.hasFirstTimeCycleInquiryToRespond();
-	//	}
+    private boolean isStudentAndHasFirstTimeCycleInquiryToRespond(IUserView userView) {	
+	if (userView.hasRoleType(RoleType.STUDENT)) {
+	    final Student student = userView.getPerson().getStudent();
+	    return student != null && student.hasFirstTimeCycleInquiryToRespond();
+	}
 	return false;
     }
 
