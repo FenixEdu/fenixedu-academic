@@ -354,6 +354,12 @@ webServices.PersonInformation.getPersonInformation.password=p
 webServices.PaymentManagement.username=u
 webServices.PaymentManagement.password=p
 
+#---------------------------------------------------------------
+# Credentials for Koha application to retireve data
+#---------------------------------------------------------------
+externalServices.koha.username=abc
+externalServices.koha.password=123
+
 external.application.workflow.equivalences.uri=<URL da aplica��o>/rest/equivalenceProcess/
 external.application.workflow.equivalences.uri.secret=password
 #------------------------------------------------------------------------------
