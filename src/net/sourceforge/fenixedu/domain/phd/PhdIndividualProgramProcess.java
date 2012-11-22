@@ -639,7 +639,7 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
 		return true;
 	    }
 	}
-	return false;
+	return (activeStatesIntervals.size() == 0 && beginActiveDate != null);
     }
 
     public Student getStudent() {
