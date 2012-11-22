@@ -156,7 +156,8 @@ public class TeachersListFromGiafReportFile extends TeachersListFromGiafReportFi
 	// Coluna "Nome"
 	row.setCell(teacher.getPerson().getName());
 	// Coluna "Data de nascimento"
-	row.setCell(writeDate(YearMonthDay.fromDateFields(teacher.getPerson().getDateOfBirth())));
+	row.setCell(teacher.getPerson().getDateOfBirth() != null ? writeDate(YearMonthDay.fromDateFields(teacher.getPerson()
+		.getDateOfBirth())) : null);
 	// Coluna "Sexo"
 	row.setCell(teacher.getPerson().getGender().toLocalizedString());
 	// Coluna "Nacionalidade"
