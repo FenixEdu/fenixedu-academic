@@ -287,10 +287,10 @@ public class A3ESDegreeProcess implements Serializable {
 
 		json.put("q-6.2.1.1", competence.getName(executionSemester));
 
-		json.put("q-6.2.1.2", getTeachersAndTeachingHours(course, executionSemester, true));
+		json.put("q-6.2.1.2", getTeachersAndTeachingHours(course, true));
 
 		JSONObject q6213 = new JSONObject();
-		String teachersAndTeachingHours = getTeachersAndTeachingHours(course, executionSemester, false);
+		String teachersAndTeachingHours = getTeachersAndTeachingHours(course, false);
 		q6213.put("en", teachersAndTeachingHours);
 		q6213.put("pt", teachersAndTeachingHours);
 		json.put("q-6.2.1.3", q6213);
@@ -347,14 +347,15 @@ public class A3ESDegreeProcess implements Serializable {
 	return content;
     }
 
-    private String getTeachersAndTeachingHours(CurricularCourse course, ExecutionSemester executionSemester,
-	    boolean responsibleTeacher) {
+    private String getTeachersAndTeachingHours(CurricularCourse course, boolean responsibleTeacher) {
 	Map<Teacher, Double> responsiblesMap = new HashMap<Teacher, Double>();
+	List<ExecutionSemester> executionSemesters = getSelectedExecutionSemesters();
 	for (final ExecutionCourse executionCourse : course.getAssociatedExecutionCourses()) {
-	    if (executionSemester == executionCourse.getExecutionPeriod()) {
+	    if (executionSemesters.contains(executionCourse.getExecutionPeriod())) {
 		for (Professorship professorhip : executionCourse.getProfessorshipsSet()) {
 		    if (professorhip.isResponsibleFor() == responsibleTeacher
-			    && professorhip.getPerson().getTeacher().isActiveOrHasAuthorizationForSemester(executionSemester)) {
+			    && professorhip.getPerson().getTeacher()
+				    .isActiveOrHasAuthorizationForSemester(executionCourse.getExecutionPeriod())) {
 			Double hours = responsiblesMap.get(professorhip.getTeacher());
 			if (hours == null) {
 			    hours = 0.0;
@@ -408,7 +409,7 @@ public class A3ESDegreeProcess implements Serializable {
 		    if (previousExecutionYear.equals(executionCourse.getExecutionPeriod().getExecutionYear())) {
 			if (executionCourse.isDissertation()) {
 			    for (Attends attends : executionCourse.getAttends()) {
-				if (attends.hasEnrolment() || attends.getEnrolment().getThesis() != null) {
+				if (attends.hasEnrolment() && attends.getEnrolment().getThesis() != null) {
 				    for (ThesisEvaluationParticipant thesisEvaluationParticipant : attends.getEnrolment()
 					    .getThesis().getOrientation()) {
 					if (thesisEvaluationParticipant.getPerson().getTeacher() != null
@@ -590,24 +591,23 @@ public class A3ESDegreeProcess implements Serializable {
 		addCell("Categoria", teacherCurricularInformation.getProfessionalCategoryName());
 		Iterator<QualificationBean> qualifications = teacherCurricularInformation.getQualifications().iterator();
 
-		if (qualifications.hasNext()) {
-		    QualificationBean qualification = qualifications.next();
-		    addCell("Grau", qualification.getDegree());
-		    addCell("Área científica", qualification.getScientificArea());
-		    addCell("Ano", qualification.getYear());
-		    addCell("Instituição", qualification.getInstitution());
-		}
+		QualificationBean qualification = qualifications.hasNext() ? qualifications.next() : null;
+		addCell("Grau", qualification != null ? qualification.getDegree() : null);
+		addCell("Área científica", qualification != null ? qualification.getScientificArea() : null);
+		addCell("Ano", qualification != null ? qualification.getYear() : null);
+		addCell("Instituição", qualification != null ? qualification.getInstitution() : null);
+
 		addCell("Regime", teacherCurricularInformation.getProfessionalRegimeTime());
 
 		List<String> otherQualificationStrings = new ArrayList<String>();
 		while (qualifications.hasNext()) {
-		    QualificationBean qualification = qualifications.next();
+		    QualificationBean otherQualification = qualifications.next();
 		    StringBuilder qualificationString = new StringBuilder();
-		    qualificationString.append(qualification.getYear()).append(",");
-		    qualificationString.append(qualification.getDegree()).append(",");
-		    qualificationString.append(qualification.getScientificArea()).append(",");
-		    qualificationString.append(qualification.getInstitution()).append(",");
-		    qualificationString.append(qualification.getClassification());
+		    qualificationString.append(otherQualification.getYear()).append(",");
+		    qualificationString.append(otherQualification.getDegree()).append(",");
+		    qualificationString.append(otherQualification.getScientificArea()).append(",");
+		    qualificationString.append(otherQualification.getInstitution()).append(",");
+		    qualificationString.append(otherQualification.getClassification());
 		    otherQualificationStrings.add(qualificationString.toString());
 		}
 		addCell("Outras Qualificações", StringUtils.join(otherQualificationStrings, "\n"));
