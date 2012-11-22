@@ -1534,8 +1534,7 @@ public class Student extends Student_Base {
     }
 
     /*
-     * If student has delegate role, get the curricular courses he is
-     * responsible for
+     * If student has delegate role, get the curricular courses he is responsible for
      */
     public Set<CurricularCourse> getCurricularCoursesResponsibleForByFunctionType(FunctionType delegateFunctionType,
 	    ExecutionYear executionYear) {
@@ -1903,14 +1902,11 @@ public class Student extends Student_Base {
 
     public boolean isEligibleForCareerWorkshopApplication() {
 	/*
-	 * RULE TO FILTER 2nd CYCLE STUDENTS ONLY - Prior to Sep2012 for
-	 * (Registration registration : getActiveRegistrations()) {
+	 * RULE TO FILTER 2nd CYCLE STUDENTS ONLY - Prior to Sep2012 for (Registration registration : getActiveRegistrations()) {
 	 * 
 	 * if (isMasterDegreeOnly(registration)) return true;
 	 * 
-	 * if (isIntegratedMasterDegree(registration)) { if
-	 * (isEnroledOnSecondCycle(registration)) { return true; } } } return
-	 * false;
+	 * if (isIntegratedMasterDegree(registration)) { if (isEnroledOnSecondCycle(registration)) { return true; } } } return false;
 	 */
 	return true;
     }
@@ -2124,7 +2120,8 @@ public class Student extends Student_Base {
 
     public boolean hasFirstTimeCycleInquiryToRespond() {
 	for (Registration registration : getActiveRegistrations()) {
-	    if (!registration.hasInquiryStudentCycleAnswer() && registration.isFirstTime()) {
+	    if (!registration.getDegreeType().isEmpty() && !registration.hasInquiryStudentCycleAnswer()
+		    && registration.isFirstTime()) {
 		if (registration.hasPhdIndividualProgramProcess()
 			&& registration.getPhdIndividualProgramProcess().hasInquiryStudentCycleAnswer()) {
 		    return false;

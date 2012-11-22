@@ -35,7 +35,8 @@ public class FirstTimeCycleInquiryDA extends FenixDispatchAction {
 	ExecutionYear currentExecutionYear = ExecutionYear.readCurrentExecutionYear();
 
 	for (Registration registration : student.getActiveRegistrations()) {
-	    if (!registration.hasInquiryStudentCycleAnswer() && registration.isFirstTime(currentExecutionYear)) {
+	    if (!registration.getDegreeType().isEmpty() && !registration.hasInquiryStudentCycleAnswer()
+		    && registration.isFirstTime()) {
 		if (registration.hasPhdIndividualProgramProcess()
 			&& registration.getPhdIndividualProgramProcess().hasInquiryStudentCycleAnswer()) {
 		    return actionMapping.findForward("firstTimeCyleInquiry");
