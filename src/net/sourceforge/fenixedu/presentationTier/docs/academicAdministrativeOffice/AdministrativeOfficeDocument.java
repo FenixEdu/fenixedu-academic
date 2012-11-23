@@ -214,9 +214,7 @@ public class AdministrativeOfficeDocument extends FenixReport {
 	newFillReport();
     }
     
-    protected void newFillReport() {
-	
-    }
+    protected void newFillReport() {}
 
     protected boolean showPriceFields() {
 	return getDocumentRequest().isCertificate() && getDocumentRequest().getEventType() != null;
@@ -257,9 +255,7 @@ public class AdministrativeOfficeDocument extends FenixReport {
 	addParameter("universityName", getMLSTextContent(UniversityUnit.getInstitutionsUniversityUnit().getPartyName()));
     }
     
-    protected void setDocumentTitle() {
-	addParameter("documentTitle",getResourceBundle().getString("label.academicDocument.title"));
-    }
+    protected void setDocumentTitle(){}
 
     protected void setPersonFields() {
 	final Person person = getDocumentRequest().getPerson();
