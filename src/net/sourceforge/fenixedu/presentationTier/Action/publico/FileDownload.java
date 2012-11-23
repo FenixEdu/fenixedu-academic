@@ -39,29 +39,11 @@ public class FileDownload extends FenixAction {
 		dos.close();
 	    } else if (file.isPrivate() && person == null) {
 		response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-		return sendLoginRedirect(request);
-		// redirect
 	    } else {
 		response.setStatus(HttpServletResponse.SC_FORBIDDEN);
 	    }
 	}
 	return null;
-    }
-
-    private ActionForward sendLoginRedirect(final HttpServletRequest request) {
-	boolean isCasEnabled = PropertiesManager.getBooleanProperty("cas.enabled");
-	final String loginPage;
-	if (isCasEnabled) {
-	    String port = request.getServerPort() == 80 || request.getServerPort() == 443 ? "" : ":" + request.getServerPort();
-	    String casValue = request.getScheme() + "://" + request.getServerName() + port + request.getContextPath()
-		    + request.getRequestURI();
-	    String urlSuffix = "?service=" + casValue;
-	    loginPage = PropertiesManager.getProperty("cas.loginUrl") + urlSuffix;
-	} else {
-	    String urlSuffix = "?service=" + request.getRequestURI();
-	    loginPage = PropertiesManager.getProperty("login.page") + urlSuffix;
-	}
-	return new ActionForward(loginPage, true);
     }
 
 }
