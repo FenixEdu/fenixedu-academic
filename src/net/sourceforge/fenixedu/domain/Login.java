@@ -285,13 +285,22 @@ public class Login extends Login_Base {
 
     private String makeNewAlias(final RoleType roleType) {
 	final Person person = getUser().getPerson();
-	final Employee employee = person == null ? null : person.getEmployee();
-	return roleType == RoleType.EMPLOYEE && employee != null ?
-		"F" + employee.getEmployeeNumber() : getTeacherAlias(roleType, person, employee);
+	return roleType == RoleType.EMPLOYEE ? makeNewAliasEmployee(person)
+		: roleType == RoleType.TEACHER ? makeNewAliasTeacher(person)
+		: roleType == RoleType.GRANT_OWNER ? makeNewAliasGrantOwner(person)
+		: null;
     }
 
-    private String getTeacherAlias(final RoleType roleType, final Person person, final Employee employee) {
-	return roleType == RoleType.TEACHER && person.hasTeacher() && employee != null ?
-		"D" + employee.getEmployeeNumber() : null;
+    private String makeNewAliasEmployee(final Person person) {
+	return person.hasEmployee() ? "F" + person.getEmployee().getEmployeeNumber() : null;
     }
+
+    private String makeNewAliasTeacher(final Person person) {
+	return person.hasEmployee() && person.hasTeacher() ? "D" + person.getEmployee().getEmployeeNumber() : null;
+    }
+
+    private String makeNewAliasGrantOwner(final Person person) {
+	return person.hasGrantOwner() ? "B" + person.getGrantOwner().getNumber() : null;
+    }
+
 }
