@@ -88,6 +88,7 @@ public class Login extends Login_Base {
     public void setUsername(RoleType roleType) {
 	removeAliasWithoutCloseLogin(roleType);
 	openLoginIfNecessary(roleType);
+	updateAliases(roleType);
     }
 
     public void setUserUID() {
@@ -264,5 +265,33 @@ public class Login extends Login_Base {
 		throw new DomainException("error.user.login.already.exists");
 	    }
 	}
+    }
+
+    public void updateAliases(final RoleType roleType) {
+	final String newAlias = makeNewAlias(roleType);
+	if (newAlias != null && !hasAlias(newAlias)) {
+	    LoginAlias.createNewCustomLoginAlias(this, newAlias);
+	}
+    }
+
+    private boolean hasAlias(final String newAlias) {
+	for (final LoginAlias loginAlias : getAliasSet()) {
+	    if (loginAlias.getAlias().equals(newAlias)) {
+		return true;
+	    }
+	}
+	return false;
+    }
+
+    private String makeNewAlias(final RoleType roleType) {
+	final Person person = getUser().getPerson();
+	final Employee employee = person == null ? null : person.getEmployee();
+	return roleType == RoleType.EMPLOYEE && employee != null ?
+		"F" + employee.getEmployeeNumber() : getTeacherAlias(roleType, person, employee);
+    }
+
+    private String getTeacherAlias(final RoleType roleType, final Person person, final Employee employee) {
+	return roleType == RoleType.TEACHER && person.hasTeacher() && employee != null ?
+		"D" + employee.getEmployeeNumber() : null;
     }
 }
