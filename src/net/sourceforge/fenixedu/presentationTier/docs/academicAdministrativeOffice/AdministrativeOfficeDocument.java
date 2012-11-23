@@ -199,6 +199,7 @@ public class AdministrativeOfficeDocument extends FenixReport {
 	}
 
 	addIntroParameters(AccessControl.getPerson().getEmployee());
+	setDocumentTitle();
 	setPersonFields();
 
 	if (getDocumentRequest().hasExecutionYear()) {
@@ -209,6 +210,12 @@ public class AdministrativeOfficeDocument extends FenixReport {
 	addParameter("degreeDescription", getDegreeDescription());
 	addParameter("employeeLocation", AccessControl.getPerson().getEmployee().getCurrentCampus().getLocation());
 	addParameter("day", new LocalDate().toString(DD_MMMM_YYYY, getLocale()));
+	
+	newFillReport();
+    }
+    
+    protected void newFillReport() {
+	
     }
 
     protected boolean showPriceFields() {
@@ -244,9 +251,14 @@ public class AdministrativeOfficeDocument extends FenixReport {
     final protected void addIntroParameters(final Employee employee) {
 	addParameter("administrativeOfficeCoordinator", employee.getCurrentWorkingPlace().getActiveUnitCoordinator());
 	addParameter("administrativeOfficeName", getMLSTextContent(employee.getCurrentWorkingPlace().getPartyName()));
+	addParameter("supervisingUnit", getResourceBundle().getString("label.academicDocument.direcaoAcademica"));
 
 	addParameter("institutionName", getMLSTextContent(RootDomainObject.getInstance().getInstitutionUnit().getPartyName()));
 	addParameter("universityName", getMLSTextContent(UniversityUnit.getInstitutionsUniversityUnit().getPartyName()));
+    }
+    
+    protected void setDocumentTitle() {
+	addParameter("documentTitle",getResourceBundle().getString("label.academicDocument.title"));
     }
 
     protected void setPersonFields() {
