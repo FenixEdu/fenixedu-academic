@@ -43,4 +43,4 @@ function executeWithTempFile() {
 	echo
 }
 
-execute "Adding a "ShowSubsections" flag to Section entity." addShowSubSectionFlagToSection.sql
+execute "Adding a 'ShowSubsections' flag to Section entity." addShowSubSectionFlagToSection.sql
