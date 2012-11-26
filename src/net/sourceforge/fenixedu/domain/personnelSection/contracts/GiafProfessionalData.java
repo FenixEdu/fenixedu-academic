@@ -11,6 +11,11 @@ import org.joda.time.LocalDate;
 
 public class GiafProfessionalData extends GiafProfessionalData_Base {
 
+    public GiafProfessionalData() {
+	super();
+	setRootDomainObject(RootDomainObject.getInstance());
+    }
+
     public GiafProfessionalData(final PersonProfessionalData personProfessionalData, final String personGiafIdentification,
 	    final LocalDate institutionEntryDate, final ContractSituation contractSituation,
 	    final String contractSituationGiafId, final LocalDate contractSituationDate,
