@@ -83,7 +83,7 @@ public class FirstTimeCycleInquiryDA extends FenixDispatchAction {
 	    HttpServletResponse response) throws Exception {
 
 	final StudentFirstTimeCycleInquiryBean studentInquiryBean = getRenderedObject("studentInquiryBean");
-	if (!studentInquiryBean.getRegistration().hasInquiryStudentCycleAnswer()) {
+	if (!studentInquiryBean.hasInquiryStudentCycleAnswer()) {
 	    RenderUtils.invalidateViewState();
 	    String validationResult = studentInquiryBean.validateInquiry();
 	    if (!Boolean.valueOf(validationResult)) {

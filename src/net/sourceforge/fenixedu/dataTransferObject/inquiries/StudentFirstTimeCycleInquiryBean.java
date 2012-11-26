@@ -173,4 +173,14 @@ public class StudentFirstTimeCycleInquiryBean implements Serializable {
     public StudentCycleInquiryTemplate getStudentInquiryTemplate() {
 	return studentInquiryTemplate;
     }
+
+    public boolean hasInquiryStudentCycleAnswer() {
+	if (getRegistration() != null && getRegistration().hasInquiryStudentCycleAnswer()) {
+	    return true;
+	}
+	if (getPhdProcess() != null && getPhdProcess().hasInquiryStudentCycleAnswer()) {
+	    return true;
+	}
+	return false;
+    }
 }
