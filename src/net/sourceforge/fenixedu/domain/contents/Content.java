@@ -155,6 +155,11 @@ public abstract class Content extends Content_Base {
      *             if the content cannot be deleted
      */
     public void delete() {
+	// While you would think the following line is redundant (it is also done in
+	// deleteDomainObject(), we need to know that the object is being delete beforehand.
+	// Some content override the getInitialContet() method (for example) and always 
+	// return a value, unless the object has already been disconnected from root.
+	removeRootDomainObject();
 	checkDeletion();
 	disconnect();
 	deleteDomainObject();

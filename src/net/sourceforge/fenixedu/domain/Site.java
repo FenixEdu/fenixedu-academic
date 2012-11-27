@@ -30,7 +30,7 @@ import pt.utl.ist.fenix.tools.util.i18n.Language;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 /**
- * @author Ivo Brand�o
+ * @author Ivo Brandão
  */
 public abstract class Site extends Site_Base {
 
@@ -336,24 +336,26 @@ public abstract class Site extends Site_Base {
 
     @Override
     public Content getInitialContent() {
-	final MetaDomainObjectPortal template = getTemplate();
 	Content initialContent = null;
-	if (template != null) {
+	if (hasRootDomainObject()) {
+	    final MetaDomainObjectPortal template = getTemplate();
+	    if (template != null) {
 
-	    initialContent = getTemplate().getInitialContent();
-	    if (initialContent != null) {
-		return initialContent;
-	    }
-
-	    Collection<Element> children = getOrderedChildren(Element.class);
-	    if (!children.isEmpty()) {
-		return children.iterator().next();
-	    }
-
-	    for (Container container : getOrderedChildren(Container.class)) {
-		initialContent = container.getInitialContent();
+		initialContent = getTemplate().getInitialContent();
 		if (initialContent != null) {
-		    break;
+		    return initialContent;
+		}
+
+		Collection<Element> children = getOrderedChildren(Element.class);
+		if (!children.isEmpty()) {
+		    return children.iterator().next();
+		}
+
+		for (Container container : getOrderedChildren(Container.class)) {
+		    initialContent = container.getInitialContent();
+		    if (initialContent != null) {
+			break;
+		    }
 		}
 	    }
 	}
