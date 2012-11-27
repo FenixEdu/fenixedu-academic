@@ -46,14 +46,20 @@
 
 <logic:notEmpty name="infoSiteStudentGroup" property="infoSiteStudentInformationList">
 <p>
+	<%
+		final String urlPhoto = "/insertStudentGroup.do?method=prepareCreateStudentGroup"
+				+ "&amp;objectCode=" + pageContext.findAttribute("objectCode")
+				+ (request.getParameter("shiftCode") != null ? "&amp;shiftCode=" + request.getParameter("shiftCode") : "")
+				+ "&amp;groupPropertiesCode=" + request.getParameter("groupPropertiesCode");
+	%>
 	<logic:present name="showPhotos">
-		<html:link page="<%="/insertStudentGroup.do?method=prepareCreateStudentGroup&amp;objectCode=" + pageContext.findAttribute("objectCode")+ "&amp;shiftCode=" + request.getParameter("shiftCode")+ "&amp;showPhotos=true&amp;groupPropertiesCode=" + request.getParameter("groupPropertiesCode")%>">
-		    	<bean:message key="label.viewPhoto"/>
+		<html:link page="<%= urlPhoto + "&amp;showPhotos=true" %>">
+		    <bean:message key="label.viewPhoto"/>
 		</html:link>
 	</logic:present>
 	<logic:notPresent name="showPhotos">
-		<html:link page="<%="/insertStudentGroup.do?method=prepareCreateStudentGroup&amp;objectCode=" + pageContext.findAttribute("objectCode")+ "&amp;shiftCode=" + request.getParameter("shiftCode")+ "&amp;groupPropertiesCode=" + request.getParameter("groupPropertiesCode")%>">
-		    	<bean:message key="label.notViewPhoto"/>
+		<html:link page="<%= urlPhoto%>">
+		    <bean:message key="label.notViewPhoto"/>
 		</html:link>
 	</logic:notPresent>
 </p>
