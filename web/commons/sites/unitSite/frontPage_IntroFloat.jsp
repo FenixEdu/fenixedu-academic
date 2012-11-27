@@ -31,7 +31,6 @@
 			<logic:equal name="site" property="showFlags" value="true">
 				 <jsp:include page="../../../i18n.jsp"/>
 			</logic:equal>
-	
 		<logic:equal name="site" property="showIntroduction" value="true">
 			<logic:present name="site" property="description">
 				<div class="usiteintrofloated">
@@ -48,18 +47,17 @@
 		<logic:equal name="site" property="showBanner" value="true">
 			<logic:present name="banner">
 				<bean:define id="banner" name="banner" type="net.sourceforge.fenixedu.domain.UnitSiteBanner"/>
-				
 				<logic:empty name="banner" property="link">
-					<img src="<%= banner.getMainImage().getDownloadUrl() %>"/>
+					<%= pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX %><img src="<%= banner.getMainImage().getDownloadUrl() %>"/>
 				</logic:empty>
 				<logic:notEmpty name="banner" property="link">
 					<a href="<bean:write name="banner" property="link"/>" target="_blank">
-						<img src="<%= banner.getMainImage().getDownloadUrl() %>"/>
+						<%= pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX %><img src="<%= banner.getMainImage().getDownloadUrl() %>"/>
 					</a>
 				</logic:notEmpty>
 			</logic:present>
 			<logic:notPresent name="banner">
-				<a href="http://www.bolonha.ist.eu"><img src="<%= request.getContextPath() %>/images/site/bolonha.gif" alt="Com o IST, entra no melhor ensino superior europeu - www.bolonha.ist.eu" width="420" height="150"/></a>
+				<%= pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX %><a href="http://www.bolonha.ist.eu"><%= pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX %><img src="<%= request.getContextPath() %>/images/site/bolonha.gif" alt="Com o IST, entra no melhor ensino superior europeu - www.bolonha.ist.eu" width="420" height="150"/></a>
 			</logic:notPresent>
 		</logic:equal>
 	</div>
