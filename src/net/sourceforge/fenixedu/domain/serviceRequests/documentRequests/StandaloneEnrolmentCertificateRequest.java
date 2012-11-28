@@ -49,6 +49,11 @@ public class StandaloneEnrolmentCertificateRequest extends StandaloneEnrolmentCe
     public boolean isAvailableForTransitedRegistrations() {
 	return true;
     }
+    
+    @Override
+    public boolean hasPersonalInfo() {
+	return true;
+    }
 
     @Override
     protected void internalChangeState(AcademicServiceRequestBean academicServiceRequestBean) {

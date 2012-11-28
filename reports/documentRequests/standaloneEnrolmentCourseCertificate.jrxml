@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8"  ?>
 <!-- Created with iReport - A designer for JasperReports -->
 <!DOCTYPE jasperReport PUBLIC "//JasperReports//DTD Report Design//EN" "http://jasperreports.sourceforge.net/dtds/jasperreport.dtd">
 <jasperReport
@@ -45,6 +45,20 @@
 	<parameter name="enrolmentsInfo" isForPrompting="false" class="java.lang.String"/>
 	<parameter name="day" isForPrompting="false" class="java.lang.String"/>
 	<parameter name="employeeLocation" isForPrompting="false" class="java.lang.String"/>
+	<parameter name="firstParagraph" isForPrompting="false" class="java.lang.String"/>
+	<parameter name="secondParagraph" isForPrompting="false" class="java.lang.String"/>
+	<parameter name="seventhParagraph" isForPrompting="false" class="java.lang.String"/>
+	<parameter name="signer" isForPrompting="false" class="java.lang.String"/>
+	<parameter name="signerLocation" isForPrompting="false" class="java.lang.String"/>
+	<parameter name="page" isForPrompting="false" class="java.lang.String"/>
+	<parameter name="pageOf" isForPrompting="false" class="java.lang.String"/>
+	<parameter name="studentNumber" isForPrompting="false" class="java.lang.String"/>
+	<parameter name="documentNumber" isForPrompting="false" class="java.lang.String"/>
+	<parameter name="checkedBy" isForPrompting="false" class="java.lang.String"/>
+	<parameter name="priceTagsPrinting" isForPrompting="false" class="java.lang.String"/>
+	<parameter name="priceTagsIssuing" isForPrompting="false" class="java.lang.String"/>
+	<parameter name="priceTagsFastDelivery" isForPrompting="false" class="java.lang.String"/>
+	<parameter name="priceTagsTotal" isForPrompting="false" class="java.lang.String"/>
 
 
 		<group  name="endLine" >
@@ -100,7 +114,7 @@
 					<textElement textAlignment="Right" lineSpacing="1_1_2">
 						<font pdfFontName="Courier-Oblique" size="12" isItalic="true"/>
 					</textElement>
-				<textFieldExpression   class="java.lang.String"><![CDATA["Coordenador" + ($P{administrativeOfficeCoordinator}.isMale() ? "" : "a") + " do " + $P{administrativeOfficeName}]]></textFieldExpression>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$P{signer}]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="true" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
@@ -118,7 +132,7 @@
 					<textElement lineSpacing="1_1_2">
 						<font pdfFontName="Courier-Oblique" size="12" isItalic="true"/>
 					</textElement>
-				<textFieldExpression   class="java.lang.String"><![CDATA[$P{institutionName} + ", em " + $P{employeeLocation} + ", " + $P{day}]]></textFieldExpression>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$P{signerLocation}]]></textFieldExpression>
 				</textField>
 			</band>
 			</groupFooter>
@@ -144,13 +158,13 @@
 					<graphicElement stretchType="NoStretch"/>
 					<imageExpression class="java.lang.String"><![CDATA[$P{imageUrl}]]></imageExpression>
 				</image>
-				<staticText>
+				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
 						x="168"
 						y="113"
 						width="58"
 						height="11"
-						key="staticText-11"
+						key="textField-35"
 						stretchType="RelativeToTallestObject">
 							<printWhenExpression><![CDATA[$P{printPriceFields}]]></printWhenExpression>
 						</reportElement>
@@ -162,15 +176,15 @@
 					<textElement lineSpacing="Single">
 						<font pdfFontName="Courier-Oblique" size="8" isItalic="true"/>
 					</textElement>
-				<text><![CDATA[Impresso.....]]></text>
-				</staticText>
-				<staticText>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$P{priceTagsPrinting}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
 						x="168"
 						y="124"
 						width="62"
 						height="11"
-						key="staticText-12"
+						key="textField-36"
 						stretchType="RelativeToTallestObject">
 							<printWhenExpression><![CDATA[$P{printPriceFields}]]></printWhenExpression>
 						</reportElement>
@@ -182,15 +196,15 @@
 					<textElement lineSpacing="Single">
 						<font pdfFontName="Courier-Oblique" size="8" isItalic="true"/>
 					</textElement>
-				<text><![CDATA[Emissão da Cert.]]></text>
-				</staticText>
-				<staticText>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$P{priceTagsIssuing}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
 						x="168"
 						y="135"
 						width="58"
 						height="11"
-						key="staticText-13"
+						key="textField-37"
 						stretchType="RelativeToTallestObject">
 							<printWhenExpression><![CDATA[$P{printPriceFields}]]></printWhenExpression>
 						</reportElement>
@@ -202,15 +216,15 @@
 					<textElement lineSpacing="Single">
 						<font pdfFontName="Courier-Oblique" size="8" isItalic="true"/>
 					</textElement>
-				<text><![CDATA[Urgência......]]></text>
-				</staticText>
-				<staticText>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$P{priceTagsFastDelivery}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
 						x="198"
 						y="146"
 						width="25"
 						height="11"
-						key="staticText-14"
+						key="textField-38"
 						stretchType="RelativeToTallestObject">
 							<printWhenExpression><![CDATA[$P{printPriceFields}]]></printWhenExpression>
 						</reportElement>
@@ -222,8 +236,8 @@
 					<textElement lineSpacing="Single">
 						<font pdfFontName="Courier-Oblique" size="8" isItalic="true"/>
 					</textElement>
-				<text><![CDATA[Total]]></text>
-				</staticText>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$P{priceTagsTotal}]]></textFieldExpression>
+				</textField>
 				<textField isStretchWithOverflow="true" isBlankWhenNull="false" evaluationTime="Report" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
 						x="235"
@@ -327,15 +341,15 @@
 					<textElement textAlignment="Justified" lineSpacing="1_1_2">
 						<font pdfFontName="Courier-BoldOblique" size="12" isBold="true" isItalic="true"/>
 					</textElement>
-				<textFieldExpression   class="java.lang.String"><![CDATA["      " + $P{administrativeOfficeCoordinator}.getName() + ", Coordenador" + ($P{administrativeOfficeCoordinator}.isMale() ? "" : "a") + " do " + $P{administrativeOfficeName}.toUpperCase() + " do " + $P{institutionName}.toUpperCase() + ", " + $P{universityName}.toUpperCase()]]></textFieldExpression>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$P{firstParagraph}]]></textFieldExpression>
 				</textField>
-				<staticText>
+				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
 						x="64"
 						y="33"
 						width="469"
 						height="22"
-						key="staticText-14"
+						key="textField-31"
 						positionType="Float"/>
 					<box>					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -345,8 +359,8 @@
 					<textElement lineSpacing="1_1_2">
 						<font pdfFontName="Courier-Oblique" size="12" isItalic="true"/>
 					</textElement>
-				<text><![CDATA[     CERTIFICA que,]]></text>
-				</staticText>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$P{secondParagraph}]]></textFieldExpression>
+				</textField>
 				<textField isStretchWithOverflow="true" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
 						x="65"
@@ -435,7 +449,7 @@
 					<textElement textAlignment="Justified" lineSpacing="1_1_2">
 						<font pdfFontName="Courier-Oblique" size="12" isItalic="true"/>
 					</textElement>
-				<textFieldExpression   class="java.lang.String"><![CDATA["no " + $P{degreeDescription} + ", obteve aproveitamento nas seguintes unidades curriculares isoladas:"]]></textFieldExpression>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$P{seventhParagraph}]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="true" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
@@ -478,15 +492,15 @@
 					<textElement>
 						<font pdfFontName="Courier-Oblique" size="8" isItalic="true"/>
 					</textElement>
-				<textFieldExpression   class="java.lang.String"><![CDATA["Registo Nº " + $P{documentRequest}.getServiceRequestNumber().toString().trim()]]></textFieldExpression>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$P{documentNumber}]]></textFieldExpression>
 				</textField>
-				<staticText>
+				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
 						x="80"
 						y="61"
 						width="271"
 						height="11"
-						key="staticText-11"/>
+						key="textField-34"/>
 					<box>					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<bottomPen lineWidth="0.0" lineColor="#000000"/>
@@ -495,8 +509,8 @@
 					<textElement lineSpacing="Single">
 						<font pdfFontName="Courier-Oblique" size="8" isItalic="true"/>
 					</textElement>
-				<text><![CDATA[Conferido por: _______________________________]]></text>
-				</staticText>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$P{checkedBy}]]></textFieldExpression>
+				</textField>
 				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
 						x="81"
@@ -513,15 +527,15 @@
 					<textElement lineSpacing="Double">
 						<font pdfFontName="Courier-Oblique" size="8" isItalic="true"/>
 					</textElement>
-				<textFieldExpression   class="java.lang.String"><![CDATA["Alun" + ($P{registration}.getPerson().isMale() ? "o" : "a") + " Nº " + $P{registration}.getNumber()]]></textFieldExpression>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$P{studentNumber}]]></textFieldExpression>
 				</textField>
-				<staticText>
+				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
 						x="460"
 						y="45"
 						width="25"
 						height="19"
-						key="staticText-5"
+						key="textField-32"
 						positionType="Float"/>
 					<box>					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -531,15 +545,15 @@
 					<textElement textAlignment="Center" verticalAlignment="Middle">
 						<font pdfFontName="Courier-Oblique" size="8" isItalic="true"/>
 					</textElement>
-				<text><![CDATA[Pág.]]></text>
-				</staticText>
-				<staticText>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$P{page}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
 						x="498"
 						y="45"
 						width="14"
 						height="19"
-						key="staticText-6"
+						key="textField-33"
 						positionType="Float"/>
 					<box>					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -549,8 +563,8 @@
 					<textElement textAlignment="Center" verticalAlignment="Middle">
 						<font pdfFontName="Courier-Oblique" size="8" isItalic="true"/>
 					</textElement>
-				<text><![CDATA[de]]></text>
-				</staticText>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$P{pageOf}]]></textFieldExpression>
+				</textField>
 				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
 						x="485"

@@ -43,7 +43,7 @@ public class RegistrationDeclaration extends AdministrativeOfficeDocument {
     
     @Override
     protected void setDocumentTitle() {
-	addParameter("documentTitle",getResourceBundle().getString("label.academicDocument.title.declaration"));
+	addParameter("documentTitle", getResourceBundle().getString("label.academicDocument.title.declaration"));
     }
     
     @Override
