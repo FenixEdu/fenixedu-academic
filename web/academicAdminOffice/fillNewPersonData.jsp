@@ -18,7 +18,28 @@
 	<fr:edit id="chooseIngression" name="ingressionInformationBean" visible="false" />	
 	
 	<h3 class="mtop15 mbottom025"><bean:message key="label.person.title.personal.info" bundle="ACADEMIC_OFFICE_RESOURCES" /></h3>
-	<fr:edit id="personData" name="personBean" schema="student.personalData-edit" >
+	<fr:edit id="personData" name="personBean">
+		<fr:schema type="net.sourceforge.fenixedu.dataTransferObject.person.PersonBean" bundle="ACADEMIC_OFFICE_RESOURCES">
+			<fr:slot name="name" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
+				<fr:property name="size" value="50" />
+			</fr:slot>
+			<fr:slot name="givenNames" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
+				<fr:property name="size" value="50" />
+			</fr:slot>
+			<fr:slot name="familyNames" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
+				<fr:property name="size" value="50" />
+			</fr:slot>
+			<fr:slot name="gender" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" />
+			<fr:slot name="socialSecurityNumber" />
+			<fr:slot name="professionType" />
+			<fr:slot name="professionalCondition" layout="menu-select">
+				<fr:property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.ProfessionalSituationConditionTypeProviderForRaides2011"/>
+			</fr:slot>
+			<fr:slot name="profession" />
+			<fr:slot name="maritalStatus">
+				<fr:property name="excludedValues" value="UNKNOWN" />
+			</fr:slot>
+		</fr:schema>
 		<fr:layout name="tabular" >
 			<fr:property name="classes" value="tstyle4 thlight thright mtop025"/>
 	        <fr:property name="columnClasses" value="width14em,,tdclear tderror1"/>
@@ -85,7 +106,7 @@
 				<fr:property name="destination" value="schoolLevel-postback" />
 			</fr:slot>
 			<% if(precedentDegreeInformationBean.isUnitFromRaidesListMandatory()) { %>
-				<fr:slot name="institutionUnitName" layout="autoComplete" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
+				<fr:slot name="institutionUnitName" layout="autoCompleteWithPostBack" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
 					<fr:property name="size" value="50"/>
 					<fr:property name="labelField" value="unit.name"/>
 					<fr:property name="indicatorShown" value="true"/>
@@ -94,13 +115,14 @@
 					<fr:property name="className" value="net.sourceforge.fenixedu.domain.organizationalStructure.UnitName"/>
 					<fr:property name="minChars" value="3"/>
 					<fr:property name="rawSlotName" value="institutionName"/>
+					<fr:property name="destination" value="institutionPostBack"/>
 				</fr:slot>
 				<fr:slot name="raidesDegreeDesignation" layout="autoComplete" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
 			    	<fr:property name="size" value="50"/>
 					<fr:property name="labelField" value="description"/>
 					<fr:property name="indicatorShown" value="true"/>
 					<fr:property name="serviceName" value="SearchRaidesDegreeDesignations"/>
-					<fr:property name="serviceArgs" value="slot=description,size=50"/>
+					<fr:property name="serviceArgs" value="<%="slot=description,size=50,filterSchoolLevelName=" + ((precedentDegreeInformationBean.getSchoolLevel() != null) ? precedentDegreeInformationBean.getSchoolLevel().getName() : "null") + ",filterUnitOID=" + ((precedentDegreeInformationBean.getInstitution() != null) ? precedentDegreeInformationBean.getInstitution().getExternalId() : "null") %>"/>
 					<fr:property name="className" value="net.sourceforge.fenixedu.domain.raides.DegreeDesignation"/>
 					<fr:property name="minChars" value="3"/>
 			    </fr:slot>
@@ -147,6 +169,7 @@
 			<fr:property name="classes" value="tstyle4 thlight thright mtop05"/>
 	        <fr:property name="columnClasses" value="width14em,,tdclear tderror1"/>
 	        <fr:property name="requiredMarkShown" value="true" />
+			<fr:destination name="institutionPostBack" path="/createStudent.do?method=prepareEditInstitutionPostback" />
 	        <fr:destination name="schoolLevel-postback" path="/createStudent.do?method=fillNewPersonDataPostback" />
 	        <fr:destination name="invalid" path="/createStudent.do?method=invalid" />
 		</fr:layout>

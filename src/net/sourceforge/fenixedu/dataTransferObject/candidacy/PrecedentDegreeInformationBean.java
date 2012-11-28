@@ -156,6 +156,11 @@ public class PrecedentDegreeInformationBean implements Serializable {
 	this.otherSchoolLevel = otherSchoolLevel;
     }
 
+    public void resetDegree() {
+	setDegreeDesignation(null);
+	setRaidesDegreeDesignation(null);
+    }
+
     public void validate() {
 	if (this.schoolLevel == SchoolLevelType.OTHER && StringUtils.isEmpty(this.otherSchoolLevel)) {
 	    throw new DomainException("error.registration.PrecedentDegreeInformationBean.otherSchoolLevel.must.be.filled");

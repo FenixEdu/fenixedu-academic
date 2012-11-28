@@ -253,6 +253,23 @@ public class StudentOperationsDispatchAction extends FenixDispatchAction {
 	return true;
     }
 
+    public ActionForward prepareEditInstitutionPostback(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) {
+
+	PrecedentDegreeInformationBean pdiBean = getRenderedObject("precedentDegreeInformation");
+	pdiBean.resetDegree();
+
+	request.setAttribute("executionDegreeBean", getRenderedObject("executionDegree"));
+	request.setAttribute("ingressionInformationBean", getRenderedObject("chooseIngression"));
+	request.setAttribute("personBean", getRenderedObject("person"));
+	request.setAttribute("precedentDegreeInformationBean", pdiBean);
+	request.setAttribute("originInformationBean", getRenderedObject("originInformation"));
+	RenderUtils.invalidateViewState("precedentDegreeInformation");
+	RenderUtils.invalidateViewState("precedentDegreeInformationExternal");
+
+	return mapping.findForward("fillNewPersonData");
+    }
+
     public ActionForward fillNewPersonDataPostback(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) {
 
