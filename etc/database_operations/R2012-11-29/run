@@ -43,3 +43,4 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "Correcting the English translation for the Brazilian nationality." correctBrazilianNationality.sql
