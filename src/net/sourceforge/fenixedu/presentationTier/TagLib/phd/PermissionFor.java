@@ -35,6 +35,6 @@ public class PermissionFor extends ConditionalTagBase {
 	Campus employeeCampus = person.getEmployeeCampus();
 
 	AdministrativeOfficePermission permission = employeeAdministrativeOffice.getPermission(getPermission(), employeeCampus);
-	return permission.isMember(person);
+	return permission == null ? false : permission.isMember(person);  //TEMP FIX - Can be deleted after merge
     }
 }
