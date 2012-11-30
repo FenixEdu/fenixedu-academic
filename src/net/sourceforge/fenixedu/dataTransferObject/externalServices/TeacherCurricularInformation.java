@@ -28,6 +28,7 @@ import net.sourceforge.fenixedu.domain.personnelSection.contracts.GiafProfession
 import net.sourceforge.fenixedu.domain.personnelSection.contracts.PersonProfessionalData;
 import net.sourceforge.fenixedu.domain.personnelSection.contracts.ProfessionalCategory;
 import net.sourceforge.fenixedu.domain.personnelSection.contracts.ProfessionalRegime;
+import net.sourceforge.fenixedu.domain.phd.InternalPhdParticipant;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess;
 import net.sourceforge.fenixedu.domain.research.activity.JournalIssue;
 import net.sourceforge.fenixedu.domain.research.result.ResearchResult;
@@ -346,9 +347,10 @@ public class TeacherCurricularInformation implements Serializable {
 		}
 	    }
 	    if (degree.getPhdProgram() != null) {
-		for (PhdIndividualProgramProcess phdIndividualProgramProcess : teacher.getPerson()
-			.getPhdIndividualProgramProcesses()) {
-		    if (phdIndividualProgramProcess.isActive(executionSemester.getAcademicInterval().toInterval())
+		for (InternalPhdParticipant participant : teacher.getPerson().getInternalParticipantsSet()) {
+		    PhdIndividualProgramProcess phdIndividualProgramProcess = participant.getIndividualProcess();
+		    if (phdIndividualProgramProcess.getPhdProgram().equals(degree.getPhdProgram())
+			    && phdIndividualProgramProcess.isActive(executionSemester.getAcademicInterval().toInterval())
 			    && phdIndividualProgramProcess.isGuiderOrAssistentGuider(teacher.getPerson())
 			    && teacher.isActiveOrHasAuthorizationForSemester(executionSemester)) {
 			addLecturedCurricularUnit(phdIndividualProgramProcess.getPhdProgram().getName().getContent(),
