@@ -16,6 +16,7 @@ import pt.ist.fenixWebFramework.services.Service;
 public class PhysicalAddress extends PhysicalAddress_Base {
 
     public static Comparator<PhysicalAddress> COMPARATOR_BY_ADDRESS = new Comparator<PhysicalAddress>() {
+	@Override
 	public int compare(PhysicalAddress contact, PhysicalAddress otherContact) {
 	    final String address = contact.getAddress();
 	    final String otherAddress = otherContact.getAddress();
@@ -27,7 +28,7 @@ public class PhysicalAddress extends PhysicalAddress_Base {
 	    } else if (otherAddress != null) {
 		result = -1;
 	    }
-	    return (result == 0) ? COMPARATOR_BY_TYPE.compare(contact, otherContact) : result;
+	    return result == 0 ? COMPARATOR_BY_TYPE.compare(contact, otherContact) : result;
 	}
     };
 
@@ -51,6 +52,11 @@ public class PhysicalAddress extends PhysicalAddress_Base {
 	    PhysicalAddressData data) {
 	this();
 	super.init(party, type, defaultContact);
+	setVisibleToAlumni(Boolean.FALSE);
+	setVisibleToEmployees(Boolean.FALSE);
+	setVisibleToPublic(Boolean.FALSE);
+	setVisibleToStudents(Boolean.FALSE);
+	setVisibleToTeachers(Boolean.FALSE);
 	edit(data);
     }
 
