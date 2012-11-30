@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -35,7 +36,10 @@ import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcessState;
 import net.sourceforge.fenixedu.domain.space.Campus;
+import net.sourceforge.fenixedu.domain.student.Registration;
+import net.sourceforge.fenixedu.domain.student.RegistrationAgreement;
 import net.sourceforge.fenixedu.domain.student.Student;
+import net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationState;
 import net.sourceforge.fenixedu.domain.teacher.CategoryType;
 
 import org.apache.commons.lang.StringUtils;
@@ -210,13 +214,45 @@ public class ExportUserInfoForKoha extends ExternalInterfaceDispatchAction {
     }
 
     private StudentCurricularPlan findStudentCurricularPlan(final Student student, final DateTime begin, final DateTime end) {
-	final Set<StudentCurricularPlan> studentCurricularPlans = CardGenerationBatch.getStudentCurricularPlans(begin, end, student);
+	final Set<StudentCurricularPlan> studentCurricularPlans = getStudentCurricularPlans(begin, end, student);
 	if (studentCurricularPlans.size() == 1) {
 	    return studentCurricularPlans.iterator().next();
 	} else if (studentCurricularPlans.size() > 1) {
 	    return findMaxStudentCurricularPlan(studentCurricularPlans);
 	}
 	return null;
+    }
+
+    public static Set<StudentCurricularPlan> getStudentCurricularPlans(final DateTime begin, final DateTime end, final Student student) {
+	final Set<StudentCurricularPlan> studentCurricularPlans = new HashSet<StudentCurricularPlan>();
+
+	for (final Registration registration : student.getRegistrationsSet()) {
+	    if (!registration.isActive()) {
+		continue;
+	    }
+	    final DegreeType degreeType = registration.getDegreeType();
+	    if (!degreeType.isBolonhaType()) {
+		continue;
+	    }
+	    for (final StudentCurricularPlan studentCurricularPlan : registration.getStudentCurricularPlansSet()) {
+		if (studentCurricularPlan.isActive()) {
+		    if (degreeType == DegreeType.BOLONHA_DEGREE || degreeType == DegreeType.BOLONHA_MASTER_DEGREE
+			    || degreeType == DegreeType.BOLONHA_INTEGRATED_MASTER_DEGREE
+			    || degreeType == DegreeType.BOLONHA_ADVANCED_SPECIALIZATION_DIPLOMA) {
+			studentCurricularPlans.add(studentCurricularPlan);
+		    } else {
+			final RegistrationState registrationState = registration.getActiveState();
+			if (registrationState != null) {
+			    final DateTime dateTime = registrationState.getStateDate();
+			    if (!dateTime.isBefore(begin) && !dateTime.isAfter(end)) {
+				studentCurricularPlans.add(studentCurricularPlan);
+			    }
+			}
+		    }
+		}
+	    }
+	}
+	return studentCurricularPlans;
     }
 
     private static StudentCurricularPlan findMaxStudentCurricularPlan(final Set<StudentCurricularPlan> studentCurricularPlans) {
