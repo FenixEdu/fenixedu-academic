@@ -5,8 +5,6 @@ import java.io.IOException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 
 import org.apache.struts.action.ActionForm;
@@ -55,7 +53,7 @@ public class A3esDispatchAction extends FenixDispatchAction {
     }
 
     public ActionForward exportTeacherCurriculum(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-	    HttpServletResponse response) throws FenixFilterException, FenixServiceException, IOException {
+	    HttpServletResponse response) throws IOException {
 	A3ESDegreeProcess process = getRenderedObject("process");
 	SpreadsheetBuilder spreadsheetBuilder = process.exportTeacherCurriculum();
 	response.setContentType("text/plain");

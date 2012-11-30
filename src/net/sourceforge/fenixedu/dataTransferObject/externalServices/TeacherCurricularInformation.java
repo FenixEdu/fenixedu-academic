@@ -423,7 +423,7 @@ public class TeacherCurricularInformation implements Serializable {
 
 	public QualificationBean(Qualification qualification) {
 	    type = qualification.getType();
-	    degree = qualification.getType() != null ? qualification.getType().getLocalizedName() : "Sem Grau";
+	    degree = qualification.getType() != null ? qualification.getType().getLocalizedName().trim() : "Sem Grau";
 	    if (qualification.getType().name().startsWith("DOCTORATE_DEGREE")) {
 		degree = QualificationType.DOCTORATE_DEGREE.getLocalizedName();
 	    }
