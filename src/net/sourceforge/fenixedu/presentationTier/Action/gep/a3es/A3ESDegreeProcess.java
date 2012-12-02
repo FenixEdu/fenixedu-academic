@@ -306,11 +306,11 @@ public class A3ESDegreeProcess implements Serializable {
 		JSONObject q6216 = new JSONObject();
 		q6216.put(
 			"en",
-			ResourceBundle.getBundle("resources.GEPResources", Locale.forLanguageTag("en")).getString(
+			ResourceBundle.getBundle("resources.GEPResources", Locale.ENGLISH).getString(
 				"label.gep.a3es.q6-2-1-6"));
 		q6216.put(
 			"pt",
-			ResourceBundle.getBundle("resources.GEPResources", Locale.forLanguageTag("pt")).getString(
+			ResourceBundle.getBundle("resources.GEPResources", new Locale("pt")).getString(
 				"label.gep.a3es.q6-2-1-6"));
 		json.put("q-6.2.1.6", q6216);
 
@@ -322,11 +322,11 @@ public class A3ESDegreeProcess implements Serializable {
 		JSONObject q6218 = new JSONObject();
 		q6218.put(
 			"en",
-			ResourceBundle.getBundle("resources.GEPResources", Locale.forLanguageTag("en")).getString(
+			ResourceBundle.getBundle("resources.GEPResources", Locale.ENGLISH).getString(
 				"label.gep.a3es.q6-2-1-8"));
 		q6218.put(
 			"pt",
-			ResourceBundle.getBundle("resources.GEPResources", Locale.forLanguageTag("pt")).getString(
+			ResourceBundle.getBundle("resources.GEPResources", new Locale("pt")).getString(
 				"label.gep.a3es.q6-2-1-8"));
 		json.put("q-6.2.1.8", q6218);
 
