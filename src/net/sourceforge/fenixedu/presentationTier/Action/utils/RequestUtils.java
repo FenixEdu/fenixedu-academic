@@ -158,7 +158,7 @@ public class RequestUtils {
     public static boolean isPrivateURI(HttpServletRequest request) {
 	final String uri = request.getRequestURI().substring(APP_CONTEXT_LENGTH);
 
-	return (uri.length() > 1 && (uri.indexOf("CSS/") == -1) && (uri.indexOf("ajax/") == -1) && (uri.indexOf("images/") == -1)
+	return uri.length() > 1 && (uri.indexOf("CSS/") == -1) && (uri.indexOf("ajax/") == -1) && (uri.indexOf("images/") == -1)
 		&& (uri.indexOf("img/") == -1) && (uri.indexOf("download/") == -1) && (uri.indexOf("external/") == -1)
 		&& (uri.indexOf("services/") == -1) && (uri.indexOf("index.jsp") == -1) && (uri.indexOf("index.html") == -1)
 		&& (uri.indexOf("login.do") == -1) && (uri.indexOf("loginCAS.do") == -1) && (uri.indexOf("privado") == -1)
@@ -168,6 +168,6 @@ public class RequestUtils {
 		&& (uri.indexOf("exceptionHandlingAction.do") == -1) && (uri.indexOf("manager/manageCache.do") == -1)
 		&& (uri.indexOf("checkPasswordKerberos.do") == -1) && (uri.indexOf("siteMap.do") == -1)
 		&& (uri.indexOf("cms/forwardEmailAction.do") == -1) && (uri.indexOf("isAlive.do") == -1)
-		&& (uri.indexOf("gwt/") == -1) && (uri.indexOf("remote/") == -1));
+		&& (uri.indexOf("gwt/") == -1) && (uri.indexOf("remote/") == -1) && (uri.indexOf("downloadFile/") == -1);
     }
 }

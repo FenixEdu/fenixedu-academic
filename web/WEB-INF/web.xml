@@ -333,6 +333,10 @@
         <servlet-class>net.sourceforge.fenixedu.presentationTier.servlets.MathMlServlet</servlet-class>
     </servlet>
     <servlet>
+        <servlet-name>FileDownloadServlet</servlet-name>
+        <servlet-class>net.sourceforge.fenixedu.presentationTier.servlets.FileDownloadServlet</servlet-class>
+    </servlet>
+    <servlet>
         <display-name>XFire Servlet</display-name>
         <servlet-name>XFireServlet</servlet-name>
         <servlet-class>org.codehaus.xfire.transport.http.XFireConfigurableServlet</servlet-class>
@@ -370,6 +374,10 @@
    	<servlet-mapping>
 		<servlet-name>MathMlServlet</servlet-name>
 		<url-pattern>/mathml/MathMlServlet</url-pattern>
+	</servlet-mapping>
+   	<servlet-mapping>
+		<servlet-name>FileDownloadServlet</servlet-name>
+		<url-pattern>/downloadFile/*</url-pattern>
 	</servlet-mapping>
 	<servlet-mapping>
 		<servlet-name>AutoCompleteServlet</servlet-name>
