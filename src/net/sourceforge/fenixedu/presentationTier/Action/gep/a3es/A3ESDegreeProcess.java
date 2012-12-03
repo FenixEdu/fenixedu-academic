@@ -304,14 +304,10 @@ public class A3ESDegreeProcess implements Serializable {
 		json.put("q-6.2.1.5", q6215);
 
 		JSONObject q6216 = new JSONObject();
-		q6216.put(
-			"en",
-			ResourceBundle.getBundle("resources.GEPResources", Locale.ENGLISH).getString(
-				"label.gep.a3es.q6-2-1-6"));
-		q6216.put(
-			"pt",
-			ResourceBundle.getBundle("resources.GEPResources", new Locale("pt")).getString(
-				"label.gep.a3es.q6-2-1-6"));
+		q6216.put("en",
+			ResourceBundle.getBundle("resources.GEPResources", Locale.ENGLISH).getString("label.gep.a3es.q6-2-1-6"));
+		q6216.put("pt",
+			ResourceBundle.getBundle("resources.GEPResources", new Locale("pt")).getString("label.gep.a3es.q6-2-1-6"));
 		json.put("q-6.2.1.6", q6216);
 
 		JSONObject q6217 = new JSONObject();
@@ -320,14 +316,10 @@ public class A3ESDegreeProcess implements Serializable {
 		json.put("q-6.2.1.7", q6217);
 
 		JSONObject q6218 = new JSONObject();
-		q6218.put(
-			"en",
-			ResourceBundle.getBundle("resources.GEPResources", Locale.ENGLISH).getString(
-				"label.gep.a3es.q6-2-1-8"));
-		q6218.put(
-			"pt",
-			ResourceBundle.getBundle("resources.GEPResources", new Locale("pt")).getString(
-				"label.gep.a3es.q6-2-1-8"));
+		q6218.put("en",
+			ResourceBundle.getBundle("resources.GEPResources", Locale.ENGLISH).getString("label.gep.a3es.q6-2-1-8"));
+		q6218.put("pt",
+			ResourceBundle.getBundle("resources.GEPResources", new Locale("pt")).getString("label.gep.a3es.q6-2-1-8"));
 		json.put("q-6.2.1.8", q6218);
 
 		List<String> references = new ArrayList<String>();
@@ -624,8 +616,8 @@ public class A3ESDegreeProcess implements Serializable {
 		List<String> lectured = new ArrayList<String>();
 		for (LecturedCurricularUnit lecturedCurricularUnit : teacherCurricularInformation.getLecturedUCs()) {
 		    StringBuilder lecturedString = new StringBuilder();
-		    lecturedString.append(lecturedCurricularUnit.getDegree()).append(",");
 		    lecturedString.append(lecturedCurricularUnit.getName()).append(",");
+		    lecturedString.append(lecturedCurricularUnit.getDegree()).append(",");
 		    lecturedString.append(lecturedCurricularUnit.getShiftType()).append(",");
 		    lecturedString.append(lecturedCurricularUnit.getHours());
 		    lectured.add(lecturedString.toString());

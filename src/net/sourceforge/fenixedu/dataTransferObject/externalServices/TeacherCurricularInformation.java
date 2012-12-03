@@ -91,6 +91,7 @@ public class TeacherCurricularInformation implements Serializable {
 	    if (qualification.getType() != null
 		    && (qualification.getType().equals(QualificationType.DEGREE)
 			    || qualification.getType().equals(QualificationType.MASTER_DEGREE)
+			    || qualification.getType().equals(QualificationType.MASTER)
 			    || qualification.getType().equals(QualificationType.DOCTORATE_DEGREE) || qualification.getType()
 			    .name().startsWith("DOCTORATE_DEGREE"))) {
 		this.qualificationBeans.add(new QualificationBean(qualification));
@@ -342,7 +343,7 @@ public class TeacherCurricularInformation implements Serializable {
 		ExecutionCourse executionCourse = thesisEvaluationParticipant.getThesis().getEnrolment()
 			.getExecutionCourseFor(executionSemester);
 		if (executionCourse != null) {
-		    addLecturedCurricularUnit(executionCourse.getDegreePresentationString(), executionCourse.getName(), "O",
+		    addLecturedCurricularUnit(executionCourse.getDegreePresentationString(), executionCourse.getName(), "OT",
 			    (float) 0);
 		}
 	    }
@@ -354,7 +355,7 @@ public class TeacherCurricularInformation implements Serializable {
 			    && phdIndividualProgramProcess.isGuiderOrAssistentGuider(teacher.getPerson())
 			    && teacher.isActiveOrHasAuthorizationForSemester(executionSemester)) {
 			addLecturedCurricularUnit(phdIndividualProgramProcess.getPhdProgram().getName().getContent(),
-				"Dissertação", "O", (float) 0);
+				"Dissertação", "OT", (float) 0);
 		    }
 		}
 	    }
@@ -404,10 +405,10 @@ public class TeacherCurricularInformation implements Serializable {
 
     private void addLecturedCurricularUnit(String degree, String name, String shiftType, Float hours) {
 	for (LecturedCurricularUnit lecturedCurricularUnit : lecturedUCs) {
-	    if (lecturedCurricularUnit.getDegree().equals(degree) && lecturedCurricularUnit.getName().equals(name)
-		    && lecturedCurricularUnit.getOriginalShiftType().equals(shiftType)) {
+	    if (lecturedCurricularUnit.getName().equals(name) && lecturedCurricularUnit.getOriginalShiftType().equals(shiftType)) {
 		lecturedUCs.remove(lecturedCurricularUnit);
 		lecturedCurricularUnit.addHours(hours);
+		lecturedCurricularUnit.addDegree(degree);
 		lecturedUCs.add(lecturedCurricularUnit);
 		return;
 	    }
@@ -462,16 +463,22 @@ public class TeacherCurricularInformation implements Serializable {
     }
 
     public class LecturedCurricularUnit implements Comparable<LecturedCurricularUnit> {
-	protected String degree;
+	protected Set<String> degrees = new HashSet<String>();
 	protected String name;
 	protected String shiftType;
 	protected float hours;
 
 	public LecturedCurricularUnit(String degree, String name, String shiftType, float hoursValue) {
-	    this.degree = degree;
+	    addDegree(degree);
 	    this.name = name;
 	    this.shiftType = shiftType;
 	    this.hours = hoursValue;
+	}
+
+	public void addDegree(String degrees) {
+	    for (String thisDegree : degrees.split(",")) {
+		this.degrees.add(thisDegree.trim());
+	    }
 	}
 
 	public void addHours(Float hours) {
@@ -505,7 +512,7 @@ public class TeacherCurricularInformation implements Serializable {
 	}
 
 	public String getDegree() {
-	    return degree;
+	    return StringUtils.join(degrees, ", ");
 	}
 
 	@Override
