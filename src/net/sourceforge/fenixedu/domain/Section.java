@@ -341,7 +341,11 @@ public class Section extends Section_Base {
 
     public void removeSite() {
 	Node node = getSiteNode();
+	final Content child = node.getChild();
 	node.delete();
+	if (!child.hasAnyParents()) {
+	    child.delete();
+	}
     }
 
     public void setFirstParent(Container container) {

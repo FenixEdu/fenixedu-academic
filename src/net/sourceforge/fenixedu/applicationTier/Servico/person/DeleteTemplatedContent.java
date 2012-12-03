@@ -23,7 +23,14 @@ public class DeleteTemplatedContent extends FenixService {
 	    }
 	}
 
-	for (; !nodesToDelete.isEmpty(); nodesToDelete.get(0).delete())
-	    ;
+	for (; !nodesToDelete.isEmpty(); ) {
+	    final Node node = nodesToDelete.get(0);
+	    final Content child = node.getChild();
+	    if (child.getParentsSet().isEmpty()) {
+		child.delete();
+	    }
+	    node.delete();
+	}
+
     }
 }

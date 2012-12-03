@@ -21,25 +21,9 @@ import dml.runtime.RelationAdapter;
  */
 public abstract class Node extends Node_Base implements MenuEntry, Comparable<Node> {
 
-    static {
-	ContentNode.addListener(new RelationAdapter<Node, Content>() {
-
-	    @Override
-	    public void afterRemove(Node node, Content content) {
-		super.afterRemove(node, content);
-		if (node != null && content != null) {
-		    if (!content.hasAnyParents()) {
-			content.delete();
-		    }
-		}
-	    }
-	});
-    }
-
     protected Node() {
 	super();
 	setRootDomainObject(RootDomainObject.getInstance());
-	// setOjbConcreteClass(getClass().getName());
     }
 
     protected void init(Container parent, Content child, Boolean isAscending) {

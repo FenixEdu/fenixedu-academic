@@ -364,13 +364,11 @@ public class Announcement extends Announcement_Base {
 
     @Override
     protected void disconnectContent() {
-	super.disconnectContent();
-
-	for (AnnouncementCategory category : getCategories()) {
+	for (final AnnouncementCategory category : getCategories()) {
 	    removeCategories(category);
 	}
-
 	removeCampus();
+	super.disconnectContent();
     }
 
     public boolean isInPublicationPeriod() {
