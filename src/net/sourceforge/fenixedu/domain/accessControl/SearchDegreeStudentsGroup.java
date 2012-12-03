@@ -81,7 +81,7 @@ public class SearchDegreeStudentsGroup extends Group {
     }
 
     public String getMinGradeString() {
-	return (minGrade != null) ? String.valueOf(minGrade) : "ND";
+	return minGrade != null ? String.valueOf(minGrade) : "ND";
     }
 
     public void setMinGrade(Double minGrade) {
@@ -93,7 +93,7 @@ public class SearchDegreeStudentsGroup extends Group {
     }
 
     public String getMaxGradeString() {
-	return (maxGrade != null) ? String.valueOf(maxGrade) : "ND";
+	return maxGrade != null ? String.valueOf(maxGrade) : "ND";
     }
 
     public void setMaxGrade(Double maxGrade) {
@@ -105,7 +105,7 @@ public class SearchDegreeStudentsGroup extends Group {
     }
 
     public String getMinNumberApprovedString() {
-	return (minNumberApproved != null) ? String.valueOf(minNumberApproved) : "ND";
+	return minNumberApproved != null ? String.valueOf(minNumberApproved) : "ND";
     }
 
     public void setMinNumberApproved(Double minNumberApproved) {
@@ -117,7 +117,7 @@ public class SearchDegreeStudentsGroup extends Group {
     }
 
     public String getMaxNumberApprovedString() {
-	return (maxNumberApproved != null) ? String.valueOf(maxNumberApproved) : "ND";
+	return maxNumberApproved != null ? String.valueOf(maxNumberApproved) : "ND";
     }
 
     public void setMaxNumberApproved(Double maxNumberApproved) {
@@ -129,7 +129,7 @@ public class SearchDegreeStudentsGroup extends Group {
     }
 
     public String getMinStudentNumberString() {
-	return (minStudentNumber != null) ? String.valueOf(minStudentNumber) : "ND";
+	return minStudentNumber != null ? String.valueOf(minStudentNumber) : "ND";
     }
 
     public void setMinStudentNumber(Double minStudentNumber) {
@@ -141,7 +141,7 @@ public class SearchDegreeStudentsGroup extends Group {
     }
 
     public String getMaxStudentNumberString() {
-	return (maxStudentNumber != null) ? String.valueOf(maxStudentNumber) : "ND";
+	return maxStudentNumber != null ? String.valueOf(maxStudentNumber) : "ND";
     }
 
     public void setMaxStudentNumber(Double maxStudentNumber) {
@@ -153,7 +153,7 @@ public class SearchDegreeStudentsGroup extends Group {
     }
 
     public String getMinimumYearString() {
-	return (minimumYear != null) ? String.valueOf(minimumYear) : "ND";
+	return minimumYear != null ? String.valueOf(minimumYear) : "ND";
     }
 
     public void setMinimumYear(Integer minimumYear) {
@@ -165,7 +165,7 @@ public class SearchDegreeStudentsGroup extends Group {
     }
 
     public String getMaximumYearString() {
-	return (maximumYear != null) ? String.valueOf(maximumYear) : "ND";
+	return maximumYear != null ? String.valueOf(maximumYear) : "ND";
     }
 
     public void setMaximumYear(Integer maximumYear) {
@@ -217,7 +217,12 @@ public class SearchDegreeStudentsGroup extends Group {
     }
 
     private Comparator<StudentCurricularPlan> determineComparatorKind() {
-	final String sortBy = (getSortBy() != null) ? getSortBy() : "student.number";
+	final String sortBy;
+	if (getSortBy() != null && !getSortBy().equalsIgnoreCase("null")) {
+	    sortBy = getSortBy();
+	} else {
+	    sortBy = "student.number";
+	}
 
 	if (sortBy.equals("registration.average")) {
 	    return new Comparator<StudentCurricularPlan>() {
@@ -304,10 +309,12 @@ public class SearchDegreeStudentsGroup extends Group {
 			return left.getRegistration().getStudent().getNumber()
 				.compareTo(right.getRegistration().getStudent().getNumber());
 		    }
-		    if (left.getRegistration().getPerson().getDefaultEmailAddress() == null)
+		    if (left.getRegistration().getPerson().getDefaultEmailAddress() == null) {
 			return -1;
-		    if (right.getRegistration().getPerson().getDefaultEmailAddress() == null)
+		    }
+		    if (right.getRegistration().getPerson().getDefaultEmailAddress() == null) {
 			return 1;
+		    }
 		    int result = EmailAddress.COMPARATOR_BY_EMAIL.compare(left.getRegistration().getPerson()
 			    .getDefaultEmailAddress(), right.getRegistration().getPerson().getDefaultEmailAddress());
 		    if (result > 0) {
@@ -365,8 +372,8 @@ public class SearchDegreeStudentsGroup extends Group {
 		}
 	    };
 	}
-	return null;
 
+	return null;
     }
 
     public Map<StudentCurricularPlan, RegistrationStateType> searchStudentCurricularPlans(Integer minIndex, Integer maxIndex) {
@@ -404,7 +411,8 @@ public class SearchDegreeStudentsGroup extends Group {
 	    return true;
 	}
 
-	final RegistrationState lastRegistrationState = studentCurricularPlan.getRegistration().getLastRegistrationState(executionYear);
+	final RegistrationState lastRegistrationState = studentCurricularPlan.getRegistration().getLastRegistrationState(
+		executionYear);
 	if (lastRegistrationState == null || lastRegistrationState.getStateType() != registrationStateType) {
 	    return false;
 	}
