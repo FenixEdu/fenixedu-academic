@@ -4,6 +4,7 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 
 import javax.servlet.ServletException;
+import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -13,11 +14,10 @@ import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 
 import org.apache.commons.httpclient.HttpStatus;
-import org.apache.struts.action.ActionServlet;
 
 import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
-public class FileDownloadServlet extends ActionServlet {
+public class FileDownloadServlet extends HttpServlet {
 
     @Override
     public void doGet(final HttpServletRequest request, final HttpServletResponse response)
