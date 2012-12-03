@@ -10,9 +10,9 @@ public class AnnouncementNode extends AnnouncementNode_Base {
 	init(announcementBoard, child, Boolean.TRUE);
     }
 
-    public int compareTo(Node o) {
-	// TODO Auto-generated method stub
-	return 0;
+    public int compareTo(final Node o) {
+	final String oid = o == null ? null : o.getExternalId();
+	return getExternalId().compareTo(oid);
     }
 
 }
