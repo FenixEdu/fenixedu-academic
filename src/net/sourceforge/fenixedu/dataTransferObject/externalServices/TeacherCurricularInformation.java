@@ -508,7 +508,7 @@ public class TeacherCurricularInformation implements Serializable {
 	}
 
 	public float getHours() {
-	    return hours;
+	    return ((float) Math.round(hours * 100)) / 100;
 	}
 
 	public String getDegree() {

@@ -465,8 +465,9 @@ public class A3ESDegreeProcess implements Serializable {
 	    StringBuilder output = new StringBuilder();
 
 	    toplevel.put("q-cf-name", info.getTeacher().getPerson().getName());
-	    toplevel.put("q-cf-ies", RootDomainObject.getInstance().getInstitutionUnit().getName());
-	    toplevel.put("q-cf-uo", info.getUnitName());
+	    // toplevel.put("q-cf-ies",
+	    // RootDomainObject.getInstance().getInstitutionUnit().getName());
+	    // toplevel.put("q-cf-uo", info.getUnitName());
 	    toplevel.put("q-cf-cat", info.getProfessionalCategoryName());
 	    toplevel.put("q-cf-time", info.getProfessionalRegimeTime());
 	    JSONObject file = new JSONObject();

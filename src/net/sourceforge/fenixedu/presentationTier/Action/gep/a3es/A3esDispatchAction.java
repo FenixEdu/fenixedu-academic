@@ -18,8 +18,7 @@ import pt.utl.ist.fenix.tools.spreadsheet.SpreadsheetBuilder;
 import pt.utl.ist.fenix.tools.spreadsheet.WorkbookExportFormat;
 
 @Mapping(module = "gep", path = "/a3es", scope = "request", parameter = "method")
-@Forwards(value = { @Forward(name = "chooseDegreeAndSemesters", path = "/gep/a3es/chooseDegreeAndSemesters.jsp"),
-	@Forward(name = "listProcesses", path = "/gep/a3es/listProcesses.jsp") })
+@Forwards(value = { @Forward(name = "listProcesses", path = "/gep/a3es/listProcesses.jsp") })
 public class A3esDispatchAction extends FenixDispatchAction {
     public ActionForward prepare(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) {
