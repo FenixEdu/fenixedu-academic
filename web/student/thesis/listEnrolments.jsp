@@ -9,6 +9,10 @@
 <em><bean:message key="title.student.portalTitle"/></em>
 <h2><bean:message key="title.student.thesis"/></h2>
 
+<div class="infoop2">
+	<p><bean:message key="dissertation.style.guide.info" bundle="APPLICATION_RESOURCES"/></p>
+</div>
+
 <logic:empty name="enrolments">
 	<em><bean:message key="label.student.thesis.notFound"/></em>
 </logic:empty>
