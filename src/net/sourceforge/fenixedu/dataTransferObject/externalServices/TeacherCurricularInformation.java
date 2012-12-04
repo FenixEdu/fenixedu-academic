@@ -65,8 +65,8 @@ public class TeacherCurricularInformation implements Serializable {
 	    new Comparator<QualificationBean>() {
 		@Override
 		public int compare(final QualificationBean o1, final QualificationBean o2) {
-		    int compareYear = o1.type.compareTo(o2.type);
-		    if (compareYear == 0) {
+		    int compareType = o1.type.compareTo(o2.type);
+		    if (compareType == 0) {
 			if (o1.year == null && o2.year == null) {
 			    return 0;
 			} else if (o1.year == null) {
@@ -76,7 +76,11 @@ public class TeacherCurricularInformation implements Serializable {
 			}
 			return o1.year.compareTo(o2.year);
 		    }
-		    return compareYear;
+		    if ((o1.getType().equals(QualificationType.AGGREGATION) && o2.getType().isDoctorate())
+			    || (o2.getType().equals(QualificationType.AGGREGATION) && o1.getType().isDoctorate())) {
+			return -compareType;
+		    }
+		    return compareType;
 		}
 	    }));
 
@@ -89,11 +93,9 @@ public class TeacherCurricularInformation implements Serializable {
 	this.executionSemesters.addAll(executionSemester);
 	for (Qualification qualification : teacher.getPerson().getAssociatedQualifications()) {
 	    if (qualification.getType() != null
-		    && (qualification.getType().equals(QualificationType.DEGREE)
-			    || qualification.getType().equals(QualificationType.MASTER_DEGREE)
-			    || qualification.getType().equals(QualificationType.MASTER)
-			    || qualification.getType().equals(QualificationType.DOCTORATE_DEGREE) || qualification.getType()
-			    .name().startsWith("DOCTORATE_DEGREE"))) {
+		    && (qualification.getType().isDegree() || qualification.getType().isMaster()
+			    || qualification.getType().isDoctorate() || qualification.getType().equals(
+			    QualificationType.AGGREGATION))) {
 		this.qualificationBeans.add(new QualificationBean(qualification));
 	    }
 	}

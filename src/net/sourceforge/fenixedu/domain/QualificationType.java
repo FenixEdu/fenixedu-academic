@@ -107,4 +107,18 @@ public enum QualificationType {
 	return QualificationType.class.getSimpleName() + "." + name();
     }
 
+    public boolean isDegree() {
+	return equals(DEGREE) || equals(DEGREE_FOREIGNER_WITH_EQUIVALENCE) || equals(DEGREE_FOREIGNER_WITHOUT_EQUIVALENCE);
+    }
+
+    public boolean isMaster() {
+	return equals(MASTER) || equals(MASTER_DEGREE) || equals(MASTER_DEGREE_FOREIGNER_WITH_EQUIVALENCE)
+		|| equals(MASTER_DEGREE_FOREIGNER_WITHOUT_EQUIVALENCE) || equals(MASTER_DEGREE_WITH_RECOGNITION);
+    }
+
+    public boolean isDoctorate() {
+	return equals(DOCTORATE_DEGREE) || equals(DOCTORATE_DEGREE_BOLOGNA)
+		|| equals(DOCTORATE_DEGREE_FOREIGNER_WITH_EQUIVALENCE) || equals(DOCTORATE_DEGREE_FOREIGNER_WITHOUT_EQUIVALENCE)
+		|| equals(DOCTORATE_DEGREE_WITH_RECOGNITION) || equals(DOCTORATE_DEGREE_WITH_REGISTER);
+    }
 }
