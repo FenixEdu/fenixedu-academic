@@ -27,7 +27,6 @@ import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Professorship;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.degreeStructure.BibliographicReferences.BibliographicReference;
 import net.sourceforge.fenixedu.domain.degreeStructure.RootCourseGroup;
@@ -473,8 +472,10 @@ public class A3ESDegreeProcess implements Serializable {
 	    JSONObject file = new JSONObject();
 	    {
 		file.put("name", cut("nome", info.getTeacher().getPerson().getName(), output, 200));
-		file.put("ies", cut("ies", RootDomainObject.getInstance().getInstitutionUnit().getName(), output, 200));
-		file.put("uo", cut("uo", info.getUnitName(), output, 200));
+		// file.put("ies", cut("ies",
+		// RootDomainObject.getInstance().getInstitutionUnit().getName(),
+		// output, 200));
+		// file.put("uo", cut("uo", info.getUnitName(), output, 200));
 		file.put("cat", info.getProfessionalCategoryName());
 
 		Iterator<QualificationBean> qualifications = info.getQualifications().iterator();
