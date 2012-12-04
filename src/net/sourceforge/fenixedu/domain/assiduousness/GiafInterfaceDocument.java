@@ -29,4 +29,12 @@ public class GiafInterfaceDocument extends GiafInterfaceDocument_Base {
 	GiafInterfaceDocument giafInterfaceDocument = new GiafInterfaceDocument(giafInterfaceBean);
 	return giafInterfaceDocument;
     }
+
+    public void delete() {
+	removeModifiedBy();
+	removeRootDomainObject();
+	getGiafInterfaceFile().delete();
+	removeGiafInterfaceFile();
+	deleteDomainObject();
+    }
 }
