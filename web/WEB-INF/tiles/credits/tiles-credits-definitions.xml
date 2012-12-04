@@ -14,6 +14,7 @@
 	<definition name="teacher-professor-ships" page="/teacher/myProfessorships.jsp" 
 				controllerClass="net.sourceforge.fenixedu.presentationTier.tiles.controller.MyProfessorships">
 		<put name="title" value="/commons/blank.jsp"/>
+		<put name="bundle" value="TITLES_RESOURCES" />
 	    <put name="link" value="/commons/blank.jsp"/>
    	    <put name="professorshipList" />
 	</definition>

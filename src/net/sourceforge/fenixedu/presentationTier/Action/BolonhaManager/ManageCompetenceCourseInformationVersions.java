@@ -42,18 +42,18 @@ import pt.ist.fenixWebFramework.services.Service;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixWebFramework.struts.annotations.Tile;
 import pt.utl.ist.fenix.tools.util.excel.Spreadsheet;
 import pt.utl.ist.fenix.tools.util.excel.Spreadsheet.Row;
 
 @Mapping(module = "bolonhaManager", path = "/competenceCourses/manageVersions")
-@Forwards( {
-	@Forward(name = "showCourses", path = "/bolonhaManager/competenceCourseVersions/listCompetenceCourses.jsp"),
+@Forwards({
+	@Forward(name = "showCourses", path = "/bolonhaManager/competenceCourseVersions/listCompetenceCourses.jsp", tileProperties = @Tile(title = "private.bologna.competencecourses.manageversions")),
 	@Forward(name = "createVersions", path = "/bolonhaManager/competenceCourseVersions/createVersion.jsp"),
 	@Forward(name = "viewVersions", path = "/bolonhaManager/competenceCourseVersions/viewVersions.jsp"),
 	@Forward(name = "viewVersionDetails", path = "/bolonhaManager/competenceCourseVersions/viewVersionDetails.jsp"),
 	@Forward(name = "editBiblio", path = "/bolonhaManager/competenceCourseVersions/editBibliography.jsp"),
-	@Forward(name = "viewInformationDetails", path = "/bolonhaManager/competenceCourseVersions/viewCompetenceCourseInformation.jsp")
-})
+	@Forward(name = "viewInformationDetails", path = "/bolonhaManager/competenceCourseVersions/viewCompetenceCourseInformation.jsp") })
 public class ManageCompetenceCourseInformationVersions extends FenixDispatchAction {
 
     public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
@@ -108,8 +108,8 @@ public class ManageCompetenceCourseInformationVersions extends FenixDispatchActi
 	}
 
 	if (bean == null) {
-	    bean = new CompetenceCourseInformationRequestBean(course
-		    .findCompetenceCourseInformationForExecutionPeriod((period != null) ? period : ExecutionSemester
+	    bean = new CompetenceCourseInformationRequestBean(
+		    course.findCompetenceCourseInformationForExecutionPeriod((period != null) ? period : ExecutionSemester
 			    .readActualExecutionSemester()));
 	} else {
 	    if (information == null) {
@@ -154,8 +154,8 @@ public class ManageCompetenceCourseInformationVersions extends FenixDispatchActi
 	String executionPeriodID = request.getParameter("executionPeriodID");
 	ExecutionSemester period = null;
 	if (executionPeriodID != null) {
-	    period = (ExecutionSemester) RootDomainObject.readDomainObjectByOID(ExecutionSemester.class, Integer
-		    .valueOf(executionPeriodID));
+	    period = (ExecutionSemester) RootDomainObject.readDomainObjectByOID(ExecutionSemester.class,
+		    Integer.valueOf(executionPeriodID));
 	}
 	return period;
 
@@ -190,8 +190,8 @@ public class ManageCompetenceCourseInformationVersions extends FenixDispatchActi
     public ActionForward createBibliographicReference(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) throws FenixFilterException, FenixServiceException {
 
-	CompetenceCourseInformationRequestBean bean = (CompetenceCourseInformationRequestBean) RenderUtils.getViewState(
-		"editVersion").getMetaObject().getObject();
+	CompetenceCourseInformationRequestBean bean = (CompetenceCourseInformationRequestBean) RenderUtils
+		.getViewState("editVersion").getMetaObject().getObject();
 	CreateReferenceBean referenceBean = (CreateReferenceBean) RenderUtils.getViewState("createReference").getMetaObject()
 		.getObject();
 	bean.getReferences().createBibliographicReference(referenceBean.getYear(), referenceBean.getTitle(),
@@ -203,8 +203,8 @@ public class ManageCompetenceCourseInformationVersions extends FenixDispatchActi
     public ActionForward viewBibliography(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) throws FenixFilterException, FenixServiceException {
 
-	CompetenceCourseInformationRequestBean bean = (CompetenceCourseInformationRequestBean) RenderUtils.getViewState(
-		"editVersion").getMetaObject().getObject();
+	CompetenceCourseInformationRequestBean bean = (CompetenceCourseInformationRequestBean) RenderUtils
+		.getViewState("editVersion").getMetaObject().getObject();
 	CompetenceCourseLoadBean load = (CompetenceCourseLoadBean) RenderUtils.getViewState("editVersionLoad").getMetaObject()
 		.getObject();
 
@@ -224,8 +224,8 @@ public class ManageCompetenceCourseInformationVersions extends FenixDispatchActi
     public ActionForward removeBibliography(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) throws FenixFilterException, FenixServiceException {
 
-	CompetenceCourseInformationRequestBean bean = (CompetenceCourseInformationRequestBean) RenderUtils.getViewState(
-		"editVersion").getMetaObject().getObject();
+	CompetenceCourseInformationRequestBean bean = (CompetenceCourseInformationRequestBean) RenderUtils
+		.getViewState("editVersion").getMetaObject().getObject();
 	bean.getReferences().deleteBibliographicReference(Integer.valueOf(request.getParameter("index")));
 	return viewBibliography(mapping, form, request, response);
     }
@@ -263,28 +263,28 @@ public class ManageCompetenceCourseInformationVersions extends FenixDispatchActi
 	ExecutionSemester period = bean.getExecutionPeriod();
 	CompetenceCourseInformationChangeRequest request = course.getChangeRequestDraft(period);
 	if (request != null) {
-	    request.edit(bean.getName(), bean.getNameEn(), bean.getJustification(), bean.getRegime(), bean.getObjectives(), bean
-		    .getObjectivesEn(), bean.getProgram(), bean.getProgramEn(), bean.getEvaluationMethod(), bean
-		    .getEvaluationMethodEn(), bean.getCompetenceCourseLevel(), requestor, loadBean.getTheoreticalHours(),
-		    loadBean.getProblemsHours(), loadBean.getLaboratorialHours(), loadBean.getSeminaryHours(), loadBean
-			    .getFieldWorkHours(), loadBean.getTrainingPeriodHours(), loadBean.getTutorialOrientationHours(),
-		    loadBean.getAutonomousWorkHours(), loadBean.getEctsCredits(), loadBean.getSecondTheoreticalHours(), loadBean
-			    .getSecondProblemsHours(), loadBean.getSecondLaboratorialHours(), loadBean.getSecondSeminaryHours(),
-		    loadBean.getSecondFieldWorkHours(), loadBean.getSecondTrainingPeriodHours(), loadBean
-			    .getSecondTutorialOrientationHours(), loadBean.getSecondAutonomousWorkHours(), loadBean
-			    .getSecondEctsCredits(), bean.getReferences(), null);
+	    request.edit(bean.getName(), bean.getNameEn(), bean.getJustification(), bean.getRegime(), bean.getObjectives(),
+		    bean.getObjectivesEn(), bean.getProgram(), bean.getProgramEn(), bean.getEvaluationMethod(),
+		    bean.getEvaluationMethodEn(), bean.getCompetenceCourseLevel(), requestor, loadBean.getTheoreticalHours(),
+		    loadBean.getProblemsHours(), loadBean.getLaboratorialHours(), loadBean.getSeminaryHours(),
+		    loadBean.getFieldWorkHours(), loadBean.getTrainingPeriodHours(), loadBean.getTutorialOrientationHours(),
+		    loadBean.getAutonomousWorkHours(), loadBean.getEctsCredits(), loadBean.getSecondTheoreticalHours(),
+		    loadBean.getSecondProblemsHours(), loadBean.getSecondLaboratorialHours(), loadBean.getSecondSeminaryHours(),
+		    loadBean.getSecondFieldWorkHours(), loadBean.getSecondTrainingPeriodHours(),
+		    loadBean.getSecondTutorialOrientationHours(), loadBean.getSecondAutonomousWorkHours(),
+		    loadBean.getSecondEctsCredits(), bean.getReferences(), null);
 	} else {
-	    new CompetenceCourseInformationChangeRequest(bean.getName(), bean.getNameEn(), bean.getJustification(), bean
-		    .getRegime(), bean.getObjectives(), bean.getObjectivesEn(), bean.getProgram(), bean.getProgramEn(), bean
-		    .getEvaluationMethod(), bean.getEvaluationMethodEn(), bean.getCompetenceCourse(), bean
-		    .getCompetenceCourseLevel(), bean.getExecutionPeriod(), requestor, loadBean.getTheoreticalHours(), loadBean
-		    .getProblemsHours(), loadBean.getLaboratorialHours(), loadBean.getSeminaryHours(), loadBean
-		    .getFieldWorkHours(), loadBean.getTrainingPeriodHours(), loadBean.getTutorialOrientationHours(), loadBean
-		    .getAutonomousWorkHours(), loadBean.getEctsCredits(), loadBean.getSecondTheoreticalHours(), loadBean
-		    .getSecondProblemsHours(), loadBean.getSecondLaboratorialHours(), loadBean.getSecondSeminaryHours(), loadBean
-		    .getSecondFieldWorkHours(), loadBean.getSecondTrainingPeriodHours(), loadBean
-		    .getSecondTutorialOrientationHours(), loadBean.getSecondAutonomousWorkHours(), loadBean
-		    .getSecondEctsCredits(), bean.getReferences(), null);
+	    new CompetenceCourseInformationChangeRequest(bean.getName(), bean.getNameEn(), bean.getJustification(),
+		    bean.getRegime(), bean.getObjectives(), bean.getObjectivesEn(), bean.getProgram(), bean.getProgramEn(),
+		    bean.getEvaluationMethod(), bean.getEvaluationMethodEn(), bean.getCompetenceCourse(),
+		    bean.getCompetenceCourseLevel(), bean.getExecutionPeriod(), requestor, loadBean.getTheoreticalHours(),
+		    loadBean.getProblemsHours(), loadBean.getLaboratorialHours(), loadBean.getSeminaryHours(),
+		    loadBean.getFieldWorkHours(), loadBean.getTrainingPeriodHours(), loadBean.getTutorialOrientationHours(),
+		    loadBean.getAutonomousWorkHours(), loadBean.getEctsCredits(), loadBean.getSecondTheoreticalHours(),
+		    loadBean.getSecondProblemsHours(), loadBean.getSecondLaboratorialHours(), loadBean.getSecondSeminaryHours(),
+		    loadBean.getSecondFieldWorkHours(), loadBean.getSecondTrainingPeriodHours(),
+		    loadBean.getSecondTutorialOrientationHours(), loadBean.getSecondAutonomousWorkHours(),
+		    loadBean.getSecondEctsCredits(), bean.getReferences(), null);
 	}
     }
 
@@ -297,8 +297,8 @@ public class ManageCompetenceCourseInformationVersions extends FenixDispatchActi
 
     private CompetenceCourse getCompetenceCourse(HttpServletRequest request) {
 	String competenceCourseID = request.getParameter("competenceCourseID");
-	CompetenceCourse course = (CompetenceCourse) RootDomainObject.readDomainObjectByOID(CompetenceCourse.class, Integer
-		.valueOf(competenceCourseID));
+	CompetenceCourse course = (CompetenceCourse) RootDomainObject.readDomainObjectByOID(CompetenceCourse.class,
+		Integer.valueOf(competenceCourseID));
 	return course;
     }
 
@@ -317,8 +317,8 @@ public class ManageCompetenceCourseInformationVersions extends FenixDispatchActi
     private CompetenceCourseInformationChangeRequest getCompetenceCourseInformationRequest(HttpServletRequest request) {
 	String competenceCourseInformationChangeRequestId = request.getParameter("changeRequestID");
 	CompetenceCourseInformationChangeRequest changeRequest = (CompetenceCourseInformationChangeRequest) RootDomainObject
-		.readDomainObjectByOID(CompetenceCourseInformationChangeRequest.class, Integer
-			.valueOf(competenceCourseInformationChangeRequestId));
+		.readDomainObjectByOID(CompetenceCourseInformationChangeRequest.class,
+			Integer.valueOf(competenceCourseInformationChangeRequestId));
 	return changeRequest;
     }
 
@@ -365,8 +365,8 @@ public class ManageCompetenceCourseInformationVersions extends FenixDispatchActi
 	return true;
     }
 
-    public ActionForward exportCompetenceCourseExecutionToExcel(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+    public ActionForward exportCompetenceCourseExecutionToExcel(ActionMapping mapping, ActionForm form,
+	    HttpServletRequest request, HttpServletResponse response) throws FenixFilterException, FenixServiceException {
 	final List<CompetenceCourse> competenceCourses = getDepartmentCompetenceCourses();
 
 	try {
@@ -376,7 +376,8 @@ public class ManageCompetenceCourseInformationVersions extends FenixDispatchActi
 	    final ServletOutputStream outputStream = response.getOutputStream();
 
 	    final Spreadsheet spreadsheet = new Spreadsheet("list");
-	    spreadsheet.setHeader(BundleUtil.getStringFromResourceBundle("resources.BolonhaManagerResources", "competenceCourse"));
+	    spreadsheet
+		    .setHeader(BundleUtil.getStringFromResourceBundle("resources.BolonhaManagerResources", "competenceCourse"));
 	    spreadsheet.setHeader(BundleUtil.getStringFromResourceBundle("resources.BolonhaManagerResources", "curricularPlan"));
 	    spreadsheet.setHeader(BundleUtil.getStringFromResourceBundle("resources.BolonhaManagerResources", "curricularYear"));
 	    spreadsheet.setHeader(BundleUtil.getStringFromResourceBundle("resources.BolonhaManagerResources", "label.semester"));

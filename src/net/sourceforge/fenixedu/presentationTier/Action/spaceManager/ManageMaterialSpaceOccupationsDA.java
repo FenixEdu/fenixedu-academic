@@ -19,14 +19,6 @@ import pt.ist.fenixWebFramework.renderers.components.state.IViewState;
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.services.ServiceManager;
 import pt.ist.fenixWebFramework.services.ServiceManagerException;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
-import pt.ist.fenixWebFramework.struts.annotations.Forward;
-import pt.ist.fenixWebFramework.struts.annotations.Forwards;
-import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
@@ -34,10 +26,10 @@ import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 @Mapping(module = "SpaceManager", path = "/manageMaterialSpaceOccupations", scope = "session", parameter = "method")
 @Forwards(value = {
-		@Forward(name = "prepareEditMaterialSpaceOccupation", path = "/spaceManager/editMaterialSpaceOccupation.jsp"),
-		@Forward(name = "showMaterialSpaceOccupations", path = "/spaceManager/manageMaterialSpaceOccupations.jsp"),
-		@Forward(name = "insertMaterialOccupation", path = "/spaceManager/insertNewMaterialOccupation.jsp"),
-		@Forward(name = "chooseMaterialType", path = "/spaceManager/insertNewMaterialOccupation.jsp") })
+	@Forward(name = "prepareEditMaterialSpaceOccupation", path = "/spaceManager/editMaterialSpaceOccupation.jsp"),
+	@Forward(name = "showMaterialSpaceOccupations", path = "/spaceManager/manageMaterialSpaceOccupations.jsp", tileProperties = @Tile(  title = "private.spacemanagement.searchspaces")),
+	@Forward(name = "insertMaterialOccupation", path = "/spaceManager/insertNewMaterialOccupation.jsp"),
+	@Forward(name = "chooseMaterialType", path = "/spaceManager/insertNewMaterialOccupation.jsp") })
 public class ManageMaterialSpaceOccupationsDA extends FenixDispatchAction {
 
     public ActionForward showMaterialSpaceOccupations(ActionMapping mapping, ActionForm form, HttpServletRequest request,

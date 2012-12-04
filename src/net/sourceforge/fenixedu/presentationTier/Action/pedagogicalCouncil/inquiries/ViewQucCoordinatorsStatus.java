@@ -23,12 +23,13 @@ import org.joda.time.DateTime;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixWebFramework.struts.annotations.Tile;
 import pt.ist.fenixframework.pstm.AbstractDomainObject;
 import pt.utl.ist.fenix.tools.util.excel.Spreadsheet;
 import pt.utl.ist.fenix.tools.util.excel.Spreadsheet.Row;
 
 @Mapping(path = "/qucCoordinatorsStatus", module = "pedagogicalCouncil")
-@Forwards( { @Forward(name = "viewQucCoordinatorsState", path = "/pedagogicalCouncil/inquiries/viewQucCoordinatorsStatus.jsp") })
+@Forwards({ @Forward(name = "viewQucCoordinatorsState", path = "/pedagogicalCouncil/inquiries/viewQucCoordinatorsStatus.jsp", tileProperties = @Tile(title = "private.pedagogiccouncil.control.coordinatorsstatusresponse")) })
 public class ViewQucCoordinatorsStatus extends FenixDispatchAction {
 
     public ActionForward prepare(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
@@ -54,7 +55,8 @@ public class ViewQucCoordinatorsStatus extends FenixDispatchAction {
 	    if (executionDegree.hasAnyInquiryResults()) {
 		for (Coordinator coordinator : executionDegree.getCoordinatorsListSet()) {
 		    if (coordinator.getResponsible()
-		    //há casos em que a secretária está não só como coordenadora de curso mas também como responsável...
+		    // há casos em que a secretária está não só como
+		    // coordenadora de curso mas também como responsável...
 			    && coordinator.getPerson().hasTeacher()) {
 			InquiryCoordinatorAnswer inquiryCoordinatorAnswer = null;
 			if (coordinatorInquiryTemplate.getShared()) {

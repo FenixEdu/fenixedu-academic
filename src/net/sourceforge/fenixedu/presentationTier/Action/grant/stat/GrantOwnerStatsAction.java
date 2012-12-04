@@ -23,14 +23,6 @@ import org.apache.struts.action.ActionMapping;
 import org.apache.struts.validator.DynaValidatorForm;
 
 import pt.ist.fenixWebFramework.security.UserView;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
-import pt.ist.fenixWebFramework.struts.annotations.Forward;
-import pt.ist.fenixWebFramework.struts.annotations.Forwards;
-import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
@@ -42,8 +34,8 @@ import pt.ist.fenixWebFramework.struts.annotations.Tile;
  */
 @Mapping(module = "facultyAdmOffice", path = "/grantOwnerStats", input = "/grantOwnerStats.do?page=0&method=actionStart", attribute = "grantOwnerStatsForm", formBean = "grantOwnerStatsForm", scope = "request", parameter = "method")
 @Forwards(value = {
-		@Forward(name = "grantowner-stats-results", path = "/facultyAdmOffice/grant/stat/ShowGrantOwnerStatsResult.jsp"),
-		@Forward(name = "grantowner-stats-options", path = "/facultyAdmOffice/grant/stat/ShowGrantOwnerStatsOptions.jsp") })
+	@Forward(name = "grantowner-stats-results", path = "/facultyAdmOffice/grant/stat/ShowGrantOwnerStatsResult.jsp", tileProperties = @Tile(title = "private.teachingstaffandresearcher.statistics.statisticsBaggins")),
+	@Forward(name = "grantowner-stats-options", path = "/facultyAdmOffice/grant/stat/ShowGrantOwnerStatsOptions.jsp", tileProperties = @Tile(title = "private.teachingstaffandresearcher.statistics.statisticsBaggins")) })
 public class GrantOwnerStatsAction extends FenixDispatchAction {
 
     public ActionForward actionStart(ActionMapping mapping, ActionForm form, HttpServletRequest request,

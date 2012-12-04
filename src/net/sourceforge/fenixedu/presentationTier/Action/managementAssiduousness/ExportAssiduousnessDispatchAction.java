@@ -41,23 +41,15 @@ import org.joda.time.DateTimeFieldType;
 import org.joda.time.LocalDate;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixWebFramework.struts.annotations.Tile;
 import pt.utl.ist.fenix.tools.util.excel.StyledExcelSpreadsheet;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
-import pt.ist.fenixWebFramework.struts.annotations.Forward;
-import pt.ist.fenixWebFramework.struts.annotations.Forwards;
-import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
-import pt.ist.fenixWebFramework.struts.annotations.Forward;
-import pt.ist.fenixWebFramework.struts.annotations.Forwards;
-import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 @Mapping(module = "personnelSection", path = "/exportAssiduousness", scope = "request", parameter = "method")
-@Forwards(value = { @Forward(name = "choose-year-month", path = "/managementAssiduousness/chooseYearMonth.jsp") })
+@Forwards(value = { @Forward(name = "choose-year-month", path = "/managementAssiduousness/chooseYearMonth.jsp", tileProperties = @Tile(title = "private.staffarea.export")) })
 public class ExportAssiduousnessDispatchAction extends FenixDispatchAction {
 
     public ActionForward chooseYearMonth(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
@@ -244,8 +236,8 @@ public class ExportAssiduousnessDispatchAction extends FenixDispatchAction {
 	final String dateSeparator = " de ";
 	ResourceBundle bundleEnumeration = ResourceBundle.getBundle("resources.EnumerationResources", Language.getLocale());
 	String month = bundleEnumeration.getString(Month.values()[now.getMonthOfYear() - 1].toString());
-	StringBuilder stringBuilder = new StringBuilder().append(now.getDayOfMonth()).append(dateSeparator).append(month).append(
-		dateSeparator).append(now.getYear());
+	StringBuilder stringBuilder = new StringBuilder().append(now.getDayOfMonth()).append(dateSeparator).append(month)
+		.append(dateSeparator).append(now.getYear());
 	parameters.put("date", stringBuilder.toString());
 
 	ComparatorChain comparatorChain = new ComparatorChain();

@@ -12,7 +12,6 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Servico.student.ConfirmAttributionOfFinalDegreeWork;
-import net.sourceforge.fenixedu.applicationTier.Servico.student.ReadFinalDegreeWorkStudentGroupByUsername;
 import net.sourceforge.fenixedu.dataTransferObject.finalDegreeWork.InfoGroup;
 import net.sourceforge.fenixedu.dataTransferObject.finalDegreeWork.InfoGroupProposal;
 import net.sourceforge.fenixedu.dataTransferObject.finalDegreeWork.InfoGroupStudent;
@@ -37,6 +36,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 /**
  * @author Luis Cruz
@@ -44,8 +44,8 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 @Mapping(module = "student", path = "/finalDegreeWorkAttribution", input = "/finalDegreeWorkAttribution.do?method=prepare&page=0", attribute = "finalDegreeWorkAttributionForm", formBean = "finalDegreeWorkAttributionForm", scope = "request", parameter = "method")
 @Forwards(value = {
 	@Forward(name = "NoConfirmationInProcessException", path = "/student/finalDegreeWork/noConfirmationInProcess.jsp"),
-		@Forward(name = "prepareShowFinalDegreeWorkList", path = "/finalDegreeWorkAttribution.do?method=prepare&page=0"),
-	@Forward(name = "showFinalDegreeWorkList", path = "/student/finalDegreeWork/attribution.jsp") })
+	@Forward(name = "prepareShowFinalDegreeWorkList", path = "/finalDegreeWorkAttribution.do?method=prepare&page=0"),
+	@Forward(name = "showFinalDegreeWorkList", path = "/student/finalDegreeWork/attribution.jsp", tileProperties = @Tile(title = "private.student.finalists.confirmattribution" )) })
 @Exceptions(value = {
 	@ExceptionHandling(type = net.sourceforge.fenixedu.applicationTier.Servico.student.ConfirmAttributionOfFinalDegreeWork.NoAttributionToConfirmException.class, key = "error.message.NoAttributionToConfirmException", handler = net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler.class, scope = "request"),
 	@ExceptionHandling(type = net.sourceforge.fenixedu.applicationTier.Servico.student.CheckCandidacyConditionsForFinalDegreeWork.NoDegreeStudentCurricularPlanFoundException.class, key = "error.message.NoDegreeStudentCurricularPlanFoundException", handler = net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler.class, scope = "request") })
@@ -59,7 +59,6 @@ public class FinalDegreeWorkAttributionDA extends FenixDispatchAction {
 	final Set<ExecutionYear> executionYears = new TreeSet<ExecutionYear>(ExecutionYear.REVERSE_COMPARATOR_BY_YEAR);
 	executionYears.addAll(rootDomainObject.getExecutionYearsSet());
 	request.setAttribute("executionYears", executionYears);
-
 
 	final FinalDegreeWorkGroup group = findGroup(executionYear);
 	if (group != null) {
@@ -83,7 +82,7 @@ public class FinalDegreeWorkAttributionDA extends FenixDispatchAction {
 
 	    String confirmAttributions[] = new String[infoGroup.getGroupStudents().size()];
 	    for (int i = 0; i < infoGroup.getGroupStudents().size(); i++) {
-		InfoGroupStudent infoGroupStudent = (InfoGroupStudent) infoGroup.getGroupStudents().get(i);
+		InfoGroupStudent infoGroupStudent = infoGroup.getGroupStudents().get(i);
 		if (infoGroupStudent != null && infoGroupStudent.getFinalDegreeWorkProposalConfirmation() != null) {
 		    confirmAttributions[i] = infoGroupStudent.getFinalDegreeWorkProposalConfirmation().getIdInternal().toString();
 		    confirmAttributions[i] += infoGroupStudent.getStudent().getIdInternal();
@@ -98,8 +97,8 @@ public class FinalDegreeWorkAttributionDA extends FenixDispatchAction {
 
     }
 
-    public ActionForward prepareWithArgs(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
-	    throws Exception {
+    public ActionForward prepareWithArgs(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
 	final ExecutionYear executionYear = getDomainObject(request, "executionYearOID");
 	return prepare(mapping, form, request, executionYear);
     }
@@ -109,9 +108,8 @@ public class FinalDegreeWorkAttributionDA extends FenixDispatchAction {
 	final DynaActionForm finalDegreeWorkAttributionForm = (DynaActionForm) form;
 	final ExecutionYear executionYear;
 	final String executionYearOID = (String) finalDegreeWorkAttributionForm.get("executionYearOID");
-	executionYear = executionYearOID == null || executionYearOID.equals("") ?
-		ExecutionYear.readCurrentExecutionYear() : 
-		rootDomainObject.readExecutionYearByOID(Integer.valueOf(executionYearOID));
+	executionYear = executionYearOID == null || executionYearOID.equals("") ? ExecutionYear.readCurrentExecutionYear()
+		: rootDomainObject.readExecutionYearByOID(Integer.valueOf(executionYearOID));
 	return prepare(mapping, finalDegreeWorkAttributionForm, request, executionYear);
     }
 
@@ -151,6 +149,7 @@ public class FinalDegreeWorkAttributionDA extends FenixDispatchAction {
 
 	Integer groupID = null;
 
+	@Override
 	public boolean evaluate(Object arg0) {
 	    InfoGroupProposal infoGroupProposal = (InfoGroupProposal) arg0;
 	    return (infoGroupProposal.getFinalDegreeWorkProposal().getGroupAttributedByTeacher() != null)

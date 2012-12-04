@@ -17,14 +17,6 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
 import pt.ist.fenixWebFramework.security.UserView;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
-import pt.ist.fenixWebFramework.struts.annotations.Forward;
-import pt.ist.fenixWebFramework.struts.annotations.Forwards;
-import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
@@ -36,7 +28,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Tile;
  */
 
 @Mapping(module = "facultyAdmOffice", path = "/manageGrantOwner", input = "/manageGrantOwner.do?page=0&method=prepareManageGrantOwnerForm", attribute = "voidForm", formBean = "voidForm", scope = "request", parameter = "method")
-@Forwards(value = { @Forward(name = "manage-grant-owner", path = "/facultyAdmOffice/grant/owner/manageGrantOwner.jsp") })
+@Forwards(value = { @Forward(name = "manage-grant-owner", path = "/facultyAdmOffice/grant/owner/manageGrantOwner.jsp", tileProperties = @Tile(title = "private.teachingstaffandresearcher.managementscholarship.scholarshipsearch")) })
 public class ManageGrantOwnerAction extends FenixDispatchAction {
     public ActionForward prepareManageGrantOwnerForm(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {

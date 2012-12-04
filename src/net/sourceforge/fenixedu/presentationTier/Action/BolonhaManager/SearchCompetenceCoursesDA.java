@@ -17,15 +17,10 @@ import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
-import pt.ist.fenixWebFramework.struts.annotations.Forward;
-import pt.ist.fenixWebFramework.struts.annotations.Forwards;
-import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 @Mapping(module = "bolonhaManager", path = "/competenceCourses/searchCompetenceCourses")
-@Forwards( { @Forward(name = "searchCompetenceCourses", path = "/bolonhaManager/competenceCourses/searchCompetenceCourses.jsp") })
+@Forwards({ @Forward(name = "searchCompetenceCourses", path = "/bolonhaManager/competenceCourses/searchCompetenceCourses.jsp", tileProperties = @Tile(title = "private.bologna.competencecourses.search")) })
 public class SearchCompetenceCoursesDA extends FenixDispatchAction {
 
     public static class SearchCompetenceCourseBean implements Serializable {

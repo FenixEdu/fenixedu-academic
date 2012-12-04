@@ -19,10 +19,11 @@ import org.apache.struts.action.ActionMapping;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 @Mapping(path = "/personalIngressionDataViewer", module = "gep")
 @Forwards({
-	@Forward(name = "chooseStudent", path = "/gep/student/candidacy/personal/ingression/data/chooseStudent.jsp"),
+	@Forward(name = "chooseStudent", path = "/gep/student/candidacy/personal/ingression/data/chooseStudent.jsp", tileProperties = @Tile(title = "private.gep.raidesdata.raidesdatabystudent")),
 	@Forward(name = "viewStudent", path = "/gep/student/candidacy/personal/ingression/data/viewStudent.jsp"),
 	@Forward(name = "viewStudentCandidacy", path = "/gep/student/candidacy/personal/ingression/data/viewStudentCandidacy.jsp"),
 	@Forward(name = "viewPersonalIngressionData", path = "/gep/student/candidacy/personal/ingression/data/viewPersonalIngressionData.jsp"),

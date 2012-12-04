@@ -36,19 +36,15 @@ import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
-import pt.ist.fenixWebFramework.struts.annotations.Forward;
-import pt.ist.fenixWebFramework.struts.annotations.Forwards;
-import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 @Mapping(path = "/studentDismissals", module = "academicAdminOffice", formBean = "studentDismissalForm")
-@Forwards( { @Forward(name = "manage", path = "/academicAdminOffice/dismissal/managementDismissals.jsp"),
-	@Forward(name = "chooseEquivalents", path = "/academicAdminOffice/dismissal/chooseEquivalents.jsp"),
-	@Forward(name = "visualizeRegistration", path = "/student.do?method=visualizeRegistration"),
-	@Forward(name = "chooseDismissalEnrolments", path = "/academicAdminOffice/dismissal/chooseDismissalEnrolments.jsp"),
-	@Forward(name = "confirmCreateDismissals", path = "/academicAdminOffice/dismissal/confirmCreateDismissals.jsp")
+@Forwards({
+	@Forward(name = "manage", path = "/academicAdminOffice/dismissal/managementDismissals.jsp", tileProperties = @Tile(title = "private.academicadministrativeoffice.studentoperations.viewstudents")),
+	@Forward(name = "chooseEquivalents", path = "/academicAdminOffice/dismissal/chooseEquivalents.jsp", tileProperties = @Tile(title = "private.academicadministrativeoffice.studentoperations.viewstudents")),
+	@Forward(name = "visualizeRegistration", path = "/student.do?method=visualizeRegistration", tileProperties = @Tile(title = "private.academicadministrativeoffice.studentoperations.viewstudents")),
+	@Forward(name = "chooseDismissalEnrolments", path = "/academicAdminOffice/dismissal/chooseDismissalEnrolments.jsp", tileProperties = @Tile(title = "private.academicadministrativeoffice.studentoperations.viewstudents")),
+	@Forward(name = "confirmCreateDismissals", path = "/academicAdminOffice/dismissal/confirmCreateDismissals.jsp", tileProperties = @Tile(title = "private.academicadministrativeoffice.studentoperations.viewstudents"))
 
 })
 public class StudentDismissalsDA extends FenixDispatchAction {

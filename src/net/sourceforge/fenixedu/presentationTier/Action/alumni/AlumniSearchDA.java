@@ -18,14 +18,6 @@ import org.apache.struts.action.ActionMapping;
 
 import pt.ist.fenixWebFramework.renderers.components.state.IViewState;
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
-import pt.ist.fenixWebFramework.struts.annotations.Forward;
-import pt.ist.fenixWebFramework.struts.annotations.Forwards;
-import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
@@ -33,8 +25,8 @@ import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 @Mapping(module = "alumni", path = "/searchAlumni", scope = "request", parameter = "method")
 @Forwards(value = {
-		@Forward(name = "viewAlumniDetails", path = "/alumni/viewAlumniDetails.jsp"),
-		@Forward(name = "showAlumniList", path = "/alumni/showAlumniList.jsp") })
+	@Forward(name = "viewAlumniDetails", path = "/alumni/viewAlumniDetails.jsp", tileProperties = @Tile(title = "private.alumni.academicpath.searchalumni")),
+	@Forward(name = "showAlumniList", path = "/alumni/showAlumniList.jsp", tileProperties = @Tile(title = "private.alumni.academicpath.searchalumni")) })
 public class AlumniSearchDA extends FenixDispatchAction {
 
     public ActionForward showAlumniList(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,

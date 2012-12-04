@@ -35,16 +35,17 @@ import org.apache.struts.action.ActionMapping;
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
-@Forwards( {
+@Forwards({
 
-	@Forward(name = "showDegreeModulesToEnrol", path = "/academicAdminOffice/student/enrollment/bolonha/showDegreeModulesToEnrol.jsp"),
+	@Forward(name = "showDegreeModulesToEnrol", path = "/academicAdminOffice/student/enrollment/bolonha/showDegreeModulesToEnrol.jsp", tileProperties = @Tile(title = "private.academicadministrativeoffice.studentoperations.viewstudents")),
 
-	@Forward(name = "chooseOptionalCurricularCourseToEnrol", path = "/academicAdminOffice/student/enrollment/bolonha/chooseOptionalCurricularCourseToEnrol.jsp"),
+	@Forward(name = "chooseOptionalCurricularCourseToEnrol", path = "/academicAdminOffice/student/enrollment/bolonha/chooseOptionalCurricularCourseToEnrol.jsp", tileProperties = @Tile(title = "private.academicadministrativeoffice.studentoperations.viewstudents")),
 
-	@Forward(name = "chooseCycleCourseGroupToEnrol", path = "/academicAdminOffice/student/enrollment/bolonha/chooseCycleCourseGroupToEnrol.jsp"),
+	@Forward(name = "chooseCycleCourseGroupToEnrol", path = "/academicAdminOffice/student/enrollment/bolonha/chooseCycleCourseGroupToEnrol.jsp", tileProperties = @Tile(title = "private.academicadministrativeoffice.studentoperations.viewstudents")),
 
-	@Forward(name = "notAuthorized", path = "/student/notAuthorized_bd.jsp")
+	@Forward(name = "notAuthorized", path = "/student/notAuthorized_bd.jsp", tileProperties = @Tile(title = "private.academicadministrativeoffice.studentoperations.viewstudents"))
 
 })
 public abstract class AbstractBolonhaStudentEnrollmentDA extends FenixDispatchAction {
@@ -53,8 +54,8 @@ public abstract class AbstractBolonhaStudentEnrollmentDA extends FenixDispatchAc
 	    HttpServletResponse response, final StudentCurricularPlan studentCurricularPlan,
 	    final ExecutionSemester executionSemester) {
 
-	request.setAttribute("bolonhaStudentEnrollmentBean", createStudentEnrolmentBean(form, studentCurricularPlan,
-		executionSemester));
+	request.setAttribute("bolonhaStudentEnrollmentBean",
+		createStudentEnrolmentBean(form, studentCurricularPlan, executionSemester));
 
 	return mapping.findForward("showDegreeModulesToEnrol");
     }
@@ -80,11 +81,13 @@ public abstract class AbstractBolonhaStudentEnrollmentDA extends FenixDispatchAc
 
 	final BolonhaStudentEnrollmentBean bolonhaStudentEnrollmentBean = getBolonhaStudentEnrollmentBeanFromViewState();
 	try {
-	    final RuleResult ruleResults = (RuleResult) executeService("EnrolBolonhaStudent", new Object[] {
-		    bolonhaStudentEnrollmentBean.getStudentCurricularPlan(),
-		    bolonhaStudentEnrollmentBean.getExecutionPeriod(), bolonhaStudentEnrollmentBean.getDegreeModulesToEvaluate(),
-		    bolonhaStudentEnrollmentBean.getCurriculumModulesToRemove(),
-		    bolonhaStudentEnrollmentBean.getCurricularRuleLevel() });
+	    final RuleResult ruleResults = (RuleResult) executeService(
+		    "EnrolBolonhaStudent",
+		    new Object[] { bolonhaStudentEnrollmentBean.getStudentCurricularPlan(),
+			    bolonhaStudentEnrollmentBean.getExecutionPeriod(),
+			    bolonhaStudentEnrollmentBean.getDegreeModulesToEvaluate(),
+			    bolonhaStudentEnrollmentBean.getCurriculumModulesToRemove(),
+			    bolonhaStudentEnrollmentBean.getCurricularRuleLevel() });
 
 	    if (!bolonhaStudentEnrollmentBean.getDegreeModulesToEvaluate().isEmpty()
 		    || !bolonhaStudentEnrollmentBean.getCurriculumModulesToRemove().isEmpty()) {
@@ -110,8 +113,8 @@ public abstract class AbstractBolonhaStudentEnrollmentDA extends FenixDispatchAc
 
 	RenderUtils.invalidateViewState();
 
-	return prepareShowDegreeModulesToEnrol(mapping, form, request, response, bolonhaStudentEnrollmentBean
-		.getStudentCurricularPlan(), bolonhaStudentEnrollmentBean.getExecutionPeriod());
+	return prepareShowDegreeModulesToEnrol(mapping, form, request, response,
+		bolonhaStudentEnrollmentBean.getStudentCurricularPlan(), bolonhaStudentEnrollmentBean.getExecutionPeriod());
     }
 
     protected void enroledWithSuccess(HttpServletRequest request, BolonhaStudentEnrollmentBean bolonhaStudentEnrollmentBean) {
@@ -149,8 +152,7 @@ public abstract class AbstractBolonhaStudentEnrollmentDA extends FenixDispatchAc
 	final BolonhaStudentOptionalEnrollmentBean optionalStudentEnrollmentBean = getBolonhaStudentOptionalEnrollmentBeanFromViewState();
 	try {
 	    final RuleResult ruleResults = (RuleResult) executeService("EnrolBolonhaStudent", new Object[] {
-		    optionalStudentEnrollmentBean.getStudentCurricularPlan(),
-		    optionalStudentEnrollmentBean.getExecutionPeriod(),
+		    optionalStudentEnrollmentBean.getStudentCurricularPlan(), optionalStudentEnrollmentBean.getExecutionPeriod(),
 		    buildOptionalDegreeModuleToEnrolList(optionalStudentEnrollmentBean), Collections.EMPTY_LIST,
 		    getCurricularRuleLevel(form) });
 
@@ -171,8 +173,8 @@ public abstract class AbstractBolonhaStudentEnrollmentDA extends FenixDispatchAc
 	    return mapping.findForward("chooseOptionalCurricularCourseToEnrol");
 	}
 
-	return prepareShowDegreeModulesToEnrol(mapping, form, request, response, optionalStudentEnrollmentBean
-		.getStudentCurricularPlan(), optionalStudentEnrollmentBean.getExecutionPeriod());
+	return prepareShowDegreeModulesToEnrol(mapping, form, request, response,
+		optionalStudentEnrollmentBean.getStudentCurricularPlan(), optionalStudentEnrollmentBean.getExecutionPeriod());
     }
 
     private List<DegreeModuleToEnrol> buildOptionalDegreeModuleToEnrolList(
@@ -181,8 +183,8 @@ public abstract class AbstractBolonhaStudentEnrollmentDA extends FenixDispatchAc
 		.getSelectedDegreeModuleToEnrol();
 	final OptionalDegreeModuleToEnrol optionalDegreeModuleToEnrol = new OptionalDegreeModuleToEnrol(
 		selectedDegreeModuleToEnrol.getCurriculumGroup(), selectedDegreeModuleToEnrol.getContext(),
-		optionalStudentEnrollmentBean.getExecutionPeriod(), optionalStudentEnrollmentBean
-			.getSelectedOptionalCurricularCourse());
+		optionalStudentEnrollmentBean.getExecutionPeriod(),
+		optionalStudentEnrollmentBean.getSelectedOptionalCurricularCourse());
 
 	final List<DegreeModuleToEnrol> result = new ArrayList<DegreeModuleToEnrol>();
 	result.add(optionalDegreeModuleToEnrol);
@@ -193,8 +195,9 @@ public abstract class AbstractBolonhaStudentEnrollmentDA extends FenixDispatchAc
     public ActionForward cancelChooseOptionalCurricularCourseToEnrol(ActionMapping mapping, ActionForm form,
 	    HttpServletRequest request, HttpServletResponse response) {
 	final BolonhaStudentOptionalEnrollmentBean bolonhaStudentOptionalEnrollmentBean = getBolonhaStudentOptionalEnrollmentBeanFromViewState();
-	return prepareShowDegreeModulesToEnrol(mapping, form, request, response, bolonhaStudentOptionalEnrollmentBean
-		.getStudentCurricularPlan(), bolonhaStudentOptionalEnrollmentBean.getExecutionPeriod());
+	return prepareShowDegreeModulesToEnrol(mapping, form, request, response,
+		bolonhaStudentOptionalEnrollmentBean.getStudentCurricularPlan(),
+		bolonhaStudentOptionalEnrollmentBean.getExecutionPeriod());
     }
 
     protected BolonhaStudentOptionalEnrollmentBean getBolonhaStudentOptionalEnrollmentBeanFromViewState() {

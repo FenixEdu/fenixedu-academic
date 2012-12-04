@@ -22,19 +22,11 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixWebFramework.struts.annotations.Tile;
 import pt.utl.ist.fenix.tools.util.CollectionPager;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
-import pt.ist.fenixWebFramework.struts.annotations.Forward;
-import pt.ist.fenixWebFramework.struts.annotations.Forwards;
-import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
-import pt.ist.fenixWebFramework.struts.annotations.Forward;
-import pt.ist.fenixWebFramework.struts.annotations.Forwards;
-import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 /**
  * @author Pica
@@ -42,8 +34,8 @@ import pt.ist.fenixWebFramework.struts.annotations.Tile;
  */
 @Mapping(module = "facultyAdmOffice", path = "/listGrantOwner", input = "/listGrantOwner.do?page=0&method=listGrantOwners", attribute = "listGrantOwnerForm", formBean = "listGrantOwnerForm", scope = "request", parameter = "method")
 @Forwards(value = {
-		@Forward(name = "list-grant-owner", path = "/facultyAdmOffice/grant/list/listGrantOwner.jsp"),
-		@Forward(name = "show-grant-owner", path = "/facultyAdmOffice/grant/list/showGrantOwner.jsp") })
+	@Forward(name = "list-grant-owner", path = "/facultyAdmOffice/grant/list/listGrantOwner.jsp", tileProperties = @Tile(title = "private.teachingstaffandresearcher.listings.bybaggins")),
+	@Forward(name = "show-grant-owner", path = "/facultyAdmOffice/grant/list/showGrantOwner.jsp", tileProperties = @Tile(title = "private.teachingstaffandresearcher.listings.bybaggins")) })
 public class ListGrantOwnerAction extends FenixDispatchAction {
 
     private static final String ORDER_PARAMETER = "orderBy";

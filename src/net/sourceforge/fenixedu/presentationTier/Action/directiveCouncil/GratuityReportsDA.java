@@ -20,19 +20,12 @@ import org.joda.time.LocalDate;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
-import pt.ist.fenixWebFramework.struts.annotations.Forward;
-import pt.ist.fenixWebFramework.struts.annotations.Forwards;
-import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 @Mapping(path = "/gratuityReports", module = "directiveCouncil")
-@Forwards( {
+@Forwards({
 
-@Forward(name = "showReport", path = "/directiveCouncil/gratuityReports/showReport.jsp")
-
-})
+@Forward(name = "showReport", path = "/directiveCouncil/gratuityReports/showReport.jsp", tileProperties = @Tile(title = "private.steeringcouncil.reportsfees")) })
 public class GratuityReportsDA extends FenixDispatchAction {
 
     public static class GratuityReportParametersBean implements Serializable {
@@ -104,8 +97,10 @@ public class GratuityReportsDA extends FenixDispatchAction {
 		: new GratuityReportParametersBean(ExecutionYear.readCurrentExecutionYear());
 
 	request.setAttribute("reportParameters", parametersBean);
-	request.setAttribute("report", new GratuityReportingService().createGratuityReport(parametersBean.getExecutionYear(),
-		parametersBean.getStartDate(), parametersBean.getEndDate(), parametersBean.getDegreeTypes()));
+	request.setAttribute(
+		"report",
+		new GratuityReportingService().createGratuityReport(parametersBean.getExecutionYear(),
+			parametersBean.getStartDate(), parametersBean.getEndDate(), parametersBean.getDegreeTypes()));
 
 	return mapping.findForward("showReport");
     }
@@ -118,8 +113,10 @@ public class GratuityReportsDA extends FenixDispatchAction {
 	final GratuityReportParametersBean parametersBean = getGratuityReportParameters() != null ? getGratuityReportParameters()
 		: new GratuityReportParametersBean(ExecutionYear.readCurrentExecutionYear());
 
-	request.setAttribute("report", new GratuityReportingService().createGratuityReport(parametersBean.getExecutionYear(),
-		parametersBean.getStartDate(), parametersBean.getEndDate(), parametersBean.getDegreeTypes()));
+	request.setAttribute(
+		"report",
+		new GratuityReportingService().createGratuityReport(parametersBean.getExecutionYear(),
+			parametersBean.getStartDate(), parametersBean.getEndDate(), parametersBean.getDegreeTypes()));
 
 	return mapping.findForward("showReport");
     }

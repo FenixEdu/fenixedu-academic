@@ -16,9 +16,10 @@ import org.apache.struts.action.ActionMapping;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 @Mapping(module = "coordinator", path = "/delegatesManagement", scope = "request", parameter = "method")
-@Forwards(value = { @Forward(name = "createEditDelegates", path = "/coordinator/viewDelegates.jsp") })
+@Forwards(value = { @Forward(name = "createEditDelegates", path = "/coordinator/viewDelegates.jsp", tileProperties = @Tile(title = "private.coordinator.management.courses.students.delegates")) })
 public class DelegatesManagementDispatchActionForCoordinator extends DelegatesManagementDispatchAction {
     @Override
     public ActionForward execute(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,

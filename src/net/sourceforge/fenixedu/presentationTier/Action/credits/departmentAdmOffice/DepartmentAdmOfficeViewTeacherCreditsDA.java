@@ -25,13 +25,15 @@ import pt.ist.fenixWebFramework.security.UserView;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixWebFramework.struts.annotations.Tile;
 import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 @Mapping(module = "departmentAdmOffice", path = "/credits", scope = "request", parameter = "method")
-@Forwards(value = { @Forward(name = "selectTeacher", path = "/credits/selectTeacher.jsp"),
-	@Forward(name = "showTeacherCredits", path = "/credits/showTeacherCredits.jsp"),
-	@Forward(name = "showPastTeacherCredits", path = "/credits/showPastTeacherCredits.jsp"),
-	@Forward(name = "showAnnualTeacherCredits", path = "/credits/showAnnualTeacherCredits.jsp") })
+@Forwards(value = {
+	@Forward(name = "selectTeacher", path = "/credits/selectTeacher.jsp", tileProperties = @Tile(title = "private.administrationofcreditsofdepartmentteachers.credits.credits")),
+	@Forward(name = "showTeacherCredits", path = "/credits/showTeacherCredits.jsp", tileProperties = @Tile(title = "private.administrationofcreditsofdepartmentteachers.credits.credits")),
+	@Forward(name = "showPastTeacherCredits", path = "/credits/showPastTeacherCredits.jsp", tileProperties = @Tile(title = "private.administrationofcreditsofdepartmentteachers.credits.credits")),
+	@Forward(name = "showAnnualTeacherCredits", path = "/credits/showAnnualTeacherCredits.jsp", tileProperties = @Tile(title = "private.administrationofcreditsofdepartmentteachers.credits.credits")) })
 public class DepartmentAdmOfficeViewTeacherCreditsDA extends ViewTeacherCreditsDA {
     @Override
     public ActionForward viewAnnualTeachingCredits(ActionMapping mapping, ActionForm form, HttpServletRequest request,

@@ -34,9 +34,10 @@ import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 @Mapping(module = "student", path = "/yearDelegateManagement", scope = "request", parameter = "method")
-@Forwards(value = { @Forward(name = "showYearDelegateManagement", path = "/student/elections/yearDelegateManagement.jsp") })
+@Forwards(value = { @Forward(name = "showYearDelegateManagement", path = "/student/elections/yearDelegateManagement.jsp", tileProperties = @Tile(  title = "private.student.participate.electionofyeardelegate")) })
 public class YearDelegateManagementDispatchAction extends FenixDispatchAction {
 
     public ActionForward prepare(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,

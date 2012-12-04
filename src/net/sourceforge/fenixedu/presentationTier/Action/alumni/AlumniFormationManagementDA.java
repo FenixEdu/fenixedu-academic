@@ -15,14 +15,6 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
-import pt.ist.fenixWebFramework.struts.annotations.Forward;
-import pt.ist.fenixWebFramework.struts.annotations.Forwards;
-import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
@@ -30,9 +22,9 @@ import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 @Mapping(module = "alumni", path = "/formation", scope = "request", parameter = "method")
 @Forwards(value = {
-		@Forward(name = "alumniCreateFormation", path = "/alumni/alumniManageFormation.jsp"),
-		@Forward(name = "alumniEditFormation", path = "/alumni/alumniManageFormation.jsp"),
-		@Forward(name = "viewAlumniQualifications", path = "/alumni/viewAlumniQualifications.jsp") })
+	@Forward(name = "alumniCreateFormation", path = "/alumni/alumniManageFormation.jsp", tileProperties = @Tile(title = "private.alumni.trainingandeducation.training")),
+	@Forward(name = "alumniEditFormation", path = "/alumni/alumniManageFormation.jsp", tileProperties = @Tile(title = "private.alumni.trainingandeducation.training")),
+	@Forward(name = "viewAlumniQualifications", path = "/alumni/viewAlumniQualifications.jsp", tileProperties = @Tile(title = "private.alumni.trainingandeducation.training")) })
 public class AlumniFormationManagementDA extends AlumniEntityManagementDA {
 
     public ActionForward initFormationManagement(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,

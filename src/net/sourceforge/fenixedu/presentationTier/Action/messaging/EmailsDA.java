@@ -32,13 +32,16 @@ import pt.ist.fenixWebFramework.services.Service;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixWebFramework.struts.annotations.Tile;
 import pt.utl.ist.fenix.tools.util.CollectionPager;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 @Mapping(path = "/emails", module = "messaging")
-@Forwards( { @Forward(name = "new.email", path = "/messaging/newEmail.jsp"),
-	@Forward(name = "view.sent.emails", path = "/messaging/viewSentEmails.jsp"),
-	@Forward(name = "view.email", path = "/messaging/viewEmail.jsp"), @Forward(name = "cancel", path = "/index.do") })
+@Forwards({
+	@Forward(name = "new.email", path = "/messaging/newEmail.jsp", tileProperties = @Tile(title = "private.messaging.email.new")),
+	@Forward(name = "view.sent.emails", path = "/messaging/viewSentEmails.jsp", tileProperties = @Tile(title = "private.messaging.email.sent")),
+	@Forward(name = "view.email", path = "/messaging/viewEmail.jsp", tileProperties = @Tile(title = "private.messaging.email")),
+	@Forward(name = "cancel", path = "/index.do") })
 public class EmailsDA extends FenixDispatchAction {
     public static final ActionForward FORWARD_TO_NEW_EMAIL = new ActionForward("emails", "/emails.do?method=forwardToNewEmail",
 	    false, "/messaging");
@@ -79,7 +82,8 @@ public class EmailsDA extends FenixDispatchAction {
 	RenderUtils.invalidateViewState();
 	String validate = emailBean.validate();
 	if (validate != null) {
-	    final ResourceBundle resourceBundle = ResourceBundle.getBundle("resources.ApplicationResources", Language.getLocale());
+	    final ResourceBundle resourceBundle = ResourceBundle
+		    .getBundle("resources.ApplicationResources", Language.getLocale());
 	    final String noneSentString = resourceBundle.getString("error.email.none.sent");
 	    request.setAttribute("errorMessage", noneSentString + " " + validate);
 	    request.setAttribute("emailBean", emailBean);

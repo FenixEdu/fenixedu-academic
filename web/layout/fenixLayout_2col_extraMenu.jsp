@@ -4,6 +4,7 @@
 <%@ taglib uri="/WEB-INF/struts-tiles.tld" prefix="tiles" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
+<%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <html:html xhtml="true">
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
@@ -14,7 +15,18 @@
 	<link rel="stylesheet" type="text/css" href="<%= request.getContextPath() %>/CSS/print.css" media="print" />	
 	
 	<link href="<%= request.getContextPath() %>/CSS/dotist_timetables.css" rel="stylesheet" type="text/css" />
-	<title><bean:message key="dot.title" bundle="GLOBAL_RESOURCES"/> - <tiles:getAsString name="title" ignore="true" /></title>
+		<title>
+	    <tiles:useAttribute name="title" id="titleK" ignore="true"/>
+	    <tiles:useAttribute name="bundle" id="bundleT" ignore="true"/>
+	    <logic:present name="bundleT">
+	    	<logic:present name="titleK">
+	    		<bean:message name="titleK" bundle="<%= (String) bundleT %>"/>
+	    	</logic:present>
+	    </logic:present>
+	     <logic:notPresent name="bundleT">
+	     	<tiles:getAsString name="title" ignore="true"/>
+		</logic:notPresent>
+	</title>
 	<script type="text/javascript" src="<%= request.getContextPath() %>/CSS/scripts/hideButtons.js"></script>
 	<script src="<%= request.getContextPath() %>/javaScript/jquery/jquery.js" type="text/javascript" >
 	</script>

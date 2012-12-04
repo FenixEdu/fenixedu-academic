@@ -29,14 +29,6 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
-import pt.ist.fenixWebFramework.struts.annotations.Forward;
-import pt.ist.fenixWebFramework.struts.annotations.Forwards;
-import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
@@ -44,12 +36,12 @@ import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 @Mapping(module = "researcher", path = "/result/resultParticipationManagement", scope = "session", parameter = "method")
 @Forwards(value = {
-		@Forward(name = "createExternalUnit", path = "/researcher/result/participations/createExternalUnit.jsp"),
-		@Forward(name = "viewEditPublication", path = "/resultPublications/showPublication.do"),
-		@Forward(name = "editParticipation", path = "/researcher/result/participations/editResultParticipations.jsp", tileProperties = @Tile(head = "/commons/renderers/treeRendererHeader.jsp")),
-		@Forward(name = "ListPublications", path = "/resultPublications/listPublications.do"),
-		@Forward(name = "editPatent", path = "/resultPatents/showPatent.do"),
-		@Forward(name = "listPatents", path = "/resultPatents/management.do") })
+	@Forward(name = "createExternalUnit", path = "/researcher/result/participations/createExternalUnit.jsp"),
+	@Forward(name = "viewEditPublication", path = "/resultPublications/showPublication.do"),
+	@Forward(name = "editParticipation", path = "/researcher/result/participations/editResultParticipations.jsp", tileProperties = @Tile(head = "/commons/renderers/treeRendererHeader.jsp")),
+	@Forward(name = "ListPublications", path = "/resultPublications/listPublications.do", tileProperties = @Tile(  title = "private.operator.personnelmanagement.managementfaculty.teacherevaluation.publications")),
+	@Forward(name = "editPatent", path = "/resultPatents/showPatent.do"),
+	@Forward(name = "listPatents", path = "/resultPatents/management.do") })
 public class ResultParticipationManagementAction extends ResultsManagementAction {
 
     public ActionForward prepareEdit(ActionMapping mapping, ActionForm form, HttpServletRequest request,
@@ -259,8 +251,8 @@ public class ResultParticipationManagementAction extends ResultsManagementAction
 
 	if (bean.getOrganization() != null) {
 
-	    ExternalContract contract = (ExternalContract) InsertExternalPerson.run(new InsertExternalPerson.ServiceArguments(
-		    bean.getParticipatorName(), bean.getOrganization()));
+	    ExternalContract contract = InsertExternalPerson.run(new InsertExternalPerson.ServiceArguments(bean
+		    .getParticipatorName(), bean.getOrganization()));
 	    bean.setParticipator(contract.getPerson().getPersonName());
 	    createParticipation(bean);
 	} else {
@@ -295,7 +287,7 @@ public class ResultParticipationManagementAction extends ResultsManagementAction
 	ResultParticipationCreationBean bean = (ResultParticipationCreationBean) RenderUtils
 		.getViewState("beanForExternalPerson").getMetaObject().getObject();
 
-	Unit unit = (Unit) CreateExternalUnitByName.run(bean.getOrganizationName());
+	Unit unit = CreateExternalUnitByName.run(bean.getOrganizationName());
 	bean.setOrganization(unit);
 	createParticipation(bean);
 

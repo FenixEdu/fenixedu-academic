@@ -33,25 +33,21 @@ import org.apache.struts.action.ActionMapping;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixWebFramework.struts.annotations.Tile;
 import pt.utl.ist.fenix.tools.util.excel.Spreadsheet;
 import pt.utl.ist.fenix.tools.util.excel.Spreadsheet.Row;
 import pt.utl.ist.fenix.tools.util.excel.SpreadsheetXLSExporter;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
-import pt.ist.fenixWebFramework.struts.annotations.Forward;
-import pt.ist.fenixWebFramework.struts.annotations.Forwards;
-import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 @Mapping(path = "/caseHandlingOver23CandidacyProcess", module = "academicAdminOffice", formBeanClass = CandidacyProcessDA.CandidacyProcessForm.class)
-@Forwards( { @Forward(name = "intro", path = "/candidacy/mainCandidacyProcess.jsp"),
-	@Forward(name = "prepare-create-new-process", path = "/candidacy/createCandidacyPeriod.jsp"),
+@Forwards({
+	@Forward(name = "intro", path = "/candidacy/mainCandidacyProcess.jsp", tileProperties = @Tile(title = "private.academicadministrativeoffice.applications.23plus")),
+	@Forward(name = "prepare-create-new-process", path = "/candidacy/createCandidacyPeriod.jsp", tileProperties = @Tile(title = "private.academicadministrativeoffice.applications.23plus")),
 	@Forward(name = "prepare-edit-candidacy-period", path = "/candidacy/editCandidacyPeriod.jsp"),
 	@Forward(name = "send-to-jury", path = "/candidacy/over23/sendToJury.jsp"),
-	@Forward(name = "view-candidacy-results", path = "/candidacy/over23/viewCandidacyResults.jsp"),
-	@Forward(name = "insert-candidacy-results", path = "/candidacy/over23/introduceCandidacyResults.jsp"),
-	@Forward(name = "create-registrations", path = "/candidacy/createRegistrations.jsp")
+	@Forward(name = "view-candidacy-results", path = "/candidacy/over23/viewCandidacyResults.jsp", tileProperties = @Tile(title = "private.academicadministrativeoffice.applications.23plus")),
+	@Forward(name = "insert-candidacy-results", path = "/candidacy/over23/introduceCandidacyResults.jsp", tileProperties = @Tile(title = "private.academicadministrativeoffice.applications.23plus")),
+	@Forward(name = "create-registrations", path = "/candidacy/createRegistrations.jsp", tileProperties = @Tile(title = "private.academicadministrativeoffice.applications.23plus"))
 
 })
 public class Over23CandidacyProcessDA extends CandidacyProcessDA {
@@ -207,6 +203,7 @@ public class Over23CandidacyProcessDA extends CandidacyProcessDA {
 	return listProcessAllowedActivities(mapping, actionForm, request, response);
     }
 
+    @Override
     public ActionForward listProcessAllowedActivities(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) {
 	setCandidacyProcessInformation(request, getProcess(request));

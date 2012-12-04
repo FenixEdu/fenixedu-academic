@@ -16,18 +16,13 @@ import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
-import pt.ist.fenixWebFramework.struts.annotations.Forward;
-import pt.ist.fenixWebFramework.struts.annotations.Forwards;
-import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 /**
  * @author Pedro Santos (pedro.miguel.santos@ist.utl.pt)
  */
 @Mapping(path = "/studentExtraCurricularActivities", module = "academicAdminOffice")
-@Forwards( { @Forward(name = "manageActivities", path = "/academicAdminOffice/student/extraCurricularActivities/manageActivities.jsp") })
+@Forwards({ @Forward(name = "manageActivities", path = "/academicAdminOffice/student/extraCurricularActivities/manageActivities.jsp", tileProperties = @Tile(title = "private.academicadministrativeoffice.studentoperations.viewstudents")) })
 public class StudentExtraCurricularActivitiesDA extends FenixDispatchAction {
     public ActionForward prepare(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {

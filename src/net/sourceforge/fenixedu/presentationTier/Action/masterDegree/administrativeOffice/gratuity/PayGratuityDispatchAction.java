@@ -53,12 +53,6 @@ import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixWebFramework.struts.annotations.Tile;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
-import pt.ist.fenixWebFramework.struts.annotations.Forward;
-import pt.ist.fenixWebFramework.struts.annotations.Forwards;
-import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 /**
  * @author <a href="mailto:sana@ist.utl.pt">Shezad Anavarali </a>
@@ -66,10 +60,9 @@ import pt.ist.fenixWebFramework.struts.annotations.Tile;
  * 
  */
 @Mapping(module = "masterDegreeAdministrativeOffice", path = "/payGratuity", input = "/payGratuity.do?method=chooseContributor&page=0", attribute = "payGratuityForm", formBean = "payGratuityForm", scope = "request", parameter = "method")
-@Forwards(value = {
-		@Forward(name = "paymentSuccess", path = "paymentSuccess"),
-		@Forward(name = "confirmPayment", path = "confirmPayment"),
-		@Forward(name = "chooseContributor", path = "chooseContributorForPayGratuity") })
+@Forwards(value = { @Forward(name = "paymentSuccess", path = "paymentSuccess", tileProperties = @Tile(title = "teste56")),
+	@Forward(name = "confirmPayment", path = "confirmPayment", tileProperties = @Tile(title = "teste57")),
+	@Forward(name = "chooseContributor", path = "chooseContributorForPayGratuity", tileProperties = @Tile(title = "teste58")) })
 @Exceptions(value = { @ExceptionHandling(type = net.sourceforge.fenixedu.presentationTier.Action.exceptions.NonExistingActionException.class, key = "resources.Action.exceptions.NonExistingActionException", handler = net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler.class, scope = "request") })
 public class PayGratuityDispatchAction extends FenixDispatchAction {
 
@@ -90,9 +83,7 @@ public class PayGratuityDispatchAction extends FenixDispatchAction {
 
 	if (insuranceExecutionYearId != null) {
 	    payGratuityForm.set("insuranceExecutionYearId", new Integer(insuranceExecutionYearId));
-	    request
-		    .setAttribute(PresentationConstants.PAGE_TITLE,
-			    "link.masterDegree.administrativeOffice.gratuity.payInsurance");
+	    request.setAttribute(PresentationConstants.PAGE_TITLE, "link.masterDegree.administrativeOffice.gratuity.payInsurance");
 	}
 
 	return mapping.findForward("chooseContributor");
@@ -148,9 +139,7 @@ public class PayGratuityDispatchAction extends FenixDispatchAction {
 	    InfoInsuranceValue infoInsuranceValue = readInsuranceValue(userView, insuranceExecutionYearId);
 
 	    request.setAttribute(PresentationConstants.INSURANCE_VALUE, infoInsuranceValue);
-	    request
-		    .setAttribute(PresentationConstants.PAGE_TITLE,
-			    "link.masterDegree.administrativeOffice.gratuity.payInsurance");
+	    request.setAttribute(PresentationConstants.PAGE_TITLE, "link.masterDegree.administrativeOffice.gratuity.payInsurance");
 	}
 
 	// Read Contributor
@@ -158,8 +147,8 @@ public class PayGratuityDispatchAction extends FenixDispatchAction {
 	try {
 	    infoContributor = readContributor(mapping, userView, contributorNumber);
 	} catch (NonExistingActionException e) {
-	    throw new NonExistingActionException("error.masterDegree.administrativeOffice.nonExistingContributorSimple", mapping
-		    .findForward("chooseContributor"));
+	    throw new NonExistingActionException("error.masterDegree.administrativeOffice.nonExistingContributorSimple",
+		    mapping.findForward("chooseContributor"));
 	} catch (FenixActionException e) {
 
 	    e.printStackTrace();
@@ -257,7 +246,7 @@ public class PayGratuityDispatchAction extends FenixDispatchAction {
 		try {
 		    DegreeCurricularPlan degreeCurricularPlan = infoStudentCurricularPlan.getInfoDegreeCurricularPlan()
 			    .getDegreeCurricularPlan();
-		    executionDegreesList = (List) ReadExecutionDegreesByDegreeCurricularPlan.run(degreeCurricularPlan);
+		    executionDegreesList = ReadExecutionDegreesByDegreeCurricularPlan.run(degreeCurricularPlan);
 
 		} catch (FenixServiceException e) {
 		    throw new FenixActionException(e);
@@ -374,8 +363,8 @@ public class PayGratuityDispatchAction extends FenixDispatchAction {
 	}
 
 	if (infoStudent == null) {
-	    throw new NonExistingActionException("error.exception.masterDegree.nonExistentStudent", mapping
-		    .findForward("chooseContributor"));
+	    throw new NonExistingActionException("error.exception.masterDegree.nonExistentStudent",
+		    mapping.findForward("chooseContributor"));
 	}
 	return infoStudent;
     }

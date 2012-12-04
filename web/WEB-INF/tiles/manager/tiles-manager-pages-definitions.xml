@@ -499,8 +499,6 @@
 	
 	<!-- ========== Functions Management ========== -->	
 	<definition name="df.page.functionsManagement" extends="definition.manager.masterPage" >
-		<!-- <put name="navLocal" value="/manager/personManagement/mainMenu.jsp" />
--->
 	</definition>	
     
     <!-- ========== Renderers Examples ============ -->

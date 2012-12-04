@@ -44,6 +44,7 @@
     
     <!-- Assiduousness Responsible -->    
     <definition name="show-employee-list" extends="departmentMember.masterPage">
+        <put name="title" value="private.department.responsibleforattendance.staff" />
 		<put name="body" value="/assiduousnessResponsible/showEmployeeList.jsp" />
 	</definition>
 	<definition name="show-employee-work-sheet" extends="departmentMember.masterPage">
@@ -63,147 +64,183 @@
 	</definition>
 
 <!-- Teacher Service Distribution -->	
-	<definition name="df.page.teacherServiceDistribution.showTSDProcessMainOptions" extends="departmentMember.masterPage"> 
+	<definition name="df.page.teacherServiceDistribution.showTSDProcessMainOptions" extends="departmentMember.masterPage">
+	    <put name="title" value="private.department.distribution" /> 
 		<put name="body" value="/departmentMember/teacherServiceDistribution/showTeacherServiceDistributionMainOptions.jsp" />
 	</definition>
 
 	<definition name="df.page.teacherServiceDistribution.showTSDProcessCreationOptions" extends="departmentMember.masterPage"> 
+	    <put name="title" value="private.department.distribution" /> 
 		<put name="body" value="/departmentMember/teacherServiceDistribution/showTeacherServiceDistributionCreationOptions.jsp" />
 	</definition>
 
-	<definition name="df.page.teacherServiceDistribution.showTSDProcessCreationForm" extends="departmentMember.masterPage"> 
+	<definition name="df.page.teacherServiceDistribution.showTSDProcessCreationForm" extends="departmentMember.masterPage">
+	    <put name="title" value="private.department.distribution" />  
 		<put name="body" value="/departmentMember/teacherServiceDistribution/showTeacherServiceDistributionCreationForm.jsp" />
 	</definition>
 
-	<definition name="df.page.teacherServiceDistribution.showTSDProcessServices" extends="departmentMember.masterPage"> 
+	<definition name="df.page.teacherServiceDistribution.showTSDProcessServices" extends="departmentMember.masterPage">
+	    <put name="title" value="private.department.distribution" />  
 		<put name="body" value="/departmentMember/teacherServiceDistribution/showTeacherServiceDistributionServices.jsp" />
 	</definition>
 
-	<definition name="df.page.teacherServiceDistribution.showTSDProcesss" extends="departmentMember.masterPage"> 
+	<definition name="df.page.teacherServiceDistribution.showTSDProcesss" extends="departmentMember.masterPage">
+	    <put name="title" value="private.department.distribution" />  
 		<put name="body" value="/departmentMember/teacherServiceDistribution/showTeacherServiceDistributions.jsp" />
 	</definition>
 
-	<definition name="df.page.teacherServiceDistribution.showTSDProcesssForCopy" extends="departmentMember.masterPage"> 
+	<definition name="df.page.teacherServiceDistribution.showTSDProcesssForCopy" extends="departmentMember.masterPage">
+	    <put name="title" value="private.department.distribution" />  
 		<put name="body" value="/departmentMember/teacherServiceDistribution/showTeacherServiceDistributionsForCopy.jsp"/>
 	</definition>
 
-	<definition name="df.page.teacherServiceDistribution.showTSDProcessPhasesManagementForm" extends="departmentMember.masterPage"> 
+	<definition name="df.page.teacherServiceDistribution.showTSDProcessPhasesManagementForm" extends="departmentMember.masterPage">
+	    <put name="title" value="private.department.distribution" />  
 		<put name="body" value="/departmentMember/teacherServiceDistribution/showValuationPhasesManagementForm.jsp" />
 	</definition>
 
-	<definition name="df.page.teacherServiceDistribution.tsdProcessPhaseDataManagementOptions" extends="departmentMember.masterPage"> 
+	<definition name="df.page.teacherServiceDistribution.tsdProcessPhaseDataManagementOptions" extends="departmentMember.masterPage">
+	    <put name="title" value="private.department.distribution" />  
 		<put name="body" value="/departmentMember/teacherServiceDistribution/valuationPhaseDataManagementOptions.jsp" />
 	</definition>
 
-	<definition name="df.page.teacherServiceDistribution.showOmissionValuesValuationForm" extends="departmentMember.masterPage"> 
+	<definition name="df.page.teacherServiceDistribution.showOmissionValuesValuationForm" extends="departmentMember.masterPage">
+	    <put name="title" value="private.department.distribution" />  
 		<put name="body" value="/departmentMember/teacherServiceDistribution/showOmissionValuesValuationForm.jsp"/>
 	</definition>
 
-	<definition name="df.page.teacherServiceDistribution.showTeacherServiceDistributionSupportServices" extends="departmentMember.masterPage"> 
+	<definition name="df.page.teacherServiceDistribution.showTeacherServiceDistributionSupportServices" extends="departmentMember.masterPage">
+	    <put name="title" value="private.department.distribution" />  
 		<put name="body" value="/departmentMember/teacherServiceDistribution/showValuationGroupingSupportServices.jsp" />
 	</definition>
 
-	<definition name="df.page.teacherServiceDistribution.tsdCourseForm" extends="departmentMember.masterPage"> 
+	<definition name="df.page.teacherServiceDistribution.tsdCourseForm" extends="departmentMember.masterPage">
+	    <put name="title" value="private.department.distribution" />  
 		<put name="body" value="/departmentMember/teacherServiceDistribution/courseValuationForm.jsp" />
 	</definition>
 	
-	<definition name="df.page.teacherServiceDistribution.courseValuationStudents" extends="departmentMember.masterPage"> 
+	<definition name="df.page.teacherServiceDistribution.courseValuationStudents" extends="departmentMember.masterPage">
+	    <put name="title" value="private.department.distribution" />  
 		<put name="body" value="/departmentMember/teacherServiceDistribution/courseValuationStudents.jsp" />
 	</definition>
 	
-	<definition name="df.page.teacherServiceDistribution.courseValuationShifts" extends="departmentMember.masterPage"> 
+	<definition name="df.page.teacherServiceDistribution.courseValuationShifts" extends="departmentMember.masterPage">
+	    <put name="title" value="private.department.distribution" />  
 		<put name="body" value="/departmentMember/teacherServiceDistribution/courseValuationShifts.jsp" />
 	</definition>
 	
-	<definition name="df.page.teacherServiceDistribution.courseValuationWeights" extends="departmentMember.masterPage"> 
+	<definition name="df.page.teacherServiceDistribution.courseValuationWeights" extends="departmentMember.masterPage">
+	    <put name="title" value="private.department.distribution" />  
 		<put name="body" value="/departmentMember/teacherServiceDistribution/courseValuationWeights.jsp" />
 	</definition>
 	
-	<definition name="df.page.teacherServiceDistribution.courseValuationHours" extends="departmentMember.masterPage"> 
+	<definition name="df.page.teacherServiceDistribution.courseValuationHours" extends="departmentMember.masterPage">
+	    <put name="title" value="private.department.distribution" />  
 		<put name="body" value="/departmentMember/teacherServiceDistribution/courseValuationHours.jsp" />
 	</definition>
 
-	<definition name="df.page.teacherServiceDistribution.tsdCurricularCourseGroupCreationForm" extends="departmentMember.masterPage"> 
+	<definition name="df.page.teacherServiceDistribution.tsdCurricularCourseGroupCreationForm" extends="departmentMember.masterPage">
+	    <put name="title" value="private.department.distribution" />  
 		<put name="body" value="/departmentMember/teacherServiceDistribution/curricularCourseValuationGroupCreationForm.jsp" />
 	</definition>
 
-	<definition name="df.page.teacherServiceDistribution.tsdProfessorshipForm" extends="departmentMember.masterPage"> 
+	<definition name="df.page.teacherServiceDistribution.tsdProfessorshipForm" extends="departmentMember.masterPage">
+	    <put name="title" value="private.department.distribution" />  
 		<put name="body" value="/departmentMember/teacherServiceDistribution/professorshipValuationForm.jsp" />
 	</definition>
 
-	<definition name="df.page.teacherServiceDistribution.tsdProfessorshipFormByTSDTeacher" extends="departmentMember.masterPage"> 
+	<definition name="df.page.teacherServiceDistribution.tsdProfessorshipFormByTSDTeacher" extends="departmentMember.masterPage">
+	    <put name="title" value="private.department.distribution" />  
 		<put name="body" value="/departmentMember/teacherServiceDistribution/professorshipValuationFormByValuationTeacher.jsp" />
 	</definition>
 
-	<definition name="df.page.teacherServiceDistribution.showTSDProcessValuation" extends="departmentMember.masterPage"> 
+	<definition name="df.page.teacherServiceDistribution.showTSDProcessValuation" extends="departmentMember.masterPage">
+	    <put name="title" value="private.department.distribution" />  
 		<put name="body" value="/departmentMember/teacherServiceDistribution/showTeacherServiceDistributionValuation.jsp" />
 	</definition>
 
-	<definition name="df.page.teacherServiceDistribution.showTSDProcessValuationByTeachersAndCourses" extends="departmentMember.masterPage"> 
+	<definition name="df.page.teacherServiceDistribution.showTSDProcessValuationByTeachersAndCourses" extends="departmentMember.masterPage">
+	    <put name="title" value="private.department.distribution" />  
 		<put name="body" value="/departmentMember/teacherServiceDistribution/showTeacherServiceDistributionValuationByTeachersAndCourses.jsp" />
 	</definition>
 
-	<definition name="df.page.teacherServiceDistribution.showTSDProcessValuationByTeachers" extends="departmentMember.masterPage"> 
+	<definition name="df.page.teacherServiceDistribution.showTSDProcessValuationByTeachers" extends="departmentMember.masterPage">
+	    <put name="title" value="private.department.distribution" />  
 		<put name="body" value="/departmentMember/teacherServiceDistribution/showTeacherServiceDistributionValuationByTeachers.jsp" />
 	</definition>
 	
-	<definition name="df.page.teacherServiceDistribution.showTSDProcessValuationByCharts" extends="departmentMember.masterPage"> 
+	<definition name="df.page.teacherServiceDistribution.showTSDProcessValuationByCharts" extends="departmentMember.masterPage">
+	    <put name="title" value="private.department.distribution" />  
 		<put name="body" value="/departmentMember/teacherServiceDistribution/showTeacherServiceDistributionValuationByCharts.jsp" />
 	</definition>
 	
-	<definition name="df.page.teacherServiceDistribution.defineSchoolClassCalculationMethod" extends="departmentMember.masterPage"> 
+	<definition name="df.page.teacherServiceDistribution.defineSchoolClassCalculationMethod" extends="departmentMember.masterPage">
+	    <put name="title" value="private.department.distribution" />  
 		<put name="body" value="/departmentMember/teacherServiceDistribution/editSchoolClassCalculationMethod.jsp"/>
 	</definition>
 	
-	<definition name="df.page.teacherServiceDistribution.list-valuation-teachers" extends="departmentMember.masterPage"> 
+	<definition name="df.page.teacherServiceDistribution.list-valuation-teachers" extends="departmentMember.masterPage">
+	    <put name="title" value="private.department.distribution" />  
 		<put name="body" value="/departmentMember/teacherServiceDistribution/listValuationTeachers.jsp" />
 	</definition>
 	
 	<definition name="df.page.teacherServiceDistribution.show-teachers-list" extends="departmentMember.masterPage">
+	    <put name="title" value="private.department.distribution" /> 
 		<put name="body" value="/departmentMember/teacherServiceDistribution/showRealTeachers.jsp"/>
 	</definition>
 	
 	<definition name="df.page.teacherServiceDistribution.show-remove-teachers" extends="departmentMember.masterPage">
+	    <put name="title" value="private.department.distribution" /> 
 		<put name="body" value="/departmentMember/teacherServiceDistribution/showRemoveTeachers.jsp"/>
 	</definition>
 	
 	<definition name="df.page.teacherServiceDistribution.show-form-to-create-teacher" extends="departmentMember.masterPage">
+	    <put name="title" value="private.department.distribution" /> 
 		<put name="body" value="/departmentMember/teacherServiceDistribution/createTeacherForm.jsp"/>
 	</definition>
 	
 	<definition name="df.page.teacherServiceDistribution.show-form-to-create-course" extends="departmentMember.masterPage">
+	    <put name="title" value="private.department.distribution" /> 
 		<put name="body" value="/departmentMember/teacherServiceDistribution/createCourseForm.jsp"/>
 	</definition>
 
 	<definition name="df.page.teacherServiceDistribution.showGlobalTSDProcesss" extends="departmentMember.masterPage"> 
+	    <put name="title" value="private.department.distribution" />  
 		<put name="body" value="/departmentMember/teacherServiceDistribution/showGlobalTeacherServiceDistributions.jsp" />
 	</definition>
 	
-	<definition name="df.page.teacherServiceDistribution.showGlobalTSDProcesssValuationByCourses" extends="departmentMember.masterPage"> 
+	<definition name="df.page.teacherServiceDistribution.showGlobalTSDProcesssValuationByCourses" extends="departmentMember.masterPage">
+	    <put name="title" value="private.department.distribution" />  
 		<put name="body" value="/departmentMember/teacherServiceDistribution/showGlobalTeacherServiceDistributionsValuationByCourses.jsp"/>
 	</definition>
 
-	<definition name="df.page.teacherServiceDistribution.showGlobalTSDProcesssValuationByTeachers" extends="departmentMember.masterPage"> 
+	<definition name="df.page.teacherServiceDistribution.showGlobalTSDProcesssValuationByTeachers" extends="departmentMember.masterPage">
+	    <put name="title" value="private.department.distribution" />  
 		<put name="body" value="/departmentMember/teacherServiceDistribution/showGlobalTeacherServiceDistributionsValuationByTeachers.jsp"/>
 	</definition>
 	
-    <definition name="df.page.teacherServiceDistribution.showTeacherServiceDistributionPermissionServicesForm" extends="departmentMember.masterPage"> 
+    <definition name="df.page.teacherServiceDistribution.showTeacherServiceDistributionPermissionServicesForm" extends="departmentMember.masterPage">
+        <put name="title" value="private.department.distribution" />  
 		<put name="body" value="/departmentMember/teacherServiceDistribution/showValuationGroupingPermissionServicesForm.jsp"/>
 	</definition>
 
-    <definition name="df.page.teacherServiceDistribution.showTeacherServiceDistributionPermissionServicesFormByPerson" extends="departmentMember.masterPage"> 
+    <definition name="df.page.teacherServiceDistribution.showTeacherServiceDistributionPermissionServicesFormByPerson" extends="departmentMember.masterPage">
+        <put name="title" value="private.department.distribution" />  
 		<put name="body" value="/departmentMember/teacherServiceDistribution/showValuationGroupingPermissionServicesFormByPerson.jsp"/>
 	</definition>
     
- 	<definition name="df.page.teacherServiceDistribution.showTSDProcesssForCopy" extends="departmentMember.masterPage"> 
+ 	<definition name="df.page.teacherServiceDistribution.showTSDProcesssForCopy" extends="departmentMember.masterPage">
+ 	    <put name="title" value="private.department.distribution" />  
 		<put name="body" value="/departmentMember/teacherServiceDistribution/showTeacherServiceDistributionsForCopy.jsp"/>
 	</definition>
 	
 	<definition name="df.page.teacherServiceDistribution.show-courses-list" extends="departmentMember.masterPage">
+	    <put name="title" value="private.department.distribution" /> 
 		<put name="body" value="/departmentMember/teacherServiceDistribution/showCoursesToAdd.jsp"/>
 	</definition>
 	
  	<definition name="df.page.teacherServiceDistribution.showGlobalTSDProcesssValuationByTeachersAndCourses" extends="departmentMember.masterPage">
+ 	    <put name="title" value="private.department.distribution" /> 
 		<put name="body" value="/departmentMember/teacherServiceDistribution/showGlobalTeacherServiceDistributionsValuationByTeachersAndCourses.jsp"/>
 	</definition>
 		    
@@ -302,34 +339,42 @@
     </definition>  
     
    	<definition name="department-upload-file" extends="department.intranet">
+   	   <put name="title" value="private.department.departmentspecific.files" />
        <put name="body" value="/commons/unitFiles/uploadFile.jsp"/>  
     </definition>        
 
    	<definition name="department-manage-files" extends="department.intranet">
+   	   <put name="title" value="private.department.departmentspecific.files" />
        <put name="body" value="/commons/unitFiles/manageFiles.jsp"/>  
     </definition>        
 
    	<definition name="department-edit-file" extends="department.intranet">
+   	   <put name="title" value="private.department.departmentspecific.files" />
        <put name="body" value="/commons/unitFiles/editFile.jsp"/>  
     </definition>      
 
     <definition name="sendMail" extends="department.intranet">
+       <put name="title" value="private.department.departmentspecific.sendemail" />
        <put name="body" value="/departmentMember/intranet/sendEmail.jsp"/>  
     </definition>      
     
     <definition name="show-projects" extends="departmentMember.masterPage">
+        <put name="title" value="private.department.departmentspecific.projects" />
     	<put name="body" value="/departmentMember/showProjects.jsp"/>
     </definition>
     
     <definition name="view-last-project-submission-for-each-group" extends="departmentMember.masterPage">
+        <put name="title" value="private.department.departmentspecific.projects" />
 		<put name="body" value="/teacher/evaluation/viewLastProjectSubmissionForEachGroup.jsp" />
 	</definition>
 	
 	<definition name="view-project-submissions-by-group" extends="departmentMember.masterPage">
+	    <put name="title" value="private.department.departmentspecific.projects" />
 		<put name="body" value="/teacher/evaluation/viewProjectSubmissionsByGroup.jsp" />
 	</definition>
 	
 	<definition name="view-last-project-submission-for-each-group" extends="departmentMember.masterPage">
+	    <put name="title" value="private.department.departmentspecific.projects" />
 		<put name="body" value="/teacher/evaluation/viewLastProjectSubmissionForEachGroup.jsp" />
 	</definition>
 	

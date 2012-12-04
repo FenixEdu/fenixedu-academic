@@ -20,10 +20,12 @@ import org.apache.struts.action.ActionMapping;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 @Mapping(path = "/students", module = "academicAdminOffice")
-@Forwards( { @Forward(name = "viewStudentDetails", path = "/academicAdminOffice/student/viewStudentDetails.jsp"),
-	@Forward(name = "search", path = "/academicAdminOffice/searchStudents.jsp") })
+@Forwards({
+	@Forward(name = "viewStudentDetails", path = "/academicAdminOffice/student/viewStudentDetails.jsp", tileProperties = @Tile(title = "private.academicadministrativeoffice.studentoperations.viewstudents")),
+	@Forward(name = "search", path = "/academicAdminOffice/searchStudents.jsp", tileProperties = @Tile(title = "private.academicadministrativeoffice.studentoperations.viewstudents")) })
 public class SearchForStudentsDA extends FenixDispatchAction {
 
     public ActionForward prepareSearch(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,

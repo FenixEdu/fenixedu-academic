@@ -24,10 +24,11 @@ import org.apache.struts.action.ActionMapping;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixWebFramework.struts.annotations.Tile;
 import pt.utl.ist.fenix.tools.util.excel.StyledExcelSpreadsheet;
 
 @Mapping(module = "scientificCouncil", path = "/exportCredits", scope = "request", parameter = "method")
-@Forwards(value = { @Forward(name = "exportDepartmentCourses", path = "/credits/export/exportDepartmentCourses.jsp") })
+@Forwards(value = { @Forward(name = "exportDepartmentCourses", path = "/credits/export/exportDepartmentCourses.jsp", tileProperties = @Tile(title = "private.department.coursestypes")) })
 public class CreditsReportsDA extends FenixDispatchAction {
 
     public ActionForward prepareExportDepartmentCourses(ActionMapping mapping, ActionForm form, HttpServletRequest request,

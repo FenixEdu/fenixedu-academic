@@ -42,12 +42,6 @@ import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixWebFramework.struts.annotations.Tile;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
-import pt.ist.fenixWebFramework.struts.annotations.Forward;
-import pt.ist.fenixWebFramework.struts.annotations.Forwards;
-import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 /**
  * @author <a href="mailto:sana@ist.utl.pt">Shezad Anavarali </a>
@@ -56,9 +50,9 @@ import pt.ist.fenixWebFramework.struts.annotations.Tile;
  */
 @Mapping(module = "masterDegreeAdministrativeOffice", path = "/editInsuranceValue", input = "/editInsuranceValue.do?method=chooseExecutionYear&page=0", attribute = "editInsuranceForm", formBean = "editInsuranceForm", scope = "request", parameter = "method")
 @Forwards(value = {
-		@Forward(name = "defineSuccess", path = "defineInsuranceValueSuccess"),
-		@Forward(name = "chooseExecutionYear", path = "chooseExecutionYear"),
-		@Forward(name = "defineInsuranceValue", path = "defineInsuranceValue") })
+	@Forward(name = "defineSuccess", path = "defineInsuranceValueSuccess", tileProperties = @Tile(title = "teste44")),
+	@Forward(name = "chooseExecutionYear", path = "chooseExecutionYear", tileProperties = @Tile(title = "teste45")),
+	@Forward(name = "defineInsuranceValue", path = "defineInsuranceValue", tileProperties = @Tile(title = "teste46")) })
 @Exceptions(value = { @ExceptionHandling(type = net.sourceforge.fenixedu.presentationTier.Action.exceptions.NonExistingActionException.class, key = "resources.Action.exceptions.NonExistingActionException", handler = net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler.class, scope = "request") })
 public class EditInsuranceValueDispatchAction extends FenixDispatchAction {
 
@@ -132,8 +126,8 @@ public class EditInsuranceValueDispatchAction extends FenixDispatchAction {
 
 	request.setAttribute(PresentationConstants.MONTH_DAYS_KEY, Data.getMonthDays());
 	request.setAttribute(PresentationConstants.MONTH_LIST_KEY, Data.getMonths());
-	request.setAttribute(PresentationConstants.YEARS_KEY, Data.getCustomYears(Integer.parseInt(executionYears[0]), Integer
-		.parseInt(executionYears[1])));
+	request.setAttribute(PresentationConstants.YEARS_KEY,
+		Data.getCustomYears(Integer.parseInt(executionYears[0]), Integer.parseInt(executionYears[1])));
 
 	return mapping.findForward("defineInsuranceValue");
 
@@ -155,8 +149,8 @@ public class EditInsuranceValueDispatchAction extends FenixDispatchAction {
 
 	if ((endDateDay.intValue() > 0) && (endDateMonth.intValue() > 0) && (endDateYear.intValue() > 0)
 		&& Data.validDate(endDateDay, endDateMonth, endDateYear)) {
-	    Calendar officialDateCalendar = new GregorianCalendar(endDateYear.intValue(), endDateMonth.intValue(), endDateDay
-		    .intValue());
+	    Calendar officialDateCalendar = new GregorianCalendar(endDateYear.intValue(), endDateMonth.intValue(),
+		    endDateDay.intValue());
 	    endDate = officialDateCalendar.getTime();
 	} else {
 	    // invalid date!!
@@ -175,6 +169,7 @@ public class EditInsuranceValueDispatchAction extends FenixDispatchAction {
     private List buildLabelValueBeanForJsp(List infoExecutionYears) {
 	List executionYearLabels = new ArrayList();
 	CollectionUtils.collect(infoExecutionYears, new Transformer() {
+	    @Override
 	    public Object transform(Object arg0) {
 		InfoExecutionYear infoExecutionYear = (InfoExecutionYear) arg0;
 

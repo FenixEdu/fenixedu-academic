@@ -146,6 +146,7 @@
       <message-resources parameter="resources.CardGenerationResources" key="CARD_GENERATION_RESOURCES" null="false"></message-resources>
       <message-resources parameter="resources.CaseHandlingResources" key="CASE_HANDLING_RESOURCES" null="false"></message-resources>
       <message-resources parameter="resources.PhdResources" key="PHD_RESOURCES" null="false"></message-resources>
+      <message-resources null="false" key="TITLES_RESOURCES" parameter="resources.TitlesResources"></message-resources>
       <!-- ========== Plug Ins Configuration ================================= -->
       <plug-in className="org.apache.struts.validator.ValidatorPlugIn">
             <set-property property="pathnames" value="/WEB-INF/validator-rules.xml,/WEB-INF/fenix-validator-rules.xml,/WEB-INF/conf/validation-default.xml"></set-property>

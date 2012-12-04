@@ -36,6 +36,8 @@
     </definition>        
 
    	<definition name="pedagogical-manage-files" extends="pedagogicalCouncil.communication">
+   	   <put name="bundle" value="TITLES_RESOURCES"/>
+   	   <put name="title" value="private.pedagogiccouncil.communication.files"/>
        <put name="body" value="/commons/unitFiles/manageFiles.jsp"/>  
     </definition>        
 
@@ -112,6 +114,8 @@
     </definition>
     
      <definition name="df.page.send.email.redirect" extends="pedagogicalCouncil.masterPage">
+     	<put name="bundle" value="TITLES_RESOURCES"/>
+        <put name="title" value="private.pedagogiccouncil.communication.sendingemail"/>
         <put name="body" value="/email/sendEmailRedirect.jsp"/>
     </definition>
 

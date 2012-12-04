@@ -20,12 +20,16 @@ import org.apache.struts.action.ActionMapping;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 @Mapping(path = "/reportStudentsUTLCandidates", module = "academicAdminOffice")
-@Forwards({ @Forward(name = "prepare", path = "/academicAdminOffice/scholarship/utl/report/prepare.jsp"),
-	@Forward(name = "showReport", path = "/academicAdminOffice/scholarship/utl/report/showReport.jsp"),
-	@Forward(name = "viewDetails", path = "/academicAdminOffice/scholarship/utl/report/viewDetails.jsp"),
-	@Forward(name = "prepareForOneStudent", path = "/academicAdminOffice/scholarship/utl/report/prepareForOneStudent.jsp") })
+@Forwards({
+
+	@Forward(name = "prepare", path = "/academicAdminOffice/scholarship/utl/report/prepare.jsp", tileProperties = @Tile(title = "private.academicadministrativeoffice.scholarships.utl")),
+	@Forward(name = "showReport", path = "/academicAdminOffice/scholarship/utl/report/showReport.jsp", tileProperties = @Tile(title = "private.academicadministrativeoffice.scholarships.utl")),
+	@Forward(name = "viewDetails", path = "/academicAdminOffice/scholarship/utl/report/viewDetails.jsp", tileProperties = @Tile(title = "private.academicadministrativeoffice.scholarships.utl")),
+	@Forward(name = "prepareForOneStudent", path = "/academicAdminOffice/scholarship/utl/report/prepareForOneStudent.jsp", tileProperties = @Tile(title = "private.academicadministrativeoffice.scholarships.utl")) })
+
 public class ReportStudentsUTLCandidatesDA extends FenixDispatchAction {
 
     public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
@@ -111,7 +115,7 @@ public class ReportStudentsUTLCandidatesDA extends FenixDispatchAction {
 
 	response.getOutputStream().flush();
 	response.flushBuffer();
-	
+
 	return null;
     }
 

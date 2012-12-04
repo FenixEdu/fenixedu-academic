@@ -32,10 +32,11 @@ import pt.utl.ist.fenix.tools.util.i18n.Language;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 @Mapping(module = "messaging", path = "/viewFiles", scope = "request", parameter = "method")
-@Forwards(value = { @Forward(name = "uploadFile", path = "/commons/unitFiles/uploadFile.jsp", tileProperties = @Tile(head = "/messaging/files/context.jsp")),
-		@Forward(name = "manageFiles", path = "/commons/unitFiles/manageFiles.jsp", tileProperties = @Tile(head = "/messaging/files/context.jsp")),
-		@Forward(name = "showSources", path = "/messaging/files/showSources.jsp", tileProperties = @Tile(head = "/commons/renderers/treeRendererHeader.jsp")),
-		@Forward(name = "editFile", path = "/commons/unitFiles/editFile.jsp", tileProperties = @Tile(head = "/messaging/files/context.jsp")) })
+@Forwards(value = {
+	@Forward(name = "uploadFile", path = "/commons/unitFiles/uploadFile.jsp", tileProperties = @Tile(head = "/messaging/files/context.jsp")),
+	@Forward(name = "manageFiles", path = "/commons/unitFiles/manageFiles.jsp", tileProperties = @Tile(head = "/messaging/files/context.jsp")),
+	@Forward(name = "showSources", path = "/messaging/files/showSources.jsp", tileProperties = @Tile(head = "/commons/renderers/treeRendererHeader.jsp", title = "private.messaging.files")),
+	@Forward(name = "editFile", path = "/commons/unitFiles/editFile.jsp", tileProperties = @Tile(head = "/messaging/files/context.jsp")) })
 public class ViewFilesDA extends UnitFunctionalities {
 
     public ActionForward showSources(ActionMapping mapping, ActionForm form, HttpServletRequest request,

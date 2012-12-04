@@ -43,6 +43,7 @@ import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixWebFramework.struts.annotations.Tile;
 import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 /**
@@ -51,14 +52,15 @@ import pt.ist.fenixframework.pstm.AbstractDomainObject;
  */
 
 @Mapping(path = "/viewInquiriesResults", module = "coordinator", formBeanClass = ViewInquiriesResultPageDTO.class)
-@Forwards( { @Forward(name = "inquiryResults", path = "/coordinator/inquiries/viewInquiriesResults.jsp"),
-	@Forward(name = "curricularUnitSelection", path = "/coordinator/inquiries/curricularUnitSelection.jsp"),
+@Forwards({
+	@Forward(name = "inquiryResults", path = "/coordinator/inquiries/viewInquiriesResults.jsp"),
+	@Forward(name = "curricularUnitSelection", path = "/coordinator/inquiries/curricularUnitSelection.jsp", tileProperties = @Tile(title = "private.coordinator.management.courses.management.qucresults")),
 	@Forward(name = "showFilledTeachingInquiry", path = "/inquiries/showFilledTeachingInquiry.jsp", useTile = false),
 	@Forward(name = "showFilledTeachingInquiry_v2", path = "/inquiries/showFilledTeachingInquiry_v2.jsp", useTile = false),
 	@Forward(name = "showFilledDelegateInquiry", path = "/inquiries/showFilledDelegateInquiry.jsp", useTile = false),
 	@Forward(name = "showCourseInquiryResult", path = "/inquiries/showCourseInquiryResult.jsp", useTile = false),
 	@Forward(name = "showTeachingInquiryResult", path = "/inquiries/showTeachingInquiryResult.jsp", useTile = false),
-	@Forward(name = "coordinatorUCView", path = "/coordinator/inquiries/coordinatorUCView.jsp"),
+	@Forward(name = "coordinatorUCView", path = "/coordinator/inquiries/coordinatorUCView.jsp", tileProperties = @Tile(title = "private.coordinator.management.courses.management.qucresults")),
 	@Forward(name = "coordinatorInquiry", path = "/coordinator/inquiries/coordinatorInquiry.jsp") })
 public class ViewInquiriesResultsForCoordinatorDA extends ViewInquiriesResultsDA {
 
@@ -141,12 +143,15 @@ public class ViewInquiriesResultsForCoordinatorDA extends ViewInquiriesResultsDA
 		currentCoordinator = currentExecutionDegree.getCoordinatorByTeacher(AccessControl.getPerson());
 	    }
 
-	    //check if the chosen executionSemester has the same executionYear of the next executionSemester of the chosen one
+	    // check if the chosen executionSemester has the same executionYear
+	    // of the next executionSemester of the chosen one
 	    ExecutionYear executionYear = executionSemester.getExecutionYear();
 	    ExecutionYear nextExecutionYear = executionSemester.getNextExecutionPeriod().getExecutionYear();
 	    boolean sameExecutionYear = executionYear == nextExecutionYear;
 
-	    Coordinator coordinatorAfter = null; //it can see the results in the previous semesters of its coordination
+	    Coordinator coordinatorAfter = null; // it can see the results in
+						 // the previous semesters of
+						 // its coordination
 	    if (coordinator == null && currentCoordinator == null) {
 		if (!sameExecutionYear) {
 		    ExecutionSemester executionSemesterIter = executionSemester.getNextExecutionPeriod();
@@ -180,13 +185,15 @@ public class ViewInquiriesResultsForCoordinatorDA extends ViewInquiriesResultsDA
 	    } else {
 		finalCoordinatorToUse = currentCoordinator != null ? currentCoordinator : coordinatorAfter;
 	    }
-	    //responsibleCoordinator = coordinator.isResponsible();
+	    // responsibleCoordinator = coordinator.isResponsible();
 
 	    InquiryCoordinatorAnswer inquiryCoordinatorAnswer = null;
 	    if (coordinatorInquiryTemplate.getShared()) {
 		inquiryCoordinatorAnswer = executionDegree.getInquiryCoordinationAnswers(executionSemester);
 	    } else {
-		//TODO since in the 1rst semester more than one could fill in the inquiry, it should show multiples links for each one, it is only showing one link
+		// TODO since in the 1rst semester more than one could fill in
+		// the inquiry, it should show multiples links for each one, it
+		// is only showing one link
 		if (coordinator != null) {
 		    inquiryCoordinatorAnswer = coordinator.getInquiryCoordinatorAnswer(executionSemester);
 		}
@@ -339,6 +346,7 @@ public class ViewInquiriesResultsForCoordinatorDA extends ViewInquiriesResultsDA
 	return selectexecutionSemester(actionMapping, actionForm, request, response);
     }
 
+    @Override
     protected boolean coordinatorCanComment(final ExecutionDegree executionDegree, final ExecutionSemester executionPeriod) {
 	if (executionDegree.getDegreeType().isThirdCycle()) {
 	    return false;

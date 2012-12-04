@@ -12,14 +12,7 @@ import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
-import pt.ist.fenixWebFramework.struts.annotations.Forward;
-import pt.ist.fenixWebFramework.struts.annotations.Forwards;
-import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
+
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
@@ -31,8 +24,8 @@ import pt.ist.fenixWebFramework.struts.annotations.Tile;
  */
 @Mapping(module = "masterDegreeAdministrativeOffice", path = "/penaltyExemption", scope = "request", parameter = "method")
 @Forwards(value = {
-		@Forward(name = "return", path = "/studentSituation.do?page=0&method=readStudent"),
-		@Forward(name = "edit", path = "gratuity.penaltyExemption.edit") })
+	@Forward(name = "return", path = "/studentSituation.do?page=0&method=readStudent", tileProperties = @Tile(title = "teste59")),
+	@Forward(name = "edit", path = "gratuity.penaltyExemption.edit", tileProperties = @Tile(title = "teste60")) })
 public class PenaltyExemptionDA extends FenixDispatchAction {
 
     public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
@@ -44,8 +37,8 @@ public class PenaltyExemptionDA extends FenixDispatchAction {
 	    return mapping.findForward("return");
 	}
 
-	request.setAttribute("gratuitySituation", rootDomainObject.readGratuitySituationByOID(getIntegerFromRequest(request,
-		"gratuitySituationID")));
+	request.setAttribute("gratuitySituation",
+		rootDomainObject.readGratuitySituationByOID(getIntegerFromRequest(request, "gratuitySituationID")));
 	return mapping.findForward("edit");
     }
 

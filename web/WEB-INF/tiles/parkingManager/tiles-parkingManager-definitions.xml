@@ -3,7 +3,8 @@
 <!-- Tiles definitions -->
 <tiles-definitions>
 	<definition name="definition.parkingManager.masterPage" extends="df.layout.two-column">
-		<put name="title" value="Gestão do Estacionamento"/>
+		<put name="title" value="private.parking"/>
+		<put name="bundle" value="TITLES_RESOURCES" />
 		<put name="serviceName" value="Gestão do Estacionamento"/>
 		<put name="navLocal" value="/parkingManager/parkingManagerMenu.jsp"/>
 		<put name="navGeral" value="/commons/commonGeneralNavigationBar.jsp"/>

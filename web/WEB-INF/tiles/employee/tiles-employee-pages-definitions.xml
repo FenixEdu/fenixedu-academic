@@ -19,6 +19,8 @@
 		<put name="body" value="/employee/showWorkSheet.jsp" />
 	</definition>
 	<definition name="show-employee-list" extends="definition.employee.two-column">
+		<put name="bundle" value="TITLES_RESOURCES"/>
+		<put name="title" value="private.employee.responsableforattendance"/>
 		<put name="body" value="/assiduousnessResponsible/showEmployeeList.jsp" />
 	</definition>
 	<definition name="show-employee-work-sheet" extends="definition.employee.two-column">

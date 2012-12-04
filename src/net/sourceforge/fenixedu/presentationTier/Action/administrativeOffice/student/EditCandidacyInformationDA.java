@@ -25,11 +25,12 @@ import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixWebFramework.struts.annotations.Tile;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 @Mapping(path = "/editCandidacyInformation", module = "academicAdminOffice")
-@Forwards( {
-	@Forward(name = "editCandidacyInformation", path = "/academicAdminOffice/student/registration/editCandidacyInformation.jsp"),
+@Forwards({
+	@Forward(name = "editCandidacyInformation", path = "/academicAdminOffice/student/registration/editCandidacyInformation.jsp", tileProperties = @Tile(title = "private.academicadministrativeoffice.studentoperations.viewstudents")),
 	@Forward(name = "visualizeStudent", path = "/student.do?method=visualizeStudent") })
 public class EditCandidacyInformationDA extends FenixDispatchAction {
 
@@ -52,8 +53,8 @@ public class EditCandidacyInformationDA extends FenixDispatchAction {
 	}
 	ExecutionYear currentExecutionYear = ExecutionYear.readCurrentExecutionYear();
 	if (chooseRegistrationOrPhd.getPhdRegistrationWrapper().isRegistration()) {
-	    return chooseRegistrationOrPhd.getPhdRegistrationWrapper().getRegistration().getPersonalInformationBean(
-		    currentExecutionYear);
+	    return chooseRegistrationOrPhd.getPhdRegistrationWrapper().getRegistration()
+		    .getPersonalInformationBean(currentExecutionYear);
 	} else {
 	    return chooseRegistrationOrPhd.getPhdRegistrationWrapper().getPhdIndividualProgramProcess()
 		    .getPersonalInformationBean(currentExecutionYear);
@@ -82,7 +83,7 @@ public class EditCandidacyInformationDA extends FenixDispatchAction {
 
 	return mapping.findForward("editCandidacyInformation");
     }
-
+    
     public ActionForward schoolLevelPostback(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) {
 	final PersonalInformationBean personalInformationBean = getRenderedObject("personalInformationBean");
@@ -146,8 +147,8 @@ public class EditCandidacyInformationDA extends FenixDispatchAction {
 		Locale locale = Language.getLocale();
 		ResourceBundle bundle = ResourceBundle.getBundle("resources.PhdResources", locale);
 		StringBuilder stringBuilder = new StringBuilder(bundle.getString("label.phd")).append(" ");
-		stringBuilder.append(getPhdIndividualProgramProcess().getPhdProgram().getName().getContent(
-			Language.valueOf(locale.getLanguage())));
+		stringBuilder.append(getPhdIndividualProgramProcess().getPhdProgram().getName()
+			.getContent(Language.valueOf(locale.getLanguage())));
 		return stringBuilder.toString();
 	    }
 	}

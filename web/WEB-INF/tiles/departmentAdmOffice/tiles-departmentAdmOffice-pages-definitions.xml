@@ -23,6 +23,7 @@
     </definition>
     <definition name="search-for-teacherExecutionCourseAssociation-management-summaries" 
         extends="departmentAdmOffice.masterPage">
+        <put name="title" value="private.administrationofcreditsofdepartmentteachers.teachers.summaries"/>
         <put name="body" value="search-for-teacherExecutionCourseAssociation-body-summaries"/>
     </definition>
     
@@ -30,10 +31,12 @@
 
     <definition name="search-for-teacherExecutionCourseAssociation-management" 
         extends="departmentAdmOffice.masterPage">
+        <put name="title" value="private.administrationofcreditsofdepartmentteachers.teachers.courses"/>
         <put name="body" value="search-for-teacherExecutionCourseAssociation-body"/>
     </definition>
     <definition name="search-for-teacherExecutionCourseAssociation-body" 
         extends="teacher-search-form-layout">
+        <put name="title" value="bla6"/>
         <put name="searchInfo" value="label.search.for.teacherExecutionCourseAssociation.management"/>
     </definition>  
     <definition name="show-teacher-professorships-for-management" 
@@ -122,6 +125,7 @@
 	</definition>
     
     <definition name="createProfessorship" extends="departmentAdmOffice.masterPage">
+    	<put name="title" value = "private.administrationofcreditsofdepartmentteachers.teachers.courses"/>
         <put name="body" value="/departmentAdmOffice/teacher/professorship/createProfessorship.jsp"/>
     </definition>
        
@@ -169,9 +173,11 @@
 		<put name="body" value="/departmentAdmOffice/finalDegreeWork/showFinalDegreeWorkList_bd.jsp" />
 	</definition>
 	<definition name="df.page.showFinalDegreeWorkProposal" extends="departmentAdmOffice.masterPage">
+		<put name="title" value="private.administrationofcreditsofdepartmentteachers.dissertations.dissertationsmanagement"/>
 		<put name="body" value="/departmentAdmOffice/finalDegreeWork/showFinalDegreeWorkProposal_bd.jsp" />
 	</definition>
 	<definition name="df.page.showFinalDegreeChooseExecutionDegree" extends="departmentAdmOffice.masterPage">
+		<put name="title" value="private.administrationofcreditsofdepartmentteachers.dissertations.dissertationsmanagement"/>
 		<put name="body" value="/departmentAdmOffice/finalDegreeWork/showFinalDegreeChooseExecutionDegree_bd.jsp" />
 	</definition>
 	<definition name="df.page.manageFinalDegreeWorks" extends="departmentAdmOffice.masterPage">
@@ -194,24 +200,31 @@
 	</definition>	
 
 	<definition name="show-final-degree-work-info" extends="departmentAdmOffice.masterPage">
+		<put name="title" value="private.administrationofcreditsofdepartmentteachers.dissertations.dissertationsmanagement"/>
 		<put name="body" value="/coordinator/finalDegreeWork/showFinalDegreeWorkInfo.jsp" />
 	</definition>
 	<definition name="edit-final-degree-periods" extends="departmentAdmOffice.masterPage">
+		<put name="title" value="private.administrationofcreditsofdepartmentteachers.dissertations.dissertationsmanagement"/>
 		<put name="body" value="/coordinator/finalDegreeWork/editFinalDegreePeriods.jsp" />
 	</definition>
 	<definition name="edit-final-degree-requirements" extends="departmentAdmOffice.masterPage">
+		<put name="title" value="private.administrationofcreditsofdepartmentteachers.dissertations.dissertationsmanagement"/>
 		<put name="body" value="/coordinator/finalDegreeWork/editFinalDegreeRequirements.jsp" />
 	</definition>
 	<definition name="detailed-proposal-list" extends="departmentAdmOffice.masterPage">
+		<put name="title" value="private.administrationofcreditsofdepartmentteachers.dissertations.dissertationsmanagement"/>
 		<put name="body" value="/coordinator/finalDegreeWork/detailedProposalList_bd.jsp" />
 	</definition>
 	<definition name="show-proposals" extends="departmentAdmOffice.masterPage">
+		<put name="title" value="private.administrationofcreditsofdepartmentteachers.dissertations.dissertationsmanagement"/>
 		<put name="body" value="/coordinator/finalDegreeWork/showProposals.jsp" />
 	</definition>
 	<definition name="show-proposal" extends="departmentAdmOffice.masterPage">
+		<put name="title" value="private.administrationofcreditsofdepartmentteachers.dissertations.dissertationsmanagement"/>
 		<put name="body" value="/coordinator/finalDegreeWork/showProposal.jsp" />
 	</definition>
 	<definition name="show-candidates" extends="departmentAdmOffice.masterPage">
+		<put name="title" value="private.administrationofcreditsofdepartmentteachers.dissertations.dissertationsmanagement"/>
 		<put name="body" value="/coordinator/finalDegreeWork/showCandidates.jsp" />
 	</definition>
     <definition name="thesis-list" extends="departmentAdmOffice.masterPage">
@@ -490,7 +503,8 @@
     </definition>        
 
    	<definition name="department-manage-files" extends="department.intranet">
-       <put name="body" value="/commons/unitFiles/manageFiles.jsp"/>  
+   		<put name="title" value="private.administrationofcreditsofdepartmentteachers.department.files"/>
+       	<put name="body" value="/commons/unitFiles/manageFiles.jsp"/>  
     </definition>        
 
    	<definition name="department-edit-file" extends="department.intranet">

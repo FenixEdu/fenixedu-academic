@@ -18,7 +18,6 @@ import net.sourceforge.fenixedu.dataTransferObject.residenceManagement.Residence
 import net.sourceforge.fenixedu.dataTransferObject.residenceManagement.ResidentListsHolderBean;
 import net.sourceforge.fenixedu.domain.DomainObject;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
-import net.sourceforge.fenixedu.domain.accounting.Event;
 import net.sourceforge.fenixedu.domain.accounting.ResidenceEvent;
 import net.sourceforge.fenixedu.domain.organizationalStructure.ResidenceManagementUnit;
 import net.sourceforge.fenixedu.domain.residence.ResidenceMonth;
@@ -39,34 +38,29 @@ import pt.ist.fenixWebFramework.services.Service;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
-import pt.ist.fenixWebFramework.struts.annotations.Forward;
-import pt.ist.fenixWebFramework.struts.annotations.Forwards;
-import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 @Mapping(path = "/residenceManagement", module = "residenceManagement")
-@Forwards( { @Forward(name = "importData", path = "/residenceManagement/importData.jsp"),
+@Forwards({
+	@Forward(name = "importData", path = "/residenceManagement/importData.jsp", tileProperties = @Tile(title = "private.housingmanagement.debtmanagement" )),
 	@Forward(name = "yearConfiguration", path = "residenceManagement-yearConfiguration"),
-	@Forward(name = "editPaymentLimitDay", path = "/residenceManagement/editPaymentLimitDay.jsp"),
-	@Forward(name = "importCurrentDebt", path = "/residenceManagement/importCurrentDebts.jsp"),
-	@Forward(name = "editRoomValues", path = "/residenceManagement/editRoomValues.jsp"),
-	@Forward(name = "missingPayments", path = "/residenceManagement/missingPayment.jsp")
-})
+	@Forward(name = "editPaymentLimitDay", path = "/residenceManagement/editPaymentLimitDay.jsp", tileProperties = @Tile(title = "private.housingmanagement.debtmanagement" )),
+	@Forward(name = "importCurrentDebt", path = "/residenceManagement/importCurrentDebts.jsp", tileProperties = @Tile(title = "private.housingmanagement.debtmanagement" )),
+	@Forward(name = "editRoomValues", path = "/residenceManagement/editRoomValues.jsp", tileProperties = @Tile(title = "private.housingmanagement.debtmanagement" )),
+	@Forward(name = "missingPayments", path = "/residenceManagement/missingPayment.jsp") })
 public class ResidenceManagementDispatchAction extends FenixDispatchAction {
-    
+
     public ActionForward missingPayments(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
 	List<ResidenceEvent> results = new ArrayList<ResidenceEvent>();
-	for (ResidenceMonth month : rootDomainObject.getResidenceMonths0()){
-	    for (ResidenceEvent residenceEvent : month.getEvents()){
-		if (residenceEvent.isInDebt()){
+	for (ResidenceMonth month : rootDomainObject.getResidenceMonths0()) {
+	    for (ResidenceEvent residenceEvent : month.getEvents()) {
+		if (residenceEvent.isInDebt()) {
 		    results.add(residenceEvent);
 		}
 	    }
 	}
-	Collections.sort(results,new Comparator<ResidenceEvent>() {
+	Collections.sort(results, new Comparator<ResidenceEvent>() {
 	    @Override
 	    public int compare(ResidenceEvent o1, ResidenceEvent o2) {
 		return o1.getEventStateDate().compareTo(o2.getEventStateDate());
@@ -75,7 +69,7 @@ public class ResidenceManagementDispatchAction extends FenixDispatchAction {
 	request.setAttribute("list", results);
 	return mapping.findForward("missingPayments");
     }
-    
+
     public ActionForward importCurrentDebts(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
 	ImportResidenceEventBean bean = getRenderedObject("importFile");

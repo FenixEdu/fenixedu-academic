@@ -4,7 +4,8 @@
 <!-- Tiles definitions -->
 <tiles-definitions>
 	<definition name="pedagogicalCouncil.masterPage" extends="df.layout.two-column">
-	  <put name="title" value="Conselho Pedagógico" />
+	  <put name="title" value="private.pedagogiccouncil" />
+	  <put name="bundle" value="TITLES_RESOURCES" />
 	  <put name="serviceName" value="" />
 	  <put name="navLocal" value="/pedagogicalCouncil/localNavigationBar.jsp" />
 	  <put name="navGeral" value="/commons/commonGeneralNavigationBar.jsp" />
@@ -14,7 +15,8 @@
 	</definition>
 
 	<definition name="pedagogicalCouncil.masterPage-without-local-navigation" extends="df.layout.two-column">
-	  <put name="title" value="Conselho Pedagógico" />
+	  <put name="title" value="private.pedagogiccouncil" />
+	  <put name="bundle" value="TITLES_RESOURCES" />
 	  <put name="serviceName" value="" />
 	  <put name="navLocal" value="" />
 	  <put name="navGeral" value="/commons/commonGeneralNavigationBar.jsp" />

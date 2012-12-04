@@ -38,11 +38,12 @@ import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixWebFramework.struts.annotations.Tile;
 import pt.utl.ist.fenix.tools.util.excel.StyledExcelSpreadsheet;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 @Mapping(module = "facultyAdmOffice", path = "/exportGrants", scope = "request", parameter = "method")
-@Forwards(value = { @Forward(name = "search-grants", path = "/facultyAdmOffice/grant/export/searchGrants.jsp") })
+@Forwards(value = { @Forward(name = "search-grants", path = "/facultyAdmOffice/grant/export/searchGrants.jsp", tileProperties = @Tile(title = "private.teachingstaffandresearcher.listings.bygrant")) })
 public class ExportGrantsAction extends FenixDispatchAction {
 
     private static final String EMPTY_STRING = "";

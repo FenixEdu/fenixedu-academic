@@ -24,11 +24,12 @@ import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixWebFramework.struts.annotations.Tile;
 import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 @Mapping(path = "/qucAudit", module = "pedagogicalCouncil")
-@Forwards( {
-	@Forward(name = "showExecutionCoursesForAudit", path = "/pedagogicalCouncil/inquiries/searchExecutionCourseToAudit.jsp"),
+@Forwards({
+	@Forward(name = "showExecutionCoursesForAudit", path = "/pedagogicalCouncil/inquiries/searchExecutionCourseToAudit.jsp", tileProperties = @Tile(title = "private.pedagogiccouncil.control.qucaudit")),
 	@Forward(name = "selectPersons", path = "/pedagogicalCouncil/inquiries/selectPersons.jsp"),
 	@Forward(name = "viewProcessDetails", path = "/pedagogicalCouncil/inquiries/viewProcessDetails.jsp") })
 public class QucAuditPedagogicalCouncilDA extends ViewQucAuditProcessDA {

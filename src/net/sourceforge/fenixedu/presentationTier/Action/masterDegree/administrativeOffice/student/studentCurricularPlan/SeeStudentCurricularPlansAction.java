@@ -1,6 +1,5 @@
 package net.sourceforge.fenixedu.presentationTier.Action.masterDegree.administrativeOffice.student.studentCurricularPlan;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -18,14 +17,7 @@ import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionEx
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
-import pt.ist.fenixWebFramework.struts.annotations.Forward;
-import pt.ist.fenixWebFramework.struts.annotations.Forwards;
-import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
+
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
@@ -36,9 +28,10 @@ import pt.ist.fenixWebFramework.struts.annotations.Tile;
  */
 
 @Mapping(module = "masterDegreeAdministrativeOffice", path = "/seeStudentCurricularPlans", scope = "request", validate = false)
-@Forwards(value = { @Forward(name = "viewStudentCurricularPlans", path = "df.page.viewStudentCurricularPlans") })
+@Forwards(value = { @Forward(name = "viewStudentCurricularPlans", path = "df.page.viewStudentCurricularPlans", tileProperties = @Tile(title = "teste")) })
 public class SeeStudentCurricularPlansAction extends FenixAction {
 
+    @Override
     public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
 	    throws FenixActionException, FenixFilterException {
 
@@ -55,7 +48,7 @@ public class SeeStudentCurricularPlansAction extends FenixAction {
 
 	List studentCurricularPlansList = null;
 	try {
-	    studentCurricularPlansList = (ArrayList) ReadPosGradStudentCurricularPlans.run(studentId2);
+	    studentCurricularPlansList = ReadPosGradStudentCurricularPlans.run(studentId2);
 	    if (studentCurricularPlansList != null && !studentCurricularPlansList.isEmpty()) {
 		Collections.sort(studentCurricularPlansList);
 	    }

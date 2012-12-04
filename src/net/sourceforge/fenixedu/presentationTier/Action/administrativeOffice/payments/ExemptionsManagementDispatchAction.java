@@ -57,30 +57,31 @@ import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 @Mapping(path = "/exemptionsManagement", module = "academicAdminOffice", formBeanClass = FenixActionForm.class)
 @Forwards({
-	@Forward(name = "showEventsToApplyExemption", path = "/academicAdminOffice/payments/exemptions/showEventsToApplyExemption.jsp"),
-	@Forward(name = "showForGratuityEvent", path = "/academicAdminOffice/payments/exemptions/showForGratuityEvent.jsp"),
-	@Forward(name = "showForImprovementOfApprovedEnrolmentEvent", path = "/academicAdminOffice/payments/exemptions/showForImprovementOfApprovedEnrolmentEvent.jsp"),
-	@Forward(name = "showForAdministrativeOfficeFeeAndInsuranceEvent", path = "/academicAdminOffice/payments/exemptions/showForAdministrativeOfficeFeeAndInsuranceEvent.jsp"),
-	@Forward(name = "showForInsuranceEvent", path = "/academicAdminOffice/payments/exemptions/showForInsuranceEvent.jsp"),
-	@Forward(name = "showForSecondCycleIndividualCandidacyEvent", path = "/academicAdminOffice/payments/exemptions/showForSecondCycleIndividualCandidacyEvent.jsp"),
-	@Forward(name = "showForPhdRegistrationFee", path = "/phd/academicAdminOffice/payments/exemptions/showForPhdRegistrationFee.jsp"),
-	@Forward(name = "showForAcademicEvent", path = "/academicAdminOffice/payments/exemptions/showForAcademicEvent.jsp"),
-	@Forward(name = "showPhdGratuity", path = "/phd/academicAdminOffice/payments/exemptions/showPhdGratuity.jsp"),
-	@Forward(name = "showForPhdEvent", path = "/phd/academicAdminOffice/payments/exemptions/showForPhdEvent.jsp"),
-	@Forward(name = "createGratuityExemption", path = "/academicAdminOffice/payments/exemptions/payment/gratuity/create.jsp"),
-	@Forward(name = "createInstallmentPenaltyExemption", path = "/academicAdminOffice/payments/exemptions/penalty/createInstallmentExemption.jsp"),
-	@Forward(name = "createImprovementOfApprovedEnrolmentPenaltyExemption", path = "/academicAdminOffice/payments/exemptions/penalty/createImprovementOfApprovedEnrolmentExemption.jsp"),
-	@Forward(name = "createAdministrativeOfficeFeeAndInsurancePenaltyExemption", path = "/academicAdminOffice/payments/exemptions/penalty/createAdministrativeOfficeFeeAndInsuranceExemption.jsp"),
-	@Forward(name = "createAdministrativeOfficeFeeAndInsuranceExemption", path = "/academicAdminOffice/payments/exemptions/payment/administrativeOfficeFeeAndInsurance/create.jsp"),
-	@Forward(name = "createInsuranceExemption", path = "/academicAdminOffice/payments/exemptions/payment/insurance/createInsuranceExemption.jsp"),
-	@Forward(name = "createSecondCycleIndividualCandidacyExemption", path = "/academicAdminOffice/payments/exemptions/createSecondCycleIndividualCandidacyExemption.jsp"),
-	@Forward(name = "createPhdRegistrationFeePenaltyExemption", path = "/phd/academicAdminOffice/payments/exemptions/createPhdRegistrationFeePenaltyExemption.jsp"),
-	@Forward(name = "createAcademicEventExemption", path = "/academicAdminOffice/payments/exemptions/createAcademicEventExemption.jsp"),
-	@Forward(name = "createPhdEventExemption", path = "/phd/academicAdminOffice/payments/exemptions/createPhdEventExemption.jsp"),
-	@Forward(name = "createFCTExemption", path = "/phd/academicAdminOffice/payments/exemptions/createFCTExemption.jsp")
+	@Forward(name = "showEventsToApplyExemption", path = "/academicAdminOffice/payments/exemptions/showEventsToApplyExemption.jsp", tileProperties = @Tile(title = "private.academicadministrativeoffice.studentoperations.viewstudents")),
+	@Forward(name = "showForGratuityEvent", path = "/academicAdminOffice/payments/exemptions/showForGratuityEvent.jsp", tileProperties = @Tile(title = "private.academicadministrativeoffice.studentoperations.viewstudents")),
+	@Forward(name = "showForImprovementOfApprovedEnrolmentEvent", path = "/academicAdminOffice/payments/exemptions/showForImprovementOfApprovedEnrolmentEvent.jsp", tileProperties = @Tile(title = "private.academicadministrativeoffice.studentoperations.viewstudents")),
+	@Forward(name = "showForAdministrativeOfficeFeeAndInsuranceEvent", path = "/academicAdminOffice/payments/exemptions/showForAdministrativeOfficeFeeAndInsuranceEvent.jsp", tileProperties = @Tile(title = "private.academicadministrativeoffice.studentoperations.viewstudents")),
+	@Forward(name = "showForInsuranceEvent", path = "/academicAdminOffice/payments/exemptions/showForInsuranceEvent.jsp", tileProperties = @Tile(title = "private.academicadministrativeoffice.studentoperations.viewstudents")),
+	@Forward(name = "showForSecondCycleIndividualCandidacyEvent", path = "/academicAdminOffice/payments/exemptions/showForSecondCycleIndividualCandidacyEvent.jsp", tileProperties = @Tile(title = "private.academicadministrativeoffice.studentoperations.viewstudents")),
+	@Forward(name = "showForPhdRegistrationFee", path = "/phd/academicAdminOffice/payments/exemptions/showForPhdRegistrationFee.jsp", tileProperties = @Tile(title = "private.academicadministrativeoffice.studentoperations.viewstudents")),
+	@Forward(name = "showForAcademicEvent", path = "/academicAdminOffice/payments/exemptions/showForAcademicEvent.jsp", tileProperties = @Tile(title = "private.academicadministrativeoffice.studentoperations.viewstudents")),
+	@Forward(name = "showPhdGratuity", path = "/phd/academicAdminOffice/payments/exemptions/showPhdGratuity.jsp", tileProperties = @Tile(title = "private.academicadministrativeoffice.studentoperations.viewstudents")),
+	@Forward(name = "showForPhdEvent", path = "/phd/academicAdminOffice/payments/exemptions/showForPhdEvent.jsp", tileProperties = @Tile(title = "private.academicadministrativeoffice.studentoperations.viewstudents")),
+	@Forward(name = "createGratuityExemption", path = "/academicAdminOffice/payments/exemptions/payment/gratuity/create.jsp", tileProperties = @Tile(title = "private.academicadministrativeoffice.studentoperations.viewstudents")),
+	@Forward(name = "createInstallmentPenaltyExemption", path = "/academicAdminOffice/payments/exemptions/penalty/createInstallmentExemption.jsp", tileProperties = @Tile(title = "private.academicadministrativeoffice.studentoperations.viewstudents")),
+	@Forward(name = "createImprovementOfApprovedEnrolmentPenaltyExemption", path = "/academicAdminOffice/payments/exemptions/penalty/createImprovementOfApprovedEnrolmentExemption.jsp", tileProperties = @Tile(title = "private.academicadministrativeoffice.studentoperations.viewstudents")),
+	@Forward(name = "createAdministrativeOfficeFeeAndInsurancePenaltyExemption", path = "/academicAdminOffice/payments/exemptions/penalty/createAdministrativeOfficeFeeAndInsuranceExemption.jsp", tileProperties = @Tile(title = "private.academicadministrativeoffice.studentoperations.viewstudents")),
+	@Forward(name = "createAdministrativeOfficeFeeAndInsuranceExemption", path = "/academicAdminOffice/payments/exemptions/payment/administrativeOfficeFeeAndInsurance/create.jsp", tileProperties = @Tile(title = "private.academicadministrativeoffice.studentoperations.viewstudents")),
+	@Forward(name = "createInsuranceExemption", path = "/academicAdminOffice/payments/exemptions/payment/insurance/createInsuranceExemption.jsp", tileProperties = @Tile(title = "private.academicadministrativeoffice.studentoperations.viewstudents")),
+	@Forward(name = "createSecondCycleIndividualCandidacyExemption", path = "/academicAdminOffice/payments/exemptions/createSecondCycleIndividualCandidacyExemption.jsp", tileProperties = @Tile(title = "private.academicadministrativeoffice.studentoperations.viewstudents")),
+	@Forward(name = "createPhdRegistrationFeePenaltyExemption", path = "/phd/academicAdminOffice/payments/exemptions/createPhdRegistrationFeePenaltyExemption.jsp", tileProperties = @Tile(title = "private.academicadministrativeoffice.studentoperations.viewstudents")),
+	@Forward(name = "createAcademicEventExemption", path = "/academicAdminOffice/payments/exemptions/createAcademicEventExemption.jsp", tileProperties = @Tile(title = "private.academicadministrativeoffice.studentoperations.viewstudents")),
+	@Forward(name = "createPhdEventExemption", path = "/phd/academicAdminOffice/payments/exemptions/createPhdEventExemption.jsp", tileProperties = @Tile(title = "private.academicadministrativeoffice.studentoperations.viewstudents")),
+	@Forward(name = "createFCTExemption", path = "/phd/academicAdminOffice/payments/exemptions/createFCTExemption.jsp", tileProperties = @Tile(title = "private.academicadministrativeoffice.studentoperations.viewstudents"))
 
 })
 public class ExemptionsManagementDispatchAction extends AcademicAdminOfficePaymentsManagementDispatchAction {
@@ -431,8 +432,8 @@ public class ExemptionsManagementDispatchAction extends AcademicAdminOfficePayme
 
 	try {
 	    final PhdEventExemptionBean bean = getRenderedObject("exemptionBean");
-	    PhdGratuityExternalScholarshipExemption.createPhdGratuityExternalScholarshipExemption(getLoggedPerson(request).getEmployee(),
-		    bean.getValue(), bean.getProvider(), ((PhdGratuityEvent) bean.getEvent()));
+	    PhdGratuityExternalScholarshipExemption.createPhdGratuityExternalScholarshipExemption(getLoggedPerson(request)
+		    .getEmployee(), bean.getValue(), bean.getProvider(), ((PhdGratuityEvent) bean.getEvent()));
 	} catch (DomainExceptionWithLabelFormatter ex) {
 	    addActionMessage(request, ex.getKey(), solveLabelFormatterArgs(request, ex.getLabelFormatterArgs()));
 	    return showExemptions(mapping, form, request, response);
@@ -450,13 +451,15 @@ public class ExemptionsManagementDispatchAction extends AcademicAdminOfficePayme
 
 	try {
 	    final PhdEventExemptionBean bean = getRenderedObject("exemptionBean");
-	    if (bean.getJustificationType() == PhdEventExemptionJustificationType.PHD_GRATUITY_FCT_SCHOLARSHIP_EXEMPTION){
-		PhdGratuityExternalScholarshipExemption.createPhdGratuityExternalScholarshipExemption(getLoggedPerson(request).getEmployee(), bean.getValue(), bean.getProvider(), (PhdGratuityEvent) bean.getEvent());
-	    }else if (bean.getJustificationType() == PhdEventExemptionJustificationType.DIRECTIVE_COUNCIL_AUTHORIZATION){
+	    if (bean.getJustificationType() == PhdEventExemptionJustificationType.PHD_GRATUITY_FCT_SCHOLARSHIP_EXEMPTION) {
+		PhdGratuityExternalScholarshipExemption.createPhdGratuityExternalScholarshipExemption(getLoggedPerson(request)
+			.getEmployee(), bean.getValue(), bean.getProvider(), (PhdGratuityEvent) bean.getEvent());
+	    } else if (bean.getJustificationType() == PhdEventExemptionJustificationType.DIRECTIVE_COUNCIL_AUTHORIZATION) {
 		PhdEventExemption.create(getLoggedPerson(request).getEmployee(), bean.getEvent(), bean.getValue(),
-		    bean.getJustificationType(), bean.getDispatchDate(), bean.getReason());
-	    }else if (bean.getJustificationType() == PhdEventExemptionJustificationType.FINE_EXEMPTION){
-		PhdGratuityFineExemption.createPhdGratuityFineExemption(getLoggedPerson(request).getEmployee(),(PhdGratuityEvent) bean.getEvent(), bean.getReason());
+			bean.getJustificationType(), bean.getDispatchDate(), bean.getReason());
+	    } else if (bean.getJustificationType() == PhdEventExemptionJustificationType.FINE_EXEMPTION) {
+		PhdGratuityFineExemption.createPhdGratuityFineExemption(getLoggedPerson(request).getEmployee(),
+			(PhdGratuityEvent) bean.getEvent(), bean.getReason());
 	    }
 	} catch (DomainExceptionWithLabelFormatter ex) {
 	    addActionMessage(request, ex.getKey(), solveLabelFormatterArgs(request, ex.getLabelFormatterArgs()));
@@ -575,15 +578,15 @@ public class ExemptionsManagementDispatchAction extends AcademicAdminOfficePayme
 	return showExemptions(mapping, form, request, response);
     }
 
-    public ActionForward changeForm(ActionMapping mapping, ActionForm actionForm,
-	    HttpServletRequest request, HttpServletResponse response) {
+    public ActionForward changeForm(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) {
 	PhdEventExemptionBean bean = getRenderedObject("exemptionBean");
 	RenderUtils.invalidateViewState();
-	if (bean.getJustificationType().equals(PhdEventExemptionJustificationType.PHD_GRATUITY_FCT_SCHOLARSHIP_EXEMPTION)){
+	if (bean.getJustificationType().equals(PhdEventExemptionJustificationType.PHD_GRATUITY_FCT_SCHOLARSHIP_EXEMPTION)) {
 	    request.setAttribute("exemptionBean", bean);
 	    return mapping.findForward("createFCTExemption");
-	    
-	}else{
+
+	} else {
 	    request.setAttribute("exemptionBean", bean);
 	    return mapping.findForward("createFCTExemption");
 	}

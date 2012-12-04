@@ -1157,6 +1157,7 @@
       <message-resources null="false" key="GROUP_NAME_RESOURCES" parameter="resources.GroupNameResources"></message-resources>
       <message-resources null="false" key="STUNDENT_RESOURCES" parameter="resources.StudentResources"></message-resources>
       <message-resources null="false" key="INQUIRIES_RESOURCES" parameter="resources.InquiriesResources"></message-resources>
+      <message-resources null="false" key="TITLES_RESOURCES" parameter="resources.TitlesResources"></message-resources>
       <!-- ========== Plug Ins Configuration ================================= -->
       <plug-in className="org.apache.struts.validator.ValidatorPlugIn">
             <set-property value="/WEB-INF/validator-rules.xml,/WEB-INF/fenix-validator-rules.xml,/WEB-INF/conf/validation-teacher.xml" property="pathnames"></set-property>

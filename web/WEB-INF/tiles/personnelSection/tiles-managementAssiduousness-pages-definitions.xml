@@ -41,6 +41,8 @@
 	</definition>
 	<!-- Insert Justification for several employees -->
 	<definition name="insert-justification" extends="definition.managementAssiduousness.masterPage">
+		<put name="bundle" value="TITLES_RESOURCES"/>
+	    <put name="title" value="private.staffarea.allemployees.justifications" />
 		<put name="body" value="/managementAssiduousness/employee/insertJustification.jsp"/>
 	</definition>	
 	<!-- Consults -->
@@ -87,9 +89,13 @@
 		<put name="body" value="/managementAssiduousness/extraWork/insertPaymentRequest.jsp"/>
 	</definition>
 	<definition name="create-extra-work-authorization" extends="definition.managementAssiduousness.masterPage">
+		<put name="bundle" value="TITLES_RESOURCES"/>
+		<put name="title" value = "private.staffarea.allemployees.justifications" />
 		<put name="body" value="/managementAssiduousness/extraWork/createExtraWorkAuthorization.jsp"/>
 	</definition>	
 	<definition name="show-extra-work-authorizations" extends="definition.managementAssiduousness.masterPage">
+		<put name="bundle" value="TITLES_RESOURCES"/>
+		<put name="title" value="private.staffarea.outstandingjob.viewspecialworkpermits"/>
 		<put name="body" value="/managementAssiduousness/extraWork/showExtraWorkAuthorizations.jsp"/>
 	</definition>
 	<definition name="view-extra-work-authorization" extends="definition.managementAssiduousness.masterPage">
@@ -143,35 +149,45 @@
     	<put name="body-context" value="/personnelSection/unitFunctionalities/context.jsp"/>
     </definition>
 	<definition name="manage-persisted-groups" extends="personnel.intranet">
-       <put name="body" value="/commons/PersistentMemberGroups/managePersistedGroups.jsp"/>  
+		<put name="bundle" value="TITLES_RESOURCES"/>
+		<put name="title" value="private.staffarea.communication.groups"/>
+    	<put name="body" value="/commons/PersistentMemberGroups/managePersistedGroups.jsp"/>  
     </definition>          
     
 	<definition name="create-persisted-group" extends="personnel.intranet">
-       <put name="body" value="/commons/PersistentMemberGroups/createPersistedGroup.jsp"/>  
+		<put name="bundle" value="TITLES_RESOURCES"/>
+		<put name="title" value="private.staffarea.communication.groups"/>
+    	<put name="body" value="/commons/PersistentMemberGroups/createPersistedGroup.jsp"/>  
     </definition>          
     
    	<definition name="edit-persisted-group" extends="personnel.intranet">
-       <put name="body" value="/commons/PersistentMemberGroups/editPersistedGroup.jsp"/>  
+   		<put name="bundle" value="TITLES_RESOURCES"/>
+   		<put name="title" value="private.staffarea.communication.groups"/>
+    	<put name="body" value="/commons/PersistentMemberGroups/editPersistedGroup.jsp"/>  
     </definition>          
 
    	<definition name="upload-file" extends="personnel.intranet">
-       <put name="body" value="/commons/PersistentMemberGroups/editPersistedGroup.jsp"/>  
+   	   <put name="body" value="/commons/PersistentMemberGroups/editPersistedGroup.jsp"/>  
     </definition>        
 
 	<definition name="edit-uploaders" extends="personnel.intranet">
-       <put name="body" value="/commons/PersistentMemberGroups/configureUploaders.jsp"/>  
+	   <put name="body" value="/commons/PersistentMemberGroups/configureUploaders.jsp"/>  
     </definition>  
     
    	<definition name="upload-file" extends="personnel.intranet">
-       <put name="body" value="/commons/unitFiles/uploadFile.jsp"/>  
+   	   <put name="body" value="/commons/unitFiles/uploadFile.jsp"/>  
     </definition>        
 
    	<definition name="manage-files" extends="personnel.intranet">
-       <put name="body" value="/commons/unitFiles/manageFiles.jsp"/>  
+   		<put name="bundle" value="TITLES_RESOURCES"/>
+   		<put name="title" value="private.staffarea.communication.files"/>
+    	<put name="body" value="/commons/unitFiles/manageFiles.jsp"/>  
     </definition>        
 
    	<definition name="edit-file" extends="personnel.intranet">
-       <put name="body" value="/commons/unitFiles/editFile.jsp"/>  
+   		<put name="bundle" value="TITLES_RESOURCES"/>
+   		<put name="title" value="private.staffarea.communication.files"/>
+    	<put name="body" value="/commons/unitFiles/editFile.jsp"/>  
     </definition>      
 
 	<definition name="manage-people-search" extends="definition.managementAssiduousness.masterPage">
@@ -195,16 +211,23 @@
 	<definition name="professionalInformation-showProfessionalInformation" extends="definition.managementAssiduousness.masterPage">
 		 <put name="body" value="/manager/personManagement/contracts/showProfessionalInformation.jsp"/>
 	</definition>
+	
 	<definition name="qualification-showQualifications" extends="definition.managementAssiduousness.masterPage">
-		 <put name="body" value="/manager/qualifications/showQualifications.jsp"/>
+	     <put name="body" value="/manager/qualifications/showQualifications.jsp"/>
 	</definition>
+	
+	
 	<definition name="qualification-qualification" extends="definition.managementAssiduousness.masterPage">
 		 <put name="body" value="/manager/qualifications/qualification.jsp"/>
 	</definition>
 	<definition name="findPerson" extends="definition.managementAssiduousness.masterPage" >
+		<put name="bundle" value="TITLES_RESOURCES"/>
+		<put name="title" value="private.staffarea.interfacegiaf.interfacegiaf.searchpeople" />
 		<put name="body" value="/manager/personManagement/findPerson.jsp" />
 	</definition>
 	<definition name="displayPerson" extends="definition.managementAssiduousness.masterPage" >
+		<put name="bundle" value="TITLES_RESOURCES"/>
+	    <put name="title" value="private.staffarea.managepeople.searchpeople" />
 		<put name="body" value="/manager/personManagement/displayPerson.jsp" />
 	</definition>
 </tiles-definitions>

@@ -15,10 +15,12 @@ import org.apache.struts.action.ActionMapping;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 @Mapping(module = "operator", path = "/alumni", scope = "request", parameter = "method")
-@Forwards(value = { @Forward(name = "alumni.closed.identity.requests", path = "/operator/alumni/viewClosedIdentityRequests.jsp"),
-	@Forward(name = "alumni.view.identity.requests.list", path = "/operator/alumni/viewIdentityRequestsList.jsp"),
+@Forwards(value = {
+	@Forward(name = "alumni.closed.identity.requests", path = "/operator/alumni/viewClosedIdentityRequests.jsp"),
+	@Forward(name = "alumni.view.identity.requests.list", path = "/operator/alumni/viewIdentityRequestsList.jsp", tileProperties = @Tile(title = "private.operator.alumni.identityvalidation")),
 	@Forward(name = "alumni.validate.request.result", path = "/operator/alumni/validateIdentityRequestResult.jsp"),
 	@Forward(name = "alumni.validate.request", path = "/operator/alumni/validateIdentityRequest.jsp") })
 public class AlumniOperations extends FenixDispatchAction {

@@ -22,14 +22,6 @@ import org.apache.struts.action.ActionMessage;
 import org.apache.struts.action.ActionMessages;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
-import pt.ist.fenixWebFramework.struts.annotations.Forward;
-import pt.ist.fenixWebFramework.struts.annotations.Forwards;
-import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
@@ -42,9 +34,9 @@ import pt.ist.fenixWebFramework.struts.annotations.Tile;
  */
 @Mapping(module = "person", path = "/uploadPhoto", attribute = "voidForm", formBean = "voidForm", scope = "request", parameter = "method")
 @Forwards(value = {
-		@Forward(name = "visualizePersonalInformation", path = "/person/visualizePersonalInfo.jsp"),
-		@Forward(name = "confirm", path = "/person/uploadPhoto.jsp"),
-		@Forward(name = "upload", path = "/person/uploadPhoto.jsp") })
+	@Forward(name = "visualizePersonalInformation", path = "/person/visualizePersonalInfo.jsp", tileProperties = @Tile(title = "private.personal.dspace.information")),
+	@Forward(name = "confirm", path = "/person/uploadPhoto.jsp", tileProperties = @Tile(title = "private.personal.dspace.information")),
+	@Forward(name = "upload", path = "/person/uploadPhoto.jsp", tileProperties = @Tile(title = "private.personal.dspace.information")) })
 public class UploadPhotoDA extends FenixDispatchAction {
     private static final int MAX_RAW_SIZE = 1000000; // 2M
 
@@ -109,8 +101,8 @@ public class UploadPhotoDA extends FenixDispatchAction {
 	PhotographUploadBean photo = getRenderedObject();
 	RenderUtils.invalidateViewState();
 
-	UploadOwnPhoto.run(new ByteArray(photo.getFileInputStream()).getBytes(), new ByteArray(photo.getCompressedInputStream())
-		.getBytes(), ContentType.getContentType(photo.getContentType()));
+	UploadOwnPhoto.run(new ByteArray(photo.getFileInputStream()).getBytes(),
+		new ByteArray(photo.getCompressedInputStream()).getBytes(), ContentType.getContentType(photo.getContentType()));
 	return mapping.findForward("visualizePersonalInformation");
     }
 

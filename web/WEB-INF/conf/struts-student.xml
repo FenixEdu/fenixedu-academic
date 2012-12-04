@@ -328,6 +328,7 @@
       <message-resources null="false" key="DELEGATES_RESOURCES" parameter="resources.DelegateResources"></message-resources>
       <message-resources null="false" key="SCIENTIFIC_COUNCIL_RESOURCES" parameter="resources.ScientificCouncilResources"></message-resources>
       <message-resources null="false" key="PEDAGOGICAL_COUNCIL" parameter="resources.PedagogicalCouncilResources"></message-resources>
+      <message-resources null="false" key="TITLES_RESOURCES" parameter="resources.TitlesResources"></message-resources>
       <!-- ========== Plug Ins Configuration ================================= -->
       <plug-in className="org.apache.struts.validator.ValidatorPlugIn">
             <set-property value="/WEB-INF/validator-rules.xml,/WEB-INF/conf/validation-student.xml" property="pathnames"></set-property>

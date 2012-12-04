@@ -26,40 +26,32 @@ import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 import org.apache.struts.util.RequestUtils;
 
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixWebFramework.struts.annotations.Tile;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
-import pt.ist.fenixWebFramework.struts.annotations.Forward;
-import pt.ist.fenixWebFramework.struts.annotations.Forwards;
-import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
-import pt.ist.fenixWebFramework.struts.annotations.Forward;
-import pt.ist.fenixWebFramework.struts.annotations.Forwards;
-import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 @Mapping(module = "person", path = "/manageHomepage", input = "/manageHomepage.do?method=prepare", attribute = "homepageForm", formBean = "homepageForm", scope = "request", parameter = "method")
 @Forwards(value = {
-		@Forward(name = "addInstitutionSection", path = "homepage-add-institution-section"),
-		@Forward(name = "uploadScorm", path = "homepage-upload-scorm"),
-		@Forward(name = "organizeItems", path = "homepage-organizeItems"),
-		@Forward(name = "createScorm", path = "homepage-create-scorm"),
-		@Forward(name = "organizeFiles", path = "homepage-organizeFiles"),
-		@Forward(name = "edit-fileItem-name", path = "homepage-editFileItemName"),
-		@Forward(name = "editSectionPermissions", path = "homepage-editSectionPermissions"),
-		@Forward(name = "confirmSectionDelete", path = "homepage-confirmSectionDelete"),
-		@Forward(name = "editItemPermissions", path = "homepage-editItemPermissions"),
-		@Forward(name = "createSection", path = "homepage-createSection"),
-		@Forward(name = "section", path = "homepage-section"),
-		@Forward(name = "editSection", path = "homepage-editSection"),
-		@Forward(name = "uploadFile", path = "homepage-uploadFile"),
-		@Forward(name = "sectionsManagement", path = "homepage-sectionsManagement"),
-		@Forward(name = "createItem", path = "homepage-createItem"),
-		@Forward(name = "show-homepage-options", path = "/person/homepageOptions.jsp"),
-		@Forward(name = "editItem", path = "homepage-editItem"),
-		@Forward(name = "editFile", path = "homepage-editFile") })
+	@Forward(name = "addInstitutionSection", path = "homepage-add-institution-section", tileProperties = @Tile(title = "private.personal.homepage.options")),
+	@Forward(name = "uploadScorm", path = "homepage-upload-scorm", tileProperties = @Tile(title = "private.personal.homepage.options")),
+	@Forward(name = "organizeItems", path = "homepage-organizeItems", tileProperties = @Tile(title = "private.personal.homepage.options")),
+	@Forward(name = "createScorm", path = "homepage-create-scorm", tileProperties = @Tile(title = "private.personal.homepage.options")),
+	@Forward(name = "organizeFiles", path = "homepage-organizeFiles", tileProperties = @Tile(title = "private.personal.homepage.options")),
+	@Forward(name = "edit-fileItem-name", path = "homepage-editFileItemName", tileProperties = @Tile(title = "private.personal.homepage.options")),
+	@Forward(name = "editSectionPermissions", path = "homepage-editSectionPermissions", tileProperties = @Tile(title = "private.personal.homepage.options")),
+	@Forward(name = "confirmSectionDelete", path = "homepage-confirmSectionDelete", tileProperties = @Tile(title = "private.personal.homepage.options")),
+	@Forward(name = "editItemPermissions", path = "homepage-editItemPermissions", tileProperties = @Tile(title = "private.personal.homepage.options")),
+	@Forward(name = "createSection", path = "homepage-createSection", tileProperties = @Tile(title = "private.personal.homepage.options")),
+	@Forward(name = "section", path = "homepage-section", tileProperties = @Tile(title = "private.personal.homepage.options")),
+	@Forward(name = "editSection", path = "homepage-editSection", tileProperties = @Tile(title = "private.personal.homepage.options")),
+	@Forward(name = "uploadFile", path = "homepage-uploadFile", tileProperties = @Tile(title = "private.personal.homepage.options")),
+	@Forward(name = "sectionsManagement", path = "homepage-sectionsManagement", tileProperties = @Tile(title = "private.personal.homepage.options")),
+	@Forward(name = "createItem", path = "homepage-createItem", tileProperties = @Tile(title = "private.personal.homepage.options")),
+	@Forward(name = "show-homepage-options", path = "/person/homepageOptions.jsp", tileProperties = @Tile(title = "private.personal.homepage.options")),
+	@Forward(name = "editItem", path = "homepage-editItem", tileProperties = @Tile(title = "private.personal.homepage.options")),
+	@Forward(name = "editFile", path = "homepage-editFile", tileProperties = @Tile(title = "private.personal.homepage.options")) })
 public class ManageHomepageDA extends SiteManagementDA {
 
     @Override
@@ -91,8 +83,8 @@ public class ManageHomepageDA extends SiteManagementDA {
 	    dynaActionForm.set("researchUnitHomepage", homepage.getResearchUnitHomepage());
 	    dynaActionForm.set("researchUnit", homepage.getResearchUnit() != null ? homepage.getResearchUnit().getContent()
 		    : null);
-	    dynaActionForm.set("showCurrentAttendingExecutionCourses", booleanString(homepage
-		    .getShowCurrentAttendingExecutionCourses()));
+	    dynaActionForm.set("showCurrentAttendingExecutionCourses",
+		    booleanString(homepage.getShowCurrentAttendingExecutionCourses()));
 	    dynaActionForm.set("showPublications", booleanString(homepage.getShowPublications()));
 	    dynaActionForm.set("showPatents", booleanString(homepage.getShowPatents()));
 	    dynaActionForm.set("showInterests", booleanString(homepage.getShowInterests()));
@@ -147,12 +139,13 @@ public class ManageHomepageDA extends SiteManagementDA {
 	}
 	final String showCurrentAttendingExecutionCourses = (String) dynaActionForm.get("showCurrentAttendingExecutionCourses");
 
-	SubmitHomepage.run(getUserView(request).getPerson(), Boolean.valueOf(activated), Boolean.valueOf(showUnit), Boolean
-		.valueOf(showCategory), Boolean.valueOf(showPhoto), Boolean.valueOf(showResearchUnitHomepage), Boolean
-		.valueOf(showCurrentExecutionCourses), Boolean.valueOf(showActiveStudentCurricularPlans), Boolean
-		.valueOf(showAlumniDegrees), researchUnitHomepage, researchUnitMultiLanguageString, Boolean
-		.valueOf(showCurrentAttendingExecutionCourses), Boolean.valueOf(showPublications), Boolean.valueOf(showPatents),
-		Boolean.valueOf(showInterests), Boolean.valueOf(showParticipations), Boolean.valueOf(showPrizes));
+	SubmitHomepage.run(getUserView(request).getPerson(), Boolean.valueOf(activated), Boolean.valueOf(showUnit),
+		Boolean.valueOf(showCategory), Boolean.valueOf(showPhoto), Boolean.valueOf(showResearchUnitHomepage),
+		Boolean.valueOf(showCurrentExecutionCourses), Boolean.valueOf(showActiveStudentCurricularPlans),
+		Boolean.valueOf(showAlumniDegrees), researchUnitHomepage, researchUnitMultiLanguageString,
+		Boolean.valueOf(showCurrentAttendingExecutionCourses), Boolean.valueOf(showPublications),
+		Boolean.valueOf(showPatents), Boolean.valueOf(showInterests), Boolean.valueOf(showParticipations),
+		Boolean.valueOf(showPrizes));
 
 	return options(mapping, actionForm, request, response);
     }

@@ -23,14 +23,7 @@ import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
-import pt.ist.fenixWebFramework.struts.annotations.Forward;
-import pt.ist.fenixWebFramework.struts.annotations.Forwards;
-import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
+
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
@@ -41,7 +34,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Tile;
  * 
  */
 @Mapping(module = "masterDegreeAdministrativeOffice", path = "/listMasterDegreeThesis", scope = "request", parameter = "method")
-@Forwards(value = { @Forward(name = "showList", path = "/masterDegreeAdministrativeOffice/lists/listMasterDegreeThesis.jsp", tileProperties = @Tile(navLocal = "/masterDegreeAdministrativeOffice/lists/listsMenu.jsp", navGeral = "/masterDegreeAdministrativeOffice/commonNavGeralPosGraduacao.jsp")) })
+@Forwards(value = { @Forward(name = "showList", path = "/masterDegreeAdministrativeOffice/lists/listMasterDegreeThesis.jsp", tileProperties = @Tile(navLocal = "/masterDegreeAdministrativeOffice/lists/listsMenu.jsp", navGeral = "/masterDegreeAdministrativeOffice/commonNavGeralPosGraduacao.jsp", title = "private.postgraduateoffice.listings")) })
 public class ListMasterDegreeThesisDispatchAction extends FenixDispatchAction {
 
     public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
@@ -51,8 +44,8 @@ public class ListMasterDegreeThesisDispatchAction extends FenixDispatchAction {
 	if (bean == null) {
 	    bean = new ListMasterDegreeProofsBean();
 	} else {
-	    Collection<MasterDegreeThesis> masterDegreeThesisCollection = (Collection<MasterDegreeThesis>) ReadActiveMasterDegreeThesis
-		    .run(bean.getThesisState(), bean.getYear(), bean.getDegree());
+	    Collection<MasterDegreeThesis> masterDegreeThesisCollection = ReadActiveMasterDegreeThesis.run(bean.getThesisState(),
+		    bean.getYear(), bean.getDegree());
 
 	    if (bean.getGenerateFile()) {
 		request.setAttribute("chooseDegreeAndYearBean", bean);

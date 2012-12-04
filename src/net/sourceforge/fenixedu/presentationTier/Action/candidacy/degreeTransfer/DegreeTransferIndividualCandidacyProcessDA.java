@@ -16,7 +16,6 @@ import net.sourceforge.fenixedu.domain.candidacyProcess.degreeTransfer.DegreeTra
 import net.sourceforge.fenixedu.domain.candidacyProcess.degreeTransfer.DegreeTransferIndividualCandidacyProcess;
 import net.sourceforge.fenixedu.domain.candidacyProcess.degreeTransfer.DegreeTransferIndividualCandidacyProcessBean;
 import net.sourceforge.fenixedu.domain.candidacyProcess.degreeTransfer.DegreeTransferIndividualCandidacyResultBean;
-import net.sourceforge.fenixedu.domain.candidacyProcess.secondCycle.SecondCycleIndividualCandidacyResultBean;
 import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.presentationTier.Action.candidacy.IndividualCandidacyProcessDA;
@@ -30,28 +29,29 @@ import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 @Mapping(path = "/caseHandlingDegreeTransferIndividualCandidacyProcess", module = "academicAdminOffice", formBeanClass = FenixActionForm.class)
 @Forwards({
 	// @Forward(name = "intro", path =
 	// "/candidacy/mainCandidacyProcess.jsp"),
-	@Forward(name = "intro", path = "/caseHandlingDegreeTransferCandidacyProcess.do?method=listProcessAllowedActivities"),
-	@Forward(name = "list-allowed-activities", path = "/candidacy/degreeTransfer/listIndividualCandidacyActivities.jsp"),
-	@Forward(name = "prepare-create-new-process", path = "/candidacy/selectPersonForCandidacy.jsp"),
-	@Forward(name = "fill-personal-information", path = "/candidacy/fillPersonalInformation.jsp"),
-	@Forward(name = "fill-candidacy-information", path = "/candidacy/degreeTransfer/fillCandidacyInformation.jsp"),
-	@Forward(name = "prepare-candidacy-payment", path = "/candidacy/candidacyPayment.jsp"),
-	@Forward(name = "change-state", path = "/candidacy/degreeTransfer/changeState.jsp"),
-	@Forward(name = "edit-candidacy-personal-information", path = "/candidacy/editPersonalInformation.jsp"),
-	@Forward(name = "edit-candidacy-information", path = "/candidacy/degreeTransfer/editCandidacyInformation.jsp"),
-	@Forward(name = "edit-candidacy-curricularCourses-information", path = "/candidacy/degreeTransfer/editCandidacyCurricularCoursesInformation.jsp"),
-	@Forward(name = "introduce-candidacy-result", path = "/candidacy/degreeTransfer/introduceCandidacyResult.jsp"),
-	@Forward(name = "cancel-candidacy", path = "/candidacy/cancelCandidacy.jsp"),
-	@Forward(name = "create-registration", path = "/candidacy/createRegistration.jsp"),
-	@Forward(name = "prepare-edit-candidacy-documents", path = "/candidacy/editCandidacyDocuments.jsp"),
-	@Forward(name = "change-process-checked-state", path = "/candidacy/changeProcessCheckedState.jsp"),
-	@Forward(name = "change-payment-checked-state", path = "/candidacy/changePaymentCheckedState.jsp"),
-	@Forward(name = "reject-candidacy", path = "/candidacy/rejectCandidacy.jsp")
+	@Forward(name = "intro", path = "/caseHandlingDegreeTransferCandidacyProcess.do?method=listProcessAllowedActivities", tileProperties = @Tile(title = "private.academicadministrativeoffice.applications.transfers")),
+	@Forward(name = "list-allowed-activities", path = "/candidacy/degreeTransfer/listIndividualCandidacyActivities.jsp", tileProperties = @Tile(title = "private.academicadministrativeoffice.applications.transfers")),
+	@Forward(name = "prepare-create-new-process", path = "/candidacy/selectPersonForCandidacy.jsp", tileProperties = @Tile(title = "private.academicadministrativeoffice.applications.transfers")),
+	@Forward(name = "fill-personal-information", path = "/candidacy/fillPersonalInformation.jsp", tileProperties = @Tile(title = "private.academicadministrativeoffice.applications.transfers")),
+	@Forward(name = "fill-candidacy-information", path = "/candidacy/degreeTransfer/fillCandidacyInformation.jsp", tileProperties = @Tile(title = "private.academicadministrativeoffice.applications.transfers")),
+	@Forward(name = "prepare-candidacy-payment", path = "/candidacy/candidacyPayment.jsp", tileProperties = @Tile(title = "private.academicadministrativeoffice.applications.transfers")),
+	@Forward(name = "change-state", path = "/candidacy/degreeTransfer/changeState.jsp", tileProperties = @Tile(title = "private.academicadministrativeoffice.applications.transfers")),
+	@Forward(name = "edit-candidacy-personal-information", path = "/candidacy/editPersonalInformation.jsp", tileProperties = @Tile(title = "private.academicadministrativeoffice.applications.transfers")),
+	@Forward(name = "edit-candidacy-information", path = "/candidacy/degreeTransfer/editCandidacyInformation.jsp", tileProperties = @Tile(title = "private.academicadministrativeoffice.applications.transfers")),
+	@Forward(name = "edit-candidacy-curricularCourses-information", path = "/candidacy/degreeTransfer/editCandidacyCurricularCoursesInformation.jsp", tileProperties = @Tile(title = "private.academicadministrativeoffice.applications.transfers")),
+	@Forward(name = "introduce-candidacy-result", path = "/candidacy/degreeTransfer/introduceCandidacyResult.jsp", tileProperties = @Tile(title = "private.academicadministrativeoffice.applications.transfers")),
+	@Forward(name = "cancel-candidacy", path = "/candidacy/cancelCandidacy.jsp", tileProperties = @Tile(title = "private.academicadministrativeoffice.applications.transfers")),
+	@Forward(name = "create-registration", path = "/candidacy/createRegistration.jsp", tileProperties = @Tile(title = "private.academicadministrativeoffice.applications.transfers")),
+	@Forward(name = "prepare-edit-candidacy-documents", path = "/candidacy/editCandidacyDocuments.jsp", tileProperties = @Tile(title = "private.academicadministrativeoffice.applications.transfers")),
+	@Forward(name = "change-process-checked-state", path = "/candidacy/changeProcessCheckedState.jsp", tileProperties = @Tile(title = "private.academicadministrativeoffice.applications.transfers")),
+	@Forward(name = "change-payment-checked-state", path = "/candidacy/changePaymentCheckedState.jsp", tileProperties = @Tile(title = "private.academicadministrativeoffice.applications.transfers")),
+	@Forward(name = "reject-candidacy", path = "/candidacy/rejectCandidacy.jsp", tileProperties = @Tile(title = "private.academicadministrativeoffice.applications.transfers"))
 
 })
 public class DegreeTransferIndividualCandidacyProcessDA extends IndividualCandidacyProcessDA {
@@ -142,7 +142,7 @@ public class DegreeTransferIndividualCandidacyProcessDA extends IndividualCandid
     public ActionForward executeEditCandidacyInformation(ActionMapping mapping, ActionForm actionForm,
 	    HttpServletRequest request, HttpServletResponse response) throws FenixFilterException, FenixServiceException {
 	try {
-	    DegreeTransferIndividualCandidacyProcessBean bean = (DegreeTransferIndividualCandidacyProcessBean) getIndividualCandidacyProcessBean();
+	    DegreeTransferIndividualCandidacyProcessBean bean = getIndividualCandidacyProcessBean();
 
 	    executeActivity(getProcess(request), "EditCandidacyInformation", bean);
 	} catch (final DomainException e) {
@@ -202,8 +202,8 @@ public class DegreeTransferIndividualCandidacyProcessDA extends IndividualCandid
     public ActionForward prepareExecuteChangeIndividualCandidacyState(ActionMapping mapping, ActionForm actionForm,
 	    HttpServletRequest request, HttpServletResponse response) {
 
-	request.setAttribute("individualCandidacyResultBean", new DegreeTransferIndividualCandidacyResultBean(
-		getProcess(request)));
+	request.setAttribute("individualCandidacyResultBean",
+		new DegreeTransferIndividualCandidacyResultBean(getProcess(request)));
 	return mapping.findForward("change-state");
     }
 
@@ -211,15 +211,15 @@ public class DegreeTransferIndividualCandidacyProcessDA extends IndividualCandid
 	    HttpServletRequest request, HttpServletResponse response) throws FenixFilterException, FenixServiceException {
 
 	try {
-	    executeActivity(getProcess(request), "ChangeIndividualCandidacyState",  getCandidacyResultBean());
+	    executeActivity(getProcess(request), "ChangeIndividualCandidacyState", getCandidacyResultBean());
 	} catch (final DomainException e) {
 	    addActionMessage(request, e.getMessage(), e.getArgs());
-	    request.setAttribute("individualCandidacyResultBean",  getCandidacyResultBean());
+	    request.setAttribute("individualCandidacyResultBean", getCandidacyResultBean());
 	    return mapping.findForward("change-state");
 	}
 	return listProcessAllowedActivities(mapping, actionForm, request, response);
     }
-    
+
     public ActionForward executeIntroduceCandidacyResult(ActionMapping mapping, ActionForm actionForm,
 	    HttpServletRequest request, HttpServletResponse response) throws FenixFilterException, FenixServiceException {
 
@@ -281,7 +281,7 @@ public class DegreeTransferIndividualCandidacyProcessDA extends IndividualCandid
     @Override
     public ActionForward createNewProcess(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) throws FenixFilterException, FenixServiceException {
-	DegreeTransferIndividualCandidacyProcessBean bean = (DegreeTransferIndividualCandidacyProcessBean) getIndividualCandidacyProcessBean();
+	DegreeTransferIndividualCandidacyProcessBean bean = getIndividualCandidacyProcessBean();
 
 	boolean isValid = hasInvalidViewState();
 	if (!isValid) {

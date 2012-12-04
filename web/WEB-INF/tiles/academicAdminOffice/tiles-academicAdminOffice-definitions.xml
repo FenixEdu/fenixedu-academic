@@ -4,7 +4,8 @@
 <!-- Tiles definitions -->
 <tiles-definitions>
 	<definition name="academicAdminOffice.masterPage" extends="df.layout.two-column">
-	  <put name="title" value="Secretaria Académica" />
+	  <put name="bundle" value="TITLES_RESOURCES" />
+	  <put name="title" value="private.academicadministrativeoffice"/>
 	  <put name="serviceName" value="" />
 	  <put name="navLocal" value="/academicAdminOffice/localNavigationBar.jsp" />
 	  <put name="navGeral" value="/commons/commonGeneralNavigationBar.jsp" />

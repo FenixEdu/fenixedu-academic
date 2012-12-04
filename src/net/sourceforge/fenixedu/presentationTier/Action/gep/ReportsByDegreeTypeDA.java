@@ -48,10 +48,12 @@ import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 @Mapping(module = "gep", path = "/reportsByDegreeType", scope = "session", parameter = "method")
-@Forwards(value = { @Forward(name = "selectDegreeType", path = "/gep/reportsByDegreeType.jsp"),
-	@Forward(name = "viewReports", path = "/gep/viewReports.jsp") })
+@Forwards(value = {
+	@Forward(name = "selectDegreeType", path = "/gep/reportsByDegreeType.jsp", tileProperties = @Tile(title = "private.gep.gepportal.reportsbydegreetype")),
+	@Forward(name = "viewReports", path = "/gep/viewReports.jsp", tileProperties = @Tile(title = "private.gep.gepportal.reportsbydegreetype")) })
 public class ReportsByDegreeTypeDA extends FenixDispatchAction {
 
     private static final int MAX_AUTHORIZED_REPORT_FILES = 20;
@@ -251,8 +253,8 @@ public class ReportsByDegreeTypeDA extends FenixDispatchAction {
 	final ExecutionYear executionYear = getExecutionYear(request);
 	final String format = getFormat(request);
 
-	prepareNewJobResponse(request, ReportFileFactory.createEctsLabelCurricularCourseReportFile(format, degreeType,
-		executionYear));
+	prepareNewJobResponse(request,
+		ReportFileFactory.createEctsLabelCurricularCourseReportFile(format, degreeType, executionYear));
 
 	return selectDegreeType(mapping, actionForm, request, response);
     }
@@ -312,8 +314,8 @@ public class ReportsByDegreeTypeDA extends FenixDispatchAction {
 	final ExecutionYear executionYear = getExecutionYear(request);
 	final String format = getFormat(request);
 
-	prepareNewJobResponse(request, ReportFileFactory.createCourseLoadAndResponsiblesReportFile(format, degreeType,
-		executionYear));
+	prepareNewJobResponse(request,
+		ReportFileFactory.createCourseLoadAndResponsiblesReportFile(format, degreeType, executionYear));
 
 	return selectDegreeType(mapping, actionForm, request, response);
     }
@@ -388,8 +390,8 @@ public class ReportsByDegreeTypeDA extends FenixDispatchAction {
 	final ExecutionYear executionYear = getExecutionYear(request);
 	final String format = getFormat(request);
 
-	prepareNewJobResponse(request, ReportFileFactory
-		.createDissertationsProposalsReportFile(format, degreeType, executionYear));
+	prepareNewJobResponse(request,
+		ReportFileFactory.createDissertationsProposalsReportFile(format, degreeType, executionYear));
 
 	return selectDegreeType(mapping, actionForm, request, response);
     }
@@ -432,8 +434,8 @@ public class ReportsByDegreeTypeDA extends FenixDispatchAction {
 	final ExecutionYear executionYear = getExecutionYear(request);
 	final String format = getFormat(request);
 
-	prepareNewJobResponse(request, ReportFileFactory.createDissertationsWithExternalAffiliationsReportFile(format,
-		degreeType, executionYear));
+	prepareNewJobResponse(request,
+		ReportFileFactory.createDissertationsWithExternalAffiliationsReportFile(format, degreeType, executionYear));
 
 	return selectDegreeType(mapping, actionForm, request, response);
     }
@@ -621,6 +623,7 @@ public class ReportsByDegreeTypeDA extends FenixDispatchAction {
 	    this.reportClass = reportClass;
 	}
 
+	@Override
 	public boolean evaluate(Object object) {
 	    QueueJob queueJob = (QueueJob) object;
 	    try {

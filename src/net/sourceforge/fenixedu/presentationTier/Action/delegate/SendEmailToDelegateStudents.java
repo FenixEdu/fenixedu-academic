@@ -39,10 +39,12 @@ import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 @Mapping(path = "/sendEmailToDelegateStudents", module = "delegate")
-@Forwards({ @Forward(name = "choose-receivers", path = "/delegate/chooseReceivers.jsp"),
-	@Forward(name = "choose-student-receivers", path = "/delegate/chooseStudentReceivers.jsp") })
+@Forwards({
+	@Forward(name = "choose-receivers", path = "/delegate/chooseReceivers.jsp", tileProperties = @Tile(title = "private.delegate.communication.sendemailtostudents")),
+	@Forward(name = "choose-student-receivers", path = "/delegate/chooseStudentReceivers.jsp", tileProperties = @Tile(title = "private.delegate.communication.sendemailtostudents")) })
 public class SendEmailToDelegateStudents extends FenixDispatchAction {
 
     @SuppressWarnings("unchecked")

@@ -3,12 +3,18 @@
 <!-- Tiles definitions -->
 <tiles-definitions>
 	<definition name="show-anual-installment" extends="definition.payrollSection.masterPage">
+		 
+		<put name="title" value="private.staffarea.bonus.managebenefitsawards"/>
 		<put name="body" value="/personnelSection/payrollSection/showAnualInstallment.jsp"/>
 	</definition>
 	<definition name="upload-bonus-file" extends="definition.payrollSection.masterPage">
+		 
+	    <put name="title" value="private.staffarea.bonus.importfileawards"/>
 		<put name="body" value="/personnelSection/payrollSection/uploadBonusFile.jsp"/>
 	</definition>
 	<definition name="show-bonus-installment" extends="definition.payrollSection.masterPage">
+		<put name="bundle" value="TITLES_RESOURCES"/>
+	    <put name="title" value="private.staffarea.bonus.queryandexportawards"/>
 		<put name="body" value="/personnelSection/payrollSection/showBonusInstallment.jsp"/>
 	</definition>
 </tiles-definitions>

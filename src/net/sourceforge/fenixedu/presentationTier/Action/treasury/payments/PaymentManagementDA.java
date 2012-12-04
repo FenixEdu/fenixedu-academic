@@ -45,13 +45,13 @@ import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixWebFramework.struts.annotations.Tile;
 import pt.utl.ist.fenix.tools.util.CollectionPager;
 
-@Mapping(module = "treasury", path = "/paymentManagement", parameter = "method", scope = "request" )
+@Mapping(module = "treasury", path = "/paymentManagement", parameter = "method", scope = "request")
 @Forwards(value = {
-	@Forward(name = "paymentManagement", path = "treasury.paymentManagement"),
-	@Forward(name = "viewProfile", path = "treasury.viewProfile")
-})
+	@Forward(name = "paymentManagement", path = "treasury.paymentManagement", tileProperties = @Tile(  title = "private.treasury.payments")),
+	@Forward(name = "viewProfile", path = "treasury.viewProfile", tileProperties = @Tile(  title = "private.treasury.payments")) })
 public class PaymentManagementDA extends FenixDispatchAction {
 
     public static Set<Unit> getUnitsForCurrentUser() {
@@ -103,7 +103,7 @@ public class PaymentManagementDA extends FenixDispatchAction {
 
 	private String searchString;
 
-	private SearchPerson searchPerson = new SearchPerson();
+	private final SearchPerson searchPerson = new SearchPerson();
 
 	public String getSearchString() {
 	    return searchString;
@@ -235,7 +235,7 @@ public class PaymentManagementDA extends FenixDispatchAction {
 	public boolean hasValidArgs() {
 	    return unit != null;
 	}
-	
+
     }
 
     public static class SearchTransactions implements Serializable {
@@ -367,8 +367,8 @@ public class PaymentManagementDA extends FenixDispatchAction {
 	}
 
 	public Party getContributorParty() {
-	    return contributorNumber == null || StringUtils.isEmpty(contributorNumber) ?
-		    null : Party.readByContributorNumber(contributorNumber);
+	    return contributorNumber == null || StringUtils.isEmpty(contributorNumber) ? null : Party
+		    .readByContributorNumber(contributorNumber);
 	}
 
 	public Collection<EntryDTO> getEntryDTOsForPayment() {
@@ -403,7 +403,7 @@ public class PaymentManagementDA extends FenixDispatchAction {
 	    final HttpServletResponse response) {
 	final Person person = getDomainObject(request, "personOid");
 	return viewProfile(person, mapping, request);
-    }    
+    }
 
     private ActionForward viewProfile(final Person person, final ActionMapping mapping, final HttpServletRequest request) {
 	request.setAttribute("person", person);
@@ -426,7 +426,8 @@ public class PaymentManagementDA extends FenixDispatchAction {
 	return viewProfile(person, mapping, request);
     }
 
-    public ActionForward viewEvent(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
+    public ActionForward viewEvent(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) {
 	final Event event = getDomainObject(request, "eventId");
 	return viewEvent(event, mapping, request);
     }
@@ -438,21 +439,13 @@ public class PaymentManagementDA extends FenixDispatchAction {
 
 	final CreatePaymentsForEvents service = new CreatePaymentsForEvents();
 	final Receipt receipt = service.run(currentUser, paymentBean.getEntryDTOsForPayment(), PaymentMode.CASH, false,
-		paymentBean.getPaymentDateTime(), event.getPerson(),
-		paymentBean.getContributorParty(), paymentBean.getContributorParty() == null ? paymentBean.getContributorName() : null,
+		paymentBean.getPaymentDateTime(), event.getPerson(), paymentBean.getContributorParty(),
+		paymentBean.getContributorParty() == null ? paymentBean.getContributorName() : null,
 		getReceiptCreatorUnit(request), paymentBean.getEvent().getOwnerUnit());
 	request.setAttribute("receipt", receipt);
 
 	return viewEvent(event, mapping, request);
     }
-
-
-
-
-
-
-
-
 
     public ActionForward searchPeople(final SearchBean searchBean, final ActionMapping mapping, final HttpServletRequest request) {
 	request.setAttribute("searchBean", searchBean);

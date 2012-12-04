@@ -37,14 +37,6 @@ import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 
 import pt.ist.fenixWebFramework.security.UserView;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
-import pt.ist.fenixWebFramework.struts.annotations.Forward;
-import pt.ist.fenixWebFramework.struts.annotations.Forwards;
-import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
@@ -56,9 +48,9 @@ import pt.ist.fenixWebFramework.struts.annotations.Tile;
  */
 @Mapping(module = "gep", path = "/teachingStaff", input = "/teachingStaff.do?method=prepare", attribute = "teachingStaffForm", formBean = "teachingStaffForm", scope = "request", parameter = "method")
 @Forwards(value = {
-		@Forward(name = "chooseExecutionCourse", path = "/gep/teachingStaff/chooseExecutionCourse.jsp"),
-		@Forward(name = "chooseExecutionYearAndDegreeCurricularPlan", path = "/gep/teachingStaff/chooseExecutionYearAndDegreeCurricularPlan.jsp"),
-		@Forward(name = "viewTeachingStaff", path = "/gep/teachingStaff/viewTeachingStaff.jsp") })
+	@Forward(name = "chooseExecutionCourse", path = "/gep/teachingStaff/chooseExecutionCourse.jsp", tileProperties = @Tile(title = "private.gep.gepportal.consultationguidelines")),
+	@Forward(name = "chooseExecutionYearAndDegreeCurricularPlan", path = "/gep/teachingStaff/chooseExecutionYearAndDegreeCurricularPlan.jsp", tileProperties = @Tile(title = "private.gep.surveys.faculty")),
+	@Forward(name = "viewTeachingStaff", path = "/gep/teachingStaff/viewTeachingStaff.jsp", tileProperties = @Tile(title = "private.gep.gepportal.consultationguidelines")) })
 public class TeachingStaffDispatchAction extends FenixDispatchAction {
 
     public ActionForward prepare(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
@@ -157,8 +149,8 @@ public class TeachingStaffDispatchAction extends FenixDispatchAction {
 		.run(nonAffiliatedTeacherInstitutionName) : (Unit) rootDomainObject
 		.readPartyByOID(nonAffiliatedTeacherInstitutionID);
 
-	NonAffiliatedTeacher.associateToInstitutionAndExecutionCourse(nonAffiliatedTeacherName, institution, rootDomainObject
-		.readExecutionCourseByOID((Integer) dynaActionForm.get("executionCourseID")));
+	NonAffiliatedTeacher.associateToInstitutionAndExecutionCourse(nonAffiliatedTeacherName, institution,
+		rootDomainObject.readExecutionCourseByOID((Integer) dynaActionForm.get("executionCourseID")));
 
 	return viewTeachingStaff(mapping, actionForm, request, response);
 

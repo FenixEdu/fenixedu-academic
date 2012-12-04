@@ -24,6 +24,8 @@
        <put name="body" value="/delegate/showStudents.jsp"/>  
     </definition>
     <definition name="email-redirect" extends="definition.delegate.two-column">
+       <put name="bundle" value="TITLES_RESOURCES"/>
+       <put name="title" value="private.delegate.communication.sendemailtodelegates"/>
        <put name="body" value="/email/sendEmailRedirect.jsp"/>  
     </definition>
     

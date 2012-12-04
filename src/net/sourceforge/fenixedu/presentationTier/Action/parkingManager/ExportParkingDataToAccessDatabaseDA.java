@@ -28,6 +28,10 @@ import org.apache.struts.action.ActionMapping;
 import org.joda.time.DateTime;
 import org.joda.time.YearMonthDay;
 
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixWebFramework.struts.annotations.Tile;
 import pt.utl.ist.fenix.tools.util.DateFormatUtil;
 import pt.utl.ist.fenix.tools.util.FileUtils;
 import pt.utl.ist.fenix.tools.util.excel.ExcelStyle;
@@ -38,21 +42,9 @@ import com.healthmarketscience.jackcess.Column;
 import com.healthmarketscience.jackcess.DataType;
 import com.healthmarketscience.jackcess.Database;
 import com.healthmarketscience.jackcess.Table;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
-import pt.ist.fenixWebFramework.struts.annotations.Forward;
-import pt.ist.fenixWebFramework.struts.annotations.Forwards;
-import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
-import pt.ist.fenixWebFramework.struts.annotations.Forward;
-import pt.ist.fenixWebFramework.struts.annotations.Forwards;
-import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 @Mapping(module = "parkingManager", path = "/exportParkingDB", input = "/exportParkingDB.do?method=prepareExportFile", attribute = "exportFile", formBean = "exportFile", scope = "request", parameter = "method")
-@Forwards(value = { @Forward(name = "exportFile", path = "/parkingManager/exportFile.jsp") })
+@Forwards(value = { @Forward(name = "exportFile", path = "/parkingManager/exportFile.jsp", tileProperties = @Tile(title = "private.parking.exportbase")) })
 public class ExportParkingDataToAccessDatabaseDA extends FenixDispatchAction {
 
     public ActionForward prepareExportFile(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
@@ -215,8 +207,8 @@ public class ExportParkingDataToAccessDatabaseDA extends FenixDispatchAction {
 	row.setCell(vehicle1PlateNumber); // license
 	row.setCell(vehicle2PlateNumber); // licenseAlt
 	row.setCell(person != null && person.getWorkPhone() != null ? getString(person.getWorkPhone(), 19) : ""); // registration
-	row.setCell(person != null && person.getDefaultMobilePhoneNumber() != null ? getString(person
-		.getDefaultMobilePhoneNumber(), 19) : ""); // registrationAlt
+	row.setCell(person != null && person.getDefaultMobilePhoneNumber() != null ? getString(
+		person.getDefaultMobilePhoneNumber(), 19) : ""); // registrationAlt
 	row.setCell(""); // clientRef
 	row.setCell(""); // comment
 	row.setCell("0"); // price
@@ -438,8 +430,8 @@ public class ExportParkingDataToAccessDatabaseDA extends FenixDispatchAction {
 	newRow[12] = vehicle1PlateNumber;
 	newRow[13] = vehicle2PlateNumber;
 	newRow[14] = person != null && person.getWorkPhone() != null ? getString(person.getWorkPhone(), 19) : "";
-	newRow[15] = person != null && person.getDefaultMobilePhoneNumber() != null ? getString(person
-		.getDefaultMobilePhoneNumber(), 19) : "";
+	newRow[15] = person != null && person.getDefaultMobilePhoneNumber() != null ? getString(
+		person.getDefaultMobilePhoneNumber(), 19) : "";
 	newRow[16] = accessTableRow.get("ClientRef");
 	newRow[17] = accessTableRow.get("Comment");
 	newRow[18] = accessTableRow.get("Price");
@@ -490,8 +482,8 @@ public class ExportParkingDataToAccessDatabaseDA extends FenixDispatchAction {
 	newRow[12] = vehicle1PlateNumber;
 	newRow[13] = vehicle2PlateNumber;
 	newRow[14] = person != null && person.getWorkPhone() != null ? getString(person.getWorkPhone(), 19) : "";
-	newRow[15] = person != null && person.getDefaultMobilePhoneNumber() != null ? getString(person
-		.getDefaultMobilePhoneNumber(), 19) : "";
+	newRow[15] = person != null && person.getDefaultMobilePhoneNumber() != null ? getString(
+		person.getDefaultMobilePhoneNumber(), 19) : "";
 	newRow[16] = "";
 	newRow[17] = "";
 	newRow[18] = 0;

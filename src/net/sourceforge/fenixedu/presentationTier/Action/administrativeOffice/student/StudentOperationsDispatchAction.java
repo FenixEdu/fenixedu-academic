@@ -33,6 +33,7 @@ import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 /**
  * @author - Shezad Anavarali (shezad@ist.utl.pt)
@@ -40,9 +41,9 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
  * 
  */
 @Mapping(path = "/createStudent", module = "academicAdminOffice")
-@Forwards( {
-	@Forward(name = "chooseNewStudentExecutionDegreeAndIdentification", path = "/academicAdminOffice/chooseNewStudentExecutionDegreeAndIdentification.jsp"),
-	@Forward(name = "fillNewPersonData", path = "/academicAdminOffice/fillNewPersonData.jsp"),
+@Forwards({
+	@Forward(name = "chooseNewStudentExecutionDegreeAndIdentification", path = "/academicAdminOffice/chooseNewStudentExecutionDegreeAndIdentification.jsp", tileProperties = @Tile(title = "private.academicadministrativeoffice.studentoperations.createstudent")),
+	@Forward(name = "fillNewPersonData", path = "/academicAdminOffice/fillNewPersonData.jsp", tileProperties = @Tile(title = "private.academicadministrativeoffice.studentoperations.createstudent")),
 	@Forward(name = "fillNewPersonDataForEmployee", path = "/academicAdminOffice/fillNewPersonDataForEmployee.jsp"),
 	@Forward(name = "fillOriginInformation", path = "/academicAdminOffice/fillOriginInformation.jsp"),
 	@Forward(name = "createStudentSuccess", path = "/academicAdminOffice/createStudentSuccess.jsp"),
@@ -94,8 +95,8 @@ public class StudentOperationsDispatchAction extends FenixDispatchAction {
 
 	ExecutionDegreeBean executionDegreeBean = (ExecutionDegreeBean) RenderUtils.getViewState("executionDegree")
 		.getMetaObject().getObject();
-	IngressionInformationBean ingressionInformationBean = (IngressionInformationBean) RenderUtils.getViewState(
-		"chooseIngression").getMetaObject().getObject();
+	IngressionInformationBean ingressionInformationBean = (IngressionInformationBean) RenderUtils
+		.getViewState("chooseIngression").getMetaObject().getObject();
 	ingressionInformationBean.clearIngressionAndEntryPhase();
 
 	RenderUtils.invalidateViewState();
@@ -116,8 +117,8 @@ public class StudentOperationsDispatchAction extends FenixDispatchAction {
 
 	ExecutionDegreeBean executionDegreeBean = (ExecutionDegreeBean) RenderUtils.getViewState("executionDegree")
 		.getMetaObject().getObject();
-	IngressionInformationBean ingressionInformationBean = (IngressionInformationBean) RenderUtils.getViewState(
-		"chooseIngression").getMetaObject().getObject();
+	IngressionInformationBean ingressionInformationBean = (IngressionInformationBean) RenderUtils
+		.getViewState("chooseIngression").getMetaObject().getObject();
 	ingressionInformationBean.clearAgreement();
 
 	RenderUtils.invalidateViewState();
@@ -137,8 +138,8 @@ public class StudentOperationsDispatchAction extends FenixDispatchAction {
 
 	ExecutionDegreeBean executionDegreeBean = (ExecutionDegreeBean) RenderUtils.getViewState("executionDegree")
 		.getMetaObject().getObject();
-	IngressionInformationBean ingressionInformationBean = (IngressionInformationBean) RenderUtils.getViewState(
-		"chooseIngression").getMetaObject().getObject();
+	IngressionInformationBean ingressionInformationBean = (IngressionInformationBean) RenderUtils
+		.getViewState("chooseIngression").getMetaObject().getObject();
 	ingressionInformationBean.clearAgreement();
 
 	RenderUtils.invalidateViewState("executionDegree");
@@ -164,8 +165,8 @@ public class StudentOperationsDispatchAction extends FenixDispatchAction {
 
 	ExecutionDegreeBean executionDegreeBean = (ExecutionDegreeBean) RenderUtils.getViewState("executionDegree")
 		.getMetaObject().getObject();
-	IngressionInformationBean ingressionInformationBean = (IngressionInformationBean) RenderUtils.getViewState(
-		"chooseIngression").getMetaObject().getObject();
+	IngressionInformationBean ingressionInformationBean = (IngressionInformationBean) RenderUtils
+		.getViewState("chooseIngression").getMetaObject().getObject();
 	PrecedentDegreeInformationBean precedentDegreeInformationBean = RenderUtils.getViewState("precedentDegreeInformation") == null ? new PrecedentDegreeInformationBean()
 		: (PrecedentDegreeInformationBean) RenderUtils.getViewState("precedentDegreeInformation").getMetaObject()
 			.getObject();
@@ -241,8 +242,8 @@ public class StudentOperationsDispatchAction extends FenixDispatchAction {
 	    IngressionInformationBean ingressionInformationBean, Person person, ChoosePersonBean choosePersonBean) {
 
 	try {
-	    Registration.checkIngression(ingressionInformationBean.getIngression(), person, executionDegreeBean
-		    .getDegreeCurricularPlan());
+	    Registration.checkIngression(ingressionInformationBean.getIngression(), person,
+		    executionDegreeBean.getDegreeCurricularPlan());
 	} catch (DomainException e) {
 	    RenderUtils.invalidateViewState();
 	    request.setAttribute("choosePersonBean", choosePersonBean);
@@ -269,7 +270,7 @@ public class StudentOperationsDispatchAction extends FenixDispatchAction {
 
 	return mapping.findForward("fillNewPersonData");
     }
-
+    
     public ActionForward fillNewPersonDataPostback(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) {
 
@@ -366,10 +367,13 @@ public class StudentOperationsDispatchAction extends FenixDispatchAction {
     }
 
     /*
-     * public ActionForward printRegistrationDeclarationTemplate(ActionMapping mapping, ActionForm actionForm, HttpServletRequest
-     * request, HttpServletResponse response) {
+     * public ActionForward printRegistrationDeclarationTemplate(ActionMapping
+     * mapping, ActionForm actionForm, HttpServletRequest request,
+     * HttpServletResponse response) {
      * 
-     * Integer registrationID = Integer.valueOf(request.getParameter("registrationID")); request.setAttribute("registration",
+     * Integer registrationID =
+     * Integer.valueOf(request.getParameter("registrationID"));
+     * request.setAttribute("registration",
      * rootDomainObject.readRegistrationByOID(registrationID));
      * 
      * return mapping.findForward("printRegistrationDeclarationTemplate"); }

@@ -37,11 +37,13 @@ import pt.ist.fenixWebFramework.security.UserView;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixWebFramework.struts.annotations.Tile;
 import pt.utl.ist.fenix.tools.file.FileManagerException;
 import pt.utl.ist.fenix.tools.util.FileUtils;
 
 @Mapping(module = "person", path = "/parking", input = "/parking.do?method=prepareEditParking&page=0", attribute = "parkingForm", formBean = "parkingForm", scope = "request", validate = false, parameter = "method")
-@Forwards(value = { @Forward(name = "prepareParking", path = "/person/parking/parkingRequest.jsp"),
+@Forwards(value = {
+	@Forward(name = "prepareParking", path = "/person/parking/parkingRequest.jsp", tileProperties = @Tile(title = "private.personal.dspace.parking")),
 	@Forward(name = "editParkingRequest", path = "/person/parking/editParkingRequest.jsp") })
 public class ParkingDispatchAction extends FenixDispatchAction {
     public ActionForward prepareParking(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,

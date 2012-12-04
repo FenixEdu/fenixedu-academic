@@ -41,24 +41,19 @@ import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
-import pt.ist.fenixWebFramework.struts.annotations.Forward;
-import pt.ist.fenixWebFramework.struts.annotations.Forwards;
-import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 @Mapping(path = "/registration", module = "academicAdminOffice")
-@Forwards( {
+@Forwards({
 	@Forward(name = "chooseCycleForViewRegistrationCurriculum", path = "/academicAdminOffice/student/registration/chooseCycleForViewRegistrationCurriculum.jsp"),
 	@Forward(name = "chooseCycleForRegistrationConclusion", path = "/academicAdminOffice/student/registration/chooseCycleForRegistrationConclusion.jsp"),
-	@Forward(name = "view-registration-curriculum", path = "/academicAdminOffice/student/registration/viewRegistrationCurriculum.jsp"),
+	@Forward(name = "view-registration-curriculum", path = "/academicAdminOffice/student/registration/viewRegistrationCurriculum.jsp", tileProperties = @Tile(title = "private.academicadministrativeoffice.studentoperations.viewstudents")),
 	@Forward(name = "registrationConclusion", path = "/academicAdminOffice/student/registration/registrationConclusion.jsp"),
 	@Forward(name = "registrationConclusionDocument", path = "/academicAdminOffice/student/registration/registrationConclusionDocument.jsp"),
-	@Forward(name = "viewAttends", path = "/academicAdminOffice/student/registration/viewAttends.jsp"),
-	@Forward(name = "addAttends", path = "/academicAdminOffice/student/registration/addAttends.jsp"),
-	@Forward(name = "showRegimes", path = "/academicAdminOffice/student/registration/showRegimes.jsp"),
-	@Forward(name = "createRegime", path = "/academicAdminOffice/student/registration/createRegime.jsp") })
+	@Forward(name = "viewAttends", path = "/academicAdminOffice/student/registration/viewAttends.jsp", tileProperties = @Tile(title = "private.academicadministrativeoffice.studentoperations.viewstudents")),
+	@Forward(name = "addAttends", path = "/academicAdminOffice/student/registration/addAttends.jsp", tileProperties = @Tile(title = "private.academicadministrativeoffice.studentoperations.viewstudents")),
+	@Forward(name = "showRegimes", path = "/academicAdminOffice/student/registration/showRegimes.jsp", tileProperties = @Tile(title = "private.academicadministrativeoffice.studentoperations.viewstudents")),
+	@Forward(name = "createRegime", path = "/academicAdminOffice/student/registration/createRegime.jsp", tileProperties = @Tile(title = "private.academicadministrativeoffice.studentoperations.viewstudents")) })
 public class RegistrationDA extends StudentRegistrationDA {
 
     public ActionForward prepareViewRegistrationCurriculum(ActionMapping mapping, ActionForm actionForm,

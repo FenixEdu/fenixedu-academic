@@ -19,10 +19,11 @@ import org.apache.struts.action.ActionMapping;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixWebFramework.struts.annotations.Tile;
 import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 @Mapping(module = "scientificCouncil", path = "/projectTutorialCourses", scope = "request", parameter = "method")
-@Forwards(value = { @Forward(name = "showDepartmentExecutionCourses", path = "/credits/showDepartmentExecutionCourses.jsp") })
+@Forwards(value = { @Forward(name = "showDepartmentExecutionCourses", path = "/credits/showDepartmentExecutionCourses.jsp", tileProperties = @Tile(title = "private.scientificcouncil.credits.coursestypes")) })
 public class ProjectTutorialExecutionCoursesDA extends FenixDispatchAction {
 
     public ActionForward showDepartmentExecutionCourses(ActionMapping mapping, ActionForm form, HttpServletRequest request,

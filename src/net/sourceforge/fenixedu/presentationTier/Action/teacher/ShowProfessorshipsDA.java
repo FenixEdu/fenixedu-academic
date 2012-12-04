@@ -21,18 +21,10 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
+
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
-import pt.ist.fenixWebFramework.struts.annotations.Forward;
-import pt.ist.fenixWebFramework.struts.annotations.Forwards;
-import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 @Mapping(module = "teacher", path = "/showProfessorships", input = "/showProfessorships.do?method=list", attribute = "showProfessorshipsForm", formBean = "showProfessorshipsForm", scope = "request", validate = false, parameter = "method")
 @Forwards(value = { @Forward(name = "list", path = "list-professorships") })
@@ -79,8 +71,8 @@ public class ShowProfessorshipsDA extends FenixDispatchAction {
 	}
 	Collections.sort(executionCourses, ExecutionCourse.EXECUTION_COURSE_COMPARATOR_BY_EXECUTION_PERIOD_AND_NAME);
 
-	request.setAttribute("executionPeriodLabelValueBeans", LabelValueBeanUtils.executionPeriodLabelValueBeans(
-		executionSemesters, true));
+	request.setAttribute("executionPeriodLabelValueBeans",
+		LabelValueBeanUtils.executionPeriodLabelValueBeans(executionSemesters, true));
 
 	return mapping.findForward("list");
     }

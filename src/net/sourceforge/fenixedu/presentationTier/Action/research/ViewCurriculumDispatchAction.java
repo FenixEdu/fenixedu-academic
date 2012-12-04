@@ -47,9 +47,10 @@ import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 @Mapping(module = "researcher", path = "/viewCurriculum", scope = "session", parameter = "method")
-@Forwards(value = { @Forward(name = "Success", path = "/researcher/viewCurriculum.jsp") })
+@Forwards(value = { @Forward(name = "Success", path = "/researcher/viewCurriculum.jsp", tileProperties = @Tile(  title = "private.operator.personnelmanagement.managementfaculty.teacherevaluation.curriculum")) })
 public class ViewCurriculumDispatchAction extends FenixAction {
 
     @Override

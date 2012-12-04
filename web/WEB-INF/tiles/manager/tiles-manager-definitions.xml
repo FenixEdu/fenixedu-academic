@@ -11,7 +11,8 @@
 
 
 	<definition name="definition.manager.masterPage.old" extends="df.layout.two-column">
-	  <put name="title" value="Portal de Gerência" />
+	  <put name="title" value="private.administrator" />
+	  <put name="bundle" value="TITLES_RESOURCES" />
 	  <put name="serviceName" value="Portal de Gerência" />
 	  <put name="navLocal" value="/manager/commons/commonNavLocalManager.jsp" />
 	  <put name="navGeral" value="/commons/functionalities/top-menu.jsp" />

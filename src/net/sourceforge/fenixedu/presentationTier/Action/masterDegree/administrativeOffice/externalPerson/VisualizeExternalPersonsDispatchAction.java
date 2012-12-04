@@ -36,12 +36,6 @@ import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixWebFramework.struts.annotations.Tile;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
-import pt.ist.fenixWebFramework.struts.annotations.Forward;
-import pt.ist.fenixWebFramework.struts.annotations.Forwards;
-import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 /**
  * 
@@ -51,9 +45,9 @@ import pt.ist.fenixWebFramework.struts.annotations.Tile;
  */
 @Mapping(module = "masterDegreeAdministrativeOffice", path = "/visualizeExternalPersons", input = "/visualizeExternalPersons.do?page=0&method=prepare", attribute = "visualizeExternalPersonsForm", formBean = "visualizeExternalPersonsForm", scope = "request", parameter = "method")
 @Forwards(value = {
-		@Forward(name = "error", path = "df.page.showExternalPersons_Error"),
-		@Forward(name = "start", path = "df.page.visualizeExternalPersons"),
-		@Forward(name = "success", path = "df.page.showExternalPersons") })
+	@Forward(name = "error", path = "df.page.showExternalPersons_Error", tileProperties = @Tile(title = "teste29")),
+	@Forward(name = "start", path = "df.page.visualizeExternalPersons", tileProperties = @Tile(title = "teste30")),
+	@Forward(name = "success", path = "df.page.showExternalPersons", tileProperties = @Tile(title = "teste31")) })
 @Exceptions(value = { @ExceptionHandling(type = net.sourceforge.fenixedu.presentationTier.Action.exceptions.ExistingActionException.class, key = "resources.Action.exceptions.ExistingActionException", handler = net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler.class, scope = "request") })
 public class VisualizeExternalPersonsDispatchAction extends FenixDispatchAction {
 
@@ -110,7 +104,7 @@ public class VisualizeExternalPersonsDispatchAction extends FenixDispatchAction 
 
 	try {
 
-	    infoExternalPersons = (List) ReadExternalPersonsByInstitution.run(institutionId);
+	    infoExternalPersons = ReadExternalPersonsByInstitution.run(institutionId);
 
 	    if ((infoExternalPersons == null) || (infoExternalPersons.isEmpty())) {
 		actionErrors.add("label.masterDegree.administrativeOffice.nonExistingExternalPersons", new ActionError(

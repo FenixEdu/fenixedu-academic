@@ -25,21 +25,23 @@ import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixWebFramework.struts.annotations.Tile;
 import pt.utl.ist.fenix.tools.util.FileUtils;
 
 @Mapping(path = "/thesisSubmission", module = "student")
-@Forwards({ @Forward(name = "thesis-notFound", path = "/student/thesis/notFound.jsp"),
-	@Forward(name = "thesis-showState", path = "/student/thesis/showState.jsp"),
-	@Forward(name = "thesis-showUnavailable", path = "/student/thesis/showUnavailable.jsp"),
-	@Forward(name = "thesis-submit", path = "/student/thesis/submit.jsp"),
-	@Forward(name = "thesis-edit-abstract", path = "/student/thesis/editAbstract.jsp"),
-	@Forward(name = "thesis-edit-keywords", path = "/student/thesis/editKeywords.jsp"),
-	@Forward(name = "thesis-declaration", path = "/student/thesis/declaration.jsp"),
-	@Forward(name = "thesis-declaration-view", path = "/student/thesis/viewDeclaration.jsp"),
-	@Forward(name = "thesis-upload-dissertation", path = "/student/thesis/uploadDissertation.jsp"),
-	@Forward(name = "thesis-upload-abstract", path = "/student/thesis/uploadAbstract.jsp"),
-	@Forward(name = "thesis-list-enrolments", path = "/student/thesis/listEnrolments.jsp"),
-	@Forward(name = "viewOperationsThesis", path = "/student/thesis/viewOperationsThesis.jsp") })
+@Forwards({
+	@Forward(name = "thesis-notFound", path = "/student/thesis/notFound.jsp", tileProperties = @Tile(  title = "private.student.submit.dissertation")),
+	@Forward(name = "thesis-showState", path = "/student/thesis/showState.jsp", tileProperties = @Tile(  title = "private.student.submit.dissertation")),
+	@Forward(name = "thesis-showUnavailable", path = "/student/thesis/showUnavailable.jsp", tileProperties = @Tile(  title = "private.student.submit.dissertation")),
+	@Forward(name = "thesis-submit", path = "/student/thesis/submit.jsp", tileProperties = @Tile(  title = "private.student.submit.dissertation")),
+	@Forward(name = "thesis-edit-abstract", path = "/student/thesis/editAbstract.jsp", tileProperties = @Tile(  title = "private.student.submit.dissertation")),
+	@Forward(name = "thesis-edit-keywords", path = "/student/thesis/editKeywords.jsp", tileProperties = @Tile(  title = "private.student.submit.dissertation")),
+	@Forward(name = "thesis-declaration", path = "/student/thesis/declaration.jsp", tileProperties = @Tile(  title = "private.student.submit.dissertation")),
+	@Forward(name = "thesis-declaration-view", path = "/student/thesis/viewDeclaration.jsp", tileProperties = @Tile(  title = "private.student.submit.dissertation")),
+	@Forward(name = "thesis-upload-dissertation", path = "/student/thesis/uploadDissertation.jsp", tileProperties = @Tile(  title = "private.student.submit.dissertation")),
+	@Forward(name = "thesis-upload-abstract", path = "/student/thesis/uploadAbstract.jsp", tileProperties = @Tile(  title = "private.student.submit.dissertation")),
+	@Forward(name = "thesis-list-enrolments", path = "/student/thesis/listEnrolments.jsp", tileProperties = @Tile(  title = "private.student.submit.dissertation")),
+	@Forward(name = "viewOperationsThesis", path = "/student/thesis/viewOperationsThesis.jsp", tileProperties = @Tile(  title = "private.student.submit.dissertation")) })
 public class ThesisSubmissionDA extends AbstractManageThesisDA {
 
     public Student getStudent(HttpServletRequest request) {

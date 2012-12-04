@@ -15,14 +15,7 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.ActionMessage;
 import org.apache.struts.action.ActionMessages;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
-import pt.ist.fenixWebFramework.struts.annotations.Forward;
-import pt.ist.fenixWebFramework.struts.annotations.Forwards;
-import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
+
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
@@ -30,9 +23,9 @@ import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 @Mapping(module = "directiveCouncil", path = "/assiduousnessStructure", input = "/assiduousnessStructure.do?method=showAssiduousnessStructure", attribute = "assiduousnessForm", formBean = "assiduousnessForm", scope = "request", parameter = "method")
 @Forwards(value = {
-		@Forward(name = "create-assiduousness-person-function", path = "/directiveCouncil/assiduousnessStructure/createAssiduousnessPersonFunction.jsp"),
-		@Forward(name = "edit-assiduousness-person-function", path = "/directiveCouncil/assiduousnessStructure/editAssiduousnessPersonFunction.jsp"),
-		@Forward(name = "show-assiduousness-structure", path = "/directiveCouncil/assiduousnessStructure/showAssiduousnessStructure.jsp") })
+	@Forward(name = "create-assiduousness-person-function", path = "/directiveCouncil/assiduousnessStructure/createAssiduousnessPersonFunction.jsp"),
+	@Forward(name = "edit-assiduousness-person-function", path = "/directiveCouncil/assiduousnessStructure/editAssiduousnessPersonFunction.jsp"),
+	@Forward(name = "show-assiduousness-structure", path = "/directiveCouncil/assiduousnessStructure/showAssiduousnessStructure.jsp", tileProperties = @Tile(title = "private.steeringcouncil.structuresiadap")) })
 public class AssiduousnessStructureDispatchAction extends FenixDispatchAction {
 
     public ActionForward showAssiduousnessStructure(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
@@ -92,9 +85,7 @@ public class AssiduousnessStructureDispatchAction extends FenixDispatchAction {
 		return mapping.findForward("create-assiduousness-person-function");
 	    }
 	}
-	request
-		.setAttribute("assiduousnessStructureSearch",
-			new AssiduousnessStructureSearch(assiduousnessPersonFunctionFactory));
+	request.setAttribute("assiduousnessStructureSearch", new AssiduousnessStructureSearch(assiduousnessPersonFunctionFactory));
 	return mapping.findForward("show-assiduousness-structure");
     }
 

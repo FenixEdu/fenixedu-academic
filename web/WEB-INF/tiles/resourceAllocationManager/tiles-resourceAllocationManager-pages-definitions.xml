@@ -3,6 +3,8 @@
 <!-- Tiles definitions -->
 <tiles-definitions>
 	<definition name="df.page.mainExams" extends="definition.sop.examsPage" >
+		<put name="bundle" value="TITLES_RESOURCES"/>
+	    <put name="title" value="private.resourcemanagement.reviewswritten.executiondates"/>
 		<put name="body" value="/resourceAllocationManager/exams/mainExams_bd.jsp" />
 		<put name="context" value="/commons/context.jsp" />
 	</definition>
@@ -35,6 +37,8 @@
 		<put name="context" value="/commons/contextExecutionDegreeAndCurricularYear.jsp" />
 	</definition>
 	<definition name="df.page.roomSearch" extends="definition.sop.examsPage" >
+		<put name="bundle" value="TITLES_RESOURCES"/>
+	    <put name="title" value="private.resourcemanagement.reviewswritten.executiondates.searchfreerooms"/>
 		<put name="body" value="/resourceAllocationManager/exams/roomSearch.jsp" />
 		<put name="context" value="/commons/context.jsp" />
 	</definition>
@@ -55,19 +59,23 @@
 		<put name="context" value="/commons/context.jsp" />
 	</definition>
 	<definition name="df.page.selectDegreeAndYearForWrittenEvaluationsSearch" extends="definition.sop.examsPage" >
+		<put name="bundle" value="TITLES_RESOURCES"/>
+	    <put name="title" value="private.resourcemanagement.reviewswritten.executiondates.searchbycourseandyear"/>
 		<put name="body" value="/resourceAllocationManager/writtenEvaluations/selectDegreeAndYear.jsp" />
 		<put name="context" value="/commons/context.jsp" />
 	</definition>
 	<definition name="df.page.examSearchByDate" extends="definition.sop.examsPage" >
+		<put name="bundle" value="TITLES_RESOURCES"/>
+	    <put name="title" value="private.resourcemanagement.reviewswritten.executiondates.searchbydate"/>
 		<put name="body" value="/resourceAllocationManager/exams/examSearchByDate.jsp" />
 		<put name="context" value="/commons/context.jsp" />
 	</definition>
 	<definition name="df.page.examSearchByRoom" extends="definition.sop.examsPage" >
-		<put name="body" value="/resourceAllocationManager/exams/roomExamsMap.jsp" />
+	    <put name="body" value="/resourceAllocationManager/exams/roomExamsMap.jsp" />
 		<put name="context" value="/commons/context.jsp" />
 	</definition>
 	<definition name="df.page.degreeYearExamsMap" extends="definition.sop.examsPage" >
-		<put name="body" value="/resourceAllocationManager/exams/degreeYearExamsMap.jsp" />
+	    <put name="body" value="/resourceAllocationManager/exams/degreeYearExamsMap.jsp" />
 		<put name="context" value="/commons/context.jsp" />
 	</definition>
 	<definition name="df.page.degreeYearWrittenEvaluationsMap" extends="df.layout.print" >
@@ -79,64 +87,95 @@
 		<put name="context" value="/commons/context.jsp" />
 	</definition>
 	<definition name="df.page.showWrittenEvaluationsByDate" extends="definition.sop.examsPage" >
+		<put name="bundle" value="TITLES_RESOURCES"/>
+	    <put name="title" value="private.resourcemanagement.reviewswritten.executiondates.searchbydate"/>
 		<put name="body" value="/resourceAllocationManager/writtenEvaluations/showWrittenEvaluationsByDate.jsp" />
 		<put name="context" value="/commons/context.jsp" />
 	</definition>
 	<!-- ==================== View Curricular Course Historic ================== -->
-	<definition name="view-degree-curricular-plan-execution-year" 
-		extends="definition.sop.curriculumHistoric">
+	<definition name="view-degree-curricular-plan-execution-year" extends="definition.sop.curriculumHistoric">
+		<put name="bundle" value="TITLES_RESOURCES"/>
+		<put name="title" value="private.resourcemanagement.historyguidelines"/>
 		<put name="body" value="/commons/curriculumHistoric/chooseDegreeCPlanExecutionYear.jsp"></put>
 	</definition>
-	<definition name="show-active-curricular-scopes" 
-		extends="definition.sop.curriculumHistoric">
+	<definition name="show-active-curricular-scopes" extends="definition.sop.curriculumHistoric">
+		<put name="bundle" value="TITLES_RESOURCES"/>
+		<put name="title" value="private.resourcemanagement.historyguidelines"/>
 		<put name="body" value="/commons/curriculumHistoric/showActiveCurricularCourseScopes.jsp"></put>
 	</definition>
-	<definition name="view-curriculum-historic" 
-		extends="definition.sop.curriculumHistoric">
+	<definition name="view-curriculum-historic" extends="definition.sop.curriculumHistoric">
+		<put name="bundle" value="TITLES_RESOURCES"/>
+		<put name="title" value="private.resourcemanagement.historyguidelines"/>
 		<put name="body" value="/commons/curriculumHistoric/showCurriculumHistoricReport.jsp"></put>
 	</definition>
 	<!-- ========== EXECUTION COURSE MERGE ========== -->
 	<definition name="df.page.chooseDegreesForExecutionCourseMerge" extends="definition.sop.executionCourses" >
+		<put name="bundle" value="TITLES_RESOURCES"/>
+	    <put name="title" value="private.resourcemanagement.disciplinesexecution.manage.group"/>
 		<put name="body" value="/manager/chooseDegreesForExecutionCourseMerge.jsp" />
 	</definition>
 	<definition name="df.page.chooseExecutionCoursesForExecutionCourseMerge" extends="definition.sop.executionCourses" >
+		<put name="bundle" value="TITLES_RESOURCES"/>
+	    <put name="title" value="private.resourcemanagement.disciplinesexecution.manage.group"/>
 		<put name="body" value="/manager/chooseExecutionCoursesForExecutionCourseMerge.jsp" />
 	</definition>
 	
 	<!-- =================== Rooms Punctual Scheduling  =================== -->	
 	<definition name="prepare-rooms-punctual-scheduling" extends="definition.sop.roomsManagement" >
+		<put name="bundle" value="TITLES_RESOURCES"/>
+	    <put name="title" value="private.resourcemanagement.rooms.manage.roomsmarkingspot"/>
 		<put name="body" value="/resourceAllocationManager/roomsPunctualScheduling/roomsPunctualScheduling.jsp" />
 	</definition>
 	<definition name="prepare-create-room-punctual-scheduling" extends="definition.sop.roomsManagement" >
+		<put name="bundle" value="TITLES_RESOURCES"/>
+	    <put name="title" value="private.resourcemanagement.rooms.manage.roomsmarkingspot"/>
 		<put name="body" value="/resourceAllocationManager/roomsPunctualScheduling/createRoomsPunctualSchedulings.jsp" />
 	</definition>	
 	<definition name="prepare-finalize-creation-of-rooms-punctual-scheduling" extends="definition.sop.roomsManagement" >
+		<put name="bundle" value="TITLES_RESOURCES"/>
+	    <put name="title" value="private.resourcemanagement.rooms.manage.roomsmarkingspot"/>
 		<put name="body" value="/resourceAllocationManager/roomsPunctualScheduling/finalizeCreationOfRoomsPunctualSchedulings.jsp" />
 	</definition>	
 	<definition name="prepare-view-rooms-punctual-scheduling" extends="definition.sop.roomsManagement" >
+		<put name="bundle" value="TITLES_RESOURCE"/>
+	    <put name="title" value="private.resourcemanagement.rooms.manage.roomsmarkingspot"/>
 		<put name="body" value="/resourceAllocationManager/roomsPunctualScheduling/editRoomsPunctualScheduling.jsp" />
 	</definition>		
 	<definition name="see-rooms-reserve-requests" extends="definition.sop.roomsManagement" >
+		<put name="bundle" value="TITLES_RESOURCES"/>
+	    <put name="title" value="private.resourcemanagement.rooms.manage.reservationrequests"/>
 		<put name="body" value="/resourceAllocationManager/roomsPunctualScheduling/seeRoomsReserveRequests.jsp" />
 	</definition>	
 	<definition name="see-specified-rooms-reserve-request" extends="definition.sop.roomsManagement" >
+		<put name="bundle" value="TITLES_RESOURCES"/>
+	    <put name="title" value="private.resourcemanagement.rooms.manage.reservationrequests"/>
 		<put name="body" value="/resourceAllocationManager/roomsPunctualScheduling/seeSpecifiedRoomsReserveRequest.jsp" />
 	</definition>
 	<definition name="see-rooms-punctual-scheduling-history" extends="definition.sop.roomsManagement" >
+		<put name="bundle" value="TITLES_RESOURCES"/>
+	    <put name="title" value="private.resourcemanagement.rooms.manage.roomsmarkingspot"/>
 		<put name="body" value="/resourceAllocationManager/roomsPunctualScheduling/seeRoomsPunctualSchedulingHistory.jsp" />
 	</definition>
 
 	<!-- =================== Vehicle Management  =================== -->	
 	<definition name="prepare-vehicle-management" extends="definition.resourceAllocationManager.otherResourcesManagement" >
+		<put name="bundle" value="TITLES_RESOURCES"/>
+		<put name="title" value="private.resourcemanagement.vehicles"/>
 		<put name="body" value="/resourceAllocationManager/vehicleManagement/vehicleManagement.jsp" />
 	</definition>	
 	<definition name="prepare-create-vehicle-allocation" extends="definition.resourceAllocationManager.otherResourcesManagement" >
+		<put name="bundle" value="TITLES_RESOURCES"/>
+		<put name="title" value="private.resourcemanagement.vehicles"/>
 		<put name="body" value="/resourceAllocationManager/vehicleManagement/editVehicleAllocation.jsp" />
 	</definition>
 	<definition name="see-vehicle-allocation-history" extends="definition.resourceAllocationManager.otherResourcesManagement" >
+		<put name="bundle" value="TITLES_RESOURCES"/>
+		<put name="title" value="private.resourcemanagement.vehicles"/>
 		<put name="body" value="/resourceAllocationManager/vehicleManagement/seeVehicleAllocationHistory.jsp" />
 	</definition>
 	<definition name="see-vehicle-allocation" extends="definition.resourceAllocationManager.otherResourcesManagement" >
+		<put name="bundle" value="TITLES_RESOURCES"/>
+		<put name="title" value="private.resourcemanagement.vehicles"/>
 		<put name="body" value="/resourceAllocationManager/vehicleManagement/seeVehicleAllocation.jsp" />
 	</definition>
 
@@ -151,6 +190,8 @@
 
 	<!-- =================== Access Groups Management  =================== -->
 	<definition name="prepare-access-groups-management" extends="definition.resourceAllocationManager.otherResourcesManagement" >
+		<put name="bundle" value="TITLES_RESOURCES"/>
+		<put name="title" value="private.resourcemanagement.accessgroups"/>
 		<put name="body" value="/resourceAllocationManager/accessGroups/accessGroupsManagement.jsp" />
 	</definition>
 							

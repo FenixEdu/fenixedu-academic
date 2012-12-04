@@ -33,17 +33,18 @@ import org.joda.time.LocalDate;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixWebFramework.struts.annotations.Tile;
 import pt.utl.ist.fenix.tools.util.CollectionPager;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 @Mapping(path = "/generatedDocuments", module = "academicAdminOffice", formBeanClass = FenixActionForm.class)
-@Forwards( {
+@Forwards({
 
-@Forward(name = "searchPerson", path = "/academicAdminOffice/generatedDocuments/searchPerson.jsp"),
+	@Forward(name = "searchPerson", path = "/academicAdminOffice/generatedDocuments/searchPerson.jsp", tileProperties = @Tile(title = "private.academicadministrativeoffice.documents.annualirs")),
 
-@Forward(name = "showAnnualIRSDocuments", path = "/academicAdminOffice/generatedDocuments/showAnnualIRSDocuments.jsp"),
+	@Forward(name = "showAnnualIRSDocuments", path = "/academicAdminOffice/generatedDocuments/showAnnualIRSDocuments.jsp", tileProperties = @Tile(title = "private.academicadministrativeoffice.documents.annualirs")),
 
-@Forward(name = "payments.manageIRSDocuments", path = "/academicAdminOffice/generatedDocuments/payments/manageIRSDocuments.jsp")
+	@Forward(name = "payments.manageIRSDocuments", path = "/academicAdminOffice/generatedDocuments/payments/manageIRSDocuments.jsp", tileProperties = @Tile(title = "private.academicadministrativeoffice.studentoperations.viewstudents"))
 
 })
 public class GeneratedDocumentsDA extends FenixDispatchAction {
@@ -177,8 +178,9 @@ public class GeneratedDocumentsDA extends FenixDispatchAction {
 	addPayedAmount(person, declarationDTO.getCivilYear(), declarationDTO);
 	final IRSCustomDeclaration customDeclaration = new IRSCustomDeclaration(declarationDTO);
 
-	return ReportsUtils.exportToPdfFileAsByteArray(customDeclaration.getReportTemplateKey(), customDeclaration
-		.getParameters(), ResourceBundle.getBundle("resources.AcademicAdminOffice", Language.getLocale()),
+	return ReportsUtils.exportToPdfFileAsByteArray(customDeclaration.getReportTemplateKey(),
+		customDeclaration.getParameters(),
+		ResourceBundle.getBundle("resources.AcademicAdminOffice", Language.getLocale()),
 		customDeclaration.getDataSource());
     }
 

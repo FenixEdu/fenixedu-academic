@@ -18,11 +18,13 @@ import org.apache.struts.action.ActionMapping;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 @Mapping(module = "candidate", path = "/index", scope = "session")
-@Forwards(value = { @Forward(name = "showCandidacyDetails", path = "/degreeCandidacyManagement.do?method=showCandidacyDetails"),
-	@Forward(name = "fillData", path = "/degreeCandidacyManagement.do?method=doOperation"),
-	@Forward(name = "showWelcome", path = "/candidate/index.jsp") })
+@Forwards(value = {
+	@Forward(name = "showCandidacyDetails", path = "/degreeCandidacyManagement.do?method=showCandidacyDetails", tileProperties = @Tile(title = "private.candidate.applications")),
+	@Forward(name = "fillData", path = "/degreeCandidacyManagement.do?method=doOperation", tileProperties = @Tile(title = "private.candidate.applications")),
+	@Forward(name = "showWelcome", path = "/candidate/index.jsp", tileProperties = @Tile(title = "private.candidate.applications")) })
 public class IndexAction extends FenixAction {
 
     @Override
@@ -35,8 +37,8 @@ public class IndexAction extends FenixAction {
 	    if (candidacy instanceof DegreeCandidacy || candidacy instanceof IMDCandidacy) {
 		request.setAttribute("candidacyID", candidacy.getIdInternal());
 		final CandidacySituation activeCandidacySituation = candidacy.getActiveCandidacySituation();
-		if (activeCandidacySituation != null &&
-			CandidacySituationType.STAND_BY == activeCandidacySituation.getCandidacySituationType()) {
+		if (activeCandidacySituation != null
+			&& CandidacySituationType.STAND_BY == activeCandidacySituation.getCandidacySituationType()) {
 		    request.setAttribute("operationType", CandidacyOperationType.FILL_PERSONAL_DATA.toString());
 		    return mapping.findForward("fillData");
 		} else {

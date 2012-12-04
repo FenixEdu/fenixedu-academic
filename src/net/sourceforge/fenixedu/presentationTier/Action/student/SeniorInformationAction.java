@@ -20,14 +20,6 @@ import org.apache.struts.action.ActionMapping;
 
 import pt.ist.fenixWebFramework.renderers.components.state.IViewState;
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
-import pt.ist.fenixWebFramework.struts.annotations.Forward;
-import pt.ist.fenixWebFramework.struts.annotations.Forwards;
-import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
@@ -39,9 +31,9 @@ import pt.ist.fenixWebFramework.struts.annotations.Tile;
  */
 @Mapping(module = "student", path = "/seniorInformation", input = "/seniorInformation.do?method=prepare&page=0", scope = "request", parameter = "method")
 @Forwards(value = {
-		@Forward(name = "chooseRegistration", path = "/student/senior/chooseRegistration.jsp"),
-		@Forward(name = "show-result", path = "/student/senior/seniorInfo.jsp"),
-		@Forward(name = "show-form", path = "/student/senior/seniorInfoManagement.jsp") })
+	@Forward(name = "chooseRegistration", path = "/student/senior/chooseRegistration.jsp", tileProperties = @Tile(title = "private.student.finalists.seniorinformationsheet" )),
+	@Forward(name = "show-result", path = "/student/senior/seniorInfo.jsp", tileProperties = @Tile(title = "private.student.finalists.seniorinformationsheet" )),
+	@Forward(name = "show-form", path = "/student/senior/seniorInfoManagement.jsp", tileProperties = @Tile(title = "private.student.finalists.seniorinformationsheet" )) })
 public class SeniorInformationAction extends FenixDispatchAction {
 
     public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
@@ -66,7 +58,7 @@ public class SeniorInformationAction extends FenixDispatchAction {
 	if (registration == null) {
 	    throw new FenixActionException();
 	} else {
-	    final Senior senior = (Senior) ReadStudentSenior.run(registration);
+	    final Senior senior = ReadStudentSenior.run(registration);
 	    request.setAttribute("senior", senior);
 	    return mapping.findForward("show-form");
 	}
@@ -76,7 +68,7 @@ public class SeniorInformationAction extends FenixDispatchAction {
 	    throws Exception {
 
 	final IViewState viewState = RenderUtils.getViewState("editSeniorExpectedInfoID");
-	request.setAttribute("senior", (Senior) viewState.getMetaObject().getObject());
+	request.setAttribute("senior", viewState.getMetaObject().getObject());
 
 	return mapping.findForward("show-result");
     }

@@ -18,11 +18,11 @@ import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.contents.Content;
 import net.sourceforge.fenixedu.domain.messaging.Announcement;
 import net.sourceforge.fenixedu.domain.messaging.AnnouncementBoard;
+import net.sourceforge.fenixedu.domain.messaging.AnnouncementBoard.AnnouncementPresentationBean;
 import net.sourceforge.fenixedu.domain.messaging.AnnouncementBoardAccessLevel;
 import net.sourceforge.fenixedu.domain.messaging.AnnouncementBoardAccessType;
 import net.sourceforge.fenixedu.domain.messaging.ExecutionCourseAnnouncementBoard;
 import net.sourceforge.fenixedu.domain.messaging.UnitAnnouncementBoard;
-import net.sourceforge.fenixedu.domain.messaging.AnnouncementBoard.AnnouncementPresentationBean;
 import net.sourceforge.fenixedu.util.PeriodState;
 
 import org.apache.struts.action.ActionForm;
@@ -30,19 +30,11 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.joda.time.DateTime;
 
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixWebFramework.struts.annotations.Tile;
 import pt.utl.ist.fenix.tools.util.CollectionPager;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
-import pt.ist.fenixWebFramework.struts.annotations.Forward;
-import pt.ist.fenixWebFramework.struts.annotations.Forwards;
-import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
-import pt.ist.fenixWebFramework.struts.annotations.Forward;
-import pt.ist.fenixWebFramework.struts.annotations.Forwards;
-import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 /**
  * @author <a href="mailto:goncalo@ist.utl.pt">Goncalo Luiz</a><br>
@@ -52,16 +44,16 @@ import pt.ist.fenixWebFramework.struts.annotations.Tile;
  */
 @Mapping(module = "messaging", path = "/announcements/announcementsStartPageHandler", attribute = "announcementsStartPageForm", formBean = "announcementsStartPageForm", scope = "request", parameter = "method")
 @Forwards(value = {
-		@Forward(name = "viewAnnouncement", path = "/messaging/announcements/viewAnnouncement.jsp"),
-		@Forward(name = "uploadFile", path = "/messaging/announcements/uploadFileToBoard.jsp"),
-		@Forward(name = "boardListingWithCriteria", path = "/messaging/announcements/boardListingWithCriteria.jsp"),
-		@Forward(name = "news", path = "/messaging/announcements/news.jsp"),
-		@Forward(name = "edit", path = "/messaging/announcements/editAnnouncement.jsp"),
-		@Forward(name = "listAnnouncements", path = "/messaging/announcements/listBoardAnnouncements.jsp"),
-		@Forward(name = "add", path = "/messaging/announcements/addAnnouncement.jsp"),
-		@Forward(name = "startPage", path = "/messaging/announcements/startPage.jsp"),
-		@Forward(name = "editFile", path = "/messaging/announcements/editFileInBoard.jsp"),
-		@Forward(name = "listAnnouncementBoards", path = "/messaging/announcements/listAnnouncementBoards.jsp") })
+	@Forward(name = "viewAnnouncement", path = "/messaging/announcements/viewAnnouncement.jsp"),
+	@Forward(name = "uploadFile", path = "/messaging/announcements/uploadFileToBoard.jsp"),
+	@Forward(name = "boardListingWithCriteria", path = "/messaging/announcements/boardListingWithCriteria.jsp"),
+	@Forward(name = "news", path = "/messaging/announcements/news.jsp", tileProperties = @Tile(title = "private.messaging.announcements.news")),
+	@Forward(name = "edit", path = "/messaging/announcements/editAnnouncement.jsp"),
+	@Forward(name = "listAnnouncements", path = "/messaging/announcements/listBoardAnnouncements.jsp"),
+	@Forward(name = "add", path = "/messaging/announcements/addAnnouncement.jsp"),
+	@Forward(name = "startPage", path = "/messaging/announcements/startPage.jsp", tileProperties = @Tile(title = "private.messaging.announcements.bookmarks")),
+	@Forward(name = "editFile", path = "/messaging/announcements/editFileInBoard.jsp"),
+	@Forward(name = "listAnnouncementBoards", path = "/messaging/announcements/listAnnouncementBoards.jsp") })
 public class AnnouncementsStartPageHandler extends AnnouncementManagement {
 
     private static final int RECENT_BOARDS_TO_SHOW = 40;
@@ -77,6 +69,7 @@ public class AnnouncementsStartPageHandler extends AnnouncementManagement {
 	return mapping.findForward("news");
     }
 
+    @Override
     public ActionForward start(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
 
@@ -165,8 +158,8 @@ public class AnnouncementsStartPageHandler extends AnnouncementManagement {
 
 	final AnnouncementsStartPageForm form = (AnnouncementsStartPageForm) actionForm;
 
-	final AnnouncementPresentationBean announcementPresentationBean = new AnnouncementPresentationBean(form
-		.getHowManyAnnouncementsToShow(), Announcement.NEWEST_FIRST);
+	final AnnouncementPresentationBean announcementPresentationBean = new AnnouncementPresentationBean(
+		form.getHowManyAnnouncementsToShow(), Announcement.NEWEST_FIRST);
 
 	if (form.getBoardType().equals("BOOKMARKED")) {
 	    getBookmarkedAnnouncements(request, announcementPresentationBean);
@@ -260,8 +253,8 @@ public class AnnouncementsStartPageHandler extends AnnouncementManagement {
 		    } else if (board instanceof ExecutionCourseAnnouncementBoard) {
 			ExecutionCourseAnnouncementBoard executionCourseBoard = (ExecutionCourseAnnouncementBoard) board;
 			if (executionCourseBoard.hasExecutionCourse()
-				&& executionCourseBoard.getExecutionCourse().getExecutionPeriod().getState().equals(
-					PeriodState.CURRENT)) {
+				&& executionCourseBoard.getExecutionCourse().getExecutionPeriod().getState()
+					.equals(PeriodState.CURRENT)) {
 			    executionCourseAnnouncementBoards.add(executionCourseBoard);
 			}
 		    }
@@ -278,8 +271,8 @@ public class AnnouncementsStartPageHandler extends AnnouncementManagement {
 		request, executionCourseAnnouncementBoards, level, type);
 
 	request.setAttribute("unitAnnouncementBoards", getPagedUnitAnnouncementBoard(unitAnnouncementBoards, request));
-	request.setAttribute("executionCourseAnnouncementBoards", getPagedExecutionCourseAnnouncementBoard(
-		executionCourseAnnouncementBoards, request));
+	request.setAttribute("executionCourseAnnouncementBoards",
+		getPagedExecutionCourseAnnouncementBoard(executionCourseAnnouncementBoards, request));
 	request.setAttribute("returnMethod", "handleBoardListing");
 
 	return mapping.findForward("boardListingWithCriteria");
@@ -316,9 +309,7 @@ public class AnnouncementsStartPageHandler extends AnnouncementManagement {
 
 	final CollectionPager<ExecutionCourseAnnouncementBoard> executionCourseBoardsPager = new CollectionPager<ExecutionCourseAnnouncementBoard>(
 		executionCourseAnnouncementBoards, PAGE_SIZE);
-	request
-		.setAttribute("numberOfPagesExecutionCourseBoards", Integer
-			.valueOf(executionCourseBoardsPager.getNumberOfPages()));
+	request.setAttribute("numberOfPagesExecutionCourseBoards", Integer.valueOf(executionCourseBoardsPager.getNumberOfPages()));
 	return executionCourseBoardsPager.getPage(pageNumber);
     }
 

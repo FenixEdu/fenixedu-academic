@@ -35,17 +35,17 @@ import pt.ist.fenixWebFramework.struts.annotations.Tile;
 @Mapping(path = "/phdThesisProcess", module = "coordinator")
 @Forwards(tileProperties = @Tile(navLocal = "/coordinator/localNavigationBar.jsp"), value = {
 
-@Forward(name = "submitJuryElementsDocument", path = "/phd/thesis/coordinator/submitJuryElementsDocument.jsp"),
+	@Forward(name = "submitJuryElementsDocument", path = "/phd/thesis/coordinator/submitJuryElementsDocument.jsp"),
 
-@Forward(name = "manageThesisJuryElements", path = "/phd/thesis/coordinator/manageThesisJuryElements.jsp"),
+	@Forward(name = "manageThesisJuryElements", path = "/phd/thesis/coordinator/manageThesisJuryElements.jsp"),
 
-@Forward(name = "juryReporterFeedbackUpload", path = "/phd/thesis/coordinator/juryReporterFeedbackUpload.jsp"),
+	@Forward(name = "juryReporterFeedbackUpload", path = "/phd/thesis/coordinator/juryReporterFeedbackUpload.jsp"),
 
-@Forward(name = "manageThesisDocuments", path = "/phd/thesis/coordinator/manageThesisDocuments.jsp"),
+	@Forward(name = "manageThesisDocuments", path = "/phd/thesis/coordinator/manageThesisDocuments.jsp", tileProperties = @Tile(title = "private.coordinator.phdprocess")),
 
-@Forward(name = "scheduleThesisMeeting", path = "/phd/thesis/coordinator/scheduleThesisMeeting.jsp"),
+	@Forward(name = "scheduleThesisMeeting", path = "/phd/thesis/coordinator/scheduleThesisMeeting.jsp"),
 
-@Forward(name = "editPhdProcessState", path = "/phd/thesis/academicAdminOffice/editState.jsp")
+	@Forward(name = "editPhdProcessState", path = "/phd/thesis/academicAdminOffice/editState.jsp")
 
 })
 public class PhdThesisProcessDA extends CommonPhdThesisProcessDA {
@@ -99,35 +99,25 @@ public class PhdThesisProcessDA extends CommonPhdThesisProcessDA {
     // Restrict thesis documents
 
     private static final List<PhdIndividualProgramDocumentType> AVAILABLE_DOCUMENTS_TO_COORDINATOR = Arrays
-	    .asList(new PhdIndividualProgramDocumentType[] {
-		    PhdIndividualProgramDocumentType.ASSISTENT_GUIDER_ACCEPTANCE_LETTER,
+	    .asList(new PhdIndividualProgramDocumentType[] { PhdIndividualProgramDocumentType.ASSISTENT_GUIDER_ACCEPTANCE_LETTER,
 		    PhdIndividualProgramDocumentType.CANDIDACY_FEEDBACK_DOCUMENT,
-		    PhdIndividualProgramDocumentType.CANDIDACY_FORM,
-		    PhdIndividualProgramDocumentType.CANDIDACY_RATIFICATION,
-		    PhdIndividualProgramDocumentType.CV,
-		    PhdIndividualProgramDocumentType.DEGREE_FINALIZATION_CERTIFICATE,
+		    PhdIndividualProgramDocumentType.CANDIDACY_FORM, PhdIndividualProgramDocumentType.CANDIDACY_RATIFICATION,
+		    PhdIndividualProgramDocumentType.CV, PhdIndividualProgramDocumentType.DEGREE_FINALIZATION_CERTIFICATE,
 		    PhdIndividualProgramDocumentType.DISSERTATION_OR_FINAL_WORK_DOCUMENT,
-		    PhdIndividualProgramDocumentType.FINAL_THESIS,
-		    PhdIndividualProgramDocumentType.GRE_LINGUISTICS_CERTIFICATE,
+		    PhdIndividualProgramDocumentType.FINAL_THESIS, PhdIndividualProgramDocumentType.GRE_LINGUISTICS_CERTIFICATE,
 		    PhdIndividualProgramDocumentType.GUIDER_ACCEPTANCE_LETTER,
 		    PhdIndividualProgramDocumentType.HABILITATION_CERTIFICATE_DOCUMENT,
-		    PhdIndividualProgramDocumentType.ID_DOCUMENT,
-		    PhdIndividualProgramDocumentType.JURY_PRESIDENT_ELEMENT,
+		    PhdIndividualProgramDocumentType.ID_DOCUMENT, PhdIndividualProgramDocumentType.JURY_PRESIDENT_ELEMENT,
 		    PhdIndividualProgramDocumentType.MAXIMUM_GRADE_GUIDER_PROPOSAL,
-		    PhdIndividualProgramDocumentType.MOTIVATION_LETTER,
-		    PhdIndividualProgramDocumentType.PROVISIONAL_THESIS,
+		    PhdIndividualProgramDocumentType.MOTIVATION_LETTER, PhdIndividualProgramDocumentType.PROVISIONAL_THESIS,
 		    PhdIndividualProgramDocumentType.PUBLIC_PRESENTATION_SEMINAR_COMISSION,
 		    PhdIndividualProgramDocumentType.PUBLIC_PRESENTATION_SEMINAR_REPORT,
-		    PhdIndividualProgramDocumentType.RECOMMENDATION_LETTER,
-		    PhdIndividualProgramDocumentType.REGISTRATION_FORM,
-		    PhdIndividualProgramDocumentType.RESEARCH_PLAN,
-		    PhdIndividualProgramDocumentType.SOCIAL_SECURITY,
-		    PhdIndividualProgramDocumentType.STUDY_PLAN,
-		    PhdIndividualProgramDocumentType.THESIS_ABSTRACT,
+		    PhdIndividualProgramDocumentType.RECOMMENDATION_LETTER, PhdIndividualProgramDocumentType.REGISTRATION_FORM,
+		    PhdIndividualProgramDocumentType.RESEARCH_PLAN, PhdIndividualProgramDocumentType.SOCIAL_SECURITY,
+		    PhdIndividualProgramDocumentType.STUDY_PLAN, PhdIndividualProgramDocumentType.THESIS_ABSTRACT,
 		    PhdIndividualProgramDocumentType.THESIS_REQUIREMENT,
 		    PhdIndividualProgramDocumentType.TOEFL_LINGUISTICS_CERTIFICATE,
-		    PhdIndividualProgramDocumentType.JURY_ELEMENTS,
-		    PhdIndividualProgramDocumentType.JURY_REPORT_FEEDBACK });
+		    PhdIndividualProgramDocumentType.JURY_ELEMENTS, PhdIndividualProgramDocumentType.JURY_REPORT_FEEDBACK });
 
     @Override
     public ActionForward manageThesisDocuments(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,

@@ -29,11 +29,6 @@ import org.apache.struts.action.ActionMapping;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
-import pt.ist.fenixWebFramework.struts.annotations.Forward;
-import pt.ist.fenixWebFramework.struts.annotations.Forwards;
-import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 /**
@@ -42,9 +37,9 @@ import pt.ist.fenixWebFramework.struts.annotations.Tile;
  */
 
 @Mapping(path = "/viewInquiriesResults", module = "gep", formBeanClass = ViewInquiriesResultPageDTO.class)
-@Forwards( {
+@Forwards({
 	@Forward(name = "inquiryResults", path = "/coordinator/inquiries/viewInquiriesResults.jsp"),
-	@Forward(name = "chooseDegreeCurricularPlan", path = "/pedagogicalCouncil/inquiries/chooseDegreeCurricularPlan.jsp"),
+	@Forward(name = "chooseDegreeCurricularPlan", path = "/pedagogicalCouncil/inquiries/chooseDegreeCurricularPlan.jsp", tileProperties = @Tile(title = "private.gep.surveys.qucresults")),
 	@Forward(name = "curricularUnitSelection", path = "/coordinator/inquiries/curricularUnitSelection.jsp"),
 	@Forward(name = "showFilledTeachingInquiry", path = "/coordinator/inquiries/showFilledTeachingInquiry.jsp", useTile = false, contextRelative = true),
 	@Forward(name = "showFilledTeachingInquiry_v2", path = "/coordinator/inquiries/showFilledTeachingInquiry_v2.jsp", useTile = false, contextRelative = true),

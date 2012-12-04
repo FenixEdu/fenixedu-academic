@@ -14,18 +14,10 @@ import net.sourceforge.fenixedu.presentationTier.Action.base.FenixAction;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
+
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
-import pt.ist.fenixWebFramework.struts.annotations.Forward;
-import pt.ist.fenixWebFramework.struts.annotations.Forwards;
-import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 @Mapping(module = "webSiteManager", path = "/index", scope = "session")
 @Forwards(value = { @Forward(name = "list", path = "website-index") })
@@ -38,6 +30,7 @@ public class ListSitesAction extends FenixAction {
 
 	SortedSet<UnitSite> sites = new TreeSet<UnitSite>(new Comparator<UnitSite>() {
 
+	    @Override
 	    public int compare(UnitSite o1, UnitSite o2) {
 		return o1.getUnit().getName().compareTo(o2.getUnit().getName());
 	    }

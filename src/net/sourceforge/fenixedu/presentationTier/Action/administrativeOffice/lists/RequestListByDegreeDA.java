@@ -42,16 +42,11 @@ import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.utl.ist.fenix.tools.util.excel.StyledExcelSpreadsheet;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
-import pt.ist.fenixWebFramework.struts.annotations.Forward;
-import pt.ist.fenixWebFramework.struts.annotations.Forwards;
-import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixWebFramework.struts.annotations.Tile;
+import pt.utl.ist.fenix.tools.util.excel.StyledExcelSpreadsheet;
 
 @Mapping(path = "/requestListByDegree", module = RequestListByDegreeDA.MODULE)
-@Forwards( { @Forward(name = "searchRequests", path = "/academicAdminOffice/lists/searchRequestsByDegree.jsp") })
+@Forwards({ @Forward(name = "searchRequests", path = "/academicAdminOffice/lists/searchRequestsByDegree.jsp", tileProperties = @Tile(title = "private.academicadministrativeoffice.lists.requestsbydegree")) })
 public class RequestListByDegreeDA extends FenixDispatchAction {
 
     private static final String DATETIME_FORMAT = "dd-MM-yyyy HH:mm";
@@ -171,7 +166,7 @@ public class RequestListByDegreeDA extends FenixDispatchAction {
 	    }
 	    resultList.add(request);
 	}
-	
+
 	return resultList;
     }
 

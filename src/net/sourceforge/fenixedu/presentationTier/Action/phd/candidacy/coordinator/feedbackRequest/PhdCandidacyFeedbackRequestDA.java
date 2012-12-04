@@ -24,12 +24,12 @@ import net.sourceforge.fenixedu.domain.phd.candidacy.feedbackRequest.PhdCandidac
 import net.sourceforge.fenixedu.domain.phd.candidacy.feedbackRequest.PhdCandidacyFeedbackRequestProcessBean;
 import net.sourceforge.fenixedu.presentationTier.Action.phd.PhdDocumentsZip;
 import net.sourceforge.fenixedu.presentationTier.Action.phd.candidacy.CommonPhdCandidacyDA;
-import pt.ist.fenixWebFramework.rendererExtensions.converters.DomainObjectKeyArrayConverter;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
+import pt.ist.fenixWebFramework.rendererExtensions.converters.DomainObjectKeyArrayConverter;
 import pt.ist.fenixWebFramework.renderers.DataProvider;
 import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
@@ -41,9 +41,9 @@ import pt.ist.fenixWebFramework.struts.annotations.Tile;
 @Mapping(path = "/phdCandidacyFeedbackRequest", module = "coordinator")
 @Forwards(tileProperties = @Tile(navLocal = "/coordinator/localNavigationBar.jsp"), value = {
 
-@Forward(name = "manageFeedbackRequest", path = "/phd/candidacy/coordinator/feedbackRequest/manageFeedbackRequest.jsp"),
+	@Forward(name = "manageFeedbackRequest", path = "/phd/candidacy/coordinator/feedbackRequest/manageFeedbackRequest.jsp", tileProperties = @Tile(title = "private.coordinator.phdprocess")),
 
-@Forward(name = "uploadCandidacyFeedback", path = "/phd/candidacy/coordinator/feedbackRequest/uploadCandidacyFeedback.jsp")
+	@Forward(name = "uploadCandidacyFeedback", path = "/phd/candidacy/coordinator/feedbackRequest/uploadCandidacyFeedback.jsp")
 
 })
 public class PhdCandidacyFeedbackRequestDA extends CommonPhdCandidacyDA {
@@ -164,8 +164,10 @@ public class PhdCandidacyFeedbackRequestDA extends CommonPhdCandidacyDA {
 	bean.setMailSubject(AlertService.getSubjectPrefixed(bean.getIndividualProgramProcess(),
 		"message.phd.candidacy.feedback.default.subject"));
 
-	bean.setMailBody(AlertService.getBodyText(bean.getIndividualProgramProcess(), AlertMessage.create(
-		"message.phd.candidacy.feedback.default.body", bean.getIndividualProgramProcess().getPerson().getName())));
+	bean.setMailBody(AlertService.getBodyText(
+		bean.getIndividualProgramProcess(),
+		AlertMessage.create("message.phd.candidacy.feedback.default.body", bean.getIndividualProgramProcess().getPerson()
+			.getName())));
 
     }
 

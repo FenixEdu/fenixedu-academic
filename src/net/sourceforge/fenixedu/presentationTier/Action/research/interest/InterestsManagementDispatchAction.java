@@ -14,7 +14,6 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.applicationTier.Servico.research.interest.ChangeResearchInterestOrder;
 import net.sourceforge.fenixedu.applicationTier.Servico.research.interest.DeleteResearchInterest;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
 import net.sourceforge.fenixedu.domain.research.ResearchInterest;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 
@@ -23,14 +22,6 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
-import pt.ist.fenixWebFramework.struts.annotations.Forward;
-import pt.ist.fenixWebFramework.struts.annotations.Forwards;
-import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
@@ -38,9 +29,9 @@ import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 @Mapping(module = "researcher", path = "/interests/interestsManagement", scope = "session", parameter = "method")
 @Forwards(value = {
-		@Forward(name = "InsertNewInterest", path = "/researcher/interests/insertNewInterest.jsp"),
-		@Forward(name = "EditInterest", path = "/researcher/interests/editInterest.jsp"),
-		@Forward(name = "Success", path = "/researcher/interests/interestsManagement.jsp", tileProperties = @Tile(head = "/commons/renderers/treeRendererHeader.jsp")) })
+	@Forward(name = "InsertNewInterest", path = "/researcher/interests/insertNewInterest.jsp", tileProperties = @Tile(  title = "private.operator.personnelmanagement.managementfaculty.teacherevaluation.researchinterests")),
+	@Forward(name = "EditInterest", path = "/researcher/interests/editInterest.jsp", tileProperties = @Tile(  title = "private.operator.personnelmanagement.managementfaculty.teacherevaluation.researchinterests")),
+	@Forward(name = "Success", path = "/researcher/interests/interestsManagement.jsp", tileProperties = @Tile(head = "/commons/renderers/treeRendererHeader.jsp",   title = "private.operator.personnelmanagement.managementfaculty.teacherevaluation.researchinterests")) })
 public class InterestsManagementDispatchAction extends FenixDispatchAction {
 
     private static final int UP = -1;
@@ -100,7 +91,7 @@ public class InterestsManagementDispatchAction extends FenixDispatchAction {
 	    request.setAttribute("lastOrder", 1);
 	}
 
-	request.setAttribute("party", (Party) getUserView(request).getPerson());
+	request.setAttribute("party", getUserView(request).getPerson());
 
 	return mapping.findForward("InsertNewInterest");
     }
@@ -182,6 +173,7 @@ public class InterestsManagementDispatchAction extends FenixDispatchAction {
 
 	List<ResearchInterest> orderedInterests = new ArrayList<ResearchInterest>(researchInterests);
 	Collections.sort(orderedInterests, new Comparator<ResearchInterest>() {
+	    @Override
 	    public int compare(ResearchInterest researchInterest1, ResearchInterest researchInterest2) {
 		return researchInterest1.getOrder().compareTo(researchInterest2.getOrder());
 	    }

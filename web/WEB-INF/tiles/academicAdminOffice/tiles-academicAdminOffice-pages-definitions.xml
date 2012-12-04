@@ -6,6 +6,7 @@
         <put name="body" value="/academicAdminOffice/index.jsp"></put>
     </definition>
 	<definition name="student.showStudentCurriculum" extends="academicAdminOffice.masterPage" >
+		<put name="title" value="private.academicadministrativeoffice.studentoperations.viewstudents"/>
 		<put name="body" value="/student/curriculum/displayStudentCurriculum_bd.jsp" />
 	</definition>
     <definition name="student.showRegistrationStates" extends="academicAdminOffice.masterPage">
@@ -23,18 +24,23 @@
 		<put name="body" value="/academicAdminOffice/contributor/createContributor.jsp"/>
 	</definition>
 	<definition name="contributor.chooseContributor" extends="academicAdminOffice.masterPage">
+		<put name = "title" value = "private.academicadministrativeoffice.contributors.consultation"/>
 		<put name="body" value="/academicAdminOffice/contributor/chooseContributor.jsp"/>
 	</definition>
 	<definition name="contributor.visualizeContributor" extends="academicAdminOffice.masterPage">
+		<put name = "title" value = "private.academicadministrativeoffice.contributors.consultation"/>
 		<put name="body" value="/academicAdminOffice/contributor/visualizeContributor.jsp"/>
 	</definition>
 	<definition name="contributor.selectContributorFromList" extends="academicAdminOffice.masterPage">
+		
 		<put name="body" value="/academicAdminOffice/contributor/selectContributorFromList.jsp"/>
 	</definition>
 	<definition name="contributor.editContributor" extends="academicAdminOffice.masterPage">
+		<put name = "title" value = "private.academicadministrativeoffice.contributors.change"/>
 		<put name="body" value="/academicAdminOffice/contributor/editContributor.jsp"/>
 	</definition>
 	<definition name="contributor.editContributorSuccess" extends="academicAdminOffice.masterPage">
+		<put name = "title" value = "private.academicadministrativeoffice.contributors.change"/>
 		<put name="body" value="/academicAdminOffice/contributor/editContributorSuccess.jsp"/>
 	</definition>
 	
@@ -42,32 +48,41 @@
 
 	<!-- ===================== MarkSheet Management ====================== -->
 	<definition name="show.markSheetManagement.create.page.step1" extends="academicAdminOffice.masterPage">
+	    <put name="title" value="private.academicadministrativeoffice.marksheets.marksheetmanagement" />
 		<put name="body" value="/academicAdminOffice/gradeSubmission/createMarkSheetStep1.jsp"></put>
 	</definition>
 	<definition name="show.markSheetManagement.create.page.step2" extends="academicAdminOffice.masterPage">
+	    <put name="title" value="private.academicadministrativeoffice.marksheets.marksheetmanagement" />
 		<put name="body" value="/academicAdminOffice/gradeSubmission/createMarkSheetStep2.jsp"></put>
 	</definition>
 	<definition name="markSheetManagement.viewMarkSheet" extends="academicAdminOffice.masterPage">
+	    <put name="title" value="private.academicadministrativeoffice.marksheets.marksheetmanagement" />
 		<put name="body" value="/academicAdminOffice/gradeSubmission/viewMarkSheet.jsp"></put>
 	</definition>
 	<definition name="show.markSheetManagement.rectify.page.step1" extends="academicAdminOffice.masterPage">
+	    <put name="title" value="private.academicadministrativeoffice.marksheets.marksheetmanagement" />
 		<put name="body" value="/academicAdminOffice/gradeSubmission/rectifyMarkSheetStep1.jsp"></put>
 	</definition>
 	<definition name="show.markSheetManagement.rectify.page.step2" extends="academicAdminOffice.masterPage">
+	    <put name="title" value="private.academicadministrativeoffice.marksheets.marksheetmanagement" />
 		<put name="body" value="/academicAdminOffice/gradeSubmission/rectifyMarkSheetStep2.jsp"></put>
 	</definition>
 	<definition name="show.markSheetManagement.showRectificationHistoric" extends="academicAdminOffice.masterPage">
+	    <put name="title" value="private.academicadministrativeoffice.marksheets.marksheetmanagement" />
 		<put name="body" value="/academicAdminOffice/gradeSubmission/showRectificationHistoric.jsp"></put>
 	</definition>
 	<definition name="show.printMarkSheet.choosePrinterMarkSheetsWeb" extends="academicAdminOffice.masterPage">
+	    <put name="title" value="private.academicadministrativeoffice.marksheets.marksheetmanagement" />
 		<put name="body" value="/academicAdminOffice/gradeSubmission/choosePrinterMarkSheetsWeb_bd.jsp"></put>
 	</definition>	
 	<definition name="show.printMarkSheet.choosePrinterMarkSheet" extends="academicAdminOffice.masterPage">
+		<put name="title" value="private.academicadministrativeoffice.marksheets.marksheetmanagement" />
 		<put name="body" value="/academicAdminOffice/gradeSubmission/choosePrinterMarkSheet_bd.jsp"></put>
 	</definition>
 
 	<!-- ===================== Old MarkSheet Management ====================== -->
 	<definition name="show.printMarkSheet.choosePrinterMarkSheet" extends="academicAdminOffice.masterPage">
+	    <put name="title" value="private.academicadministrativeoffice.marksheets.oldmanagementguidelines" />
 		<put name="body" value="/academicAdminOffice/gradeSubmission/oldMarkSheets/choosePrinterMarkSheet_bd.jsp"></put>
 	</definition>
 

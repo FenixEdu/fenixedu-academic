@@ -26,23 +26,25 @@ import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 @Mapping(path = "/caseHandlingOver23IndividualCandidacyProcess", module = "academicAdminOffice", formBeanClass = Over23IndividualCandidacyProcessDA.CandidacyForm.class)
-@Forwards({ @Forward(name = "intro", path = "/caseHandlingOver23CandidacyProcess.do?method=listProcessAllowedActivities"),
-	@Forward(name = "list-allowed-activities", path = "/candidacy/over23/listIndividualCandidacyActivities.jsp"),
-	@Forward(name = "prepare-create-new-process", path = "/candidacy/selectPersonForCandidacy.jsp"),
-	@Forward(name = "fill-personal-information", path = "/candidacy/fillPersonalInformation.jsp"),
-	@Forward(name = "fill-candidacy-information", path = "/candidacy/over23/fillCandidacyInformation.jsp"),
-	@Forward(name = "prepare-candidacy-payment", path = "/candidacy/candidacyPayment.jsp"),
-	@Forward(name = "edit-candidacy-personal-information", path = "/candidacy/editPersonalInformation.jsp"),
-	@Forward(name = "edit-candidacy-information", path = "/candidacy/over23/editCandidacyInformation.jsp"),
-	@Forward(name = "introduce-candidacy-result", path = "/candidacy/over23/introduceCandidacyResult.jsp"),
-	@Forward(name = "cancel-candidacy", path = "/candidacy/cancelCandidacy.jsp"),
-	@Forward(name = "create-registration", path = "/candidacy/createRegistration.jsp"),
-	@Forward(name = "prepare-edit-candidacy-documents", path = "/candidacy/editCandidacyDocuments.jsp"),
-	@Forward(name = "select-person-for-bind-with-candidacy", path = "/candidacy/selectPersonForBind.jsp"),
-	@Forward(name = "edit-personal-information-for-bind", path = "/candidacy/editPersonalInformationForCandidacyBind.jsp"),
-	@Forward(name = "change-process-checked-state", path = "/candidacy/changeProcessCheckedState.jsp")
+@Forwards({
+	@Forward(name = "intro", path = "/caseHandlingOver23CandidacyProcess.do?method=listProcessAllowedActivities", tileProperties = @Tile(title = "private.academicadministrativeoffice.applications.23plus")),
+	@Forward(name = "list-allowed-activities", path = "/candidacy/over23/listIndividualCandidacyActivities.jsp", tileProperties = @Tile(title = "private.academicadministrativeoffice.applications.23plus")),
+	@Forward(name = "prepare-create-new-process", path = "/candidacy/selectPersonForCandidacy.jsp", tileProperties = @Tile(title = "private.academicadministrativeoffice.applications.23plus")),
+	@Forward(name = "fill-personal-information", path = "/candidacy/fillPersonalInformation.jsp", tileProperties = @Tile(title = "private.academicadministrativeoffice.applications.23plus")),
+	@Forward(name = "fill-candidacy-information", path = "/candidacy/over23/fillCandidacyInformation.jsp", tileProperties = @Tile(title = "private.academicadministrativeoffice.applications.23plus")),
+	@Forward(name = "prepare-candidacy-payment", path = "/candidacy/candidacyPayment.jsp", tileProperties = @Tile(title = "private.academicadministrativeoffice.applications.23plus")),
+	@Forward(name = "edit-candidacy-personal-information", path = "/candidacy/editPersonalInformation.jsp", tileProperties = @Tile(title = "private.academicadministrativeoffice.applications.23plus")),
+	@Forward(name = "edit-candidacy-information", path = "/candidacy/over23/editCandidacyInformation.jsp", tileProperties = @Tile(title = "private.academicadministrativeoffice.applications.23plus")),
+	@Forward(name = "introduce-candidacy-result", path = "/candidacy/over23/introduceCandidacyResult.jsp", tileProperties = @Tile(title = "private.academicadministrativeoffice.applications.23plus")),
+	@Forward(name = "cancel-candidacy", path = "/candidacy/cancelCandidacy.jsp", tileProperties = @Tile(title = "private.academicadministrativeoffice.applications.23plus")),
+	@Forward(name = "create-registration", path = "/candidacy/createRegistration.jsp", tileProperties = @Tile(title = "private.academicadministrativeoffice.applications.23plus")),
+	@Forward(name = "prepare-edit-candidacy-documents", path = "/candidacy/editCandidacyDocuments.jsp", tileProperties = @Tile(title = "private.academicadministrativeoffice.applications.23plus")),
+	@Forward(name = "select-person-for-bind-with-candidacy", path = "/candidacy/selectPersonForBind.jsp", tileProperties = @Tile(title = "private.academicadministrativeoffice.applications.23plus")),
+	@Forward(name = "edit-personal-information-for-bind", path = "/candidacy/editPersonalInformationForCandidacyBind.jsp", tileProperties = @Tile(title = "private.academicadministrativeoffice.applications.23plus")),
+	@Forward(name = "change-process-checked-state", path = "/candidacy/changeProcessCheckedState.jsp", tileProperties = @Tile(title = "private.academicadministrativeoffice.applications.23plus"))
 
 })
 public class Over23IndividualCandidacyProcessDA extends IndividualCandidacyProcessDA {
@@ -254,9 +256,10 @@ public class Over23IndividualCandidacyProcessDA extends IndividualCandidacyProce
 	return listProcessAllowedActivities(mapping, actionForm, request, response);
     }
 
+    @Override
     public ActionForward addConcludedHabilitationsEntry(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) {
-	IndividualCandidacyProcessBean bean = (IndividualCandidacyProcessBean) getIndividualCandidacyProcessBean();
+	IndividualCandidacyProcessBean bean = getIndividualCandidacyProcessBean();
 	bean.addConcludedFormationBean();
 
 	request.setAttribute(getIndividualCandidacyProcessBeanName(), bean);
@@ -266,16 +269,17 @@ public class Over23IndividualCandidacyProcessDA extends IndividualCandidacyProce
 
     public ActionForward addNonConcludedHabilitationsEntry(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) {
-	IndividualCandidacyProcessBean bean = (IndividualCandidacyProcessBean) getIndividualCandidacyProcessBean();
+	IndividualCandidacyProcessBean bean = getIndividualCandidacyProcessBean();
 	bean.addNonConcludedFormationBean();
 	request.setAttribute(getIndividualCandidacyProcessBeanName(), bean);
 
 	return forwardTo(mapping, request);
     }
 
+    @Override
     public ActionForward removeConcludedHabilitationsEntry(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) {
-	IndividualCandidacyProcessBean bean = (IndividualCandidacyProcessBean) getIndividualCandidacyProcessBean();
+	IndividualCandidacyProcessBean bean = getIndividualCandidacyProcessBean();
 	Integer index = getIntegerFromRequest(request, "removeIndex");
 	bean.removeFormationConcludedBean(index);
 	request.setAttribute(getIndividualCandidacyProcessBeanName(), bean);
@@ -285,7 +289,7 @@ public class Over23IndividualCandidacyProcessDA extends IndividualCandidacyProce
 
     public ActionForward removeNonConcludedHabilitationsEntry(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse reponse) {
-	IndividualCandidacyProcessBean bean = (IndividualCandidacyProcessBean) getIndividualCandidacyProcessBean();
+	IndividualCandidacyProcessBean bean = getIndividualCandidacyProcessBean();
 	Integer index = getIntegerFromRequest(request, "removeIndex");
 	bean.removeFormationNonConcludedBean(index);
 	request.setAttribute(getIndividualCandidacyProcessBeanName(), bean);
@@ -306,7 +310,7 @@ public class Over23IndividualCandidacyProcessDA extends IndividualCandidacyProce
     @Override
     public ActionForward createNewProcess(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) throws FenixFilterException, FenixServiceException {
-	Over23IndividualCandidacyProcessBean bean = (Over23IndividualCandidacyProcessBean) getIndividualCandidacyProcessBean();
+	Over23IndividualCandidacyProcessBean bean = getIndividualCandidacyProcessBean();
 
 	boolean isValid = validateOver23IndividualCandidacy(request, bean) && hasInvalidViewState();
 	if (!isValid) {

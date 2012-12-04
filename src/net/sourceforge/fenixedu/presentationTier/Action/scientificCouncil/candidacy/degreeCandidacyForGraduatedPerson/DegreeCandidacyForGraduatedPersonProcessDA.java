@@ -8,18 +8,12 @@ import net.sourceforge.fenixedu.presentationTier.Action.masterDegree.coordinator
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
-import pt.ist.fenixWebFramework.struts.annotations.Forward;
-import pt.ist.fenixWebFramework.struts.annotations.Forwards;
-import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 @Mapping(path = "/caseHandlingDegreeCandidacyForGraduatedPersonProcess", module = "scientificCouncil", formBeanClass = CandidacyProcessDA.CandidacyProcessForm.class)
-@Forwards( { @Forward(name = "intro", path = "/scientificCouncil/candidacy/mainCandidacyProcess.jsp") })
+@Forwards({ @Forward(name = "intro", path = "/scientificCouncil/candidacy/mainCandidacyProcess.jsp", tileProperties = @Tile(  title = "private.scientificcouncil.applications")) })
 public class DegreeCandidacyForGraduatedPersonProcessDA extends
 	net.sourceforge.fenixedu.presentationTier.Action.candidacy.graduatedPerson.DegreeCandidacyForGraduatedPersonProcessDA {
-
 
     public DegreeCurricularPlan getDegreeCurricularPlan(HttpServletRequest request) {
 	final Integer degreeCurricularPlanOID = CoordinatedDegreeInfo.findDegreeCurricularPlanID(request);

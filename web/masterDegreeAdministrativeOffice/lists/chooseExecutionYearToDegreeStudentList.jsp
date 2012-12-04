@@ -1,6 +1,6 @@
 <%@ taglib uri="/WEB-INF/struts-tiles.tld" prefix="tiles" %>
 <tiles:insert definition="df.layout.two-column.posGrad" beanName="" flush="true">
-  <tiles:put name="title" value="Secretaria de Pós-Graduação" />
+  <tiles:put name="title" value="Secretaria de Pós-Graduação149" />
   <tiles:put name="serviceName" value="Secretaria de Pós-Graduação" />
   <tiles:put name="navLocal" value="/masterDegreeAdministrativeOffice/lists/listsMenu.jsp" />
   <tiles:put name="navGeral" value="/masterDegreeAdministrativeOffice/commonNavGeralPosGraduacao.jsp" />

@@ -33,14 +33,6 @@ import org.apache.struts.action.ActionMapping;
 import org.apache.struts.validator.DynaValidatorForm;
 
 import pt.ist.fenixWebFramework.security.UserView;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
-import pt.ist.fenixWebFramework.struts.annotations.Forward;
-import pt.ist.fenixWebFramework.struts.annotations.Forwards;
-import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
@@ -52,9 +44,9 @@ import pt.ist.fenixWebFramework.struts.annotations.Tile;
  */
 @Mapping(module = "masterDegreeAdministrativeOffice", path = "/insertGratuityDataLA", input = "/insertGratuityDataDA.do?method=prepareInsertGratuityData&page=0", attribute = "insertGratuityDataForm", formBean = "insertGratuityDataForm", scope = "request", parameter = "method")
 @Forwards(value = {
-		@Forward(name = "insertGratuityData", path = "df.page.insertGratuityData"),
-		@Forward(name = "insertConfirmation", path = "df.page.insertGratuityDataConfirmation"),
-		@Forward(name = "cancel", path = "/insertGratuityDataDA.do?method=prepareInsertChooseExecutionYear&page=0") })
+	@Forward(name = "insertGratuityData", path = "df.page.insertGratuityData", tileProperties = @Tile(title = "teste52")),
+	@Forward(name = "insertConfirmation", path = "df.page.insertGratuityDataConfirmation", tileProperties = @Tile(title = "teste53")),
+	@Forward(name = "cancel", path = "/insertGratuityDataDA.do?method=prepareInsertChooseExecutionYear&page=0", tileProperties = @Tile(title = "teste54")) })
 public class InsertGratuityDataLookupDispatchAction extends FenixLookupDispatchAction {
 
     public ActionForward addPhase(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
@@ -230,8 +222,8 @@ public class InsertGratuityDataLookupDispatchAction extends FenixLookupDispatchA
 	    infoGratuityValues.setEndPayment(Data.convertStringDate((String) actionForm.get("finalDateTotalPayment"), "/"));
 	    if (actionForm.get("initialDateTotalPayment") != null
 		    && ((String) actionForm.get("initialDateTotalPayment")).length() > 0) {
-		infoGratuityValues.setStartPayment(Data
-			.convertStringDate((String) actionForm.get("initialDateTotalPayment"), "/"));
+		infoGratuityValues
+			.setStartPayment(Data.convertStringDate((String) actionForm.get("initialDateTotalPayment"), "/"));
 	    }
 	}
 	if (actionForm.get("partialPayment") != null && ((Boolean) actionForm.get("partialPayment")).equals(Boolean.TRUE)) {
@@ -269,6 +261,7 @@ public class InsertGratuityDataLookupDispatchAction extends FenixLookupDispatchA
 	return infoPaymentPhase;
     }
 
+    @Override
     protected Map getKeyMethodMap() {
 
 	Map map = new HashMap();

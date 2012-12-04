@@ -4,8 +4,21 @@
 <%@ taglib uri="/WEB-INF/struts-tiles.tld" prefix="tiles" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
+<%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <html:html xhtml="true">
 <head>
+	<title>
+	    <tiles:useAttribute name="title" id="titleK" ignore="true"/>
+	    <tiles:useAttribute name="bundle" id="bundleT" ignore="true"/>
+	    <logic:present name="bundleT">
+	    	<logic:present name="titleK">
+	    		<bean:message name="titleK" bundle="<%= (String) bundleT %>"/>
+	    	</logic:present>
+	    </logic:present>
+	     <logic:notPresent name="bundleT">
+	     	<tiles:getAsString name="title" ignore="true"/>
+		</logic:notPresent>
+	</title>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 	<link rel="shortcut icon" href="<%= request.getContextPath() %>/images/favicon.ico" type="image/ico"/>
 	<link rel="stylesheet" type="text/css" href="<%= request.getContextPath() %>/CSS/layout.css"  media="screen"  />

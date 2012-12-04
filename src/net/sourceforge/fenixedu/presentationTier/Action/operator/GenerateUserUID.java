@@ -24,10 +24,11 @@ import org.apache.struts.action.ActionMapping;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixWebFramework.struts.annotations.Tile;
 import pt.utl.ist.fenix.tools.util.CollectionPager;
 
 @Mapping(module = "operator", path = "/generateUserUID", scope = "request", parameter = "method")
-@Forwards(value = { @Forward(name = "prepareSearchPerson", path = "/operator/userUID/searchPersonToGenerateUserUID.jsp") })
+@Forwards(value = { @Forward(name = "prepareSearchPerson", path = "/operator/userUID/searchPersonToGenerateUserUID.jsp", tileProperties = @Tile(title = "private.operator.institutionalgenerateusername")) })
 public class GenerateUserUID extends FenixDispatchAction {
 
     public ActionForward prepareSearchPerson(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,

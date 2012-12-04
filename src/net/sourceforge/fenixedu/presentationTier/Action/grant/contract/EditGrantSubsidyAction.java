@@ -23,14 +23,6 @@ import org.apache.struts.action.ActionMapping;
 import org.apache.struts.validator.DynaValidatorForm;
 
 import pt.ist.fenixWebFramework.security.UserView;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
-import pt.ist.fenixWebFramework.struts.annotations.Forward;
-import pt.ist.fenixWebFramework.struts.annotations.Forwards;
-import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
@@ -42,8 +34,8 @@ import pt.ist.fenixWebFramework.struts.annotations.Tile;
  */
 @Mapping(module = "facultyAdmOffice", path = "/editGrantSubsidy", input = "/editGrantSubsidy.do?page=0&method=prepareEditGrantSubsidyForm", attribute = "editGrantSubsidyForm", formBean = "editGrantSubsidyForm", scope = "request", parameter = "method")
 @Forwards(value = {
-		@Forward(name = "edit-grant-subsidy", path = "/facultyAdmOffice/grant/contract/editGrantSubsidy.jsp"),
-		@Forward(name = "manage-grant-subsidy", path = "/manageGrantSubsidy.do?method=prepareManageGrantSubsidyForm") })
+	@Forward(name = "edit-grant-subsidy", path = "/facultyAdmOffice/grant/contract/editGrantSubsidy.jsp", tileProperties = @Tile(title = "private.teachingstaffandresearcher.miscellaneousmanagement.costcenter")),
+	@Forward(name = "manage-grant-subsidy", path = "/manageGrantSubsidy.do?method=prepareManageGrantSubsidyForm", tileProperties = @Tile(title = "private.teachingstaffandresearcher.miscellaneousmanagement.costcenter")) })
 public class EditGrantSubsidyAction extends FenixDispatchAction {
     /*
      * Fills the form with the correspondent data

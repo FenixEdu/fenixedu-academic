@@ -489,6 +489,7 @@
       <message-resources null="false" key="GROUP_NAME_RESOURCES" parameter="resources.GroupNameResources"></message-resources>
       <message-resources null="false" key="CONTENT_RESOURCES" parameter="resources.ContentResources"></message-resources>
       <message-resources null="false" key="COORDINATOR_RESOURCES" parameter="resources.CoordinatorResources"></message-resources>
+      <message-resources null="false" key="TITLES_RESOURCES" parameter="resources.TitlesResources"></message-resources>
       <!--
 		========== Plug Ins Configuration =================================
 	-->

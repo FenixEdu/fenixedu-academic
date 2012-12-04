@@ -33,17 +33,12 @@ import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixWebFramework.struts.annotations.Tile;
 import pt.utl.ist.fenix.tools.util.excel.Spreadsheet;
 import pt.utl.ist.fenix.tools.util.excel.Spreadsheet.Row;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
-import pt.ist.fenixWebFramework.struts.annotations.Forward;
-import pt.ist.fenixWebFramework.struts.annotations.Forwards;
-import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 @Mapping(path = "/listCourseResponsibles", module = "departmentAdmOffice")
-@Forwards({ @Forward(name = "chooseCurricularCourse", path = "/departmentAdmOffice/lists/listCourseResponsibles.jsp") })
+@Forwards({ @Forward(name = "chooseCurricularCourse", path = "/departmentAdmOffice/lists/listCourseResponsibles.jsp", tileProperties = @Tile(title = "private.administrationofcreditsofdepartmentteachers.lists.responsiblesbycourse")) })
 public class ListCourseResponsibles extends FenixDispatchAction {
 
     protected static final String RESOURCE_MODULE = "academicAdminOffice";

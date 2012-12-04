@@ -17,9 +17,11 @@ import org.apache.struts.action.ActionMapping;
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
-@Forwards( { @Forward(name = "showGuide", path = "/academicAdminOffice/payments/guides/showGuide.jsp"),
-	@Forward(name = "showEvents", path = "/payments.do?method=showEvents") })
+@Forwards({
+	@Forward(name = "showGuide", path = "/academicAdminOffice/payments/guides/showGuide.jsp", tileProperties = @Tile(title = "private.academicadministrativeoffice.studentoperations.viewstudents")),
+	@Forward(name = "showEvents", path = "/payments.do?method=showEvents", tileProperties = @Tile(title = "private.academicadministrativeoffice.studentoperations.viewstudents")) })
 public abstract class GuidesManagementDA extends PaymentsManagementDispatchAction {
 
     @Override

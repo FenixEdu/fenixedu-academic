@@ -23,16 +23,12 @@ import org.apache.struts.action.ActionMapping;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
-import pt.ist.fenixWebFramework.struts.annotations.Forward;
-import pt.ist.fenixWebFramework.struts.annotations.Forwards;
-import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixWebFramework.struts.annotations.Tile;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 @Mapping(path = "/viewQucResults", module = "pedagogicalCouncil")
-@Forwards( { @Forward(name = "chooseDepartment", path = "/pedagogicalCouncil/inquiries/chooseDepartment.jsp"),
+@Forwards({
+	@Forward(name = "chooseDepartment", path = "/pedagogicalCouncil/inquiries/chooseDepartment.jsp", tileProperties = @Tile(title = "private.pedagogiccouncil.control.qucresults2")),
 	@Forward(name = "viewResumeResults", path = "/departmentMember/quc/viewResumeResults.jsp"),
 	@Forward(name = "viewCompetenceResults", path = "/departmentMember/quc/viewCompetenceResults.jsp"),
 	@Forward(name = "viewTeachersResults", path = "/departmentMember/quc/viewTeachersResults.jsp"),
@@ -75,6 +71,7 @@ public class ViewQUCResultsPedagogicalCouncilDA extends ViewQUCResultsDA {
 	return departmentUnit;
     }
 
+    @Override
     public boolean getShowAllComments() {
 	return true;
     }

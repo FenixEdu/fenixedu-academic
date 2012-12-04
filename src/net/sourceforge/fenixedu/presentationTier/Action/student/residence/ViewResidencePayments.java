@@ -15,16 +15,12 @@ import org.apache.struts.action.ActionMapping;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
-import pt.ist.fenixWebFramework.struts.annotations.Forward;
-import pt.ist.fenixWebFramework.struts.annotations.Forwards;
-import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 @Mapping(path = "/viewResidencePayments", module = "student")
-@Forwards( { @Forward(name = "showEvents", path = "/student/residenceServices/showResidenceEvents.jsp"),
-	@Forward(name = "eventDetails", path = "/student/residenceServices/showDetails.jsp") })
+@Forwards({
+	@Forward(name = "showEvents", path = "/student/residenceServices/showResidenceEvents.jsp", tileProperties = @Tile(  title = "private.student.view.paymentsofresidence")),
+	@Forward(name = "eventDetails", path = "/student/residenceServices/showDetails.jsp", tileProperties = @Tile(  title = "private.student.view.paymentsofresidence")) })
 public class ViewResidencePayments extends FenixDispatchAction {
 
     public ActionForward listEvents(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,

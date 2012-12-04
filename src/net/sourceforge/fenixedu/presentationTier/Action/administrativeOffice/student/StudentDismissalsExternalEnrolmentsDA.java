@@ -13,15 +13,9 @@ import org.apache.struts.action.ActionMapping;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
-import pt.ist.fenixWebFramework.struts.annotations.Forward;
-import pt.ist.fenixWebFramework.struts.annotations.Forwards;
-import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 @Mapping(path = "/studentDismissalsExternalEnrolments", module = "academicAdminOffice", formBean = "studentExternalEnrolmentsForm")
-@Forwards( { @Forward(name = "manageDismissals", path = "/academicAdminOffice/dismissal/managementDismissals.jsp"),
+@Forwards({ @Forward(name = "manageDismissals", path = "/academicAdminOffice/dismissal/managementDismissals.jsp"),
 	@Forward(name = "visualizeRegistration", path = "/academicAdminOffice/student/registration/viewRegistrationDetails.jsp") })
 public class StudentDismissalsExternalEnrolmentsDA extends StudentExternalEnrolmentsDA {
 

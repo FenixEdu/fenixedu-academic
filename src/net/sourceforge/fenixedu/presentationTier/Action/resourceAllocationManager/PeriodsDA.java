@@ -35,8 +35,8 @@ import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 @Mapping(path = "/periods", module = "resourceAllocationManager")
 @Forwards(tileProperties = @Tile(extend = "definition.sop.periods"), value = {
-	@Forward(name = "firstPage", path = "/resourceAllocationManager/periods/firstPage.jsp", contextRelative = true, useTile = true, redirect = false),
-	@Forward(name = "managePeriods", path = "/resourceAllocationManager/periods/managePeriods.jsp") })
+	@Forward(name = "firstPage", path = "/resourceAllocationManager/periods/firstPage.jsp", contextRelative = true, useTile = true, redirect = false, tileProperties = @Tile(  title = "private.resourcemanagement.periods.periods")),
+	@Forward(name = "managePeriods", path = "/resourceAllocationManager/periods/managePeriods.jsp", tileProperties = @Tile(  title = "private.resourcemanagement.periods.periodmanagement")) })
 public class PeriodsDA extends FenixDispatchAction {
 
     public static class ContextBean implements Serializable, HasExecutionSemester {

@@ -19,10 +19,11 @@ import org.apache.struts.action.ActionMapping;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixWebFramework.struts.annotations.Tile;
 import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 @Mapping(path = "/departmentCredits", module = "scientificCouncil")
-@Forwards( { @Forward(name = "departmentCredits", path = "/scientificCouncil/credits/departmentCredits/departmentCredits.jsp") })
+@Forwards({ @Forward(name = "departmentCredits", path = "/scientificCouncil/credits/departmentCredits/departmentCredits.jsp", tileProperties = @Tile(  title = "private.scientificcouncil.credits.departmentcredits")) })
 public class DepartmentCreditsDA extends FenixDispatchAction {
 
     public ActionForward prepareDepartmentCredits(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,

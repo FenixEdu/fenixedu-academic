@@ -18,15 +18,10 @@ import org.apache.struts.action.ActionMapping;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
-import pt.ist.fenixWebFramework.struts.annotations.Forward;
-import pt.ist.fenixWebFramework.struts.annotations.Forwards;
-import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 @Mapping(path = "/career/careerManagement", module = "researcher")
-@Forwards(@Forward(name = "showCareer", path = "/researcher/career/showCareer.jsp"))
+@Forwards(@Forward(name = "showCareer", path = "/researcher/career/showCareer.jsp", tileProperties = @Tile(  title = "private.operator.personnelmanagement.managementfaculty.teacherevaluation.professionalcareer")))
 public class CareerManagementDispatchAction extends FenixDispatchAction {
     public ActionForward showCareer(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) {

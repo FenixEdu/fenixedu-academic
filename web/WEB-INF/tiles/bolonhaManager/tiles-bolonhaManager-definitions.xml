@@ -4,7 +4,8 @@
 <!-- Tiles definitions -->
 <tiles-definitions>
 	<definition name="bolonhaManager.masterPage" extends="df.layout.two-column">
-	  <put name="title" value="Processo Bolonha" />
+	  <put name="bundle" value="TITLES_RESOURCES" />
+	  <put name="title" value="private.bologna" />
 	  <put name="serviceName" value="Processo Bolonha" />
 	  <put name="navLocal" value="/bolonhaManager/commons/localNavigationBar.jsp" />
 	  <put name="navGeral" value="/commons/commonGeneralNavigationBar.jsp" />

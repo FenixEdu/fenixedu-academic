@@ -34,13 +34,8 @@ import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.utl.ist.fenix.tools.util.excel.StyledExcelSpreadsheet;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
-import pt.ist.fenixWebFramework.struts.annotations.Forward;
-import pt.ist.fenixWebFramework.struts.annotations.Forwards;
-import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixWebFramework.struts.annotations.Tile;
+import pt.utl.ist.fenix.tools.util.excel.StyledExcelSpreadsheet;
 
 /**
  * @author - Shezad Anavarali (shezad@ist.utl.pt)
@@ -49,7 +44,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Tile;
  */
 
 @Mapping(path = "/diplomasListBySituation", module = DiplomasListBySituationDA.MODULE)
-@Forwards( { @Forward(name = "searchDiplomas", path = "/academicAdminOffice/lists/searchDiplomasBySituation.jsp") })
+@Forwards({ @Forward(name = "searchDiplomas", path = "/academicAdminOffice/lists/searchDiplomasBySituation.jsp", tileProperties = @Tile(title = "private.academicadministrativeoffice.lists.diplomas")) })
 public class DiplomasListBySituationDA extends FenixDispatchAction {
 
     private static final String LOCALDATE_FORMAT = "yyyy-MM-dd";

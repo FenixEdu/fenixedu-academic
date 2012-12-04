@@ -25,20 +25,21 @@ import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 @Mapping(path = "/caseHandlingDegreeCandidacyForGraduatedPersonIndividualProcess", module = "academicAdminOffice", formBeanClass = FenixActionForm.class)
-@Forwards( { // @Forward(name = "intro", path =
+@Forwards({ // @Forward(name = "intro", path =
 	// "/candidacy/mainCandidacyProcess.jsp"),
-	@Forward(name = "intro", path = "/caseHandlingDegreeCandidacyForGraduatedPersonProcess.do?method=listProcessAllowedActivities"),
-	@Forward(name = "list-allowed-activities", path = "/candidacy/graduatedPerson/listIndividualCandidacyActivities.jsp"),
+	@Forward(name = "intro", path = "/caseHandlingDegreeCandidacyForGraduatedPersonProcess.do?method=listProcessAllowedActivities", tileProperties = @Tile(title = "private.academicadministrativeoffice.applications.middleupperholders")),
+	@Forward(name = "list-allowed-activities", path = "/candidacy/graduatedPerson/listIndividualCandidacyActivities.jsp", tileProperties = @Tile(title = "private.academicadministrativeoffice.applications.middleupperholders")),
 	@Forward(name = "prepare-create-new-process", path = "/candidacy/selectPersonForCandidacy.jsp"),
 	@Forward(name = "fill-personal-information", path = "/candidacy/fillPersonalInformation.jsp"),
-	@Forward(name = "fill-candidacy-information", path = "/candidacy/graduatedPerson/fillCandidacyInformation.jsp"),
+	@Forward(name = "fill-candidacy-information", path = "/candidacy/graduatedPerson/fillCandidacyInformation.jsp", tileProperties = @Tile(title = "private.academicadministrativeoffice.applications.middleupperholders")),
 	@Forward(name = "prepare-candidacy-payment", path = "/candidacy/candidacyPayment.jsp"),
-	@Forward(name = "change-state", path = "/candidacy/graduatedPerson/changeState.jsp"),
+	@Forward(name = "change-state", path = "/candidacy/graduatedPerson/changeState.jsp", tileProperties = @Tile(title = "private.academicadministrativeoffice.applications.middleupperholders")),
 	@Forward(name = "edit-candidacy-personal-information", path = "/candidacy/editPersonalInformation.jsp"),
-	@Forward(name = "edit-candidacy-information", path = "/candidacy/graduatedPerson/editCandidacyInformation.jsp"),
-	@Forward(name = "introduce-candidacy-result", path = "/candidacy/graduatedPerson/introduceCandidacyResult.jsp"),
+	@Forward(name = "edit-candidacy-information", path = "/candidacy/graduatedPerson/editCandidacyInformation.jsp", tileProperties = @Tile(title = "private.academicadministrativeoffice.applications.middleupperholders")),
+	@Forward(name = "introduce-candidacy-result", path = "/candidacy/graduatedPerson/introduceCandidacyResult.jsp", tileProperties = @Tile(title = "private.academicadministrativeoffice.applications.middleupperholders")),
 	@Forward(name = "cancel-candidacy", path = "/candidacy/cancelCandidacy.jsp"),
 	@Forward(name = "create-registration", path = "/candidacy/createRegistration.jsp"),
 	@Forward(name = "prepare-edit-candidacy-documents", path = "/candidacy/editCandidacyDocuments.jsp"),
@@ -161,15 +162,15 @@ public class DegreeCandidacyForGraduatedPersonIndividualProcessDA extends Indivi
 	DegreeCandidacyForGraduatedPersonIndividualCandidacyResultBean bean = getRenderedObject();
 	RenderUtils.invalidateViewState();
 	if (bean == null || bean.getDegree() == null) {
-	    request.setAttribute("individualCandidacyResultBean", new DegreeCandidacyForGraduatedPersonIndividualCandidacyResultBean(
-		    getProcess(request)));
+	    request.setAttribute("individualCandidacyResultBean",
+		    new DegreeCandidacyForGraduatedPersonIndividualCandidacyResultBean(getProcess(request)));
 	} else {
-	    request.setAttribute("individualCandidacyResultBean", new DegreeCandidacyForGraduatedPersonIndividualCandidacyResultBean(
-		    getProcess(request), bean.getDegree()));
+	    request.setAttribute("individualCandidacyResultBean",
+		    new DegreeCandidacyForGraduatedPersonIndividualCandidacyResultBean(getProcess(request), bean.getDegree()));
 	}
 	return mapping.findForward("introduce-candidacy-result");
     }
-    
+
     public ActionForward prepareExecuteChangeIndividualCandidacyState(ActionMapping mapping, ActionForm actionForm,
 	    HttpServletRequest request, HttpServletResponse response) {
 
@@ -177,21 +178,19 @@ public class DegreeCandidacyForGraduatedPersonIndividualProcessDA extends Indivi
 		getProcess(request)));
 	return mapping.findForward("change-state");
     }
-    
+
     public ActionForward executeChangeIndividualCandidacyState(ActionMapping mapping, ActionForm actionForm,
 	    HttpServletRequest request, HttpServletResponse response) throws FenixFilterException, FenixServiceException {
 
 	try {
-	    executeActivity(getProcess(request), "ChangeIndividualCandidacyState",  getCandidacyResultBean());
+	    executeActivity(getProcess(request), "ChangeIndividualCandidacyState", getCandidacyResultBean());
 	} catch (final DomainException e) {
 	    addActionMessage(request, e.getMessage(), e.getArgs());
-	    request.setAttribute("individualCandidacyResultBean",  getCandidacyResultBean());
+	    request.setAttribute("individualCandidacyResultBean", getCandidacyResultBean());
 	    return mapping.findForward("change-state");
 	}
 	return listProcessAllowedActivities(mapping, actionForm, request, response);
     }
-    
-    
 
     public ActionForward executeIntroduceCandidacyResultInvalid(ActionMapping mapping, ActionForm actionForm,
 	    HttpServletRequest request, HttpServletResponse response) {
@@ -254,7 +253,7 @@ public class DegreeCandidacyForGraduatedPersonIndividualProcessDA extends Indivi
     @Override
     public ActionForward createNewProcess(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) throws FenixFilterException, FenixServiceException {
-	DegreeCandidacyForGraduatedPersonIndividualProcessBean bean = (DegreeCandidacyForGraduatedPersonIndividualProcessBean) getIndividualCandidacyProcessBean();
+	DegreeCandidacyForGraduatedPersonIndividualProcessBean bean = getIndividualCandidacyProcessBean();
 
 	boolean isValid = hasInvalidViewState();
 	if (!isValid) {

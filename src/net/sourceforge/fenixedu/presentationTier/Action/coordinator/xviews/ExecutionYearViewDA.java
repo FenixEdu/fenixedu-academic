@@ -4,8 +4,6 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.Comparator;
 import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.TreeMap;
@@ -37,17 +35,13 @@ import pt.ist.fenixWebFramework.security.UserView;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
-import pt.ist.fenixWebFramework.struts.annotations.Forward;
-import pt.ist.fenixWebFramework.struts.annotations.Forwards;
-import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 @Mapping(path = "/xYear", module = "coordinator")
-@Forwards( { @Forward(name = "xViewsDisclaimer", path = "/coordinator/xviews/xViewsDisclaimer.jsp"),
-	@Forward(name = "xYearEntry", path = "/coordinator/xviews/xYearEntry.jsp"),
-	@Forward(name = "xYearDisplay", path = "/coordinator/xviews/xYearDisplay.jsp") })
+@Forwards({
+	@Forward(name = "xViewsDisclaimer", path = "/coordinator/xviews/xViewsDisclaimer.jsp", tileProperties = @Tile(title = "private.coordinator.management.courses.analytictools.executionyear")),
+	@Forward(name = "xYearEntry", path = "/coordinator/xviews/xYearEntry.jsp", tileProperties = @Tile(title = "private.coordinator.management.courses.analytictools.executionyear")),
+	@Forward(name = "xYearDisplay", path = "/coordinator/xviews/xYearDisplay.jsp", tileProperties = @Tile(title = "private.coordinator.management.courses.analytictools.executionyear")) })
 public class ExecutionYearViewDA extends FenixDispatchAction {
 
     @Override
@@ -87,56 +81,67 @@ public class ExecutionYearViewDA extends FenixDispatchAction {
 
 	}
 
-	/*YearViewBean yearViewBean = new YearViewBean(searchFormBean.getDegreeCurricularPlan());
-	yearViewBean.setExecutionYear(searchFormBean.getExecutionYear());
-	yearViewBean.setEnrolments();*/
+	/*
+	 * YearViewBean yearViewBean = new
+	 * YearViewBean(searchFormBean.getDegreeCurricularPlan());
+	 * yearViewBean.setExecutionYear(searchFormBean.getExecutionYear());
+	 * yearViewBean.setEnrolments();
+	 */
 
 	request.setAttribute("dcpEId", searchFormBean.getDegreeCurricularPlan().getExternalId());
 	request.setAttribute("eyEId", searchFormBean.getExecutionYear().getExternalId());
 
-	/*Inar totalInar = generateINAR(yearViewBean);
-	request.setAttribute("totalInar", totalInar);
-
-	int years = yearViewBean.getDegreeCurricularPlan().getDegree().getDegreeType().getYears();
-	request.setAttribute("#years", years);
-
-	Map<CurricularYear, Inar> mapInarByYear = generateInarByCurricularYear(yearViewBean);
-	for (int i = 1; i <= years; i++) {
-	    Inar value = mapInarByYear.get(CurricularYear.readByYear(i));
-	    String label = "InarFor" + i + "Year";
-	    request.setAttribute(label, value);
-	}
-
-	Map<CurricularYear, String> mapAveragebyYear = generateAverageByCurricularYear(yearViewBean);
-	List averageByYear = new LinkedList(mapAveragebyYear.entrySet());
-	request.setAttribute("averageByYear", averageByYear);
-
-	// @Deprecated
-	// if(<3 == true) {you.marry(me) ? super.happy() : null;}
-	if (yearViewBean.hasBranchesByType(BranchType.MAJOR)) {
-	    Map<BranchCourseGroup, Inar> mapInarByBranches = generateInarByBranch(yearViewBean, BranchType.MAJOR);
-	    yearViewBean.setHasMajorBranches(true);
-	    yearViewBean.setMajorBranches(yearViewBean.getDegreeCurricularPlan().getBranchesByType(BranchType.MAJOR));
-	    yearViewBean.setInarByMajorBranches(mapInarByBranches);
-
-	    Map<BranchCourseGroup, String> mapAverageByBranches = generateAverageByBranch(yearViewBean, BranchType.MAJOR);
-	    yearViewBean.setAverageByMajorBranches(mapAverageByBranches);
-	}
-
-	if (yearViewBean.hasBranchesByType(BranchType.MINOR)) {
-	    Map<BranchCourseGroup, Inar> mapInarByBranches = generateInarByBranch(yearViewBean, BranchType.MINOR);
-	    yearViewBean.setHasMinorBranches(true);
-	    yearViewBean.setMinorBranches(yearViewBean.getDegreeCurricularPlan().getBranchesByType(BranchType.MINOR));
-	    yearViewBean.setInarByMinorBranches(mapInarByBranches);
-
-	    Map<BranchCourseGroup, String> mapAverageByBranches = generateAverageByBranch(yearViewBean, BranchType.MINOR);
-	    yearViewBean.setAverageByMinorBranches(mapAverageByBranches);
-	}
-
-	String resumedQUC = generateQUCResults(yearViewBean);
-	yearViewBean.setResumedQUC(resumedQUC);
-
-	request.setAttribute("yearViewBean", yearViewBean);*/
+	/*
+	 * Inar totalInar = generateINAR(yearViewBean);
+	 * request.setAttribute("totalInar", totalInar);
+	 * 
+	 * int years =
+	 * yearViewBean.getDegreeCurricularPlan().getDegree().getDegreeType
+	 * ().getYears(); request.setAttribute("#years", years);
+	 * 
+	 * Map<CurricularYear, Inar> mapInarByYear =
+	 * generateInarByCurricularYear(yearViewBean); for (int i = 1; i <=
+	 * years; i++) { Inar value =
+	 * mapInarByYear.get(CurricularYear.readByYear(i)); String label =
+	 * "InarFor" + i + "Year"; request.setAttribute(label, value); }
+	 * 
+	 * Map<CurricularYear, String> mapAveragebyYear =
+	 * generateAverageByCurricularYear(yearViewBean); List averageByYear =
+	 * new LinkedList(mapAveragebyYear.entrySet());
+	 * request.setAttribute("averageByYear", averageByYear);
+	 * 
+	 * // @Deprecated // if(<3 == true) {you.marry(me) ? super.happy() :
+	 * null;} if (yearViewBean.hasBranchesByType(BranchType.MAJOR)) {
+	 * Map<BranchCourseGroup, Inar> mapInarByBranches =
+	 * generateInarByBranch(yearViewBean, BranchType.MAJOR);
+	 * yearViewBean.setHasMajorBranches(true);
+	 * yearViewBean.setMajorBranches(
+	 * yearViewBean.getDegreeCurricularPlan().getBranchesByType
+	 * (BranchType.MAJOR));
+	 * yearViewBean.setInarByMajorBranches(mapInarByBranches);
+	 * 
+	 * Map<BranchCourseGroup, String> mapAverageByBranches =
+	 * generateAverageByBranch(yearViewBean, BranchType.MAJOR);
+	 * yearViewBean.setAverageByMajorBranches(mapAverageByBranches); }
+	 * 
+	 * if (yearViewBean.hasBranchesByType(BranchType.MINOR)) {
+	 * Map<BranchCourseGroup, Inar> mapInarByBranches =
+	 * generateInarByBranch(yearViewBean, BranchType.MINOR);
+	 * yearViewBean.setHasMinorBranches(true);
+	 * yearViewBean.setMinorBranches(
+	 * yearViewBean.getDegreeCurricularPlan().getBranchesByType
+	 * (BranchType.MINOR));
+	 * yearViewBean.setInarByMinorBranches(mapInarByBranches);
+	 * 
+	 * Map<BranchCourseGroup, String> mapAverageByBranches =
+	 * generateAverageByBranch(yearViewBean, BranchType.MINOR);
+	 * yearViewBean.setAverageByMinorBranches(mapAverageByBranches); }
+	 * 
+	 * String resumedQUC = generateQUCResults(yearViewBean);
+	 * yearViewBean.setResumedQUC(resumedQUC);
+	 * 
+	 * request.setAttribute("yearViewBean", yearViewBean);
+	 */
 
 	request.setAttribute("searchFormBean", searchFormBean);
 	return mapping.findForward("xYearDisplay");
@@ -163,6 +168,7 @@ public class ExecutionYearViewDA extends FenixDispatchAction {
 
     private Map<CurricularYear, Inar> generateInarByCurricularYear(YearViewBean bean) {
 	Map<CurricularYear, Inar> result = new TreeMap<CurricularYear, Inar>(new Comparator() {
+	    @Override
 	    public int compare(Object year1, Object year2) {
 		return ((CurricularYear) year1).getYear().compareTo(((CurricularYear) year2).getYear());
 	    }
@@ -192,6 +198,7 @@ public class ExecutionYearViewDA extends FenixDispatchAction {
 
     private Map<CurricularYear, String> generateAverageByCurricularYear(YearViewBean bean) {
 	Map<CurricularYear, String> result = new TreeMap<CurricularYear, String>(new Comparator() {
+	    @Override
 	    public int compare(Object year1, Object year2) {
 		return ((CurricularYear) year1).getYear().compareTo(((CurricularYear) year2).getYear());
 	    }
@@ -302,9 +309,7 @@ public class ExecutionYearViewDA extends FenixDispatchAction {
 	    if (cardinality.get(branch).compareTo(BigDecimal.ZERO) == 0) {
 		result.put(branch, "-");
 	    } else {
-		result
-			.put(branch, (sigma.get(branch)).divide(cardinality.get(branch), 2, RoundingMode.HALF_EVEN)
-				.toPlainString());
+		result.put(branch, (sigma.get(branch)).divide(cardinality.get(branch), 2, RoundingMode.HALF_EVEN).toPlainString());
 	    }
 	}
 
@@ -325,8 +330,8 @@ public class ExecutionYearViewDA extends FenixDispatchAction {
      */
 
     private String generateQUCResults(YearViewBean bean) {
-	ExecutionDegree executionDegree = ExecutionDegree.getByDegreeCurricularPlanAndExecutionYear(bean
-		.getDegreeCurricularPlan(), bean.getExecutionYear());
+	ExecutionDegree executionDegree = ExecutionDegree.getByDegreeCurricularPlanAndExecutionYear(
+		bean.getDegreeCurricularPlan(), bean.getExecutionYear());
 
 	Set<StudentInquiriesCourseResult> courseResults = executionDegree.getStudentInquiriesCourseResultsSet();
 	Set<StudentInquiriesTeachingResult> teachingResults = executionDegree.getStudentInquiriesTeachingResultsSet();

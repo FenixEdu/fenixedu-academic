@@ -39,12 +39,6 @@ import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixWebFramework.struts.annotations.Tile;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
-import pt.ist.fenixWebFramework.struts.annotations.Forward;
-import pt.ist.fenixWebFramework.struts.annotations.Forwards;
-import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 /**
  * 
@@ -55,9 +49,9 @@ import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 @Mapping(module = "masterDegreeAdministrativeOffice", path = "/insertExternalPerson", input = "/insertExternalPerson.do?page=0&method=prepare", attribute = "insertExternalPersonForm", formBean = "insertExternalPersonForm", scope = "request", parameter = "method")
 @Forwards(value = {
-		@Forward(name = "error", path = "df.page.insertExternalPerson_Error"),
-		@Forward(name = "start", path = "df.page.insertExternalPerson"),
-		@Forward(name = "success", path = "df.page.insertExternalPerson_Success") })
+	@Forward(name = "error", path = "df.page.insertExternalPerson_Error", tileProperties = @Tile(title = "teste25")),
+	@Forward(name = "start", path = "df.page.insertExternalPerson", tileProperties = @Tile(title = "teste26")),
+	@Forward(name = "success", path = "df.page.insertExternalPerson_Success", tileProperties = @Tile(title = "teste27")) })
 @Exceptions(value = { @ExceptionHandling(type = net.sourceforge.fenixedu.presentationTier.Action.exceptions.ExistingActionException.class, key = "resources.Action.exceptions.ExistingActionException", handler = net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler.class, scope = "request") })
 public class InsertExternalPersonDispatchAction extends FenixDispatchAction {
 
@@ -75,8 +69,8 @@ public class InsertExternalPersonDispatchAction extends FenixDispatchAction {
 	    return mapping.findForward("error");
 	}
 
-	request.setAttribute(PresentationConstants.SEX_LIST_KEY, Gender.getSexLabelValues((Locale) request
-		.getAttribute(Globals.LOCALE_KEY)));
+	request.setAttribute(PresentationConstants.SEX_LIST_KEY,
+		Gender.getSexLabelValues((Locale) request.getAttribute(Globals.LOCALE_KEY)));
 	return mapping.findForward("start");
 
     }
@@ -126,8 +120,8 @@ public class InsertExternalPersonDispatchAction extends FenixDispatchAction {
 	String email = (String) insertExternalPersonForm.get("email");
 
 	if (institutionID == 0) {
-	    request.setAttribute(PresentationConstants.SEX_LIST_KEY, Gender.getSexLabelValues((Locale) request
-		    .getAttribute(Globals.LOCALE_KEY)));
+	    request.setAttribute(PresentationConstants.SEX_LIST_KEY,
+		    Gender.getSexLabelValues((Locale) request.getAttribute(Globals.LOCALE_KEY)));
 
 	    getInstitutions(request);
 
@@ -142,13 +136,13 @@ public class InsertExternalPersonDispatchAction extends FenixDispatchAction {
 	try {
 	    InsertExternalPerson.run(name, sex, address, institutionID, phone, mobile, homepage, email);
 	} catch (ExistingServiceException e) {
-	    request.setAttribute(PresentationConstants.SEX_LIST_KEY, Gender.getSexLabelValues((Locale) request
-		    .getAttribute(Globals.LOCALE_KEY)));
+	    request.setAttribute(PresentationConstants.SEX_LIST_KEY,
+		    Gender.getSexLabelValues((Locale) request.getAttribute(Globals.LOCALE_KEY)));
 	    getInstitutions(request);
 	    throw new ExistingActionException(e.getMessage(), mapping.findForward("start"));
 	} catch (FenixServiceException e) {
-	    request.setAttribute(PresentationConstants.SEX_LIST_KEY, Gender.getSexLabelValues((Locale) request
-		    .getAttribute(Globals.LOCALE_KEY)));
+	    request.setAttribute(PresentationConstants.SEX_LIST_KEY,
+		    Gender.getSexLabelValues((Locale) request.getAttribute(Globals.LOCALE_KEY)));
 	    getInstitutions(request);
 	    throw new FenixActionException(e.getMessage(), mapping.findForward("start"));
 	}

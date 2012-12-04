@@ -26,17 +26,9 @@ import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixWebFramework.struts.annotations.Tile;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
-import pt.ist.fenixWebFramework.struts.annotations.Forward;
-import pt.ist.fenixWebFramework.struts.annotations.Forwards;
-import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 @Mapping(path = "/sendMailToTutoredStudents", module = "teacher")
-@Forwards(tileProperties = @Tile(navLocal = "/teacher/commons/navigationBarIndex.jsp"), value = {
-    @Forward(name = "chooseReceivers", path = "/teacher/tutor/chooseReceivers.jsp")
- })
+@Forwards(tileProperties = @Tile(navLocal = "/teacher/commons/navigationBarIndex.jsp"), value = { @Forward(name = "chooseReceivers", path = "/teacher/tutor/chooseReceivers.jsp", tileProperties = @Tile(  title = "private.teacher.managementmentoring.sendemail")) })
 public class SendEmailToTutoredStudents extends FenixDispatchAction {
 
     public Teacher getTeacher(HttpServletRequest request) {

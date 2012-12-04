@@ -35,7 +35,7 @@
             <bean:message key="link.ects.management" bundle="GEP_RESOURCES" />
         </html:link>
     </li>
-    <li>
+	<li>
         <html:link page="/a3es.do?method=prepare">
             <bean:message key="link.gep.a3es" bundle="GEP_RESOURCES" />
         </html:link>

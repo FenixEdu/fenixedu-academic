@@ -5,13 +5,12 @@
 	
 <!-- Tiles definitions -->
 <tiles-definitions>
-	<definition name="definition.rectorate.master" extends="df.layout.two-column">
-	  <put name="title" value="Reitoria" />
-	  <put name="serviceName" value="Reitoria" />
-	  <put name="navLocal" value="/commons/functionalities/side-menu.jsp" />
-	  <put name="navGeral" value="/commons/functionalities/top-menu.jsp" />
-      <put name="body" value="/commons/blank.jsp" />
-      <put name="footer" value="/copyright.jsp" />
+	<definition name="definition.rectorate.master" extends="df.layout.two-column.contents">
+		<put name="serviceName" value="Reitoria" />
+		<put name="navLocal" value="/commons/functionalities/side-menu.jsp" />
+		<put name="navGeral" value="/commons/functionalities/top-menu.jsp" />
+    	<put name="body" value="/commons/blank.jsp" />
+    	<put name="footer" value="/copyright.jsp" />
 	</definition>
 
 </tiles-definitions>

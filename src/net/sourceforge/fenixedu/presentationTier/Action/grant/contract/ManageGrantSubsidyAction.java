@@ -21,14 +21,6 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
 import pt.ist.fenixWebFramework.security.UserView;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
-import pt.ist.fenixWebFramework.struts.annotations.Forward;
-import pt.ist.fenixWebFramework.struts.annotations.Forwards;
-import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
@@ -40,7 +32,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Tile;
  */
 
 @Mapping(module = "facultyAdmOffice", path = "/manageGrantSubsidy", input = "/manageGrantSubsidy.do?page=0&method=prepareManageGrantSubsidyForm", attribute = "voidForm", formBean = "voidForm", scope = "request", parameter = "method")
-@Forwards(value = { @Forward(name = "manage-grant-subsidy", path = "/facultyAdmOffice/grant/contract/manageGrantSubsidy.jsp") })
+@Forwards(value = { @Forward(name = "manage-grant-subsidy", path = "/facultyAdmOffice/grant/contract/manageGrantSubsidy.jsp", tileProperties = @Tile(title = "private.teachingstaffandresearcher.miscellaneousmanagement.costcenter")) })
 public class ManageGrantSubsidyAction extends FenixDispatchAction {
 
     public ActionForward prepareManageGrantSubsidyForm(ActionMapping mapping, ActionForm form, HttpServletRequest request,
@@ -69,10 +61,10 @@ public class ManageGrantSubsidyAction extends FenixDispatchAction {
 
 	// Read Subsidies
 
-	List infoGrantActiveSubsidyList = ReadAllGrantSubsidiesByGrantContractAndState.run(idContract, InfoGrantSubsidy
-		.getActiveStateValue());
-	List infoGrantNotActiveSubsidyList = ReadAllGrantSubsidiesByGrantContractAndState.run(idContract, InfoGrantSubsidy
-		.getInactiveStateValue());
+	List infoGrantActiveSubsidyList = ReadAllGrantSubsidiesByGrantContractAndState.run(idContract,
+		InfoGrantSubsidy.getActiveStateValue());
+	List infoGrantNotActiveSubsidyList = ReadAllGrantSubsidiesByGrantContractAndState.run(idContract,
+		InfoGrantSubsidy.getInactiveStateValue());
 
 	// If they exist put them on request
 	if (infoGrantActiveSubsidyList != null && !infoGrantActiveSubsidyList.isEmpty()) {

@@ -24,12 +24,7 @@ import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.ActionMessage;
 import org.apache.struts.action.ActionMessages;
 import org.joda.time.YearMonthDay;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
-import pt.ist.fenixWebFramework.struts.annotations.Forward;
-import pt.ist.fenixWebFramework.struts.annotations.Forwards;
-import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
+
 import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
 import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
@@ -39,8 +34,8 @@ import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 @Mapping(module = "personnelSection", path = "/manageUnitsExtraWorkAmounts", scope = "request", parameter = "method")
 @Forwards(value = {
-		@Forward(name = "show-units-extra-work-amounts", path = "/managementAssiduousness/extraWork/showUnitsExtraWorkAmounts.jsp"),
-		@Forward(name = "show-unit-extra-work-movements", path = "/managementAssiduousness/extraWork/showUnitExtraWorkMovements.jsp") })
+	@Forward(name = "show-units-extra-work-amounts", path = "/managementAssiduousness/extraWork/showUnitsExtraWorkAmounts.jsp", tileProperties = @Tile(title = "private.staffarea.outstandingjob.fundingforworkingovertime")),
+	@Forward(name = "show-unit-extra-work-movements", path = "/managementAssiduousness/extraWork/showUnitExtraWorkMovements.jsp", tileProperties = @Tile(title = "private.staffarea.outstandingjob.fundingforworkingovertime")) })
 @Exceptions(value = { @ExceptionHandling(type = net.sourceforge.fenixedu.domain.exceptions.DomainException.class, handler = net.sourceforge.fenixedu.presentationTier.config.FenixDomainExceptionHandler.class, scope = "request") })
 public class ManageExtraWorkUnitAmountDispatchAction extends FenixDispatchAction {
 

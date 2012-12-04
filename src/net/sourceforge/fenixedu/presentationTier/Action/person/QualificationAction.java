@@ -48,6 +48,7 @@ public class QualificationAction extends CRUDActionByOID {
      * org.apache.struts.action.ActionForm,
      * javax.servlet.http.HttpServletRequest)
      */
+    @Override
     protected void populateFormFromInfoObject(ActionMapping mapping, InfoObject infoObject, ActionForm form,
 	    HttpServletRequest request) throws FenixActionException {
 	DynaActionForm dynaForm = (DynaActionForm) form;
@@ -70,6 +71,7 @@ public class QualificationAction extends CRUDActionByOID {
      * (org.apache.struts.action.ActionForm,
      * presentationTier.mapping.framework.CRUDMapping)
      */
+    @Override
     protected InfoObject populateInfoObjectFromForm(ActionForm form, CRUDMapping mapping) throws FenixActionException {
 	try {
 	    InfoQualification infoQualification = (InfoQualification) super.populateInfoObjectFromForm(form, mapping);

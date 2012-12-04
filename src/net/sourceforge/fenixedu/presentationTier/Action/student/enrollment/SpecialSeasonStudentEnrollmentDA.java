@@ -3,42 +3,33 @@ package net.sourceforge.fenixedu.presentationTier.Action.student.enrollment;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.struts.action.ActionForm;
-import org.apache.struts.action.ActionForward;
-import org.apache.struts.action.ActionMapping;
-import org.apache.struts.action.ActionMessage;
-
-import pt.ist.fenixWebFramework.struts.annotations.Forward;
-import pt.ist.fenixWebFramework.struts.annotations.Forwards;
-import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
 import net.sourceforge.fenixedu.dataTransferObject.student.enrollment.bolonha.SpecialSeasonBolonhaStudentEnrolmentBean;
 import net.sourceforge.fenixedu.domain.EnrolmentPeriodInSpecialSeasonEvaluations;
-import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.Student;
-import net.sourceforge.fenixedu.domain.student.StudentStatute;
 import net.sourceforge.fenixedu.presentationTier.Action.administrativeOffice.studentEnrolment.bolonha.AcademicAdminOfficeSpecialSeasonBolonhaStudentEnrolmentDA;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
+
+import org.apache.struts.action.ActionForm;
+import org.apache.struts.action.ActionForward;
+import org.apache.struts.action.ActionMapping;
+
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixWebFramework.struts.annotations.Tile;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 @Mapping(path = "/enrollment/evaluations/specialSeason", module = "student")
-@Forwards( {
-	@Forward(name = "showDegreeModulesToEnrol", path = "/student/enrollment/evaluations/specialSeasonShowDegreeModules.jsp"),
-	@Forward(name = "showPickSCPAndSemester", path = "/student/enrollment/evaluations/specialSeasonPickSCPAndSemester.jsp"),
-	@Forward(name = "showStudentEnrollmentMenu", path = "/student/enrollment/evaluations/specialSeason.jsp") })
+@Forwards({
+	@Forward(name = "showDegreeModulesToEnrol", path = "/student/enrollment/evaluations/specialSeasonShowDegreeModules.jsp", tileProperties = @Tile(  title = "private.student.subscribe.specialseason")),
+	@Forward(name = "showPickSCPAndSemester", path = "/student/enrollment/evaluations/specialSeasonPickSCPAndSemester.jsp", tileProperties = @Tile(  title = "private.student.subscribe.specialseason")),
+	@Forward(name = "showStudentEnrollmentMenu", path = "/student/enrollment/evaluations/specialSeason.jsp", tileProperties = @Tile(  title = "private.student.subscribe.specialseason")) })
 public class SpecialSeasonStudentEnrollmentDA extends AcademicAdminOfficeSpecialSeasonBolonhaStudentEnrolmentDA {
 
     public ActionForward entryPoint(ActionMapping mapping, ActionForm form, HttpServletRequest request,
@@ -53,8 +44,8 @@ public class SpecialSeasonStudentEnrollmentDA extends AcademicAdminOfficeSpecial
 		request.setAttribute("disableContinue", true);
 	    } else {
 		addActionMessage("warning", request, "message.out.special.season.enrolment.period.upcoming", enrolmentPeriod
-			.getStartDateDateTime().toString("dd-MM-yyyy"), enrolmentPeriod.getEndDateDateTime().toString(
-			"dd-MM-yyyy"));
+			.getStartDateDateTime().toString("dd-MM-yyyy"),
+			enrolmentPeriod.getEndDateDateTime().toString("dd-MM-yyyy"));
 		request.setAttribute("disableContinue", true);
 	    }
 	} else if (hasPendingDebts(student)) {
@@ -109,8 +100,8 @@ public class SpecialSeasonStudentEnrollmentDA extends AcademicAdminOfficeSpecial
 	    bean.getScp().getRegistration().grantSeniorStatute(bean.getExecutionSemester().getExecutionYear());
 	}
 
-	request.setAttribute("bolonhaStudentEnrollmentBean", new SpecialSeasonBolonhaStudentEnrolmentBean(bean.getScp(), bean
-		.getExecutionSemester()));
+	request.setAttribute("bolonhaStudentEnrollmentBean",
+		new SpecialSeasonBolonhaStudentEnrolmentBean(bean.getScp(), bean.getExecutionSemester()));
 	request.setAttribute("bean", bean);
 	return mapping.findForward("showDegreeModulesToEnrol");
     }
@@ -136,22 +127,21 @@ public class SpecialSeasonStudentEnrollmentDA extends AcademicAdminOfficeSpecial
 	    return true;
 	}
 
-	/* Iterative equivalent
-	boolean result = true;
-	for(StudentCurricularPlan scp : scps) {
-	    boolean eval = !(scp.getDegreeCurricularPlan().hasOpenSpecialSeasonEnrolmentPeriod(
-			ExecutionYear.readCurrentExecutionYear().getFirstExecutionPeriod())
-			|| scp.getDegreeCurricularPlan().hasOpenSpecialSeasonEnrolmentPeriod(
-				ExecutionYear.readCurrentExecutionYear().getLastExecutionPeriod())
-			|| scp.getDegreeCurricularPlan().hasOpenSpecialSeasonEnrolmentPeriod(
-				ExecutionYear.readCurrentExecutionYear().getPreviousExecutionYear().getFirstExecutionPeriod())
-			|| scp.getDegreeCurricularPlan().hasOpenSpecialSeasonEnrolmentPeriod(
-				ExecutionYear.readCurrentExecutionYear().getPreviousExecutionYear().getLastExecutionPeriod()));
-	    result = result && eval;
-	}
-	return result;
-	*/
-	
+	/*
+	 * Iterative equivalent boolean result = true; for(StudentCurricularPlan
+	 * scp : scps) { boolean eval =
+	 * !(scp.getDegreeCurricularPlan().hasOpenSpecialSeasonEnrolmentPeriod(
+	 * ExecutionYear.readCurrentExecutionYear().getFirstExecutionPeriod())
+	 * || scp.getDegreeCurricularPlan().hasOpenSpecialSeasonEnrolmentPeriod(
+	 * ExecutionYear.readCurrentExecutionYear().getLastExecutionPeriod()) ||
+	 * scp.getDegreeCurricularPlan().hasOpenSpecialSeasonEnrolmentPeriod(
+	 * ExecutionYear.readCurrentExecutionYear().getPreviousExecutionYear().
+	 * getFirstExecutionPeriod()) ||
+	 * scp.getDegreeCurricularPlan().hasOpenSpecialSeasonEnrolmentPeriod(
+	 * ExecutionYear.readCurrentExecutionYear().getPreviousExecutionYear().
+	 * getLastExecutionPeriod())); result = result && eval; } return result;
+	 */
+
 	final StudentCurricularPlan scp = scps.get(0);
 	scps.remove(0);
 	// Any SpecialSeason enrollment period opened for this/last year will
@@ -161,10 +151,11 @@ public class SpecialSeasonStudentEnrollmentDA extends AcademicAdminOfficeSpecial
 		|| scp.getDegreeCurricularPlan().hasOpenSpecialSeasonEnrolmentPeriod(
 			ExecutionYear.readCurrentExecutionYear().getLastExecutionPeriod())
 		|| scp.getDegreeCurricularPlan().hasOpenSpecialSeasonEnrolmentPeriod(
-			ExecutionYear.readCurrentExecutionYear().getPreviousExecutionYear().getFirstExecutionPeriod())
-		|| scp.getDegreeCurricularPlan().hasOpenSpecialSeasonEnrolmentPeriod(
-			ExecutionYear.readCurrentExecutionYear().getPreviousExecutionYear().getLastExecutionPeriod())) && enrollmentPeriodNotOpen(scps);
-	
+			ExecutionYear.readCurrentExecutionYear().getPreviousExecutionYear().getFirstExecutionPeriod()) || scp
+		.getDegreeCurricularPlan().hasOpenSpecialSeasonEnrolmentPeriod(
+			ExecutionYear.readCurrentExecutionYear().getPreviousExecutionYear().getLastExecutionPeriod()))
+		&& enrollmentPeriodNotOpen(scps);
+
     }
 
     private EnrolmentPeriodInSpecialSeasonEvaluations getNextEnrollmentPeriod(List<StudentCurricularPlan> scps) {

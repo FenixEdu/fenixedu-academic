@@ -27,22 +27,24 @@ import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 @Mapping(path = "/caseHandlingStandaloneIndividualCandidacyProcess", module = "academicAdminOffice", formBeanClass = StandaloneIndividualCandidacyProcessDA.StandaloneIndividualCandidacyForm.class)
-@Forwards( { @Forward(name = "intro", path = "/caseHandlingStandaloneCandidacyProcess.do?method=listProcessAllowedActivities"),
-	@Forward(name = "list-allowed-activities", path = "/candidacy/listIndividualCandidacyActivities.jsp"),
-	@Forward(name = "prepare-create-new-process", path = "/candidacy/selectPersonForCandidacy.jsp"),
-	@Forward(name = "fill-personal-information", path = "/candidacy/fillPersonalInformation.jsp"),
-	@Forward(name = "fill-candidacy-information", path = "/candidacy/standalone/fillCandidacyInformation.jsp"),
-	@Forward(name = "prepare-candidacy-payment", path = "/candidacy/candidacyPayment.jsp"),
-	@Forward(name = "edit-candidacy-personal-information", path = "/candidacy/editPersonalInformation.jsp"),
-	@Forward(name = "edit-common-candidacy-information", path = "/candidacy/editCommonCandidacyInformation.jsp"),
-	@Forward(name = "edit-candidacy-information", path = "/candidacy/standalone/editCandidacyInformation.jsp"),
-	@Forward(name = "introduce-candidacy-result", path = "/candidacy/standalone/introduceCandidacyResult.jsp"),
-	@Forward(name = "cancel-candidacy", path = "/candidacy/cancelCandidacy.jsp"),
-	@Forward(name = "create-registration", path = "/candidacy/createRegistration.jsp"),
-	@Forward(name = "select-person-for-bind-with-candidacy", path = "/candidacy/selectPersonForBind.jsp"),
-	@Forward(name = "edit-personal-information-for-bind", path = "/candidacy/editPersonalInformationForCandidacyBind.jsp")
+@Forwards({
+	@Forward(name = "intro", path = "/caseHandlingStandaloneCandidacyProcess.do?method=listProcessAllowedActivities", tileProperties = @Tile(title = "private.academicadministrativeoffice.applications.isolatedcurriculum")),
+	@Forward(name = "list-allowed-activities", path = "/candidacy/listIndividualCandidacyActivities.jsp", tileProperties = @Tile(title = "private.academicadministrativeoffice.applications.isolatedcurriculum")),
+	@Forward(name = "prepare-create-new-process", path = "/candidacy/selectPersonForCandidacy.jsp", tileProperties = @Tile(title = "private.academicadministrativeoffice.applications.isolatedcurriculum")),
+	@Forward(name = "fill-personal-information", path = "/candidacy/fillPersonalInformation.jsp", tileProperties = @Tile(title = "private.academicadministrativeoffice.applications.isolatedcurriculum")),
+	@Forward(name = "fill-candidacy-information", path = "/candidacy/standalone/fillCandidacyInformation.jsp", tileProperties = @Tile(title = "private.academicadministrativeoffice.applications.isolatedcurriculum")),
+	@Forward(name = "prepare-candidacy-payment", path = "/candidacy/candidacyPayment.jsp", tileProperties = @Tile(title = "private.academicadministrativeoffice.applications.isolatedcurriculum")),
+	@Forward(name = "edit-candidacy-personal-information", path = "/candidacy/editPersonalInformation.jsp", tileProperties = @Tile(title = "private.academicadministrativeoffice.applications.isolatedcurriculum")),
+	@Forward(name = "edit-common-candidacy-information", path = "/candidacy/editCommonCandidacyInformation.jsp", tileProperties = @Tile(title = "private.academicadministrativeoffice.applications.isolatedcurriculum")),
+	@Forward(name = "edit-candidacy-information", path = "/candidacy/standalone/editCandidacyInformation.jsp", tileProperties = @Tile(title = "private.academicadministrativeoffice.applications.isolatedcurriculum")),
+	@Forward(name = "introduce-candidacy-result", path = "/candidacy/standalone/introduceCandidacyResult.jsp", tileProperties = @Tile(title = "private.academicadministrativeoffice.applications.isolatedcurriculum")),
+	@Forward(name = "cancel-candidacy", path = "/candidacy/cancelCandidacy.jsp", tileProperties = @Tile(title = "private.academicadministrativeoffice.applications.isolatedcurriculum")),
+	@Forward(name = "create-registration", path = "/candidacy/createRegistration.jsp", tileProperties = @Tile(title = "private.academicadministrativeoffice.applications.isolatedcurriculum")),
+	@Forward(name = "select-person-for-bind-with-candidacy", path = "/candidacy/selectPersonForBind.jsp", tileProperties = @Tile(title = "private.academicadministrativeoffice.applications.isolatedcurriculum")),
+	@Forward(name = "edit-personal-information-for-bind", path = "/candidacy/editPersonalInformationForCandidacyBind.jsp", tileProperties = @Tile(title = "private.academicadministrativeoffice.applications.isolatedcurriculum"))
 
 })
 public class StandaloneIndividualCandidacyProcessDA extends IndividualCandidacyProcessDA {
@@ -142,8 +144,7 @@ public class StandaloneIndividualCandidacyProcessDA extends IndividualCandidacyP
 	final StandaloneIndividualCandidacyForm form = (StandaloneIndividualCandidacyForm) actionForm;
 	final StandaloneIndividualCandidacyProcessBean bean = getIndividualCandidacyProcessBean();
 	request.setAttribute(getIndividualCandidacyProcessBeanName(), bean);
-	bean.removeCurricularCourseFromResult(CurricularCourseByExecutionSemesterBean
-		.buildFrom(form.getCurricularCourseBeanKey()));
+	bean.removeCurricularCourseFromResult(CurricularCourseByExecutionSemesterBean.buildFrom(form.getCurricularCourseBeanKey()));
 	return mapping.findForward("fill-candidacy-information");
     }
 
@@ -209,8 +210,7 @@ public class StandaloneIndividualCandidacyProcessDA extends IndividualCandidacyP
 	final StandaloneIndividualCandidacyForm form = (StandaloneIndividualCandidacyForm) actionForm;
 	final StandaloneIndividualCandidacyProcessBean bean = getIndividualCandidacyProcessBean();
 	request.setAttribute(getIndividualCandidacyProcessBeanName(), bean);
-	bean.removeCurricularCourseFromResult(CurricularCourseByExecutionSemesterBean
-		.buildFrom(form.getCurricularCourseBeanKey()));
+	bean.removeCurricularCourseFromResult(CurricularCourseByExecutionSemesterBean.buildFrom(form.getCurricularCourseBeanKey()));
 	return mapping.findForward("edit-candidacy-information");
     }
 

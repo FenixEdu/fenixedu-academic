@@ -37,6 +37,7 @@ import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixWebFramework.struts.annotations.Tile;
 import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 /**
@@ -44,10 +45,11 @@ import pt.ist.fenixframework.pstm.AbstractDomainObject;
  * 
  */
 @Mapping(path = "/delegateInquiry", module = "delegate")
-@Forwards( { @Forward(name = "chooseCoursesToAnswer", path = "/delegate/inquiries/chooseCoursesToAnswer.jsp"),
-	@Forward(name = "inquiry1stPage", path = "/delegate/inquiries/inquiry1stPage.jsp"),
-	@Forward(name = "delegateInquiry", path = "/delegate/inquiries/delegateInquiry.jsp"),
-	@Forward(name = "inquiriesClosed", path = "/delegate/inquiries/inquiriesClosed.jsp") })
+@Forwards({
+	@Forward(name = "chooseCoursesToAnswer", path = "/delegate/inquiries/chooseCoursesToAnswer.jsp", tileProperties = @Tile(title = "private.delegate.participate.qucdelegateinquiries")),
+	@Forward(name = "inquiry1stPage", path = "/delegate/inquiries/inquiry1stPage.jsp", tileProperties = @Tile(title = "private.delegate.participate.qucdelegateinquiries")),
+	@Forward(name = "delegateInquiry", path = "/delegate/inquiries/delegateInquiry.jsp", tileProperties = @Tile(title = "private.delegate.participate.qucdelegateinquiries")),
+	@Forward(name = "inquiriesClosed", path = "/delegate/inquiries/inquiriesClosed.jsp", tileProperties = @Tile(title = "private.delegate.participate.qucdelegateinquiries")) })
 public class YearDelegateInquiryDA extends FenixDispatchAction {
 
     public ActionForward showCoursesToAnswerPage(ActionMapping actionMapping, ActionForm actionForm, HttpServletRequest request,
@@ -70,7 +72,9 @@ public class YearDelegateInquiryDA extends FenixDispatchAction {
 	}
 
 	if (yearDelegate != null) {
-	    PersonFunction lastYearDelegatePersonFunction = yearDelegate.getDegree().getUnit()
+	    PersonFunction lastYearDelegatePersonFunction = yearDelegate
+		    .getDegree()
+		    .getUnit()
 		    .getLastYearDelegatePersonFunctionByExecutionYearAndCurricularYear(executionPeriod.getExecutionYear(),
 			    yearDelegate.getCurricularYear());
 	    if (lastYearDelegatePersonFunction.getDelegate() != yearDelegate) {
@@ -78,8 +82,8 @@ public class YearDelegateInquiryDA extends FenixDispatchAction {
 	    }
 
 	    final ExecutionDegree executionDegree = ExecutionDegree.getByDegreeCurricularPlanAndExecutionYear(yearDelegate
-		    .getRegistration().getStudentCurricularPlan(executionPeriod).getDegreeCurricularPlan(), executionPeriod
-		    .getExecutionYear());
+		    .getRegistration().getStudentCurricularPlan(executionPeriod).getDegreeCurricularPlan(),
+		    executionPeriod.getExecutionYear());
 	    Set<ExecutionCourse> executionCoursesToInquiries = yearDelegate.getExecutionCoursesToInquiries(executionPeriod,
 		    executionDegree);
 

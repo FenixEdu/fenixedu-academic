@@ -16,24 +16,16 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixWebFramework.struts.annotations.Tile;
 import pt.utl.ist.fenix.tools.util.CollectionPager;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
-import pt.ist.fenixWebFramework.struts.annotations.Forward;
-import pt.ist.fenixWebFramework.struts.annotations.Forwards;
-import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
-import pt.ist.fenixWebFramework.struts.annotations.Forward;
-import pt.ist.fenixWebFramework.struts.annotations.Forwards;
-import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 @Mapping(module = "identificationCardManager", path = "/searchPeople", scope = "session", parameter = "method")
 @Forwards(value = {
-		@Forward(name = "viewPersonCards", path = "/identificationCardManager/viewPersonCards.jsp"),
-		@Forward(name = "showSearchPage", path = "/identificationCardManager/searchPeople.jsp") })
+	@Forward(name = "viewPersonCards", path = "/identificationCardManager/viewPersonCards.jsp", tileProperties = @Tile(title = "private.identificationcards.search")),
+	@Forward(name = "showSearchPage", path = "/identificationCardManager/searchPeople.jsp", tileProperties = @Tile(title = "private.identificationcards.search")) })
 public class CardGenerationSearchDA extends FenixDispatchAction {
 
     public ActionForward search(final ActionMapping mapping, final ActionForm actionForm, final HttpServletRequest request,
@@ -98,8 +90,7 @@ public class CardGenerationSearchDA extends FenixDispatchAction {
 	    final HttpServletRequest request, final HttpServletResponse response) throws Exception {
 	final String cardGenerationEntryIdString = request.getParameter("cardGenerationEntryId");
 	final Integer cardGenerationEntryId = cardGenerationEntryIdString != null && cardGenerationEntryIdString.length() > 0 ? Integer
-		.valueOf(cardGenerationEntryIdString)
-		: null;
+		.valueOf(cardGenerationEntryIdString) : null;
 	if (cardGenerationEntryId != null) {
 	    final CardGenerationEntry cardGenerationEntry = rootDomainObject.readCardGenerationEntryByOID(cardGenerationEntryId);
 	    request.setAttribute("cardGenerationEntry", cardGenerationEntry);

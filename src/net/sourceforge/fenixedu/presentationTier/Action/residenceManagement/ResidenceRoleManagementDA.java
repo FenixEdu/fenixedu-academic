@@ -18,15 +18,10 @@ import pt.ist.fenixWebFramework.services.Service;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
-import pt.ist.fenixWebFramework.struts.annotations.Forward;
-import pt.ist.fenixWebFramework.struts.annotations.Forwards;
-import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 @Mapping(path = "/residenceRoleManagement", module = "residenceManagement")
-@Forwards( { @Forward(name = "residenceRoleManagement", path = "/residenceManagement/residenceRoleManagement.jsp") })
+@Forwards({ @Forward(name = "residenceRoleManagement", path = "/residenceManagement/residenceRoleManagement.jsp", tileProperties = @Tile(title = "private.housingmanagement.rolemanagement" )) })
 public class ResidenceRoleManagementDA extends FenixDispatchAction {
 
     public ActionForward addResidenceRoleManagemenToPerson(ActionMapping mapping, ActionForm actionForm,

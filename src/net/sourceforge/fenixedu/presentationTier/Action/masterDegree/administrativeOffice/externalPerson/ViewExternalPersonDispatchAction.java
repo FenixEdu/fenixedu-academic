@@ -23,12 +23,6 @@ import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixWebFramework.struts.annotations.Tile;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
-import pt.ist.fenixWebFramework.struts.annotations.Forward;
-import pt.ist.fenixWebFramework.struts.annotations.Forwards;
-import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 /**
  * 
@@ -38,7 +32,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Tile;
  */
 
 @Mapping(module = "masterDegreeAdministrativeOffice", path = "/viewExternalPerson", scope = "request", parameter = "method")
-@Forwards(value = { @Forward(name = "start", path = "df.page.viewExternalPerson") })
+@Forwards(value = { @Forward(name = "start", path = "df.page.viewExternalPerson", tileProperties = @Tile(title = "teste28")) })
 @Exceptions(value = { @ExceptionHandling(type = net.sourceforge.fenixedu.presentationTier.Action.exceptions.ExistingActionException.class, key = "resources.Action.exceptions.ExistingActionException", handler = net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler.class, scope = "request") })
 public class ViewExternalPersonDispatchAction extends FenixDispatchAction {
 

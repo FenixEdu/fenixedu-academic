@@ -20,6 +20,7 @@
       <message-resources null="false" key="ENUMERATION_RESOURCES" parameter="resources.EnumerationResources"></message-resources>
       <message-resources null="false" key="PARKING_RESOURCES" parameter="resources.ParkingResources"></message-resources>
       <message-resources null="false" key="APPLICATION_RESOURCES" parameter="resources.ApplicationResources"></message-resources>
+      <message-resources null="false" key="TITLES_RESOURCES" parameter="resources.TitlesResources"></message-resources>
       <!-- ========== Plug Ins Configuration =================================== -->
       <plug-in className="pt.ist.fenixWebFramework.struts.tiles.FenixTilesPlugin">
             <set-property value="/WEB-INF/tiles/layouts/tiles-layout-definitions.xml,/WEB-INF/tiles/manager/functionalities/tiles-functionalities-definitions.xml,/WEB-INF/tiles/manager/functionalities/tiles-functionalities-pages-definitions.xml" property="definitions-config"></set-property>

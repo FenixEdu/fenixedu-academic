@@ -8,6 +8,8 @@
     </definition>
           
     <definition name="df.page.read-execution-course-teachers" extends="scientificCouncil.masterPage" >
+    	<put name="bundle" value="TITLES_RESOURCES"/>
+        <put name="title" value="private.scientificcouncil.credits.summary"/>
 		<put name="body" value="/scientificCouncil/credits/readTeachers_bd.jsp" />
 	</definition>
 	<definition name="df.page.insert-professorShip-by-number" extends="scientificCouncil.masterPage" >
@@ -78,6 +80,8 @@
 		<put name="creditLineDTO"/>
 	</definition>    	
 	<definition name="creditsResumeWithDescription" page="/credits/commons/creditsResumeWithDescription.jsp">
+		<put name="bundle" value="TITLES_RESOURCES"/>
+	 	<put name="title" value="private.scientificcouncil.credits.summary"/>
 		<put name="creditLineDTO"/>
 	</definition>
     
@@ -101,6 +105,8 @@
     
     <!-- CreditsPeriods -->
     <definition name="show-credits-periods" extends="scientificCouncil.masterPage">
+    	<put name="bundle" value="TITLES_RESOURCES"/>
+        <put name="title" value="private.scientificcouncil.credits.summary"/>
         <put name="body" value="/scientificCouncil/credits/periods/showPeriods.jsp"/>
     </definition>  
     <definition name="edit-teacher-credits-periods" extends="scientificCouncil.masterPage">
@@ -117,45 +123,61 @@
     
     <!-- ============  =========== -->
     <definition name="show-scientific-journal-merge-page" extends="scientificCouncil.masterPage">
+        
     	<put name="body" value="/scientificCouncil/researchActivity/showScientificJournalsToMerge.jsp"/>
     </definition>
     <definition name="show-scientific-journal-list-page" extends="scientificCouncil.masterPage">
+    	<put name="bundle" value="TITLES_RESOURCES"/>
+        <put name="title" value="private.scientificcouncil.scientificactivities.editjournal"/>
     	<put name="body" value="/scientificCouncil/researchActivity/showScientificJournalsToEdit.jsp"/>
     </definition>
     <definition name="show-scientific-journal-edit-page" extends="scientificCouncil.masterPage">
+        
     	<put name="body" value="/scientificCouncil/researchActivity/showEditScientificJournal.jsp"/>
     </definition>    
 	<definition name="show-scientific-journal-merge-list" extends="scientificCouncil.masterPage">
+	        
     	<put name="body" value="/scientificCouncil/researchActivity/showScientificJournalsToMergeList.jsp"/>
     </definition>
 	<definition name="show-journal-issue-merge-list" extends="scientificCouncil.masterPage">
+	    
     	<put name="body" value="/scientificCouncil/researchActivity/showJournalIssuesToMergeList.jsp"/>
     </definition>    
 	<definition name="show-journal-issue-merge-page" extends="scientificCouncil.masterPage">
+	    
     	<put name="body" value="/scientificCouncil/researchActivity/showJournalIssuesToMerge.jsp"/>
     </definition>
-	<definition name="show-event-edition-merge-list" extends="scientificCouncil.masterPage">
+	<definition name="show-event-edition-merge-list"	 extends="scientificCouncil.masterPage">
     	<put name="body" value="/scientificCouncil/researchActivity/showEventEditionsToMergeList.jsp"/>
     </definition>    
 	<definition name="show-event-edition-merge-page" extends="scientificCouncil.masterPage">
     	<put name="body" value="/scientificCouncil/researchActivity/showEventEditionsToMerge.jsp"/>
     </definition>            
 	<definition name="show-scientific-journal-list-page-merge-jounal-issues" extends="scientificCouncil.masterPage">
+		<put name="bundle" value="TITLES_RESOURCES"/>
+	    <put name="title" value="private.scientificcouncil.scientificactivities.mergejournals"/>
     	<put name="body" value="/scientificCouncil/researchActivity/showScientificJournalsToMergeJournalIssues.jsp"/>
     </definition>
 	<definition name="show-event-list-page-merge-event-editions" extends="scientificCouncil.masterPage">
+		<put name="bundle" value="TITLES_RESOURCES"/>
+		<put name="title" value = "private.scientificcouncil.scientificactivities.mergeeventissues"/>
     	<put name="body" value="/scientificCouncil/researchActivity/showEventsToMergeEventEditions.jsp"/>
     </definition>            
     <definition name="show-event-merge-page" extends="scientificCouncil.masterPage">
     	<put name="body" value="/scientificCouncil/researchActivity/showEventsToMerge.jsp"/>
     </definition>
         <definition name="show-event-merge-list" extends="scientificCouncil.masterPage">
+        
     	<put name="body" value="/scientificCouncil/researchActivity/showEventsToMergeList.jsp"/>
     </definition>
     <definition name="show-event-list-page" extends="scientificCouncil.masterPage">
+    	<put name="bundle" value="TITLES_RESOURCES"/>
+    	<put name="title" value="private.scientificcouncil.scientificactivities.editevent"/>
     	<put name="body" value="/scientificCouncil/researchActivity/showEventsToEdit.jsp"/>
     </definition>
     <definition name="show-event-edit-page" extends="scientificCouncil.masterPage">
+    	<put name="bundle" value="TITLES_RESOURCES"/>
+        <put name="title" value="private.scientificcouncil.scientificactivities.editevent"/>
     	<put name="body" value="/scientificCouncil/researchActivity/showEditEvent.jsp"/>
     </definition>    
     
@@ -238,15 +260,17 @@
     </definition>  
     
    	<definition name="scientific-upload-file" extends="scientificCouncil.communication">
-       <put name="body" value="/commons/unitFiles/uploadFile.jsp"/>  
+   	   <put name="body" value="/commons/unitFiles/uploadFile.jsp"/>  
     </definition>        
 
    	<definition name="scientific-manage-files" extends="scientificCouncil.communication">
-       <put name="body" value="/commons/unitFiles/manageFiles.jsp"/>  
+   		<put name="bundle" value="TITLES_RESOURCES"/>
+   	   	<put name="title" value="private.scientificcouncil.communication.files"/>
+       	<put name="body" value="/commons/unitFiles/manageFiles.jsp"/>  
     </definition>        
 
    	<definition name="scientific-edit-file" extends="scientificCouncil.communication">
-       <put name="body" value="/commons/unitFiles/editFile.jsp"/>  
+   	   <put name="body" value="/commons/unitFiles/editFile.jsp"/>  
     </definition>      
 
 	<!--  bolonha -->
@@ -264,6 +288,8 @@
     </definition>     
 
      <definition name="df.page.send.email.redirect" extends="scientificCouncil.masterPage">
+     	<put name="bundle" value="TITLES_RESOURCES"/>
+     	<put name="title" value="private.scientificcouncil.communication.sendemail"/>
         <put name="body" value="/email/sendEmailRedirect.jsp"/>
     </definition>
 </tiles-definitions>

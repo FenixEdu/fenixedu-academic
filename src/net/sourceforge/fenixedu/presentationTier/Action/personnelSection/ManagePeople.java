@@ -26,13 +26,15 @@ import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixWebFramework.struts.annotations.Tile;
 import pt.utl.ist.fenix.tools.util.CollectionPager;
 
 @Mapping(path = "/personnelManagePeople", module = "personnelSection")
-@Forwards({ @Forward(name = "searchPeople", path = "/personnelSection/people/searchPeople.jsp"),
-	@Forward(name = "createPerson", path = "/personnelSection/people/createPerson.jsp"),
-	@Forward(name = "createPersonFillInfo", path = "/personnelSection/people/createPersonFillInfo.jsp"),
-	@Forward(name = "viewPerson", path = "/personnelSection/people/viewPerson.jsp") })
+@Forwards({
+	@Forward(name = "searchPeople", path = "/personnelSection/people/searchPeople.jsp", tileProperties = @Tile(title = "private.staffarea.managepeople.searchpeople")),
+	@Forward(name = "createPerson", path = "/personnelSection/people/createPerson.jsp", tileProperties = @Tile(title = "private.staffarea.managepeople.createperson")),
+	@Forward(name = "createPersonFillInfo", path = "/personnelSection/people/createPersonFillInfo.jsp", tileProperties = @Tile(title = "private.staffarea.managepeople.createperson")),
+	@Forward(name = "viewPerson", path = "/personnelSection/people/viewPerson.jsp", tileProperties = @Tile(title = "private.staffarea.managepeople")) })
 public class ManagePeople extends FenixDispatchAction {
 
     public ActionForward search(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)

@@ -31,24 +31,16 @@ import org.apache.struts.action.ActionMessages;
 
 import pt.ist.fenixWebFramework.renderers.components.state.IViewState;
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixWebFramework.struts.annotations.Tile;
 import pt.utl.ist.fenix.tools.file.FileManagerException;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
-import pt.ist.fenixWebFramework.struts.annotations.Forward;
-import pt.ist.fenixWebFramework.struts.annotations.Forwards;
-import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
-import pt.ist.fenixWebFramework.struts.annotations.Forward;
-import pt.ist.fenixWebFramework.struts.annotations.Forwards;
-import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 @Mapping(module = "SpaceManager", path = "/manageBlueprints", scope = "session", parameter = "method")
 @Forwards(value = {
-		@Forward(name = "showBlueprintVersions", path = "/spaceManager/manageSpaceBlueprintVersions.jsp"),
-		@Forward(name = "createNewBlueprintVersion", path = "/spaceManager/addNewBlueprintVersion.jsp") })
+	@Forward(name = "showBlueprintVersions", path = "/spaceManager/manageSpaceBlueprintVersions.jsp", tileProperties = @Tile(  title = "private.spacemanagement.searchspaces")),
+	@Forward(name = "createNewBlueprintVersion", path = "/spaceManager/addNewBlueprintVersion.jsp", tileProperties = @Tile(  title = "private.spacemanagement.searchspaces")) })
 public class ManageSpaceBlueprintsDA extends FenixDispatchAction {
 
     public ActionForward showBlueprintVersions(final ActionMapping mapping, final HttpServletRequest request,
@@ -259,8 +251,7 @@ public class ManageSpaceBlueprintsDA extends FenixDispatchAction {
 
     private Boolean isToViewOriginalSpaceBlueprint(HttpServletRequest request) {
 	final String viewOriginalSpaceBlueprintString = request.getParameterMap().containsKey("viewOriginalSpaceBlueprint") ? request
-		.getParameter("viewOriginalSpaceBlueprint")
-		: (String) request.getAttribute("viewOriginalSpaceBlueprint");
+		.getParameter("viewOriginalSpaceBlueprint") : (String) request.getAttribute("viewOriginalSpaceBlueprint");
 	return viewOriginalSpaceBlueprintString != null ? Boolean.valueOf(viewOriginalSpaceBlueprintString) : null;
     }
 

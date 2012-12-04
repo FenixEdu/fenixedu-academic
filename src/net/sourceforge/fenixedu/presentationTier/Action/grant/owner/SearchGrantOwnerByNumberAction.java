@@ -18,14 +18,6 @@ import org.apache.struts.action.ActionMapping;
 import org.apache.struts.validator.DynaValidatorForm;
 
 import pt.ist.fenixWebFramework.security.UserView;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
-import pt.ist.fenixWebFramework.struts.annotations.Forward;
-import pt.ist.fenixWebFramework.struts.annotations.Forwards;
-import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
@@ -37,8 +29,8 @@ import pt.ist.fenixWebFramework.struts.annotations.Tile;
  */
 @Mapping(module = "facultyAdmOffice", path = "/searchGrantOwnerByNumber", input = "/searchGrantOwner.do?page=0&method=searchForm", attribute = "searchGrantOwnerByNumberForm", formBean = "searchGrantOwnerByNumberForm", scope = "request", parameter = "method")
 @Forwards(value = {
-		@Forward(name = "search-succesfull", path = "/facultyAdmOffice/grant/owner/searchGrantOwnerResultForm.jsp"),
-		@Forward(name = "search-unSuccesfull", path = "/searchGrantOwner.do?page=0&method=searchForm") })
+	@Forward(name = "search-succesfull", path = "/facultyAdmOffice/grant/owner/searchGrantOwnerResultForm.jsp", tileProperties = @Tile(title = "private.teachingstaffandresearcher.managementscholarship.scholarshipsearch")),
+	@Forward(name = "search-unSuccesfull", path = "/searchGrantOwner.do?page=0&method=searchForm", tileProperties = @Tile(title = "private.teachingstaffandresearcher.managementscholarship.scholarshipsearch")) })
 public class SearchGrantOwnerByNumberAction extends FenixDispatchAction {
     public ActionForward searchGrantOwner(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
@@ -49,7 +41,7 @@ public class SearchGrantOwnerByNumberAction extends FenixDispatchAction {
 	grantOwnerNumber = new Integer((String) searchGrantOwnerForm.get("grantOwnerNumber"));
 
 	IUserView userView = UserView.getUser();
-	infoGrantOwnerList = (List) SearchGrantOwner.run(null, null, null, grantOwnerNumber, null, null);
+	infoGrantOwnerList = SearchGrantOwner.run(null, null, null, grantOwnerNumber, null, null);
 
 	if (infoGrantOwnerList.isEmpty()) {
 	    return setError(request, mapping, "errors.grant.owner.not.found", "search-unSuccesfull", grantOwnerNumber);

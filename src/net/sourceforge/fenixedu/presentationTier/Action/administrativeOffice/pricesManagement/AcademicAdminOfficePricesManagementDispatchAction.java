@@ -7,16 +7,12 @@ import net.sourceforge.fenixedu.presentationTier.Action.commons.administrativeOf
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
-import pt.ist.fenixWebFramework.struts.annotations.Forward;
-import pt.ist.fenixWebFramework.struts.annotations.Forwards;
-import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 @Mapping(path = "/pricesManagement", module = "academicAdminOffice")
-@Forwards( { @Forward(name = "viewPrices", path = "/academicAdminOffice/pricesManagement/viewPrices.jsp"),
-	@Forward(name = "editPrice", path = "/academicAdminOffice/pricesManagement/editPrice.jsp") })
+@Forwards({
+	@Forward(name = "viewPrices", path = "/academicAdminOffice/pricesManagement/viewPrices.jsp", tileProperties = @Tile(title = "private.academicadministrativeoffice.payments.prices")),
+	@Forward(name = "editPrice", path = "/academicAdminOffice/pricesManagement/editPrice.jsp", tileProperties = @Tile(title = "private.academicadministrativeoffice.payments.prices")) })
 public class AcademicAdminOfficePricesManagementDispatchAction extends PricesManagementDispatchAction {
 
     @Override

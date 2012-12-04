@@ -13,11 +13,6 @@ import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Input;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
-import pt.ist.fenixWebFramework.struts.annotations.Forward;
-import pt.ist.fenixWebFramework.struts.annotations.Forwards;
-import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 /**
@@ -26,7 +21,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Tile;
  */
 
 @Mapping(path = "/manageRegistrationStartDates", module = "academicAdminOffice")
-@Forwards( { @Forward(name = "showEditStartDates", path = "/academicAdminOffice/student/registration/manageRegistrationStartDates.jsp") })
+@Forwards({ @Forward(name = "showEditStartDates", path = "/academicAdminOffice/student/registration/manageRegistrationStartDates.jsp", tileProperties = @Tile(title = "private.academicadministrativeoffice.studentoperations.viewstudents")) })
 public class ManageRegistrationStartDatesDA extends FenixDispatchAction {
 
     @Input

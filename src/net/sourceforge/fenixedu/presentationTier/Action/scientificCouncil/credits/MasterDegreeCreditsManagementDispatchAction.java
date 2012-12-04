@@ -44,21 +44,15 @@ import org.apache.struts.action.DynaActionForm;
 import org.joda.time.DateTime;
 
 import pt.ist.fenixWebFramework.security.UserView;
+import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
+import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixWebFramework.struts.annotations.Tile;
 import pt.utl.ist.fenix.tools.util.Pair;
 import pt.utl.ist.fenix.tools.util.excel.Spreadsheet;
 import pt.utl.ist.fenix.tools.util.excel.Spreadsheet.Row;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
-import pt.ist.fenixWebFramework.struts.annotations.Forward;
-import pt.ist.fenixWebFramework.struts.annotations.Forwards;
-import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
-import pt.ist.fenixWebFramework.struts.annotations.Forward;
-import pt.ist.fenixWebFramework.struts.annotations.Forwards;
-import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 /**
  * @author Ricardo Rodrigues Modified by Manuel Pinto
@@ -66,13 +60,13 @@ import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 @Mapping(module = "scientificCouncil", path = "/masterDegreeCreditsManagement", input = "/masterDegreeCreditsManagement.do?method=prepareEdit", attribute = "masterDegreeCreditsForm", formBean = "masterDegreeCreditsForm", scope = "request", parameter = "method")
 @Forwards(value = {
-		@Forward(name = "showCreditsReport", path = "/scientificCouncil/credits/showMasterDegreeCreditsReport.jsp"),
-		@Forward(name = "chooseMasterDegreeExecution", path = "/scientificCouncil/credits/chooseMasterDegreeExecution.jsp"),
-		@Forward(name = "editMasterDegreeCredits", path = "/scientificCouncil/credits/editMasterDegreeCredits.jsp"),
-		@Forward(name = "successfulEdit", path = "/masterDegreeCreditsManagement.do?method=viewMasterDegreeCredits") })
+	@Forward(name = "showCreditsReport", path = "/scientificCouncil/credits/showMasterDegreeCreditsReport.jsp", tileProperties = @Tile(  title = "private.scientificcouncil.credits.releasefor3rdcycle")),
+	@Forward(name = "chooseMasterDegreeExecution", path = "/scientificCouncil/credits/chooseMasterDegreeExecution.jsp", tileProperties = @Tile(  title = "private.scientificcouncil.credits.releasefor3rdcycle")),
+	@Forward(name = "editMasterDegreeCredits", path = "/scientificCouncil/credits/editMasterDegreeCredits.jsp", tileProperties = @Tile(  title = "private.scientificcouncil.credits.releasefor3rdcycle")),
+	@Forward(name = "successfulEdit", path = "/masterDegreeCreditsManagement.do?method=viewMasterDegreeCredits", tileProperties = @Tile(  title = "private.scientificcouncil.credits.releasefor3rdcycle")) })
 @Exceptions(value = {
-		@ExceptionHandling(type = java.lang.NumberFormatException.class, key = "error.credits.invalidNumber", handler = org.apache.struts.action.ExceptionHandler.class, path = "/masterDegreeCreditsManagement.do?method=prepareEdit", scope = "request"),
-		@ExceptionHandling(type = net.sourceforge.fenixedu.domain.exceptions.DomainException.class, handler = net.sourceforge.fenixedu.presentationTier.config.FenixDomainExceptionHandler.class, scope = "request") })
+	@ExceptionHandling(type = java.lang.NumberFormatException.class, key = "error.credits.invalidNumber", handler = org.apache.struts.action.ExceptionHandler.class, path = "/masterDegreeCreditsManagement.do?method=prepareEdit", scope = "request"),
+	@ExceptionHandling(type = net.sourceforge.fenixedu.domain.exceptions.DomainException.class, handler = net.sourceforge.fenixedu.presentationTier.config.FenixDomainExceptionHandler.class, scope = "request") })
 public class MasterDegreeCreditsManagementDispatchAction extends FenixDispatchAction {
 
     private final static String LINE_BRAKE = "\n";
@@ -164,8 +158,8 @@ public class MasterDegreeCreditsManagementDispatchAction extends FenixDispatchAc
 
 	request.setAttribute("executionDegree", executionDegree);
 
-	MasterDegreeCreditsDTO masterDegreeCreditsDTO = new MasterDegreeCreditsDTO(curricularCourse, executionDegree
-		.getExecutionYear());
+	MasterDegreeCreditsDTO masterDegreeCreditsDTO = new MasterDegreeCreditsDTO(curricularCourse,
+		executionDegree.getExecutionYear());
 	request.setAttribute("masterDegreeCreditsDTO", masterDegreeCreditsDTO);
 
 	dynaForm.set("executionDegreeID", executionDegree.getIdInternal());
@@ -270,9 +264,9 @@ public class MasterDegreeCreditsManagementDispatchAction extends FenixDispatchAc
 
 		    GenericTrio<Pair<ExecutionCourse, Boolean>, Integer, Integer> executionCourseMap = new GenericTrio<Pair<ExecutionCourse, Boolean>, Integer, Integer>(
 			    new Pair<ExecutionCourse, Boolean>(executionCourse, executionCourse.isMasterDegreeDFAOrDEAOnly()),
-			    curricularCourse.getEnrolmentsByExecutionPeriod(executionCourse.getExecutionPeriod()).size(), Integer
-				    .valueOf(curricularCourse.getNumberOfStudentsWithFirstEnrolmentIn(executionCourse
-					    .getExecutionPeriod())));
+			    curricularCourse.getEnrolmentsByExecutionPeriod(executionCourse.getExecutionPeriod()).size(),
+			    Integer.valueOf(curricularCourse.getNumberOfStudentsWithFirstEnrolmentIn(executionCourse
+				    .getExecutionPeriod())));
 
 		    executionPeriodMap.add(executionCourseMap);
 
@@ -344,8 +338,8 @@ public class MasterDegreeCreditsManagementDispatchAction extends FenixDispatchAc
 		executionDegree.getExecutionYear());
 	List<MasterDegreeCreditsDTO> masterDegreeCoursesDTOs = new ArrayList<MasterDegreeCreditsDTO>();
 	for (CurricularCourse curricularCourse : curricularCourses) {
-	    MasterDegreeCreditsDTO masterDegreeCreditsDTO = new MasterDegreeCreditsDTO(curricularCourse, executionDegree
-		    .getExecutionYear());
+	    MasterDegreeCreditsDTO masterDegreeCreditsDTO = new MasterDegreeCreditsDTO(curricularCourse,
+		    executionDegree.getExecutionYear());
 	    masterDegreeCoursesDTOs.add(masterDegreeCreditsDTO);
 	}
 	return masterDegreeCoursesDTOs;

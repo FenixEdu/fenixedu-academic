@@ -39,22 +39,28 @@
 	
 	<!-- SHIFT ENROLMENT DEFINITIONS -->
 	<definition name="df.page.shift.enrolment.chooseRegistration" extends="definition.student.masterPage">
-	          <put name="body" value="/student/enrollment/shifts/chooseRegistration.jsp" />
+		<put name="title" value ="A"/>
+	    <put name="body" value="/student/enrollment/shifts/chooseRegistration.jsp" />
 	</definition>
 	<definition name="prepare-enrollment-view-warning" extends="definition.student.one-column">
-	          <put name="body" value="/student/enrollment/prepareEnrollmentViewWarning.jsp" />
+	    <put name="title" value ="B"/>
+	    <put name="body" value="/student/enrollment/prepareEnrollmentViewWarning.jsp" />
 	</definition>
 	<definition name="show-courses-by-degree" extends="definition.student.one-column">
-	          <put name="body" value="/student/enrollment/showCoursesByDegree.jsp" />
+		<put name="title" value ="C"/>
+	    <put name="body" value="/student/enrollment/showCoursesByDegree.jsp" />
 	</definition>
 	<definition name="show-shifts-enrollment" extends="definition.student.one-column">
+		<put name="title" value ="D"/>
 		<put name="body" value="/student/enrollment/showShiftsEnrollment.jsp" />		
 	</definition>
-	<definition name="show-shifts-to-enroll" extends="definition.student.masterPage">	
+	<definition name="show-shifts-to-enroll" extends="definition.student.masterPage">
+		<put name="title" value ="E"/>	
 		<put name="navLocal" value="/student/enrollment/listClasses.jsp" />
 		<put name="body" value="/student/enrollment/showShiftsToEnroll.jsp" />
 	</definition>
 	<definition name="enrollment-confirmation" extends="definition.student.one-column">
+		<put name="title" value ="F"/>
 		<put name="body" value="/student/enrollment/showShiftsEnrollment.jsp" />		
 	</definition>
 	
@@ -64,15 +70,21 @@
 		<put name="body" value="/student/notAuthorized_bd.jsp" />
 	</definition>	
 	<definition name="df.page.curriculum.chooseRegistration" extends="definition.student.masterPage">
+		<put name="bundle" value="TITLES_RESOURCES"/>
+		<put name="title" value="private.student.view.curriculum"/>
 		<put name="body" value="/student/curriculum/chooseRegistration.jsp" />
 	</definition>
     <definition name="chooseCycleForViewRegistrationCurriculum" extends="definition.student.masterPage">
+        
         <put name="body" value="/student/curriculum/chooseCycleForViewRegistrationCurriculum.jsp"></put>
     </definition>
     <definition name="view-registration-curriculum" extends="definition.student.masterPage">
+        
         <put name="body" value="/student/curriculum/viewRegistrationCurriculum.jsp"></put>
     </definition>
 	<definition name="df.page.showStudentCurriculum" extends="definition.student.masterPage" >
+		<put name="bundle" value="TITLES_RESOURCES"/>
+		<put name="title" value="private.student.view.curriculum"/>
 		<put name="body" value="/student/curriculum/displayStudentCurriculum_bd.jsp" />
 	</definition>	
 	<definition name="df.page.showStudentCurricularPlans" extends="definition.student.masterPage" >
@@ -156,6 +168,8 @@
 	</definition>
 
 	<definition name="df.page.finalDegreeWork.candidacy" extends="definition.student.masterPage">
+		<put name="bundle" value="TITLES_RESOURCES"/>
+		<put name="title" value="private.student.finalists.application"/>
 		<put name="body" value="/student/finalDegreeWork/candidacy.jsp"/>
 	</definition>
 	<definition name="df.page.finalDegreeWork.dissertations" extends="definition.student.masterPage">
@@ -254,26 +268,38 @@
 	</definition>
 		
 	<definition name="df.page.documentRequest.createDocumentRequests" extends="definition.student.administrativeOfficeServices">
+		<put name="bundle" value="TITLES_RESOURCES"/>
+		<put name="title" value="private.student.view.academicservices.certificaterequest"/>
 		<put name="body" value="/student/administrativeOfficeServices/documentRequest/createDocumentRequests.jsp" />
 	</definition>
 	
 	<definition name="df.page.documentRequest.chooseRegistration" extends="definition.student.administrativeOfficeServices">
+		<put name="bundle" value="TITLES_RESOURCES"/>
+		<put name="title" value="private.student.view.academicservices.certificaterequest"/>
 		<put name="body" value="/student/administrativeOfficeServices/documentRequest/chooseRegistration.jsp" />
 	</definition>
 		
 	<definition name="df.page.documentRequest.viewDocumentRequestsToCreate" extends="definition.student.administrativeOfficeServices">
+		<put name="bundle" value="TITLES_RESOURCES"/>
+		<put name="title" value="private.student.view.academicservices.certificaterequest"/>
 		<put name="body" value="/student/administrativeOfficeServices/documentRequest/viewDocumentRequestsToCreate.jsp" />
 	</definition>
 		
 	<definition name="df.page.documentRequest.createSuccess" extends="definition.student.administrativeOfficeServices">
+		<put name="bundle" value="TITLES_RESOURCES"/>
+		<put name="title" value="private.student.view.academicservices.certificaterequest"/>
 		<put name="body" value="/student/administrativeOfficeServices/documentRequest/createSuccess.jsp" />
 	</definition>
 		
 	<definition name="df.page.documentRequest.viewDocumentRequests" extends="definition.student.administrativeOfficeServices">
+		<put name="bundle" value="TITLES_RESOURCES"/>
+		<put name="title" value="private.student.view.academicservices.viewrequests"/>
 		<put name="body" value="/student/administrativeOfficeServices/documentRequest/viewDocumentRequests.jsp" />
 	</definition>
 		
 	<definition name="df.page.documentRequest.viewDocumentRequest" extends="definition.student.administrativeOfficeServices">
+		<put name="bundle" value="TITLES_RESOURCES"/>
+		<put name="title" value="private.student.view.academicservices.viewrequests"/>
 		<put name="body" value="/student/administrativeOfficeServices/documentRequest/viewDocumentRequest.jsp" />
 	</definition>
 	
@@ -287,6 +313,8 @@
 	
 	
 	<definition name="df.page.documents.showAnnualIrsDocuments" extends="definition.student.administrativeOfficeServices">
+		<put name="bundle" value="TITLES_RESOURCES"/>
+		<put name="title" value="private.student.view.academicservices.annualirs"/>
 		<put name="body" value="/student/administrativeOfficeServices/generatedDocuments/showAnnualIRSDocuments.jsp" />
 	</definition>
 	
@@ -311,16 +339,22 @@
 	
 	<!-- Begin: Payments -->
 	<definition name="payments.management.showEvents" extends="definition.student.administrativeOfficeServices">
+		<put name="bundle" value="TITLES_RESOURCES"/>
+		<put name="title" value="private.student.view.academicservices.payments"/>
 		<put name="body" value="/student/administrativeOfficeServices/payments/showStudentEvents.jsp"/>
 	</definition>
 	
 	<definition name="payments.management.showEventDetails" extends="definition.student.administrativeOfficeServices">
+		<put name="bundle" value="TITLES_RESOURCES"/>
+		<put name="title" value="private.student.view.academicservices.payments"/>
 		<put name="body" value="/student/administrativeOfficeServices/payments/showEventDetails.jsp"/>
 	</definition>
 	<!-- End: Payments -->
 	
 	<!-- Begin: Prices -->
 	<definition name="prices.viewPrices" extends="definition.student.administrativeOfficeServices">
+		<put name="bundle" value="TITLES_RESOURCES"/>
+		<put name="title" value="private.student.view.academicservices.pricing"/>
 		<put name="body" value="/student/administrativeOfficeServices/prices/viewPrices.jsp"/>
 	</definition>
 	<!-- End: Prices -->
@@ -354,6 +388,7 @@
 
 	<!-- Begin: Bolonha Student Enrolment -->
 	<definition name="enrolment.bolonha.showDegreeModulesToEnrol" extends="definition.student.masterPage">
+
 		<put name="body" value="/student/enrollment/bolonha/showDegreeModulesToEnrol.jsp"/>
 	</definition>
 	<definition name="enrolment.bolonha.chooseOptionalCurricularCourseEnrol" extends="definition.student.masterPage">
@@ -385,12 +420,13 @@
 	<!-- start: Edit Missing Candidacy Information -->
 	
 	<definition name="candidacy.edit.missing.candidacy.information" extends="df.layout.two-column.no-navigation">
-	  <put name="title" value="Portal do Estudante" />
-	  <put name="serviceName" value="Portal do Estudante" />	
-	  <put name="navLocal" value="/student/commons/commonNavLocalStudent.jsp" />
-	  <put name="navGeral" value="/student/commons/commonNavGeralStudent.jsp" />
-	  <put name="body" value="/student/candidacy/editMissingCandidacyInformation.jsp" />
-	  <put name="footer" value="/copyright.jsp" />
+		<put name="bundle" value="TITLES_RESOURCES"/>
+		<put name="title" value="private.student" />
+		<put name="serviceName" value="Portal do Estudante" />	
+		<put name="navLocal" value="/student/commons/commonNavLocalStudent.jsp" />
+		<put name="navGeral" value="/student/commons/commonNavGeralStudent.jsp" />
+		<put name="body" value="/student/candidacy/editMissingCandidacyInformation.jsp" />
+		<put name="footer" value="/copyright.jsp" />
 	</definition>
 	
 	

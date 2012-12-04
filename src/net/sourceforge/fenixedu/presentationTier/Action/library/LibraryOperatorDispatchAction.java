@@ -42,12 +42,14 @@ import pt.ist.fenixWebFramework.services.Service;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixWebFramework.struts.annotations.Tile;
 import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 @Mapping(path = "/libraryOperator", module = "library")
-@Forwards({ @Forward(name = "libraryOperator", path = "/library/operator/libraryOperator.jsp"),
-	@Forward(name = "libraryUpdateCapacityAndLockers", path = "/library/operator/libraryUpdateCapacityAndLockers.jsp"),
-	@Forward(name = "libraryAddOrRemoveOperators", path = "/library/operator/libraryAddOrRemoveOperators.jsp") })
+@Forwards({
+	@Forward(name = "libraryOperator", path = "/library/operator/libraryOperator.jsp", tileProperties = @Tile(title = "private.library.libraryoperator")),
+	@Forward(name = "libraryUpdateCapacityAndLockers", path = "/library/operator/libraryUpdateCapacityAndLockers.jsp", tileProperties = @Tile(title = "private.library.updatecapacityandlockers")),
+	@Forward(name = "libraryAddOrRemoveOperators", path = "/library/operator/libraryAddOrRemoveOperators.jsp", tileProperties = @Tile(title = "private.library.addorremoveoperators")) })
 public class LibraryOperatorDispatchAction extends FenixDispatchAction {
     public ActionForward prepare(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) {

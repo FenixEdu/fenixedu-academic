@@ -15,14 +15,14 @@
 		<link rel="stylesheet" type="text/css" media="screen" href="<%= request.getContextPath() %>/CSS/iststyle.css" />
 
 		<title>
-			<bean:message key="dot.title" bundle="GLOBAL_RESOURCES"/> <bean:message key="site.map.title" bundle="GLOBAL_RESOURCES"/>
+			<bean:message key="dot.title" bundle="GLOBAL_RESOURCES"/><bean:message key="site.map.title" bundle="GLOBAL_RESOURCES"/>
 		</title>
 	</head>
 
 	<body>
 		<div id="container">
 
-			<h1><bean:message key="dot.title" bundle="GLOBAL_RESOURCES"/> <bean:message key="site.map.title" bundle="GLOBAL_RESOURCES"/></h1>
+			<h1><bean:message key="dot.title" bundle="GLOBAL_RESOURCES"/><bean:message key="site.map.title" bundle="GLOBAL_RESOURCES"/></h1>
 			<br/>
 			<jsp:include page="i18n.jsp"/>
 

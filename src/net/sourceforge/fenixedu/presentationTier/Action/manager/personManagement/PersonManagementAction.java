@@ -45,6 +45,7 @@ import pt.ist.fenixWebFramework.security.UserView;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixWebFramework.struts.annotations.Tile;
 import pt.utl.ist.fenix.tools.util.CollectionPager;
 
 /**
@@ -53,9 +54,9 @@ import pt.utl.ist.fenix.tools.util.CollectionPager;
  */
 @Mapping(module = "personnelSection", path = "/findPerson", input = "findPerson", attribute = "findPersonForm", formBean = "findPersonForm", scope = "request", parameter = "method")
 @Forwards(value = {
-		@Forward(name = "viewPerson", path = "/personnelSection/people/viewPerson.jsp"),
-		@Forward(name = "displayPerson", path = "/manager/personManagement/displayPerson.jsp"),
-		@Forward(name = "findPerson", path = "/manager/personManagement/findPerson.jsp") })
+	@Forward(name = "viewPerson", path = "/personnelSection/people/viewPerson.jsp"),
+	@Forward(name = "displayPerson", path = "/manager/personManagement/displayPerson.jsp"),
+	@Forward(name = "findPerson", path = "/manager/personManagement/findPerson.jsp", tileProperties = @Tile(title = "private.staffarea.interfacegiaf.interfacegiaf.searchpeople")) })
 public class PersonManagementAction extends FenixDispatchAction {
 
     public ActionForward firstPage(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
@@ -183,9 +184,9 @@ public class PersonManagementAction extends FenixDispatchAction {
 	final IViewState viewState = RenderUtils.getViewState("anyPersonSearchBeanId");
 	AnyPersonSearchBean bean = (AnyPersonSearchBean) viewState.getMetaObject().getObject();
 
-	SearchParameters searchParameters = new SearchPerson.SearchParameters(bean.getName(), null, null, bean
-		.getDocumentIdNumber(), bean.getIdDocumentType() != null ? bean.getIdDocumentType().getName() : null, null, null,
- null, null, null, null, null, (String) null);
+	SearchParameters searchParameters = new SearchPerson.SearchParameters(bean.getName(), null, null,
+		bean.getDocumentIdNumber(), bean.getIdDocumentType() != null ? bean.getIdDocumentType().getName() : null, null,
+		null, null, null, null, null, null, (String) null);
 
 	SearchPersonPredicate predicate = new SearchPerson.SearchPersonPredicate(searchParameters);
 

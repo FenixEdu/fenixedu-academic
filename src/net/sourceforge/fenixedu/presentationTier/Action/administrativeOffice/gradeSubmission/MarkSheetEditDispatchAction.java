@@ -32,16 +32,12 @@ import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
-import pt.ist.fenixWebFramework.struts.annotations.Forward;
-import pt.ist.fenixWebFramework.struts.annotations.Forwards;
-import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 @Mapping(path = "/editMarkSheet", module = "academicAdminOffice", formBean = "markSheetManagementForm", input = "/markSheetManagement.do?method=prepareSearchMarkSheet")
-@Forwards( { @Forward(name = "editMarkSheet", path = "/academicAdminOffice/gradeSubmission/editMarkSheet.jsp"),
-	@Forward(name = "searchMarkSheetFilled", path = "/markSheetManagement.do?method=prepareSearchMarkSheetFilled") })
+@Forwards({
+	@Forward(name = "editMarkSheet", path = "/academicAdminOffice/gradeSubmission/editMarkSheet.jsp", tileProperties = @Tile(title = "private.academicadministrativeoffice.marksheets.marksheetmanagement")),
+	@Forward(name = "searchMarkSheetFilled", path = "/markSheetManagement.do?method=prepareSearchMarkSheetFilled", tileProperties = @Tile(title = "private.academicadministrativeoffice.marksheets.marksheetmanagement")) })
 // @Forward(name = "editArchiveInformation", path =
 // "/academicAdminOffice/gradeSubmission/editMarkSheetArchiveInformation.jsp")
 // })
@@ -76,11 +72,12 @@ public class MarkSheetEditDispatchAction extends MarkSheetDispatchAction {
 
 	ActionMessages actionMessages = createActionMessages();
 
-	checkIfTeacherIsResponsibleOrCoordinator(editBean.getCurricularCourse(), editBean.getExecutionPeriod(), editBean
-		.getTeacherId(), editBean.getTeacher(), request, editBean.getMarkSheet().getMarkSheetType(), actionMessages);
+	checkIfTeacherIsResponsibleOrCoordinator(editBean.getCurricularCourse(), editBean.getExecutionPeriod(),
+		editBean.getTeacherId(), editBean.getTeacher(), request, editBean.getMarkSheet().getMarkSheetType(),
+		actionMessages);
 
-	checkIfEvaluationDateIsInExamsPeriod(editBean.getDegreeCurricularPlan(), editBean.getExecutionPeriod(), editBean
-		.getEvaluationDate(), editBean.getMarkSheet().getMarkSheetType(), request, actionMessages);
+	checkIfEvaluationDateIsInExamsPeriod(editBean.getDegreeCurricularPlan(), editBean.getExecutionPeriod(),
+		editBean.getEvaluationDate(), editBean.getMarkSheet().getMarkSheetType(), request, actionMessages);
 
 	if (actionMessages.isEmpty()) {
 	    try {

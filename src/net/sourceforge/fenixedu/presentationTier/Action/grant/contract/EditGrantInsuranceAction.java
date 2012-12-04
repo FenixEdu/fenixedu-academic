@@ -29,14 +29,6 @@ import org.apache.struts.action.ActionMapping;
 import org.apache.struts.validator.DynaValidatorForm;
 
 import pt.ist.fenixWebFramework.security.UserView;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
-import pt.ist.fenixWebFramework.struts.annotations.Forward;
-import pt.ist.fenixWebFramework.struts.annotations.Forwards;
-import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
@@ -48,8 +40,8 @@ import pt.ist.fenixWebFramework.struts.annotations.Tile;
  */
 @Mapping(module = "facultyAdmOffice", path = "/editGrantInsurance", input = "/editGrantInsurance.do?page=0&method=prepareEditGrantInsuranceForm", attribute = "editGrantInsuranceForm", formBean = "editGrantInsuranceForm", scope = "request", parameter = "method")
 @Forwards(value = {
-		@Forward(name = "manage-grant-contract", path = "/manageGrantContract.do?method=prepareManageGrantContractForm"),
-		@Forward(name = "edit-grant-insurance", path = "/facultyAdmOffice/grant/contract/editGrantInsurance.jsp") })
+	@Forward(name = "manage-grant-contract", path = "/manageGrantContract.do?method=prepareManageGrantContractForm"),
+	@Forward(name = "edit-grant-insurance", path = "/facultyAdmOffice/grant/contract/editGrantInsurance.jsp", tileProperties = @Tile(title = "private.teachingstaffandresearcher.listings.byinsurance")) })
 public class EditGrantInsuranceAction extends FenixDispatchAction {
 
     /*
@@ -76,7 +68,7 @@ public class EditGrantInsuranceAction extends FenixDispatchAction {
 	    // Read the insurance
 
 	    InfoGrantContract infoGrantContract = null;
-	    InfoGrantInsurance infoGrantInsurance = (InfoGrantInsurance) ReadGrantInsuranceByGrantContract.run(idContract);
+	    InfoGrantInsurance infoGrantInsurance = ReadGrantInsuranceByGrantContract.run(idContract);
 
 	    if (infoGrantInsurance == null) { // Is a new Insurance
 		// Read the contract
@@ -133,8 +125,8 @@ public class EditGrantInsuranceAction extends FenixDispatchAction {
 		    throw new Error("unkown type: " + infoGrantInsurance.getInfoGrantPaymentEntity());
 		}
 
-		InfoGrantPaymentEntity infoGrantPaymentEntity = (InfoGrantPaymentEntity) ReadPaymentEntityByNumberAndClass.run(
-			infoGrantInsurance.getInfoGrantPaymentEntity().getNumber(), classname);
+		InfoGrantPaymentEntity infoGrantPaymentEntity = ReadPaymentEntityByNumberAndClass.run(infoGrantInsurance
+			.getInfoGrantPaymentEntity().getNumber(), classname);
 
 		if (infoGrantPaymentEntity == null) {
 		    if (verifyStringParameterInForm(editGrantInsuranceForm, "project")) {

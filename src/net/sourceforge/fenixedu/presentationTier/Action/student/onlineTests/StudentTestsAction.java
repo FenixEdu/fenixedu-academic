@@ -64,18 +64,20 @@ import org.apache.util.Base64;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 /**
  * @author Susana Fernandes
  */
 @Mapping(module = "student", path = "/studentTests", input = "/studentTests.do?method=prepareToDoTest", attribute = "studentTestForm", formBean = "studentTestForm", scope = "request", validate = false, parameter = "method")
 @Forwards(value = {
-	@Forward(name = "testsFirstPage", path = "/student/onlineTests/testsFirstPage_bd.jsp"),
-	@Forward(name = "viewStudentExecutionCoursesWithTests", path = "/student/onlineTests/viewStudentExecutionCoursesWithTests_bd.jsp"),
-	@Forward(name = "testError", path = "/student/onlineTests/testError_bd.jsp"),
-	@Forward(name = "studentFeedback", path = "show-Student-Test-Feedback"),
-	@Forward(name = "showTestCorrection", path = "show-Test-Correction"), @Forward(name = "doTest", path = "do-Test"),
-	@Forward(name = "giveUpQuestion", path = "/student/onlineTests/giveUpQuestion.jsp") })
+	@Forward(name = "testsFirstPage", path = "/student/onlineTests/testsFirstPage_bd.jsp", tileProperties = @Tile(  title = "private.student.submit.worksheets")),
+	@Forward(name = "viewStudentExecutionCoursesWithTests", path = "/student/onlineTests/viewStudentExecutionCoursesWithTests_bd.jsp", tileProperties = @Tile(  title = "private.student.submit.worksheets")),
+	@Forward(name = "testError", path = "/student/onlineTests/testError_bd.jsp", tileProperties = @Tile(  title = "private.student.submit.worksheets")),
+	@Forward(name = "studentFeedback", path = "show-Student-Test-Feedback", tileProperties = @Tile(  title = "private.student.submit.worksheets")),
+	@Forward(name = "showTestCorrection", path = "show-Test-Correction", tileProperties = @Tile(  title = "private.student.submit.worksheets")),
+	@Forward(name = "doTest", path = "do-Test", tileProperties = @Tile(  title = "private.student.submit.worksheets")),
+	@Forward(name = "giveUpQuestion", path = "/student/onlineTests/giveUpQuestion.jsp", tileProperties = @Tile(  title = "private.student.submit.worksheets")) })
 public class StudentTestsAction extends FenixDispatchAction {
 
     public ActionForward viewStudentExecutionCoursesWithTests(ActionMapping mapping, ActionForm form, HttpServletRequest request,

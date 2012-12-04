@@ -35,25 +35,15 @@ import org.apache.struts.action.ActionMessages;
 import org.joda.time.DateTimeFieldType;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.utl.ist.fenix.tools.util.excel.StyledExcelSpreadsheet;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
-import pt.ist.fenixWebFramework.struts.annotations.Forward;
-import pt.ist.fenixWebFramework.struts.annotations.Forwards;
-import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
-import pt.ist.fenixWebFramework.struts.annotations.Forward;
-import pt.ist.fenixWebFramework.struts.annotations.Forwards;
-import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 @Mapping(module = "personnelSection", path = "/anualInstallments", attribute = "parametrizationForm", formBean = "parametrizationForm", scope = "request", parameter = "method")
-@Forwards(value = {
-		@Forward(name = "show-bonus-installment", path = "show-bonus-installment"),
-		@Forward(name = "show-anual-installment", path = "show-anual-installment") })
+@Forwards(value = { @Forward(name = "show-bonus-installment", path = "show-bonus-installment"),
+	@Forward(name = "show-anual-installment", path = "show-anual-installment") })
 public class AnualInstallmentsDispatchAction extends FenixDispatchAction {
 
     private final String separator = ";";
@@ -121,8 +111,8 @@ public class AnualInstallmentsDispatchAction extends FenixDispatchAction {
     }
 
     public List<AnualBonusInstallmentFactory> getOrderedAnualBonusInstallmentsList() {
-	List<AnualBonusInstallment> anualBonusInstallmentList = new ArrayList<AnualBonusInstallment>(rootDomainObject
-		.getAnualBonusInstallments());
+	List<AnualBonusInstallment> anualBonusInstallmentList = new ArrayList<AnualBonusInstallment>(
+		rootDomainObject.getAnualBonusInstallments());
 	HashMap<Integer, Integer> anualBonusInstallments = new HashMap<Integer, Integer>();
 
 	for (AnualBonusInstallment anualBonusInstallment : anualBonusInstallmentList) {
@@ -207,8 +197,8 @@ public class AnualInstallmentsDispatchAction extends FenixDispatchAction {
 	    bonusInstallment = new BonusInstallment();
 	}
 	bonusInstallment.updateList();
-	List<EmployeeBonusInstallment> employeeBonusInstallmentList = new ArrayList<EmployeeBonusInstallment>(bonusInstallment
-		.getBonusInstallmentList());
+	List<EmployeeBonusInstallment> employeeBonusInstallmentList = new ArrayList<EmployeeBonusInstallment>(
+		bonusInstallment.getBonusInstallmentList());
 
 	Collections.sort(employeeBonusInstallmentList, new BeanComparator("employee.employeeNumber"));
 	StringBuilder stringBuilder = new StringBuilder();
@@ -248,8 +238,8 @@ public class AnualInstallmentsDispatchAction extends FenixDispatchAction {
 		employeeBonusInstallment.getAnualBonusInstallment().getPaymentPartialDate().get(DateTimeFieldType.year()))
 		.append(separator);
 	stringBuilder.append(
-		getMonthString(employeeBonusInstallment.getAnualBonusInstallment().getPaymentPartialDate().get(
-			DateTimeFieldType.monthOfYear()))).append(endLine);
+		getMonthString(employeeBonusInstallment.getAnualBonusInstallment().getPaymentPartialDate()
+			.get(DateTimeFieldType.monthOfYear()))).append(endLine);
 	return stringBuilder.toString();
     }
 
@@ -298,11 +288,11 @@ public class AnualInstallmentsDispatchAction extends FenixDispatchAction {
 		    // getPartialYearMonth().get(DateTimeFieldType.year()))
 		    // .append(separator);
 		    stringBuilder.append(
-			    getMonthString(employeeBonusInstallment.getAnualBonusInstallment().getPaymentPartialDate().get(
-				    DateTimeFieldType.year()))).append(endLine);
+			    getMonthString(employeeBonusInstallment.getAnualBonusInstallment().getPaymentPartialDate()
+				    .get(DateTimeFieldType.year()))).append(endLine);
 		    stringBuilder.append(
-			    getMonthString(employeeBonusInstallment.getAnualBonusInstallment().getPaymentPartialDate().get(
-				    DateTimeFieldType.monthOfYear()))).append(endLine);
+			    getMonthString(employeeBonusInstallment.getAnualBonusInstallment().getPaymentPartialDate()
+				    .get(DateTimeFieldType.monthOfYear()))).append(endLine);
 
 		    stringBuilder.append(
 			    new DecimalFormat("000000").format(employeeBonusInstallment.getEmployee().getEmployeeNumber()))

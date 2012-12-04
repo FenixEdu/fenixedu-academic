@@ -4,8 +4,8 @@
 <!-- Tiles definitions -->
 <tiles-definitions>
 	<definition name="spaceManager.masterPage" extends="df.layout.two-column">
-	  <put name="title" value="" />
-	  <put name="serviceName" value="" />
+	  <put name="title" value="private.spacemanagement"/>
+	  <put name="bundle" value="TITLES_RESOURCES" />
 	  <put name="navLocal" value="/spaceManager/localNavigationBar.jsp" />
 	  <put name="navGeral" value="/commons/commonGeneralNavigationBar.jsp" />
 	  <put name="body-context" value="/commons/blank.jsp"/>

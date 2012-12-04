@@ -26,15 +26,10 @@ import org.apache.struts.action.ActionMapping;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
-import pt.ist.fenixWebFramework.struts.annotations.Forward;
-import pt.ist.fenixWebFramework.struts.annotations.Forwards;
-import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 @Mapping(path = "/caseHandlingDegreeChangeCandidacyProcess", module = "coordinator", formBeanClass = CandidacyProcessDA.CandidacyProcessForm.class)
-@Forwards( { @Forward(name = "intro", path = "/coordinator/candidacy/mainCandidacyProcess.jsp")
+@Forwards({ @Forward(name = "intro", path = "/coordinator/candidacy/mainCandidacyProcess.jsp", tileProperties = @Tile(title = "private.coordinator.management.courses.applicationprocesses.coursechange"))
 
 })
 public class DegreeChangeCandidacyProcessDA extends

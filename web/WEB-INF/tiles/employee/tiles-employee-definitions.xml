@@ -4,7 +4,8 @@
 <!-- Tiles definitions -->
 <tiles-definitions>
 	<definition name="definition.employee.two-column" extends="df.layout.two-column">
-		<put name="title" value="Área de Funcionário" />
+		<put name="title" value="private.employee" />
+		<put name="bundle" value="TITLES_RESOURCES" />
 		<put name="serviceName" value="Portal de Funcionário" />
 	  	<put name="navGeral" value="/commons/commonGeneralNavigationBar.jsp" />
 	  	<put name="navLocal" value="/employee/mainMenu.jsp" />

@@ -23,21 +23,13 @@ import org.apache.struts.action.ActionMapping;
 import org.apache.struts.validator.DynaValidatorForm;
 
 import pt.ist.fenixWebFramework.security.UserView;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
-import pt.ist.fenixWebFramework.struts.annotations.Forward;
-import pt.ist.fenixWebFramework.struts.annotations.Forwards;
-import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 @Mapping(module = "facultyAdmOffice", path = "/correctGrantOwner", input = "/correctGrantOwner.do?page=0&method=prepareForm", attribute = "correctGrantOwner", formBean = "correctGrantOwner", scope = "request", parameter = "method")
-@Forwards(value = { @Forward(name = "correct-grant-owner", path = "/facultyAdmOffice/grant/correction/grantOwnerCorrection.jsp") })
+@Forwards(value = { @Forward(name = "correct-grant-owner", path = "/facultyAdmOffice/grant/correction/grantOwnerCorrection.jsp", tileProperties = @Tile(title = "private.teachingstaffandresearcher.corrections.baggins")) })
 public class CorrectGrantOwnerAction extends FenixDispatchAction {
 
     public ActionForward prepareForm(ActionMapping mapping, ActionForm form, HttpServletRequest request,
@@ -67,7 +59,7 @@ public class CorrectGrantOwnerAction extends FenixDispatchAction {
 
 	// Read the grant owner
 
-	List infoGrantOwnerList = (List) SearchGrantOwner.run(null, null, null, grantOwnerNumber, new Boolean(true), null);
+	List infoGrantOwnerList = SearchGrantOwner.run(null, null, null, grantOwnerNumber, new Boolean(true), null);
 
 	if (infoGrantOwnerList.isEmpty() || infoGrantOwnerList.size() > 1) {
 	    return setError(request, mapping, "errors.grant.correction.unknownGrantOwner", null, null);
@@ -76,8 +68,8 @@ public class CorrectGrantOwnerAction extends FenixDispatchAction {
 
 	// Read the new person
 
-	List infoPersonList = (List) SearchGrantOwner.run(null, documentIdNumber.toString(), documentIdType, null, new Boolean(
-		false), null);
+	List infoPersonList = SearchGrantOwner.run(null, documentIdNumber.toString(), documentIdType, null, new Boolean(false),
+		null);
 
 	if (infoPersonList.isEmpty() || infoPersonList.size() > 1) {
 	    return setError(request, mapping, "errors.grant.correction.unknownPerson", null, null);

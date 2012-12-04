@@ -22,14 +22,7 @@ import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
-import pt.ist.fenixWebFramework.struts.annotations.Forward;
-import pt.ist.fenixWebFramework.struts.annotations.Forwards;
-import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
+
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
@@ -37,9 +30,9 @@ import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 @Mapping(module = "scientificCouncil", path = "/competenceCourses/manageVersions", scope = "session", parameter = "method")
 @Forwards(value = {
-		@Forward(name = "manageVersions", path = "/scientificCouncil/bolonha/manageVersions.jsp"),
-		@Forward(name = "listRequests", path = "/scientificCouncil/bolonha/listVersions.jsp"),
-		@Forward(name = "viewVersionDetails", path = "/scientificCouncil/bolonha/viewVersionDetails.jsp") })
+	@Forward(name = "manageVersions", path = "/scientificCouncil/bolonha/manageVersions.jsp", tileProperties = @Tile(title = "private.scientificcouncil.bolognaprocess.versionproposals")),
+	@Forward(name = "listRequests", path = "/scientificCouncil/bolonha/listVersions.jsp", tileProperties = @Tile(title = "private.scientificcouncil.bolognaprocess.versionproposals")),
+	@Forward(name = "viewVersionDetails", path = "/scientificCouncil/bolonha/viewVersionDetails.jsp", tileProperties = @Tile(title = "private.scientificcouncil.bolognaprocess.versionproposals")) })
 public class ManageCompetenceCourseInformationChangeRequests extends FenixDispatchAction {
 
     public ActionForward prepare(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
@@ -55,8 +48,8 @@ public class ManageCompetenceCourseInformationChangeRequests extends FenixDispat
 	    HttpServletResponse response) {
 
 	String departmentID = request.getParameter("departmentID");
-	Department department = (Department) RootDomainObject.readDomainObjectByOID(Department.class, Integer
-		.valueOf(departmentID));
+	Department department = (Department) RootDomainObject.readDomainObjectByOID(Department.class,
+		Integer.valueOf(departmentID));
 	putChangeRequestInRequest(request, department);
 
 	return mapping.findForward("listRequests");
@@ -106,15 +99,15 @@ public class ManageCompetenceCourseInformationChangeRequests extends FenixDispat
     private CompetenceCourseInformationChangeRequest getChangeRequest(HttpServletRequest request) {
 	String competenceCourseInformationChangeRequestId = request.getParameter("changeRequestID");
 	CompetenceCourseInformationChangeRequest changeRequest = (CompetenceCourseInformationChangeRequest) RootDomainObject
-		.readDomainObjectByOID(CompetenceCourseInformationChangeRequest.class, Integer
-			.valueOf(competenceCourseInformationChangeRequestId));
+		.readDomainObjectByOID(CompetenceCourseInformationChangeRequest.class,
+			Integer.valueOf(competenceCourseInformationChangeRequestId));
 	return changeRequest;
     }
 
     private CompetenceCourse getCompetenceCourse(HttpServletRequest request) {
 	String competenceCourseID = request.getParameter("competenceCourseID");
-	CompetenceCourse course = (CompetenceCourse) RootDomainObject.readDomainObjectByOID(CompetenceCourse.class, Integer
-		.valueOf(competenceCourseID));
+	CompetenceCourse course = (CompetenceCourse) RootDomainObject.readDomainObjectByOID(CompetenceCourse.class,
+		Integer.valueOf(competenceCourseID));
 	return course;
     }
 

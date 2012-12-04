@@ -35,14 +35,7 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 import org.apache.struts.util.LabelValueBean;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
-import pt.ist.fenixWebFramework.struts.annotations.Forward;
-import pt.ist.fenixWebFramework.struts.annotations.Forwards;
-import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
+
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
@@ -54,11 +47,11 @@ import pt.ist.fenixWebFramework.struts.annotations.Tile;
  */
 @Mapping(module = "student", path = "/enrollStudentGroupShift", attribute = "groupEnrolmentForm", formBean = "groupEnrolmentForm", scope = "request", parameter = "method")
 @Forwards(value = {
-		@Forward(name = "sucess", path = "/student/enrollStudentGroupShift_bd.jsp"),
-		@Forward(name = "insucess", path = "/viewEnroledExecutionCourses.do?method=prepare"),
-		@Forward(name = "viewStudentGroupInformation", path = "/viewStudentGroupInformation.do"),
-		@Forward(name = "viewShiftsAndGroups", path = "/viewShiftsAndGroups.do"),
-		@Forward(name = "viewExecutionCourseProjects", path = "/viewExecutionCourseProjects.do") })
+	@Forward(name = "sucess", path = "/student/enrollStudentGroupShift_bd.jsp"),
+	@Forward(name = "insucess", path = "/viewEnroledExecutionCourses.do?method=prepare"),
+	@Forward(name = "viewStudentGroupInformation", path = "/viewStudentGroupInformation.do"),
+	@Forward(name = "viewShiftsAndGroups", path = "/viewShiftsAndGroups.do"),
+	@Forward(name = "viewExecutionCourseProjects", path = "/viewExecutionCourseProjects.do", tileProperties = @Tile(title = "private.student.subscribe.groups" )) })
 public class EnrollStudentGroupShiftDispatchAction extends FenixDispatchAction {
 
     public ActionForward prepareEnrollStudentGroupShift(ActionMapping mapping, ActionForm form, HttpServletRequest request,
@@ -116,7 +109,7 @@ public class EnrollStudentGroupShiftDispatchAction extends FenixDispatchAction {
 	InfoSiteShifts infoSiteShifts = null;
 
 	try {
-	    infoSiteShifts = (InfoSiteShifts) ReadGroupingShifts.run(groupPropertiesCode, studentGroupCode);
+	    infoSiteShifts = ReadGroupingShifts.run(groupPropertiesCode, studentGroupCode);
 
 	} catch (ExistingServiceException e) {
 	    ActionErrors actionErrors = new ActionErrors();

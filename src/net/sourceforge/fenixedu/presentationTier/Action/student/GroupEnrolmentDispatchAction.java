@@ -25,8 +25,8 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonValidChang
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.applicationTier.Servico.student.ReadExportGroupingsByGrouping;
 import net.sourceforge.fenixedu.applicationTier.Servico.student.ReadStudentsWithoutGroup;
-import net.sourceforge.fenixedu.applicationTier.Servico.student.VerifyStudentGroupAtributes;
 import net.sourceforge.fenixedu.applicationTier.Servico.student.ReadStudentsWithoutGroup.NewStudentGroupAlreadyExists;
+import net.sourceforge.fenixedu.applicationTier.Servico.student.VerifyStudentGroupAtributes;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExportGrouping;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSiteStudentsWithoutGroup;
 import net.sourceforge.fenixedu.domain.student.GroupEnrolment;
@@ -113,8 +113,8 @@ public class GroupEnrolmentDispatchAction extends FenixDispatchAction {
 	InfoSiteStudentsWithoutGroup studentsNotEnroled = null;
 
 	try {
-	    studentsNotEnroled = (InfoSiteStudentsWithoutGroup) ReadStudentsWithoutGroup.run(groupPropertiesCode, userView
-		    .getUtilizador());
+	    studentsNotEnroled = (InfoSiteStudentsWithoutGroup) ReadStudentsWithoutGroup.run(groupPropertiesCode,
+		    userView.getUtilizador());
 
 	} catch (ExistingServiceException e) {
 	    ActionErrors actionErrors1 = new ActionErrors();
@@ -145,8 +145,7 @@ public class GroupEnrolmentDispatchAction extends FenixDispatchAction {
 	request.setAttribute("infoUserStudent", studentsNotEnroled.getInfoUserStudent());
 	request.setAttribute("infoGrouping", studentsNotEnroled.getInfoGrouping());
 
-	List<InfoExportGrouping> infoExportGroupings = (List<InfoExportGrouping>) ReadExportGroupingsByGrouping
-		.run(groupPropertiesCode);
+	List<InfoExportGrouping> infoExportGroupings = ReadExportGroupingsByGrouping.run(groupPropertiesCode);
 	request.setAttribute("infoExportGroupings", infoExportGroupings);
 
 	return mapping.findForward("sucess");

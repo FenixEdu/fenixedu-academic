@@ -19,17 +19,11 @@ import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixWebFramework.struts.annotations.Tile;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
-import pt.ist.fenixWebFramework.struts.annotations.Forward;
-import pt.ist.fenixWebFramework.struts.annotations.Forwards;
-import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 @Mapping(path = "/viewStudentsByTutor", module = "teacher")
 @Forwards(tileProperties = @Tile(navLocal = "/teacher/commons/navigationBarIndex.jsp"), value = {
-	@Forward(name = "viewStudentsByTutor", path = "/teacher/tutor/viewStudentsByTutor.jsp"),
-	@Forward(name = "editStudent", path = "/teacher/tutor/editStudent.jsp") })
+	@Forward(name = "viewStudentsByTutor", path = "/teacher/tutor/viewStudentsByTutor.jsp", tileProperties = @Tile(  title = "private.teacher.managementmentoring.seetutorandos")),
+	@Forward(name = "editStudent", path = "/teacher/tutor/editStudent.jsp", tileProperties = @Tile(  title = "private.teacher.managementmentoring.seetutorandos")) })
 public class ViewStudentsDispatchAction extends ViewStudentsByTutorDispatchAction {
 
     public ActionForward viewStudentsByTutor(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
@@ -58,8 +52,8 @@ public class ViewStudentsDispatchAction extends ViewStudentsByTutorDispatchActio
 	    HttpServletResponse response) throws Exception {
 	Student student = rootDomainObject.readStudentByOID(Integer.valueOf(request.getParameter("studentID")));
 
-	Registration registration = rootDomainObject.readRegistrationByOID(Integer
-		.valueOf(request.getParameter("registrationID")));
+	Registration registration = rootDomainObject
+		.readRegistrationByOID(Integer.valueOf(request.getParameter("registrationID")));
 	TutorshipLog tutorshipLog = registration.getActiveTutorship().getTutorshipLog();
 
 	request.setAttribute("tutor", getLoggedPerson(request));

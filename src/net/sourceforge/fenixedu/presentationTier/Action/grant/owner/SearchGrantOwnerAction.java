@@ -18,21 +18,18 @@ import org.apache.struts.validator.DynaValidatorForm;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
-import pt.ist.fenixWebFramework.struts.annotations.Forward;
-import pt.ist.fenixWebFramework.struts.annotations.Forwards;
-import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 @Mapping(module = "facultyAdmOffice", path = "/searchGrantOwner", input = "/searchGrantOwner.do?page=0&method=searchForm", attribute = "searchGrantOwnerForm", formBean = "searchGrantOwnerForm", scope = "request", parameter = "method", customMappingClass = net.sourceforge.fenixedu.presentationTier.mapping.framework.SearchActionMapping.class, customMappingProperties = {
 	"serviceName", "SearchGrantOwner", "objectAttribute", "infoGrantOwner", "listAttribute", "infoGrantOwnerList",
 	"notFoundMessageKey", "errors.person.not.found" })
-@Forwards(value = { @Forward(name = "list-many", path = "/facultyAdmOffice/grant/owner/searchGrantOwnerResultForm.jsp"),
-	@Forward(name = "search-form", path = "/facultyAdmOffice/grant/owner/searchGrantOwnerForm.jsp"),
-	@Forward(name = "list-one", path = "/facultyAdmOffice/grant/owner/searchGrantOwnerResultForm.jsp") })
+@Forwards(value = {
+	@Forward(name = "list-many", path = "/facultyAdmOffice/grant/owner/searchGrantOwnerResultForm.jsp", tileProperties = @Tile(title = "private.teachingstaffandresearcher.listings.byinsurance")),
+	@Forward(name = "search-form", path = "/facultyAdmOffice/grant/owner/searchGrantOwnerForm.jsp", tileProperties = @Tile(title = "private.teachingstaffandresearcher.managementscholarship.scholarshipsearch")),
+	@Forward(name = "list-one", path = "/facultyAdmOffice/grant/owner/searchGrantOwnerResultForm.jsp", tileProperties = @Tile(title = "private.teachingstaffandresearcher.listings.byinsurance")) })
 public class SearchGrantOwnerAction extends SearchAction {
 
+    @Override
     protected Object[] getSearchServiceArgs(HttpServletRequest request, ActionForm form) throws Exception {
 	DynaValidatorForm searchGrantOwnerForm = (DynaValidatorForm) form;
 	String name = (String) searchGrantOwnerForm.get("name");
@@ -59,6 +56,7 @@ public class SearchGrantOwnerAction extends SearchAction {
 	return args;
     }
 
+    @Override
     protected Collection treateServiceResult(SearchActionMapping mapping, HttpServletRequest request, Collection result)
 	    throws Exception {
 	if (result != null && result.size() == 3) {
@@ -86,6 +84,7 @@ public class SearchGrantOwnerAction extends SearchAction {
 	return result;
     }
 
+    @Override
     protected void prepareFormConstants(ActionMapping mapping, HttpServletRequest request, ActionForm form) throws Exception {
 	/*
 	 * List documentTypeList =

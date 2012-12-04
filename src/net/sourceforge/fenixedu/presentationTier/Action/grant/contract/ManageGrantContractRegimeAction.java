@@ -21,14 +21,6 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
 import pt.ist.fenixWebFramework.security.UserView;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
-import pt.ist.fenixWebFramework.struts.annotations.Forward;
-import pt.ist.fenixWebFramework.struts.annotations.Forwards;
-import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
@@ -39,7 +31,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Tile;
  * @author Pica
  */
 @Mapping(module = "facultyAdmOffice", path = "/manageGrantContractRegime", input = "/manageGrantContractRegime.do?page=0&method=prepareManageGrantContractRegime", attribute = "voidForm", formBean = "voidForm", scope = "request", parameter = "method")
-@Forwards(value = { @Forward(name = "manage-grant-contract-regime", path = "/facultyAdmOffice/grant/contract/manageGrantContractRegime.jsp") })
+@Forwards(value = { @Forward(name = "manage-grant-contract-regime", path = "/facultyAdmOffice/grant/contract/manageGrantContractRegime.jsp", tileProperties = @Tile(title = "private.teachingstaffandresearcher.miscellaneousmanagement.costcenter")) })
 public class ManageGrantContractRegimeAction extends FenixDispatchAction {
 
     public ActionForward prepareManageGrantContractRegime(ActionMapping mapping, ActionForm form, HttpServletRequest request,

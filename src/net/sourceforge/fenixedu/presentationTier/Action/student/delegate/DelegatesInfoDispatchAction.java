@@ -26,21 +26,13 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
-import pt.ist.fenixWebFramework.struts.annotations.Forward;
-import pt.ist.fenixWebFramework.struts.annotations.Forwards;
-import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 @Mapping(module = "student", path = "/delegatesInfo", scope = "request", parameter = "method")
-@Forwards(value = { @Forward(name = "showDegreeDelegates", path = "/student/delegates/showDelegates.jsp") })
+@Forwards(value = { @Forward(name = "showDegreeDelegates", path = "/student/delegates/showDelegates.jsp", tileProperties = @Tile(  title = "private.student.view.delegates")) })
 public class DelegatesInfoDispatchAction extends FenixDispatchAction {
 
     public ActionForward prepare(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
@@ -63,11 +55,11 @@ public class DelegatesInfoDispatchAction extends FenixDispatchAction {
     public ActionForward showAll(ActionMapping mapping, HttpServletRequest request, DelegateSearchBean bean) {
 	/* DEGREE DELEGATES */
 	if (bean.getExecutionYear() != null && bean.getDegree() != null && bean.getDegreeType() != null) {
-	request.setAttribute("yearDelegates", getYearDelegateBeans(bean));
-	request.setAttribute("degreeDelegate", getDelegateSearchBean(bean, FunctionType.DELEGATE_OF_DEGREE));
-	request.setAttribute("masterDegreeDelegate", getDelegateSearchBean(bean, FunctionType.DELEGATE_OF_MASTER_DEGREE));
-	request.setAttribute("integratedMasterDegreeDelegate",
-		getDelegateSearchBean(bean, FunctionType.DELEGATE_OF_INTEGRATED_MASTER_DEGREE));
+	    request.setAttribute("yearDelegates", getYearDelegateBeans(bean));
+	    request.setAttribute("degreeDelegate", getDelegateSearchBean(bean, FunctionType.DELEGATE_OF_DEGREE));
+	    request.setAttribute("masterDegreeDelegate", getDelegateSearchBean(bean, FunctionType.DELEGATE_OF_MASTER_DEGREE));
+	    request.setAttribute("integratedMasterDegreeDelegate",
+		    getDelegateSearchBean(bean, FunctionType.DELEGATE_OF_INTEGRATED_MASTER_DEGREE));
 	}
 	/* GGAE DELEGATES */
 	List<DelegateSearchBean> delegatesFound = getGGAEDelegateBeans();
@@ -132,7 +124,7 @@ public class DelegatesInfoDispatchAction extends FenixDispatchAction {
 	updateBeanDegreeType(bean);
 	return showAll(mapping, request, bean);
     }
-    
+
     public ActionForward updateDegreeType(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) {
 	DelegateSearchBean bean = (DelegateSearchBean) getRenderedObject("searchByDegreeBean");
@@ -159,8 +151,8 @@ public class DelegatesInfoDispatchAction extends FenixDispatchAction {
 	    delegates.addAll(bean.getDegree()
 		    .getAllDelegatesByExecutionYearAndFunctionType(bean.getExecutionYear(), functionType));
 	}
-	return (delegates.isEmpty() ? null : new DelegateSearchBean(delegates.get(0).getPerson(), functionType, bean
-		.getExecutionYear()));
+	return (delegates.isEmpty() ? null : new DelegateSearchBean(delegates.get(0).getPerson(), functionType,
+		bean.getExecutionYear()));
     }
 
     /* Year delegates from given degree */

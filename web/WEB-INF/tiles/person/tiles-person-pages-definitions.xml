@@ -5,11 +5,15 @@
 <tiles-definitions>
 
 	<definition name="show-change-password-link" extends="definition.person.masterPage">
-		 <put name="body" value="/person/showChangePassLink.jsp"/>
+		<put name="bundle" value="TITLES_RESOURCES"/>
+	    <put name="title" value="private.personal.dspace.password"/>
+		<put name="body" value="/person/showChangePassLink.jsp"/>
 	</definition>
 
 	<definition name="visualize.personal.information" extends="definition.person.masterPage">
-		 <put name="body" value="/person/visualizePersonalInfo.jsp"/>
+		<put name="bundle" value="TITLES_RESOURCES"/>
+	    <put name="title" value="private.personal.dspace.information"/>
+		<put name="body" value="/person/visualizePersonalInfo.jsp"/>
 	</definition>
 	
     <definition name="person.upload.photo" extends="definition.person.masterPage">
@@ -54,15 +58,23 @@
     </definition>   
     
     <definition name="homepage-sectionsManagement" extends="definition.person.homepage" >
+    	<put name="bundle" value="TITLES_RESOURCES"/>
+        <put name="title" value="private.personal.system.portalroot"/>
         <put name="body" value="/commons/sites/sectionsManagement.jsp"/>
     </definition>
     <definition name="homepage-section" extends="definition.person.homepage" >
+    	<put name="bundle" value="TITLES_RESOURCES"/>
+        <put name="title" value="private.personal.system.portalroot"/>
         <put name="body" value="/commons/sites/section.jsp"/>
     </definition>
-    <definition name="homepage-editSection" extends="definition.person.homepage" >
+    <definition name="homepage-editSection" extends="definition.person.homepage">
+    	<put name="bundle" value="TITLES_RESOURCES"/>
+        <put name="title" value="private.personal.system.portalroot"/>
         <put name="body" value="/commons/sites/editSection.jsp"/>
     </definition>   
     <definition name="homepage-createSection" extends="definition.person.homepage" >
+    	<put name="bundle" value="TITLES_RESOURCES"/>
+        <put name="title" value="private.personal.system.portalroot"/>
         <put name="body" value="/commons/sites/createSection.jsp"/>
     </definition>   
     <definition name="homepage-createItem" extends="definition.person.homepage" >
@@ -126,10 +138,10 @@
 		
 	<!--  ============== Parking ===================== -->
 	<definition name="prepare-parking" extends="definition.person.masterPage">
-		 <put name="body" value="/person/parking/parkingRequest.jsp"/>
+	     <put name="body" value="/person/parking/parkingRequest.jsp"/>
 	</definition>
 	<definition name="edit-parking-request" extends="definition.person.masterPage">
-		 <put name="body" value="/person/parking/editParkingRequest.jsp"/>
+	     <put name="body" value="/person/parking/editParkingRequest.jsp"/>
 	</definition>
 	
 	<!--  ===== VIGILANCY ====== -->
@@ -201,7 +213,7 @@
   </definition>  
 
    <definition name="add.to.pool" extends="definition.person.masterPage">
-  	<put name="body" value="/person/portals/addToPool.jsp"/>
+    <put name="body" value="/person/portals/addToPool.jsp"/>
   </definition>  
   
    <definition name="case.handling.list.processes" extends="definition.person.masterPage">

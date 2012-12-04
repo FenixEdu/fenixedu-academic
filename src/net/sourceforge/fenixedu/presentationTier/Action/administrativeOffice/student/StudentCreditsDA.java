@@ -3,15 +3,9 @@ package net.sourceforge.fenixedu.presentationTier.Action.administrativeOffice.st
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
-import pt.ist.fenixWebFramework.struts.annotations.Forward;
-import pt.ist.fenixWebFramework.struts.annotations.Forwards;
-import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 @Mapping(path = "/studentCredits", module = "academicAdminOffice", formBean = "studentDismissalForm")
-@Forwards( { @Forward(name = "manage", path = "/academicAdminOffice/dismissal/managementDismissals.jsp"),
+@Forwards({ @Forward(name = "manage", path = "/academicAdminOffice/dismissal/managementDismissals.jsp"),
 	@Forward(name = "chooseEquivalents", path = "/academicAdminOffice/dismissal/chooseCreditEquivalents.jsp"),
 	@Forward(name = "visualizeRegistration", path = "/student.do?method=visualizeRegistration"),
 	@Forward(name = "chooseDismissalEnrolments", path = "/academicAdminOffice/dismissal/chooseCreditEnrolments.jsp"),

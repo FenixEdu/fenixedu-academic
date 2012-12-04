@@ -36,20 +36,16 @@ import pt.ist.fenixWebFramework.services.Service;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixWebFramework.struts.annotations.Tile;
 import pt.utl.ist.fenix.tools.spreadsheet.SheetData;
 import pt.utl.ist.fenix.tools.spreadsheet.SpreadsheetBuilder;
 import pt.utl.ist.fenix.tools.spreadsheet.WorkbookExportFormat;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
-import pt.ist.fenixWebFramework.struts.annotations.Forward;
-import pt.ist.fenixWebFramework.struts.annotations.Forwards;
-import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 @Mapping(path = "/rectorateDocumentSubmission", module = "academicAdminOffice")
-@Forwards({ @Forward(name = "index", path = "/academicAdminOffice/rectorateDocumentSubmission/batchIndex.jsp"),
-	@Forward(name = "viewBatch", path = "/academicAdminOffice/rectorateDocumentSubmission/showBatch.jsp") })
+@Forwards({
+	@Forward(name = "index", path = "/academicAdminOffice/rectorateDocumentSubmission/batchIndex.jsp", tileProperties = @Tile(title = "private.academicadministrativeoffice.academicservices.documentstorectory")),
+	@Forward(name = "viewBatch", path = "/academicAdminOffice/rectorateDocumentSubmission/showBatch.jsp", tileProperties = @Tile(title = "private.academicadministrativeoffice.academicservices.documentstorectory")) })
 public class RectorateDocumentSubmissionDispatchAction extends FenixDispatchAction {
     public ActionForward index(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) {
@@ -157,7 +153,7 @@ public class RectorateDocumentSubmissionDispatchAction extends FenixDispatchActi
 	    HttpServletResponse response) {
 	SortedSet<AcademicServiceRequest> sorted = new TreeSet<AcademicServiceRequest>(
 		DocumentRequest.COMPARATOR_BY_REGISTRY_NUMBER);
-	
+
 	sorted.addAll(documents);
 	Set<RegistryCode> codes = new HashSet<RegistryCode>();
 	for (AcademicServiceRequest document : documents) {
@@ -197,13 +193,13 @@ public class RectorateDocumentSubmissionDispatchAction extends FenixDispatchActi
 		default:
 		    addCell("Ciclo", null);
 		}
-		
-		if(document.isRequestForRegistration()) {
+
+		if (document.isRequestForRegistration()) {
 		    addCell("Tipo de Curso", enumeration.getString(((DocumentRequest) document).getDegreeType().name()));
-		} else if(document.isRequestForPhd()) {
+		} else if (document.isRequestForPhd()) {
 		    addCell("Tipo de Curso", phdBundle.getString("label.php.program"));
 		}
-		
+
 		addCell("Nº de Aluno", document.getStudent().getNumber());
 		addCell("Nome", document.getPerson().getName());
 		if (!document.isDiploma()) {

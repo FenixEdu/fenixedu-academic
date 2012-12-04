@@ -25,22 +25,17 @@ import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
-import pt.ist.fenixWebFramework.struts.annotations.Forward;
-import pt.ist.fenixWebFramework.struts.annotations.Forwards;
-import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 @Mapping(path = "/accountingEventsManagement", module = "academicAdminOffice")
-@Forwards( {
+@Forwards({
 
-	@Forward(name = "chooseEventType", path = "/academicAdminOffice/accountingEventsManagement/chooseEventType.jsp"),
-	@Forward(name = "createGratuityEvent", path = "/academicAdminOffice/accountingEventsManagement/createGratuityEvent.jsp"),
-	@Forward(name = "createAdministrativeOfficeFeeAndInsuranceEvent", path = "/academicAdminOffice/accountingEventsManagement/createAdministrativeOfficeFeeAndInsuranceEvent.jsp"),
-	@Forward(name = "createInsuranceEvent", path = "/academicAdminOffice/accountingEventsManagement/createInsuranceEvent.jsp"),
-	@Forward(name = "createEnrolmentOutOfPeriodEvent", path = "/academicAdminOffice/accountingEventsManagement/createEnrolmentOutOfPeriodEvent.jsp"),
-	@Forward(name = "createDfaRegistrationEvent", path = "/academicAdminOffice/accountingEventsManagement/createDfaRegistrationEvent.jsp")
+	@Forward(name = "chooseEventType", path = "/academicAdminOffice/accountingEventsManagement/chooseEventType.jsp", tileProperties = @Tile(title = "private.academicadministrativeoffice.studentoperations.viewstudents")),
+	@Forward(name = "createGratuityEvent", path = "/academicAdminOffice/accountingEventsManagement/createGratuityEvent.jsp", tileProperties = @Tile(title = "private.academicadministrativeoffice.studentoperations.viewstudents")),
+	@Forward(name = "createAdministrativeOfficeFeeAndInsuranceEvent", path = "/academicAdminOffice/accountingEventsManagement/createAdministrativeOfficeFeeAndInsuranceEvent.jsp", tileProperties = @Tile(title = "private.academicadministrativeoffice.studentoperations.viewstudents")),
+	@Forward(name = "createInsuranceEvent", path = "/academicAdminOffice/accountingEventsManagement/createInsuranceEvent.jsp", tileProperties = @Tile(title = "private.academicadministrativeoffice.studentoperations.viewstudents")),
+	@Forward(name = "createEnrolmentOutOfPeriodEvent", path = "/academicAdminOffice/accountingEventsManagement/createEnrolmentOutOfPeriodEvent.jsp", tileProperties = @Tile(title = "private.academicadministrativeoffice.studentoperations.viewstudents")),
+	@Forward(name = "createDfaRegistrationEvent", path = "/academicAdminOffice/accountingEventsManagement/createDfaRegistrationEvent.jsp", tileProperties = @Tile(title = "private.academicadministrativeoffice.studentoperations.viewstudents"))
 
 })
 public class AccountingEventsManagementDA extends FenixDispatchAction {
@@ -184,8 +179,8 @@ public class AccountingEventsManagementDA extends FenixDispatchAction {
 	final AccountingEventCreateBean accountingEventCreateBean = getAccountingEventCreateBean();
 	try {
 
-	    AccountingEventsCreator.createAdministrativeOfficeFeeAndInsuranceEvent(accountingEventCreateBean
-		    .getStudentCurricularPlan(), accountingEventCreateBean.getExecutionYear());
+	    AccountingEventsCreator.createAdministrativeOfficeFeeAndInsuranceEvent(
+		    accountingEventCreateBean.getStudentCurricularPlan(), accountingEventCreateBean.getExecutionYear());
 
 	    addActionMessage("success", request, "label.accountingEvents.management.createEvents.eventCreatedWithSucess");
 

@@ -3,7 +3,8 @@
 <!-- Tiles definitions -->
 <tiles-definitions>
 	<definition name="definition.identificationCardManager.masterPage" extends="df.layout.two-column">
-		<put name="title" value="Gestao de Cartoes"/>
+		<put name="title" value="private.identificationcards.homepage"/>
+		<put name="bundle" value="TITLES_RESOURCES" />
 		<put name="serviceName" value="Gestao de Cartoes"/>
 		<put name="navLocal" value="/commons/functionalities/side-menu.jsp" />
 		<put name="navGeral" value="/commons/functionalities/top-menu.jsp" />

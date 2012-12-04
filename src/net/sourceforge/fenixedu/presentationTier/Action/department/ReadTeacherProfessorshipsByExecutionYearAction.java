@@ -28,18 +28,12 @@ import net.sourceforge.fenixedu.util.PeriodState;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
 import org.apache.struts.action.DynaActionForm;
+
 import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
 import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
-import pt.ist.fenixWebFramework.struts.annotations.Forward;
-import pt.ist.fenixWebFramework.struts.annotations.Forwards;
-import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 /**
  * @author jpvl
@@ -106,6 +100,7 @@ public class ReadTeacherProfessorshipsByExecutionYearAction extends AbstractRead
 	List executionYears = ReadNotClosedExecutionYears.run();
 
 	InfoExecutionYear infoExecutionYear = (InfoExecutionYear) CollectionUtils.find(executionYears, new Predicate() {
+	    @Override
 	    public boolean evaluate(Object arg0) {
 		InfoExecutionYear infoExecutionYearElem = (InfoExecutionYear) arg0;
 		if (infoExecutionYearElem.getState().equals(PeriodState.CURRENT)) {

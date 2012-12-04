@@ -35,13 +35,14 @@ import org.apache.struts.action.ActionMapping;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixWebFramework.struts.annotations.Tile;
 import pt.utl.ist.fenix.tools.util.excel.Spreadsheet;
 import pt.utl.ist.fenix.tools.util.excel.Spreadsheet.Row;
 import pt.utl.ist.fenix.tools.util.excel.SpreadsheetXLSExporter;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 @Mapping(path = "/caseHandlingSecondCycleCandidacyProcess", module = "coordinator", formBeanClass = SecondCycleCandidacyProcessDA.SecondCycleCandidacyProcessForm.class)
-@Forwards( { @Forward(name = "intro", path = "/coordinator/candidacy/secondCycle/mainCandidacyProcess.jsp") })
+@Forwards({ @Forward(name = "intro", path = "/coordinator/candidacy/secondCycle/mainCandidacyProcess.jsp", tileProperties = @Tile(title = "private.coordinator.management.courses.applicationprocesses.2ndcycle")) })
 public class SecondCycleCandidacyProcessDA extends CandidacyProcessDA {
 
     static public class SecondCycleCandidacyProcessForm extends CandidacyProcessForm {

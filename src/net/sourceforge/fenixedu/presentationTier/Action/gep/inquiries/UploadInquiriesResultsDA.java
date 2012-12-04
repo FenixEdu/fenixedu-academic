@@ -21,6 +21,7 @@ import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixWebFramework.struts.annotations.Tile;
 import pt.utl.ist.fenix.tools.util.FileUtils;
 
 /**
@@ -28,7 +29,7 @@ import pt.utl.ist.fenix.tools.util.FileUtils;
  * 
  */
 @Mapping(path = "/uploadInquiriesResults", module = "gep")
-@Forwards( { @Forward(name = "prepareUploadPage", path = "/gep/inquiries/uploadInquiriesResults.jsp") })
+@Forwards({ @Forward(name = "prepareUploadPage", path = "/gep/inquiries/uploadInquiriesResults.jsp", tileProperties = @Tile(title = "private.gep.surveys.importresults")) })
 public class UploadInquiriesResultsDA extends FenixDispatchAction {
 
     public ActionForward prepare(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,

@@ -5,6 +5,8 @@
         <put name="body" value="/spaceManager/index.jsp"></put>
     </definition>
     <definition name="show-create-space-form" extends="spaceManager.masterPage">
+    	<put name="bundle" value="TITLES_RESOURCES"/>
+        <put name="title" value = "private.spacemanagement" />
         <put name="body" value="/spaceManager/createSpace.jsp"></put>
     </definition>
     <definition name="show-manage-space-form" extends="spaceManager.masterPage">

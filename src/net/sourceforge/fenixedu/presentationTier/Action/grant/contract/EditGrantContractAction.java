@@ -34,14 +34,6 @@ import org.apache.struts.action.ActionMapping;
 import org.apache.struts.validator.DynaValidatorForm;
 
 import pt.ist.fenixWebFramework.security.UserView;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
-import pt.ist.fenixWebFramework.struts.annotations.Forward;
-import pt.ist.fenixWebFramework.struts.annotations.Forwards;
-import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
@@ -55,9 +47,9 @@ import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 @Mapping(module = "facultyAdmOffice", path = "/editGrantContract", input = "/editGrantContract.do?page=0&method=prepareEditGrantContractForm", attribute = "editGrantContractForm", formBean = "editGrantContractForm", scope = "request", parameter = "method")
 @Forwards(value = {
-		@Forward(name = "edit-grant-contract", path = "/facultyAdmOffice/grant/contract/editGrantContractForm.jsp"),
-		@Forward(name = "search-main-page", path = "searchGrantOwner"),
-		@Forward(name = "manage-grant-contract", path = "/manageGrantContract.do?method=prepareManageGrantContractForm") })
+	@Forward(name = "edit-grant-contract", path = "/facultyAdmOffice/grant/contract/editGrantContractForm.jsp", tileProperties = @Tile(title = "private.teachingstaffandresearcher.corrections.contractnumberchange")),
+	@Forward(name = "search-main-page", path = "searchGrantOwner"),
+	@Forward(name = "manage-grant-contract", path = "/manageGrantContract.do?method=prepareManageGrantContractForm") })
 public class EditGrantContractAction extends FenixDispatchAction {
     /*
      * Fills the form with the correspondent data
@@ -132,10 +124,8 @@ public class EditGrantContractAction extends FenixDispatchAction {
 	    if (infoGrantContractRegime.getDateBeginContract().after(infoGrantContractRegime.getDateEndContract())) {
 		return setError(request, mapping, "errors.grant.contract.conflictdates", null, null);
 	    }
-	    
 
-	    Teacher teacher = Teacher.readByIstId((String) editGrantContractForm
-		    .get("grantContractOrientationTeacherIstId"));
+	    Teacher teacher = Teacher.readByIstId((String) editGrantContractForm.get("grantContractOrientationTeacherIstId"));
 	    if (teacher == null) {
 		return setError(request, mapping, "errors.grant.contract.orientation.teacher.not.found", null, null);
 	    }

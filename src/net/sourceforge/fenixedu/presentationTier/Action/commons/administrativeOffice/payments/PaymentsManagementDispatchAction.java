@@ -36,16 +36,18 @@ import org.joda.time.DateTime;
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
-@Forwards( { @Forward(name = "showOperations", path = "/academicAdminOffice/payments/showOperations.jsp"),
-	@Forward(name = "showEvents", path = "/academicAdminOffice/payments/showEvents.jsp"),
-	@Forward(name = "showEventsWithPayments", path = "/academicAdminOffice/payments/showEventsWithPayments.jsp"),
+@Forwards({
+	@Forward(name = "showOperations", path = "/academicAdminOffice/payments/showOperations.jsp", tileProperties = @Tile(title = "private.academicadministrativeoffice.studentoperations.viewstudents")),
+	@Forward(name = "showEvents", path = "/academicAdminOffice/payments/showEvents.jsp", tileProperties = @Tile(title = "private.academicadministrativeoffice.studentoperations.viewstudents")),
+	@Forward(name = "showEventsWithPayments", path = "/academicAdminOffice/payments/showEventsWithPayments.jsp", tileProperties = @Tile(title = "private.academicadministrativeoffice.studentoperations.viewstudents")),
 	@Forward(name = "showPaymentsForEvent", path = "/academicAdminOffice/payments/showPaymentsForEvent.jsp"),
-	@Forward(name = "preparePayment", path = "/academicAdminOffice/payments/preparePayment.jsp"),
+	@Forward(name = "preparePayment", path = "/academicAdminOffice/payments/preparePayment.jsp", tileProperties = @Tile(title = "private.academicadministrativeoffice.studentoperations.viewstudents")),
 	@Forward(name = "preparePrintGuide", path = "/guides.do?method=preparePrintGuide"),
 	@Forward(name = "showReceipt", path = "/receipts.do?method=prepareShowReceipt"),
-	@Forward(name = "showEventsWithPaymentCodes", path = "/academicAdminOffice/payments/showEventsWithPaymentCodes.jsp"),
-	@Forward(name = "showPaymentCodesForEvent", path = "/academicAdminOffice/payments/showPaymentCodesForEvent.jsp")
+	@Forward(name = "showEventsWithPaymentCodes", path = "/academicAdminOffice/payments/showEventsWithPaymentCodes.jsp", tileProperties = @Tile(title = "private.academicadministrativeoffice.studentoperations.viewstudents")),
+	@Forward(name = "showPaymentCodesForEvent", path = "/academicAdminOffice/payments/showPaymentCodesForEvent.jsp", tileProperties = @Tile(title = "private.academicadministrativeoffice.studentoperations.viewstudents"))
 
 })
 public abstract class PaymentsManagementDispatchAction extends FenixDispatchAction {
@@ -85,8 +87,8 @@ public abstract class PaymentsManagementDispatchAction extends FenixDispatchActi
     public ActionForward preparePayment(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) {
 
-	final PaymentsManagementDTO paymentsManagementDTO = (PaymentsManagementDTO) RenderUtils.getViewState(
-		"paymentsManagementDTO").getMetaObject().getObject();
+	final PaymentsManagementDTO paymentsManagementDTO = (PaymentsManagementDTO) RenderUtils
+		.getViewState("paymentsManagementDTO").getMetaObject().getObject();
 
 	paymentsManagementDTO.setPaymentDate(new DateTime());
 
@@ -120,8 +122,8 @@ public abstract class PaymentsManagementDispatchAction extends FenixDispatchActi
     public ActionForward doPayment(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) throws FenixFilterException, FenixServiceException {
 
-	final PaymentsManagementDTO paymentsManagementDTO = (PaymentsManagementDTO) RenderUtils.getViewState(
-		"paymentsManagementDTO-edit").getMetaObject().getObject();
+	final PaymentsManagementDTO paymentsManagementDTO = (PaymentsManagementDTO) RenderUtils
+		.getViewState("paymentsManagementDTO-edit").getMetaObject().getObject();
 
 	if (paymentsManagementDTO.getSelectedEntries().isEmpty()) {
 
@@ -132,11 +134,13 @@ public abstract class PaymentsManagementDispatchAction extends FenixDispatchActi
 	}
 
 	try {
-	    final Receipt receipt = (Receipt) executeService("CreatePaymentsForEvents", new Object[] {
-		    getUserView(request).getPerson().getUser(), paymentsManagementDTO.getSelectedEntries(), PaymentMode.CASH,
-		    paymentsManagementDTO.isDifferedPayment(), paymentsManagementDTO.getPaymentDate(),
-		    paymentsManagementDTO.getPerson(), paymentsManagementDTO.getContributorParty(),
-		    paymentsManagementDTO.getContributorName(), getReceiptCreatorUnit(request), getReceiptOwnerUnit(request) });
+	    final Receipt receipt = (Receipt) executeService(
+		    "CreatePaymentsForEvents",
+		    new Object[] { getUserView(request).getPerson().getUser(), paymentsManagementDTO.getSelectedEntries(),
+			    PaymentMode.CASH, paymentsManagementDTO.isDifferedPayment(), paymentsManagementDTO.getPaymentDate(),
+			    paymentsManagementDTO.getPerson(), paymentsManagementDTO.getContributorParty(),
+			    paymentsManagementDTO.getContributorName(), getReceiptCreatorUnit(request),
+			    getReceiptOwnerUnit(request) });
 
 	    request.setAttribute("personId", paymentsManagementDTO.getPerson().getIdInternal());
 	    request.setAttribute("receiptID", receipt.getIdInternal());

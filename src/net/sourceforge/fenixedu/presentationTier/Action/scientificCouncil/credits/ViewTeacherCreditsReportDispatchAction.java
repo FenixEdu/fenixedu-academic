@@ -54,6 +54,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixWebFramework.struts.annotations.Tile;
 import pt.utl.ist.fenix.tools.spreadsheet.Formula;
 import pt.utl.ist.fenix.tools.spreadsheet.SheetData;
 import pt.utl.ist.fenix.tools.spreadsheet.SpreadsheetBuilder;
@@ -69,9 +70,9 @@ import pt.utl.ist.fenix.tools.util.excel.Spreadsheet.Row;
 
 @Mapping(module = "scientificCouncil", path = "/creditsReport", attribute = "creditsReportForm", formBean = "creditsReportForm", scope = "request", parameter = "method")
 @Forwards(value = {
-	@Forward(name = "showCreditsReport", path = "/scientificCouncil/credits/showTeachersCreditsReport.jsp"),
-	@Forward(name = "showDepartmentCreditsReport", path = "/scientificCouncil/credits/showDepartmentGlobalCreditsReport.jsp"),
-	@Forward(name = "prepare", path = "/scientificCouncil/credits/selectReportParameters.jsp") })
+	@Forward(name = "showCreditsReport", path = "/scientificCouncil/credits/showTeachersCreditsReport.jsp", tileProperties = @Tile(  title = "private.scientificcouncil.credits.report")),
+	@Forward(name = "showDepartmentCreditsReport", path = "/scientificCouncil/credits/showDepartmentGlobalCreditsReport.jsp", tileProperties = @Tile(  title = "private.scientificcouncil.credits.report")),
+	@Forward(name = "prepare", path = "/scientificCouncil/credits/selectReportParameters.jsp", tileProperties = @Tile(  title = "private.scientificcouncil.credits.report")) })
 @Exceptions(value = { @ExceptionHandling(type = net.sourceforge.fenixedu.presentationTier.Action.scientificCouncil.credits.ViewTeacherCreditsReportDispatchAction.InvalidPeriodException.class, key = "error.credits.chooseExecutionPeriods", handler = org.apache.struts.action.ExceptionHandler.class, path = "/creditsReport.do?method=prepare", scope = "request") })
 public class ViewTeacherCreditsReportDispatchAction extends FenixDispatchAction {
 

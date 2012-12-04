@@ -25,9 +25,10 @@ import pt.ist.fenixWebFramework.services.Service;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 @Mapping(path = "/tutorTeachers", module = "coordinator")
-@Forwards({ @Forward(name = "manage", path = "/coordinator/tutors/tutorTeachers.jsp") })
+@Forwards({ @Forward(name = "manage", path = "/coordinator/tutors/tutorTeachers.jsp", tileProperties = @Tile(title = "private.coordinator.management.courses.managementmentoring.tutoringparticipation")) })
 public class TutorTeachersManagementDispatchAction extends FenixDispatchAction {
     public static class TutorshipIntentionSelector implements Serializable {
 	private Teacher teacher;
@@ -129,7 +130,8 @@ public class TutorTeachersManagementDispatchAction extends FenixDispatchAction {
     }
 
     public static class YearSelection implements Serializable {
-	private AcademicInterval executionYear = AcademicInterval.readDefaultAcademicInterval(AcademicPeriod.YEAR).getNextAcademicInterval();
+	private AcademicInterval executionYear = AcademicInterval.readDefaultAcademicInterval(AcademicPeriod.YEAR)
+		.getNextAcademicInterval();
 
 	public YearSelection() {
 	}
@@ -159,9 +161,9 @@ public class TutorTeachersManagementDispatchAction extends FenixDispatchAction {
 	AcademicInterval current = AcademicInterval.readDefaultAcademicInterval(AcademicPeriod.YEAR);
 	AcademicInterval next = AcademicInterval.readDefaultAcademicInterval(AcademicPeriod.YEAR).getNextAcademicInterval();
 
-	if (next == null){
+	if (next == null) {
 	    request.setAttribute("academicInterval", current.getResumedRepresentationInStringFormat());
-	}else{
+	} else {
 	    request.setAttribute("academicInterval", next.getResumedRepresentationInStringFormat());
 	}
 	return selectYear(mapping, actionForm, request, response);

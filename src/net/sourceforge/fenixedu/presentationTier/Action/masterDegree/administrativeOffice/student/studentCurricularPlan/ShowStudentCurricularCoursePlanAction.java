@@ -11,14 +11,7 @@ import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
-import pt.ist.fenixWebFramework.struts.annotations.Forward;
-import pt.ist.fenixWebFramework.struts.annotations.Forwards;
-import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
+
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
@@ -28,7 +21,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Tile;
  * @author Tânia Pousão Created on 6/Out/2003
  */
 @Mapping(module = "masterDegreeAdministrativeOffice", path = "/showStudentCurricularCoursePlan", scope = "request")
-@Forwards(value = { @Forward(name = "ShowStudentCurricularCoursePlan", path = "df.page.showStudentCurricularCoursePlan") })
+@Forwards(value = { @Forward(name = "ShowStudentCurricularCoursePlan", path = "df.page.showStudentCurricularCoursePlan", tileProperties = @Tile(title = "teste75")) })
 public class ShowStudentCurricularCoursePlanAction extends FenixDispatchAction {
 
     @Override

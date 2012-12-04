@@ -23,11 +23,6 @@ import org.apache.struts.action.ActionMapping;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
-import pt.ist.fenixWebFramework.struts.annotations.Forward;
-import pt.ist.fenixWebFramework.struts.annotations.Forwards;
-import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 /**
@@ -35,8 +30,8 @@ import pt.ist.fenixWebFramework.struts.annotations.Tile;
  * 
  */
 @Mapping(path = "/manageRegistrationState", module = "academicAdminOffice")
-@Forwards( {
-	@Forward(name = "showRegistrationStates", path = "/academicAdminOffice/student/registration/manageRegistrationState.jsp"),
+@Forwards({
+	@Forward(name = "showRegistrationStates", path = "/academicAdminOffice/student/registration/manageRegistrationState.jsp", tileProperties = @Tile(title = "private.academicadministrativeoffice.studentoperations.viewstudents")),
 	@Forward(name = "deleteActualInfoConfirm", path = "/academicAdminOffice/student/registration/deleteRegistrationActualInfo.jsp") })
 public class ManageRegistrationStateDA extends FenixDispatchAction {
 

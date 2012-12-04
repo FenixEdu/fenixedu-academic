@@ -36,21 +36,23 @@ import org.apache.struts.action.ActionMapping;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixWebFramework.struts.annotations.Tile;
 import pt.utl.ist.fenix.tools.util.excel.Spreadsheet;
 import pt.utl.ist.fenix.tools.util.excel.Spreadsheet.Row;
 import pt.utl.ist.fenix.tools.util.excel.StyledExcelSpreadsheet;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 @Mapping(path = "/caseHandlingDegreeTransferCandidacyProcess", module = "academicAdminOffice", formBeanClass = CandidacyProcessDA.CandidacyProcessForm.class)
-@Forwards( { @Forward(name = "intro", path = "/candidacy/mainCandidacyProcess.jsp"),
-	@Forward(name = "prepare-create-new-process", path = "/candidacy/createCandidacyPeriod.jsp"),
-	@Forward(name = "prepare-edit-candidacy-period", path = "/candidacy/editCandidacyPeriod.jsp"),
-	@Forward(name = "send-to-coordinator", path = "/candidacy/sendToCoordinator.jsp"),
-	@Forward(name = "send-to-scientificCouncil", path = "/candidacy/sendToScientificCouncil.jsp"),
-	@Forward(name = "view-candidacy-results", path = "/candidacy/degreeTransfer/viewCandidacyResults.jsp"),
-	@Forward(name = "introduce-candidacy-results", path = "/candidacy/degreeTransfer/introduceCandidacyResults.jsp"),
-	@Forward(name = "create-registrations", path = "/candidacy/createRegistrations.jsp"),
-	@Forward(name = "prepare-select-available-degrees", path = "/candidacy/selectAvailableDegrees.jsp")
+@Forwards({
+	@Forward(name = "intro", path = "/candidacy/mainCandidacyProcess.jsp", tileProperties = @Tile(title = "private.academicadministrativeoffice.applications.transfers")),
+	@Forward(name = "prepare-create-new-process", path = "/candidacy/createCandidacyPeriod.jsp", tileProperties = @Tile(title = "private.academicadministrativeoffice.applications.transfers")),
+	@Forward(name = "prepare-edit-candidacy-period", path = "/candidacy/editCandidacyPeriod.jsp", tileProperties = @Tile(title = "private.academicadministrativeoffice.applications.transfers")),
+	@Forward(name = "send-to-coordinator", path = "/candidacy/sendToCoordinator.jsp", tileProperties = @Tile(title = "private.academicadministrativeoffice.applications.transfers")),
+	@Forward(name = "send-to-scientificCouncil", path = "/candidacy/sendToScientificCouncil.jsp", tileProperties = @Tile(title = "private.academicadministrativeoffice.applications.transfers")),
+	@Forward(name = "view-candidacy-results", path = "/candidacy/degreeTransfer/viewCandidacyResults.jsp", tileProperties = @Tile(title = "private.academicadministrativeoffice.applications.transfers")),
+	@Forward(name = "introduce-candidacy-results", path = "/candidacy/degreeTransfer/introduceCandidacyResults.jsp", tileProperties = @Tile(title = "private.academicadministrativeoffice.applications.transfers")),
+	@Forward(name = "create-registrations", path = "/candidacy/createRegistrations.jsp", tileProperties = @Tile(title = "private.academicadministrativeoffice.applications.transfers")),
+	@Forward(name = "prepare-select-available-degrees", path = "/candidacy/selectAvailableDegrees.jsp", tileProperties = @Tile(title = "private.academicadministrativeoffice.applications.transfers"))
 
 })
 public class DegreeTransferCandidacyProcessDA extends CandidacyProcessDA {
@@ -443,6 +445,7 @@ public class DegreeTransferCandidacyProcessDA extends CandidacyProcessDA {
 	return result;
     }
 
+    @Override
     protected Spreadsheet buildIndividualCandidacyReport(final Spreadsheet spreadsheet,
 	    final IndividualCandidacyProcess individualCandidacyProcess) {
 	DegreeTransferIndividualCandidacyProcess degreeTransferIndividualCandidacyProcess = (DegreeTransferIndividualCandidacyProcess) individualCandidacyProcess;

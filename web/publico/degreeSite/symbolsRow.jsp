@@ -14,7 +14,7 @@
 
 <% if (!PropertiesManager.useBarraAsAuthenticationBroker()) { %>
 <div id="header_links">
-	<a href="<%= fenixUrl %>/loginPage.jsp">Login <bean:message key="dot.title" bundle="GLOBAL_RESOURCES"/></a>
+	<a href="<%= fenixUrl %>/loginPage.jsp">Login .IST<!--bean:message key="dot.title" bundle="GLOBAL_RESOURCES"/--></a>
 	| <a href="<%= institutionUrl %>/pt/sobre-IST/contacto">Contactos</a>
 	| <a href="<%= institutionUrl %>/html/mapadosite/">Mapa do Site</a>
 </div>

@@ -34,15 +34,16 @@ import pt.ist.fenixWebFramework.services.Service;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixWebFramework.struts.annotations.Tile;
 import pt.ist.fenixframework.pstm.AbstractDomainObject;
 import pt.utl.ist.fenix.tools.util.excel.Spreadsheet;
 
 @Mapping(path = "/caseHandlingMobilityApplicationProcess", module = "academicAdminOffice", formBeanClass = ErasmusCandidacyProcessDA.ErasmusCandidacyProcessForm.class)
 @Forwards({
-	@Forward(name = "intro", path = "/candidacy/erasmus/mainCandidacyProcess.jsp"),
-	@Forward(name = "prepare-create-new-process", path = "/candidacy/createCandidacyPeriod.jsp"),
-	@Forward(name = "prepare-edit-candidacy-period", path = "/candidacy/editCandidacyPeriod.jsp"),
-	@Forward(name = "view-child-process-with-missing.required-documents", path = "/candidacy/erasmus/viewChildProcessesWithMissingRequiredDocuments.jsp") })
+	@Forward(name = "intro", path = "/candidacy/erasmus/mainCandidacyProcess.jsp", tileProperties = @Tile(title = "private.academicadministrativeoffice.applications.mobility")),
+	@Forward(name = "prepare-create-new-process", path = "/candidacy/createCandidacyPeriod.jsp", tileProperties = @Tile(title = "private.academicadministrativeoffice.applications.mobility")),
+	@Forward(name = "prepare-edit-candidacy-period", path = "/candidacy/editCandidacyPeriod.jsp", tileProperties = @Tile(title = "private.academicadministrativeoffice.applications.mobility")),
+	@Forward(name = "view-child-process-with-missing.required-documents", path = "/candidacy/erasmus/viewChildProcessesWithMissingRequiredDocuments.jsp", tileProperties = @Tile(title = "private.academicadministrativeoffice.applications.mobility")) })
 public class ErasmusCandidacyProcessDA extends CandidacyProcessDA {
 
     static public class ErasmusCandidacyProcessForm extends CandidacyProcessForm {
@@ -84,12 +85,13 @@ public class ErasmusCandidacyProcessDA extends CandidacyProcessDA {
 	request.setAttribute("candidacyProcessBean", bean);
 	if (map.hasAnyChildProcesses()) {
 	    request.setAttribute("preLoadLevel", "Error");
-	} else if (map.hasAnyCoordinators() || map.getCandidacyPeriod().getMobilityQuotasCount() > 0 || map.getCandidacyPeriod().getEmailTemplatesCount() > 0) {
+	} else if (map.hasAnyCoordinators() || map.getCandidacyPeriod().getMobilityQuotasCount() > 0
+		|| map.getCandidacyPeriod().getEmailTemplatesCount() > 0) {
 	    request.setAttribute("preLoadLevel", "Warn");
 	} else {
 	    request.setAttribute("preLoadLevel", "Ok");
 	}
-	
+
 	return mapping.findForward("prepare-edit-candidacy-period");
     }
 
@@ -102,15 +104,15 @@ public class ErasmusCandidacyProcessDA extends CandidacyProcessDA {
 	request.setAttribute("chooseMobilityProgramBeanSchemaName", "MobilityChooseProgramBean.selectMobilityProgram");
 	return super.execute(mapping, actionForm, request, response);
     }
-    
-    public ActionForward preLoadLastConfigurations(ActionMapping mapping, ActionForm actionForm,
-	    HttpServletRequest request, HttpServletResponse response) {
-	String processEid = (String) request.getParameter("processEid");
+
+    public ActionForward preLoadLastConfigurations(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) {
+	String processEid = request.getParameter("processEid");
 	MobilityApplicationProcess process = AbstractDomainObject.fromExternalId(processEid);
 	preLoadLastProcessConfigurations(process);
 	return listProcessAllowedActivities(mapping, actionForm, request, response);
     }
-    
+
     @Service
     private void preLoadLastProcessConfigurations(MobilityApplicationProcess process) {
 	process.resetConfigurations();
@@ -296,6 +298,7 @@ public class ErasmusCandidacyProcessDA extends CandidacyProcessDA {
 
     public static class ErasmusCandidacyDegreesProvider implements DataProvider {
 
+	@Override
 	public Object provide(Object source, Object currentValue) {
 	    final List<Degree> degrees = new ArrayList<Degree>(Degree.readAllByDegreeType(
 		    DegreeType.BOLONHA_INTEGRATED_MASTER_DEGREE, DegreeType.BOLONHA_MASTER_DEGREE));
@@ -307,6 +310,7 @@ public class ErasmusCandidacyProcessDA extends CandidacyProcessDA {
 	    return degrees;
 	}
 
+	@Override
 	public Converter getConverter() {
 	    return new DomainObjectKeyConverter();
 	}
@@ -315,6 +319,7 @@ public class ErasmusCandidacyProcessDA extends CandidacyProcessDA {
 
     public static class MobilityApplicationsMobilityProgramsProvider implements DataProvider {
 
+	@Override
 	public Converter getConverter() {
 	    return new DomainObjectKeyConverter();
 	}

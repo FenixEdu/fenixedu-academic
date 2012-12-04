@@ -4,7 +4,8 @@
 <!-- Tiles definitions -->
 <tiles-definitions>
 	<definition name="functionalities.master" extends="df.layout.two-column">
-	  <put name="title" value="Portal de Gerência" />
+	  <put name="title" value="private.personal.system.features" />
+	  <put name="bundle" value="TITLES_RESOURCES" />
       <put name="head" value="/commons/renderers/treeRendererHeader.jsp" />
 	  <put name="serviceName" value="Gestão de funcionalidades" />
 	  <put name="navGeral" value="/person/commonNavGeralPerson.jsp"/>

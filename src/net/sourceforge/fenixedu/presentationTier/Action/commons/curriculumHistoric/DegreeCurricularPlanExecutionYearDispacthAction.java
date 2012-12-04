@@ -26,11 +26,6 @@ import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
-import pt.ist.fenixWebFramework.struts.annotations.Forward;
-import pt.ist.fenixWebFramework.struts.annotations.Forwards;
-import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 /**
@@ -38,8 +33,9 @@ import pt.ist.fenixWebFramework.struts.annotations.Tile;
  * @author lmre
  */
 @Mapping(path = "/chooseExecutionYearAndDegreeCurricularPlan", module = "academicAdminOffice", formBean = "executionYearDegreeCurricularPlanForm")
-@Forwards( { @Forward(name = "chooseExecutionYear", path = "/commons/curriculumHistoric/chooseDegreeCPlanExecutionYear.jsp"),
-	@Forward(name = "showActiveCurricularCourses", path = "/commons/curriculumHistoric/showActiveCurricularCourseScopes.jsp") })
+@Forwards({
+	@Forward(name = "chooseExecutionYear", path = "/commons/curriculumHistoric/chooseDegreeCPlanExecutionYear.jsp", tileProperties = @Tile(title = "private.academicadministrativeoffice.marksheets.consult")),
+	@Forward(name = "showActiveCurricularCourses", path = "/commons/curriculumHistoric/showActiveCurricularCourseScopes.jsp", tileProperties = @Tile(title = "private.academicadministrativeoffice.marksheets.consult")) })
 public class DegreeCurricularPlanExecutionYearDispacthAction extends FenixDispatchAction {
 
     public ActionForward prepare(final ActionMapping mapping, final ActionForm form, final HttpServletRequest request,

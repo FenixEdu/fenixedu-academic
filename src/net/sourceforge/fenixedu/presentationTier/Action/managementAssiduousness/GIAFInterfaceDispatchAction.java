@@ -27,16 +27,12 @@ import org.apache.struts.action.ActionMapping;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
-import pt.ist.fenixWebFramework.struts.annotations.Forward;
-import pt.ist.fenixWebFramework.struts.annotations.Forwards;
-import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 @Mapping(path = "/giafInterface", module = "personnelSection")
-@Forwards( { @Forward(name = "employee-hour-value", path = "/managementAssiduousness/giafInterface/showEmployeeHourValue.jsp"),
-	@Forward(name = "insert-A17-vacations", path = "/managementAssiduousness/giafInterface/insertA17Vacations.jsp") })
+@Forwards({
+	@Forward(name = "employee-hour-value", path = "/managementAssiduousness/giafInterface/showEmployeeHourValue.jsp", tileProperties = @Tile(title = "private.staffarea.interfacegiaf.interfacegiaf.wagehour")),
+	@Forward(name = "insert-A17-vacations", path = "/managementAssiduousness/giafInterface/insertA17Vacations.jsp", tileProperties = @Tile(title = "private.staffarea.interfacegiaf.interfacegiaf.vacationsbya17")) })
 public class GIAFInterfaceDispatchAction extends FenixDispatchAction {
 
     public ActionForward showEmployeeHourValue(ActionMapping mapping, ActionForm form, HttpServletRequest request,
@@ -82,8 +78,8 @@ public class GIAFInterfaceDispatchAction extends FenixDispatchAction {
 		addErrorMessage(request, "message", e.getMessage());
 	    }
 	}
-	List<GiafInterfaceDocument> giafInterfaceDocuments = new ArrayList<GiafInterfaceDocument>(rootDomainObject
-		.getGiafInterfaceDocuments());
+	List<GiafInterfaceDocument> giafInterfaceDocuments = new ArrayList<GiafInterfaceDocument>(
+		rootDomainObject.getGiafInterfaceDocuments());
 	Collections.sort(giafInterfaceDocuments, new BeanComparator("createdWhen"));
 	Collections.reverse(giafInterfaceDocuments);
 	request.setAttribute("giafInterfaceDocuments", giafInterfaceDocuments);

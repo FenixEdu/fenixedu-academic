@@ -50,13 +50,14 @@ import pt.ist.fenixWebFramework.services.Service;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixWebFramework.struts.annotations.Tile;
 import pt.utl.ist.fenix.tools.spreadsheet.SheetData;
 import pt.utl.ist.fenix.tools.spreadsheet.SpreadsheetBuilder;
 import pt.utl.ist.fenix.tools.spreadsheet.WorkbookExportFormat;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 @Mapping(path = "/manageEctsComparabilityTables", module = "gep")
-@Forwards({ @Forward(name = "index", path = "/gep/ects/comparabilityTableIndex.jsp") })
+@Forwards({ @Forward(name = "index", path = "/gep/ects/comparabilityTableIndex.jsp", tileProperties = @Tile(title = "private.gep.gepportal.ectstables")) })
 public class ManageEctsComparabilityTablesDispatchAction extends FenixDispatchAction {
     private static final String SEPARATOR = "\\t";
 
@@ -94,7 +95,7 @@ public class ManageEctsComparabilityTablesDispatchAction extends FenixDispatchAc
 		response.setContentType("text/csv");
 		response.setHeader("Content-disposition", "attachment; filename=template.tsv");
 		new SpreadsheetBuilder().addSheet("template", builder)
-		.build(WorkbookExportFormat.TSV, response.getOutputStream());
+			.build(WorkbookExportFormat.TSV, response.getOutputStream());
 		return null;
 	    } finally {
 		response.flushBuffer();

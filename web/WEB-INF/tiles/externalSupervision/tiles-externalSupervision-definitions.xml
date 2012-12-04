@@ -5,8 +5,7 @@
 
 <!-- Tiles definitions -->
 <tiles-definitions>
-	<definition name="definition.externalSupervision.master" extends="df.layout.two-column">
-	  <put name="title" value="Supervisão Externa" />
+	<definition name="definition.externalSupervision.master" extends="df.layout.two-column.contents">
 	  <put name="serviceName" value="Supervisão Externa" />
 	  <put name="navLocal" value="/commons/functionalities/side-menu.jsp" />
 	  <put name="navGeral" value="/commons/functionalities/top-menu.jsp" />

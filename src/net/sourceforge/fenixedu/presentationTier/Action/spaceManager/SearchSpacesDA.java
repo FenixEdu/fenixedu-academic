@@ -20,10 +20,12 @@ import org.apache.struts.action.ActionMapping;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 @Mapping(module = "SpaceManager", path = "/searchSpace", scope = "session", parameter = "method")
-@Forwards(value = { @Forward(name = "prepareSearch", path = "/spaceManager/searchSpaces.jsp"),
-	@Forward(name = "prepareSearchEvents", path = "/spaceManager/searchSpaceEvents.jsp") })
+@Forwards(value = {
+	@Forward(name = "prepareSearch", path = "/spaceManager/searchSpaces.jsp", tileProperties = @Tile(  title = "private.spacemanagement.searchspaces")),
+	@Forward(name = "prepareSearchEvents", path = "/spaceManager/searchSpaceEvents.jsp", tileProperties = @Tile(  title = "private.spacemanagement.searchoccupations")) })
 public class SearchSpacesDA extends FenixDispatchAction {
 
     public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {

@@ -15,21 +15,13 @@ import net.sourceforge.fenixedu.presentationTier.Action.directiveCouncil.Summari
 import org.apache.struts.util.LabelValueBean;
 
 import pt.ist.fenixWebFramework.security.UserView;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
-import pt.ist.fenixWebFramework.struts.annotations.Forward;
-import pt.ist.fenixWebFramework.struts.annotations.Forwards;
-import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 @Mapping(module = "departmentAdmOffice", path = "/summariesControl", input = "/index.do", attribute = "summariesControlForm", formBean = "summariesControlForm", scope = "request", parameter = "method")
-@Forwards(value = { @Forward(name = "success", path = "/departmentAdmOffice/summariesControl/listTeacherSummariesControl.jsp") })
+@Forwards(value = { @Forward(name = "success", path = "/departmentAdmOffice/summariesControl/listTeacherSummariesControl.jsp", tileProperties = @Tile(title = "private.administrationofcreditsofdepartmentteachers.consultations.controlbrief")) })
 public class DepartmentAdmOfficeSummariesControlAction extends SummariesControlAction {
 
     @Override

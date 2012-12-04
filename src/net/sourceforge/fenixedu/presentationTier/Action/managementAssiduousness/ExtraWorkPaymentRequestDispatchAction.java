@@ -17,14 +17,7 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.ActionMessage;
 import org.apache.struts.action.ActionMessages;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
-import pt.ist.fenixWebFramework.struts.annotations.Forward;
-import pt.ist.fenixWebFramework.struts.annotations.Forwards;
-import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
+
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
@@ -32,8 +25,8 @@ import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 @Mapping(module = "personnelSection", path = "/extraWorkPaymentRequest", scope = "request", parameter = "method")
 @Forwards(value = {
-		@Forward(name = "prepare-insert-payment-request", path = "/managementAssiduousness/extraWork/prepareInsertPaymentRequest.jsp"),
-		@Forward(name = "insert-payment-request", path = "/managementAssiduousness/extraWork/insertPaymentRequest.jsp") })
+	@Forward(name = "prepare-insert-payment-request", path = "/managementAssiduousness/extraWork/prepareInsertPaymentRequest.jsp", tileProperties = @Tile(title = "private.staffarea.outstandingjob.paymentrequests")),
+	@Forward(name = "insert-payment-request", path = "/managementAssiduousness/extraWork/insertPaymentRequest.jsp", tileProperties = @Tile(title = "private.staffarea.outstandingjob.paymentrequests")) })
 public class ExtraWorkPaymentRequestDispatchAction extends FenixDispatchAction {
 
     public ActionForward chooseUnitYearMonth(ActionMapping mapping, ActionForm form, HttpServletRequest request,

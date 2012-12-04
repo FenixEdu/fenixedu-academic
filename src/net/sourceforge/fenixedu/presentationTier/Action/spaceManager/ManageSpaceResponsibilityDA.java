@@ -22,14 +22,6 @@ import org.apache.struts.action.ActionMessages;
 
 import pt.ist.fenixWebFramework.renderers.components.state.IViewState;
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
-import pt.ist.fenixWebFramework.struts.annotations.Forward;
-import pt.ist.fenixWebFramework.struts.annotations.Forwards;
-import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
@@ -37,8 +29,8 @@ import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 @Mapping(module = "SpaceManager", path = "/manageSpaceResponsibility", scope = "session", parameter = "method")
 @Forwards(value = {
-		@Forward(name = "manageResponsabilityInterval", path = "/spaceManager/manageResponsabilityInterval.jsp"),
-		@Forward(name = "showSpaceResponsibility", path = "/spaceManager/spaceResponsibilityManagement.jsp") })
+	@Forward(name = "manageResponsabilityInterval", path = "/spaceManager/manageResponsabilityInterval.jsp", tileProperties = @Tile(  title = "private.spacemanagement.searchspaces")),
+	@Forward(name = "showSpaceResponsibility", path = "/spaceManager/spaceResponsibilityManagement.jsp", tileProperties = @Tile(  title = "private.spacemanagement.searchspaces")) })
 public class ManageSpaceResponsibilityDA extends FenixDispatchAction {
 
     public ActionForward showSpaceResponsibility(ActionMapping mapping, ActionForm form, HttpServletRequest request,

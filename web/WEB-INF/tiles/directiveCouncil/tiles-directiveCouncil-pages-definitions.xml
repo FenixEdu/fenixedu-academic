@@ -12,6 +12,8 @@
 		<put name="body" value="/masterDegreeAdministrativeOffice/gratuity/studentsGratuityList.jsp"/>
 	</definition>
 	<definition name="teacherSummariesControlList" extends="definition.directiveCouncil.masterPage">
+		<put name="bundle" value="TITLES_RESOURCES"/>
+		<put name="title" value="private.steeringcouncil.control.controlbriefs"/>
 		<put name="body" value="/directiveCouncil/summariesControl/listTeacherSummariesControl.jsp"/>
 	</definition>
     <definition name="df.page.evaluation.method.control" extends="definition.directiveCouncil.masterPage">
@@ -24,6 +26,8 @@
         <put name="body" value="/directiveCouncil/assiduousnessStructure/editAssiduousnessPersonFunction.jsp"/>
     </definition>
      <definition name="create-assiduousness-person-function" extends="definition.directiveCouncil.masterPage">
+     	<put name="bundle" value="TITLES_RESOURCES"/>
+        <put name="title" value="private.steeringcouncil.structuresiadap"/>
         <put name="body" value="/directiveCouncil/assiduousnessStructure/createAssiduousnessPersonFunction.jsp"/>
     </definition>
      <definition name="df.page.card.generation.firstPage" extends="definition.directiveCouncil.masterPage">
@@ -48,6 +52,8 @@
         <put name="body" value="/directiveCouncil/cardGeneration/showCardGenerationProblem.jsp"/>
     </definition>
      <definition name="df.page.send.email.redirect" extends="definition.directiveCouncil.masterPage">
+     	<put name="bundle" value="TITLES_RESOURCES"/>
+        <put name="title" value="private.steeringcouncil.sendingmail"/>
         <put name="body" value="/email/sendEmailRedirect.jsp"/>
     </definition>
      <definition name="df.page.people.search" extends="definition.directiveCouncil.masterPage">

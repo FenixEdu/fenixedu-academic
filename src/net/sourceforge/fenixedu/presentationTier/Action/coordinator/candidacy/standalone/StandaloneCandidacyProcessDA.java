@@ -25,10 +25,10 @@ import org.apache.struts.action.ActionMapping;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 @Mapping(path = "/caseHandlingStandaloneCandidacyProcess", module = "coordinator", formBeanClass = net.sourceforge.fenixedu.presentationTier.Action.candidacy.standalone.StandaloneCandidacyProcessDA.StandaloneCandidacyProcessForm.class)
-@Forwards({ @Forward(name = "intro", path = "/coordinator/candidacy/standalone/mainCandidacyProcess.jsp")
-})
+@Forwards({ @Forward(name = "intro", path = "/coordinator/candidacy/standalone/mainCandidacyProcess.jsp", tileProperties = @Tile(title = "private.coordinator.management.courses.applicationprocesses.isolatedcurriculum")) })
 public class StandaloneCandidacyProcessDA extends
 	net.sourceforge.fenixedu.presentationTier.Action.candidacy.standalone.StandaloneCandidacyProcessDA {
 
@@ -45,31 +45,37 @@ public class StandaloneCandidacyProcessDA extends
 	throw new RuntimeException("not allowed");
     }
 
+    @Override
     public ActionForward prepareExecuteSendToCoordinator(ActionMapping mapping, ActionForm actionForm,
 	    HttpServletRequest request, HttpServletResponse response) {
 	throw new RuntimeException("not allowed");
     }
 
+    @Override
     public ActionForward executeSendToCoordinator(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws FenixFilterException, FenixServiceException {
 	throw new RuntimeException("not allowed");
     }
 
+    @Override
     public ActionForward prepareExecutePrintCandidacies(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws IOException {
 	throw new RuntimeException("not allowed");
     }
 
+    @Override
     public ActionForward prepareExecuteIntroduceCandidacyResults(ActionMapping mapping, ActionForm actionForm,
 	    HttpServletRequest request, HttpServletResponse response) {
 	throw new RuntimeException("not allowed");
     }
 
+    @Override
     public ActionForward prepareIntroduceCandidacyResults(ActionMapping mapping, ActionForm actionForm,
 	    HttpServletRequest request, HttpServletResponse response) {
 	throw new RuntimeException("not allowed");
     }
 
+    @Override
     public ActionForward executeIntroduceCandidacyResults(ActionMapping mapping, ActionForm actionForm,
 	    HttpServletRequest request, HttpServletResponse response) throws FenixFilterException, FenixServiceException {
 	throw new RuntimeException("not allowed");
@@ -79,16 +85,18 @@ public class StandaloneCandidacyProcessDA extends
     protected List<IndividualCandidacyProcess> getChildProcesses(CandidacyProcess process, HttpServletRequest request) {
 	final DegreeCurricularPlan degreeCurricularPlan = getDegreeCurricularPlan(request);
 	final List<IndividualCandidacyProcess> result = new ArrayList(super.getChildProcesses(process, request));
-	for (final Iterator<IndividualCandidacyProcess> i = result.iterator(); i.hasNext(); ) {
-	    final StandaloneIndividualCandidacyProcess individualCandidacyProcess = (StandaloneIndividualCandidacyProcess) i.next();
+	for (final Iterator<IndividualCandidacyProcess> i = result.iterator(); i.hasNext();) {
+	    final StandaloneIndividualCandidacyProcess individualCandidacyProcess = (StandaloneIndividualCandidacyProcess) i
+		    .next();
 	    if (!matchesDegree(degreeCurricularPlan, individualCandidacyProcess)) {
 		i.remove();
 	    }
 	}
-        return result;
+	return result;
     }
 
-    private boolean matchesDegree(final DegreeCurricularPlan degreeCurricularPlan, final StandaloneIndividualCandidacyProcess individualCandidacyProcess) {
+    private boolean matchesDegree(final DegreeCurricularPlan degreeCurricularPlan,
+	    final StandaloneIndividualCandidacyProcess individualCandidacyProcess) {
 	if (degreeCurricularPlan == null) {
 	    return true;
 	}

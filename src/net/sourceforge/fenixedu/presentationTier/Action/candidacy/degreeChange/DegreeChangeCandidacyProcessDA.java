@@ -38,21 +38,24 @@ import org.joda.time.format.DateTimeFormatter;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixWebFramework.struts.annotations.Tile;
 import pt.utl.ist.fenix.tools.util.excel.Spreadsheet;
 import pt.utl.ist.fenix.tools.util.excel.Spreadsheet.Row;
 import pt.utl.ist.fenix.tools.util.excel.StyledExcelSpreadsheet;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 @Mapping(path = "/caseHandlingDegreeChangeCandidacyProcess", module = "academicAdminOffice", formBeanClass = CandidacyProcessDA.CandidacyProcessForm.class)
-@Forwards( { @Forward(name = "intro", path = "/candidacy/mainCandidacyProcess.jsp"),
-	@Forward(name = "prepare-create-new-process", path = "/candidacy/createCandidacyPeriod.jsp"),
-	@Forward(name = "prepare-edit-candidacy-period", path = "/candidacy/editCandidacyPeriod.jsp"),
-	@Forward(name = "send-to-coordinator", path = "/candidacy/sendToCoordinator.jsp"),
-	@Forward(name = "send-to-scientificCouncil", path = "/candidacy/sendToScientificCouncil.jsp"),
-	@Forward(name = "view-candidacy-results", path = "/candidacy/degreeChange/viewCandidacyResults.jsp"),
-	@Forward(name = "introduce-candidacy-results", path = "/candidacy/degreeChange/introduceCandidacyResults.jsp"),
-	@Forward(name = "create-registrations", path = "/candidacy/createRegistrations.jsp"),
-	@Forward(name = "prepare-select-available-degrees", path = "/candidacy/selectAvailableDegrees.jsp")
+@Forwards({
+
+	@Forward(name = "intro", path = "/candidacy/mainCandidacyProcess.jsp", tileProperties = @Tile(title = "private.academicadministrativeoffice.applications.coursechanges")),
+	@Forward(name = "prepare-create-new-process", path = "/candidacy/createCandidacyPeriod.jsp", tileProperties = @Tile(title = "private.academicadministrativeoffice.applications.coursechanges")),
+	@Forward(name = "prepare-edit-candidacy-period", path = "/candidacy/editCandidacyPeriod.jsp", tileProperties = @Tile(title = "private.academicadministrativeoffice.applications.coursechanges")),
+	@Forward(name = "send-to-coordinator", path = "/candidacy/sendToCoordinator.jsp", tileProperties = @Tile(title = "private.academicadministrativeoffice.applications.coursechanges")),
+	@Forward(name = "send-to-scientificCouncil", path = "/candidacy/sendToScientificCouncil.jsp", tileProperties = @Tile(title = "private.academicadministrativeoffice.applications.coursechanges")),
+	@Forward(name = "view-candidacy-results", path = "/candidacy/degreeChange/viewCandidacyResults.jsp", tileProperties = @Tile(title = "private.academicadministrativeoffice.applications.coursechanges")),
+	@Forward(name = "introduce-candidacy-results", path = "/candidacy/degreeChange/introduceCandidacyResults.jsp", tileProperties = @Tile(title = "private.academicadministrativeoffice.applications.coursechanges")),
+	@Forward(name = "create-registrations", path = "/candidacy/createRegistrations.jsp", tileProperties = @Tile(title = "private.academicadministrativeoffice.applications.coursechanges")),
+	@Forward(name = "prepare-select-available-degrees", path = "/candidacy/selectAvailableDegrees.jsp", tileProperties = @Tile(title = "private.academicadministrativeoffice.applications.coursechanges"))
 
 })
 public class DegreeChangeCandidacyProcessDA extends CandidacyProcessDA {
@@ -446,6 +449,7 @@ public class DegreeChangeCandidacyProcessDA extends CandidacyProcessDA {
 
     private static final DateTimeFormatter dateFormat = DateTimeFormat.forPattern("dd/MM/yyyy");
 
+    @Override
     protected Spreadsheet buildIndividualCandidacyReport(final Spreadsheet spreadsheet,
 	    final IndividualCandidacyProcess individualCandidacyProcess) {
 	DegreeChangeIndividualCandidacyProcess degreeChangeIndividualCandidacyProcess = (DegreeChangeIndividualCandidacyProcess) individualCandidacyProcess;
@@ -457,9 +461,7 @@ public class DegreeChangeCandidacyProcessDA extends CandidacyProcessDA {
 	row.setCell(degreeChangeIndividualCandidacyProcess.getPersonalDetails().getName());
 	row.setCell(degreeChangeIndividualCandidacyProcess.getPersonalDetails().getIdDocumentType().getLocalizedName());
 	row.setCell(degreeChangeIndividualCandidacyProcess.getPersonalDetails().getDocumentIdNumber());
-	row
-		.setCell(degreeChangeIndividualCandidacyProcess.getPersonalDetails().getCountry().getCountryNationality()
-			.getContent());
+	row.setCell(degreeChangeIndividualCandidacyProcess.getPersonalDetails().getCountry().getCountryNationality().getContent());
 	row.setCell(degreeChangeIndividualCandidacyProcess.getPrecedentDegreeInformation().getInstitution().getName());
 	row.setCell(degreeChangeIndividualCandidacyProcess.getPrecedentDegreeInformation().getDegreeDesignation());
 	row.setCell(degreeChangeIndividualCandidacyProcess.getCandidacy().getSelectedDegree().getName());

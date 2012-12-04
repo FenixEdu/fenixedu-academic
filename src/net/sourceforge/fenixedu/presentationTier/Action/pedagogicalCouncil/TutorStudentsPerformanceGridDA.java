@@ -11,9 +11,9 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.dataTransferObject.pedagogicalCouncil.NumberBean;
 import net.sourceforge.fenixedu.dataTransferObject.teacher.tutor.PerformanceGridTableDTO;
-import net.sourceforge.fenixedu.dataTransferObject.teacher.tutor.StudentsPerformanceInfoBean;
 import net.sourceforge.fenixedu.dataTransferObject.teacher.tutor.PerformanceGridTableDTO.PerformanceGridLine;
 import net.sourceforge.fenixedu.dataTransferObject.teacher.tutor.PerformanceGridTableDTO.PerformanceGridLine.PerformanceGridLineYearGroup;
+import net.sourceforge.fenixedu.dataTransferObject.teacher.tutor.StudentsPerformanceInfoBean;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
@@ -31,19 +31,14 @@ import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixWebFramework.struts.annotations.Tile;
 import pt.utl.ist.fenix.tools.spreadsheet.SheetData;
 import pt.utl.ist.fenix.tools.spreadsheet.SpreadsheetBuilder;
 import pt.utl.ist.fenix.tools.spreadsheet.WorkbookExportFormat;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
-import pt.ist.fenixWebFramework.struts.annotations.Forward;
-import pt.ist.fenixWebFramework.struts.annotations.Forwards;
-import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 @Mapping(path = "/tutorStudentsPerformanceGrid", module = "pedagogicalCouncil")
-@Forwards( { @Forward(name = "viewStudentsPerformanceGrid", path = "/pedagogicalCouncil/tutorship/showStudentsPerformanceGrid.jsp") })
+@Forwards({ @Forward(name = "viewStudentsPerformanceGrid", path = "/pedagogicalCouncil/tutorship/showStudentsPerformanceGrid.jsp", tileProperties = @Tile(title = "private.pedagogiccouncil.tutoring.viewperformancegrids")) })
 public class TutorStudentsPerformanceGridDA extends ViewStudentsPerformanceGridDispatchAction {
 
     public ActionForward prepareTutorSearch(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
@@ -79,8 +74,8 @@ public class TutorStudentsPerformanceGridDA extends ViewStudentsPerformanceGridD
 	prepareStudentsPerformanceGrid(mapping, actionForm, request, response, person);
 	final PerformanceGridTableDTO performanceGridTable = (PerformanceGridTableDTO) request
 		.getAttribute("performanceGridTable");
-	SheetData<PerformanceGridLine> builder = new SheetData<PerformanceGridLine>(performanceGridTable
-		.getPerformanceGridTableLines()) {
+	SheetData<PerformanceGridLine> builder = new SheetData<PerformanceGridLine>(
+		performanceGridTable.getPerformanceGridTableLines()) {
 	    @Override
 	    protected void makeLine(PerformanceGridLine item) {
 		final ResourceBundle bundle = ResourceBundle.getBundle("resources.ApplicationResources", Language.getLocale());
@@ -102,8 +97,8 @@ public class TutorStudentsPerformanceGridDA extends ViewStudentsPerformanceGridD
 			    addSemesterCell(item, monitoringYear, year, 1, true), (short) 1);
 		    addCell(bundle.getString("label.second.semester.short"), addSemesterCell(item, monitoringYear, year, 2, true));
 		    addCell(MessageFormat.format(bundle.getString("label.performanceGrid.year.notTutorated"), year + 1),
-			    (short) 2, bundle.getString("label.first.semester.short"), (short) 1, addSemesterCell(item,
-				    monitoringYear, year, 1, false), (short) 1);
+			    (short) 2, bundle.getString("label.first.semester.short"), (short) 1,
+			    addSemesterCell(item, monitoringYear, year, 1, false), (short) 1);
 		    addCell(bundle.getString("label.second.semester.short"),
 			    addSemesterCell(item, monitoringYear, year, 2, false));
 		}
@@ -141,8 +136,7 @@ public class TutorStudentsPerformanceGridDA extends ViewStudentsPerformanceGridD
 	    }
 	};
 	response.setContentType("text/plain");
-	response.setHeader("Content-disposition", "attachment; filename=" + person.getIstUsername()
-		+ "-students-performance.xls");
+	response.setHeader("Content-disposition", "attachment; filename=" + person.getIstUsername() + "-students-performance.xls");
 	new SpreadsheetBuilder().addSheet(person.getIstUsername() + "-students-performance.xls", builder).build(
 		WorkbookExportFormat.EXCEL, response.getOutputStream());
 	response.flushBuffer();

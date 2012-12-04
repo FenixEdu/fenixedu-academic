@@ -26,14 +26,7 @@ import org.apache.struts.action.ActionErrors;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
-import pt.ist.fenixWebFramework.struts.annotations.Forward;
-import pt.ist.fenixWebFramework.struts.annotations.Forwards;
-import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
+
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
@@ -45,11 +38,11 @@ import pt.ist.fenixWebFramework.struts.annotations.Tile;
  */
 @Mapping(module = "student", path = "/viewShiftsAndGroups", attribute = "enroledExecutionCoursesForm", formBean = "enroledExecutionCoursesForm", scope = "request")
 @Forwards(value = {
-		@Forward(name = "sucess", path = "/student/viewShiftsAndGroups_bd.jsp"),
-		@Forward(name = "insucess", path = "/viewEnroledExecutionCourses.do?method=prepare"),
-		@Forward(name = "viewExecutionCourseProjects", path = "/viewExecutionCourseProjects.do") })
+	@Forward(name = "sucess", path = "/student/viewShiftsAndGroups_bd.jsp", tileProperties = @Tile(  title = "private.student.subscribe.groups")),
+	@Forward(name = "insucess", path = "/viewEnroledExecutionCourses.do?method=prepare", tileProperties = @Tile(  title = "private.student.subscribe.groups")) })
 public class ViewShiftsAndGroupsAction extends FenixContextAction {
 
+    @Override
     public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
 	    throws FenixActionException, FenixFilterException, FenixServiceException {
 
@@ -61,8 +54,7 @@ public class ViewShiftsAndGroupsAction extends FenixContextAction {
 
 	String username = userView.getUtilizador();
 
-	List<InfoExportGrouping> infoExportGroupings = (List<InfoExportGrouping>) ReadExportGroupingsByGrouping
-		.run(groupPropertiesCode);
+	List<InfoExportGrouping> infoExportGroupings = ReadExportGroupingsByGrouping.run(groupPropertiesCode);
 	request.setAttribute("infoExportGroupings", infoExportGroupings);
 
 	InfoSiteShiftsAndGroups infoSiteShiftsAndGroups;

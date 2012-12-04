@@ -30,12 +30,6 @@ import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixWebFramework.struts.annotations.Tile;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
-import pt.ist.fenixWebFramework.struts.annotations.Forward;
-import pt.ist.fenixWebFramework.struts.annotations.Forwards;
-import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 /**
  * @author <a href="mailto:sana@ist.utl.pt">Shezad Anavarali </a>
@@ -44,11 +38,11 @@ import pt.ist.fenixWebFramework.struts.annotations.Tile;
  */
 @Mapping(module = "masterDegreeAdministrativeOffice", path = "/viewReimbursementGuides", input = "/viewReimbursementGuides.do?page=0&method=view", scope = "request", parameter = "method")
 @Forwards(value = {
-		@Forward(name = "error", path = "df.page.reimbursementGuide_Error"),
-		@Forward(name = "start", path = "df.page.viewReimbursementGuides") })
+	@Forward(name = "error", path = "df.page.reimbursementGuide_Error", tileProperties = @Tile(title = "teste71")),
+	@Forward(name = "start", path = "df.page.viewReimbursementGuides", tileProperties = @Tile(title = "teste72")) })
 @Exceptions(value = {
-		@ExceptionHandling(type = net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException.class, key = "resources.Action.exceptions.FenixActionException", handler = net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler.class, scope = "request"),
-		@ExceptionHandling(type = net.sourceforge.fenixedu.presentationTier.Action.exceptions.InvalidSituationActionException.class, key = "resources.Action.exceptions.InvalidSituationActionException", handler = net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler.class, scope = "request") })
+	@ExceptionHandling(type = net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException.class, key = "resources.Action.exceptions.FenixActionException", handler = net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler.class, scope = "request"),
+	@ExceptionHandling(type = net.sourceforge.fenixedu.presentationTier.Action.exceptions.InvalidSituationActionException.class, key = "resources.Action.exceptions.InvalidSituationActionException", handler = net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler.class, scope = "request") })
 public class ViewReimbursementGuidesDispatchAction extends FenixDispatchAction {
 
     public ActionForward view(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
@@ -72,8 +66,8 @@ public class ViewReimbursementGuidesDispatchAction extends FenixDispatchAction {
 	}
 
 	if (infoGuide.getInfoReimbursementGuides().isEmpty() == true)
-	    throw new NonExistingActionException("error.exception.masterDegree.nonExistingReimbursementGuides", mapping
-		    .findForward("error"));
+	    throw new NonExistingActionException("error.exception.masterDegree.nonExistingReimbursementGuides",
+		    mapping.findForward("error"));
 
 	if (infoGuide.getInfoGuideSituation().getSituation().equals(GuideState.PAYED)) {
 	    return mapping.findForward("start");

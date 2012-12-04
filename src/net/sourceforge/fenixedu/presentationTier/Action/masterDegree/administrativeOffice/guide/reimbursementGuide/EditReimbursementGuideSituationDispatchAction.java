@@ -38,12 +38,6 @@ import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixWebFramework.struts.annotations.Tile;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
-import pt.ist.fenixWebFramework.struts.annotations.Forward;
-import pt.ist.fenixWebFramework.struts.annotations.Forwards;
-import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 /**
  * @author <a href="mailto:sana@ist.utl.pt">Shezad Anavarali </a>
@@ -52,13 +46,13 @@ import pt.ist.fenixWebFramework.struts.annotations.Tile;
  */
 @Mapping(module = "masterDegreeAdministrativeOffice", path = "/editReimbursementGuideSituation", input = "/editReimbursementGuideSituation.do?page=0&method=prepare", attribute = "editReimbursementGuideSituationForm", formBean = "editReimbursementGuideSituationForm", scope = "request", parameter = "method")
 @Forwards(value = {
-		@Forward(name = "error", path = "df.page.reimbursementGuide_Error"),
-		@Forward(name = "start", path = "df.page.editReimbursementGuideSituation"),
-		@Forward(name = "success", path = "df.page.editReimbursementGuideSituation_Success") })
+	@Forward(name = "error", path = "df.page.reimbursementGuide_Error", tileProperties = @Tile(title = "teste66")),
+	@Forward(name = "start", path = "df.page.editReimbursementGuideSituation", tileProperties = @Tile(title = "teste67")),
+	@Forward(name = "success", path = "df.page.editReimbursementGuideSituation_Success", tileProperties = @Tile(title = "teste68")) })
 @Exceptions(value = {
-		@ExceptionHandling(type = net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException.class, key = "resources.Action.exceptions.FenixActionException", handler = net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler.class, scope = "request"),
-		@ExceptionHandling(type = net.sourceforge.fenixedu.presentationTier.Action.exceptions.InvalidSituationActionException.class, key = "resources.Action.exceptions.InvalidSituationActionException", handler = net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler.class, scope = "request"),
-		@ExceptionHandling(type = net.sourceforge.fenixedu.presentationTier.Action.exceptions.NoEntryChosenActionException.class, key = "resources.Action.exceptions.NoEntryChosenActionException", handler = net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler.class, scope = "request") })
+	@ExceptionHandling(type = net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException.class, key = "resources.Action.exceptions.FenixActionException", handler = net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler.class, scope = "request"),
+	@ExceptionHandling(type = net.sourceforge.fenixedu.presentationTier.Action.exceptions.InvalidSituationActionException.class, key = "resources.Action.exceptions.InvalidSituationActionException", handler = net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler.class, scope = "request"),
+	@ExceptionHandling(type = net.sourceforge.fenixedu.presentationTier.Action.exceptions.NoEntryChosenActionException.class, key = "resources.Action.exceptions.NoEntryChosenActionException", handler = net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler.class, scope = "request") })
 public class EditReimbursementGuideSituationDispatchAction extends FenixDispatchAction {
 
     public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
@@ -73,7 +67,7 @@ public class EditReimbursementGuideSituationDispatchAction extends FenixDispatch
 	InfoReimbursementGuide infoReimbursementGuide = null;
 
 	try {
-	    infoReimbursementGuide = (InfoReimbursementGuide) ViewReimbursementGuide.run(reimbursementGuideId);
+	    infoReimbursementGuide = ViewReimbursementGuide.run(reimbursementGuideId);
 	} catch (FenixServiceException e) {
 	    throw new FenixActionException(e.getMessage(), mapping.findForward("error"));
 	}

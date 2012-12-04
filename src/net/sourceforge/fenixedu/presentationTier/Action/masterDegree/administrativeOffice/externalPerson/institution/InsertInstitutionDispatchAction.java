@@ -22,13 +22,6 @@ import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
-import pt.ist.fenixWebFramework.struts.annotations.Forward;
-import pt.ist.fenixWebFramework.struts.annotations.Forwards;
-import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 /**
  * @author Shezad Anavarali (sana@mega.ist.utl.pt)
@@ -37,10 +30,9 @@ import pt.ist.fenixWebFramework.struts.annotations.Tile;
  */
 
 @Mapping(module = "masterDegreeAdministrativeOffice", path = "/insertInstitution", input = "df.page.insertInstitution", attribute = "insertInstitutionForm", formBean = "insertInstitutionForm", scope = "request", parameter = "method")
-@Forwards(value = {
-		@Forward(name = "error", path = "df.page.insertInstitution"),
-		@Forward(name = "start", path = "df.page.insertInstitution"),
-		@Forward(name = "success", path = "df.page.insertInstitution_success") })
+@Forwards(value = { @Forward(name = "error", path = "df.page.insertInstitution"),
+	@Forward(name = "start", path = "df.page.insertInstitution"),
+	@Forward(name = "success", path = "df.page.insertInstitution_success") })
 @Exceptions(value = { @ExceptionHandling(type = net.sourceforge.fenixedu.presentationTier.Action.exceptions.ExistingActionException.class, key = "resources.Action.exceptions.ExistingActionException", handler = net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler.class, scope = "request") })
 public class InsertInstitutionDispatchAction extends FenixDispatchAction {
 

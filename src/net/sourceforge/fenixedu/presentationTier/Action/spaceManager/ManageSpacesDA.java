@@ -38,22 +38,21 @@ import net.sourceforge.fenixedu.domain.resource.Resource;
 import net.sourceforge.fenixedu.domain.resource.ResourceResponsibility;
 import net.sourceforge.fenixedu.domain.space.AllocatableSpace;
 import net.sourceforge.fenixedu.domain.space.Blueprint;
+import net.sourceforge.fenixedu.domain.space.Blueprint.BlueprintTextRectangles;
 import net.sourceforge.fenixedu.domain.space.BlueprintFile;
 import net.sourceforge.fenixedu.domain.space.Building;
 import net.sourceforge.fenixedu.domain.space.Floor;
 import net.sourceforge.fenixedu.domain.space.PersonSpaceOccupation;
 import net.sourceforge.fenixedu.domain.space.Room;
 import net.sourceforge.fenixedu.domain.space.Space;
+import net.sourceforge.fenixedu.domain.space.Space.SpaceAccessGroupType;
 import net.sourceforge.fenixedu.domain.space.SpaceComparator;
 import net.sourceforge.fenixedu.domain.space.SpaceInformation;
 import net.sourceforge.fenixedu.domain.space.SpaceResponsibility;
 import net.sourceforge.fenixedu.domain.space.UnitSpaceOccupation;
-import net.sourceforge.fenixedu.domain.space.Blueprint.BlueprintTextRectangles;
-import net.sourceforge.fenixedu.domain.space.Space.SpaceAccessGroupType;
 import net.sourceforge.fenixedu.domain.util.FactoryExecutor;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants;
-import net.sourceforge.fenixedu.util.BundleUtil;
 import net.sourceforge.fenixedu.util.spaceBlueprints.SpaceBlueprintsDWGProcessor;
 
 import org.apache.struts.action.ActionForm;
@@ -68,34 +67,26 @@ import org.joda.time.YearMonthDay;
 
 import pt.ist.fenixWebFramework.renderers.components.state.IViewState;
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixWebFramework.struts.annotations.Tile;
 import pt.utl.ist.fenix.tools.util.excel.Spreadsheet;
 import pt.utl.ist.fenix.tools.util.excel.Spreadsheet.Row;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
-import pt.ist.fenixWebFramework.struts.annotations.Forward;
-import pt.ist.fenixWebFramework.struts.annotations.Forwards;
-import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
-import pt.ist.fenixWebFramework.struts.annotations.Forward;
-import pt.ist.fenixWebFramework.struts.annotations.Forwards;
-import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 @Mapping(module = "SpaceManager", path = "/manageSpaces", attribute = "spaceContextForm", formBean = "spaceContextForm", scope = "request", parameter = "method")
 @Forwards(value = {
-		@Forward(name = "ShowCreateSubSpaceForm", path = "/spaceManager/createSubSpace.jsp"),
-		@Forward(name = "CreateSpaceInformation", path = "/spaceManager/createSpaceInformation.jsp"),
-		@Forward(name = "CompareRoomsBeforeMerge", path = "/spaceManager/compareRoomsBeforeMerge.jsp"),
-		@Forward(name = "ManageSpace", path = "/spaceManager/manageSpace.jsp"),
-		@Forward(name = "PrepareMergeSpace", path = "/spaceManager/mergeRoom.jsp"),
-		@Forward(name = "PrepareMoveSpace", path = "/spaceManager/moveSpace.jsp"),
-		@Forward(name = "ViewSpaceInformation", path = "/spaceManager/viewSpaceInformation.jsp"),
-		@Forward(name = "ShowSpaces", path = "/spaceManager/index.jsp"),
-		@Forward(name = "ViewEventSpaceOccupations", path = "/spaceManager/viewEventSpaceOccupations.jsp"),
-		@Forward(name = "ManageSpaceAccessGroups", path = "/spaceManager/manageAccessGroups.jsp"),
-		@Forward(name = "EditSpace", path = "/spaceManager/editSpace.jsp") })
+	@Forward(name = "ShowCreateSubSpaceForm", path = "/spaceManager/createSubSpace.jsp", tileProperties = @Tile(  title = "private.spacemanagement.searchspaces")),
+	@Forward(name = "CreateSpaceInformation", path = "/spaceManager/createSpaceInformation.jsp", tileProperties = @Tile(  title = "private.spacemanagement.searchspaces")),
+	@Forward(name = "CompareRoomsBeforeMerge", path = "/spaceManager/compareRoomsBeforeMerge.jsp"),
+	@Forward(name = "ManageSpace", path = "/spaceManager/manageSpace.jsp", tileProperties = @Tile(  title = "private.spacemanagement.searchspaces")),
+	@Forward(name = "PrepareMergeSpace", path = "/spaceManager/mergeRoom.jsp"),
+	@Forward(name = "PrepareMoveSpace", path = "/spaceManager/moveSpace.jsp", tileProperties = @Tile(  title = "private.spacemanagement.searchspaces")),
+	@Forward(name = "ViewSpaceInformation", path = "/spaceManager/viewSpaceInformation.jsp"),
+	@Forward(name = "ShowSpaces", path = "/spaceManager/index.jsp"),
+	@Forward(name = "ViewEventSpaceOccupations", path = "/spaceManager/viewEventSpaceOccupations.jsp"),
+	@Forward(name = "ManageSpaceAccessGroups", path = "/spaceManager/manageAccessGroups.jsp", tileProperties = @Tile(  title = "private.spacemanagement.searchspaces")),
+	@Forward(name = "EditSpace", path = "/spaceManager/editSpace.jsp", tileProperties = @Tile(  title = "private.spacemanagement.searchspaces")) })
 public class ManageSpacesDA extends FenixDispatchAction {
 
     public ActionForward viewSpaces(ActionMapping mapping, ActionForm form, HttpServletRequest request,
@@ -267,8 +258,8 @@ public class ManageSpacesDA extends FenixDispatchAction {
 	}
 
 	try {
-	    SpaceAccessGroupsManagement.run(space, (bean != null) ? bean.getAccessGroupType() : null, true, (bean != null) ? bean
-		    .getMaintainElements() : false, groupExpression);
+	    SpaceAccessGroupsManagement.run(space, (bean != null) ? bean.getAccessGroupType() : null, true,
+		    (bean != null) ? bean.getMaintainElements() : false, groupExpression);
 	} catch (DomainException e) {
 	    addActionMessage(request, e.getMessage());
 	}
@@ -594,9 +585,9 @@ public class ManageSpacesDA extends FenixDispatchAction {
 	    final byte[] blueprintBytes = blueprintFile.getContent().getBytes();
 	    final InputStream inputStream = new ByteArrayInputStream(blueprintBytes);
 	    try {
-		BlueprintTextRectangles blueprintTextRectangles = SpaceBlueprintsDWGProcessor.getBlueprintTextRectangles(inputStream,
-			mostRecentBlueprint.getSpace(), viewBlueprintNumbers, viewOriginalSpaceBlueprint, viewSpaceIdentifications,
-			viewDoorNumbers, scalePercentage);
+		BlueprintTextRectangles blueprintTextRectangles = SpaceBlueprintsDWGProcessor.getBlueprintTextRectangles(
+			inputStream, mostRecentBlueprint.getSpace(), viewBlueprintNumbers, viewOriginalSpaceBlueprint,
+			viewSpaceIdentifications, viewDoorNumbers, scalePercentage);
 		request.setAttribute("blueprintTextRectangles", blueprintTextRectangles);
 	    } catch (final Error e) {
 		if ("Dwg version not supported".equals(e.getMessage())) {
@@ -658,8 +649,7 @@ public class ManageSpacesDA extends FenixDispatchAction {
 
     private Boolean isToViewOriginalSpaceBlueprint(HttpServletRequest request) {
 	final String viewOriginalSpaceBlueprintString = request.getParameterMap().containsKey("viewOriginalSpaceBlueprint") ? request
-		.getParameter("viewOriginalSpaceBlueprint")
-		: (String) request.getAttribute("viewOriginalSpaceBlueprint");
+		.getParameter("viewOriginalSpaceBlueprint") : (String) request.getAttribute("viewOriginalSpaceBlueprint");
 	return viewOriginalSpaceBlueprintString != null ? Boolean.valueOf(viewOriginalSpaceBlueprintString) : Boolean.FALSE;
     }
 

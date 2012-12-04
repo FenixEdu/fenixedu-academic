@@ -42,14 +42,6 @@ import org.apache.struts.util.LabelValueBean;
 import org.apache.struts.validator.DynaValidatorForm;
 
 import pt.ist.fenixWebFramework.security.UserView;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
-import pt.ist.fenixWebFramework.struts.annotations.Forward;
-import pt.ist.fenixWebFramework.struts.annotations.Forwards;
-import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
@@ -61,8 +53,8 @@ import pt.ist.fenixWebFramework.struts.annotations.Tile;
  */
 @Mapping(module = "masterDegreeAdministrativeOffice", path = "/insertGratuityDataDA", input = "/insertGratuityDataDA.do?method=prepareInsertGratuityDataChooseDegree&page=0", attribute = "insertGratuityDataForm", formBean = "insertGratuityDataForm", scope = "request", parameter = "method")
 @Forwards(value = {
-		@Forward(name = "prepareInsertGratuityData", path = "df.page.prepareInsertGratuityData"),
-		@Forward(name = "insertGratuityData", path = "df.page.insertGratuityData") })
+	@Forward(name = "prepareInsertGratuityData", path = "df.page.prepareInsertGratuityData", tileProperties = @Tile(title = "teste50")),
+	@Forward(name = "insertGratuityData", path = "df.page.insertGratuityData", tileProperties = @Tile(title = "teste51")) })
 public class InsertGratuityDataDispatchAction extends FenixDispatchAction {
 
     public ActionForward prepareInsertChooseExecutionYear(ActionMapping mapping, ActionForm form, HttpServletRequest request,
@@ -85,6 +77,7 @@ public class InsertGratuityDataDispatchAction extends FenixDispatchAction {
     private List buildLabelValueBeanForJsp(List infoExecutionYears) {
 	List executionYearLabels = new ArrayList();
 	CollectionUtils.collect(infoExecutionYears, new Transformer() {
+	    @Override
 	    public Object transform(Object arg0) {
 		InfoExecutionYear infoExecutionYear = (InfoExecutionYear) arg0;
 
@@ -242,14 +235,14 @@ public class InsertGratuityDataDispatchAction extends FenixDispatchAction {
 
     private void removeRegistrationPaymentFromPhases(InfoGratuityValues infoGratuityValues) {
 	CollectionUtils.filter(infoGratuityValues.getInfoPaymentPhases(), new Predicate() {
+	    @Override
 	    public boolean evaluate(Object arg0) {
 		InfoPaymentPhase infoPaymentPhase = (InfoPaymentPhase) arg0;
 
 		if (infoPaymentPhase.getDescription() == null
 			|| !infoPaymentPhase
 				.getDescription()
-				.equals(
-					net.sourceforge.fenixedu.presentationTier.Action.masterDegree.utils.PresentationConstants.REGISTRATION_PAYMENT)) {
+				.equals(net.sourceforge.fenixedu.presentationTier.Action.masterDegree.utils.PresentationConstants.REGISTRATION_PAYMENT)) {
 		    return true;
 		}
 		return false;
@@ -260,13 +253,13 @@ public class InsertGratuityDataDispatchAction extends FenixDispatchAction {
     private InfoPaymentPhase findRegistrationPayment(InfoGratuityValues infoGratuityValues) {
 	InfoPaymentPhase infoPaymentPhase = (InfoPaymentPhase) CollectionUtils.find(infoGratuityValues.getInfoPaymentPhases(),
 		new Predicate() {
+		    @Override
 		    public boolean evaluate(Object arg0) {
 			InfoPaymentPhase infoPaymentPhase = (InfoPaymentPhase) arg0;
 			if (infoPaymentPhase.getDescription() != null
 				&& infoPaymentPhase
 					.getDescription()
-					.equals(
-						net.sourceforge.fenixedu.presentationTier.Action.masterDegree.utils.PresentationConstants.REGISTRATION_PAYMENT)) {
+					.equals(net.sourceforge.fenixedu.presentationTier.Action.masterDegree.utils.PresentationConstants.REGISTRATION_PAYMENT)) {
 			    return true;
 			}
 			return false;

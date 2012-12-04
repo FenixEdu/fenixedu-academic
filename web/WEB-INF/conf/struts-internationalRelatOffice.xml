@@ -39,6 +39,7 @@
       <message-resources null="false" key="DOMAIN_RESOURCES" parameter="resources.DomainResources"></message-resources>
       <message-resources null="false" key="COMMON_RESOURCES" parameter="resources.CommonResources"></message-resources>
       <message-resources null="false" key="GEP_RESOURCES" parameter="resources.GEPResources"></message-resources>
+      <message-resources null="false" key="TITLES_RESOURCES" parameter="resources.TitlesResources"></message-resources>
       <!-- ========== Plug Ins Configuration ================================= -->
       <plug-in className="org.apache.struts.validator.ValidatorPlugIn">
             <set-property value="/WEB-INF/validator-rules.xml,/WEB-INF/fenix-validator-rules.xml,/WEB-INF/conf/validation-internRelationOffice.xml" property="pathnames"></set-property>

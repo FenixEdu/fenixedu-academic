@@ -40,6 +40,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Input;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 /**
  * @author <a href="mailto:sana@ist.utl.pt">Shezad Anavarali </a>
@@ -48,8 +49,9 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
  */
 
 @Mapping(path = "/studentSituation", formBean = "studentSituationForm", module = "masterDegreeAdministrativeOffice")
-@Forwards( { @Forward(name = "chooseStudent", path = "chooseStudentForStudentSituation"),
-	@Forward(name = "success", path = "studentSituation") })
+@Forwards({
+	@Forward(name = "chooseStudent", path = "chooseStudentForStudentSituation", tileProperties = @Tile(title = "teste61")),
+	@Forward(name = "success", path = "studentSituation", tileProperties = @Tile(title = "teste62")) })
 @Exceptions({ @ExceptionHandling(type = NonExistingActionException.class, handler = FenixErrorExceptionHandler.class) })
 public class StudentSituationDispatchAction extends FenixDispatchAction {
 
@@ -71,8 +73,8 @@ public class StudentSituationDispatchAction extends FenixDispatchAction {
 	Integer studentNumber = getIntegerFromRequestOrForm(request, studentSituationForm, "studentNumber");
 	String degreeType = (String) getFromRequestOrForm(request, studentSituationForm, "degreeType");
 
-	InfoStudent infoStudent = (InfoStudent) ReadStudentByNumberAndDegreeType.run(studentNumber, DegreeType
-		.valueOf(degreeType));
+	InfoStudent infoStudent = (InfoStudent) ReadStudentByNumberAndDegreeType.run(studentNumber,
+		DegreeType.valueOf(degreeType));
 
 	if (infoStudent == null) {
 	    throw new NonExistingActionException("error.exception.masterDegree.nonExistentStudent", mapping.findForward("choose"));

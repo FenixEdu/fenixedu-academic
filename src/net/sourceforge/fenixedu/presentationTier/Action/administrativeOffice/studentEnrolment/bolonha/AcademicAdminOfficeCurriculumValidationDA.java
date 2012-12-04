@@ -44,15 +44,16 @@ import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 @Mapping(path = "/curriculumValidation", module = "academicAdminOffice", formBeanClass = FenixActionForm.class)
-@Forwards( {
-	@Forward(name = "show-curriculum-validation-options", path = "/academicAdminOffice/student/curriculumValidation/curriculumValidationOperations.jsp"),
-	@Forward(name = "show-degree-modules-to-enrol", path = "/academicAdminOffice/student/curriculumValidation/showDegreeModulesToEnrol.jsp"),
-	@Forward(name = "show-set-evaluations-form", path = "/academicAdminOffice/student/curriculumValidation/setEvaluationsForm.jsp"),
-	@Forward(name = "show-edit-evaluation-form", path = "/academicAdminOffice/student/curriculumValidation/editEvaluationForm.jsp"),
-	@Forward(name = "show-set-end-stage-date-form", path = "/academicAdminOffice/student/curriculumValidation/setStageDate.jsp"),
-	@Forward(name = "registrationConclusion", path = "/academicAdminOffice/student/curriculumValidation/registrationConclusion.jsp")
+@Forwards({
+	@Forward(name = "show-curriculum-validation-options", path = "/academicAdminOffice/student/curriculumValidation/curriculumValidationOperations.jsp", tileProperties = @Tile(title = "private.academicadministrativeoffice.studentoperations.viewstudents")),
+	@Forward(name = "show-degree-modules-to-enrol", path = "/academicAdminOffice/student/curriculumValidation/showDegreeModulesToEnrol.jsp", tileProperties = @Tile(title = "private.academicadministrativeoffice.studentoperations.viewstudents")),
+	@Forward(name = "show-set-evaluations-form", path = "/academicAdminOffice/student/curriculumValidation/setEvaluationsForm.jsp", tileProperties = @Tile(title = "private.academicadministrativeoffice.studentoperations.viewstudents")),
+	@Forward(name = "show-edit-evaluation-form", path = "/academicAdminOffice/student/curriculumValidation/editEvaluationForm.jsp", tileProperties = @Tile(title = "private.academicadministrativeoffice.studentoperations.viewstudents")),
+	@Forward(name = "show-set-end-stage-date-form", path = "/academicAdminOffice/student/curriculumValidation/setStageDate.jsp", tileProperties = @Tile(title = "private.academicadministrativeoffice.studentoperations.viewstudents")),
+	@Forward(name = "registrationConclusion", path = "/academicAdminOffice/student/curriculumValidation/registrationConclusion.jsp", tileProperties = @Tile(title = "private.academicadministrativeoffice.studentoperations.viewstudents"))
 
 })
 public class AcademicAdminOfficeCurriculumValidationDA extends FenixDispatchAction {
@@ -62,8 +63,8 @@ public class AcademicAdminOfficeCurriculumValidationDA extends FenixDispatchActi
 	    HttpServletResponse response) throws Exception {
 
 	StudentCurricularPlan studentCurricularPlan = readStudentCurricularPlan(request);
-	request.setAttribute("studentCurriculumValidationAllowed", studentCurricularPlan
-		.getEvaluationForCurriculumValidationAllowed());
+	request.setAttribute("studentCurriculumValidationAllowed",
+		studentCurricularPlan.getEvaluationForCurriculumValidationAllowed());
 
 	return super.execute(mapping, actionForm, request, response);
     }
@@ -80,8 +81,10 @@ public class AcademicAdminOfficeCurriculumValidationDA extends FenixDispatchActi
 
 	addDebtsWarningMessages(studentCurricularPlan.getRegistration().getStudent(), executionSemester, request);
 
-	request.setAttribute("bolonhaStudentEnrollmentBean", readBolonhaStudentEnrollmentBean(request, studentCurricularPlan,
-		executionSemester, null, CurricularRuleLevel.ENROLMENT_NO_RULES, true));
+	request.setAttribute(
+		"bolonhaStudentEnrollmentBean",
+		readBolonhaStudentEnrollmentBean(request, studentCurricularPlan, executionSemester, null,
+			CurricularRuleLevel.ENROLMENT_NO_RULES, true));
 
 	return mapping.findForward("show-degree-modules-to-enrol");
     }
@@ -103,11 +106,11 @@ public class AcademicAdminOfficeCurriculumValidationDA extends FenixDispatchActi
 	try {
 	    final RuleResult ruleResults = (RuleResult) executeService(
 		    "EnrolBolonhaStudentInCurriculumValidationContext",
-		    new Object[] {
-		    bolonhaStudentEnrollmentBean.getStudentCurricularPlan(),
-		    bolonhaStudentEnrollmentBean.getExecutionPeriod(), bolonhaStudentEnrollmentBean.getDegreeModulesToEvaluate(),
-		    bolonhaStudentEnrollmentBean.getCurriculumModulesToRemove(),
-		    bolonhaStudentEnrollmentBean.getCurricularRuleLevel() });
+		    new Object[] { bolonhaStudentEnrollmentBean.getStudentCurricularPlan(),
+			    bolonhaStudentEnrollmentBean.getExecutionPeriod(),
+			    bolonhaStudentEnrollmentBean.getDegreeModulesToEvaluate(),
+			    bolonhaStudentEnrollmentBean.getCurriculumModulesToRemove(),
+			    bolonhaStudentEnrollmentBean.getCurricularRuleLevel() });
 
 	    if (!bolonhaStudentEnrollmentBean.getDegreeModulesToEvaluate().isEmpty()
 		    || !bolonhaStudentEnrollmentBean.getCurriculumModulesToRemove().isEmpty()) {
@@ -136,14 +139,16 @@ public class AcademicAdminOfficeCurriculumValidationDA extends FenixDispatchActi
 
     public ActionForward prepareSetEvaluations(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) {
-	StudentCurricularPlan studentCurricularPlan = (StudentCurricularPlan) readStudentCurricularPlan(request);
+	StudentCurricularPlan studentCurricularPlan = readStudentCurricularPlan(request);
 	ExecutionSemester executionSemester = readExecutionSemester(request);
 
 	RenderUtils.invalidateViewState("student.enrolment.bean");
 	RenderUtils.invalidateViewState("student.enrolment.bean.execution.semester");
 
-	request.setAttribute("bolonhaStudentEnrollmentBean", readBolonhaStudentEnrollmentBean(request, studentCurricularPlan,
-		executionSemester, null, CurricularRuleLevel.ENROLMENT_NO_RULES, true));
+	request.setAttribute(
+		"bolonhaStudentEnrollmentBean",
+		readBolonhaStudentEnrollmentBean(request, studentCurricularPlan, executionSemester, null,
+			CurricularRuleLevel.ENROLMENT_NO_RULES, true));
 
 	java.util.List<java.util.List<MarkSheetEnrolmentEvaluationBean>> enrolmentEvaluationBeanList = new java.util.ArrayList<java.util.List<MarkSheetEnrolmentEvaluationBean>>();
 	java.util.List<java.util.List<MarkSheetEnrolmentEvaluationBean>> finalEnrolmentEvaluationBeanList = new java.util.ArrayList<java.util.List<MarkSheetEnrolmentEvaluationBean>>();
@@ -225,11 +230,13 @@ public class AcademicAdminOfficeCurriculumValidationDA extends FenixDispatchActi
 
     public ActionForward prepareEditEndStageDate(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) {
-	StudentCurricularPlan studentCurricularPlan = (StudentCurricularPlan) readStudentCurricularPlan(request);
+	StudentCurricularPlan studentCurricularPlan = readStudentCurricularPlan(request);
 	ExecutionSemester executionSemester = readExecutionSemester(request);
 
-	request.setAttribute("bolonhaStudentEnrollmentBean", readBolonhaStudentEnrollmentBean(request, studentCurricularPlan,
-		executionSemester, null, CurricularRuleLevel.ENROLMENT_NO_RULES, true));
+	request.setAttribute(
+		"bolonhaStudentEnrollmentBean",
+		readBolonhaStudentEnrollmentBean(request, studentCurricularPlan, executionSemester, null,
+			CurricularRuleLevel.ENROLMENT_NO_RULES, true));
 
 	return mapping.findForward("show-set-end-stage-date-form");
     }
@@ -237,7 +244,7 @@ public class AcademicAdminOfficeCurriculumValidationDA extends FenixDispatchActi
     public ActionForward editEndStageDate(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) {
 	BolonhaStudentEnrollmentBean studentEnrolmentBean = readStudentEnrolmentBean(request);
-	StudentCurricularPlan studentCurricularPlan = (StudentCurricularPlan) readStudentCurricularPlan(request);
+	StudentCurricularPlan studentCurricularPlan = readStudentCurricularPlan(request);
 
 	studentCurricularPlan.editEndStageDate(studentEnrolmentBean.getEndStageDate());
 
@@ -268,9 +275,8 @@ public class AcademicAdminOfficeCurriculumValidationDA extends FenixDispatchActi
 
 	try {
 	    final RuleResult ruleResults = (RuleResult) executeService("EnrolBolonhaStudent", new Object[] {
-		    readStudentCurricularPlan(request), enrolment.getExecutionPeriod(),
-		    new ArrayList<IDegreeModuleToEvaluate>(), Arrays.asList(new CurriculumModule[] { enrolment }),
-		    CurricularRuleLevel.ENROLMENT_NO_RULES });
+		    readStudentCurricularPlan(request), enrolment.getExecutionPeriod(), new ArrayList<IDegreeModuleToEvaluate>(),
+		    Arrays.asList(new CurriculumModule[] { enrolment }), CurricularRuleLevel.ENROLMENT_NO_RULES });
 
 	    if (ruleResults.isWarning()) {
 		addRuleResultMessagesToActionMessages("warning", request, ruleResults);
@@ -364,8 +370,8 @@ public class AcademicAdminOfficeCurriculumValidationDA extends FenixDispatchActi
 	    java.util.List<java.util.List<MarkSheetEnrolmentEvaluationBean>> finalEnrolmentEvaluationBeanList,
 	    java.util.List<Enrolment> enrolments, boolean forEdition) {
 	RootCurriculumGroup module = studentCurricularPlan.getRoot();
-	enrolments = enrolments != null ? enrolments : new java.util.ArrayList<Enrolment>(module
-		.getEnrolmentsBy(executionSemester));
+	enrolments = enrolments != null ? enrolments : new java.util.ArrayList<Enrolment>(
+		module.getEnrolmentsBy(executionSemester));
 
 	for (Enrolment enrolment : enrolments) {
 	    java.util.List<MarkSheetEnrolmentEvaluationBean> markSheetList = new java.util.ArrayList<MarkSheetEnrolmentEvaluationBean>();

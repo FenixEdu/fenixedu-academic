@@ -26,17 +26,9 @@ import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixWebFramework.struts.annotations.Tile;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
-import pt.ist.fenixWebFramework.struts.annotations.Forward;
-import pt.ist.fenixWebFramework.struts.annotations.Forwards;
-import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 @Mapping(path = "/viewStudentsPerformanceGrid", module = "teacher")
-@Forwards(tileProperties = @Tile(navLocal = "/teacher/commons/navigationBarIndex.jsp"), value = {
-    @Forward(name = "viewStudentsPerformanceGrid", path = "/teacher/tutor/viewStudentsPerformanceGrid.jsp")
- })
+@Forwards(tileProperties = @Tile(navLocal = "/teacher/commons/navigationBarIndex.jsp"), value = { @Forward(name = "viewStudentsPerformanceGrid", path = "/teacher/tutor/viewStudentsPerformanceGrid.jsp", tileProperties = @Tile(  title = "private.teacher.managementmentoring.gridperformance")) })
 public class ViewStudentsPerformanceGridDispatchAction extends StudentsPerformanceGridDispatchAction {
 
     public ActionForward prepare(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
@@ -104,8 +96,8 @@ public class ViewStudentsPerformanceGridDispatchAction extends StudentsPerforman
 
 		Collections.sort(tutorships, Tutorship.TUTORSHIP_COMPARATOR_BY_STUDENT_NUMBER);
 
-		PerformanceGridTableDTO performanceGridTable = createPerformanceGridTable(request, tutorships, bean
-			.getStudentsEntryYear(), bean.getCurrentMonitoringYear());
+		PerformanceGridTableDTO performanceGridTable = createPerformanceGridTable(request, tutorships,
+			bean.getStudentsEntryYear(), bean.getCurrentMonitoringYear());
 		getStatisticsAndPutInTheRequest(request, performanceGridTable);
 
 		request.setAttribute("performanceGridFiltersBean", bean);

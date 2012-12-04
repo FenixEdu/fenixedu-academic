@@ -34,14 +34,14 @@ import pt.ist.fenixWebFramework.renderers.components.state.IViewState;
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
-@Forwards( {
-	@Forward(name = "showReceipts", path = "/academicAdminOffice/payments/receipts/showReceipts.jsp"),
-	@Forward(name = "showReceipt", path = "/academicAdminOffice/payments/receipts/showReceipt.jsp"),
-	@Forward(name = "showPaymentsWithoutReceipt", path = "/academicAdminOffice/payments/receipts/showPaymentsWithoutReceipt.jsp"),
-	@Forward(name = "confirmCreateReceipt", path = "/academicAdminOffice/payments/receipts/confirmCreateReceipt.jsp"),
-	@Forward(name = "showOperations", path = "/payments.do?method=showOperations"),
-	@Forward(name = "editReceipt", path = "/academicAdminOffice/payments/receipts/editReceipt.jsp") })
+@Forwards({
+	@Forward(name = "showReceipts", path = "/academicAdminOffice/payments/receipts/showReceipts.jsp", tileProperties = @Tile(title = "private.academicadministrativeoffice.studentoperations.viewstudents")),
+	@Forward(name = "showReceipt", path = "/academicAdminOffice/payments/receipts/showReceipt.jsp", tileProperties = @Tile(title = "private.academicadministrativeoffice.studentoperations.viewstudents")),
+	@Forward(name = "showPaymentsWithoutReceipt", path = "/academicAdminOffice/payments/receipts/showPaymentsWithoutReceipt.jsp", tileProperties = @Tile(title = "private.academicadministrativeoffice.studentoperations.viewstudents")),
+	@Forward(name = "confirmCreateReceipt", path = "/academicAdminOffice/payments/receipts/confirmCreateReceipt.jsp", tileProperties = @Tile(title = "private.academicadministrativeoffice.studentoperations.viewstudents")),
+	@Forward(name = "editReceipt", path = "/academicAdminOffice/payments/receipts/editReceipt.jsp", tileProperties = @Tile(title = "private.academicadministrativeoffice.studentoperations.viewstudents")) })
 public abstract class ReceiptsManagementDA extends PaymentsManagementDispatchAction {
 
     public static class EditReceiptBean implements Serializable {
@@ -137,8 +137,8 @@ public abstract class ReceiptsManagementDA extends PaymentsManagementDispatchAct
 		.getObject() : null);
 
 	receiptBean.setPerson(person);
-	receiptBean.setEntries(getSelectableEntryBeans(person
-		.getPaymentsWithoutReceiptByAdministrativeOffice(getAdministrativeOffice(request)),
+	receiptBean.setEntries(getSelectableEntryBeans(
+		person.getPaymentsWithoutReceiptByAdministrativeOffice(getAdministrativeOffice(request)),
 		(entriesToSelect != null) ? entriesToSelect : new HashSet<Entry>()));
 
 	request.setAttribute("createReceiptBean", receiptBean);
@@ -178,10 +178,12 @@ public abstract class ReceiptsManagementDA extends PaymentsManagementDispatchAct
 		.getMetaObject().getObject();
 
 	try {
-	    final Receipt receipt = (Receipt) executeService("CreateReceipt", new Object[] {
-		    getUserView(request).getPerson().getEmployee(), createReceiptBean.getPerson(),
-		    createReceiptBean.getContributorParty(), createReceiptBean.getContributorName(), createReceiptBean.getYear(),
-		    getReceiptCreatorUnit(request), getReceiptOwnerUnit(request), createReceiptBean.getSelectedEntries() });
+	    final Receipt receipt = (Receipt) executeService(
+		    "CreateReceipt",
+		    new Object[] { getUserView(request).getPerson().getEmployee(), createReceiptBean.getPerson(),
+			    createReceiptBean.getContributorParty(), createReceiptBean.getContributorName(),
+			    createReceiptBean.getYear(), getReceiptCreatorUnit(request), getReceiptOwnerUnit(request),
+			    createReceiptBean.getSelectedEntries() });
 
 	    request.setAttribute("personId", receipt.getPerson().getIdInternal());
 	    request.setAttribute("receiptID", receipt.getIdInternal());
@@ -200,8 +202,8 @@ public abstract class ReceiptsManagementDA extends PaymentsManagementDispatchAct
 	    HttpServletResponse response) {
 
 	request.setAttribute("person", getPerson(request));
-	request.setAttribute("receiptsForAdministrativeOffice", getPerson(request).getReceiptsByAdministrativeOffice(
-		getAdministrativeOffice(request)));
+	request.setAttribute("receiptsForAdministrativeOffice",
+		getPerson(request).getReceiptsByAdministrativeOffice(getAdministrativeOffice(request)));
 
 	return mapping.findForward("showReceipts");
     }
@@ -275,9 +277,7 @@ public abstract class ReceiptsManagementDA extends PaymentsManagementDispatchAct
     public ActionForward prepareEditReceipt(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) {
 
-	request
-		.setAttribute("editReceiptBean",
-			new EditReceiptBean(getReceipt(request), AccessControl.getPerson().getEmployee()));
+	request.setAttribute("editReceiptBean", new EditReceiptBean(getReceipt(request), AccessControl.getPerson().getEmployee()));
 
 	return mapping.findForward("editReceipt");
     }

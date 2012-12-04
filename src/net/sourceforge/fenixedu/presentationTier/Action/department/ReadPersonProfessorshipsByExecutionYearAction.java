@@ -50,9 +50,10 @@ import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 @Mapping(module = "departmentAdmOffice", path = "/showTeacherProfessorshipsForManagement", input = "show-teacher-professorships-for-management", attribute = "teacherExecutionCourseResponsabilities", formBean = "teacherExecutionCourseResponsabilities", scope = "request")
-@Forwards(value = { @Forward(name = "list-professorships", path = "/departmentAdmOffice/teacher/showTeacherProfessorshipsForManagement.jsp") })
+@Forwards(value = { @Forward(name = "list-professorships", path = "/departmentAdmOffice/teacher/showTeacherProfessorshipsForManagement.jsp", tileProperties = @Tile(title = "private.administrationofcreditsofdepartmentteachers.teachers.courses")) })
 @Exceptions(value = { @ExceptionHandling(type = net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException.class, key = "message.teacher-not-belong-to-department", handler = org.apache.struts.action.ExceptionHandler.class, path = "/teacherSearchForExecutionCourseAssociation.do?method=searchForm&page=0", scope = "request") })
 public class ReadPersonProfessorshipsByExecutionYearAction extends Action {
     private final class Professorships2DetailProfessorship implements Transformer {
@@ -60,6 +61,7 @@ public class ReadPersonProfessorshipsByExecutionYearAction extends Action {
 	    super();
 	}
 
+	@Override
 	public Object transform(Object input) {
 	    Professorship professorship = (Professorship) input;
 	    InfoProfessorship infoProfessorShip = InfoProfessorship.newInfoFromDomain(professorship);
@@ -82,6 +84,7 @@ public class ReadPersonProfessorshipsByExecutionYearAction extends Action {
 	    List infoCurricularCourses = (List) CollectionUtils.collect(executionCourse.getAssociatedCurricularCourses(),
 		    new Transformer() {
 
+			@Override
 			public Object transform(Object input) {
 			    CurricularCourse curricularCourse = (CurricularCourse) input;
 			    InfoCurricularCourse infoCurricularCourse = InfoCurricularCourse.newInfoFromDomain(curricularCourse);
@@ -204,6 +207,7 @@ public class ReadPersonProfessorshipsByExecutionYearAction extends Action {
 	List executionYears = ReadNotClosedExecutionYears.run();
 
 	InfoExecutionYear infoExecutionYear = (InfoExecutionYear) CollectionUtils.find(executionYears, new Predicate() {
+	    @Override
 	    public boolean evaluate(Object arg0) {
 		InfoExecutionYear infoExecutionYearElem = (InfoExecutionYear) arg0;
 		if (infoExecutionYearElem.getState().equals(PeriodState.CURRENT)) {

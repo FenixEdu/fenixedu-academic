@@ -43,12 +43,6 @@ import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixWebFramework.struts.annotations.Tile;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
-import pt.ist.fenixWebFramework.struts.annotations.Forward;
-import pt.ist.fenixWebFramework.struts.annotations.Forwards;
-import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 /**
  * @author <a href="mailto:sana@ist.utl.pt">Shezad Anavarali </a>
@@ -57,9 +51,9 @@ import pt.ist.fenixWebFramework.struts.annotations.Tile;
  */
 @Mapping(module = "masterDegreeAdministrativeOffice", path = "/createGuideFromTransactions", input = "/createGuideFromTransactionsForm.do?method=chooseContributor&page=0", attribute = "createGuideFromTransactionsForm", formBean = "createGuideFromTransactionsForm", scope = "request", parameter = "method")
 @Forwards(value = {
-		@Forward(name = "createSuccess", path = "createGuideFromTransactionsSuccess"),
-		@Forward(name = "confirmCreate", path = "confirmCreateGuideFromTransactions"),
-		@Forward(name = "chooseContributor", path = "chooseContributorForCreateGuideFromTransactions") })
+	@Forward(name = "createSuccess", path = "createGuideFromTransactionsSuccess", tileProperties = @Tile(title = "teste41")),
+	@Forward(name = "confirmCreate", path = "confirmCreateGuideFromTransactions", tileProperties = @Tile(title = "teste42")),
+	@Forward(name = "chooseContributor", path = "chooseContributorForCreateGuideFromTransactions", tileProperties = @Tile(title = "teste43")) })
 @Exceptions(value = { @ExceptionHandling(type = net.sourceforge.fenixedu.presentationTier.Action.exceptions.NonExistingActionException.class, key = "resources.Action.exceptions.NonExistingActionException", handler = net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler.class, scope = "request") })
 public class CreateGuideFromTransactionsDispatchAction extends FenixDispatchAction {
 
@@ -91,7 +85,7 @@ public class CreateGuideFromTransactionsDispatchAction extends FenixDispatchActi
 	List infoTransactions = null;
 
 	try {
-	    infoTransactions = (List) ReadAllTransactionsByGratuitySituationID.run(gratuitySituationId);
+	    infoTransactions = ReadAllTransactionsByGratuitySituationID.run(gratuitySituationId);
 
 	} catch (FenixServiceException e) {
 	    throw new FenixActionException(e);
@@ -147,8 +141,7 @@ public class CreateGuideFromTransactionsDispatchAction extends FenixDispatchActi
 	infoGuide.setYear(new Integer(Calendar.getInstance().get(Calendar.YEAR)));
 
 	try {
-	    infoGuide = (InfoGuide) CreateGuideFromTransactions.run(infoGuide, "", GuideState.PAYED, Arrays
-		    .asList(transactionsWithoutGuide));
+	    infoGuide = CreateGuideFromTransactions.run(infoGuide, "", GuideState.PAYED, Arrays.asList(transactionsWithoutGuide));
 
 	} catch (FenixServiceException e) {
 	    throw new FenixActionException(e);
@@ -197,7 +190,7 @@ public class CreateGuideFromTransactionsDispatchAction extends FenixDispatchActi
 	InfoGratuitySituation infoGratuitySituation = null;
 
 	try {
-	    infoGratuitySituation = (InfoGratuitySituation) ReadGratuitySituationById.run(gratuitySituationId);
+	    infoGratuitySituation = ReadGratuitySituationById.run(gratuitySituationId);
 
 	} catch (ExcepcaoInexistente e) {
 	    throw new FenixActionException(e);
@@ -227,8 +220,8 @@ public class CreateGuideFromTransactionsDispatchAction extends FenixDispatchActi
 	}
 
 	if (infoStudent == null) {
-	    throw new NonExistingActionException("error.exception.masterDegree.nonExistentStudent", mapping
-		    .findForward("chooseContributor"));
+	    throw new NonExistingActionException("error.exception.masterDegree.nonExistentStudent",
+		    mapping.findForward("chooseContributor"));
 	}
 	return infoStudent;
     }

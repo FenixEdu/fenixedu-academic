@@ -35,15 +35,16 @@ import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 @Mapping(module = "student", path = "/studentShiftEnrollmentManager", input = "/studentShiftEnrollmentManager.do?method=prepare", attribute = "studentShiftEnrollmentForm", formBean = "studentShiftEnrollmentForm", scope = "request", validate = false, parameter = "method")
 @Forwards(value = {
-	@Forward(name = "showEnrollmentPage", path = "/studentShiftEnrollmentManagerLoockup.do?method=Escolher Turnos"),
-	@Forward(name = "chooseRegistration", path = "/student/enrollment/shifts/chooseRegistration.jsp"),
-	@Forward(name = "showShiftsEnrollment", path = "show-shifts-enrollment"),
-	@Forward(name = "prepareEnrollmentViewWarning", path = "prepare-enrollment-view-warning"),
-	@Forward(name = "selectCourses", path = "show-courses-by-degree"),
-	@Forward(name = "shiftEnrollmentCannotProceed", path = "/student/enrollment/bolonha/shiftEnrollmentCannotProceed.jsp") })
+	@Forward(name = "showEnrollmentPage", path = "/studentShiftEnrollmentManagerLoockup.do?method=Escolher Turnos", tileProperties = @Tile(  title = "private.student.subscribe.groups")),
+	@Forward(name = "chooseRegistration", path = "/student/enrollment/shifts/chooseRegistration.jsp", tileProperties = @Tile(  title = "private.student.subscribe.groups")),
+	@Forward(name = "showShiftsEnrollment", path = "show-shifts-enrollment", tileProperties = @Tile(  title = "private.student.subscribe.groups")),
+	@Forward(name = "prepareEnrollmentViewWarning", path = "prepare-enrollment-view-warning", tileProperties = @Tile(  title = "private.student.subscribe.groups")),
+	@Forward(name = "selectCourses", path = "show-courses-by-degree", tileProperties = @Tile(  title = "private.student.subscribe.groups")),
+	@Forward(name = "shiftEnrollmentCannotProceed", path = "/student/enrollment/bolonha/shiftEnrollmentCannotProceed.jsp", tileProperties = @Tile(  title = "private.student.subscribe.groups")) })
 @Exceptions(value = {
 	@ExceptionHandling(type = net.sourceforge.fenixedu.applicationTier.Filtro.enrollment.ClassEnrollmentAuthorizationFilter.CurrentClassesEnrolmentPeriodUndefinedForDegreeCurricularPlan.class, key = "error.message.CurrentClassesEnrolmentPeriodUndefinedForDegreeCurricularPlan", handler = net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler.class, scope = "request"),
 	@ExceptionHandling(type = net.sourceforge.fenixedu.applicationTier.Filtro.enrollment.ClassEnrollmentAuthorizationFilter.InquiriesNotAnswered.class, key = "message.student.cannotEnroll.inquiriesNotAnswered", handler = net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler.class, scope = "request"),
@@ -150,8 +151,10 @@ public class ShiftStudentEnrollmentManagerDispatchAction extends TransactionalDi
 	form.set("degree", selectedExecutionDegree.getIdInternal());
 
 	sortExecutionDegreesByDegreeName(executionDegrees);
-	request.setAttribute("executionDegrees", ExecutionDegreesFormat.buildLabelValueBeansForExecutionDegree(executionDegrees,
-		getResources(request, "ENUMERATION_RESOURCES"), request));
+	request.setAttribute(
+		"executionDegrees",
+		ExecutionDegreesFormat.buildLabelValueBeansForExecutionDegree(executionDegrees,
+			getResources(request, "ENUMERATION_RESOURCES"), request));
 
 	request.setAttribute("attendingExecutionCourses", registration.getAttendingExecutionCoursesFor(executionSemester));
 	request.setAttribute("executionCoursesFromExecutionDegree", selectedExecutionDegree.getDegreeCurricularPlan()
@@ -172,12 +175,12 @@ public class ShiftStudentEnrollmentManagerDispatchAction extends TransactionalDi
 	    final List<ShiftToEnrol> shiftsToEnrol = (List<ShiftToEnrol>) ServiceManagerServiceFactory.executeService(
 		    "ReadShiftsToEnroll", new Object[] { registration });
 
-	    request.setAttribute("numberOfExecutionCoursesHavingNotEnroledShifts", registration
-		    .getNumberOfExecutionCoursesHavingNotEnroledShiftsFor(executionSemester));
+	    request.setAttribute("numberOfExecutionCoursesHavingNotEnroledShifts",
+		    registration.getNumberOfExecutionCoursesHavingNotEnroledShiftsFor(executionSemester));
 
 	    request.setAttribute("shiftsToEnrolFromEnroledExecutionCourses", getShiftsToEnrolByEnroledState(shiftsToEnrol, true));
-	    request.setAttribute("shiftsToEnrolFromUnenroledExecutionCourses", getShiftsToEnrolByEnroledState(shiftsToEnrol,
-		    false));
+	    request.setAttribute("shiftsToEnrolFromUnenroledExecutionCourses",
+		    getShiftsToEnrolByEnroledState(shiftsToEnrol, false));
 
 	    final List<Shift> studentShifts = registration.getShiftsFor(executionSemester);
 	    request.setAttribute("studentShifts", studentShifts);

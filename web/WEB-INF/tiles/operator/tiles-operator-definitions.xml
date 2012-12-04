@@ -3,7 +3,8 @@
 <!-- Tiles definitions -->
 <tiles-definitions>
 	<definition name="definition.operator.two-column" extends="df.layout.two-column">
-	  <put name="title" value="Operador" />
+	  <put name="title" value="private.operator" />
+	  <put name="bundle" value="TITLES_RESOURCES" />
 	  <put name="serviceName" value="Operador" />	
 	  <put name="navLocal" value="/operator/operatorMainMenu.jsp" />	  
 	  <put name="navGeral" value="/operator/commonNavGeralOperator.jsp" />

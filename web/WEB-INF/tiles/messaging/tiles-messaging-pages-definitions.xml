@@ -7,6 +7,8 @@
     </definition>
 
    	<definition name="df.page.structure" extends="definition.messaging.masterPage" >
+   		<put name="bundle" value="TITLES_RESOURCES"/>
+   	    <put name="title" value="private.messaging.search.organizationalstructure"/>
 		<put name="body"  value="/commons/blank.jsp"/>
 	</definition>   
 
@@ -71,7 +73,9 @@
 	
 	<!-- ========== BEGIN: FIND PERSON MANAGEMENT ========== -->
 	<definition name="find-person" extends="definition.messaging.masterPage" >
-		<put name="body" value="/person/findPerson/findPerson.jsp" />
+		<put name="bundle" value="TITLES_RESOURCES"/>
+	    <put name="title" value="private.messaging.search.person"/>
+	    <put name="body" value="/person/findPerson/findPerson.jsp" />
 	</definition>	
 	<!-- ========== END: FIND PERSON MANAGEMENT ========== -->
 
@@ -99,9 +103,13 @@
 
 	<!-- === Protocols === -->
 	<definition name="search-protocols" extends="definition.messaging.masterPage">
+		<put name="bundle" value="TITLES_RESOURCES"/>
+	    <put name="title" value="private.messaging.search.protocols"/>
         <put name="body" value="/protocols/searchProtocols.jsp"/>
     </definition>
 	<definition name="view-protocol-details" extends="definition.messaging.masterPage">
+		<put name="bundle" value="TITLES_RESOURCES"/>
+	    <put name="title" value="private.messaging.search.protocols"/>
         <put name="body" value="/protocols/viewProtocolDetails.jsp"/>
     </definition> 
 

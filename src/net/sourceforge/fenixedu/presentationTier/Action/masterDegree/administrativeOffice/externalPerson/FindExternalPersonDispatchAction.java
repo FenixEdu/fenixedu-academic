@@ -1,6 +1,5 @@
 package net.sourceforge.fenixedu.presentationTier.Action.masterDegree.administrativeOffice.externalPerson;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -26,13 +25,6 @@ import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
-import pt.ist.fenixWebFramework.struts.annotations.Forward;
-import pt.ist.fenixWebFramework.struts.annotations.Forwards;
-import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 /**
  * 
@@ -42,10 +34,9 @@ import pt.ist.fenixWebFramework.struts.annotations.Tile;
  */
 
 @Mapping(module = "masterDegreeAdministrativeOffice", path = "/findExternalPerson", input = "/findExternalPerson.do?page=0&method=prepare", attribute = "findExternalPersonForm", formBean = "findExternalPersonForm", scope = "request", parameter = "method")
-@Forwards(value = {
-		@Forward(name = "error", path = "df.page.showExternalPersons_Error"),
-		@Forward(name = "start", path = "df.page.findExternalPerson"),
-		@Forward(name = "success", path = "df.page.showExternalPersons") })
+@Forwards(value = { @Forward(name = "error", path = "df.page.showExternalPersons_Error"),
+	@Forward(name = "start", path = "df.page.findExternalPerson"),
+	@Forward(name = "success", path = "df.page.showExternalPersons") })
 @Exceptions(value = { @ExceptionHandling(type = net.sourceforge.fenixedu.presentationTier.Action.exceptions.ExistingActionException.class, key = "resources.Action.exceptions.ExistingActionException", handler = net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler.class, scope = "request") })
 public class FindExternalPersonDispatchAction extends FenixDispatchAction {
 
@@ -68,7 +59,7 @@ public class FindExternalPersonDispatchAction extends FenixDispatchAction {
 
 	try {
 	    if (!externalPersonName.equals(""))
-		infoExternalPersonsList = (ArrayList) SearchExternalPersonsByName.run(externalPersonName);
+		infoExternalPersonsList = SearchExternalPersonsByName.run(externalPersonName);
 	} catch (FenixServiceException e) {
 	    throw new FenixActionException(e);
 	}

@@ -12,21 +12,16 @@ import org.apache.struts.action.ActionMapping;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
-import pt.ist.fenixWebFramework.struts.annotations.Forward;
-import pt.ist.fenixWebFramework.struts.annotations.Forwards;
-import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 @Mapping(path = "/curriculumLinesLocationManagement", module = "academicAdminOffice")
-@Forwards( {
+@Forwards({
 
-@Forward(name = "showCurriculum", path = "/academicAdminOffice/curriculum/curriculumLines/location/showCurriculum.jsp"),
+	@Forward(name = "showCurriculum", path = "/academicAdminOffice/curriculum/curriculumLines/location/showCurriculum.jsp", tileProperties = @Tile(title = "private.academicadministrativeoffice.studentoperations.viewstudents")),
 
-@Forward(name = "chooseNewLocation", path = "/academicAdminOffice/curriculum/curriculumLines/location/chooseNewLocation.jsp"),
+	@Forward(name = "chooseNewLocation", path = "/academicAdminOffice/curriculum/curriculumLines/location/chooseNewLocation.jsp"),
 
-@Forward(name = "backToStudentEnrolments", path = "/studentEnrolments.do?method=prepare")
+	@Forward(name = "backToStudentEnrolments", path = "/studentEnrolments.do?method=prepare")
 
 })
 public class CurriculumLinesLocationManagementDA extends AbstractCurriculumLinesLocationManagementDA {

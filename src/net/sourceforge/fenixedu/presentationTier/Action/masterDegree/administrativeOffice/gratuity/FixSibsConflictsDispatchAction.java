@@ -29,6 +29,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Input;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 /**
  * @author <a href="mailto:sana@ist.utl.pt">Shezad Anavarali </a>
@@ -37,7 +38,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
  */
 
 @Mapping(path = "/fixSibsPaymentFileEntries", module = "masterDegreeAdministrativeOffice", formBeanClass = FixSibsPaymentFileEntriesForm.class)
-@Forwards(@Forward(name = "show", path = "showSibsPaymentFileEntries"))
+@Forwards(@Forward(name = "show", path = "showSibsPaymentFileEntries", tileProperties = @Tile(title = "teste48")))
 @Exceptions({ @ExceptionHandling(type = NonExistingActionException.class, handler = FenixErrorExceptionHandler.class) })
 public class FixSibsConflictsDispatchAction extends FenixDispatchAction {
 
@@ -50,7 +51,7 @@ public class FixSibsConflictsDispatchAction extends FenixDispatchAction {
 	List infoSibsPaymentFileEntries = null;
 
 	try {
-	    infoSibsPaymentFileEntries = (List) ReadNonProcessedSibsEntries.run();
+	    infoSibsPaymentFileEntries = ReadNonProcessedSibsEntries.run();
 	} catch (FenixServiceException e) {
 	    throw new FenixActionException(e);
 	}

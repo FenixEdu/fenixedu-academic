@@ -14,15 +14,16 @@ import org.apache.struts.action.ActionMapping;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixWebFramework.struts.annotations.Tile;
 import pt.utl.ist.fenix.tools.util.excel.Spreadsheet;
 
 @Mapping(path = "/student/scholarship/report/utlScholarshipReport", module = "academicAdminOffice")
-@Forwards({ 
-    	@Forward(name = "list", path = "/academicAdminOffice/student/scholarship/report/utl/list.jsp"),
+@Forwards({
+	@Forward(name = "list", path = "/academicAdminOffice/student/scholarship/report/utl/list.jsp"),
 	@Forward(name = "create", path = "/academicAdminOffice/student/scholarship/report/utl/create.jsp"),
 	@Forward(name = "view", path = "/academicAdminOffice/student/scholarship/report/utl/view.jsp"),
 	@Forward(name = "search", path = "/academicAdminOffice/student/scholarship/report/utl/search.jsp"),
-	@Forward(name = "viewUTLScholarshipFromRegistration", path = "/academicAdminOffice/student/scholarship/report/utl/viewUTLScholarshipFromRegistration.jsp") })
+	@Forward(name = "viewUTLScholarshipFromRegistration", path = "/academicAdminOffice/student/scholarship/report/utl/viewUTLScholarshipFromRegistration.jsp", tileProperties = @Tile(title = "private.academicadministrativeoffice.studentoperations.viewstudents")) })
 public class UTLScholarshipReportDA extends FenixDispatchAction {
 
     public ActionForward list(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {

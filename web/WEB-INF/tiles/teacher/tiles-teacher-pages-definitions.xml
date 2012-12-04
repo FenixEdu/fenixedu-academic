@@ -3,8 +3,9 @@
 	"http://jakarta.apache.org/struts/dtds/tiles-config_1_1.dtd">
 <!-- Tiles definitions -->
 <tiles-definitions>
-	<definition name="df.page.teacher-index" 
-		extends="definition.teacher.two-column">
+	<definition name="df.page.teacher-index" extends="definition.teacher.two-column">
+		<put name="bundle" value="TITLES_RESOURCES"/>
+		<put name="title" value="private.teacher.managementsubjectstaught"/>
 		<put name="navLocal" value="/teacher/commons/navigationBarIndex.jsp"/>
 		<put name="body" value="/teacher/firstPage.jsp" />
 	</definition>
@@ -20,8 +21,7 @@
 		<put name="navLocal" value="/teacher/commons/navigationBarIndex.jsp"/>
 		<put name="body" value="/student/thesis/viewOperationsThesis.jsp"/>
 	</definition>
-	<definition name="df.page.viewProfessorships" 
-		extends="definition.teacher.one-column">
+	<definition name="df.page.viewProfessorships" extends="definition.teacher.one-column">
 		<put name="body" value="/teacher/viewProfessorships_bd.jsp" />
 	</definition>
 	<definition name="df.teacher.showShiftsPercentageTable" 
@@ -37,8 +37,7 @@
 		extends="df.teacher.site.administration">
 		<put name="body" value="/teacher/showStudentsEnrolledInExam_bd.jsp" />
 	</definition>
-	<definition name="df.page.management.credits" 
-		extends="definition.teacher.two-column">
+	<definition name="df.page.management.credits" extends="definition.teacher.two-column">
 		<put name="body" value="/teacher/credits/creditsManagement.jsp" />
 	</definition>
 	<definition name="candidaciesGrid" extends="definition.teacher.two-column">
@@ -47,11 +46,13 @@
 	</definition>
 	<definition name="definition.showCandidacyDetails" 
 		extends="definition.teacher.two-column">
+		<put name="title" value="private.seminars.viewapplications"/>
 		<put name="navLocal" value="/teacher/showSeminariesIndex_bd.jsp"/>
 	    <put name="body" value="/teacher/showCandidacyDetails_bd.jsp"/>
 	</definition>
 	<definition name="definition.showSeminariesIndex" 
 		extends="definition.teacher.two-column">
+		<put name="title" value="private.seminars"/>
 		<put name="navLocal" value="/teacher/showSeminariesIndex_bd.jsp"/>
 	</definition>
 	<!-- by gedl 1 feb, 2004-->
@@ -177,6 +178,8 @@
 		<put name="body" value="/teacher/submitTFC_bd.jsp"></put>		
 	</definition>
 	<definition name="df.page.chooseDegreeForFinalWorkProposal" extends="definition.teacher.two-column">
+	    <put name="bundle" value="TITLES_RESOURCES"/>
+        <put name="title" value="private.teacher.dissertations.proposals"/>
 		<put name="navLocal" value="/teacher/commons/navigationBarIndex.jsp"/>
 		<put name="body" value="/teacher/chooseDegreeForFinalWorkProposal_bd.jsp"/>
 	</definition>
@@ -342,16 +345,22 @@
 	<!-- ==================== View Curricular Course Historic ================== -->
 	<definition name="view-degree-curricular-plan-execution-year" 
 		extends="definition.curriculum.historic">
+		<put name = "bundle" value = "TITLES_RESOURCES"/>
+		<put name = "title" value = "private.teacher.consultationguidelines"/>
 		<put name="body" value="/commons/curriculumHistoric/chooseDegreeCPlanExecutionYear.jsp"></put>
 	</definition>
 
 	<definition name="show-active-curricular-scopes" 
 		extends="definition.curriculum.historic">
+		<put name = "bundle" value = "TITLES_RESOURCES"/>
+		<put name = "title" value = "private.teacher.consultationguidelines"/>
 		<put name="body" value="/commons/curriculumHistoric/showActiveCurricularCourseScopes.jsp"></put>
 	</definition>
 
 	<definition name="view-curriculum-historic" 
 		extends="definition.curriculum.historic">
+		<put name = "bundle" value = "TITLES_RESOURCES"/>
+		<put name = "title" value = "private.teacher.consultationguidelines"/>
 		<put name="body" value="/commons/curriculumHistoric/showCurriculumHistoricReport.jsp"></put>
 	</definition>
 	
@@ -826,16 +835,23 @@
 
    <!-- =================== Rooms Reserve Management ============== -->
 	<definition name="view-rooms-reserves" extends="df.page.teacher-index">
+		<put name="bundle" value="TITLES_RESOURCES"/>
+		<put name="title" value="private.teacher.roomreservations"/>
 		<put name="body" value="/teacher/roomsReserveManagement/viewRoomsReserves.jsp" />
 	</definition>			
 	<definition name="create-new-rooms-reserve" extends="df.page.teacher-index">
+		<put name="bundle" value="TITLES_RESOURCES"/>
+		<put name="title" value="private.teacher.roomreservations"/>
 		<put name="body" value="/teacher/roomsReserveManagement/createNewRoomsReserve.jsp" />
 	</definition>			
 	<definition name="see-specified-rooms-reserve" extends="df.page.teacher-index">
+		<put name="bundle" value="TITLES_RESOURCES"/>
+		<put name="title" value="private.teacher.roomreservations"/>
 		<put name="body" value="/teacher/roomsReserveManagement/seeSpecifiedRoomsReserve.jsp" />
 	</definition>
-	
 	<definition name="viewSearch" extends="execution-course-administration">
+		<put name="bundle" value="TITLES_RESOURCES"/>
+		<put name="title" value="private.teacher.roomreservations"/>
 		<put name="body" value="/teacher/viewAttendsSearch.jsp" />
 	</definition>		
 				

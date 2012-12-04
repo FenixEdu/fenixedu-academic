@@ -13,7 +13,7 @@
 <link href="<%= request.getContextPath() %>/CSS/print.css" rel="stylesheet" media="print" type="text/css" />
 <link href="<%= request.getContextPath() %>/CSS/dotist_timetables.css" rel="stylesheet" type="text/css" />
 <bean:define id="pageTitle" ><tiles:getAsString name="title" ignore="true" /></bean:define>
-<title><bean:message key="dot.title" bundle="GLOBAL_RESOURCES"/> - <bean:message name="pageTitle" bundle="GLOBAL_RESOURCES"/></title>
+<title><bean:message key="dot.title" bundle="GLOBAL_RESOURCES"/><bean:message name="pageTitle" bundle="GLOBAL_RESOURCES"/></title>
 <script type="text/javascript" src="<%= request.getContextPath() %>/CSS/scripts/hideButtons.js"></script>
 <script src="<%= request.getContextPath() %>/javaScript/jquery/jquery.js" type="text/javascript" >
 </script>

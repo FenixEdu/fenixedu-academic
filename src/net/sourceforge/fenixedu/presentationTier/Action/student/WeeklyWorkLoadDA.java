@@ -33,21 +33,13 @@ import org.joda.time.Period;
 
 import pt.ist.fenixWebFramework.renderers.components.state.LifeCycleConstants;
 import pt.ist.fenixWebFramework.renderers.components.state.ViewState;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
-import pt.ist.fenixWebFramework.struts.annotations.Forward;
-import pt.ist.fenixWebFramework.struts.annotations.Forwards;
-import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 @Mapping(module = "student", path = "/weeklyWorkLoad", input = "/weeklyWorkLoad.do?method=prepare&page=0", attribute = "weeklyWorkLoadForm", formBean = "weeklyWorkLoadForm", scope = "request", parameter = "method")
-@Forwards(value = { @Forward(name = "showWeeklyWorkLoad", path = "/student/weeklyWorkLoad.jsp") })
+@Forwards(value = { @Forward(name = "showWeeklyWorkLoad", path = "/student/weeklyWorkLoad.jsp", tileProperties = @Tile(  title = "private.student.participate.weeklyeffort")) })
 public class WeeklyWorkLoadDA extends FenixDispatchAction {
 
     public enum IntervalType {
@@ -55,6 +47,7 @@ public class WeeklyWorkLoadDA extends FenixDispatchAction {
     }
 
     private static final Comparator<Attends> ATTENDS_COMPARATOR = new Comparator<Attends>() {
+	@Override
 	public int compare(final Attends attends1, final Attends attends2) {
 	    final ExecutionCourse executionCourse1 = attends1.getExecutionCourse();
 	    final ExecutionCourse executionCourse2 = attends2.getExecutionCourse();

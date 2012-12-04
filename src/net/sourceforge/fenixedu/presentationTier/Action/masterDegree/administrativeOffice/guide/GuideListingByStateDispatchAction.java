@@ -22,14 +22,7 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
-import pt.ist.fenixWebFramework.struts.annotations.Forward;
-import pt.ist.fenixWebFramework.struts.annotations.Forwards;
-import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
+
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
@@ -43,8 +36,8 @@ import pt.ist.fenixWebFramework.struts.annotations.Tile;
  */
 @Mapping(module = "masterDegreeAdministrativeOffice", path = "/guideListingByState", input = "/guideListingByState.do?method=prepareChooseState&page=0", attribute = "chooseGuideStateForm", formBean = "chooseGuideStateForm", scope = "request", parameter = "method")
 @Forwards(value = {
-		@Forward(name = "ShowList", path = "df.page.showSearchGuideListResult"),
-		@Forward(name = "PrepareSuccess", path = "df.page.searchGuideByState") })
+	@Forward(name = "ShowList", path = "df.page.showSearchGuideListResult", tileProperties = @Tile(title = "teste73")),
+	@Forward(name = "PrepareSuccess", path = "df.page.searchGuideByState", tileProperties = @Tile(title = "teste74")) })
 public class GuideListingByStateDispatchAction extends FenixDispatchAction {
 
     public ActionForward prepareChooseState(ActionMapping mapping, ActionForm form, HttpServletRequest request,
@@ -75,7 +68,7 @@ public class GuideListingByStateDispatchAction extends FenixDispatchAction {
 	List guideList = null;
 	try {
 
-	    guideList = (List) ListGuidesByState.run(year, situationOfGuide);
+	    guideList = ListGuidesByState.run(year, situationOfGuide);
 	} catch (FenixServiceException e) {
 	    throw new FenixActionException(e);
 	}

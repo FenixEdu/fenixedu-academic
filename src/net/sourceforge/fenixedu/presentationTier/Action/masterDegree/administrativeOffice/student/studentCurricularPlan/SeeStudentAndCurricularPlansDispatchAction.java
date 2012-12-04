@@ -20,18 +20,10 @@ import org.apache.struts.action.ActionErrors;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
+
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
-import pt.ist.fenixWebFramework.struts.annotations.Forward;
-import pt.ist.fenixWebFramework.struts.annotations.Forwards;
-import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 /**
  * @author David Santos 2/Out/2003
@@ -39,7 +31,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 @Mapping(module = "masterDegreeAdministrativeOffice", path = "/seeStudentAndCurricularPlans", input = "/seeStudentAndCurricularPlans.do?method=start", attribute = "seeStudentAndCurricularPlansForm", formBean = "seeStudentAndCurricularPlansForm", scope = "request", validate = false, parameter = "method")
 @Forwards(value = { @Forward(name = "start", path = "df.page.searchStudents"),
-		@Forward(name = "viewStudents", path = "df.page.viewStudents") })
+	@Forward(name = "viewStudents", path = "df.page.viewStudents") })
 public class SeeStudentAndCurricularPlansDispatchAction extends FenixDispatchAction {
 
     public ActionForward start(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {

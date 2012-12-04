@@ -16,14 +16,6 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
-import pt.ist.fenixWebFramework.struts.annotations.Forward;
-import pt.ist.fenixWebFramework.struts.annotations.Forwards;
-import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
@@ -31,8 +23,8 @@ import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 @Mapping(module = "researcher", path = "/activities/createScientificJournal", scope = "request", parameter = "method")
 @Forwards(value = {
-		@Forward(name = "CreateScientificJournal", path = "/researcher/activities/createScientificJournalParticipation.jsp"),
-		@Forward(name = "Success", path = "/activities/activitiesManagement.do?method=listActivities") })
+	@Forward(name = "CreateScientificJournal", path = "/researcher/activities/createScientificJournalParticipation.jsp", tileProperties = @Tile(  title = "private.operator.personnelmanagement.managementfaculty.teacherevaluation.activities")),
+	@Forward(name = "Success", path = "/activities/activitiesManagement.do?method=listActivities", tileProperties = @Tile(  title = "private.operator.personnelmanagement.managementfaculty.teacherevaluation.activities")) })
 public class CreateScientificJournalDispatchAction extends FenixDispatchAction {
 
     public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
@@ -84,8 +76,8 @@ public class CreateScientificJournalDispatchAction extends FenixDispatchAction {
 
 	if (bean.getRole() != null) {
 	    try {
-		CreateResearchActivityParticipation.run(bean.getScientificJournal(), bean.getRole(), person, bean
-			.getRoleMessage(), bean.getBeginDate(), bean.getEndDate());
+		CreateResearchActivityParticipation.run(bean.getScientificJournal(), bean.getRole(), person,
+			bean.getRoleMessage(), bean.getBeginDate(), bean.getEndDate());
 	    } catch (DomainException e) {
 		addActionMessage(request, e.getMessage());
 		request.setAttribute("existentJournalBean", bean);

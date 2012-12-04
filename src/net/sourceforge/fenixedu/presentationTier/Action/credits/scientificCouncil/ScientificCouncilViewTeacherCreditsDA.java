@@ -18,11 +18,13 @@ import org.apache.struts.action.ActionMapping;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixWebFramework.struts.annotations.Tile;
 import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 @Mapping(module = "scientificCouncil", path = "/credits", scope = "request", parameter = "method")
-@Forwards(value = { @Forward(name = "selectTeacher", path = "/credits/selectTeacher.jsp"),
-	@Forward(name = "showTeacherCredits", path = "/credits/showTeacherCredits.jsp"),
+@Forwards(value = {
+	@Forward(name = "selectTeacher", path = "/credits/selectTeacher.jsp", tileProperties = @Tile(title = "private.scientificcouncil.credits.summary")),
+	@Forward(name = "showTeacherCredits", path = "/credits/showTeacherCredits.jsp", tileProperties = @Tile(title = "private.scientificcouncil.credits.summary")),
 	@Forward(name = "showPastTeacherCredits", path = "/credits/showPastTeacherCredits.jsp"),
 	@Forward(name = "showAnnualTeacherCredits", path = "/credits/showAnnualTeacherCredits.jsp") })
 public class ScientificCouncilViewTeacherCreditsDA extends ViewTeacherCreditsDA {

@@ -14,13 +14,15 @@ import org.apache.struts.action.ActionMapping;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 @Mapping(path = "/giafParametrization", module = "personnelSection")
-@Forwards({ @Forward(name = "show-contract-situations", path = "/personnelSection/contracts/showContractSituations.jsp"),
-	@Forward(name = "show-professional-categories", path = "/personnelSection/contracts/showProfessionalCategories.jsp"),
-	@Forward(name = "show-grantOwner-equivalences", path = "/personnelSection/contracts/showGrantOwnerEquivalences.jsp"),
-	@Forward(name = "show-service-exemptions", path = "/personnelSection/contracts/showServiceExemptions.jsp"),
-	@Forward(name = "show-absences", path = "/personnelSection/contracts/showAbsences.jsp") })
+@Forwards({
+	@Forward(name = "show-contract-situations", path = "/personnelSection/contracts/showContractSituations.jsp", tileProperties = @Tile(title = "private.staffarea.interfacegiaf.situations")),
+	@Forward(name = "show-professional-categories", path = "/personnelSection/contracts/showProfessionalCategories.jsp", tileProperties = @Tile(title = "private.staffarea.interfacegiaf.categories")),
+	@Forward(name = "show-grantOwner-equivalences", path = "/personnelSection/contracts/showGrantOwnerEquivalences.jsp", tileProperties = @Tile(title = "private.staffarea.interfacegiaf.grantownerequivalences")),
+	@Forward(name = "show-service-exemptions", path = "/personnelSection/contracts/showServiceExemptions.jsp", tileProperties = @Tile(title = "private.staffarea.interfacegiaf.serviceexemptions")),
+	@Forward(name = "show-absences", path = "/personnelSection/contracts/showAbsences.jsp", tileProperties = @Tile(title = "private.staffarea.interfacegiaf.absences")) })
 public class GIAFParametrizationDispatchAction extends FenixDispatchAction {
 
     public ActionForward showContractSituations(ActionMapping mapping, ActionForm form, HttpServletRequest request,

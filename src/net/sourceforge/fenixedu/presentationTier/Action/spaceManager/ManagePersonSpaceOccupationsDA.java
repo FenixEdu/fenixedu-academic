@@ -18,14 +18,7 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.ActionMessage;
 import org.apache.struts.action.ActionMessages;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
-import pt.ist.fenixWebFramework.struts.annotations.Forward;
-import pt.ist.fenixWebFramework.struts.annotations.Forwards;
-import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
+
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
@@ -33,10 +26,11 @@ import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 @Mapping(module = "SpaceManager", path = "/managePersonSpaceOccupations", attribute = "managePersonSpaceOccupationsForm", formBean = "managePersonSpaceOccupationsForm", scope = "request", parameter = "method")
 @Forwards(value = {
-		@Forward(name = "ManageSpace", path = "/manageSpaces.do?method=manageSpace"),
-		@Forward(name = "showSpaceOccupations", path = "/spaceManager/personSpaceOccupationsManagement.jsp") })
+	@Forward(name = "ManageSpace", path = "/manageSpaces.do?method=manageSpace"),
+	@Forward(name = "showSpaceOccupations", path = "/spaceManager/personSpaceOccupationsManagement.jsp", tileProperties = @Tile(  title = "private.spacemanagement.searchoccupations")) })
 public class ManagePersonSpaceOccupationsDA extends FenixDispatchAction {
 
+    @Override
     public ActionForward execute(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
 

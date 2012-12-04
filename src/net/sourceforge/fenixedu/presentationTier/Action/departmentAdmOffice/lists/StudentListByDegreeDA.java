@@ -10,15 +10,10 @@ import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
-import pt.ist.fenixWebFramework.struts.annotations.Forward;
-import pt.ist.fenixWebFramework.struts.annotations.Forwards;
-import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 @Mapping(path = "/studentsListByDegree", module = "departmentAdmOffice")
-@Forwards( { @Forward(name = "searchRegistrations", path = "/departmentAdmOffice/lists/searchRegistrationsByDegree.jsp") })
+@Forwards({ @Forward(name = "searchRegistrations", path = "/departmentAdmOffice/lists/searchRegistrationsByDegree.jsp", tileProperties = @Tile(title = "private.administrationofcreditsofdepartmentteachers.lists.studentsbydegree")) })
 public class StudentListByDegreeDA extends
 	net.sourceforge.fenixedu.presentationTier.Action.commons.administrativeOffice.lists.StudentListByDegreeDA {
 

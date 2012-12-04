@@ -37,20 +37,14 @@ import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixWebFramework.struts.annotations.Tile;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
-import pt.ist.fenixWebFramework.struts.annotations.Forward;
-import pt.ist.fenixWebFramework.struts.annotations.Forwards;
-import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 @Mapping(path = "/studentExternalEnrolments", module = "academicAdminOffice", formBean = "studentExternalEnrolmentsForm")
-@Forwards( {
-	@Forward(name = "manageExternalEnrolments", path = "/academicAdminOffice/student/enrollment/bolonha/manageExternalEnrolments.jsp"),
-	@Forward(name = "prepareEditExternalEnrolment", path = "/academicAdminOffice/student/enrollment/bolonha/editExternalEnrolment.jsp"),
-	@Forward(name = "chooseExternalUnit", path = "/academicAdminOffice/student/enrollment/bolonha/chooseExternalUnit.jsp", tileProperties = @Tile(head = "/commons/renderers/treeRendererHeader.jsp")),
-	@Forward(name = "chooseExternalCurricularCourses", path = "/academicAdminOffice/student/enrollment/bolonha/chooseExternalCurricularCourses.jsp"),
-	@Forward(name = "createExternalEnrolments", path = "/academicAdminOffice/student/enrollment/bolonha/createExternalEnrolments.jsp"),
+@Forwards({
+	@Forward(name = "manageExternalEnrolments", path = "/academicAdminOffice/student/enrollment/bolonha/manageExternalEnrolments.jsp", tileProperties = @Tile(title = "private.academicadministrativeoffice.studentoperations.viewstudents")),
+	@Forward(name = "prepareEditExternalEnrolment", path = "/academicAdminOffice/student/enrollment/bolonha/editExternalEnrolment.jsp", tileProperties = @Tile(title = "private.academicadministrativeoffice.studentoperations.viewstudents")),
+	@Forward(name = "chooseExternalUnit", path = "/academicAdminOffice/student/enrollment/bolonha/chooseExternalUnit.jsp", tileProperties = @Tile(head = "/commons/renderers/treeRendererHeader.jsp", title = "private.academicadministrativeoffice.studentoperations.viewstudents")),
+	@Forward(name = "chooseExternalCurricularCourses", path = "/academicAdminOffice/student/enrollment/bolonha/chooseExternalCurricularCourses.jsp", tileProperties = @Tile(title = "private.academicadministrativeoffice.studentoperations.viewstudents")),
+	@Forward(name = "createExternalEnrolments", path = "/academicAdminOffice/student/enrollment/bolonha/createExternalEnrolments.jsp", tileProperties = @Tile(title = "private.academicadministrativeoffice.studentoperations.viewstudents")),
 	@Forward(name = "viewRegistrationDetails", path = "/academicAdminOffice/student/registration/viewRegistrationDetails.jsp") })
 public class StudentExternalEnrolmentsDA extends FenixDispatchAction {
 

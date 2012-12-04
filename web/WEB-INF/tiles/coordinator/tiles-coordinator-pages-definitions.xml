@@ -4,9 +4,13 @@
 <!-- Tiles definitions -->
 <tiles-definitions>
 	<definition name="coordinationTeam" extends="definition.coordinator.two-column">
+	     
+	    <put name="title" value="private.coordinator.management.courses.management.coordinationteam" />
 		<put name="body" value="/coordinator/coordinationTeam/viewCoordinationTeam.jsp" />
 	</definition>
 	<definition name="chooseExecutionYear" extends="definition.coordinator.two-column">
+		 
+	    <put name="title" value="private.coordinator.management.courses.management.coordinationteam" />
 		<put name="body" value="/coordinator/coordinationTeam/chooseExecutionYear.jsp" />
 	</definition>
 	<definition name="df.page.notAuthorizedSimple" extends="definition.coordinator.two-column" >
@@ -16,6 +20,7 @@
 		<put name="body" value="/coordinator/coordinationTeam/addCoordinator.jsp" />
 	</definition>
 	<definition name="degreeSiteMenu" extends="definition.coordinator.two-column.extra-menu">
+		<put name="title" value="private.coordinator.management.courses.management.coursepage"/>
 		<put name="navLocalExtra" value="/coordinator/degreeSite/degreeSiteMenu.jsp" />
 		<put name="body" value="/coordinator/degreeSite/help.jsp" />
 	</definition>
@@ -25,6 +30,7 @@
 	</definition>
 	<definition name="viewDescriptionCurricularPlan" 
         extends="definition.coordinator.two-column.extra-menu">
+        
 		<put name="navLocalExtra" value="/coordinator/degreeSite/degreeSiteMenu.jsp" />
 		<put name="body" value="/coordinator/degreeSite/viewDescriptionCurricularPlan.jsp" />
 	</definition>
@@ -73,6 +79,7 @@
         <put name="body" value="/messaging/announcements/editAnnouncement.jsp" />
     </definition>
 	<definition name="coordinatorDegreeCurricularPlan" extends="definition.coordinator.two-column.extra-menu">
+		<put name="title" value="private.coordinator.management.courses.management.curriculumplan"/>
 		<put name="navLocalExtra" value="/coordinator/degreeCurricularPlan/degreeCurricularPlanMenu.jsp"/>
 	</definition>
 	<definition name="coordinatorCompetenceCourses" extends="definition.coordinator.two-column">
@@ -165,6 +172,7 @@
 		<put name="body" value="/student/curriculum/viewCurricularPlans_bd.jsp"/>
 	</definition>
 	<definition name="df.page.notAuthorized" extends="definition.coordinator.two-column" >
+		<put name="title" value="private.coordinator.management.courses.students.curriculum"/>
 		<put name="body" value="/coordinator/student/notAuthorized_bd.jsp" />
 	</definition>
     <definition name="chooseCycleForViewRegistrationCurriculum" extends="definition.coordinator.two-column.extra-menu.student">
@@ -193,48 +201,62 @@
 		<put name="body-context" value="/coordinator/simpleContext.jsp" />
 	</definition>
 	<definition name="df.page.showFinalDegreeWorkList" extends="definition.coordinator.two-column">
+		<put name="title" value="private.coordinator.management.courses.dissertations"/>
 		<put name="body" value="/coordinator/finalDegreeWork/showFinalDegreeWorkList_bd.jsp" />
 	</definition>
 	<definition name="show-final-degree-work-info" extends="definition.coordinator.two-column">
+		<put name="title" value="private.coordinator.management.courses.dissertations"/>
 		<put name="body" value="/coordinator/finalDegreeWork/showFinalDegreeWorkInfo.jsp" />
 	</definition>
 	<definition name="show-proposals" extends="definition.coordinator.two-column">
+		<put name="title" value="private.coordinator.management.courses.dissertations"/>
 		<put name="body" value="/coordinator/finalDegreeWork/showProposals.jsp" />
 	</definition>
 	<definition name="show-proposal" extends="definition.coordinator.two-column">
+		<put name="title" value="private.coordinator.management.courses.dissertations"/>
 		<put name="body" value="/coordinator/finalDegreeWork/showProposal.jsp" />
 	</definition>
 	<definition name="edit-proposal" extends="definition.coordinator.two-column">
+		<put name="title" value="private.coordinator.management.courses.dissertations"/>
 		<put name="body" value="/coordinator/finalDegreeWork/editProposal.jsp" />
 	</definition>
 	<definition name="show-candidates" extends="definition.coordinator.two-column">
+		<put name="title" value="private.coordinator.management.courses.dissertations"/>
 		<put name="body" value="/coordinator/finalDegreeWork/showCandidates.jsp" />
 	</definition>
 	<definition name="df.page.showFinalDegreeWorkProposal" extends="definition.coordinator.two-column">
+		<put name="title" value="private.coordinator.management.courses.dissertations"/>
 		<put name="body" value="/coordinator/finalDegreeWork/showFinalDegreeWorkProposal_bd.jsp" />
 	</definition>
 	
 	<definition name="df.page.showFinalDegreeChooseExecutionDegree" extends="definition.coordinator.two-column">
+		<put name="title" value = "private.coordinator.management.courses.dissertations"/>
 		<put name="body" value="/coordinator/finalDegreeWork/showFinalDegreeChooseExecutionDegree_bd.jsp" />
 	</definition>
 	<definition name="detailed-proposal-list" extends="definition.coordinator.two-column">
+		<put name="title" value="private.coordinator.management.courses.dissertations"/>
 		<put name="body" value="/coordinator/finalDegreeWork/detailedProposalList_bd.jsp" />
 	</definition>
 	<definition name="chooseStudentsGratuityList" extends="definition.coordinator.two-column">
+		<put name="title" value="private.coordinator.management.courses.dissertations"/>
 		<put name="body" value="/coordinator/gratuity/chooseStudentsGratuityList.jsp"/>
 	</definition>
 	<definition name="studentsGratuityList" extends="definition.coordinator.two-column">
+		<put name="title" value="private.coordinator.management.courses.dissertations"/>
 		<put name="body" value="/coordinator/gratuity/studentsGratuityList.jsp"/>
 	</definition>
 	<definition name="df.page.manageFinalDegreeWorks" extends="definition.coordinator.two-column">
+		<put name="title" value="private.coordinator.management.courses.dissertations"/>
 		<put name="body" value="/coordinator/finalDegreeWork/manageFinalDegreeWorks.jsp" />
 	</definition>
 	
 	<definition name="edit-final-degree-periods" extends="definition.coordinator.two-column">
+		<put name="title" value="private.coordinator.management.courses.dissertations"/>
 		<put name="body" value="/coordinator/finalDegreeWork/editFinalDegreePeriods.jsp" />
 	</definition>
 	
 	<definition name="edit-final-degree-requirements" extends="definition.coordinator.two-column">
+		<put name="title" value="private.coordinator.management.courses.dissertations"/>
 		<put name="body" value="/coordinator/finalDegreeWork/editFinalDegreeRequirements.jsp" />
 	</definition>
 	

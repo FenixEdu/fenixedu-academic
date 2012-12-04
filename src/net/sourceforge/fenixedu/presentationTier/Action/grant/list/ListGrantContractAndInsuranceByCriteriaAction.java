@@ -25,14 +25,6 @@ import org.apache.struts.action.ActionMapping;
 import org.apache.struts.validator.DynaValidatorForm;
 
 import pt.ist.fenixWebFramework.security.UserView;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
-import pt.ist.fenixWebFramework.struts.annotations.Forward;
-import pt.ist.fenixWebFramework.struts.annotations.Forwards;
-import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
@@ -44,9 +36,9 @@ import pt.ist.fenixWebFramework.struts.annotations.Tile;
  */
 @Mapping(module = "facultyAdmOffice", path = "/listGrantContractAndInsuranceByCriteria", input = "/listGrantContractAndInsuranceByCriteria.do?page=0&method=actionStart", attribute = "listGrantContractByCriteriaForm", formBean = "listGrantContractByCriteriaForm", scope = "request", parameter = "method")
 @Forwards(value = {
-		@Forward(name = "select-criteria", path = "/facultyAdmOffice/grant/list/selectCriteriaToListGrantContractAndInsurance.jsp"),
-		@Forward(name = "list-byCriteria-grant-contract-and-insurance", path = "/facultyAdmOffice/grant/list/listGrantContractByCriteriaAndInsurance.jsp"),
-		@Forward(name = "show-grant-owner", path = "showGrantOwnerInsurance") })
+	@Forward(name = "select-criteria", path = "/facultyAdmOffice/grant/list/selectCriteriaToListGrantContractAndInsurance.jsp", tileProperties = @Tile(title = "private.teachingstaffandresearcher.listings.byinsurance")),
+	@Forward(name = "list-byCriteria-grant-contract-and-insurance", path = "/facultyAdmOffice/grant/list/listGrantContractByCriteriaAndInsurance.jsp", tileProperties = @Tile(title = "private.teachingstaffandresearcher.listings.byinsurance")),
+	@Forward(name = "show-grant-owner", path = "showGrantOwnerInsurance") })
 public class ListGrantContractAndInsuranceByCriteriaAction extends FenixDispatchAction {
 
     public ActionForward actionStart(ActionMapping mapping, ActionForm form, HttpServletRequest request,

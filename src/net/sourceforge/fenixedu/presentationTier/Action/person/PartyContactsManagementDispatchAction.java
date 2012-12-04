@@ -35,12 +35,14 @@ import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 @Mapping(module = "person", path = "/partyContacts", scope = "request", parameter = "method")
-@Forwards(value = { @Forward(name = "visualizePersonalInformation", path = "/person/visualizePersonalInfo.jsp"),
-	@Forward(name = "editPartyContact", path = "/person/contacts/editPartyContact.jsp"),
-	@Forward(name = "createPartyContact", path = "/person/contacts/createPartyContact.jsp"),
-	@Forward(name = "inputValidationCode", path = "/person/contacts/inputValidationCode.jsp") })
+@Forwards(value = {
+	@Forward(name = "visualizePersonalInformation", path = "/person/visualizePersonalInfo.jsp", tileProperties = @Tile(title = "private.personal.dspace.information")),
+	@Forward(name = "editPartyContact", path = "/person/contacts/editPartyContact.jsp", tileProperties = @Tile(title = "private.personal.dspace.information")),
+	@Forward(name = "createPartyContact", path = "/person/contacts/createPartyContact.jsp", tileProperties = @Tile(title = "private.personal.dspace.information")),
+	@Forward(name = "inputValidationCode", path = "/person/contacts/inputValidationCode.jsp", tileProperties = @Tile(title = "private.personal.dspace.information")) })
 public class PartyContactsManagementDispatchAction extends FenixDispatchAction {
     public ActionForward postbackSetPublic(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) {
@@ -237,7 +239,7 @@ public class PartyContactsManagementDispatchAction extends FenixDispatchAction {
 
     public ActionForward prepareValidate(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) {
-	final String partyContactExtId = (String) request.getParameter("partyContact");
+	final String partyContactExtId = request.getParameter("partyContact");
 	PartyContact partyContact = PartyContact.fromExternalId(partyContactExtId);
 	partyContact.triggerValidationProcessIfNeeded();
 	PartyContactBean contactBean = PartyContactBean.createFromDomain(partyContact);

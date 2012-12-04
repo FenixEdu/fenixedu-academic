@@ -23,14 +23,6 @@ import org.apache.struts.action.ActionMapping;
 import org.apache.struts.validator.DynaValidatorForm;
 
 import pt.ist.fenixWebFramework.security.UserView;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
-import pt.ist.fenixWebFramework.struts.annotations.Forward;
-import pt.ist.fenixWebFramework.struts.annotations.Forwards;
-import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
@@ -42,9 +34,9 @@ import pt.ist.fenixWebFramework.struts.annotations.Tile;
  */
 @Mapping(module = "facultyAdmOffice", path = "/correctGrantContract", input = "/correctGrantContract.do?page=0&method=prepareForm", attribute = "correctGrantContract", formBean = "correctGrantContract", scope = "request", parameter = "method")
 @Forwards(value = {
-		@Forward(name = "correct-grant-contract-move", path = "/facultyAdmOffice/grant/correction/grantContractMove.jsp"),
-		@Forward(name = "correct-grant-contract-change-number", path = "/facultyAdmOffice/grant/correction/grantContractChangeNumber.jsp"),
-		@Forward(name = "correct-grant-contract-delete", path = "/facultyAdmOffice/grant/correction/grantContractDeletion.jsp") })
+	@Forward(name = "correct-grant-contract-move", path = "/facultyAdmOffice/grant/correction/grantContractMove.jsp", tileProperties = @Tile(title = "private.teachingstaffandresearcher.corrections.movecontract")),
+	@Forward(name = "correct-grant-contract-change-number", path = "/facultyAdmOffice/grant/correction/grantContractChangeNumber.jsp", tileProperties = @Tile(title = "private.teachingstaffandresearcher.corrections.contractnumberchange")),
+	@Forward(name = "correct-grant-contract-delete", path = "/facultyAdmOffice/grant/correction/grantContractDeletion.jsp", tileProperties = @Tile(title = "private.teachingstaffandresearcher.corrections.deletecontract")) })
 public class CorrectGrantContractAction extends FenixDispatchAction {
 
     public ActionForward prepareForm(ActionMapping mapping, ActionForm form, HttpServletRequest request,
@@ -83,7 +75,7 @@ public class CorrectGrantContractAction extends FenixDispatchAction {
 	IUserView userView = UserView.getUser();
 	// Read the grant owner
 
-	List infoGrantOwnerList = (List) SearchGrantOwner.run(null, null, null, grantOwnerNumber, new Boolean(false), null);
+	List infoGrantOwnerList = SearchGrantOwner.run(null, null, null, grantOwnerNumber, new Boolean(false), null);
 	if (infoGrantOwnerList.isEmpty() || infoGrantOwnerList.size() > 1) {
 	    return setError(request, mapping, "errors.grant.correction.unknownGrantOwner", null, null);
 	}
@@ -92,7 +84,7 @@ public class CorrectGrantContractAction extends FenixDispatchAction {
 
 	// Read the contracts
 
-	List infoGrantContractList = (List) ReadAllContractsByGrantOwner.run(infoGrantOwner.getIdInternal());
+	List infoGrantContractList = ReadAllContractsByGrantOwner.run(infoGrantOwner.getIdInternal());
 	InfoGrantContract infoGrantContract = null;
 	if (!infoGrantContractList.isEmpty()) {
 	    // Find the contract
@@ -135,14 +127,14 @@ public class CorrectGrantContractAction extends FenixDispatchAction {
 	IUserView userView = UserView.getUser();
 	// Read the grant owner
 
-	List infoGrantOwnerList = (List) SearchGrantOwner.run(null, null, null, grantOwnerNumber, new Boolean(false), null);
+	List infoGrantOwnerList = SearchGrantOwner.run(null, null, null, grantOwnerNumber, new Boolean(false), null);
 	if (infoGrantOwnerList.isEmpty() || infoGrantOwnerList.size() > 1) {
 	    return setError(request, mapping, "errors.grant.correction.unknownGrantOwner", null, null);
 	}
 	InfoGrantOwner infoGrantOwner = (InfoGrantOwner) infoGrantOwnerList.get(0);
 	// Read the contracts
 
-	List infoGrantContractList = (List) ReadAllContractsByGrantOwner.run(infoGrantOwner.getIdInternal());
+	List infoGrantContractList = ReadAllContractsByGrantOwner.run(infoGrantOwner.getIdInternal());
 	InfoGrantContract infoGrantContract = null;
 	if (!infoGrantContractList.isEmpty()) {
 	    // Find the contract
@@ -189,7 +181,7 @@ public class CorrectGrantContractAction extends FenixDispatchAction {
 	IUserView userView = UserView.getUser();
 	// Read the original grant owner
 
-	List infoGrantOwnerList = (List) SearchGrantOwner.run(null, null, null, grantOwnerNumber, new Boolean(false), null);
+	List infoGrantOwnerList = SearchGrantOwner.run(null, null, null, grantOwnerNumber, new Boolean(false), null);
 	if (infoGrantOwnerList.isEmpty() || infoGrantOwnerList.size() > 1) {
 	    return setError(request, mapping, "errors.grant.correction.unknownGrantOwner", null, null);
 	}
@@ -198,7 +190,7 @@ public class CorrectGrantContractAction extends FenixDispatchAction {
 
 	// Read the new grant owner
 
-	infoGrantOwnerList = (List) SearchGrantOwner.run(null, null, null, newGrantOwnerNumber, new Boolean(false), null);
+	infoGrantOwnerList = SearchGrantOwner.run(null, null, null, newGrantOwnerNumber, new Boolean(false), null);
 	if (infoGrantOwnerList.isEmpty() || infoGrantOwnerList.size() > 1) {
 	    return setError(request, mapping, "errors.grant.correction.unknownGrantOwner", null, null);
 	}
@@ -207,11 +199,11 @@ public class CorrectGrantContractAction extends FenixDispatchAction {
 
 	// Read the contracts of the original grant owner
 
-	List originalGrantContractList = (List) ReadAllContractsByGrantOwner.run(originalGrantOwner.getIdInternal());
+	List originalGrantContractList = ReadAllContractsByGrantOwner.run(originalGrantOwner.getIdInternal());
 
 	// Read the contracts of the original grant owner
 
-	List newGrantContractList = (List) ReadAllContractsByGrantOwner.run(newGrantOwner.getIdInternal());
+	List newGrantContractList = ReadAllContractsByGrantOwner.run(newGrantOwner.getIdInternal());
 
 	// Find the contract to move
 	InfoGrantContract infoGrantContractToMove = null;

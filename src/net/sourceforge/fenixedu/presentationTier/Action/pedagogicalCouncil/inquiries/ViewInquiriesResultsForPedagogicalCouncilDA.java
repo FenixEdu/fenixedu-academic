@@ -29,11 +29,6 @@ import org.apache.struts.action.ActionMapping;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
-import pt.ist.fenixWebFramework.struts.annotations.Forward;
-import pt.ist.fenixWebFramework.struts.annotations.Forwards;
-import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 /**
@@ -42,10 +37,10 @@ import pt.ist.fenixWebFramework.struts.annotations.Tile;
  */
 
 @Mapping(path = "/viewInquiriesResults", module = "pedagogicalCouncil", formBeanClass = ViewInquiriesResultPageDTO.class)
-@Forwards( {
-	@Forward(name = "inquiryResults", path = "/coordinator/inquiries/viewInquiriesResults.jsp"),
-	@Forward(name = "chooseDegreeCurricularPlan", path = "/pedagogicalCouncil/inquiries/chooseDegreeCurricularPlan.jsp"),
-	@Forward(name = "curricularUnitSelection", path = "/coordinator/inquiries/curricularUnitSelection.jsp"),
+@Forwards({
+	@Forward(name = "inquiryResults", path = "/coordinator/inquiries/viewInquiriesResults.jsp", tileProperties = @Tile(title = "private.pedagogiccouncil.control.qucresults1")),
+	@Forward(name = "chooseDegreeCurricularPlan", path = "/pedagogicalCouncil/inquiries/chooseDegreeCurricularPlan.jsp", tileProperties = @Tile(title = "private.pedagogiccouncil.control.qucresults1")),
+	@Forward(name = "curricularUnitSelection", path = "/coordinator/inquiries/curricularUnitSelection.jsp", tileProperties = @Tile(title = "private.pedagogiccouncil.control.qucresults1")),
 	@Forward(name = "showFilledTeachingInquiry", path = "/coordinator/inquiries/showFilledTeachingInquiry.jsp", useTile = false, contextRelative = true),
 	@Forward(name = "showFilledTeachingInquiry_v2", path = "/coordinator/inquiries/showFilledTeachingInquiry_v2.jsp", useTile = false, contextRelative = true),
 	@Forward(name = "showFilledDelegateInquiry", path = "/coordinator/inquiries/showFilledDelegateInquiry.jsp", useTile = false, contextRelative = true),

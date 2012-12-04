@@ -15,16 +15,12 @@ import org.apache.struts.action.ActionMessages;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
-import pt.ist.fenixWebFramework.struts.annotations.Forward;
-import pt.ist.fenixWebFramework.struts.annotations.Forwards;
-import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 @Mapping(path = "/editOldMarkSheet", module = "academicAdminOffice", formBean = "markSheetManagementForm", input = "/markSheetManagement.do?method=prepareSearchMarkSheet")
-@Forwards( { @Forward(name = "editMarkSheet", path = "/academicAdminOffice/gradeSubmission/oldMarkSheets/editMarkSheet.jsp"),
-	@Forward(name = "searchMarkSheetFilled", path = "/oldMarkSheetManagement.do?method=prepareSearchMarkSheetFilled") })
+@Forwards({
+	@Forward(name = "editMarkSheet", path = "/academicAdminOffice/gradeSubmission/oldMarkSheets/editMarkSheet.jsp", tileProperties = @Tile(title = "private.academicadministrativeoffice.marksheets.oldmanagementguidelines")),
+	@Forward(name = "searchMarkSheetFilled", path = "/oldMarkSheetManagement.do?method=prepareSearchMarkSheetFilled", tileProperties = @Tile(title = "private.academicadministrativeoffice.marksheets.oldmanagementguidelines")) })
 // @Forward(name = "editArchiveInformation", path =
 // "/academicAdminOffice/gradeSubmission/editMarkSheetArchiveInformation.jsp")
 // })

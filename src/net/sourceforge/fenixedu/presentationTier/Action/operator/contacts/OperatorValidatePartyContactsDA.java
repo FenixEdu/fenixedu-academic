@@ -24,12 +24,13 @@ import pt.ist.fenixWebFramework.services.Service;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixWebFramework.struts.annotations.Tile;
 import pt.utl.ist.fenix.tools.predicates.AndPredicate;
 import pt.utl.ist.fenix.tools.predicates.Predicate;
 
 @Mapping(module = "operator", path = "/validate", scope = "request", parameter = "method")
 @Forwards(value = {
-	@Forward(name = "showPendingPartyContactsValidation", path = "/operator/contacts/showPendingPartyContactsValidation.jsp"),
+	@Forward(name = "showPendingPartyContactsValidation", path = "/operator/contacts/showPendingPartyContactsValidation.jsp", tileProperties = @Tile(title = "private.operator.contacts.addressvalidation")),
 	@Forward(name = "viewPartyContactValidation", path = "/operator/contacts/viewPartyContactValidation.jsp") })
 public class OperatorValidatePartyContactsDA extends FenixDispatchAction {
 
@@ -80,7 +81,7 @@ public class OperatorValidatePartyContactsDA extends FenixDispatchAction {
 	final String extId = request.getParameter("partyContactValidation");
 	final PhysicalAddressValidation physicalAddressValidation = PartyContactValidation.fromExternalId(extId);
 	request.setAttribute("physicalAddressValidation", physicalAddressValidation);
-	request.setAttribute("person", (Person) physicalAddressValidation.getPartyContact().getParty());
+	request.setAttribute("person", physicalAddressValidation.getPartyContact().getParty());
 	return mapping.findForward("viewPartyContactValidation");
     }
 }

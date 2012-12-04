@@ -20,14 +20,6 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
 import pt.ist.fenixWebFramework.security.UserView;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
-import pt.ist.fenixWebFramework.struts.annotations.Forward;
-import pt.ist.fenixWebFramework.struts.annotations.Forwards;
-import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
@@ -38,7 +30,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Tile;
  * @author Pica
  */
 @Mapping(module = "facultyAdmOffice", path = "/manageGrantPart", input = "/manageGrantPart.do?page=0&method=prepareManageGrantPart", attribute = "voidForm", formBean = "voidForm", scope = "request", parameter = "method")
-@Forwards(value = { @Forward(name = "manage-grant-part", path = "/facultyAdmOffice/grant/contract/manageGrantPart.jsp") })
+@Forwards(value = { @Forward(name = "manage-grant-part", path = "/facultyAdmOffice/grant/contract/manageGrantPart.jsp", tileProperties = @Tile(title = "private.teachingstaffandresearcher.miscellaneousmanagement.costcenter")) })
 public class ManageGrantPartAction extends FenixDispatchAction {
     /*
      * Fills the form with the correspondent data

@@ -9,7 +9,6 @@
 <%@page import="net.sourceforge.fenixedu.domain.util.EmailAddressList"%><html:xhtml/>
 
 <h2><bean:message bundle="MESSAGING_RESOURCES" key="title.email.sent.emails"/></h2>
-
 <logic:present name="message">
 
 

@@ -15,14 +15,7 @@ import net.sourceforge.fenixedu.presentationTier.Action.messaging.ForunsManageme
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
-import pt.ist.fenixWebFramework.struts.annotations.Forward;
-import pt.ist.fenixWebFramework.struts.annotations.Forwards;
-import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
+
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
@@ -36,10 +29,10 @@ import pt.ist.fenixWebFramework.struts.annotations.Tile;
  */
 @Mapping(module = "student", path = "/viewExecutionCourseForuns", scope = "request", parameter = "method")
 @Forwards(value = {
-		@Forward(name = "viewForum", path = "/commons/forums/viewForum.jsp", tileProperties = @Tile(bodyContext = "/student/forums/context.jsp")),
-		@Forward(name = "viewThread", path = "/commons/forums/viewThread.jsp", tileProperties = @Tile(bodyContext = "/student/forums/context.jsp")),
-		@Forward(name = "createThreadAndMessage", path = "/commons/forums/createThreadAndMessage.jsp", tileProperties = @Tile(bodyContext = "/student/forums/context.jsp")),
-		@Forward(name = "viewForuns", path = "/student/forums/viewExecutionCourseForuns.jsp") })
+	@Forward(name = "viewForum", path = "/commons/forums/viewForum.jsp", tileProperties = @Tile(bodyContext = "/student/forums/context.jsp",   title = "private.student.participate.forumsofcourses")),
+	@Forward(name = "viewThread", path = "/commons/forums/viewThread.jsp", tileProperties = @Tile(bodyContext = "/student/forums/context.jsp",   title = "private.student.participate.forumsofcourses")),
+	@Forward(name = "createThreadAndMessage", path = "/commons/forums/createThreadAndMessage.jsp", tileProperties = @Tile(bodyContext = "/student/forums/context.jsp",   title = "private.student.participate.forumsofcourses")),
+	@Forward(name = "viewForuns", path = "/student/forums/viewExecutionCourseForuns.jsp", tileProperties = @Tile(  title = "private.student.participate.forumsofcourses")) })
 public class ViewExecutionCourseForunsDispatchAction extends ForunsManagement {
 
     public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)

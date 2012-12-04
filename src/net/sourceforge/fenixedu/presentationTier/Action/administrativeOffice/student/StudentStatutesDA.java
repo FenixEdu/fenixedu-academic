@@ -8,9 +8,9 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.domain.student.StudentStatute;
-import net.sourceforge.fenixedu.domain.student.StudentStatuteType;
 import net.sourceforge.fenixedu.domain.student.StudentStatute.CreateStudentStatuteFactory;
 import net.sourceforge.fenixedu.domain.student.StudentStatute.DeleteStudentStatuteFactory;
+import net.sourceforge.fenixedu.domain.student.StudentStatuteType;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 
 import org.apache.struts.action.ActionForm;
@@ -21,20 +21,15 @@ import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
-import pt.ist.fenixWebFramework.struts.annotations.Forward;
-import pt.ist.fenixWebFramework.struts.annotations.Forwards;
-import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixWebFramework.struts.annotations.Tile;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 /**
  * @author - Shezad Anavarali (shezad@ist.utl.pt)
  * 
  */
 @Mapping(path = "/studentStatutes", module = "academicAdminOffice")
-@Forwards( { @Forward(name = "manageStatutes", path = "/academicAdminOffice/manageStatutes.jsp") })
+@Forwards({ @Forward(name = "manageStatutes", path = "/academicAdminOffice/manageStatutes.jsp", tileProperties = @Tile(title = "private.academicadministrativeoffice.studentoperations.viewstudents")) })
 public class StudentStatutesDA extends FenixDispatchAction {
 
     public ActionForward prepare(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
@@ -47,13 +42,14 @@ public class StudentStatutesDA extends FenixDispatchAction {
 
 	return mapping.findForward("manageStatutes");
     }
-    
-    public ActionForward invalid(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) {
+
+    public ActionForward invalid(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) {
 	final Student student = AbstractDomainObject.fromExternalId(request.getParameter("studentOID"));
 	request.setAttribute("student", student);
 	request.setAttribute("schemaName", request.getParameter("schemaName"));
-	request.setAttribute("manageStatuteBean", (CreateStudentStatuteFactory) getRenderedObject());
-	
+	request.setAttribute("manageStatuteBean", getRenderedObject());
+
 	return mapping.findForward("manageStatutes");
     }
 
@@ -65,15 +61,15 @@ public class StudentStatutesDA extends FenixDispatchAction {
 	final StudentStatuteType statuteType = oldManageStatuteBean.getStatuteType();
 	final CreateStudentStatuteFactory manageStatuteBean = new CreateStudentStatuteFactory(student);
 	manageStatuteBean.setStatuteType(statuteType);
-	
+
 	RenderUtils.invalidateViewState();
-	
+
 	request.setAttribute("student", student);
 	request.setAttribute("manageStatuteBean", manageStatuteBean);
-	
+
 	if (manageStatuteBean.getStatuteType() == StudentStatuteType.SENIOR)
 	    request.setAttribute("schemaName", "student.createSeniorStatute");
-	else 
+	else
 	    request.setAttribute("schemaName", "student.createStatutes");
 
 	return mapping.findForward("manageStatutes");

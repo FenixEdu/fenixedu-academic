@@ -32,10 +32,12 @@ import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 @Mapping(module = "delegate", path = "/viewStudents", scope = "request", parameter = "method")
-@Forwards(value = { @Forward(name = "selectCurricularCourses", path = "selectCurricularCourses"),
-	@Forward(name = "showStudents", path = "/delegate/showStudents.jsp") })
+@Forwards(value = {
+	@Forward(name = "selectCurricularCourses", path = "selectCurricularCourses"),
+	@Forward(name = "showStudents", path = "/delegate/showStudents.jsp", tileProperties = @Tile(title = "private.delegate.view.students")) })
 public class ViewStudentsDispatchAction extends FenixDispatchAction {
 
     @Override

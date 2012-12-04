@@ -32,19 +32,13 @@ import pt.ist.fenixWebFramework.struts.annotations.Tile;
 import pt.utl.ist.fenix.tools.spreadsheet.SheetData;
 import pt.utl.ist.fenix.tools.spreadsheet.SpreadsheetBuilder;
 import pt.utl.ist.fenix.tools.spreadsheet.WorkbookExportFormat;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
-import pt.ist.fenixWebFramework.struts.annotations.Forward;
-import pt.ist.fenixWebFramework.struts.annotations.Forwards;
-import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 @Mapping(path = "/phdEnrolmentsManagement", module = "coordinator")
 @Forwards(tileProperties = @Tile(navLocal = "/coordinator/localNavigationBar.jsp"), value = {
 
-@Forward(name = "showPhdProgram", path = "/phd/coordinator/enrolments/showPhdProgram.jsp"),
+	@Forward(name = "showPhdProgram", path = "/phd/coordinator/enrolments/showPhdProgram.jsp", tileProperties = @Tile(title = "private.coordinator.subscriptions")),
 
-@Forward(name = "showEnrolments", path = "/phd/coordinator/enrolments/showEnrolments.jsp")
+	@Forward(name = "showEnrolments", path = "/phd/coordinator/enrolments/showEnrolments.jsp")
 
 })
 public class PhdEnrolmentsManagementDA extends PhdProcessDA {

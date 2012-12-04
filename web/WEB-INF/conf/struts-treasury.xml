@@ -24,6 +24,7 @@
       <message-resources null="false" key="TREASURY_RESOURCES" parameter="resources.TreasuryResources"></message-resources>
       <message-resources null="false" key="ENUMERATION_RESOURCES" parameter="resources.EnumerationResources"></message-resources>
       <message-resources null="false" key="ACCOUNTING_RESOURCES" parameter="resources.AccountingResources"></message-resources>
+      <message-resources null="false" key="TITLES_RESOURCES" parameter="resources.TitlesResources"></message-resources>
       <!-- ========== Plug Ins Configuration ================================= -->
       <plug-in className="org.apache.struts.validator.ValidatorPlugIn">
             <set-property value="/WEB-INF/validator-rules.xml,/WEB-INF/fenix-validator-rules.xml,/WEB-INF/conf/validation-treasury.xml" property="pathnames"></set-property>

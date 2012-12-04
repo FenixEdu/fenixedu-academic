@@ -22,14 +22,6 @@ import org.apache.struts.action.ActionMapping;
 import org.apache.struts.util.MessageResources;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
-import pt.ist.fenixWebFramework.struts.annotations.Forward;
-import pt.ist.fenixWebFramework.struts.annotations.Forwards;
-import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
@@ -37,8 +29,8 @@ import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 @Mapping(module = "pedagogicalCouncil", path = "/sendEmailToStudents", scope = "request", parameter = "method")
 @Forwards(value = {
-		@Forward(name = "showDegrees", path = "/pedagogicalCouncil/sendEmailToStudents.jsp"),
-		@Forward(name = "sendEmail", path = "/messaging/emails.do?method=newEmail", contextRelative = true) })
+	@Forward(name = "showDegrees", path = "/pedagogicalCouncil/sendEmailToStudents.jsp", tileProperties = @Tile(title = "private.pedagogiccouncil.communication.sendemailtostudents")),
+	@Forward(name = "sendEmail", path = "/messaging/emails.do?method=newEmail", tileProperties = @Tile(title = "private.pedagogiccouncil.communication.sendemailtostudents"), contextRelative = true) })
 public class SendEmailToStudents extends FenixDispatchAction {
 
     public ActionForward prepare(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,

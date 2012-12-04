@@ -24,21 +24,13 @@ import org.apache.struts.action.ActionMapping;
 
 import pt.ist.fenixWebFramework.renderers.components.state.IViewState;
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
-import pt.ist.fenixWebFramework.struts.annotations.Forward;
-import pt.ist.fenixWebFramework.struts.annotations.Forwards;
-import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 @Mapping(module = "coordinator", path = "/scientificCommissionTeamDA", scope = "session", parameter = "method")
-@Forwards(value = { @Forward(name = "viewScientificCommission", path = "/coordinator/scientificCommission/manageScientificCommission.jsp") })
+@Forwards(value = { @Forward(name = "viewScientificCommission", path = "/coordinator/scientificCommission/manageScientificCommission.jsp", tileProperties = @Tile(title = "private.coordinator.management.courses.management.scientificcommittee")) })
 public class ScientificCommissionTeamDA extends FenixDispatchAction {
 
     @Override
@@ -163,15 +155,15 @@ public class ScientificCommissionTeamDA extends FenixDispatchAction {
 	    String istUsername = bean.getString();
 
 	    Person person = Person.readPersonByIstUsername(istUsername);
-	    Employee employee = person==null ? null : person.getEmployee();
+	    Employee employee = person == null ? null : person.getEmployee();
 	    if (employee == null) {
 		addActionMessage("addError", request, "error.coordinator.scientificComission.employee.doesNotExist");
 	    } else {
 		ExecutionDegree executionDegree = getExecutionDegree(request);
 
 		try {
-		    executeService("AddScientificCommission", new Object[] { executionDegree.getIdInternal(),
-			    employee.getPerson() });
+		    executeService("AddScientificCommission",
+			    new Object[] { executionDegree.getIdInternal(), employee.getPerson() });
 		    RenderUtils.invalidateViewState("usernameChoice");
 		} catch (DomainException e) {
 		    addActionMessage("addError", request, e.getKey(), e.getArgs());

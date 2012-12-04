@@ -49,14 +49,14 @@ import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 @Mapping(module = "person", path = "/contentManagement", scope = "request", parameter = "method")
 @Forwards(value = {
-		@Forward(name = "addInitialContent", path = "/person/portals/addInitialContentToSection.jsp"),
-		@Forward(name = "viewContainer", path = "/person/portals/manageContainer.jsp", tileProperties = @Tile(head = "/commons/renderers/treeRendererHeader.jsp")),
-		@Forward(name = "addPortal", path = "/person/portals/addPortal.jsp"),
-		@Forward(name = "editContent", path = "/person/portals/editContent.jsp"),
-		@Forward(name = "viewElement", path = "/person/portals/manageElement.jsp", tileProperties = @Tile(head = "/commons/renderers/treeRendererHeader.jsp")),
-		@Forward(name = "editAvailabilityPolicy", path = "/person/portals/editAvailabilityPolicy.jsp"),
-		@Forward(name = "addFunctionality", path = "/person/portals/addFunctionality.jsp", tileProperties = @Tile(head = "/commons/renderers/treeRendererHeader.jsp")),
-		@Forward(name = "createSection", path = "/person/portals/createSection.jsp") })
+	@Forward(name = "addInitialContent", path = "/person/portals/addInitialContentToSection.jsp", tileProperties = @Tile(title = "private.administrator.functionalitiesmanagement.displayfunctionalities.system.portalroot")),
+	@Forward(name = "viewContainer", path = "/person/portals/manageContainer.jsp", tileProperties = @Tile(head = "/commons/renderers/treeRendererHeader.jsp", title = "private.administrator.functionalitiesmanagement.displayfunctionalities.system.portalroot")),
+	@Forward(name = "addPortal", path = "/person/portals/addPortal.jsp", tileProperties = @Tile(title = "private.administrator.functionalitiesmanagement.displayfunctionalities.system.portalroot")),
+	@Forward(name = "editContent", path = "/person/portals/editContent.jsp", tileProperties = @Tile(title = "private.administrator.functionalitiesmanagement.displayfunctionalities.system.portalroot")),
+	@Forward(name = "viewElement", path = "/person/portals/manageElement.jsp", tileProperties = @Tile(head = "/commons/renderers/treeRendererHeader.jsp", title = "private.administrator.functionalitiesmanagement.displayfunctionalities.system.portalroot")),
+	@Forward(name = "editAvailabilityPolicy", path = "/person/portals/editAvailabilityPolicy.jsp", tileProperties = @Tile(title = "private.administrator.functionalitiesmanagement.displayfunctionalities.system.portalroot")),
+	@Forward(name = "addFunctionality", path = "/person/portals/addFunctionality.jsp", tileProperties = @Tile(head = "/commons/renderers/treeRendererHeader.jsp", title = "private.administrator.functionalitiesmanagement.displayfunctionalities.system.portalroot")),
+	@Forward(name = "createSection", path = "/person/portals/createSection.jsp", tileProperties = @Tile(title = "private.administrator.functionalitiesmanagement.displayfunctionalities.system.portalroot")) })
 public class ContentManagement extends FenixDispatchAction {
 
     public ActionForward viewContent(ActionMapping mapping, ActionForm form, HttpServletRequest request,

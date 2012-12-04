@@ -44,6 +44,7 @@ import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixWebFramework.struts.annotations.Tile;
 import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 /**
@@ -51,13 +52,14 @@ import pt.ist.fenixframework.pstm.AbstractDomainObject;
  * 
  */
 @Mapping(path = "/studentInquiry", module = "student", formBean = "inquiryNotAnsweredForm")
-@Forwards( { @Forward(name = "chooseCourse", path = "/student/inquiries/chooseCourse.jsp"),
-	@Forward(name = "inquiriesClosed", path = "/student/inquiries/inquiriesClosed.jsp"),
-	@Forward(name = "showInquiry", path = "/student/inquiries/fillInInquiry.jsp"),
-	@Forward(name = "showTeachersToAnswer", path = "/student/inquiries/showTeachersToAnswer.jsp"),
-	@Forward(name = "chooseTeacher", path = "/student/inquiries/chooseTeacher.jsp"),
-	@Forward(name = "showTeacherInquiry", path = "/student/inquiries/teacherInquiry.jsp"),
-	@Forward(name = "showDontRespond", path = "/student/inquiries/dontRespond.jsp") })
+@Forwards({
+	@Forward(name = "chooseCourse", path = "/student/inquiries/chooseCourse.jsp", tileProperties = @Tile(  title = "private.student.participate.qucsurveys")),
+	@Forward(name = "inquiriesClosed", path = "/student/inquiries/inquiriesClosed.jsp", tileProperties = @Tile(  title = "private.student.participate.qucsurveys")),
+	@Forward(name = "showInquiry", path = "/student/inquiries/fillInInquiry.jsp", tileProperties = @Tile(  title = "private.student.participate.qucsurveys")),
+	@Forward(name = "showTeachersToAnswer", path = "/student/inquiries/showTeachersToAnswer.jsp", tileProperties = @Tile(  title = "private.student.participate.qucsurveys")),
+	@Forward(name = "chooseTeacher", path = "/student/inquiries/chooseTeacher.jsp", tileProperties = @Tile(  title = "private.student.participate.qucsurveys")),
+	@Forward(name = "showTeacherInquiry", path = "/student/inquiries/teacherInquiry.jsp", tileProperties = @Tile(  title = "private.student.participate.qucsurveys")),
+	@Forward(name = "showDontRespond", path = "/student/inquiries/dontRespond.jsp", tileProperties = @Tile(  title = "private.student.participate.qucsurveys")) })
 public class StudentInquiryDA extends FenixDispatchAction {
 
     public ActionForward showCoursesToAnswer(ActionMapping actionMapping, ActionForm actionForm, HttpServletRequest request,

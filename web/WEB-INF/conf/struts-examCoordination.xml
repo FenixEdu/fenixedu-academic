@@ -20,6 +20,7 @@
       <message-resources null="false" key="GLOBAL_RESOURCES" parameter="resources.GlobalResources"></message-resources>
       <message-resources null="false" key="RESEARCHER_RESOURCES" parameter="resources.ResearcherResources"></message-resources>
       <message-resources null="false" key="APPLICATION_RESOURCES" parameter="resources.ApplicationResources"></message-resources>
+      <message-resources null="false" key="TITLES_RESOURCES" parameter="resources.TitlesResources"></message-resources>
       <!-- ========== Plug Ins Configuration ================================= -->
       <plug-in className="pt.ist.fenixWebFramework.struts.tiles.FenixTilesPlugin">
             <set-property value="/WEB-INF/tiles/layouts/tiles-layout-definitions.xml,/WEB-INF/tiles/examCoordinator/tiles-examCoordination-definitions.xml,/WEB-INF/tiles/examCoordinator/tiles-examCoordination-pages-definitions.xml" property="definitions-config"></set-property>

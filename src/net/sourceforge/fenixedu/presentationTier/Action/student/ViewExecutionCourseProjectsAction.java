@@ -26,14 +26,7 @@ import org.apache.struts.action.ActionErrors;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
-import pt.ist.fenixWebFramework.struts.annotations.Forward;
-import pt.ist.fenixWebFramework.struts.annotations.Forwards;
-import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
+
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
@@ -45,11 +38,12 @@ import pt.ist.fenixWebFramework.struts.annotations.Tile;
  */
 @Mapping(module = "student", path = "/viewExecutionCourseProjects", attribute = "enroledExecutionCoursesForm", formBean = "enroledExecutionCoursesForm", scope = "request")
 @Forwards(value = {
-		@Forward(name = "sucess", path = "/student/viewExecutionCourseProjects_bd.jsp"),
-		@Forward(name = "insucess", path = "/viewEnroledExecutionCourses.do?method=prepare"),
-		@Forward(name = "noprojects", path = "/viewEnroledExecutionCourses.do?method=prepare") })
+	@Forward(name = "sucess", path = "/student/viewExecutionCourseProjects_bd.jsp", tileProperties = @Tile(title = "private.student.subscribe.groups" )),
+	@Forward(name = "insucess", path = "/viewEnroledExecutionCourses.do?method=prepare"),
+	@Forward(name = "noprojects", path = "/viewEnroledExecutionCourses.do?method=prepare") })
 public class ViewExecutionCourseProjectsAction extends FenixContextAction {
 
+    @Override
     public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
 	    throws FenixActionException, FenixFilterException, FenixServiceException {
 
@@ -68,10 +62,9 @@ public class ViewExecutionCourseProjectsAction extends FenixContextAction {
 	}
 	Integer executionCourseCode = new Integer(executionCourseCodeString);
 
-	ISiteComponent viewProjectsComponent = (InfoSiteProjects) ReadExecutionCourseProjects.run(executionCourseCode, userView
-		.getUtilizador());
+	ISiteComponent viewProjectsComponent = ReadExecutionCourseProjects.run(executionCourseCode, userView.getUtilizador());
 
-	InfoExecutionCourse infoExecutionCourse = (InfoExecutionCourse) ReadExecutionCourseByOID.run(executionCourseCode);
+	InfoExecutionCourse infoExecutionCourse = ReadExecutionCourseByOID.run(executionCourseCode);
 	request.setAttribute("infoExecutionCourse", infoExecutionCourse);
 
 	InfoSiteProjects infoSiteProjects = (InfoSiteProjects) viewProjectsComponent;

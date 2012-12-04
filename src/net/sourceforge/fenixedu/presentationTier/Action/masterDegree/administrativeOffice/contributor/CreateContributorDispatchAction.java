@@ -22,12 +22,7 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
-import pt.ist.fenixWebFramework.struts.annotations.Forward;
-import pt.ist.fenixWebFramework.struts.annotations.Forwards;
-import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
+
 import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
 import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
@@ -42,8 +37,8 @@ import pt.ist.fenixWebFramework.struts.annotations.Tile;
  */
 @Mapping(module = "academicAdminOffice", path = "/createContributorDispatchAction", input = "contributor.createContributor", attribute = "createContributorForm", formBean = "createContributorForm", scope = "request", parameter = "method")
 @Forwards(value = {
-		@Forward(name = "PrepareReady", path = "/academicAdminOffice/contributor/createContributor.jsp"),
-		@Forward(name = "CreateSuccess", path = "/academicAdminOffice/contributor/createContributorSuccess.jsp") })
+	@Forward(name = "PrepareReady", path = "/academicAdminOffice/contributor/createContributor.jsp", tileProperties = @Tile(title = "private.academicadministrativeoffice.contributors.create")),
+	@Forward(name = "CreateSuccess", path = "/academicAdminOffice/contributor/createContributorSuccess.jsp", tileProperties = @Tile(title = "private.academicadministrativeoffice.contributors.create")) })
 @Exceptions(value = { @ExceptionHandling(type = net.sourceforge.fenixedu.presentationTier.Action.exceptions.ExistingActionException.class, key = "resources.Action.exceptions.ExistingActionException", handler = net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler.class, scope = "request") })
 public class CreateContributorDispatchAction extends FenixDispatchAction {
 
@@ -98,7 +93,7 @@ public class CreateContributorDispatchAction extends FenixDispatchAction {
 	    saveErrors(request, errors);
 	    return mapping.getInputForward();
 	}
-	
+
 	if (StringUtils.isEmpty(createContributorForm.getString("contributorType"))) {
 	    ActionErrors errors = new ActionErrors();
 	    errors.add("error.invalid.contributorType", new ActionError("error.invalid.contributorType"));

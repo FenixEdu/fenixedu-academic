@@ -25,17 +25,13 @@ import org.apache.struts.action.ActionMapping;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
-import pt.ist.fenixWebFramework.struts.annotations.Forward;
-import pt.ist.fenixWebFramework.struts.annotations.Forwards;
-import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 @Mapping(path = "/studentTutorship", module = "pedagogicalCouncil")
-@Forwards( { @Forward(name = "searchStudentTutorship", path = "/pedagogicalCouncil/tutorship/showStudentPerformanceGrid.jsp"),
+@Forwards({
+	@Forward(name = "searchStudentTutorship", path = "/pedagogicalCouncil/tutorship/showStudentPerformanceGrid.jsp", tileProperties = @Tile(title = "private.pedagogiccouncil.tutoring.viewperformancegrids")),
 	@Forward(name = "showStudentPerformanceGrid", path = "/pedagogicalCouncil/tutorship/showStudentPerformanceGrid.jsp"),
-	@Forward(name = "showStudentCurriculum", path = "/pedagogicalCouncil/tutorship/showStudentCurriculum.jsp"),
+	@Forward(name = "showStudentCurriculum", path = "/pedagogicalCouncil/tutorship/showStudentCurriculum.jsp", tileProperties = @Tile(title = "private.pedagogiccouncil.tutoring.studentcurriculum")),
 	@Forward(name = "chooseRegistration", path = "/pedagogicalCouncil/tutorship/chooseRegistration.jsp") })
 public class StudentTutorshipDA extends StudentsPerformanceGridDispatchAction {
 
@@ -68,8 +64,8 @@ public class StudentTutorshipDA extends StudentsPerformanceGridDispatchAction {
 	    performanceBean = getOrCreateStudentsPerformanceBean(request, student);
 	    if (tutorships.size() > 0) {
 
-		PerformanceGridTableDTO performanceGridTable = createPerformanceGridTable(request, tutorships, performanceBean
-			.getStudentsEntryYear(), performanceBean.getCurrentMonitoringYear());
+		PerformanceGridTableDTO performanceGridTable = createPerformanceGridTable(request, tutorships,
+			performanceBean.getStudentsEntryYear(), performanceBean.getCurrentMonitoringYear());
 
 		getStatisticsAndPutInTheRequest(request, performanceGridTable);
 

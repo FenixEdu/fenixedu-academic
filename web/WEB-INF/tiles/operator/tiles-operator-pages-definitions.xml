@@ -3,11 +3,13 @@
 <!-- Tiles definitions -->
 <tiles-definitions>
 	<definition name="home" extends="definition.operator.two-column" >
-		<put name="body" value="/operator/welcomeScreen.jsp"></put>
+		<put name="body" value="/operator/welcomeScreen.jsp"/>
 		<put name="navLocal" value="/operator/operatorMainMenu.jsp"></put>
 	</definition>
 	
 	<definition name="definition.operator.password" extends="definition.operator.two-column">
+		<put name="bundle" value="TITLES_RESOURCES"/>
+		<put name="title" value = "private.operator.generatepassword"/>
 		<put name="body" value="/operator/password/generateNewStudentsPassword_bd.jsp" />
 	</definition>
     <!-- ===================== Photo ====================== -->
@@ -18,6 +20,8 @@
 	
 	<!-- ===================== Candidacy ====================== -->
 	<definition name="df.candidacy.password.chooseExecutionDegreeAndEntryPhase" extends="definition.operator.two-column">
+		<put name="bundle" value="TITLES_RESOURCES"/>
+	    <put name="title" value="private.operator.passwordscandidate"/>
 		<put name="body" value="/operator/candidacy/password/chooseExecutionDegreeAndEntryPhase.jsp"></put>
 	</definition>
 	<definition name="df.candidacy.password.generate" 
@@ -99,11 +103,15 @@
 	
 	<!-- ========== PERSON MANAGEMENT ========== -->
 	<definition name="df.personManagement.firstPage" extends="definition.operator.two-column" >
+		<put name="bundle" value="TITLES_RESOURCES"/>
+	    <put name="title" value = "private.operator.personnelmanagement.peoplemanagement" />
 		<put name="body" value="/manager/personManagement/welcomeScreen.jsp" />
 		<put name="navLocal" value="/operator/personManagement/personManagementMainMenu.jsp" />
 	</definition>
 	
 	<definition name="findPerson" extends="df.personManagement.firstPage" >
+		<put name="bundle" value="TITLES_RESOURCES"/>
+		<put name="title" value = "private.operator.personnelmanagement.managementfaculty.findperson"/>
 		<put name="body" value="/manager/personManagement/findPerson.jsp" />
 	</definition>
 	<definition name="displayPerson" extends="df.personManagement.firstPage" >
@@ -114,10 +122,14 @@
 	</definition>
 	
 	<definition name="df.recover.inactive.person.search.form" extends="df.personManagement.firstPage" >
+		<put name="bundle" value="TITLES_RESOURCES"/>
+	    <put name="title" value = "private.operator.personnelmanagement.peoplemanagement.activateperson"/>
 		<put name="body" value="/manager/personManagement/recoverInactivePerson.jsp" />
 	</definition>
 	
 	<definition name="search-person-to-edit" extends="df.personManagement.firstPage" >
+		<put name="bundle" value="TITLES_RESOURCES"/>
+	    <put name="title" value = "private.operator.personnelmanagement.peoplemanagement.editperson"/>
 		<put name="body" value="/manager/personManagement/prepareEditPerson.jsp" />
 	</definition>	
 	<definition name="prepare-edit-person" extends="df.personManagement.firstPage" >
@@ -125,6 +137,8 @@
 	</definition>
 	
 	<definition name="df.page.manage-roles" extends="df.personManagement.firstPage" >
+		<put name="bundle" value="TITLES_RESOURCES"/>
+	    <put name="title" value = "private.operator.personnelmanagement.peoplemanagement.managementroles"/>
 		<put name="body" value="/manager/manageRoles_bd.jsp" />
 	</definition>
 	<definition name="df.page.show-roleoperationlogs" extends="df.personManagement.firstPage" >
@@ -132,6 +146,8 @@
 	</definition>
 	
 	<definition name="show-generate-password-link" extends="df.personManagement.firstPage" >
+		<put name="bundle" value="TITLES_RESOURCES"/>
+	    <put name="title" value="private.operator.personnelmanagement.peoplemanagement.generatepassword"/>
 		<put name="body" value="/manager/password/showGeneratePassLink.jsp" />
 	</definition>
 	
@@ -184,6 +200,8 @@
 		<put name="body" value="/manager/teachersManagement/editCategories.jsp" />
 	</definition>
 	<definition name="df.page.prepareDissociateEC" extends="df.teacherManagement.firstPage" >
+		<put name="bundle" value="TITLES_RESOURCES"/>
+	 	<put name="title" value = "private.operator.personnelmanagement.managementfaculty.disassociatedisciplinesexecution"/>
 		<put name="body" value="/manager/teachersManagement/prepareDissociateEC.jsp" />
 	</definition>
 	<definition name="df.page.prepareDissociateECShowProfShipsAndRespFor" extends="df.teacherManagement.firstPage" >

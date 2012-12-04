@@ -39,15 +39,16 @@ import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 @Mapping(path = "/documentRequestsManagement", module = "academicAdminOffice")
 @Forwards({
-	@Forward(name = "printDocument", path = "/academicAdminOffice/serviceRequests/documentRequests/printDocument.jsp"),
-	@Forward(name = "createDocumentRequests", path = "/academicAdminOffice/serviceRequests/documentRequests/createDocumentRequests.jsp"),
-	@Forward(name = "viewDocumentRequestsToCreate", path = "/academicAdminOffice/serviceRequests/documentRequests/viewDocumentRequestsToCreate.jsp"),
-	@Forward(name = "chooseExamsToCreateExamDateCertificateRequest", path = "/academicAdminOffice/serviceRequests/documentRequests/chooseExamsToCreateExamDateCertificateRequest.jsp"),
-	@Forward(name = "viewRegistrationDetails", path = "/academicAdminOffice/student/registration/viewRegistrationDetails.jsp"),
-	@Forward(name = "processNewAcademicServiceRequest", path = "/academicServiceRequestsManagement.do?method=processNewAcademicServiceRequest")
+	@Forward(name = "printDocument", path = "/academicAdminOffice/serviceRequests/documentRequests/printDocument.jsp", tileProperties = @Tile(title = "private.academicadministrativeoffice.studentoperations.viewstudents")),
+	@Forward(name = "createDocumentRequests", path = "/academicAdminOffice/serviceRequests/documentRequests/createDocumentRequests.jsp", tileProperties = @Tile(title = "private.academicadministrativeoffice.studentoperations.viewstudents")),
+	@Forward(name = "viewDocumentRequestsToCreate", path = "/academicAdminOffice/serviceRequests/documentRequests/viewDocumentRequestsToCreate.jsp", tileProperties = @Tile(title = "private.academicadministrativeoffice.studentoperations.viewstudents")),
+	@Forward(name = "chooseExamsToCreateExamDateCertificateRequest", path = "/academicAdminOffice/serviceRequests/documentRequests/chooseExamsToCreateExamDateCertificateRequest.jsp", tileProperties = @Tile(title = "private.academicadministrativeoffice.academicservices.newrequests")),
+	@Forward(name = "viewRegistrationDetails", path = "/academicAdminOffice/student/registration/viewRegistrationDetails.jsp", tileProperties = @Tile(title = "private.academicadministrativeoffice.academicservices.newrequests")),
+	@Forward(name = "processNewAcademicServiceRequest", path = "/academicServiceRequestsManagement.do?method=processNewAcademicServiceRequest", tileProperties = @Tile(title = "private.academicadministrativeoffice.academicservices.newrequests"))
 
 })
 public class DocumentRequestsManagementDispatchAction extends FenixDispatchAction {

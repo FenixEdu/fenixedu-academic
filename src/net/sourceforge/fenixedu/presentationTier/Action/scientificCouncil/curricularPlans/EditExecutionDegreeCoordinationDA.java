@@ -26,18 +26,14 @@ import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
-import pt.ist.fenixWebFramework.struts.annotations.Forward;
-import pt.ist.fenixWebFramework.struts.annotations.Forwards;
-import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixWebFramework.struts.annotations.Tile;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 @Mapping(path = "/curricularPlans/editExecutionDegreeCoordination", module = "scientificCouncil")
-@Forwards( { @Forward(name = "presentCoordination", path = "/scientificCouncil/curricularPlans/presentCoordination.jsp"),
-	@Forward(name = "editCoordination", path = "/scientificCouncil/curricularPlans/editCoordination.jsp"),
-	@Forward(name = "selectYearAndDegree", path = "/scientificCouncil/curricularPlans/selectYearAndDegree.jsp") })
+@Forwards({
+	@Forward(name = "presentCoordination", path = "/scientificCouncil/curricularPlans/presentCoordination.jsp"),
+	@Forward(name = "editCoordination", path = "/scientificCouncil/curricularPlans/editCoordination.jsp", tileProperties = @Tile(  title = "private.scientificcouncil.bolognaprocess.managecoordinationteams")),
+	@Forward(name = "selectYearAndDegree", path = "/scientificCouncil/curricularPlans/selectYearAndDegree.jsp", tileProperties = @Tile(  title = "private.scientificcouncil.bolognaprocess.managecoordinationteams")) })
 public class EditExecutionDegreeCoordinationDA extends FenixDispatchAction {
 
     public ActionForward prepareEditCoordination(ActionMapping mapping, ActionForm form, HttpServletRequest request,
@@ -88,8 +84,8 @@ public class EditExecutionDegreeCoordinationDA extends FenixDispatchAction {
 
 	ExecutionDegreeCoordinatorsBean coordsBean = getRenderedObject("coordsBean");
 
-	Coordinator.makeCreation(personAdding, coordsBean.getExecutionDegree(), coordsBean.getNewCoordinator(), Boolean
-		.valueOf(false));
+	Coordinator.makeCreation(personAdding, coordsBean.getExecutionDegree(), coordsBean.getNewCoordinator(),
+		Boolean.valueOf(false));
 
 	coordsBean.setNewCoordinator(null);
 	request.setAttribute("coordsBean", coordsBean);
@@ -103,7 +99,7 @@ public class EditExecutionDegreeCoordinationDA extends FenixDispatchAction {
 	    HttpServletResponse response) {
 
 	final Integer coordinatorId = Integer.valueOf(request.getParameter("coordinatorId"));
-	Coordinator coordinator = (Coordinator) rootDomainObject.readCoordinatorByOID(coordinatorId);
+	Coordinator coordinator = rootDomainObject.readCoordinatorByOID(coordinatorId);
 
 	final Integer executionDegreeId = Integer.valueOf(request.getParameter("executionDegreeId"));
 	ExecutionDegree executionDegree = rootDomainObject.readExecutionDegreeByOID(executionDegreeId);
@@ -133,7 +129,7 @@ public class EditExecutionDegreeCoordinationDA extends FenixDispatchAction {
 	    HttpServletResponse response) {
 
 	final Integer coordinatorId = Integer.valueOf(request.getParameter("coordinatorId"));
-	Coordinator coordinator = (Coordinator) rootDomainObject.readCoordinatorByOID(coordinatorId);
+	Coordinator coordinator = rootDomainObject.readCoordinatorByOID(coordinatorId);
 
 	final Integer executionDegreeId = Integer.valueOf(request.getParameter("executionDegreeId"));
 	ExecutionDegree executionDegree = rootDomainObject.readExecutionDegreeByOID(executionDegreeId);

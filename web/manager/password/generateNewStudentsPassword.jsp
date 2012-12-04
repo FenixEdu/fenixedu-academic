@@ -1,6 +1,7 @@
 <%@ taglib uri="/WEB-INF/struts-tiles.tld" prefix="tiles" %>
 <tiles:insert definition="df.layout.two-column" beanName="" flush="true">
-  <tiles:put name="title" value="Operador" />
+  <tiles:put name="bundle" value="TITLES_RESOURCES"/>
+  <tiles:put name="title" value="private.operator" />
   <tiles:put name="serviceName" value="Operador" />
   <tiles:put name="navLocal" value="/manager/commons/commonNavLocalManager.jsp" />
   <tiles:put name="navGeral" value="/commons/functionalities/top-menu.jsp" />

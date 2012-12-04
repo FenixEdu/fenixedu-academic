@@ -4,7 +4,7 @@
 <%@page import="net.sourceforge.fenixedu.presentationTier.servlets.filters.ContentInjectionRewriter"%>
 <html:html xhtml="true">
 	<head>
-		<title><bean:message key="dot.title" bundle="GLOBAL_RESOURCES"/> - <bean:message key="title.login" bundle="GLOBAL_RESOURCES"/></title>
+		<title><bean:message key="dot.title" bundle="GLOBAL_RESOURCES"/><bean:message key="title.login" bundle="GLOBAL_RESOURCES"/></title>
 		<link href="<%= request.getContextPath() %>/CSS/logdotist.css" rel="stylesheet" type="text/css" />
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 

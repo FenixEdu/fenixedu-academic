@@ -33,12 +33,6 @@ import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixWebFramework.struts.annotations.Tile;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
-import pt.ist.fenixWebFramework.struts.annotations.Forward;
-import pt.ist.fenixWebFramework.struts.annotations.Forwards;
-import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 /**
  * @author <a href="mailto:sana@ist.utl.pt">Shezad Anavarali </a>
@@ -46,7 +40,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Tile;
  * 
  */
 @Mapping(module = "masterDegreeAdministrativeOffice", path = "/gratuitySituationDetails", attribute = "createGuideFromTransactionsForm", formBean = "createGuideFromTransactionsForm", scope = "request", parameter = "method")
-@Forwards(value = { @Forward(name = "showDetails", path = "gratuitySituationDetails") })
+@Forwards(value = { @Forward(name = "showDetails", path = "gratuitySituationDetails", tileProperties = @Tile(title = "teste49")) })
 @Exceptions(value = { @ExceptionHandling(type = net.sourceforge.fenixedu.presentationTier.Action.exceptions.NonExistingActionException.class, key = "resources.Action.exceptions.NonExistingActionException", handler = net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler.class, scope = "request") })
 public class GratuitySituationDetailsDispatchAction extends FenixDispatchAction {
 
@@ -81,7 +75,7 @@ public class GratuitySituationDetailsDispatchAction extends FenixDispatchAction 
 	InfoGratuitySituation infoGratuitySituation = null;
 
 	try {
-	    infoGratuitySituation = (InfoGratuitySituation) ReadGratuitySituationById.run(new Integer(gratuitySituationId));
+	    infoGratuitySituation = ReadGratuitySituationById.run(new Integer(gratuitySituationId));
 
 	} catch (ExcepcaoInexistente e) {
 	    throw new FenixActionException(e);
@@ -94,7 +88,7 @@ public class GratuitySituationDetailsDispatchAction extends FenixDispatchAction 
 	List infoTransactions = null;
 
 	try {
-	    infoTransactions = (List) ReadAllTransactionsByGratuitySituationID.run(infoGratuitySituation.getIdInternal());
+	    infoTransactions = ReadAllTransactionsByGratuitySituationID.run(infoGratuitySituation.getIdInternal());
 
 	} catch (FenixServiceException e) {
 	    throw new FenixActionException(e);

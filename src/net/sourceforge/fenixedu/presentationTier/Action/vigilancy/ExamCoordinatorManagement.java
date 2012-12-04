@@ -25,10 +25,12 @@ import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 @Mapping(module = "departmentAdmOffice", path = "/vigilancy/examCoordinatorManagement", scope = "request", parameter = "method")
-@Forwards(value = { @Forward(name = "prepareExamCoordinator", path = "/departmentAdmOffice/vigilancy/manageExamCoordinator.jsp"),
-	@Forward(name = "editExamCoordinator", path = "/departmentAdmOffice/vigilancy/editExamCoordinator.jsp") })
+@Forwards(value = {
+	@Forward(name = "prepareExamCoordinator", path = "/departmentAdmOffice/vigilancy/manageExamCoordinator.jsp", tileProperties = @Tile(title = "private.administrationofcreditsofdepartmentteachers.examcoordination.managementcoordinatorsexams")),
+	@Forward(name = "editExamCoordinator", path = "/departmentAdmOffice/vigilancy/editExamCoordinator.jsp", tileProperties = @Tile(title = "private.administrationofcreditsofdepartmentteachers.examcoordination.managementcoordinatorsexams")) })
 public class ExamCoordinatorManagement extends FenixDispatchAction {
 
     public ActionForward prepareExamCoordinator(ActionMapping mapping, ActionForm form, HttpServletRequest request,

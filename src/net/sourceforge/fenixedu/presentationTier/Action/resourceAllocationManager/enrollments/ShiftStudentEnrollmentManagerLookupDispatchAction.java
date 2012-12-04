@@ -44,7 +44,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Tile;
 @Forwards(value = {
 	@Forward(name = "prepareShiftEnrollment", path = "/studentShiftEnrollmentManager.do?method=prepareShiftEnrollment"),
 	@Forward(name = "prepareEnrollmentViewWarning", path = "/studentShiftEnrollmentManager.do?method=prepareStartViewWarning"),
-	@Forward(name = "showShiftsToEnroll", path = "/student/enrollment/showShiftsToEnroll.jsp", tileProperties = @Tile(navLocal = "/student/enrollment/listClasses.jsp")),
+	@Forward(name = "showShiftsToEnroll", path = "/student/enrollment/showShiftsToEnroll.jsp", tileProperties = @Tile(navLocal = "/student/enrollment/listClasses.jsp",   title = "private.student.subscribe.courses")),
 	@Forward(name = "studentFirstPage", path = "/dotIstPortal.do?prefix=/student&page=/index.do", contextRelative = true),
 	@Forward(name = "beginTransaction", path = "/studentShiftEnrollmentManager.do?method=start&firstTime=true") })
 @Exceptions(value = {

@@ -3,7 +3,6 @@
 <tiles:insert definition="df.layout.two-column" beanName="" flush="true">
 --%>
 <tiles:insert definition="df.layout.print.alternative" beanName="" flush="true">
-  <tiles:put name="title" value="SOP" />
   <tiles:put name="serviceName" value="Serviço de Organização Pedagógica" />
   <tiles:put name="navGeral" value="/commons/commonGeneralNavigationBar.jsp" />
   <tiles:put name="body-context" value="/commons/blank.jsp"/>  

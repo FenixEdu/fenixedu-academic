@@ -34,18 +34,10 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
+
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
-import pt.ist.fenixWebFramework.struts.annotations.Forward;
-import pt.ist.fenixWebFramework.struts.annotations.Forwards;
-import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 /**
  * @author <a href="mailto:joao.mota@ist.utl.pt">Jo�o Mota </a> 19/Dez/2003
@@ -53,7 +45,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Tile;
  */
 @Mapping(module = "publico", path = "/searchProfessorships", attribute = "teachersBodyForm", formBean = "teachersBodyForm", scope = "session", parameter = "method")
 @Forwards(value = { @Forward(name = "showForm", path = "searchProfessorships"),
-		@Forward(name = "showProfessorships", path = "showProfessorships") })
+	@Forward(name = "showProfessorships", path = "showProfessorships") })
 public class ShowTeachersBodyDispatchAction extends FenixDispatchAction {
 
     private String makeBodyHeader(String executionYear, Integer semester, Integer teacherType) {
@@ -76,9 +68,9 @@ public class ShowTeachersBodyDispatchAction extends FenixDispatchAction {
 
 	try {
 
-	    List executionDegrees = (List) ReadExecutionDegreesByExecutionYearId.run(executionYearId);
-	    List executionYears = (List) ReadNotClosedExecutionYears.run();
-	    List departments = (List) ReadAllDepartments.run();
+	    List executionDegrees = ReadExecutionDegreesByExecutionYearId.run(executionYearId);
+	    List executionYears = ReadNotClosedExecutionYears.run();
+	    List departments = ReadAllDepartments.run();
 
 	    if (executionDegrees != null && executionDegrees.size() > 0) {
 		// put execution year in the form
@@ -136,13 +128,14 @@ public class ShowTeachersBodyDispatchAction extends FenixDispatchAction {
 	String searchDetails = (String) executionDegreeForm.get("searchDetails");
 	try {
 
-	    List detailedProfessorShipsListofLists = (List) ReadProfessorshipsAndResponsibilitiesByExecutionDegreeAndExecutionPeriod
+	    List detailedProfessorShipsListofLists = ReadProfessorshipsAndResponsibilitiesByExecutionDegreeAndExecutionPeriod
 		    .run(executionDegreeId, semester, teacherType);
 
 	    if ((detailedProfessorShipsListofLists != null) && (!detailedProfessorShipsListofLists.isEmpty())) {
 
 		Collections.sort(detailedProfessorShipsListofLists, new Comparator() {
 
+		    @Override
 		    public int compare(Object o1, Object o2) {
 
 			List list1 = (List) o1;
@@ -159,7 +152,7 @@ public class ShowTeachersBodyDispatchAction extends FenixDispatchAction {
 		request.setAttribute("detailedProfessorShipsListofLists", detailedProfessorShipsListofLists);
 	    }
 
-	    InfoExecutionDegree degree = (InfoExecutionDegree) ReadExecutionDegreeByOID.run(executionDegreeId);
+	    InfoExecutionDegree degree = ReadExecutionDegreeByOID.run(executionDegreeId);
 
 	    request.setAttribute("searchType", "Consulta Por Curso");
 	    request.setAttribute("searchTarget", degree.getInfoDegreeCurricularPlan().getInfoDegree().getDegreeType() + " em "
@@ -189,13 +182,14 @@ public class ShowTeachersBodyDispatchAction extends FenixDispatchAction {
 
 	try {
 
-	    List detailedProfessorShipsListofLists = (List) ReadProfessorshipsAndResponsibilitiesByDepartmentAndExecutionPeriod
-		    .run(departmentId, executionYearId, semester, teacherType);
+	    List detailedProfessorShipsListofLists = ReadProfessorshipsAndResponsibilitiesByDepartmentAndExecutionPeriod.run(
+		    departmentId, executionYearId, semester, teacherType);
 
 	    if ((detailedProfessorShipsListofLists != null) && (!detailedProfessorShipsListofLists.isEmpty())) {
 
 		Collections.sort(detailedProfessorShipsListofLists, new Comparator() {
 
+		    @Override
 		    public int compare(Object o1, Object o2) {
 
 			List list1 = (List) o1;
@@ -211,7 +205,7 @@ public class ShowTeachersBodyDispatchAction extends FenixDispatchAction {
 		request.setAttribute("detailedProfessorShipsListofLists", detailedProfessorShipsListofLists);
 	    }
 
-	    InfoDepartment department = (InfoDepartment) ReadDepartmentByOID.run(departmentId);
+	    InfoDepartment department = ReadDepartmentByOID.run(departmentId);
 
 	    request.setAttribute("searchType", "Consulta Por Departmento");
 	    request.setAttribute("searchTarget", department.getName());

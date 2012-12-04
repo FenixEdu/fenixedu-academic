@@ -19,13 +19,14 @@ import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 /**
  * @author - Ricardo Rodrigues (ricardo.rodrigues@ist.utl.pt)
  * 
  */
 @Mapping(path = "/deleteInquiryResults", module = "gep")
-@Forwards( { @Forward(name = "deleteResults", path = "/gep/inquiries/deleteInquiryResults.jsp") })
+@Forwards({ @Forward(name = "deleteResults", path = "/gep/inquiries/deleteInquiryResults.jsp", tileProperties = @Tile(title = "private.gep.surveys.deleteresults")) })
 public class DeleteInquiriesResultsDA extends FenixDispatchAction {
 
     public ActionForward prepare(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,

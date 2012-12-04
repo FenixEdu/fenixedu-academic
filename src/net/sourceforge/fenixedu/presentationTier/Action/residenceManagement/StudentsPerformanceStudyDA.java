@@ -26,15 +26,9 @@ import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
-import pt.ist.fenixWebFramework.struts.annotations.Forward;
-import pt.ist.fenixWebFramework.struts.annotations.Forwards;
-import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 @Mapping(path = "/residenceStudentsPerformance", module = "residenceManagement")
-@Forwards( {
+@Forwards({
 	@Forward(name = "list-generated-reports", path = "/residenceManagement/studentsPerformance/listGeneratedReports.jsp"),
 	@Forward(name = "prepare-upload-student-numbers", path = "/residenceManagement/studentsPerformance/prepareUploadStudentNumbers.jsp"),
 	@Forward(name = "prepare-generate-students-performance", path = "/residenceManagement/studentsPerformance/prepareGenerateStudentsPerformace.jsp") })
@@ -51,10 +45,10 @@ public class StudentsPerformanceStudyDA extends FenixDispatchAction {
 	}
 
 	request.setAttribute("executionSemesterBean", executionSemesterBean);
-	request.setAttribute("generatedReports", StudentsPerformanceReport.readGeneratedReports(executionSemesterBean
-		.getSemester()));
-	request.setAttribute("otherReports", StudentsPerformanceReport.readNotGeneratedReports(executionSemesterBean
-		.getSemester()));
+	request.setAttribute("generatedReports",
+		StudentsPerformanceReport.readGeneratedReports(executionSemesterBean.getSemester()));
+	request.setAttribute("otherReports",
+		StudentsPerformanceReport.readNotGeneratedReports(executionSemesterBean.getSemester()));
 
 	return mapping.findForward("list-generated-reports");
     }
@@ -147,8 +141,8 @@ public class StudentsPerformanceStudyDA extends FenixDispatchAction {
     }
 
     public static class StudentsListBean {
-	private List<Student> students = new ArrayList<Student>();
-	private List<String> unacceptedEntries = new ArrayList<String>();
+	private final List<Student> students = new ArrayList<Student>();
+	private final List<String> unacceptedEntries = new ArrayList<String>();
 
 	private InputStream stream;
 	private String fileName;

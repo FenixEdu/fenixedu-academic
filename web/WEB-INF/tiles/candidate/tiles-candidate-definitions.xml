@@ -4,7 +4,8 @@
 <!-- Tiles definitions -->
 <tiles-definitions>
 	<definition name="candidate.masterPage" extends="df.layout.two-column">
-	  <put name="title" value="" />
+	  <put name="bundle" value="TITLES_RESOURCES" />
+	  <put name="title" value="private.candidate" />
 	  <put name="serviceName" value="" />
 	  <put name="navLocal" value="/candidate/localNavigationBar.jsp" />
 	  <put name="navGeral" value="/commons/commonGeneralNavigationBar.jsp" />

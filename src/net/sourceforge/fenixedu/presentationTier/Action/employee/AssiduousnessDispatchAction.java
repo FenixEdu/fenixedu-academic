@@ -38,13 +38,15 @@ import pt.ist.fenixWebFramework.security.UserView;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixWebFramework.struts.annotations.Tile;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 @Mapping(module = "employee", path = "/assiduousnessRecords", scope = "request", parameter = "method")
-@Forwards(value = { @Forward(name = "show-clockings", path = "/employee/showClockings.jsp"),
-	@Forward(name = "show-work-sheet", path = "/employee/showWorkSheet.jsp"),
-	@Forward(name = "show-employee-info", path = "/employee/showEmployeeInfo.jsp"),
-	@Forward(name = "show-justifications", path = "/employee/showJustifications.jsp") })
+@Forwards(value = {
+	@Forward(name = "show-clockings", path = "/employee/showClockings.jsp", tileProperties = @Tile(title = "private.employee.assiduity.markings")),
+	@Forward(name = "show-work-sheet", path = "/employee/showWorkSheet.jsp", tileProperties = @Tile(title = "private.employee.assiduity.entry")),
+	@Forward(name = "show-employee-info", path = "/employee/showEmployeeInfo.jsp", tileProperties = @Tile(title = "private.employee.assiduity.hours")),
+	@Forward(name = "show-justifications", path = "/employee/showJustifications.jsp", tileProperties = @Tile(title = "private.employee.assiduity.justifications")) })
 public class AssiduousnessDispatchAction extends FenixDispatchAction {
 
     private final LocalDate firstMonth = new LocalDate(2006, 9, 1);

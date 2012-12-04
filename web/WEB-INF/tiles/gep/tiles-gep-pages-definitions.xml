@@ -12,6 +12,8 @@
         <put name="body" value="/teacher/information/viewTeacherInformation.jsp"/>
     </definition>
     <definition name="search-teachers-information" extends="definition.gep.two-column">
+    	 
+    	<put name="title" value = "private.gep.gepportal.facultyinformation" />
         <put name="body" value="/gep/teachers/searchTeachersInformation.jsp"/>
     </definition>
     <definition name="view-courses-information" extends="definition.gep.two-column">
@@ -21,6 +23,8 @@
         <put name="body" value="/gep/courses/viewCourseInformation.jsp"/>
     </definition>
     <definition name="search-courses-information" extends="definition.gep.two-column">
+    	<put name="bundle" value="TITLES_RESOURCES"/>
+		<put name="title" value = "private.gep.gepportal.informationdisciplines" /> 
         <put name="body" value="/gep/courses/searchCoursesInformation.jsp"/>
     </definition>
     <definition name="list-courses-information" extends="definition.gep.one-column">
@@ -95,6 +99,8 @@
         <put name="body" value="/gep/alumni/alumniStatistics.jsp"/>
     </definition>	
 	<definition name="alumni.showAlumniDetails" extends="definition.gep.two-column">
+		<put name="bundle" value="TITLES_RESOURCES"/>
+	    <put name="title" value="private.gep.alumni.search"/>
         <put name="body" value="/gep/alumni/alumniDetails.jsp"/>
     </definition>
     <definition name="view-reports" extends="definition.gep.two-column">

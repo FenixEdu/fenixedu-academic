@@ -30,22 +30,17 @@ import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.utl.ist.fenix.tools.util.DateFormatUtil;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
-import pt.ist.fenixWebFramework.struts.annotations.Forward;
-import pt.ist.fenixWebFramework.struts.annotations.Forwards;
-import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixWebFramework.struts.annotations.Tile;
+import pt.utl.ist.fenix.tools.util.DateFormatUtil;
 
 @Mapping(path = "/rectifyOldMarkSheet", module = "academicAdminOffice", formBean = "markSheetManagementForm", input = "/academicAdminOffice/gradeSubmission/oldMarkSheets/rectifyMarkSheetStep1.jsp")
-@Forwards( {
-	@Forward(name = "rectifyMarkSheetStep1", path = "/academicAdminOffice/gradeSubmission/oldMarkSheets/rectifyMarkSheetStep1.jsp"),
-	@Forward(name = "rectifyMarkSheetStep2", path = "/academicAdminOffice/gradeSubmission/oldMarkSheets/rectifyMarkSheetStep2.jsp"),
-	@Forward(name = "searchMarkSheet", path = "/oldMarkSheetManagement.do?method=prepareSearchMarkSheet"),
-	@Forward(name = "searchMarkSheetFilled", path = "/oldMarkSheetManagement.do?method=prepareSearchMarkSheetFilled"),
-	@Forward(name = "showRectificationHistoric", path = "/academicAdminOffice/gradeSubmission/showRectificationHistoric.jsp"),
-	@Forward(name = "rectifyMarkSheetStepOneByEvaluation", path = "/academicAdminOffice/gradeSubmission/oldMarkSheets/rectifyOldMarkSheetEvaluation.jsp") })
+@Forwards({
+	@Forward(name = "rectifyMarkSheetStep1", path = "/academicAdminOffice/gradeSubmission/oldMarkSheets/rectifyMarkSheetStep1.jsp", tileProperties = @Tile(title = "private.academicadministrativeoffice.marksheets.oldmanagementguidelines")),
+	@Forward(name = "rectifyMarkSheetStep2", path = "/academicAdminOffice/gradeSubmission/oldMarkSheets/rectifyMarkSheetStep2.jsp", tileProperties = @Tile(title = "private.academicadministrativeoffice.marksheets.oldmanagementguidelines")),
+	@Forward(name = "searchMarkSheet", path = "/oldMarkSheetManagement.do?method=prepareSearchMarkSheet", tileProperties = @Tile(title = "private.academicadministrativeoffice.marksheets.oldmanagementguidelines")),
+	@Forward(name = "searchMarkSheetFilled", path = "/oldMarkSheetManagement.do?method=prepareSearchMarkSheetFilled", tileProperties = @Tile(title = "private.academicadministrativeoffice.marksheets.oldmanagementguidelines")),
+	@Forward(name = "showRectificationHistoric", path = "/academicAdminOffice/gradeSubmission/showRectificationHistoric.jsp", tileProperties = @Tile(title = "private.academicadministrativeoffice.marksheets.oldmanagementguidelines")),
+	@Forward(name = "rectifyMarkSheetStepOneByEvaluation", path = "/academicAdminOffice/gradeSubmission/oldMarkSheets/rectifyOldMarkSheetEvaluation.jsp", tileProperties = @Tile(title = "private.academicadministrativeoffice.marksheets.oldmanagementguidelines")) })
 public class OldMarkSheetRectifyDispatchAction extends OldMarkSheetCreateDispatchAction {
 
     @Override
@@ -153,9 +148,11 @@ public class OldMarkSheetRectifyDispatchAction extends OldMarkSheetCreateDispatc
 	ActionMessages actionMessages = new ActionMessages();
 	IUserView userView = getUserView(request);
 	try {
-	    ServiceUtils.executeService("CreateRectificationOldMarkSheet", new Object[] { rectifyBean.getEnrolmentEvaluation(),
-		    rectifyBean.getMarkSheetType(), rectifyBean.getRectifiedGrade(), rectifyBean.getEvaluationDate(),
-		    rectifyBean.getReason(), userView.getPerson().getEmployee() });
+	    ServiceUtils.executeService(
+		    "CreateRectificationOldMarkSheet",
+		    new Object[] { rectifyBean.getEnrolmentEvaluation(), rectifyBean.getMarkSheetType(),
+			    rectifyBean.getRectifiedGrade(), rectifyBean.getEvaluationDate(), rectifyBean.getReason(),
+			    userView.getPerson().getEmployee() });
 	    return mapping.findForward("searchMarkSheetFilled");
 	} catch (NotAuthorizedFilterException e) {
 	    addMessage(request, actionMessages, "error.notAuthorized");

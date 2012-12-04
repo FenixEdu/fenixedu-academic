@@ -21,14 +21,7 @@ import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
-import pt.ist.fenixWebFramework.struts.annotations.Forward;
-import pt.ist.fenixWebFramework.struts.annotations.Forwards;
-import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
+
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
@@ -36,13 +29,13 @@ import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 @Mapping(module = "researcher", path = "/activities/activitiesManagement", scope = "session", parameter = "method")
 @Forwards(value = {
-		@Forward(name = "EditScientificJournal", path = "/activities/editResearchActivity.do?method=prepareScientificJournal"),
-		@Forward(name = "EditParticipants", path = "/activities/editResearchActivity.do?method=prepareEditParticipants"),
-		@Forward(name = "EditEvent", path = "/activities/editResearchActivity.do?method=prepareEvent"),
-		@Forward(name = "ListActivities", path = "/researcher/activities/activitiesManagement.jsp"),
-		@Forward(name = "EditCooperation", path = "/activities/editResearchActivity.do?method=prepareCooperation"),
-		@Forward(name = "EditEventEdition", path = "/activities/editResearchActivity.do?method=prepareEventEdition"),
-		@Forward(name = "EditJournalIssue", path = "/activities/editResearchActivity.do?method=prepareJournalIssue") })
+	@Forward(name = "EditScientificJournal", path = "/activities/editResearchActivity.do?method=prepareScientificJournal"),
+	@Forward(name = "EditParticipants", path = "/activities/editResearchActivity.do?method=prepareEditParticipants"),
+	@Forward(name = "EditEvent", path = "/activities/editResearchActivity.do?method=prepareEvent"),
+	@Forward(name = "ListActivities", path = "/researcher/activities/activitiesManagement.jsp", tileProperties = @Tile(  title = "private.operator.personnelmanagement.managementfaculty.teacherevaluation.activities")),
+	@Forward(name = "EditCooperation", path = "/activities/editResearchActivity.do?method=prepareCooperation"),
+	@Forward(name = "EditEventEdition", path = "/activities/editResearchActivity.do?method=prepareEventEdition"),
+	@Forward(name = "EditJournalIssue", path = "/activities/editResearchActivity.do?method=prepareJournalIssue") })
 public class ActivitiesManagementDispatchAction extends FenixDispatchAction {
 
     public ActionForward listActivities(ActionMapping mapping, ActionForm form, HttpServletRequest request,
@@ -50,21 +43,21 @@ public class ActivitiesManagementDispatchAction extends FenixDispatchAction {
 	Person person = getLoggedPerson(request);
 
 	request.setAttribute("national-events", new ArrayList<ResearchEvent>(person.getAssociatedEvents(ScopeType.NATIONAL)));
-	request.setAttribute("international-events", new ArrayList<ResearchEvent>(person
-		.getAssociatedEvents(ScopeType.INTERNATIONAL)));
-	request.setAttribute("international-eventEditions", new ArrayList<EventEdition>(person
-		.getAssociatedEventEditions(ScopeType.INTERNATIONAL)));
-	request.setAttribute("national-eventEditions", new ArrayList<EventEdition>(person
-		.getAssociatedEventEditions(ScopeType.NATIONAL)));
-	request.setAttribute("national-journals", new ArrayList<ScientificJournal>(person
-		.getAssociatedScientificJournals(ScopeType.NATIONAL)));
-	request.setAttribute("international-journals", new ArrayList<ScientificJournal>(person
-		.getAssociatedScientificJournals(ScopeType.INTERNATIONAL)));
+	request.setAttribute("international-events",
+		new ArrayList<ResearchEvent>(person.getAssociatedEvents(ScopeType.INTERNATIONAL)));
+	request.setAttribute("international-eventEditions",
+		new ArrayList<EventEdition>(person.getAssociatedEventEditions(ScopeType.INTERNATIONAL)));
+	request.setAttribute("national-eventEditions",
+		new ArrayList<EventEdition>(person.getAssociatedEventEditions(ScopeType.NATIONAL)));
+	request.setAttribute("national-journals",
+		new ArrayList<ScientificJournal>(person.getAssociatedScientificJournals(ScopeType.NATIONAL)));
+	request.setAttribute("international-journals",
+		new ArrayList<ScientificJournal>(person.getAssociatedScientificJournals(ScopeType.INTERNATIONAL)));
 	request.setAttribute("cooperations", new ArrayList<Cooperation>(person.getAssociatedCooperations()));
 	request.setAttribute("national-issues",
 		new ArrayList<JournalIssue>(person.getAssociatedJournalIssues(ScopeType.NATIONAL)));
-	request.setAttribute("international-issues", new ArrayList<JournalIssue>(person
-		.getAssociatedJournalIssues(ScopeType.INTERNATIONAL)));
+	request.setAttribute("international-issues",
+		new ArrayList<JournalIssue>(person.getAssociatedJournalIssues(ScopeType.INTERNATIONAL)));
 	return mapping.findForward("ListActivities");
     }
 
@@ -164,28 +157,28 @@ public class ActivitiesManagementDispatchAction extends FenixDispatchAction {
     }
 
     protected Cooperation getCooperationFromRequest(HttpServletRequest request) {
-	return (Cooperation) RootDomainObject.readDomainObjectByOID(Cooperation.class, Integer.valueOf(request
-		.getParameter("activityId")));
+	return (Cooperation) RootDomainObject.readDomainObjectByOID(Cooperation.class,
+		Integer.valueOf(request.getParameter("activityId")));
     }
 
     protected JournalIssue getIssueFromRequest(HttpServletRequest request) {
-	return (JournalIssue) RootDomainObject.readDomainObjectByOID(JournalIssue.class, Integer.valueOf(request
-		.getParameter("activityId")));
+	return (JournalIssue) RootDomainObject.readDomainObjectByOID(JournalIssue.class,
+		Integer.valueOf(request.getParameter("activityId")));
     }
 
     protected ScientificJournal getScientificJournalFromRequest(HttpServletRequest request) {
-	return (ScientificJournal) RootDomainObject.readDomainObjectByOID(ScientificJournal.class, Integer.valueOf(request
-		.getParameter("activityId")));
+	return (ScientificJournal) RootDomainObject.readDomainObjectByOID(ScientificJournal.class,
+		Integer.valueOf(request.getParameter("activityId")));
     }
 
     protected ResearchEvent getEventFromRequest(HttpServletRequest request) {
-	return (ResearchEvent) RootDomainObject.readDomainObjectByOID(ResearchEvent.class, Integer.valueOf(request
-		.getParameter("activityId")));
+	return (ResearchEvent) RootDomainObject.readDomainObjectByOID(ResearchEvent.class,
+		Integer.valueOf(request.getParameter("activityId")));
     }
 
     protected EventEdition getEventEditionFromRequest(HttpServletRequest request) {
-	return (EventEdition) RootDomainObject.readDomainObjectByOID(EventEdition.class, Integer.valueOf(request
-		.getParameter("activityId")));
+	return (EventEdition) RootDomainObject.readDomainObjectByOID(EventEdition.class,
+		Integer.valueOf(request.getParameter("activityId")));
     }
 
 }

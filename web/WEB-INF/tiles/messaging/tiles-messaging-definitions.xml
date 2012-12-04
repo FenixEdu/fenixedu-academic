@@ -3,7 +3,8 @@
 <!-- Tiles definitions -->
 <tiles-definitions>
 	<definition name="definition.messaging.masterPage" extends="df.layout.two-column">
-		<put name="title" value="Portal de Comunicação"/>
+		<put name="title" value="private.messaging"/>
+		<put name="bundle" value="TITLES_RESOURCES" />
 		<put name="serviceName" value="Portal de Comunicação"/>
 		<put name="rss" value="/messaging/announcements/rssHeader.jsp"/>
 		<put name="keywords" value="/messaging/announcements/keywordsHeader.jsp"/>		

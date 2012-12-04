@@ -40,28 +40,20 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 import org.apache.struts.util.LabelValueBean;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
+
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
-import pt.ist.fenixWebFramework.struts.annotations.Forward;
-import pt.ist.fenixWebFramework.struts.annotations.Forwards;
-import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 @Mapping(module = "masterDegreeAdministrativeOffice", path = "/courseEnrolmentWithoutRulesManagerDA", input = "/courseEnrolmentWithoutRulesManagerDA.do?method=prepareEnrollmentChooseStudentAndExecutionYear&degreeType=MASTER_DEGREE&page=0", attribute = "curricularCoursesEnrollmentWithoutRuleForm", formBean = "curricularCoursesEnrollmentWithoutRuleForm", scope = "request", parameter = "method")
 @Forwards(value = {
-		@Forward(name = "globalEnrolment", path = "/globalEnrolment.do"),
-		@Forward(name = "readCurricularCourseEnrollmentList", path = "/courseEnrolmentWithoutRulesManagerDA.do?method=readEnrollments"),
-		@Forward(name = "choosesForEnrollment", path = "df.page.choosesForEnrollment"),
-		@Forward(name = "showCurricularCourseToEnroll", path = "df.page.showCurricularCourseToEnroll"),
-		@Forward(name = "curricularCourseEnrollmentList", path = "df.page.curricularCourseEnrollmentList"),
-		@Forward(name = "prepareEnrollmentChooseStudentWithoutRules", path = "df.page.prepareEnrollmentChooseStudentWithoutRules"),
-		@Forward(name = "exit", path = "/index.do") })
+	@Forward(name = "globalEnrolment", path = "/globalEnrolment.do"),
+	@Forward(name = "readCurricularCourseEnrollmentList", path = "/courseEnrolmentWithoutRulesManagerDA.do?method=readEnrollments"),
+	@Forward(name = "choosesForEnrollment", path = "df.page.choosesForEnrollment"),
+	@Forward(name = "showCurricularCourseToEnroll", path = "df.page.showCurricularCourseToEnroll"),
+	@Forward(name = "curricularCourseEnrollmentList", path = "df.page.curricularCourseEnrollmentList"),
+	@Forward(name = "prepareEnrollmentChooseStudentWithoutRules", path = "df.page.prepareEnrollmentChooseStudentWithoutRules"),
+	@Forward(name = "exit", path = "/index.do") })
 public class ExecutionCourseEnrolmentWithoutRulesManagerDispatchAction extends FenixDispatchAction {
 
     private static final int MAX_CURRICULAR_YEARS = 5;
@@ -129,6 +121,7 @@ public class ExecutionCourseEnrolmentWithoutRulesManagerDispatchAction extends F
     private List buildLabelValueBeanForJsp(List infoExecutionPeriods) {
 	List executionPeriodsLabels = new ArrayList();
 	CollectionUtils.collect(infoExecutionPeriods, new Transformer() {
+	    @Override
 	    public Object transform(Object arg0) {
 		InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) arg0;
 
@@ -181,8 +174,8 @@ public class ExecutionCourseEnrolmentWithoutRulesManagerDispatchAction extends F
 
 	request.setAttribute("executionPeriod", executionSemester);
 	request.setAttribute("studentCurricularPlan", studentCurricularPlan);
-	request.setAttribute("studentCurrentSemesterEnrollments", studentCurricularPlan
-		.getAllStudentEnrolledEnrollmentsInExecutionPeriod(executionSemester));
+	request.setAttribute("studentCurrentSemesterEnrollments",
+		studentCurricularPlan.getAllStudentEnrolledEnrollmentsInExecutionPeriod(executionSemester));
 
 	return mapping.findForward("curricularCourseEnrollmentList");
     }
@@ -283,8 +276,10 @@ public class ExecutionCourseEnrolmentWithoutRulesManagerDispatchAction extends F
 
 	sortExecutionDegrees(result);
 
-	request.setAttribute(PresentationConstants.DEGREE_LIST, ExecutionDegreesFormat.buildLabelValueBeansForExecutionDegree(
-		result, getResources(request, "ENUMERATION_RESOURCES"), request));
+	request.setAttribute(
+		PresentationConstants.DEGREE_LIST,
+		ExecutionDegreesFormat.buildLabelValueBeansForExecutionDegree(result,
+			getResources(request, "ENUMERATION_RESOURCES"), request));
 
 	request.setAttribute(PresentationConstants.ENROLMENT_YEAR_LIST_KEY, getListOfChosenCurricularYears());
 	request.setAttribute(PresentationConstants.ENROLMENT_SEMESTER_LIST_KEY, getListOfChosenCurricularSemesters());
@@ -303,6 +298,7 @@ public class ExecutionCourseEnrolmentWithoutRulesManagerDispatchAction extends F
 
     private void sortExecutionDegrees(List<ExecutionDegree> result) {
 	Collections.sort(result, new Comparator<ExecutionDegree>() {
+	    @Override
 	    public int compare(ExecutionDegree o1, ExecutionDegree o2) {
 		final String name = "" + o1.getDegree().getDegreeType().name() + o1.getDegree().getName();
 		final String name2 = "" + o2.getDegree().getDegreeType().name() + o2.getDegree().getName();
@@ -392,6 +388,7 @@ public class ExecutionCourseEnrolmentWithoutRulesManagerDispatchAction extends F
 
     private void sortCurricularCourses2Enrol(List<CurricularCourse2Enroll> curricularCourse2Enroll) {
 	Collections.sort(curricularCourse2Enroll, new Comparator<CurricularCourse2Enroll>() {
+	    @Override
 	    public int compare(CurricularCourse2Enroll o1, CurricularCourse2Enroll o2) {
 		return o1.getCurricularCourse().getName().compareTo(o2.getCurricularCourse().getName());
 	    }
@@ -418,13 +415,13 @@ public class ExecutionCourseEnrolmentWithoutRulesManagerDispatchAction extends F
 	try {
 	    Registration registration = getStudent(form);
 	    if (registration.getDegreeType().isBolonhaType()) {
-		ServiceManagerServiceFactory.executeService("WriteBolonhaEnrolmentsList", new Object[] {
-			registration.getActiveStudentCurricularPlan(), getDegreeType(form), getExecutionPeriod(form),
-			curricularCourses, optionalEnrollments, getUserView(request) });
+		ServiceManagerServiceFactory.executeService("WriteBolonhaEnrolmentsList",
+			new Object[] { registration.getActiveStudentCurricularPlan(), getDegreeType(form),
+				getExecutionPeriod(form), curricularCourses, optionalEnrollments, getUserView(request) });
 	    } else {
-		ServiceManagerServiceFactory.executeService("WriteEnrollmentsList", new Object[] {
-			registration.getActiveStudentCurricularPlan(), getDegreeType(form), getExecutionPeriod(form),
-			curricularCourses, optionalEnrollments, getUserView(request) });
+		ServiceManagerServiceFactory.executeService("WriteEnrollmentsList",
+			new Object[] { registration.getActiveStudentCurricularPlan(), getDegreeType(form),
+				getExecutionPeriod(form), curricularCourses, optionalEnrollments, getUserView(request) });
 	    }
 
 	} catch (NotAuthorizedFilterException e) {
@@ -472,8 +469,8 @@ public class ExecutionCourseEnrolmentWithoutRulesManagerDispatchAction extends F
 	final DynaActionForm actionForm = (DynaActionForm) form;
 	// actionForm.set("executionPeriod",
 	// request.getParameter("executionPeriod"));
-	Registration registration = rootDomainObject.readRegistrationByOID(Integer
-		.valueOf(request.getParameter("registrationID")));
+	Registration registration = rootDomainObject
+		.readRegistrationByOID(Integer.valueOf(request.getParameter("registrationID")));
 	if (registration == null) {
 	    throw new FenixActionException("invalid registration id");
 	}
@@ -512,8 +509,8 @@ public class ExecutionCourseEnrolmentWithoutRulesManagerDispatchAction extends F
 	List<Enrolment> allStudentEnrolledEnrollmentsInExecutionPeriod = studentCurricularPlan
 		.getAllStudentEnrolledEnrollmentsInExecutionPeriod(executionSemester);
 	for (Enrolment enrolment : allStudentEnrolledEnrollmentsInExecutionPeriod) {
-	    enrolment.setAccumulatedEctsCredits(studentCurricularPlan.getAccumulatedEctsCredits(executionSemester, enrolment
-		    .getCurricularCourse()));
+	    enrolment.setAccumulatedEctsCredits(studentCurricularPlan.getAccumulatedEctsCredits(executionSemester,
+		    enrolment.getCurricularCourse()));
 	}
 	request.setAttribute("studentCurrentSemesterEnrollments", allStudentEnrolledEnrollmentsInExecutionPeriod);
 

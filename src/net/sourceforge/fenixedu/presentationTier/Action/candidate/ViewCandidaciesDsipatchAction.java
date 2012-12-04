@@ -22,14 +22,6 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
-import pt.ist.fenixWebFramework.struts.annotations.Forward;
-import pt.ist.fenixWebFramework.struts.annotations.Forwards;
-import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
@@ -41,9 +33,9 @@ import pt.ist.fenixWebFramework.struts.annotations.Tile;
  */
 @Mapping(module = "candidate", path = "/viewCandidacies", attribute = "candidacyForm", formBean = "candidacyForm", scope = "request", parameter = "method")
 @Forwards(value = {
-		@Forward(name = "uploadDocuments", path = "/candidate/uploadDocuments.jsp"),
-		@Forward(name = "viewDetail", path = "/candidate/viewCandidacyDetails.jsp"),
-		@Forward(name = "view", path = "/candidate/viewCandidacies.jsp") })
+	@Forward(name = "uploadDocuments", path = "/candidate/uploadDocuments.jsp", tileProperties = @Tile(title = "private.candidate.applications")),
+	@Forward(name = "viewDetail", path = "/candidate/viewCandidacyDetails.jsp", tileProperties = @Tile(title = "private.candidate.applications")),
+	@Forward(name = "view", path = "/candidate/viewCandidacies.jsp", tileProperties = @Tile(title = "private.candidate.applications")) })
 public class ViewCandidaciesDsipatchAction extends FenixDispatchAction {
 
     public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
@@ -82,8 +74,8 @@ public class ViewCandidaciesDsipatchAction extends FenixDispatchAction {
     public ActionForward uploadDocuments(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) throws FenixFilterException, FenixServiceException {
 
-	List<CandidacyDocumentUploadBean> beans = (List<CandidacyDocumentUploadBean>) RenderUtils.getViewState(
-		"candidacyDocuments").getMetaObject().getObject();
+	List<CandidacyDocumentUploadBean> beans = (List<CandidacyDocumentUploadBean>) RenderUtils
+		.getViewState("candidacyDocuments").getMetaObject().getObject();
 
 	for (CandidacyDocumentUploadBean bean : beans) {
 	    bean.createTemporaryFile();

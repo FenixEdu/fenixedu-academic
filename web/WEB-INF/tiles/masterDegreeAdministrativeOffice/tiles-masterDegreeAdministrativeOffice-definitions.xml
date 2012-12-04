@@ -3,7 +3,8 @@
 <!-- Tiles definitions -->
 <tiles-definitions>
 	<definition name="definition.masterDegreeAdministrativeOffice.masterPage" extends="df.layout.two-column.posGrad">
-		<put name="title" value="Secretaria de Pós-Graduação"/>
+		<put name="title" value="private.postgraduateoffice"/>
+		<put name="bundle" value="TITLES_RESOURCES" />
 		<put name="serviceName" value="Secretaria de Pós-Graduação"/>
 		<put name="navGeral" value="/masterDegreeAdministrativeOffice/commonNavGeralPosGraduacao.jsp"/>
 		<put name="navLocal" value="/masterDegreeAdministrativeOffice/pgMainMenu.jsp"/>
@@ -41,6 +42,7 @@
 	</definition>
 	
 	<definition name="definition.masterDegreeAdministrativeOffice.dfaCandidacy" extends="definition.masterDegreeAdministrativeOffice.masterPage">
+		<put name="title" value = "bla1"/>
 		<put name="navLocal" value="/masterDegreeAdministrativeOffice/candidacy/dfaCandidacyMenu.jsp"/>
 	</definition>
 	

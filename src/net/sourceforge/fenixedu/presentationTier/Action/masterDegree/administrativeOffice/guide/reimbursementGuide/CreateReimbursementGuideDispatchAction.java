@@ -40,6 +40,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Input;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 /**
  * @author <a href="mailto:sana@ist.utl.pt">Shezad Anavarali </a>
@@ -47,9 +48,9 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
  * 
  */
 @Mapping(path = "/createReimbursementGuide", module = "masterDegreeAdministrativeOffice", formBean = "createReimbursementGuideForm")
-@Forwards( { @Forward(name = "start", path = "df.page.createReimbursementGuide"),
-	@Forward(name = "error", path = "df.page.reimbursementGuide_Error"),
-	@Forward(name = "success", path = "df.page.createReimbursementGuide_Success") })
+@Forwards({ @Forward(name = "start", path = "df.page.createReimbursementGuide", tileProperties = @Tile(title = "teste63")),
+	@Forward(name = "error", path = "df.page.reimbursementGuide_Error", tileProperties = @Tile(title = "teste64")),
+	@Forward(name = "success", path = "df.page.createReimbursementGuide_Success", tileProperties = @Tile(title = "teste65")) })
 @Exceptions({ @ExceptionHandling(type = FenixActionException.class, handler = FenixErrorExceptionHandler.class),
 	@ExceptionHandling(type = NoEntryChosenActionException.class, handler = FenixErrorExceptionHandler.class),
 	@ExceptionHandling(type = InvalidSituationActionException.class, handler = FenixErrorExceptionHandler.class) })
@@ -122,7 +123,7 @@ public class CreateReimbursementGuideDispatchAction extends FenixDispatchAction 
 		throw new NoEntryChosenActionException(); // ,mapping.findForward
 	    // ("error")
 
-	    Integer reimbursementGuideID = (Integer) CreateReimbursementGuide.run(infoGuide.getIdInternal(), remarks,
+	    Integer reimbursementGuideID = CreateReimbursementGuide.run(infoGuide.getIdInternal(), remarks,
 		    infoReimbursementGuideEntries, userView);
 
 	    request.setAttribute(PresentationConstants.REIMBURSEMENT_GUIDE, reimbursementGuideID);

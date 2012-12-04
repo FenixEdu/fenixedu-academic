@@ -15,28 +15,20 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixWebFramework.struts.annotations.Tile;
 import pt.utl.ist.fenix.tools.file.FileManagerException;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
-import pt.ist.fenixWebFramework.struts.annotations.Forward;
-import pt.ist.fenixWebFramework.struts.annotations.Forwards;
-import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
-import pt.ist.fenixWebFramework.struts.annotations.Forward;
-import pt.ist.fenixWebFramework.struts.annotations.Forwards;
-import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 @Mapping(module = "researcher", path = "/result/resultAssociationsManagement", scope = "session", parameter = "method")
 @Forwards(value = {
-		@Forward(name = "editUnitAssociations", path = "/researcher/result/editResultUnitAssociations.jsp"),
-		@Forward(name = "viewEditPublication", path = "/resultPublications/showPublication.do"),
-		@Forward(name = "ListPublications", path = "/resultPublications/listPublications.do"),
-		@Forward(name = "editPatent", path = "/resultPatents/showPatent.do"),
-		@Forward(name = "editEventAssociations", path = "/researcher/result/editResultEventAssociations.jsp"),
-		@Forward(name = "listPatents", path = "/resultPatents/management.do") })
+	@Forward(name = "editUnitAssociations", path = "/researcher/result/editResultUnitAssociations.jsp", tileProperties = @Tile(  title = "private.operator.personnelmanagement.managementfaculty.teacherevaluation.publications")),
+	@Forward(name = "viewEditPublication", path = "/resultPublications/showPublication.do", tileProperties = @Tile(  title = "private.operator.personnelmanagement.managementfaculty.teacherevaluation.publications")),
+	@Forward(name = "ListPublications", path = "/resultPublications/listPublications.do", tileProperties = @Tile(  title = "private.operator.personnelmanagement.managementfaculty.teacherevaluation.publications")),
+	@Forward(name = "editPatent", path = "/resultPatents/showPatent.do", tileProperties = @Tile(  title = "private.operator.personnelmanagement.managementfaculty.teacherevaluation.patents")),
+	@Forward(name = "editEventAssociations", path = "/researcher/result/editResultEventAssociations.jsp", tileProperties = @Tile(  title = "private.operator.personnelmanagement.managementfaculty.teacherevaluation.publications")),
+	@Forward(name = "listPatents", path = "/resultPatents/management.do", tileProperties = @Tile(  title = "private.operator.personnelmanagement.managementfaculty.teacherevaluation.patents")) })
 public class ResultAssociationsManagementAction extends ResultsManagementAction {
 
     /**

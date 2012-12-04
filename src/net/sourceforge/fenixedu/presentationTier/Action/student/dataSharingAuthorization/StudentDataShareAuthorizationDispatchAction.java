@@ -12,16 +12,12 @@ import org.apache.struts.action.ActionMapping;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
-import pt.ist.fenixWebFramework.struts.annotations.Forward;
-import pt.ist.fenixWebFramework.struts.annotations.Forwards;
-import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 @Mapping(path = "/studentDataShareAuthorization", module = "student")
-@Forwards({ @Forward(name = "authorizations", path = "/student/dataShareAuthorization/manageAuthorizations.jsp"),
-	@Forward(name = "historic", path = "/student/dataShareAuthorization/authorizationHistory.jsp") })
+@Forwards({
+	@Forward(name = "authorizations", path = "/student/dataShareAuthorization/manageAuthorizations.jsp", tileProperties = @Tile(  title = "private.student.view.dataauthorization")),
+	@Forward(name = "historic", path = "/student/dataShareAuthorization/authorizationHistory.jsp", tileProperties = @Tile(  title = "private.student.view.dataauthorization")) })
 public class StudentDataShareAuthorizationDispatchAction extends FenixDispatchAction {
     public ActionForward manageAuthorizations(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) {

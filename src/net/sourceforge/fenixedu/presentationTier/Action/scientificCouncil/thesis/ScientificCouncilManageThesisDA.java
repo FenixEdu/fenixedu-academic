@@ -30,8 +30,6 @@ import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.ScientificCommission;
 import net.sourceforge.fenixedu.domain.Teacher;
-import net.sourceforge.fenixedu.domain.accessControl.GroupUnion;
-import net.sourceforge.fenixedu.domain.accessControl.ThesisFileReadersGroup;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.interfaces.HasExecutionYear;
@@ -39,7 +37,6 @@ import net.sourceforge.fenixedu.domain.thesis.Thesis;
 import net.sourceforge.fenixedu.domain.thesis.ThesisEvaluationParticipant;
 import net.sourceforge.fenixedu.domain.thesis.ThesisFile;
 import net.sourceforge.fenixedu.domain.thesis.ThesisParticipationType;
-import net.sourceforge.fenixedu.injectionCode.IGroup;
 import net.sourceforge.fenixedu.presentationTier.Action.commons.AbstractManageThesisDA;
 import net.sourceforge.fenixedu.presentationTier.Action.coordinator.thesis.ThesisBean;
 import net.sourceforge.fenixedu.presentationTier.Action.coordinator.thesis.ThesisPresentationState;
@@ -56,24 +53,25 @@ import pt.ist.fenixWebFramework.services.Service;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixWebFramework.struts.annotations.Tile;
 import pt.utl.ist.fenix.tools.util.FileUtils;
 import pt.utl.ist.fenix.tools.util.excel.Spreadsheet;
 import pt.utl.ist.fenix.tools.util.excel.Spreadsheet.Row;
 
 @Mapping(path = "/scientificCouncilManageThesis", module = "scientificCouncil")
-@Forwards( { @Forward(name = "list-thesis", path = "/scientificCouncil/thesis/listThesis.jsp"),
-	@Forward(name = "review-proposal", path = "/scientificCouncil/thesis/reviewProposal.jsp"),
-	@Forward(name = "review-thesis", path = "/scientificCouncil/thesis/reviewThesis.jsp"),
-	@Forward(name = "view-thesis", path = "/scientificCouncil/thesis/viewThesis.jsp"),
-	@Forward(name = "list-scientific-comission", path = "/scientificCouncil/thesis/listScientificComission.jsp"),
-	@Forward(name = "list-thesis-creation-periods", path = "/scientificCouncil/thesis/listThesisCreationPeriods.jsp"),
-	@Forward(name = "viewOperationsThesis", path = "/student/thesis/viewOperationsThesis.jsp"),
-	@Forward(name = "showDissertationsInfo", path = "/scientificCouncil/thesis/showDissertationsInfo.jsp"),
-	@Forward(name = "editParticipant", path = "/scientificCouncil/thesis/editParticipant.jsp"),
-	@Forward(name = "select-person", path = "/scientificCouncil/thesis/selectPerson.jsp"),
-	@Forward(name = "change-information-with-docs", path = "/scientificCouncil/thesis/changeInformationWithDocs.jsp"),
-	@Forward(name = "search-student", path = "/scientificCouncil/thesis/searchStudent.jsp")
-	})
+@Forwards({
+	@Forward(name = "list-thesis", path = "/scientificCouncil/thesis/listThesis.jsp", tileProperties = @Tile(  title = "private.scientificcouncil.dissertations")),
+	@Forward(name = "review-proposal", path = "/scientificCouncil/thesis/reviewProposal.jsp", tileProperties = @Tile(  title = "private.scientificcouncil.dissertations")),
+	@Forward(name = "review-thesis", path = "/scientificCouncil/thesis/reviewThesis.jsp", tileProperties = @Tile(  title = "private.scientificcouncil.dissertations")),
+	@Forward(name = "view-thesis", path = "/scientificCouncil/thesis/viewThesis.jsp", tileProperties = @Tile(  title = "private.scientificcouncil.dissertations")),
+	@Forward(name = "list-scientific-comission", path = "/scientificCouncil/thesis/listScientificComission.jsp", tileProperties = @Tile(  title = "private.scientificcouncil.dissertations")),
+	@Forward(name = "list-thesis-creation-periods", path = "/scientificCouncil/thesis/listThesisCreationPeriods.jsp", tileProperties = @Tile(  title = "private.scientificcouncil.dissertations")),
+	@Forward(name = "viewOperationsThesis", path = "/student/thesis/viewOperationsThesis.jsp", tileProperties = @Tile(  title = "private.scientificcouncil.dissertations")),
+	@Forward(name = "showDissertationsInfo", path = "/scientificCouncil/thesis/showDissertationsInfo.jsp", tileProperties = @Tile(  title = "private.scientificcouncil.dissertations")),
+	@Forward(name = "editParticipant", path = "/scientificCouncil/thesis/editParticipant.jsp", tileProperties = @Tile(  title = "private.scientificcouncil.dissertations")),
+	@Forward(name = "select-person", path = "/scientificCouncil/thesis/selectPerson.jsp", tileProperties = @Tile(  title = "private.scientificcouncil.dissertations")),
+	@Forward(name = "change-information-with-docs", path = "/scientificCouncil/thesis/changeInformationWithDocs.jsp", tileProperties = @Tile(  title = "private.scientificcouncil.dissertations")),
+	@Forward(name = "search-student", path = "/scientificCouncil/thesis/searchStudent.jsp", tileProperties = @Tile(  title = "private.scientificcouncil.dissertations")) })
 public class ScientificCouncilManageThesisDA extends AbstractManageThesisDA {
 
     @Override
@@ -96,13 +94,13 @@ public class ScientificCouncilManageThesisDA extends AbstractManageThesisDA {
 
 	return super.execute(mapping, actionForm, request, response);
     }
-    
+
     public static class DissertationsContextBean implements Serializable, HasExecutionYear {
 
 	ExecutionDegree executionDegree;
-	
+
 	ExecutionYear executionYear;
-	
+
 	public DissertationsContextBean(ExecutionDegree executionDegree, ExecutionYear executionYear) {
 	    this.executionDegree = executionDegree;
 	    this.executionYear = executionYear;
@@ -125,12 +123,13 @@ public class ScientificCouncilManageThesisDA extends AbstractManageThesisDA {
 	    this.executionYear = executionYear;
 	}
     }
+
     public ActionForward dissertations(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
 
 	DissertationsContextBean dissertationsContextBean = getDissertationsContextBean(request);
 
-	if(dissertationsContextBean.getExecutionDegree() != null) {
+	if (dissertationsContextBean.getExecutionDegree() != null) {
 	    request.setAttribute("executionDegree", dissertationsContextBean.getExecutionDegree());
 	    request.setAttribute("scheduling", dissertationsContextBean.getExecutionDegree().getScheduling());
 	}
@@ -155,14 +154,13 @@ public class ScientificCouncilManageThesisDA extends AbstractManageThesisDA {
 	    return RootDomainObject.getInstance().readDegreeByOID(id);
 	}
     }
-    
+
     private ExecutionDegree getExecutionDegree(HttpServletRequest request) {
 	final Integer executionDegreeOID = getIntegerFromRequest(request, "executionDegreeOID");
 	if (executionDegreeOID == null) {
 	    return null;
 	} else {
-	    return RootDomainObject.getInstance().readExecutionDegreeByOID(
-		    Integer.valueOf(executionDegreeOID));
+	    return RootDomainObject.getInstance().readExecutionDegreeByOID(Integer.valueOf(executionDegreeOID));
 	}
     }
 
@@ -282,7 +280,7 @@ public class ScientificCouncilManageThesisDA extends AbstractManageThesisDA {
 	    return new ThesisContextBean(degree, executionYear);
 	}
     }
-    
+
     private DissertationsContextBean getDissertationsContextBean(HttpServletRequest request) {
 	DissertationsContextBean bean = getRenderedObject("dissertationsContextBean");
 	RenderUtils.invalidateViewState("dissertationsContextBean");
@@ -313,7 +311,8 @@ public class ScientificCouncilManageThesisDA extends AbstractManageThesisDA {
 	if (thesis != null) {
 	    try {
 		executeService("ApproveThesisProposal", new Object[] { thesis });
-		final ThesisPresentationState thesisPresentationState = ThesisPresentationState.getThesisPresentationState(thesis);
+		final ThesisPresentationState thesisPresentationState = ThesisPresentationState
+			.getThesisPresentationState(thesis);
 		request.setAttribute("thesisPresentationState", thesisPresentationState);
 	    } catch (final DomainException e) {
 		addActionMessage("error", request, e.getKey(), e.getArgs());
@@ -322,7 +321,7 @@ public class ScientificCouncilManageThesisDA extends AbstractManageThesisDA {
 	    addActionMessage("mail", request, "thesis.approved.mail.sent");
 	}
 
-	//return listThesis(mapping, actionForm, request, response);
+	// return listThesis(mapping, actionForm, request, response);
 	return viewThesis(mapping, actionForm, request, response);
     }
 
@@ -357,7 +356,8 @@ public class ScientificCouncilManageThesisDA extends AbstractManageThesisDA {
 	    try {
 		executeService("ApproveThesisDiscussion", new Object[] { thesis });
 		addActionMessage("mail", request, "thesis.evaluated.mail.sent");
-		final ThesisPresentationState thesisPresentationState = ThesisPresentationState.getThesisPresentationState(thesis);
+		final ThesisPresentationState thesisPresentationState = ThesisPresentationState
+			.getThesisPresentationState(thesis);
 		request.setAttribute("thesisPresentationState", thesisPresentationState);
 	    } catch (DomainException e) {
 		addActionMessage("error", request, e.getKey(), e.getArgs());
@@ -365,7 +365,7 @@ public class ScientificCouncilManageThesisDA extends AbstractManageThesisDA {
 	    }
 	}
 
-	//return listThesis(mapping, actionForm, request, response);
+	// return listThesis(mapping, actionForm, request, response);
 	return viewThesis(mapping, actionForm, request, response);
     }
 
@@ -452,8 +452,10 @@ public class ScientificCouncilManageThesisDA extends AbstractManageThesisDA {
 
 	    try {
 		temporaryFile = FileUtils.copyToTemporaryFile(bean.getFile());
-		executeService("CreateThesisDissertationFile", new Object[] { getThesis(request), temporaryFile,
-			bean.getSimpleFileName(), bean.getTitle(), bean.getSubTitle(), bean.getLanguage() });
+		executeService(
+			"CreateThesisDissertationFile",
+			new Object[] { getThesis(request), temporaryFile, bean.getSimpleFileName(), bean.getTitle(),
+				bean.getSubTitle(), bean.getLanguage() });
 	    } finally {
 		if (temporaryFile != null) {
 		    temporaryFile.delete();
@@ -474,8 +476,10 @@ public class ScientificCouncilManageThesisDA extends AbstractManageThesisDA {
 
 	    try {
 		temporaryFile = FileUtils.copyToTemporaryFile(bean.getFile());
-		executeService("CreateThesisAbstractFile", new Object[] { getThesis(request), temporaryFile,
-			bean.getSimpleFileName(), bean.getTitle(), bean.getSubTitle(), bean.getLanguage() });
+		executeService(
+			"CreateThesisAbstractFile",
+			new Object[] { getThesis(request), temporaryFile, bean.getSimpleFileName(), bean.getTitle(),
+				bean.getSubTitle(), bean.getLanguage() });
 	    } finally {
 		if (temporaryFile != null) {
 		    temporaryFile.delete();
@@ -751,15 +755,16 @@ public class ScientificCouncilManageThesisDA extends AbstractManageThesisDA {
 	    return mapping.findForward("editParticipant");
 	}
     }
+
     @Override
     public ActionForward editProposal(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
 	Thesis thesis = getThesis(request);
 
-//	if (thesis == null) {
-//	    return listThesis(mapping, actionForm, request, response);
-//	}
-//
+	// if (thesis == null) {
+	// return listThesis(mapping, actionForm, request, response);
+	// }
+	//
 	request.setAttribute("conditions", thesis.getConditions());
 
 	if (thesis.isOrientatorCreditsDistributionNeeded()) {
@@ -887,8 +892,8 @@ public class ScientificCouncilManageThesisDA extends AbstractManageThesisDA {
 		    return mapping.findForward("select-person");
 		}
 	    }
-	    ChangeThesisPerson.run(degreeCurricularPlan, thesis, new PersonChange(bean.getTargetType(), selectedPerson, bean
-		    .getTarget()));
+	    ChangeThesisPerson.run(degreeCurricularPlan, thesis,
+		    new PersonChange(bean.getTargetType(), selectedPerson, bean.getTarget()));
 
 	    return editProposal(mapping, actionForm, request, response);
 	}

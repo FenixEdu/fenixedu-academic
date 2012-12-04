@@ -6,7 +6,8 @@
 <!-- Tiles definitions -->
 <tiles-definitions>
 	<definition name="definition.library.master" extends="df.layout.two-column">
-	  <put name="title" value="Portal de Biblioteca" />
+	  <put name="title" value="private.library" />
+	  <put name="bundle" value="TITLES_RESOURCES" />
 	  <put name="serviceName" value="Portal de Biblioteca" />
 	  <put name="navLocal" value="/commons/functionalities/side-menu.jsp" />
 	  <put name="navGeral" value="/commons/functionalities/top-menu.jsp" />

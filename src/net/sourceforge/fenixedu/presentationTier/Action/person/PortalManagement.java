@@ -20,14 +20,6 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
-import pt.ist.fenixWebFramework.struts.annotations.Forward;
-import pt.ist.fenixWebFramework.struts.annotations.Forwards;
-import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
@@ -35,10 +27,10 @@ import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 @Mapping(module = "person", path = "/portalManagement", scope = "request", parameter = "method")
 @Forwards(value = {
-		@Forward(name = "editPortal", path = "/person/portals/editPortal.jsp"),
-		@Forward(name = "addToPool", path = "/person/portals/addToPool.jsp"),
-		@Forward(name = "createPortal", path = "/person/portals/createMetaPortal.jsp"),
-		@Forward(name = "selectMetaDomainObject", path = "/person/portals/prepareCreatePortal.jsp") })
+	@Forward(name = "editPortal", path = "/person/portals/editPortal.jsp", tileProperties = @Tile(title = "private.personal.system.metadomainobjects")),
+	@Forward(name = "addToPool", path = "/person/portals/addToPool.jsp", tileProperties = @Tile(title = "private.personal.system.metadomainobjects")),
+	@Forward(name = "createPortal", path = "/person/portals/createMetaPortal.jsp", tileProperties = @Tile(title = "private.personal.system.metadomainobjects")),
+	@Forward(name = "selectMetaDomainObject", path = "/person/portals/prepareCreatePortal.jsp", tileProperties = @Tile(title = "private.personal.system.metadomainobjects")) })
 public class PortalManagement extends FenixDispatchAction {
 
     public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {

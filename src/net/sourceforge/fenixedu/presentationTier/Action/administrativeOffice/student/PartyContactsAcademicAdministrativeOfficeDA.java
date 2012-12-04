@@ -22,11 +22,13 @@ import org.apache.struts.action.ActionMapping;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 @Mapping(path = "/partyContacts", module = "academicAdminOffice", formBeanClass = FenixActionForm.class)
-@Forwards({ @Forward(name = "createPartyContact", path = "/academicAdminOffice/createPartyContact.jsp"),
-	@Forward(name = "editPartyContact", path = "/academicAdminOffice/editPartyContact.jsp"),
-	@Forward(name = "inputValidationCode", path = "/academicAdminOffice/inputValidationCode.jsp"),
+@Forwards({
+	@Forward(name = "createPartyContact", path = "/academicAdminOffice/createPartyContact.jsp", tileProperties = @Tile(title = "private.academicadministrativeoffice.studentoperations.viewstudents")),
+	@Forward(name = "editPartyContact", path = "/academicAdminOffice/editPartyContact.jsp", tileProperties = @Tile(title = "private.academicadministrativeoffice.studentoperations.viewstudents")),
+	@Forward(name = "inputValidationCode", path = "/academicAdminOffice/inputValidationCode.jsp", tileProperties = @Tile(title = "private.academicadministrativeoffice.studentoperations.viewstudents")),
 	@Forward(name = "editPersonalData", path = "/student.do?method=prepareEditPersonalData") })
 public class PartyContactsAcademicAdministrativeOfficeDA extends PartyContactsManagementDispatchAction {
 

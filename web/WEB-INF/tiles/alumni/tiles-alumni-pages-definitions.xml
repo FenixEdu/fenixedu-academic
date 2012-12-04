@@ -6,34 +6,50 @@
 	</definition>
 
 	<definition name="df.page.curriculum.chooseRegistration" extends="alumni.masterPage">
+		<put name="bundle" value="TITLES_RESOURCES"/>
+       <put name="title" value="private.alumni.academicpath.viewcurriculum"/>
 		<put name="body" value="/student/curriculum/chooseRegistration.jsp" />
 	</definition>
 
 	<definition name="view-registration-curriculum"	extends="alumni.masterPage">
+	<put name="bundle" value="TITLES_RESOURCES"/>
+       <put name="title" value="private.alumni.academicpath.viewcurriculum"/>
 		<put name="body" value="/student/curriculum/viewRegistrationCurriculum.jsp" />
 	</definition>
 	
 	<definition name="chooseCycleForViewRegistrationCurriculum" extends="alumni.masterPage">
+	<put name="bundle" value="TITLES_RESOURCES"/>
+       <put name="title" value="private.alumni.academicpath.viewcurriculum"/>
         <put name="body" value="/student/curriculum/chooseCycleForViewRegistrationCurriculum.jsp"></put>
     </definition>
 
 	<definition name="df.page.showStudentCurriculum" extends="alumni.masterPage">
+	<put name="bundle" value="TITLES_RESOURCES"/>
+       <put name="title" value="private.alumni.academicpath.viewcurriculum"/>
 		<put name="body" value="/student/curriculum/displayStudentCurriculum_bd.jsp" />
 	</definition>
 
 	<definition name="df.page.notAuthorized" extends="alumni.masterPage">
+	<put name="bundle" value="TITLES_RESOURCES"/>
+       <put name="title" value="private.alumni.academicpath.viewcurriculum"/>
 		<put name="body" value="/student/notAuthorized_bd.jsp" />
 	</definition>
 
 	<definition name="alumni.view.curriculum.validate.identity" extends="alumni.masterPage">
+	<put name="bundle" value="TITLES_RESOURCES"/>
+       <put name="title" value="private.alumni.academicpath.viewcurriculum"/>
 		<put name="body" value="/alumni/notAuthorizedValidateIdentity.jsp" />
 	</definition>
 
 	<definition name="alumni.showAlumniList" extends="alumni.masterPage">
+	<put name="bundle" value="TITLES_RESOURCES"/>
+       <put name="title" value="private.delegate.communication.sendemailtodelegates"/>
 		<put name="body" value="/alumni/showAlumniList.jsp" />
 	</definition>
 
 	<definition name="alumni.viewAlumniDetails" extends="alumni.masterPage">
+	<put name="bundle" value="TITLES_RESOURCES"/>
+       <put name="title" value="private.alumni.academicpath.viewcurriculum"/>
 		<put name="body" value="/alumni/viewAlumniDetails.jsp" />
 	</definition>
 
@@ -91,6 +107,7 @@
 	</definition>
 		
 	<definition name="alumni.administrativeOfficeServices.documentRequests.viewDocumentRequestsToCreate" extends="alumni.masterPage">
+		<put name="title" value="bla"/>
 		<put name="body" value="/alumni/administrativeOfficeServices/documentRequests/viewDocumentRequestsToCreate.jsp" />
 	</definition>
 
@@ -107,6 +124,7 @@
 	</definition>
 		
 	<definition name="alumni.administrativeOfficeServices.documentRequests.viewDocumentRequest" extends="alumni.masterPage">
+		<put name="title" value="bla2"/>
 		<put name="body" value="/alumni/administrativeOfficeServices/documentRequests/viewDocumentRequest.jsp" />
 	</definition>
 	

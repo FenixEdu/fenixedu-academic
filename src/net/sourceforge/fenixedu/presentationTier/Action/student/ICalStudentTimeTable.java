@@ -23,16 +23,12 @@ import org.joda.time.DateTime;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
-import pt.ist.fenixWebFramework.struts.annotations.Forward;
-import pt.ist.fenixWebFramework.struts.annotations.Forwards;
-import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 @Mapping(path = "/ICalTimeTable", module = "student")
-@Forwards( { @Forward(name = "viewOptions", path = "/student/iCalendar/viewCalendarInformation.jsp"),
-	@Forward(name = "chooseRegistration", path = "/student/iCalendar/chooseRegistration.jsp") })
+@Forwards({
+	@Forward(name = "viewOptions", path = "/student/iCalendar/viewCalendarInformation.jsp", tileProperties = @Tile(  title = "private.student.view.sync")),
+	@Forward(name = "chooseRegistration", path = "/student/iCalendar/chooseRegistration.jsp", tileProperties = @Tile(  title = "private.student.view.sync")) })
 public class ICalStudentTimeTable extends FenixDispatchAction {
 
     public ActionForward show(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
@@ -84,8 +80,8 @@ public class ICalStudentTimeTable extends FenixDispatchAction {
 	if (AccessControl.getPerson().getUser().getPrivateKeyValidity() != null
 		&& AccessControl.getPerson().getUser().getPrivateKeyValidity().isAfter(new DateTime())) {
 	    if (AccessControl.getPerson().getUser().getPrivateKeyValidity() != null) {
-		request.setAttribute("expirationDate", AccessControl.getPerson().getUser().getPrivateKeyValidity().toString(
-			"dd/MM/yyyy HH:mm"));
+		request.setAttribute("expirationDate",
+			AccessControl.getPerson().getUser().getPrivateKeyValidity().toString("dd/MM/yyyy HH:mm"));
 		request.setAttribute("user", AccessControl.getPerson().getUser().getUserUId());
 		request.setAttribute("classURL", getUrl("syncClasses", registration, request));
 		request.setAttribute("examsURL", getUrl("syncExams", registration, request));

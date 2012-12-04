@@ -31,29 +31,21 @@ import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 import org.joda.time.YearMonthDay;
 
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixWebFramework.struts.annotations.Tile;
 import pt.utl.ist.fenix.tools.util.DateFormatUtil;
 import pt.utl.ist.fenix.tools.util.excel.Spreadsheet;
 import pt.utl.ist.fenix.tools.util.excel.Spreadsheet.Row;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
-import pt.ist.fenixWebFramework.struts.annotations.Forward;
-import pt.ist.fenixWebFramework.struts.annotations.Forwards;
-import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
-import pt.ist.fenixWebFramework.struts.annotations.Forward;
-import pt.ist.fenixWebFramework.struts.annotations.Forwards;
-import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 /**
  * @author - Shezad Anavarali (shezad@ist.utl.pt)
  * 
  */
 @Mapping(module = "masterDegreeAdministrativeOffice", path = "/listPayedInsurances", input = "/listPayedInsurances.do?method=prepare", attribute = "listPayedInsurancesForm", formBean = "listPayedInsurancesForm", scope = "request", parameter = "method")
-@Forwards(value = { @Forward(name = "chooseDates", path = "listPayedInsurances,chooseDates") })
+@Forwards(value = { @Forward(name = "chooseDates", path = "listPayedInsurances,chooseDates", tileProperties = @Tile(title = "teste55")) })
 public class ListPayedInsurancesDispatchAction extends FenixDispatchAction {
 
     public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
@@ -64,8 +56,10 @@ public class ListPayedInsurancesDispatchAction extends FenixDispatchAction {
 
 	request.setAttribute("days", Data.getMonthDays());
 	request.setAttribute("months", Data.getMonthsStartingInOne());
-	request.setAttribute("years", Data.getCustomYears(executionYears.get(0).getBeginDateYearMonthDay().getYear(), Calendar
-		.getInstance().get(Calendar.YEAR)));
+	request.setAttribute(
+		"years",
+		Data.getCustomYears(executionYears.get(0).getBeginDateYearMonthDay().getYear(),
+			Calendar.getInstance().get(Calendar.YEAR)));
 
 	DynaActionForm actionForm = (DynaActionForm) form;
 	actionForm.set("executionYearID", ExecutionYear.readCurrentExecutionYear().getIdInternal());

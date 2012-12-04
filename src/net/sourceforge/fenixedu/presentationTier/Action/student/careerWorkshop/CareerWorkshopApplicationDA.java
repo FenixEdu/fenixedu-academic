@@ -24,12 +24,14 @@ import pt.ist.fenixWebFramework.services.Service;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixWebFramework.struts.annotations.Tile;
 import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 @Mapping(path = "/careerWorkshopApplication", module = "student")
-@Forwards({ @Forward(name = "careerWorkshop", path = "/student/careerWorkshop/careerWorkshop.jsp"),
-	@Forward(name = "careerWorkshopApplicationForm", path = "/student/careerWorkshop/careerWorkshopApplicationForm.jsp"),
-	@Forward(name = "careerWorkshopConfirmationForm", path = "/student/careerWorkshop/careerWorkshopConfirmationForm.jsp") })
+@Forwards({
+	@Forward(name = "careerWorkshop", path = "/student/careerWorkshop/careerWorkshop.jsp", tileProperties = @Tile(  title = "private.student.participate.istcareerworkshops")),
+	@Forward(name = "careerWorkshopApplicationForm", path = "/student/careerWorkshop/careerWorkshopApplicationForm.jsp", tileProperties = @Tile(  title = "private.student.participate.istcareerworkshops")),
+	@Forward(name = "careerWorkshopConfirmationForm", path = "/student/careerWorkshop/careerWorkshopConfirmationForm.jsp", tileProperties = @Tile(  title = "private.student.participate.istcareerworkshops")) })
 public class CareerWorkshopApplicationDA extends FenixDispatchAction {
 
     public ActionForward prepare(ActionMapping actionMapping, ActionForm actionForm, HttpServletRequest request,

@@ -54,28 +54,23 @@ import pt.ist.fenixWebFramework.services.Service;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.utl.ist.fenix.tools.util.CollectionPager;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
-import pt.ist.fenixWebFramework.struts.annotations.Forward;
-import pt.ist.fenixWebFramework.struts.annotations.Forwards;
-import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixWebFramework.struts.annotations.Tile;
+import pt.utl.ist.fenix.tools.util.CollectionPager;
 
 @Mapping(path = "/academicServiceRequestsManagement", module = "academicAdminOffice", formBeanClass = AcademicServiceRequestsManagementDispatchAction.AcademicServiceRequestsManagementForm.class)
-@Forwards( {
-	@Forward(name = "viewRegistrationAcademicServiceRequestsHistoric", path = "/academicAdminOffice/serviceRequests/viewRegistrationAcademicServiceRequestsHistoric.jsp"),
-	@Forward(name = "viewAcademicServiceRequest", path = "/academicAdminOffice/serviceRequests/viewAcademicServiceRequest.jsp"),
-	@Forward(name = "viewRegistrationDetails", path = "/academicAdminOffice/student/registration/viewRegistrationDetails.jsp"),
+@Forwards({
+	@Forward(name = "viewRegistrationAcademicServiceRequestsHistoric", path = "/academicAdminOffice/serviceRequests/viewRegistrationAcademicServiceRequestsHistoric.jsp", tileProperties = @Tile(title = "private.academicadministrativeoffice.studentoperations.viewstudents")),
+	@Forward(name = "viewAcademicServiceRequest", path = "/academicAdminOffice/serviceRequests/viewAcademicServiceRequest.jsp", tileProperties = @Tile(title = "private.academicadministrativeoffice.studentoperations.viewstudents")),
+	@Forward(name = "viewRegistrationDetails", path = "/academicAdminOffice/student/registration/viewRegistrationDetails.jsp", tileProperties = @Tile(title = "private.academicadministrativeoffice.studentoperations.viewstudents")),
 	@Forward(name = "confirmCreateServiceRequest", path = "/academicAdminOffice/serviceRequests/confirmCreateServiceRequest.jsp"),
-	@Forward(name = "prepareRejectAcademicServiceRequest", path = "/academicAdminOffice/serviceRequests/prepareRejectAcademicServiceRequest.jsp"),
+	@Forward(name = "prepareRejectAcademicServiceRequest", path = "/academicAdminOffice/serviceRequests/prepareRejectAcademicServiceRequest.jsp", tileProperties = @Tile(title = "private.academicadministrativeoffice.studentoperations.viewstudents")),
 	@Forward(name = "prepareSendAcademicServiceRequest", path = "/academicAdminOffice/serviceRequests/prepareSendAcademicServiceRequest.jsp"),
 	@Forward(name = "prepareReceiveAcademicServiceRequest", path = "/academicAdminOffice/serviceRequests/prepareReceiveAcademicServiceRequest.jsp"),
-	@Forward(name = "prepareCancelAcademicServiceRequest", path = "/academicAdminOffice/serviceRequests/prepareCancelAcademicServiceRequest.jsp"),
+	@Forward(name = "prepareCancelAcademicServiceRequest", path = "/academicAdminOffice/serviceRequests/prepareCancelAcademicServiceRequest.jsp", tileProperties = @Tile(title = "private.academicadministrativeoffice.studentoperations.viewstudents")),
 	@Forward(name = "prepareConcludeDocumentRequest", path = "/documentRequestsManagement.do?method=prepareConcludeDocumentRequest"),
 	@Forward(name = "prepareConcludeServiceRequest", path = "/academicAdminOffice/serviceRequests/concludeServiceRequest.jsp"),
-	@Forward(name = "prepareCreateServiceRequest", path = "/academicAdminOffice/serviceRequests/prepareCreateServiceRequest.jsp"),
-	@Forward(name = "searchResults", path = "/academicAdminOffice/serviceRequests/searchResults.jsp"),
+	@Forward(name = "prepareCreateServiceRequest", path = "/academicAdminOffice/serviceRequests/prepareCreateServiceRequest.jsp", tileProperties = @Tile(title = "private.academicadministrativeoffice.studentoperations.viewstudents")),
+	@Forward(name = "searchResults", path = "/academicAdminOffice/serviceRequests/searchResults.jsp", tileProperties = @Tile(title = "private.academicadministrativeoffice.academicservices")),
 	@Forward(name = "showCurrentBag", path = "/academicAdminOffice/serviceRequests/showCurrentBag.jsp") })
 public class AcademicServiceRequestsManagementDispatchAction extends FenixDispatchAction {
 
@@ -125,11 +120,11 @@ public class AcademicServiceRequestsManagementDispatchAction extends FenixDispat
 	public void setSendEmailToStudent(Boolean sendEmailToStudent) {
 	    this.sendEmailToStudent = sendEmailToStudent;
 	}
-	
+
 	public Boolean getDeferRequest() {
 	    return deferRequest;
 	}
-	
+
 	public void setDeferRequest(Boolean deferRequest) {
 	    this.deferRequest = deferRequest;
 	}
@@ -190,12 +185,12 @@ public class AcademicServiceRequestsManagementDispatchAction extends FenixDispat
 
     private boolean canRevertToProcessingState(final AcademicServiceRequest academicServiceRequest) {
 	return AcademicServiceRequestPredicates.REVERT_TO_PROCESSING_STATE.evaluate(academicServiceRequest)
-	&& !academicServiceRequest.isPossibleToSendToOtherEntity();
+		&& !academicServiceRequest.isPossibleToSendToOtherEntity();
     }
 
     private List<AcademicServiceRequestSituation> getAcademicServiceRequestSituations(AcademicServiceRequest serviceRequest) {
-	final List<AcademicServiceRequestSituation> result = new ArrayList<AcademicServiceRequestSituation>(serviceRequest
-		.getAcademicServiceRequestSituations());
+	final List<AcademicServiceRequestSituation> result = new ArrayList<AcademicServiceRequestSituation>(
+		serviceRequest.getAcademicServiceRequestSituations());
 	Collections.sort(result, AcademicServiceRequestSituation.COMPARATOR_BY_MOST_RECENT_CREATION_DATE_AND_ID);
 	return result;
     }
@@ -255,8 +250,8 @@ public class AcademicServiceRequestsManagementDispatchAction extends FenixDispat
 	final AcademicServiceRequestBean requestBean = (AcademicServiceRequestBean) getObjectFromViewState("serviceRequestBean");
 
 	try {
-	    SendAcademicServiceRequestToExternalEntity.run(serviceRequest, requestBean.getSituationDate(), requestBean
-		    .getJustification());
+	    SendAcademicServiceRequestToExternalEntity.run(serviceRequest, requestBean.getSituationDate(),
+		    requestBean.getJustification());
 
 	} catch (DomainExceptionWithLabelFormatter ex) {
 	    addActionMessage(request, ex.getKey(), solveLabelFormatterArgs(request, ex.getLabelFormatterArgs()));
@@ -286,8 +281,8 @@ public class AcademicServiceRequestsManagementDispatchAction extends FenixDispat
 	final AcademicServiceRequestBean requestBean = (AcademicServiceRequestBean) getObjectFromViewState("serviceRequestBean");
 
 	try {
-	    ReceivedAcademicServiceRequestFromExternalEntity.run(serviceRequest, requestBean.getSituationDate(), requestBean
-		    .getJustification());
+	    ReceivedAcademicServiceRequestFromExternalEntity.run(serviceRequest, requestBean.getSituationDate(),
+		    requestBean.getJustification());
 
 	} catch (DomainExceptionWithLabelFormatter ex) {
 	    addActionMessage(request, ex.getKey(), solveLabelFormatterArgs(request, ex.getLabelFormatterArgs()));
@@ -378,8 +373,8 @@ public class AcademicServiceRequestsManagementDispatchAction extends FenixDispat
 
 	RegistrationAcademicServiceRequest academicServiceRequest = getAndSetAcademicServiceRequest(request);
 	final AcademicServiceRequestsManagementForm form = (AcademicServiceRequestsManagementForm) actionForm;
-	if(academicServiceRequest.getAcademicServiceRequestType() == AcademicServiceRequestType.SPECIAL_SEASON_REQUEST) {
-	    if(form.getDeferRequest() == null) {
+	if (academicServiceRequest.getAcademicServiceRequestType() == AcademicServiceRequestType.SPECIAL_SEASON_REQUEST) {
+	    if (form.getDeferRequest() == null) {
 		return prepareConcludeAcademicServiceRequest(mapping, actionForm, request, response);
 	    }
 	    final SpecialSeasonRequest specialSeasonRequest = (SpecialSeasonRequest) academicServiceRequest;
@@ -491,8 +486,8 @@ public class AcademicServiceRequestsManagementDispatchAction extends FenixDispat
 	final String orderGetter = StringUtils.isEmpty(orderParameter) ? DEFAULT_ORDER_GETTER : orderParameter.substring(0,
 		orderParameter.indexOf(ORDER_MARKER));
 
-	final String orderDir = StringUtils.isEmpty(orderParameter) ? DEFAULT_ORDER_DIR : orderParameter.substring(orderParameter
-		.indexOf(ORDER_MARKER) + 1, orderParameter.length());
+	final String orderDir = StringUtils.isEmpty(orderParameter) ? DEFAULT_ORDER_DIR : orderParameter.substring(
+		orderParameter.indexOf(ORDER_MARKER) + 1, orderParameter.length());
 	final boolean orderAsc = Arrays.asList(ASC_ORDER_DIR).contains(orderDir);
 
 	if (orderGetter.equals(REQUEST_NUMBER_YEAR)) {

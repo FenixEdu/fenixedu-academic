@@ -138,6 +138,7 @@
       <message-resources null="false" key="GROUP_NAME_RESOURCES" parameter="resources.GroupNameResources"></message-resources>
       <message-resources null="false" key="DEPARTMENT_MEMBER_RESOURCES" parameter="resources.DepartmentMemberResources"></message-resources>
       <message-resources null="false" key="GLOBAL_RESOURCES" parameter="resources.GlobalResources"></message-resources>
+      <message-resources null="false" key="TITLES_RESOURCES" parameter="resources.TitlesResources"></message-resources>
       <!-- ========== Plug Ins Configuration ================================= -->
       <plug-in className="pt.ist.fenixWebFramework.struts.tiles.FenixTilesPlugin">
             <set-property value="/WEB-INF/tiles/layouts/tiles-layout-definitions.xml,/WEB-INF/tiles/websiteManager/tiles-website-manager-definitions.xml,/WEB-INF/tiles/websiteManager/tiles-website-manager-pages-definitions.xml,/WEB-INF/tiles/messaging/tiles-messaging-definitions.xml,/WEB-INF/tiles/messaging/tiles-messaging-pages-definitions.xml" property="definitions-config"></set-property>

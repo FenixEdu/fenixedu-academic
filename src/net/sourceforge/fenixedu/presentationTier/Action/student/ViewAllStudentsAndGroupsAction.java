@@ -25,29 +25,21 @@ import org.apache.struts.action.ActionErrors;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
+
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
-import pt.ist.fenixWebFramework.struts.annotations.Forward;
-import pt.ist.fenixWebFramework.struts.annotations.Forwards;
-import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 /**
  * @author joaosa & rmalo
  * 
  */
 @Mapping(module = "student", path = "/viewAllStudentsAndGroups", scope = "request")
-@Forwards(value = {
-		@Forward(name = "sucess", path = "/student/viewAllStudentsAndGroups_bd.jsp"),
-		@Forward(name = "viewExecutionCourseProjects", path = "/viewExecutionCourseProjects.do") })
+@Forwards(value = { @Forward(name = "sucess", path = "/student/viewAllStudentsAndGroups_bd.jsp"),
+	@Forward(name = "viewExecutionCourseProjects", path = "/viewExecutionCourseProjects.do") })
 public class ViewAllStudentsAndGroupsAction extends FenixContextAction {
 
+    @Override
     public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
 	    throws FenixActionException, FenixFilterException, FenixServiceException {
 
@@ -59,7 +51,7 @@ public class ViewAllStudentsAndGroupsAction extends FenixContextAction {
 	InfoSiteStudentsAndGroups infoSiteStudentsAndGroups = new InfoSiteStudentsAndGroups();
 
 	try {
-	    infoSiteStudentsAndGroups = (InfoSiteStudentsAndGroups) ReadAllStudentsAndGroups.run(groupPropertiesCode);
+	    infoSiteStudentsAndGroups = ReadAllStudentsAndGroups.run(groupPropertiesCode);
 
 	} catch (InvalidSituationServiceException e) {
 	    ActionErrors actionErrors2 = new ActionErrors();
@@ -73,8 +65,7 @@ public class ViewAllStudentsAndGroupsAction extends FenixContextAction {
 	}
 
 	request.setAttribute("infoSiteStudentsAndGroups", infoSiteStudentsAndGroups);
-	List<InfoExportGrouping> infoExportGroupings = (List<InfoExportGrouping>) ReadExportGroupingsByGrouping
-		.run(groupPropertiesCode);
+	List<InfoExportGrouping> infoExportGroupings = ReadExportGroupingsByGrouping.run(groupPropertiesCode);
 	request.setAttribute("infoExportGroupings", infoExportGroupings);
 
 	return mapping.findForward("sucess");

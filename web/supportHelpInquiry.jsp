@@ -24,7 +24,7 @@
 
 <head>
 	<title>
-		<bean:message key="dot.title" bundle="GLOBAL_RESOURCES"/> - <bean:message key="label.support.page" bundle="GLOBAL_RESOURCES"/>
+		<bean:message key="dot.title" bundle="GLOBAL_RESOURCES"/><bean:message key="label.support.page" bundle="GLOBAL_RESOURCES"/>
 	</title>
    	<link href="<%= request.getContextPath() %>/CSS/logdotist_new.css" rel="stylesheet" type="text/css"/>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />

@@ -18,18 +18,12 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
+
 import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
 import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
-import pt.ist.fenixWebFramework.struts.annotations.Forward;
-import pt.ist.fenixWebFramework.struts.annotations.Forwards;
-import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 /**
  * @author Ricardo Rodrigues
@@ -38,13 +32,13 @@ import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 @Mapping(module = "scientificCouncil", path = "/teacherAdviseServiceManagement", input = "/teacherAdviseServiceManagement.do?method=showTeacherAdvises&page=0", attribute = "teacherDegreeFinalProjectStudentForm", formBean = "teacherDegreeFinalProjectStudentForm", scope = "request", parameter = "method")
 @Forwards(value = {
-		@Forward(name = "list-teacher-advise-services", path = "/credits/adviseServices/showTeacherAdviseServices.jsp"),
-		@Forward(name = "successfull-delete", path = "/teacherAdviseServiceManagement.do?method=showTeacherAdvises&page=0"),
-		@Forward(name = "successfull-edit", path = "/teacherAdviseServiceManagement.do?method=showTeacherAdvises&page=0"),
-		@Forward(name = "teacher-not-found", path = "/showAllTeacherCreditsResume.do?method=showTeacherCreditsResume&page=0") })
+	@Forward(name = "list-teacher-advise-services", path = "/credits/adviseServices/showTeacherAdviseServices.jsp"),
+	@Forward(name = "successfull-delete", path = "/teacherAdviseServiceManagement.do?method=showTeacherAdvises&page=0"),
+	@Forward(name = "successfull-edit", path = "/teacherAdviseServiceManagement.do?method=showTeacherAdvises&page=0"),
+	@Forward(name = "teacher-not-found", path = "/showAllTeacherCreditsResume.do?method=showTeacherCreditsResume&page=0") })
 @Exceptions(value = {
-		@ExceptionHandling(type = net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException.class, handler = net.sourceforge.fenixedu.presentationTier.config.FenixExceptionMessageHandler.class, scope = "request"),
-		@ExceptionHandling(type = net.sourceforge.fenixedu.domain.exceptions.DomainException.class, handler = net.sourceforge.fenixedu.presentationTier.config.FenixDomainExceptionHandler.class, scope = "request") })
+	@ExceptionHandling(type = net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException.class, handler = net.sourceforge.fenixedu.presentationTier.config.FenixExceptionMessageHandler.class, scope = "request"),
+	@ExceptionHandling(type = net.sourceforge.fenixedu.domain.exceptions.DomainException.class, handler = net.sourceforge.fenixedu.presentationTier.config.FenixDomainExceptionHandler.class, scope = "request") })
 public class ScientificCouncilManageTeacherAdviseServiceDispatchAction extends ManageTeacherAdviseServiceDispatchAction {
 
     public ActionForward showTeacherAdvises(ActionMapping mapping, ActionForm form, HttpServletRequest request,

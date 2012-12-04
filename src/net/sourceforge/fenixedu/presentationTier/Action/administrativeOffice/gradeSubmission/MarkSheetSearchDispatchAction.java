@@ -37,21 +37,17 @@ import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.utl.ist.fenix.tools.util.DateFormatUtil;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
-import pt.ist.fenixWebFramework.struts.annotations.Forward;
-import pt.ist.fenixWebFramework.struts.annotations.Forwards;
-import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixWebFramework.struts.annotations.Tile;
+import pt.utl.ist.fenix.tools.util.DateFormatUtil;
 
 @Mapping(path = "/markSheetManagement", module = "academicAdminOffice", formBean = "markSheetManagementForm", input = "/academicAdminOffice/gradeSubmission/markSheetManagement.jsp")
-@Forwards( { @Forward(name = "searchMarkSheet", path = "/academicAdminOffice/gradeSubmission/markSheetManagement.jsp"),
-	@Forward(name = "viewMarkSheet", path = "/academicAdminOffice/gradeSubmission/viewMarkSheet.jsp"),
-	@Forward(name = "removeMarkSheet", path = "/academicAdminOffice/gradeSubmission/removeMarkSheet.jsp"),
-	@Forward(name = "searchMarkSheetFilled", path = "/markSheetManagement.do?method=prepareSearchMarkSheetFilled"),
-	@Forward(name = "confirmMarkSheet", path = "/academicAdminOffice/gradeSubmission/confirmMarkSheet.jsp"),
-	@Forward(name = "choosePrinter", path = "/printMarkSheet.do?method=choosePrinterMarkSheet") })
+@Forwards({
+	@Forward(name = "searchMarkSheet", path = "/academicAdminOffice/gradeSubmission/markSheetManagement.jsp", tileProperties = @Tile(title = "private.academicadministrativeoffice.marksheets.marksheetmanagement")),
+	@Forward(name = "viewMarkSheet", path = "/academicAdminOffice/gradeSubmission/viewMarkSheet.jsp", tileProperties = @Tile(title = "private.academicadministrativeoffice.marksheets.marksheetmanagement")),
+	@Forward(name = "removeMarkSheet", path = "/academicAdminOffice/gradeSubmission/removeMarkSheet.jsp", tileProperties = @Tile(title = "private.academicadministrativeoffice.marksheets.marksheetmanagement")),
+	@Forward(name = "searchMarkSheetFilled", path = "/markSheetManagement.do?method=prepareSearchMarkSheetFilled", tileProperties = @Tile(title = "private.academicadministrativeoffice.marksheets.marksheetmanagement")),
+	@Forward(name = "confirmMarkSheet", path = "/academicAdminOffice/gradeSubmission/confirmMarkSheet.jsp", tileProperties = @Tile(title = "private.academicadministrativeoffice.marksheets.marksheetmanagement")),
+	@Forward(name = "choosePrinter", path = "/printMarkSheet.do?method=choosePrinterMarkSheet", tileProperties = @Tile(title = "private.academicadministrativeoffice.marksheets.marksheetmanagement")) })
 public class MarkSheetSearchDispatchAction extends MarkSheetDispatchAction {
 
     public ActionForward prepareSearchMarkSheet(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,

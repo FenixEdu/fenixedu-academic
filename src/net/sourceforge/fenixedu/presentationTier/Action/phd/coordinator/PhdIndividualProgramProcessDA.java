@@ -52,47 +52,47 @@ import pt.utl.ist.fenix.tools.predicates.PredicateContainer;
 @Mapping(path = "/phdIndividualProgramProcess", module = "coordinator", formBeanClass = PhdIndividualProgramProcessDA.PhdEmailProgramForm.class)
 @Forwards(tileProperties = @Tile(navLocal = "/coordinator/localNavigationBar.jsp"), value = {
 
-@Forward(name = "manageProcesses", path = "/phd/coordinator/manageProcesses.jsp"),
+	@Forward(name = "manageProcesses", path = "/phd/coordinator/manageProcesses.jsp", tileProperties = @Tile(title = "private.coordinator.phdprocess")),
 
-@Forward(name = "viewProcess", path = "/phd/coordinator/viewProcess.jsp"),
+	@Forward(name = "viewProcess", path = "/phd/coordinator/viewProcess.jsp", tileProperties = @Tile(title = "private.coordinator.phdprocess")),
 
-@Forward(name = "viewInactiveProcesses", path = "/phd/coordinator/viewInactiveProcesses.jsp"),
+	@Forward(name = "viewInactiveProcesses", path = "/phd/coordinator/viewInactiveProcesses.jsp", tileProperties = @Tile(title = "private.coordinator.phdprocess")),
 
-@Forward(name = "searchResults", path = "/phd/coordinator/searchResults.jsp"),
+	@Forward(name = "searchResults", path = "/phd/coordinator/searchResults.jsp", tileProperties = @Tile(title = "private.coordinator.phdprocess")),
 
-@Forward(name = "viewAlertMessages", path = "/phd/coordinator/viewAlertMessages.jsp"),
+	@Forward(name = "viewAlertMessages", path = "/phd/coordinator/viewAlertMessages.jsp", tileProperties = @Tile(title = "private.coordinator.phdprocess")),
 
-@Forward(name = "viewAlertMessageArchive", path = "/phd/coordinator/viewAlertMessageArchive.jsp"),
+	@Forward(name = "viewAlertMessageArchive", path = "/phd/coordinator/viewAlertMessageArchive.jsp", tileProperties = @Tile(title = "private.coordinator.phdprocess")),
 
-@Forward(name = "viewAlertMessage", path = "/phd/coordinator/viewAlertMessage.jsp"),
+	@Forward(name = "viewAlertMessage", path = "/phd/coordinator/viewAlertMessage.jsp", tileProperties = @Tile(title = "private.coordinator.phdprocess")),
 
-@Forward(name = "viewProcessAlertMessages", path = "/phd/coordinator/viewProcessAlertMessages.jsp"),
+	@Forward(name = "viewProcessAlertMessages", path = "/phd/coordinator/viewProcessAlertMessages.jsp", tileProperties = @Tile(title = "private.coordinator.phdprocess")),
 
-@Forward(name = "viewProcessAlertMessageArchive", path = "/phd/coordinator/viewProcessAlertMessageArchive.jsp"),
+	@Forward(name = "viewProcessAlertMessageArchive", path = "/phd/coordinator/viewProcessAlertMessageArchive.jsp", tileProperties = @Tile(title = "private.coordinator.phdprocess")),
 
-@Forward(name = "viewCurriculum", path = "/phd/coordinator/viewCurriculum.jsp"),
+	@Forward(name = "viewCurriculum", path = "/phd/coordinator/viewCurriculum.jsp", tileProperties = @Tile(title = "private.coordinator.phdprocess")),
 
-@Forward(name = "manageEnrolments", path = "/phd/coordinator/enrolments/manageEnrolments.jsp"),
+	@Forward(name = "manageEnrolments", path = "/phd/coordinator/enrolments/manageEnrolments.jsp", tileProperties = @Tile(title = "private.coordinator.phdprocess")),
 
-@Forward(name = "validateEnrolments", path = "/phd/coordinator/enrolments/validateEnrolments.jsp"),
+	@Forward(name = "validateEnrolments", path = "/phd/coordinator/enrolments/validateEnrolments.jsp", tileProperties = @Tile(title = "private.coordinator.phdprocess")),
 
-@Forward(name = "manageGuidanceDocuments", path = "/phd/coordinator/manageGuidanceDocuments.jsp"),
+	@Forward(name = "manageGuidanceDocuments", path = "/phd/coordinator/manageGuidanceDocuments.jsp", tileProperties = @Tile(title = "private.coordinator.phdprocess")),
 
-@Forward(name = "uploadGuidanceDocument", path = "/phd/coordinator/uploadGuidanceDocument.jsp"),
+	@Forward(name = "uploadGuidanceDocument", path = "/phd/coordinator/uploadGuidanceDocument.jsp", tileProperties = @Tile(title = "private.coordinator.phdprocess")),
 
-@Forward(name = "managePhdEmails", path = "/phd/coordinator/email/managePhdEmails.jsp"),
+	@Forward(name = "managePhdEmails", path = "/phd/coordinator/email/managePhdEmails.jsp", tileProperties = @Tile(title = "private.coordinator.phdprocess")),
 
-@Forward(name = "choosePhdEmailRecipients", path = "/phd/coordinator/email/choosePhdEmailRecipients.jsp"),
+	@Forward(name = "choosePhdEmailRecipients", path = "/phd/coordinator/email/choosePhdEmailRecipients.jsp", tileProperties = @Tile(title = "private.coordinator.phdprocess")),
 
-@Forward(name = "prepareSendPhdEmail", path = "/phd/coordinator/email/prepareSendPhdEmail.jsp"),
+	@Forward(name = "prepareSendPhdEmail", path = "/phd/coordinator/email/prepareSendPhdEmail.jsp", tileProperties = @Tile(title = "private.coordinator.phdprocess")),
 
-@Forward(name = "confirmSendPhdEmail", path = "/phd/coordinator/email/confirmSendPhdEmail.jsp"),
+	@Forward(name = "confirmSendPhdEmail", path = "/phd/coordinator/email/confirmSendPhdEmail.jsp", tileProperties = @Tile(title = "private.coordinator.phdprocess")),
 
-@Forward(name = "viewPhdEmail", path = "/phd/coordinator/email/viewPhdEmail.jsp"),
+	@Forward(name = "viewPhdEmail", path = "/phd/coordinator/email/viewPhdEmail.jsp", tileProperties = @Tile(title = "private.coordinator.phdprocess")),
 
-@Forward(name = "viewRefereeLetters", path = "/phd/coordinator/referee/viewRefereeLetters.jsp"),
+	@Forward(name = "viewRefereeLetters", path = "/phd/coordinator/referee/viewRefereeLetters.jsp", tileProperties = @Tile(title = "private.coordinator.phdprocess")),
 
-@Forward(name = "viewLetter", path = "/phd/coordinator/referee/viewLetter.jsp")
+	@Forward(name = "viewLetter", path = "/phd/coordinator/referee/viewLetter.jsp", tileProperties = @Tile(title = "private.coordinator.phdprocess"))
 
 })
 public class PhdIndividualProgramProcessDA extends CommonPhdIndividualProgramProcessDA {
@@ -321,16 +321,14 @@ public class PhdIndividualProgramProcessDA extends CommonPhdIndividualProgramPro
 	request.setAttribute("seminarCategory", getSeminarCategory());
 	request.setAttribute("thesisCategory", getThesisCategory());
 	request.setAttribute("concludedThisYearContainer", getConcludedContainer());
-	
 
-	
 	return mapping.findForward("choosePhdEmailRecipients");
     }
 
     public ActionForward prepareSendPhdEmail(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) {
 	final PhdProgramEmailBean bean = getRenderedObject("phdEmailBean");
-	
+
 	List<PhdIndividualProgramProcess> selectedIndividual = retrieveSelectedProcesses((PhdEmailProgramForm) form);
 	bean.setSelectedElements(selectedIndividual);
 
@@ -394,7 +392,7 @@ public class PhdIndividualProgramProcessDA extends CommonPhdIndividualProgramPro
 
 	actionForm.setSelectedProcesses(externalIdList.toArray(new String[0]));
     }
-    
+
     private List<PhdIndividualProgramProcess> retrieveSelectedProcesses(PhdEmailProgramForm actionForm) {
 	List<PhdIndividualProgramProcess> processList = new ArrayList<PhdIndividualProgramProcess>();
 
@@ -427,7 +425,7 @@ public class PhdIndividualProgramProcessDA extends CommonPhdIndividualProgramPro
 	    final HttpServletResponse response) {
 	PhdIndividualProgramProcess process = getProcess(request);
 	request.setAttribute("process", process);
-	
+
 	return mapping.findForward("viewRefereeLetters");
     }
 

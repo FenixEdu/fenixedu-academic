@@ -15,14 +15,6 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
-import pt.ist.fenixWebFramework.struts.annotations.Forward;
-import pt.ist.fenixWebFramework.struts.annotations.Forwards;
-import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
@@ -35,8 +27,9 @@ import pt.ist.fenixWebFramework.struts.annotations.Tile;
  *         Date: 2006-02-22
  */
 @Mapping(module = "manager", path = "/personManagement/createPerson", input = "createPerson", scope = "request", parameter = "method")
-@Forwards(value = { @Forward(name = "Prepare", path = "/manager/personManagement/createPerson.jsp"),
-		@Forward(name = "Success", path = "/manager/personManagement/createPersonSuccess.jsp") })
+@Forwards(value = {
+	@Forward(name = "Prepare", path = "/manager/personManagement/createPerson.jsp", tileProperties = @Tile(title = "private.staffarea.interfacegiaf.interfacegiaf.createperson")),
+	@Forward(name = "Success", path = "/manager/personManagement/createPersonSuccess.jsp", tileProperties = @Tile(title = "private.staffarea.interfacegiaf.interfacegiaf.createperson")) })
 public class CreatePersonAction extends FenixDispatchAction {
 
     public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)

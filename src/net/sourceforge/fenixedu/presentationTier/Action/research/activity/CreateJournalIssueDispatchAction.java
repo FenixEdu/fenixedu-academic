@@ -17,14 +17,6 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
-import pt.ist.fenixWebFramework.struts.annotations.Forward;
-import pt.ist.fenixWebFramework.struts.annotations.Forwards;
-import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
@@ -32,8 +24,8 @@ import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 @Mapping(module = "researcher", path = "/activities/createJournalIssue", scope = "request", parameter = "method")
 @Forwards(value = {
-		@Forward(name = "CreateIssue", path = "/researcher/activities/createJournalIssueParticipation.jsp"),
-		@Forward(name = "Success", path = "/activities/activitiesManagement.do?method=listActivities") })
+	@Forward(name = "CreateIssue", path = "/researcher/activities/createJournalIssueParticipation.jsp", tileProperties = @Tile(  title = "private.operator.personnelmanagement.managementfaculty.teacherevaluation.activities")),
+	@Forward(name = "Success", path = "/activities/activitiesManagement.do?method=listActivities", tileProperties = @Tile(  title = "private.operator.personnelmanagement.managementfaculty.teacherevaluation.activities")) })
 public class CreateJournalIssueDispatchAction extends FenixDispatchAction {
 
     public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
@@ -77,7 +69,7 @@ public class CreateJournalIssueDispatchAction extends FenixDispatchAction {
 	    request.setAttribute("issueBean", issueBean);
 
 	} else {
-	    JournalIssue issue = (JournalIssue) CreateJournalIssue.run(issueBean);
+	    JournalIssue issue = CreateJournalIssue.run(issueBean);
 	    bean.setJournalIssue(issue);
 	    bean.setScientificJournal(issue.getScientificJournal());
 	}
@@ -91,7 +83,7 @@ public class CreateJournalIssueDispatchAction extends FenixDispatchAction {
 	ResearchJournalIssueCreationBean bean = (ResearchJournalIssueCreationBean) RenderUtils.getViewState("name")
 		.getMetaObject().getObject();
 	CreateIssueBean issueBean = (CreateIssueBean) RenderUtils.getViewState("issueBean").getMetaObject().getObject();
-	JournalIssue issue = (JournalIssue) CreateJournalIssue.run(issueBean);
+	JournalIssue issue = CreateJournalIssue.run(issueBean);
 	bean.setJournalIssue(issue);
 	bean.setScientificJournal(issue.getScientificJournal());
 	request.setAttribute("bean", bean);

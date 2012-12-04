@@ -41,32 +41,26 @@ import org.joda.time.chrono.GregorianChronology;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 
+import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
+import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixWebFramework.struts.annotations.Tile;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
-import pt.ist.fenixWebFramework.struts.annotations.Forward;
-import pt.ist.fenixWebFramework.struts.annotations.Forwards;
-import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
-import pt.ist.fenixWebFramework.struts.annotations.Forward;
-import pt.ist.fenixWebFramework.struts.annotations.Forwards;
-import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 @Mapping(module = "personnelSection", path = "/assiduousnessParametrization", attribute = "parametrizationForm", formBean = "parametrizationForm", scope = "request", parameter = "method")
 @Forwards(value = {
-		@Forward(name = "edit-assiduousness-exemption", path = "/managementAssiduousness/editAssiduousnessExemption.jsp"),
-		@Forward(name = "insert-schedule", path = "/managementAssiduousness/insertSchedule.jsp"),
-		@Forward(name = "show-assiduousness-exemptions", path = "/managementAssiduousness/showAssiduousnessExemptions.jsp"),
-		@Forward(name = "edit-regularization-motive", path = "/managementAssiduousness/editRegularizationMotive.jsp"),
-		@Forward(name = "edit-justification-motive", path = "/managementAssiduousness/editJustificationMotive.jsp"),
-		@Forward(name = "show-justification-motives", path = "/managementAssiduousness/showJustificationMotives.jsp"),
-		@Forward(name = "show-all-schedules", path = "/managementAssiduousness/showSchedules.jsp"),
-		@Forward(name = "edit-assiduousness-status", path = "/managementAssiduousness/editAssiduousnessStatus.jsp"),
-		@Forward(name = "show-assiduousness-status", path = "/managementAssiduousness/showAssiduousnessStatus.jsp"),
-		@Forward(name = "show-regularization-motives", path = "/managementAssiduousness/showRegularizationMotives.jsp") })
+	@Forward(name = "edit-assiduousness-exemption", path = "/managementAssiduousness/editAssiduousnessExemption.jsp", tileProperties = @Tile(title = "private.staffarea.queries.tolerances")),
+	@Forward(name = "insert-schedule", path = "/managementAssiduousness/insertSchedule.jsp", tileProperties = @Tile(title = "private.staffarea.queries.schedules")),
+	@Forward(name = "show-assiduousness-exemptions", path = "/managementAssiduousness/showAssiduousnessExemptions.jsp", tileProperties = @Tile(title = "private.staffarea.queries.tolerances")),
+	@Forward(name = "edit-regularization-motive", path = "/managementAssiduousness/editRegularizationMotive.jsp", tileProperties = @Tile(title = "private.staffarea.queries.adjustments")),
+	@Forward(name = "edit-justification-motive", path = "/managementAssiduousness/editJustificationMotive.jsp", tileProperties = @Tile(title = "private.staffarea.queries.justifications")),
+	@Forward(name = "show-justification-motives", path = "/managementAssiduousness/showJustificationMotives.jsp", tileProperties = @Tile(title = "private.staffarea.queries.justifications")),
+	@Forward(name = "show-all-schedules", path = "/managementAssiduousness/showSchedules.jsp", tileProperties = @Tile(title = "private.staffarea.queries.schedules")),
+	@Forward(name = "edit-assiduousness-status", path = "/managementAssiduousness/editAssiduousnessStatus.jsp", tileProperties = @Tile(title = "private.staffarea.queries.status")),
+	@Forward(name = "show-assiduousness-status", path = "/managementAssiduousness/showAssiduousnessStatus.jsp", tileProperties = @Tile(title = "private.staffarea.queries.status")),
+	@Forward(name = "show-regularization-motives", path = "/managementAssiduousness/showRegularizationMotives.jsp", tileProperties = @Tile(title = "private.staffarea.queries.adjustments")) })
 @Exceptions(value = { @ExceptionHandling(type = net.sourceforge.fenixedu.domain.exceptions.DomainException.class, key = "error.justificationMotiveAcronymAlreadyExists", handler = net.sourceforge.fenixedu.presentationTier.config.FenixDomainExceptionHandler.class, scope = "request") })
 public class AssiduousnessParametrizationDispatchAction extends FenixDispatchAction {
     public ActionForward showSchedules(ActionMapping mapping, ActionForm form, HttpServletRequest request,
@@ -157,8 +151,8 @@ public class AssiduousnessParametrizationDispatchAction extends FenixDispatchAct
     public ActionForward prepareEditSchedule(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) throws FenixServiceException, FenixFilterException {
 	Integer scheculeId = new Integer(request.getParameter("idInternal"));
-	request.setAttribute("workScheduleTypeFactory", new WorkScheduleTypeFactoryEditor(rootDomainObject
-		.readWorkScheduleTypeByOID(scheculeId)));
+	request.setAttribute("workScheduleTypeFactory",
+		new WorkScheduleTypeFactoryEditor(rootDomainObject.readWorkScheduleTypeByOID(scheculeId)));
 	return mapping.findForward("insert-schedule");
     } // vefificar que se tem data incio tem de ter data fim
 
@@ -273,9 +267,9 @@ public class AssiduousnessParametrizationDispatchAction extends FenixDispatchAct
 	    return false;
 	}
 
-	Interval firstNormalWorkPeriodInterval = verifyTimeOfDayAndReturnInterval(workScheduleTypeFactory
-		.getBeginNormalWorkFirstPeriod(), workScheduleTypeFactory.getEndNormalWorkFirstPeriod(), workScheduleTypeFactory
-		.getEndNormalWorkFirstPeriodNextDay());
+	Interval firstNormalWorkPeriodInterval = verifyTimeOfDayAndReturnInterval(
+		workScheduleTypeFactory.getBeginNormalWorkFirstPeriod(), workScheduleTypeFactory.getEndNormalWorkFirstPeriod(),
+		workScheduleTypeFactory.getEndNormalWorkFirstPeriodNextDay());
 	if (firstNormalWorkPeriodInterval == null || firstNormalWorkPeriodInterval.equals(emptyInterval)) {
 	    setError(request, "validation", "error.invalidDates", bundle.getString("label.normalFirstWorkPeriod"));
 	    return false;
@@ -286,8 +280,8 @@ public class AssiduousnessParametrizationDispatchAction extends FenixDispatchAct
 	    return false;
 	}
 
-	Interval secondNormalWorkPeriodInterval = verifyTimeOfDayAndReturnInterval(workScheduleTypeFactory
-		.getBeginNormalWorkSecondPeriod(), workScheduleTypeFactory.getEndNormalWorkSecondPeriod(),
+	Interval secondNormalWorkPeriodInterval = verifyTimeOfDayAndReturnInterval(
+		workScheduleTypeFactory.getBeginNormalWorkSecondPeriod(), workScheduleTypeFactory.getEndNormalWorkSecondPeriod(),
 		workScheduleTypeFactory.getEndNormalWorkSecondPeriodNextDay());
 
 	if (firstNormalWorkPeriodInterval.toDuration().isLongerThan(WorkScheduleType.maximumContinuousWorkPeriod)
@@ -321,9 +315,9 @@ public class AssiduousnessParametrizationDispatchAction extends FenixDispatchAct
 		return false;
 	    }
 	}
-	Interval firstFixedWorkPeriodInterval = verifyTimeOfDayAndReturnInterval(workScheduleTypeFactory
-		.getBeginFixedWorkFirstPeriod(), workScheduleTypeFactory.getEndFixedWorkFirstPeriod(), workScheduleTypeFactory
-		.getEndFixedWorkFirstPeriodNextDay());
+	Interval firstFixedWorkPeriodInterval = verifyTimeOfDayAndReturnInterval(
+		workScheduleTypeFactory.getBeginFixedWorkFirstPeriod(), workScheduleTypeFactory.getEndFixedWorkFirstPeriod(),
+		workScheduleTypeFactory.getEndFixedWorkFirstPeriodNextDay());
 	if (firstFixedWorkPeriodInterval == null) {
 	    setError(request, "validation", "error.invalidDates", bundle.getString("label.fixedFirstWorkPeriod"));
 	    return false;
@@ -335,9 +329,9 @@ public class AssiduousnessParametrizationDispatchAction extends FenixDispatchAct
 		return false;
 	    }
 	}
-	Interval secondFixedWorkPeriodInterval = verifyTimeOfDayAndReturnInterval(workScheduleTypeFactory
-		.getBeginFixedWorkSecondPeriod(), workScheduleTypeFactory.getEndFixedWorkSecondPeriod(), workScheduleTypeFactory
-		.getEndFixedWorkSecondPeriodNextDay());
+	Interval secondFixedWorkPeriodInterval = verifyTimeOfDayAndReturnInterval(
+		workScheduleTypeFactory.getBeginFixedWorkSecondPeriod(), workScheduleTypeFactory.getEndFixedWorkSecondPeriod(),
+		workScheduleTypeFactory.getEndFixedWorkSecondPeriodNextDay());
 	if (secondFixedWorkPeriodInterval == null) {
 	    setError(request, "validation", "error.invalidDates", bundle.getString("label.fixedSecondWorkPeriod"));
 	    return false;
@@ -384,8 +378,8 @@ public class AssiduousnessParametrizationDispatchAction extends FenixDispatchAct
 
     public ActionForward showAssiduousnessExemptions(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) throws FenixServiceException, FenixFilterException {
-	List<AssiduousnessExemption> assiduousnessExemptions = new ArrayList<AssiduousnessExemption>(rootDomainObject
-		.getAssiduousnessExemptions());
+	List<AssiduousnessExemption> assiduousnessExemptions = new ArrayList<AssiduousnessExemption>(
+		rootDomainObject.getAssiduousnessExemptions());
 	Collections.sort(assiduousnessExemptions, new BeanComparator("year"));
 	request.setAttribute("assiduousnessExemptions", assiduousnessExemptions);
 	return mapping.findForward("show-assiduousness-exemptions");
@@ -455,8 +449,8 @@ public class AssiduousnessParametrizationDispatchAction extends FenixDispatchAct
 
     public ActionForward showAssiduousnessStatus(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) throws FenixServiceException, FenixFilterException {
-	List<AssiduousnessStatus> assiduousnessStatus = new ArrayList<AssiduousnessStatus>(rootDomainObject
-		.getAssiduousnessStatus());
+	List<AssiduousnessStatus> assiduousnessStatus = new ArrayList<AssiduousnessStatus>(
+		rootDomainObject.getAssiduousnessStatus());
 	ComparatorChain chain = new ComparatorChain();
 	chain.addComparator(new BeanComparator("state"));
 	chain.addComparator(new BeanComparator("description"));
@@ -478,7 +472,7 @@ public class AssiduousnessParametrizationDispatchAction extends FenixDispatchAct
 	return mapping.findForward("edit-assiduousness-status");
     }
 
-    // 
+    //
     // prepareEditAssiduousnessStatus
 
     private Interval verifyTimeOfDayAndReturnInterval(LocalTime beginTime, LocalTime endTime, Boolean endNextDay) {

@@ -6,11 +6,12 @@
 <!-- Tiles definitions -->
 <tiles-definitions>
 	<definition name="definition.residenceManagement.master" extends="df.layout.two-column">
-	  <put name="title" value="Núcleo de Alojamentos" />
-	  <put name="serviceName" value="Núcleo de Alojamentos" />
-	  <put name="navLocal" value="/commons/functionalities/side-menu.jsp" />
-	  <put name="navGeral" value="/commons/functionalities/top-menu.jsp" />
-      <put name="body" value="/commons/blank.jsp" />
-      <put name="footer" value="/copyright.jsp" />
+		<put name="bundle" value="TITLES_RESOURCES" />
+		<put name="title" value="private.housingmanagement" />
+		<put name="serviceName" value="Núcleo de Alojamentos" />
+		<put name="navLocal" value="/commons/functionalities/side-menu.jsp" />
+		<put name="navGeral" value="/commons/functionalities/top-menu.jsp" />
+    	<put name="body" value="/commons/blank.jsp" />
+    	<put name="footer" value="/copyright.jsp" />
 	</definition>
 </tiles-definitions>
