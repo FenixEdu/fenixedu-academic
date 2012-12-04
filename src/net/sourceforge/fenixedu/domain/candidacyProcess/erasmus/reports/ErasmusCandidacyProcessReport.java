@@ -3,6 +3,7 @@ package net.sourceforge.fenixedu.domain.candidacyProcess.erasmus.reports;
 import java.io.ByteArrayOutputStream;
 
 import net.sourceforge.fenixedu.domain.QueueJobResult;
+import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyPersonalDetails;
 import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyProcess;
 import net.sourceforge.fenixedu.domain.candidacyProcess.mobility.MobilityApplicationProcess;
 import net.sourceforge.fenixedu.domain.candidacyProcess.mobility.MobilityIndividualApplicationProcess;
@@ -47,13 +48,14 @@ public class ErasmusCandidacyProcessReport extends ErasmusCandidacyProcessReport
 	    if (individualCandidacyProcess.isCandidacyRejected()) {
 		continue;
 	    }
+	    
+	    IndividualCandidacyPersonalDetails personalDetails = erasmusIndividualCandidacyProcess.getPersonalDetails();
 
 	    Row row = spreadsheet.addRow();
 
 	    row.setCell(0, erasmusIndividualCandidacyProcess.getProcessCode());
 	    row.setCell(1, erasmusIndividualCandidacyProcess.getPersonalDetails().getName());
-	    row.setCell(2,
-		    erasmusIndividualCandidacyProcess.getPersonalDetails().getDateOfBirthYearMonthDay().toString("dd/MM/yyyy"));
+	    row.setCell(2, personalDetails.getDateOfBirthYearMonthDay() != null ? personalDetails.getDateOfBirthYearMonthDay().toString("dd/MM/yyyy") : "N/A");
 	    row.setCell(3, erasmusIndividualCandidacyProcess.getPersonalDetails().getCountry().getCountryNationality()
 		    .getContent());
 	    row.setCell(4, erasmusIndividualCandidacyProcess.getCandidacyHashCode().getEmail());
