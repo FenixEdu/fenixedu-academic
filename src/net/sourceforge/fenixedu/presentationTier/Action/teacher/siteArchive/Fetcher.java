@@ -175,7 +175,7 @@ public class Fetcher {
     }
 
     private File getFileFromUrl(final String url) {
-	final int i = url.lastIndexOf('=');
+	final int i = url.lastIndexOf('/');
 	final String oid = url.substring(i + 1);
 	return AbstractDomainObject.fromExternalId(oid);
     }
