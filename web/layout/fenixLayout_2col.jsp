@@ -1,10 +1,11 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<%@page import="net.sourceforge.fenixedu.injectionCode.AccessControl"%>
-<%@page import="net.sourceforge.fenixedu._development.PropertiesManager"%>
 <%@ taglib uri="/WEB-INF/struts-tiles.tld" prefix="tiles" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
+<%@page import="org.apache.struts.tiles.DirectStringAttribute"%>
+<%@page import="net.sourceforge.fenixedu.injectionCode.AccessControl"%>
+<%@page import="net.sourceforge.fenixedu._development.PropertiesManager"%>
 <%@page import="net.sourceforge.fenixedu.presentationTier.tiles.LayoutLinkInjector"%>
 <html:html xhtml="true">
 <head>
@@ -13,7 +14,7 @@
 	    <tiles:useAttribute name="bundle" id="bundleT" ignore="true"/>
 	    <logic:present name="bundleT">
 	    	<logic:present name="titleK">
-	    		<bean:message key="titleK" bundle="<%= (String) bundleT %>"/>
+	    		<bean:message key="<%= (String) titleK %>" bundle="<%= (String) bundleT %>"/>
 	    	</logic:present>
 	    </logic:present>
 	     <logic:notPresent name="bundleT">
