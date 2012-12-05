@@ -79,7 +79,7 @@ public class AuthenticateKerberos extends Authenticate {
     }
 
     public IUserView run(final String username, final String password, final String requestURL, final String remoteHost)
-	    throws ExcepcaoPersistencia, ExcepcaoAutenticacao, FenixServiceException {
+	    throws ExcepcaoAutenticacao, FenixServiceException {
 
 	Person person = Person.readPersonByUsernameWithOpenedLogin(username);
 	if (person == null) {
