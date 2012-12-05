@@ -2,12 +2,11 @@ package net.sourceforge.fenixedu.presentationTier.Action;
 
 import javax.servlet.http.HttpServletRequest;
 
-import net.sourceforge.fenixedu._development.PropertiesManager;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
+import net.sourceforge.fenixedu.applicationTier.Servico.Authenticate;
 import net.sourceforge.fenixedu.applicationTier.Servico.ExcepcaoAutenticacao;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 
 import org.apache.struts.action.ActionError;
 import org.apache.struts.action.ActionErrors;
@@ -16,8 +15,8 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 
-import pt.ist.fenixWebFramework.FenixWebFramework;
 import pt.ist.fenixWebFramework.Config.CasConfig;
+import pt.ist.fenixWebFramework.FenixWebFramework;
 
 public class LocalAuthenticationAction extends BaseAuthenticationAction {
 
@@ -36,11 +35,7 @@ public class LocalAuthenticationAction extends BaseAuthenticationAction {
 	final String password = (String) authenticationForm.get("password");
 	final String requestURL = request.getRequestURL().toString();
 
-	final Object argsAutenticacao[] = { username, password, requestURL, remoteHostName };
-	final IUserView userView = (IUserView) ServiceManagerServiceFactory.executeService(PropertiesManager
-		.getProperty("authenticationService"), argsAutenticacao);
-
-	return userView;
+	return new Authenticate().run(username, password, requestURL, remoteHostName);
     }
 
     @Override

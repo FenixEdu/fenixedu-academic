@@ -55,6 +55,31 @@ public class Sender extends Sender_Base {
 	deleteDomainObject();
     }
 
+    public static boolean hasAvailableSender() {
+	final IUserView userView = UserView.getUser();
+	if (userView != null) {
+	    if (userView.hasRoleType(RoleType.MANAGER)) {
+		return true;
+	    }
+
+	    final Person person = userView.getPerson();
+	    if (person != null && person.hasAnyMessages()) {
+		return true;
+	    }
+
+	    for (final Sender sender : RootDomainObject.getInstance().getUtilEmailSendersSet()) {
+		if (sender.allows(userView)) {
+		    return true;
+		}
+	    }
+	}
+	return false;
+    }
+
+    protected boolean allows(final IUserView userView) {
+	return getMembers().allows(userView);
+    }
+
     public static Set<Sender> getAvailableSenders() {
 	final IUserView userView = UserView.getUser();
 
@@ -66,17 +91,6 @@ public class Sender extends Sender_Base {
 	}
 
 	return senders;
-    }
-
-    public static boolean userHasRecipients() {
-	Set<Sender> senders = getAvailableSenders();
-	if (senders != null && !senders.isEmpty()) {
-	    for (final Sender sender : senders) {
-		if (sender.hasAnyRecipients())
-		    return true;
-	    }
-	}
-	return false;
     }
 
     @Service

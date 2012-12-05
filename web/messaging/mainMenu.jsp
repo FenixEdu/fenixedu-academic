@@ -29,15 +29,13 @@
 		</html:link>
 	</li>
 --%>
-	<% if (!Sender.getAvailableSenders().isEmpty()) { %>
+	<% if (Sender.hasAvailableSender()) { %>
 		<li class="navheader"><bean:message bundle="MESSAGING_RESOURCES" key="label.emails"/></li>
-		<% if (Sender.userHasRecipients()) { %>
 		<li>
 			<html:link page="/emails.do?method=newEmail">
 				<bean:message bundle="MESSAGING_RESOURCES" key="label.email.new"/>
 			</html:link>
 		</li>
-		<% } %>
 		<li>
 			<html:link page="/emails.do?method=viewSentEmails">
 				<bean:message bundle="MESSAGING_RESOURCES" key="label.email.sent"/>
