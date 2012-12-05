@@ -2,9 +2,11 @@ package net.sourceforge.fenixedu.applicationTier.Servico.teacher.finalDegreeWork
 
 import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.Branch;
+import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.FinalDegreeWorkGroup;
@@ -52,8 +54,9 @@ public class TransposeFinalDegreeWorkProposalToExecutionYear {
 
 	Proposal originalProposal = Proposal.fromOID(originalProposalOIDLong);
 
-	if (originalProposal == null || targetExecutionYear == null)
+	if (originalProposal == null || targetExecutionYear == null) {
 	    throw new FenixServiceException("The arguments provided were invalid!");
+	}
 
 	/*
 	 * Scheduling lookup
@@ -72,8 +75,19 @@ public class TransposeFinalDegreeWorkProposalToExecutionYear {
 
 	Scheduleing newScheduleing = executionDegree.getScheduling();
 
+	/*
+	 * If scheduling is null, move the proposal to the most recent
+	 * executionDegree with proposal period open
+	 */
+
 	if (newScheduleing == null) {
-	    throw new ProposalPeriodNotDefined();
+	    final DegreeCurricularPlan dcp = executionDegree.getDegreeCurricularPlan();
+	    final Set<ExecutionDegree> degrees = dcp.getExecutionDegreesWithProposalPeriodOpen();
+	    if (degrees.isEmpty()) {
+		throw new ProposalPeriodNotDefined();
+	    } else {
+		newScheduleing = degrees.iterator().next().getScheduling();
+	    }
 	}
 
 	/*
@@ -106,8 +120,9 @@ public class TransposeFinalDegreeWorkProposalToExecutionYear {
 		}
 	    }
 
-	    if (!found)
+	    if (!found) {
 		throw new FenixServiceException("The target Scheduling is not compatible with the source Scheduling");
+	    }
 
 	}
 

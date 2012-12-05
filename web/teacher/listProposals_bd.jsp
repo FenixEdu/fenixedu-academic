@@ -3,26 +3,50 @@
 <html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
+<%@ taglib uri="/WEB-INF/taglibs-datetime.tld" prefix="dt"%>
 
 <h2>
-	<bean:message bundle="APPLICATION_RESOURCES" key="link.manage.finalWork"/>
+<bean:message bundle="APPLICATION_RESOURCES" key="link.manage.finalWork"/>
 </h2>
+
+<h3><bean:write name="explicitDegree"/></h3>
 
 <p>
 	<span class="error0"><!-- Error messages go here --><html:errors /></span>
 </p>
 
+<p class='infoop2'>
+	<bean:message bundle="APPLICATION_RESOURCES" key="finalDegreeWorkProposal.createProposalFromPrevious.info"/>
+</p>
 <table class="mtop15">
 	<tr>
-		<th class="listClasses-header">
-			<bean:write name="explicitDegree"/>
-		</th>
+		<th class="listClasses-header"><bean:message bundle="APPLICATION_RESOURCES" key="label.executionYear"/></th>
+		<th class="listClasses-header" colspan="2"><bean:message bundle="APPLICATION_RESOURCES" key="label.begin"/></th>
+		<th class="listClasses-header" colspan="2"><bean:message bundle="APPLICATION_RESOURCES" key="label.end"/></th>
 	</tr>
-	<tr>
-		<th class="listClasses-header">
-			<bean:write name="explicitYear"/>
-		</th>
+	<logic:iterate id="degree" name="executionDegrees" type="net.sourceforge.fenixedu.domain.ExecutionDegree">
+	<% if (degree.getExecutionYear().getName().equals(request.getAttribute("explicitYear"))) { %> 
+		<tr class='selected'>
+	 <% } else { %>
+	 	<tr>
+	 <% } %>
+		<td>
+			<bean:write name="degree" property="executionYear.nextExecutionYear.name"/>
+		</td>
+		<td>
+			<dt:format pattern="yyyy-MM-dd"><bean:write name="degree" property="scheduling.startOfProposalPeriod.time"/></dt:format>
+		</td>
+		<td>
+			<dt:format pattern="HH:mm:ss"><bean:write name="degree" property="scheduling.startOfProposalPeriod.time"/></dt:format>
+		</td>
+		<td>
+			<dt:format pattern="yyyy-MM-dd"><bean:write name="degree" property="scheduling.endOfProposalPeriod.time"/></dt:format>
+		</td>
+		<td>
+			<dt:format pattern="HH:mm:ss"><bean:write name="degree" property="scheduling.endOfProposalPeriod.time"/></dt:format>
+		</td>
 	</tr>
+	</logic:iterate>
 </table>
 
 <logic:present name="proposals">

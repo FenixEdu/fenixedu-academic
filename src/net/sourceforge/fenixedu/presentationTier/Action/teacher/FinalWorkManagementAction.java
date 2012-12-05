@@ -10,6 +10,7 @@ import java.util.Comparator;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Set;
 import java.util.TreeSet;
 
 import javax.servlet.http.HttpServletRequest;
@@ -125,7 +126,7 @@ public class FinalWorkManagementAction extends FenixDispatchAction {
 
 	Integer min = Integer.valueOf(minimumNumberOfGroupElements);
 	Integer max = Integer.valueOf(maximumNumberOfGroupElements);
-	if ((min.intValue() > max.intValue()) || (min.intValue() <= 0)) {
+	if (min.intValue() > max.intValue() || min.intValue() <= 0) {
 	    ActionErrors actionErrors = new ActionErrors();
 	    actionErrors.add("finalWorkInformationForm.numberGroupElements.invalidInterval", new ActionError(
 		    "finalWorkInformationForm.numberGroupElements.invalidInterval"));
@@ -135,8 +136,8 @@ public class FinalWorkManagementAction extends FenixDispatchAction {
 
 	Integer orientatorCreditsPercentage = Integer.valueOf(responsibleCreditsPercentage);
 	Integer coorientatorCreditsPercentage = Integer.valueOf(coResponsibleCreditsPercentage);
-	if ((orientatorCreditsPercentage.intValue() < 0) || (coorientatorCreditsPercentage.intValue() < 0)
-		|| (orientatorCreditsPercentage.intValue() + coorientatorCreditsPercentage.intValue() != 100)) {
+	if (orientatorCreditsPercentage.intValue() < 0 || coorientatorCreditsPercentage.intValue() < 0
+		|| orientatorCreditsPercentage.intValue() + coorientatorCreditsPercentage.intValue() != 100) {
 	    ActionErrors actionErrors = new ActionErrors();
 	    actionErrors.add("finalWorkInformationForm.invalidCreditsPercentageDistribuition", new ActionError(
 		    "finalWorkInformationForm.invalidCreditsPercentageDistribuition"));
@@ -161,7 +162,7 @@ public class FinalWorkManagementAction extends FenixDispatchAction {
 	infoFinalWorkProposal.setMaximumNumberOfGroupElements(Integer.valueOf(maximumNumberOfGroupElements));
 	infoFinalWorkProposal.setObservations(observations);
 	infoFinalWorkProposal.setLocation(location);
-	DegreeType tipoCurso = (degreeType != null && degreeType.length() > 0) ? DegreeType.valueOf(degreeType) : null;
+	DegreeType tipoCurso = degreeType != null && degreeType.length() > 0 ? DegreeType.valueOf(degreeType) : null;
 	infoFinalWorkProposal.setDegreeType(tipoCurso);
 
 	infoFinalWorkProposal.setOrientator(new InfoPerson((Person) rootDomainObject.readPartyByOID(Integer
@@ -288,6 +289,7 @@ public class FinalWorkManagementAction extends FenixDispatchAction {
 	return mapping.findForward("chooseDegreeForFinalWorkProposal");
     }
 
+    @SuppressWarnings({ "deprecation", "unused" })
     public ActionForward listProposals(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) throws FenixActionException, FenixFilterException, FenixServiceException,
 	    IllegalAccessException, InstantiationException {
@@ -307,54 +309,40 @@ public class FinalWorkManagementAction extends FenixDispatchAction {
 	Integer executionDegreeInteger = Integer.valueOf(executionDegreeString);
 	ExecutionDegree executionDegree = (ExecutionDegree) readDomainObject(request, ExecutionDegree.class,
 		executionDegreeInteger);
-	request.setAttribute("degree", executionDegreeString);
-	request.setAttribute("explicitDegree", executionDegree.getDegree().getName());
 
-	String executionYearString = (String) getFromRequest(request, "executionYear");
-	Integer executionYearInteger = Integer.valueOf(executionYearString);
-	ExecutionYear executionYear = (ExecutionYear) readDomainObject(request, ExecutionYear.class, executionYearInteger);
-	request.setAttribute("executionYear", executionYearString);
-	request.setAttribute("explicitYear", executionYear.getName());
-
-	final ExecutionDegree currentExecutionDegree = getCurrentExecutionDegree(executionDegree.getDegreeCurricularPlan());
-	if (currentExecutionDegree == null) {
+	if (executionDegree == null) {
 	    ActionErrors actionErrors = new ActionErrors();
 	    actionErrors.add("finalDegreeWorkProposal.ProposalPeriod.interval.undefined", new ActionError(
 		    "finalDegreeWorkProposal.ProposalPeriod.interval.undefined"));
 	    saveErrors(request, actionErrors);
 	    return mapping.findForward("OutOfSubmisionPeriod");
 	} else {
-	    final InfoScheduleing infoScheduleing = ReadFinalDegreeWorkProposalSubmisionPeriod.run(currentExecutionDegree);
-	    if (infoScheduleing == null || infoScheduleing.getStartOfProposalPeriod() == null
-		    || infoScheduleing.getEndOfProposalPeriod() == null
-		    || infoScheduleing.getStartOfProposalPeriod().getTime() > Calendar.getInstance().getTimeInMillis()
-		    || infoScheduleing.getEndOfProposalPeriod().getTime() < Calendar.getInstance().getTimeInMillis()) {
+	    final DegreeCurricularPlan dcp = executionDegree.getDegreeCurricularPlan();
+	    final Set<ExecutionDegree> executionDegrees = dcp.getExecutionDegreesWithProposalPeriodOpen();
+	    if (executionDegrees.isEmpty()) {
 		ActionErrors actionErrors = new ActionErrors();
-		if (infoScheduleing != null && infoScheduleing.getStartOfProposalPeriod() != null
-			&& infoScheduleing.getEndOfProposalPeriod() != null) {
-		    actionErrors.add("finalDegreeWorkProposal.ProposalPeriod.validator.OutOfPeriod", new ActionError(
-			    "finalDegreeWorkProposal.ProposalPeriod.validator.OutOfPeriod"));
-		    request.setAttribute("infoScheduleing", infoScheduleing);
-		} else {
-		    actionErrors.add("finalDegreeWorkProposal.ProposalPeriod.interval.undefined", new ActionError(
-			    "finalDegreeWorkProposal.ProposalPeriod.interval.undefined"));
-		}
+		actionErrors.add("finalDegreeWorkProposal.ProposalPeriod.interval.undefined", new ActionError(
+			"finalDegreeWorkProposal.ProposalPeriod.interval.undefined"));
 		saveErrors(request, actionErrors);
-
 		return mapping.findForward("OutOfSubmisionPeriod");
 	    }
-	}
 
-	return mapping.findForward("listProposals");
-    }
+	    /*
+	     * This is done this way because executionDegrees set is a tree set
+	     * reversely order by ExecutionYear, so the first element in the set
+	     * is the most recent degree which has a submission proposal period
+	     * opened.
+	     */
+	    final ExecutionDegree recentDegree = executionDegrees.iterator().next();
+	    request.setAttribute("executionYear", recentDegree.getExecutionYear().getIdInternal().toString());
+	    request.setAttribute("explicitYear", recentDegree.getExecutionYear().getName());
 
-    private ExecutionDegree getCurrentExecutionDegree(final DegreeCurricularPlan degreeCurricularPlan) {
-	for (final ExecutionDegree executionDegree : degreeCurricularPlan.getExecutionDegreesSet()) {
-	    if (executionDegree.getExecutionYear().isCurrent()) {
-		return executionDegree;
-	    }
+	    request.setAttribute("degree", recentDegree.getIdInternal().toString());
+	    request.setAttribute("explicitDegree", recentDegree.getDegree().getName());
+
+	    request.setAttribute("executionDegrees", executionDegrees);
+	    return mapping.findForward("listProposals");
 	}
-	return null;
     }
 
     public ActionForward prepareFinalWorkInformation(ActionMapping mapping, ActionForm form, HttpServletRequest request,
@@ -601,7 +589,7 @@ public class FinalWorkManagementAction extends FenixDispatchAction {
 		if (infoProposal != null) {
 		    DynaActionForm finalWorkForm = (DynaActionForm) form;
 
-		    if ((newProposal == false) && (infoProposal.getIdInternal() != null)) {
+		    if (newProposal == false && infoProposal.getIdInternal() != null) {
 			finalWorkForm.set("idInternal", infoProposal.getIdInternal().toString());
 		    }
 
@@ -668,7 +656,7 @@ public class FinalWorkManagementAction extends FenixDispatchAction {
 		    if (infoProposal.getBranches() != null && infoProposal.getBranches().size() > 0) {
 			String[] branchList = new String[infoProposal.getBranches().size()];
 			for (int i = 0; i < infoProposal.getBranches().size(); i++) {
-			    InfoBranch infoBranch = (infoProposal.getBranches().get(i));
+			    InfoBranch infoBranch = infoProposal.getBranches().get(i);
 			    if (infoBranch != null && infoBranch.getIdInternal() != null) {
 				String brachOIDString = infoBranch.getIdInternal().toString();
 				if (brachOIDString != null && StringUtils.isNumeric(brachOIDString)) {
@@ -752,7 +740,7 @@ public class FinalWorkManagementAction extends FenixDispatchAction {
 	@Override
 	public boolean evaluate(Object arg0) {
 	    InfoGroupProposal infoGroupProposal = (InfoGroupProposal) arg0;
-	    return (infoGroupProposal.getInfoGroup() == null) ? false : groupID.equals(infoGroupProposal.getInfoGroup()
+	    return infoGroupProposal.getInfoGroup() == null ? false : groupID.equals(infoGroupProposal.getInfoGroup()
 		    .getIdInternal());
 	}
 

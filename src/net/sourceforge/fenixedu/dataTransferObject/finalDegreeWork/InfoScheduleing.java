@@ -4,6 +4,7 @@
  */
 package net.sourceforge.fenixedu.dataTransferObject.finalDegreeWork;
 
+import java.util.Calendar;
 import java.util.Date;
 
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
@@ -50,6 +51,7 @@ public class InfoScheduleing extends InfoObject {
 	super();
     }
 
+    @Override
     public boolean equals(Object obj) {
 	boolean result = false;
 	if (obj instanceof InfoScheduleing) {
@@ -60,6 +62,7 @@ public class InfoScheduleing extends InfoObject {
 	return result;
     }
 
+    @Override
     public String toString() {
 	String result = "[InfoScheduleing";
 	result += ", idInternal=" + getIdInternal();
@@ -249,5 +252,13 @@ public class InfoScheduleing extends InfoObject {
 
     public void setMinimumCompletedCreditsSecondCycle(Integer minimumCompletedCreditsSecondCycle) {
 	this.minimumCompletedCreditsSecondCycle = minimumCompletedCreditsSecondCycle;
+    }
+
+    public boolean isProposalPeriodOpen() {
+	if (getStartOfCandidacyPeriod() == null || getEndOfCandidacyPeriod() == null) {
+	    return false;
+	}
+	final long currentTime = Calendar.getInstance().getTimeInMillis();
+	return currentTime >= getStartOfCandidacyPeriod().getTime() && currentTime <= getEndOfCandidacyPeriod().getTime();
     }
 }

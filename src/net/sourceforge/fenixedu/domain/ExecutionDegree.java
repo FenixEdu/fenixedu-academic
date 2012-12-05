@@ -131,10 +131,12 @@ public class ExecutionDegree extends ExecutionDegree_Base implements Comparable<
 
 	if (canBeDeleted()) {
 
-	    for (; hasAnyCoordinatorsList(); getCoordinatorsList().get(0).delete())
+	    for (; hasAnyCoordinatorsList(); getCoordinatorsList().get(0).delete()) {
 		;
-	    for (; hasAnyScientificCommissionMembers(); getScientificCommissionMembers().get(0).delete())
+	    }
+	    for (; hasAnyScientificCommissionMembers(); getScientificCommissionMembers().get(0).delete()) {
 		;
+	    }
 
 	    if (hasGratuityValues()) {
 		getGratuityValues().delete();
@@ -144,8 +146,9 @@ public class ExecutionDegree extends ExecutionDegree_Base implements Comparable<
 	    removeDegreeCurricularPlan();
 	    removeCampus();
 
-	    for (OccupationPeriodReference reference : getOccupationPeriodReferences())
+	    for (OccupationPeriodReference reference : getOccupationPeriodReferences()) {
 		reference.delete();
+	    }
 
 	    removeRootDomainObject();
 	    deleteDomainObject();
@@ -613,13 +616,13 @@ public class ExecutionDegree extends ExecutionDegree_Base implements Comparable<
     }
 
     private boolean isSpecialAuthorization(MarkSheetType markSheetType, ExecutionSemester executionSemester, Date evaluationDate) {
-	return (markSheetType == MarkSheetType.SPECIAL_AUTHORIZATION);
+	return markSheetType == MarkSheetType.SPECIAL_AUTHORIZATION;
     }
 
     private boolean checkOccupationPeriod(Date evaluationDate, ExecutionSemester executionSemester, MarkSheetType markSheetType) {
 	OccupationPeriod occupationPeriod = getOccupationPeriodFor(executionSemester, markSheetType);
-	return (evaluationDate != null && occupationPeriod != null && occupationPeriod
-		.nestedOccupationPeriodsContainsDay(YearMonthDay.fromDateFields(evaluationDate)));
+	return evaluationDate != null && occupationPeriod != null
+		&& occupationPeriod.nestedOccupationPeriodsContainsDay(YearMonthDay.fromDateFields(evaluationDate));
     }
 
     public OccupationPeriod getOccupationPeriodFor(ExecutionSemester executionSemester, MarkSheetType markSheetType) {
@@ -636,10 +639,11 @@ public class ExecutionDegree extends ExecutionDegree_Base implements Comparable<
 
 	default:
 	}
-	if (periods.isEmpty())
+	if (periods.isEmpty()) {
 	    return null;
-	else
+	} else {
 	    return periods.iterator().next();
+	}
     }
 
     public List<Coordinator> getResponsibleCoordinators() {
@@ -653,7 +657,7 @@ public class ExecutionDegree extends ExecutionDegree_Base implements Comparable<
     }
 
     public boolean hasAnyResponsibleCoordinators() {
-	return (!getResponsibleCoordinators().isEmpty());
+	return !getResponsibleCoordinators().isEmpty();
     }
 
     public boolean isCoordinationTeamFormed() {
@@ -787,7 +791,7 @@ public class ExecutionDegree extends ExecutionDegree_Base implements Comparable<
 	    }
 	}
 	Collections.sort(abstractStudentNumbers);
-	return (!abstractStudentNumbers.isEmpty()) ? abstractStudentNumbers.get(studentNumberPosition) : null;
+	return !abstractStudentNumbers.isEmpty() ? abstractStudentNumbers.get(studentNumberPosition) : null;
     }
 
     public List<ShiftDistributionEntry> getDistributedShiftsFor(Integer studentNumber) {
@@ -819,7 +823,7 @@ public class ExecutionDegree extends ExecutionDegree_Base implements Comparable<
     public List<StudentCandidacy> getFirstCycleCandidaciesBy(CandidacySituationType candidacySituationType) {
 	final List<StudentCandidacy> result = new ArrayList<StudentCandidacy>();
 	for (final StudentCandidacy candidacy : getFirstCycleCandidacies()) {
-	    //TODO remove this first if when data is corrected
+	    // TODO remove this first if when data is corrected
 	    if (candidacy.getActiveCandidacySituation() != null) {
 		if (candidacy.getActiveCandidacySituation().getCandidacySituationType() == candidacySituationType) {
 		    result.add(candidacy);
@@ -958,8 +962,9 @@ public class ExecutionDegree extends ExecutionDegree_Base implements Comparable<
 		List<ExecutionDegree> result = new ArrayList<ExecutionDegree>();
 		result.addAll(year.getExecutionDegrees());
 		return result;
-	    } else
+	    } else {
 		academicCalendarEntry = academicCalendarEntry.getParentEntry();
+	    }
 	}
 
 	return Collections.emptyList();
@@ -1095,10 +1100,11 @@ public class ExecutionDegree extends ExecutionDegree_Base implements Comparable<
 
     private OccupationPeriod getOnePeriod(OccupationPeriodType type, Integer semester) {
 	Collection<OccupationPeriod> periods = getPeriods(type, semester);
-	if (periods.isEmpty())
+	if (periods.isEmpty()) {
 	    return null;
-	else
+	} else {
 	    return periods.iterator().next();
+	}
     }
 
     public void setPeriodForType(OccupationPeriod period, OccupationPeriodType type, Integer semester) {
@@ -1110,8 +1116,9 @@ public class ExecutionDegree extends ExecutionDegree_Base implements Comparable<
 	    return;
 	}
 
-	for (OccupationPeriodReference reference : periods)
+	for (OccupationPeriodReference reference : periods) {
 	    reference.setOccupationPeriod(period);
+	}
 
     }
 
@@ -1134,14 +1141,17 @@ public class ExecutionDegree extends ExecutionDegree_Base implements Comparable<
 	    @Override
 	    public boolean apply(OccupationPeriodReference reference) {
 
-		if (type != null && reference.getPeriodType() != type)
+		if (type != null && reference.getPeriodType() != type) {
 		    return false;
+		}
 
-		if (semester != null && reference.getSemester() != null && reference.getSemester() != semester)
+		if (semester != null && reference.getSemester() != null && reference.getSemester() != semester) {
 		    return false;
+		}
 
-		if (years != null && !reference.getCurricularYears().getYears().containsAll(years))
+		if (years != null && !reference.getCurricularYears().getYears().containsAll(years)) {
 		    return false;
+		}
 
 		return true;
 	    }

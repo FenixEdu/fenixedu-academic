@@ -39,6 +39,7 @@ import net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule;
 import net.sourceforge.fenixedu.domain.degreeStructure.OptionalCurricularCourse;
 import net.sourceforge.fenixedu.domain.degreeStructure.RootCourseGroup;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.domain.finalDegreeWork.Scheduleing;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.space.Campus;
 import net.sourceforge.fenixedu.domain.student.Registration;
@@ -244,7 +245,7 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
 	    ExecutionYear beginExecutionYear) {
 
 	if (isApproved()
-		&& ((name != null && !getName().equals(name)) || (gradeScale != null && !getGradeScale().equals(gradeScale)))) {
+		&& (name != null && !getName().equals(name) || gradeScale != null && !getGradeScale().equals(gradeScale))) {
 	    throw new DomainException("error.degreeCurricularPlan.already.approved");
 	} else {
 	    commonFieldsChange(name, gradeScale);
@@ -344,8 +345,9 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
     }
 
     private Boolean getCanBeDeleted() {
-	return (canDeleteRoot() && !hasAnyStudentCurricularPlans() && !hasAnyCurricularCourseEquivalences()
-		&& !hasAnyEnrolmentPeriods() && !hasAnyCurricularCourses() && !hasAnyExecutionDegrees() && !hasAnyAreas() && canDeleteServiceAgreement());
+	return canDeleteRoot() && !hasAnyStudentCurricularPlans() && !hasAnyCurricularCourseEquivalences()
+		&& !hasAnyEnrolmentPeriods() && !hasAnyCurricularCourses() && !hasAnyExecutionDegrees() && !hasAnyAreas()
+		&& canDeleteServiceAgreement();
     }
 
     private boolean canDeleteRoot() {
@@ -353,9 +355,8 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
     }
 
     private boolean canDeleteServiceAgreement() {
-	return !hasServiceAgreementTemplate()
-		|| (!getServiceAgreementTemplate().hasAnyPostingRules() && !getServiceAgreementTemplate()
-			.hasAnyServiceAgreements());
+	return !hasServiceAgreementTemplate() || !getServiceAgreementTemplate().hasAnyPostingRules()
+		&& !getServiceAgreementTemplate().hasAnyServiceAgreements();
     }
 
     public void delete() {
@@ -374,8 +375,9 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
 	    }
 	    removeRootDomainObject();
 	    deleteDomainObject();
-	} else
+	} else {
 	    throw new DomainException("error.degree.curricular.plan.cant.delete");
+	}
     }
 
     public String print() {
@@ -412,8 +414,9 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
 	    if (academicCalendarEntry instanceof AcademicYearCE) {
 		ExecutionYear year = ExecutionYear.getExecutionYear((AcademicYearCE) academicCalendarEntry);
 		for (ExecutionDegree executionDegree : getExecutionDegreesSet()) {
-		    if (executionDegree.getExecutionYear().getAcademicInterval().equals(year.getAcademicInterval()))
+		    if (executionDegree.getExecutionYear().getAcademicInterval().equals(year.getAcademicInterval())) {
 			return executionDegree;
+		    }
 		}
 	    }
 
@@ -421,6 +424,23 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
 	}
 
 	return null;
+    }
+
+    public Set<ExecutionDegree> getExecutionDegreesWithProposalPeriodOpen() {
+	final Set<ExecutionDegree> executionDegrees = new TreeSet<ExecutionDegree>(new Comparator<ExecutionDegree>() {
+
+	    @Override
+	    public int compare(ExecutionDegree o1, ExecutionDegree o2) {
+		return o2.getExecutionYear().compareTo(o1.getExecutionYear());
+	    }
+	});
+	for (final ExecutionDegree executionDegree : getExecutionDegreesSet()) {
+	    final Scheduleing scheduling = executionDegree.getScheduling();
+	    if (scheduling != null && scheduling.isInsideProposalSubmissionPeriod()) {
+		executionDegrees.add(executionDegree);
+	    }
+	}
+	return Collections.unmodifiableSet(executionDegrees);
     }
 
     public Set<ExecutionYear> getExecutionYears() {
@@ -630,7 +650,7 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
 
     public EnrolmentPeriodInCurricularCourses getActualEnrolmentPeriod() {
 	for (final EnrolmentPeriod enrolmentPeriod : this.getEnrolmentPeriods()) {
-	    if ((enrolmentPeriod instanceof EnrolmentPeriodInCurricularCourses) && enrolmentPeriod.isValid()) {
+	    if (enrolmentPeriod instanceof EnrolmentPeriodInCurricularCourses && enrolmentPeriod.isValid()) {
 		return (EnrolmentPeriodInCurricularCourses) enrolmentPeriod;
 	    }
 	}
@@ -644,7 +664,7 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
     public EnrolmentPeriodInSpecialSeasonEvaluations getNextSpecialSeasonEnrolmentPeriod() {
 	final List<EnrolmentPeriodInSpecialSeasonEvaluations> positivesSet = new ArrayList<EnrolmentPeriodInSpecialSeasonEvaluations>();
 	for (final EnrolmentPeriod enrolmentPeriod : this.getEnrolmentPeriods()) {
-	    if ((enrolmentPeriod instanceof EnrolmentPeriodInSpecialSeasonEvaluations) && enrolmentPeriod.isUpcomingPeriod()) {
+	    if (enrolmentPeriod instanceof EnrolmentPeriodInSpecialSeasonEvaluations && enrolmentPeriod.isUpcomingPeriod()) {
 		positivesSet.add((EnrolmentPeriodInSpecialSeasonEvaluations) enrolmentPeriod);
 	    }
 	}
@@ -654,8 +674,8 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
 
     public boolean hasOpenSpecialSeasonEnrolmentPeriod(ExecutionSemester executionSemester) {
 	for (final EnrolmentPeriod enrolmentPeriod : this.getEnrolmentPeriods()) {
-	    if ((enrolmentPeriod instanceof EnrolmentPeriodInSpecialSeasonEvaluations)
-		    && enrolmentPeriod.isFor(executionSemester) && enrolmentPeriod.isValid()) {
+	    if (enrolmentPeriod instanceof EnrolmentPeriodInSpecialSeasonEvaluations && enrolmentPeriod.isFor(executionSemester)
+		    && enrolmentPeriod.isValid()) {
 		return true;
 	    }
 	}
@@ -664,7 +684,7 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
 
     public EnrolmentPeriodInCurricularCoursesSpecialSeason getActualEnrolmentPeriodInCurricularCoursesSpecialSeason() {
 	for (final EnrolmentPeriod enrolmentPeriod : this.getEnrolmentPeriods()) {
-	    if ((enrolmentPeriod instanceof EnrolmentPeriodInCurricularCoursesSpecialSeason) && enrolmentPeriod.isValid()) {
+	    if (enrolmentPeriod instanceof EnrolmentPeriodInCurricularCoursesSpecialSeason && enrolmentPeriod.isValid()) {
 		return (EnrolmentPeriodInCurricularCoursesSpecialSeason) enrolmentPeriod;
 	    }
 	}
@@ -674,7 +694,7 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
     public boolean hasOpenEnrolmentPeriodInCurricularCoursesSpecialSeason(final ExecutionSemester executionSemester) {
 	for (final EnrolmentPeriod enrolmentPeriod : getEnrolmentPeriods()) {
 	    if (enrolmentPeriod instanceof EnrolmentPeriodInCurricularCoursesSpecialSeason) {
-		final EnrolmentPeriodInCurricularCoursesSpecialSeason enrolmentPeriodInCurricularCourses = ((EnrolmentPeriodInCurricularCoursesSpecialSeason) enrolmentPeriod);
+		final EnrolmentPeriodInCurricularCoursesSpecialSeason enrolmentPeriodInCurricularCourses = (EnrolmentPeriodInCurricularCoursesSpecialSeason) enrolmentPeriod;
 		if (enrolmentPeriodInCurricularCourses.isFor(executionSemester) && enrolmentPeriodInCurricularCourses.isValid()) {
 		    return true;
 		}
@@ -686,7 +706,7 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
 
     public EnrolmentPeriodInCurricularCoursesFlunkedSeason getActualEnrolmentPeriodInCurricularCoursesFlunkedSeason() {
 	for (final EnrolmentPeriod enrolmentPeriod : this.getEnrolmentPeriods()) {
-	    if ((enrolmentPeriod instanceof EnrolmentPeriodInCurricularCoursesFlunkedSeason) && enrolmentPeriod.isValid()) {
+	    if (enrolmentPeriod instanceof EnrolmentPeriodInCurricularCoursesFlunkedSeason && enrolmentPeriod.isValid()) {
 		return (EnrolmentPeriodInCurricularCoursesFlunkedSeason) enrolmentPeriod;
 	    }
 	}
@@ -696,7 +716,7 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
     public boolean hasOpenEnrolmentPeriodInCurricularCoursesFor(final ExecutionSemester executionSemester) {
 	for (final EnrolmentPeriod enrolmentPeriod : getEnrolmentPeriods()) {
 	    if (enrolmentPeriod instanceof EnrolmentPeriodInCurricularCourses) {
-		final EnrolmentPeriodInCurricularCourses enrolmentPeriodInCurricularCourses = ((EnrolmentPeriodInCurricularCourses) enrolmentPeriod);
+		final EnrolmentPeriodInCurricularCourses enrolmentPeriodInCurricularCourses = (EnrolmentPeriodInCurricularCourses) enrolmentPeriod;
 		if (enrolmentPeriodInCurricularCourses.isFor(executionSemester) && enrolmentPeriodInCurricularCourses.isValid()) {
 		    return true;
 		}
@@ -710,7 +730,7 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
 	final DateTime now = new DateTime();
 	final List<EnrolmentPeriodInCurricularCourses> result = new ArrayList<EnrolmentPeriodInCurricularCourses>();
 	for (final EnrolmentPeriod enrolmentPeriod : this.getEnrolmentPeriods()) {
-	    if ((enrolmentPeriod instanceof EnrolmentPeriodInCurricularCourses)
+	    if (enrolmentPeriod instanceof EnrolmentPeriodInCurricularCourses
 		    && enrolmentPeriod.getStartDateDateTime().isAfter(now)) {
 		result.add((EnrolmentPeriodInCurricularCourses) enrolmentPeriod);
 	    }
@@ -726,7 +746,7 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
 	final DateTime now = new DateTime();
 	final List<EnrolmentPeriodInCurricularCoursesSpecialSeason> result = new ArrayList<EnrolmentPeriodInCurricularCoursesSpecialSeason>();
 	for (EnrolmentPeriod enrolmentPeriod : this.getEnrolmentPeriods()) {
-	    if ((enrolmentPeriod instanceof EnrolmentPeriodInCurricularCoursesSpecialSeason)
+	    if (enrolmentPeriod instanceof EnrolmentPeriodInCurricularCoursesSpecialSeason
 		    && enrolmentPeriod.getStartDateDateTime().isAfter(now)) {
 		result.add((EnrolmentPeriodInCurricularCoursesSpecialSeason) enrolmentPeriod);
 	    }
@@ -742,7 +762,7 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
 	final DateTime now = new DateTime();
 	final List<EnrolmentPeriodInCurricularCoursesFlunkedSeason> result = new ArrayList<EnrolmentPeriodInCurricularCoursesFlunkedSeason>();
 	for (EnrolmentPeriod enrolmentPeriod : this.getEnrolmentPeriods()) {
-	    if ((enrolmentPeriod instanceof EnrolmentPeriodInCurricularCoursesFlunkedSeason)
+	    if (enrolmentPeriod instanceof EnrolmentPeriodInCurricularCoursesFlunkedSeason
 		    && enrolmentPeriod.getStartDateDateTime().isAfter(now)) {
 		result.add((EnrolmentPeriodInCurricularCoursesFlunkedSeason) enrolmentPeriod);
 	    }
@@ -756,7 +776,7 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
 
     public EnrolmentPeriodInClasses getCurrentClassesEnrollmentPeriod() {
 	for (final EnrolmentPeriod enrolmentPeriod : this.getEnrolmentPeriodsSet()) {
-	    if ((enrolmentPeriod instanceof EnrolmentPeriodInClasses)
+	    if (enrolmentPeriod instanceof EnrolmentPeriodInClasses
 		    && enrolmentPeriod.getExecutionPeriod().getState().equals(PeriodState.CURRENT)) {
 		return (EnrolmentPeriodInClasses) enrolmentPeriod;
 	    }
@@ -766,7 +786,7 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
 
     public CandidacyPeriodInDegreeCurricularPlan getCurrentCandidacyPeriodInDCP() {
 	for (final EnrolmentPeriod enrolmentPeriod : this.getEnrolmentPeriodsSet()) {
-	    if ((enrolmentPeriod instanceof CandidacyPeriodInDegreeCurricularPlan)
+	    if (enrolmentPeriod instanceof CandidacyPeriodInDegreeCurricularPlan
 		    && enrolmentPeriod.getExecutionPeriod().getExecutionYear().isCurrent()) {
 		return (CandidacyPeriodInDegreeCurricularPlan) enrolmentPeriod;
 	    }
@@ -834,8 +854,8 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
     public EnrolmentPeriodInCurricularCoursesSpecialSeason getEnrolmentPeriodInCurricularCoursesSpecialSeasonByExecutionPeriod(
 	    ExecutionSemester executionSemester) {
 	for (EnrolmentPeriod enrolmentPeriod : getEnrolmentPeriods()) {
-	    if ((enrolmentPeriod instanceof EnrolmentPeriodInCurricularCoursesSpecialSeason)
-		    && (enrolmentPeriod.getExecutionPeriod().equals(executionSemester))) {
+	    if (enrolmentPeriod instanceof EnrolmentPeriodInCurricularCoursesSpecialSeason
+		    && enrolmentPeriod.getExecutionPeriod().equals(executionSemester)) {
 		return (EnrolmentPeriodInCurricularCoursesSpecialSeason) enrolmentPeriod;
 	    }
 	}
@@ -871,16 +891,18 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
 
     public CurricularCourse getCurricularCourseByCode(String code) {
 	for (CurricularCourse curricularCourse : getCurricularCourses()) {
-	    if (curricularCourse.getCode() != null && curricularCourse.getCode().equals(code))
+	    if (curricularCourse.getCode() != null && curricularCourse.getCode().equals(code)) {
 		return curricularCourse;
+	    }
 	}
 	return null;
     }
 
     public CurricularCourse getCurricularCourseByAcronym(String acronym) {
 	for (CurricularCourse curricularCourse : getCurricularCourses()) {
-	    if (curricularCourse.getAcronym().equals(acronym))
+	    if (curricularCourse.getAcronym().equals(acronym)) {
 		return curricularCourse;
+	    }
 	}
 	return null;
     }
@@ -1050,8 +1072,9 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
 	IDegreeCurricularPlanStrategy degreeCurricularPlanStrategy = degreeCurricularPlanStrategyFactory
 		.getDegreeCurricularPlanStrategy(this);
 
-	if (grade.isEmpty())
+	if (grade.isEmpty()) {
 	    return false;
+	}
 
 	return degreeCurricularPlanStrategy.checkMark(grade.getValue());
     }
@@ -1146,8 +1169,8 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
 
     public Boolean getUserCanBuild() {
 	Person person = AccessControl.getPerson();
-	return (person.hasRole(RoleType.DEGREE_ADMINISTRATIVE_OFFICE_SUPER_USER) || person.hasRole(RoleType.MANAGER)
-		|| person.hasRole(RoleType.OPERATOR) || this.getCurricularPlanMembersGroup().isMember(person));
+	return person.hasRole(RoleType.DEGREE_ADMINISTRATIVE_OFFICE_SUPER_USER) || person.hasRole(RoleType.MANAGER)
+		|| person.hasRole(RoleType.OPERATOR) || this.getCurricularPlanMembersGroup().isMember(person);
     }
 
     public Boolean getCanModify() {
@@ -1156,7 +1179,7 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
 	}
 
 	final List<ExecutionDegree> executionDegrees = getExecutionDegrees();
-	return (executionDegrees.size() > 1) ? false : executionDegrees.isEmpty()
+	return executionDegrees.size() > 1 ? false : executionDegrees.isEmpty()
 		|| executionDegrees.get(0).getExecutionYear().isCurrent();
     }
 
@@ -1749,11 +1772,13 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
     public Set<BranchCourseGroup> getBranchesByType(net.sourceforge.fenixedu.domain.degreeStructure.BranchType branchType) {
 	final Set<BranchCourseGroup> branchesByType = new TreeSet<BranchCourseGroup>(DegreeModule.COMPARATOR_BY_NAME);
 	final Set<BranchCourseGroup> branches = getAllBranches();
-	if (branches == null)
+	if (branches == null) {
 	    return null;
+	}
 	for (BranchCourseGroup branch : branches) {
-	    if (branch.getBranchType() == branchType)
+	    if (branch.getBranchType() == branchType) {
 		branchesByType.add(branch);
+	    }
 	}
 	return branchesByType;
     }
@@ -2045,29 +2070,34 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
 	return Collections.max(getExecutionDegreesSet(), ExecutionDegree.EXECUTION_DEGREE_COMPARATORY_BY_YEAR).getExecutionYear();
     }
 
-	@Deprecated
-	public java.util.Date getEndDate(){
-		org.joda.time.YearMonthDay ymd = getEndDateYearMonthDay();
-		return (ymd == null) ? null : new java.util.Date(ymd.getYear() - 1900, ymd.getMonthOfYear() - 1, ymd.getDayOfMonth());
-	}
+    @Deprecated
+    public java.util.Date getEndDate() {
+	org.joda.time.YearMonthDay ymd = getEndDateYearMonthDay();
+	return ymd == null ? null : new java.util.Date(ymd.getYear() - 1900, ymd.getMonthOfYear() - 1, ymd.getDayOfMonth());
+    }
 
-	@Deprecated
-	public void setEndDate(java.util.Date date){
-		if(date == null) setEndDateYearMonthDay(null);
-		else setEndDateYearMonthDay(org.joda.time.YearMonthDay.fromDateFields(date));
+    @Deprecated
+    public void setEndDate(java.util.Date date) {
+	if (date == null) {
+	    setEndDateYearMonthDay(null);
+	} else {
+	    setEndDateYearMonthDay(org.joda.time.YearMonthDay.fromDateFields(date));
 	}
+    }
 
-	@Deprecated
-	public java.util.Date getInitialDate(){
-		org.joda.time.YearMonthDay ymd = getInitialDateYearMonthDay();
-		return (ymd == null) ? null : new java.util.Date(ymd.getYear() - 1900, ymd.getMonthOfYear() - 1, ymd.getDayOfMonth());
+    @Deprecated
+    public java.util.Date getInitialDate() {
+	org.joda.time.YearMonthDay ymd = getInitialDateYearMonthDay();
+	return ymd == null ? null : new java.util.Date(ymd.getYear() - 1900, ymd.getMonthOfYear() - 1, ymd.getDayOfMonth());
+    }
+
+    @Deprecated
+    public void setInitialDate(java.util.Date date) {
+	if (date == null) {
+	    setInitialDateYearMonthDay(null);
+	} else {
+	    setInitialDateYearMonthDay(org.joda.time.YearMonthDay.fromDateFields(date));
 	}
-
-	@Deprecated
-	public void setInitialDate(java.util.Date date){
-		if(date == null) setInitialDateYearMonthDay(null);
-		else setInitialDateYearMonthDay(org.joda.time.YearMonthDay.fromDateFields(date));
-	}
-
+    }
 
 }
