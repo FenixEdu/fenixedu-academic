@@ -28,6 +28,7 @@ import net.sourceforge.fenixedu.dataTransferObject.library.LibraryCardDTO;
 import net.sourceforge.fenixedu.dataTransferObject.person.ExternalPersonBean;
 import net.sourceforge.fenixedu.dataTransferObject.person.PersonBean;
 import net.sourceforge.fenixedu.domain.accessControl.PersonGroup;
+import net.sourceforge.fenixedu.domain.accessControl.RoleGroup;
 import net.sourceforge.fenixedu.domain.accounting.AcademicEvent;
 import net.sourceforge.fenixedu.domain.accounting.AccountingTransaction;
 import net.sourceforge.fenixedu.domain.accounting.Entry;
@@ -138,6 +139,9 @@ import net.sourceforge.fenixedu.domain.thesis.Thesis;
 import net.sourceforge.fenixedu.domain.thesis.ThesisEvaluationParticipant;
 import net.sourceforge.fenixedu.domain.thesis.ThesisParticipationType;
 import net.sourceforge.fenixedu.domain.util.FactoryExecutor;
+import net.sourceforge.fenixedu.domain.util.email.Message;
+import net.sourceforge.fenixedu.domain.util.email.Recipient;
+import net.sourceforge.fenixedu.domain.util.email.Sender;
 import net.sourceforge.fenixedu.domain.vigilancy.ExamCoordinator;
 import net.sourceforge.fenixedu.domain.vigilancy.UnavailablePeriod;
 import net.sourceforge.fenixedu.domain.vigilancy.Vigilancy;
@@ -145,6 +149,7 @@ import net.sourceforge.fenixedu.domain.vigilancy.VigilantGroup;
 import net.sourceforge.fenixedu.domain.vigilancy.VigilantWrapper;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.persistenceTierOracle.BackendInstance;
+import net.sourceforge.fenixedu.util.BundleUtil;
 import net.sourceforge.fenixedu.util.ByteArray;
 import net.sourceforge.fenixedu.util.ContentType;
 import net.sourceforge.fenixedu.util.Money;
@@ -1427,19 +1432,27 @@ public class Person extends Person_Base {
 	}
 
 	@Override
-	public void afterAdd(final Role insertedRole, final Person person) {
-	    if (person != null && insertedRole != null) {
-		addDependencies(insertedRole, person);
-		person.addAlias(insertedRole);
+	public void afterAdd(final Role role, final Person person) {
+	    if (person != null && role != null) {
+		addDependencies(role, person);
+		person.addAlias(role);
 		person.updateIstUsername();
+
+		if (role.getRoleType() == RoleType.MANAGER) {
+		    sendManagerRoleMembershipChangeNotification(person, "label.manager.add.subject", "label.manager.add.body");
+		}
 	    }
 	}
 
 	@Override
-	public void beforeRemove(final Role roleToBeRemoved, final Person person) {
-	    if (person != null && roleToBeRemoved != null && person.hasRole(roleToBeRemoved.getRoleType())) {
-		removeDependencies(person, roleToBeRemoved);
-		addRoleOperationLog(person, roleToBeRemoved, RoleOperationType.REMOVE);
+	public void beforeRemove(final Role role, final Person person) {
+	    if (person != null && role != null && person.hasRole(role.getRoleType())) {
+		if (role.getRoleType() == RoleType.MANAGER) {
+		    sendManagerRoleMembershipChangeNotification(person, "label.manager.remove.subject", "label.manager.remove.body");
+		}
+
+		removeDependencies(person, role);
+		addRoleOperationLog(person, role, RoleOperationType.REMOVE);
 	    }
 	}
 
@@ -1589,6 +1602,14 @@ public class Person extends Person_Base {
 		person.addPersonRoleByRoleType(roleType);
 	    }
 	}
+
+	private void sendManagerRoleMembershipChangeNotification(final Person person, final String subjectKey, final String bodyKey) {
+	    final Sender sender = RootDomainObject.getInstance().getSystemSender();
+	    final Recipient recipient = new Recipient(new RoleGroup(RoleType.MANAGER));
+	    new Message(sender, recipient, BundleUtil.getStringFromResourceBundle("resources.ApplicationResources",  subjectKey),
+		    BundleUtil.getStringFromResourceBundle("resources.ApplicationResources", bodyKey, person.getPresentationName()));
+	}
+
     }
 
     public static class EmailOptOutRoleListener extends dml.runtime.RelationAdapter<Role, Person> {
