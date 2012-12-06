@@ -1017,7 +1017,12 @@ class DomainObject {
         String name;
         String value;
     }
-
+	
+	class DomainOperationLog extends DomainObject {
+		DateTime whenDateTime;
+		String description;
+	}
+	
     class Employee extends DomainObject {
         DateTime creationDate;
         Integer employeeNumber;
@@ -1164,6 +1169,21 @@ class DomainObject {
         BigDecimal unitCreditValue;      
     }
     
+    
+    class ExecutionCourseLog extends DomainOperationLog {
+    }
+    	class ContentManagementLog extends ExecutionCourseLog {
+    	}
+    	class ProfessorshipManagementLog extends ExecutionCourseLog {
+    	}  
+    	class CurricularManagementLog extends ExecutionCourseLog {
+    	}
+    	class GroupsAndShiftsManagementLog extends ExecutionCourseLog {
+    	}
+    	class EvaluationManagementLog extends ExecutionCourseLog {
+    	}
+    
+    	
     class CourseLoad extends DomainObject {
         ShiftType type;
         BigDecimal totalQuantity;
@@ -8543,6 +8563,33 @@ class student.PersonalIngressionData extends DomainObject {
  */
 
 /* Students, Teacher and Courses Inquiries */
+
+relation DomainOperationLogPerson {
+	DomainOperationLog playsRole domainOperationLogs {
+		multiplicity*;
+	}
+	Person playsRole person{
+		multiplicity 1..1;
+	}
+}
+
+relation DomainOperationLogRootDomainObject {
+	DomainOperationLog playsRole domainOperationLogs {
+		multiplicity*;
+	}
+	RootDomainObject playsRole rootDomainObject{
+		multiplicity 1..1;
+	}
+}
+
+relation ExecutionCourseExecutionCourseLog {
+	ExecutionCourse playsRole executionCourse{
+		multiplicity 1..1;
+	}
+	ExecutionCourseLog playsRole executionCourseLogs {
+		multiplicity*;
+	}
+}
 
 relation RootDomainObjectInquiryTemplate {
     RootDomainObject playsRole rootDomainObject;
