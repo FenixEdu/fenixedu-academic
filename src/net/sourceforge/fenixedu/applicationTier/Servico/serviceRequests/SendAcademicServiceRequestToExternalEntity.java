@@ -4,12 +4,6 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.nio.charset.Charset;
-import java.security.KeyManagementException;
-import java.security.KeyStoreException;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
-import java.security.cert.CertificateException;
-import java.security.cert.X509Certificate;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -21,9 +15,7 @@ import java.util.Set;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
-import javax.net.ssl.SSLContext;
-import javax.net.ssl.TrustManager;
-import javax.net.ssl.X509TrustManager;
+import javax.ws.rs.core.MediaType;
 
 import net.sourceforge.fenixedu._development.PropertiesManager;
 import net.sourceforge.fenixedu.applicationTier.FenixService;
@@ -55,24 +47,18 @@ import org.apache.poi.hssf.usermodel.HSSFFont;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.util.HSSFColor;
 import org.apache.poi.ss.util.CellRangeAddress;
-import org.apache.util.Base64;
 import org.joda.time.YearMonthDay;
-import org.restlet.Client;
-import org.restlet.Request;
-import org.restlet.Response;
-import org.restlet.data.Method;
-import org.restlet.data.Parameter;
-import org.restlet.data.Protocol;
-import org.restlet.data.Reference;
-import org.restlet.engine.security.SslContextFactory;
-import org.restlet.representation.InputRepresentation;
-import org.restlet.util.Series;
 
 import pt.ist.fenixWebFramework.security.UserView;
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.ist.fenixWebFramework.services.Service;
 import pt.utl.ist.fenix.tools.util.excel.StyledExcelSpreadsheet;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
+
+import com.sun.jersey.api.client.Client;
+import com.sun.jersey.api.client.ClientResponse;
+import com.sun.jersey.multipart.FormDataMultiPart;
+import com.sun.jersey.multipart.file.StreamDataBodyPart;
 
 public class SendAcademicServiceRequestToExternalEntity extends FenixService {
 
@@ -83,7 +69,9 @@ public class SendAcademicServiceRequestToExternalEntity extends FenixService {
     private static final String EQUIVALENT_COURSE_LABEL = "Nome da(s) disciplina(s) considerada(s) equivalente(s)";
     private static final String GRADE_LABEL = "Classificação";
     private static final String GRADE_SCALE = "Escala";
-    private static final String MEC2006 = "MEC 2006"; //remove after when the process is open to all degrees    
+    private static final String MEC2006 = "MEC 2006"; // remove after when the
+						      // process is open to all
+						      // degrees
 
     @Checked("RolePredicates.ACADEMIC_ADMINISTRATIVE_OFFICE_PREDICATE")
     @Service
@@ -93,25 +81,16 @@ public class SendAcademicServiceRequestToExternalEntity extends FenixService {
 	academicServiceRequest.sendToExternalEntity(sendDate, justification);
 
 	if (academicServiceRequest instanceof EquivalencePlanRequest) {
-	    try {
-		sendRequestDataToExternal(academicServiceRequest);
-	    } catch (KeyManagementException e) {
-		throw new DomainException(e.getMessage(), e);
-	    } catch (NoSuchAlgorithmException e) {
-		throw new DomainException(e.getMessage(), e);
-	    } catch (KeyStoreException e) {
-		throw new DomainException(e.getMessage(), e);
-	    }
+	    sendRequestDataToExternal(academicServiceRequest);
 	}
     }
 
-    private static void sendRequestDataToExternal(final AcademicServiceRequest academicServiceRequest)
-	    throws NoSuchAlgorithmException, KeyManagementException, KeyStoreException {
-	//joantune: to everybody! guys, WTF, if you did a little sprinkle of comments it wouldn't hurt you
+    private static void sendRequestDataToExternal(final AcademicServiceRequest academicServiceRequest) {
 	final Registration registration = ((RegistrationAcademicServiceRequest) academicServiceRequest).getRegistration();
 	final ExecutionYear executionYear = ((RegistrationAcademicServiceRequest) academicServiceRequest).getExecutionYear();
 
-	if (MEC2006.equals(registration.getDegreeCurricularPlanName())) { //registration.hasIndividualCandidacy() && 
+	if (MEC2006.equals(registration.getDegreeCurricularPlanName())) { // registration.hasIndividualCandidacy()
+									  // &&
 	    final IndividualCandidacy individualCandidacy = registration.getIndividualCandidacy();
 	    final ResourceBundle bundle = ResourceBundle.getBundle("resources.AcademicAdminOffice", Language.getLocale());
 
@@ -144,74 +123,30 @@ public class SendAcademicServiceRequestToExternalEntity extends FenixService {
 	    List<IndividualCandidacyDocumentFile> candidacyDocuments = individualCandidacy != null ? individualCandidacy
 		    .getDocuments() : Collections.EMPTY_LIST;
 	    final ByteArrayOutputStream resultStream = buildDocumentsStream(candidacyDocuments, studentData.toString(),
-		    studentGrades.toString(), registration, executionYear, ((EquivalencePlanRequest) academicServiceRequest)
-			    .getNumberOfEquivalences());
+		    studentGrades.toString(), registration, executionYear,
+		    ((EquivalencePlanRequest) academicServiceRequest).getNumberOfEquivalences());
 
-	    final InputRepresentation ir = new InputRepresentation(new ByteArrayInputStream(resultStream.toByteArray()));
+	    final ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(resultStream.toByteArray());
 
-	    MessageDigest messageDigest = MessageDigest.getInstance("MD5");
-	    byte[] hashedSecret = messageDigest.digest(PropertiesManager.getProperty(
-		    "external.application.workflow.equivalences.uri.secret").getBytes());
+	    final String restEndpoint = PropertiesManager.getProperty("external.application.workflow.equivalences.uri");
+	    System.out.println("SendAcademicServiceRequestToExternalEntity : " + restEndpoint);
 
-	    final Reference reference = new Reference(PropertiesManager
-		    .getProperty("external.application.workflow.equivalences.uri")
-		    + academicServiceRequest.getServiceRequestNumber()).addQueryParameter("creator",
-		    UserView.getUser().getUsername()).addQueryParameter("requestor", registration.getPerson().getUsername())
-		    .addQueryParameter("base64Secret", new String(Base64.encode(hashedSecret)));
+	    final String restUser = PropertiesManager.getProperty("jersey.username");
+	    final String restPass = PropertiesManager.getProperty("jersey.password");
 
-	    TrustManager[] trustAllCerts = new TrustManager[] { new X509TrustManager() {
+	    Client client = new Client();
+	    final String username = UserView.getUser().getUsername();
+	    final FormDataMultiPart formDataMultiPart = new FormDataMultiPart();
+	    StreamDataBodyPart streamPart = new StreamDataBodyPart("stream", byteArrayInputStream);
+	    formDataMultiPart.bodyPart(streamPart);
+	    final String requestNumber = academicServiceRequest.getServiceRequestNumber().toString();
+	    ClientResponse response = client.resource(restEndpoint).queryParam("serviceRequestNumber", requestNumber)
+		    .queryParam("requestor", registration.getPerson().getUsername()).header("__userToLogin__", username)
+		    .header("__username__", restUser).header("__password__", restPass).type(MediaType.MULTIPART_FORM_DATA_TYPE)
+		    .post(ClientResponse.class, formDataMultiPart);
 
-		@Override
-		public X509Certificate[] getAcceptedIssuers() {
-		    return null;
-		}
-
-		@Override
-		public void checkServerTrusted(X509Certificate[] arg0, String arg1) throws CertificateException {
-		}
-
-		@Override
-		public void checkClientTrusted(X509Certificate[] arg0, String arg1) throws CertificateException {
-		}
-	    } };
-
-	    // Install the all-trusting trust manager
-	    final SSLContext sc = SSLContext.getInstance("SSL");
-	    sc.init(null, trustAllCerts, new java.security.SecureRandom());
-
-	    Client client = null;
-	    try {
-		client = new Client(Protocol.HTTPS);
-		client.setContext(new org.restlet.Context());
-		client.getContext().getAttributes().put("sslContextFactory", new SslContextFactory() {
-		    @Override
-		    public SSLContext createSslContext() throws Exception {
-			return sc;
-		    }
-
-		    @Override
-		    public void init(Series<Parameter> parameters) {
-		    }
-		});
-
-		Request request = new Request(Method.POST, reference, ir);
-		final Response response = client.handle(request);
-
-		if (response.getStatus().getCode() != 200) {
-		    String exceptionString = response.getStatus().getThrowable() != null ? response.getStatus().getThrowable()
-			    .getMessage() : "error.equivalence.externalEntity";
-		    throw new DomainException(exceptionString);
-		}
-	    } finally {
-		try {
-		    org.restlet.Context.setCurrent(null);
-		    Response.setCurrent(null);
-		    if (client != null)
-			client.stop();
-		} catch (Exception e) {
-		    // Cannot stop the client, this WILL cause a memory leak!
-		    e.printStackTrace();
-		}
+	    if (response.getStatus() != 200) {
+		throw new DomainException("error.equivalence.externalEntity");
 	    }
 	}
 
@@ -263,28 +198,32 @@ public class SendAcademicServiceRequestToExternalEntity extends FenixService {
 		}
 		fileNames.add(filename);
 		out.putNextEntry(new ZipEntry(filename));
-		//if (file.hasLocalContent()) {
+		// if (file.hasLocalContent()) {
 		out.write(file.getContents());
-		//		} else {
-		//		    final byte[] content = FileUtils.readFileInBytes("/tmp/tmp.tmp");
-		//		    out.write(content);
-		//		}
+		// } else {
+		// final byte[] content =
+		// FileUtils.readFileInBytes("/tmp/tmp.tmp");
+		// out.write(content);
+		// }
 		out.closeEntry();
 	    }
 
-	    //joantune: here we are exporting the curricular plan of the active degree (didn't felt pain! at all!)
-	    // when the origin degree registration is not active we must get the lastStudentCurricularPlan, 
+	    // joantune: here we are exporting the curricular plan of the active
+	    // degree (didn't felt pain! at all!)
+	    // when the origin degree registration is not active we must get the
+	    // lastStudentCurricularPlan,
 	    // wich is also true for the cases where the registration is active
 	    if (registration.getLastStudentCurricularPlan().hasRoot()) {
 
 		StyledExcelSpreadsheet spreadsheet = new StyledExcelSpreadsheet("Disciplinas");
 
-		//let's put it in the portrait position
+		// let's put it in the portrait position
 
 		spreadsheet.setSheetOrientation();
 
-		//let's create the shaded and unshaded styles to write the main content of the data
-		//on even lines and odd lines
+		// let's create the shaded and unshaded styles to write the main
+		// content of the data
+		// on even lines and odd lines
 		HSSFFont normalFont = spreadsheet.getWorkbook().createFont();
 		// let's make it an 10 ptr
 		normalFont.setFontHeightInPoints((short) 10);
@@ -293,7 +232,7 @@ public class SendAcademicServiceRequestToExternalEntity extends FenixService {
 		shadedNormalTextAndFont.setFont(normalFont);
 		HSSFCellStyle unshadedNormalTextAndFont = spreadsheet.getWorkbook().createCellStyle();
 		unshadedNormalTextAndFont.cloneStyleFrom(shadedNormalTextAndFont);
-		//let's shade it
+		// let's shade it
 		shadedNormalTextAndFont.setFillPattern(HSSFCellStyle.SOLID_FOREGROUND);
 		shadedNormalTextAndFont.setFillForegroundColor(HSSFColor.GREY_25_PERCENT.index);
 		HSSFCellStyle shadedUnlockedNormalTextAndFont = spreadsheet.getWorkbook().createCellStyle();
@@ -303,31 +242,32 @@ public class SendAcademicServiceRequestToExternalEntity extends FenixService {
 		unshadedUnlockedNormalTextAndFont.cloneStyleFrom(unshadedNormalTextAndFont);
 		unshadedUnlockedNormalTextAndFont.setLocked(false);
 
-		//the style to be used in the headers
+		// the style to be used in the headers
 		HSSFFont biggerFont = spreadsheet.getWorkbook().createFont();
 		// let's make it a 10 ptr
 		biggerFont.setFontHeightInPoints((short) 10);
 		biggerFont.setBoldweight(HSSFFont.BOLDWEIGHT_BOLD);
 
-		//let's 'lock' the written data
+		// let's 'lock' the written data
 		HSSFCellStyle titleStyle = spreadsheet.getExcelStyle().getTitleStyle();
 		titleStyle.setFont(biggerFont);
 		titleStyle.setLocked(true);
 
-		//also, let's make sure that it has some sort of borders *no pain here as well!!*
-		//		titleStyle.setBorderBottom(HSSFCellStyle.BORDER_THIN);
-		//		titleStyle.setBorderTop(HSSFCellStyle.BORDER_THIN);
-		//		titleStyle.setBorderRight(HSSFCellStyle.BORDER_THIN);
-		//		titleStyle.setBorderLeft(HSSFCellStyle.BORDER_THIN);
+		// also, let's make sure that it has some sort of borders *no
+		// pain here as well!!*
+		// titleStyle.setBorderBottom(HSSFCellStyle.BORDER_THIN);
+		// titleStyle.setBorderTop(HSSFCellStyle.BORDER_THIN);
+		// titleStyle.setBorderRight(HSSFCellStyle.BORDER_THIN);
+		// titleStyle.setBorderLeft(HSSFCellStyle.BORDER_THIN);
 
 		RootCourseGroup rootGroup = registration.getLastDegreeCurricularPlan().getRoot();
 		buildHeaderForCurricularGroupsFile(registration, spreadsheet, executionYear);
-		buildCurricularCoursesGroups(executionYear, rootGroup
-			.getSortedChildContextsWithCourseGroupsByExecutionYear(executionYear), spreadsheet,
+		buildCurricularCoursesGroups(executionYear,
+			rootGroup.getSortedChildContextsWithCourseGroupsByExecutionYear(executionYear), spreadsheet,
 			shadedNormalTextAndFont, unshadedNormalTextAndFont, shadedUnlockedNormalTextAndFont,
 			unshadedUnlockedNormalTextAndFont);
 
-		//let's write the last lines 
+		// let's write the last lines
 		HSSFSheet hssfSheet = spreadsheet.getSheet();
 		spreadsheet.newRow();
 		spreadsheet.newRow();
@@ -345,13 +285,13 @@ public class SendAcademicServiceRequestToExternalEntity extends FenixService {
 		hssfSheet.addMergedRegion(new CellRangeAddress(spreadsheet.getRow().getRowNum(),
 			spreadsheet.getRow().getRowNum(), 0, 4));
 
-		//let's resize all of the four columns
+		// let's resize all of the four columns
 		spreadsheet.getSheet().autoSizeColumn(0);
 		spreadsheet.getSheet().autoSizeColumn(1);
 		spreadsheet.getSheet().autoSizeColumn(2);
 		spreadsheet.getSheet().autoSizeColumn(3);
 
-		//let's protect it!!
+		// let's protect it!!
 		spreadsheet.getSheet().protectSheet("");
 
 		out.putNextEntry(new ZipEntry("plano_de_estudos.xls"));
@@ -443,13 +383,14 @@ public class SendAcademicServiceRequestToExternalEntity extends FenixService {
 		    .getSortedChildContextsWithCurricularCoursesByExecutionYear(executionYear);
 	    if (sortedContexts.size() > 1) {
 
-		//let's have a counter to make sure we shade one line but not the next
+		// let's have a counter to make sure we shade one line but not
+		// the next
 		int oddLineCounter = 0;
 		for (Context courseContext : sortedCurricularContexts) {
 		    oddLineCounter++;
 		    HSSFCellStyle cellStyleToUse;
 		    HSSFCellStyle unlockedCellStyleToUse;
-		    if ((oddLineCounter % 2) == 0) {
+		    if (oddLineCounter % 2 == 0) {
 			cellStyleToUse = shadedNormalTextAndFont;
 			unlockedCellStyleToUse = shadedUnlockedNormalTextAndFont;
 		    } else {
@@ -460,7 +401,8 @@ public class SendAcademicServiceRequestToExternalEntity extends FenixService {
 		    spreadsheet.newRow();
 		    spreadsheet.addCell(courseModule.getName(), cellStyleToUse);
 		    spreadsheet.addCell(((CurricularCourse) courseModule).getEctsCredits(), cellStyleToUse);
-		    //let's fill the next two cells so that they get shaded as well
+		    // let's fill the next two cells so that they get shaded as
+		    // well
 		    spreadsheet.addCell(StringUtils.SINGLE_SPACE, unlockedCellStyleToUse);
 		    spreadsheet.addCell(StringUtils.SINGLE_SPACE, unlockedCellStyleToUse);
 		}
