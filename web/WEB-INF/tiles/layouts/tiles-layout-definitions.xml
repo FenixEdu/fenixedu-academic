@@ -26,8 +26,6 @@
 	<definition name="df.layout.two-column" page="/layout/fenixLayout_2col.jsp" >
 		<put name="title" value="/commons/blank.jsp" type="string"/>
 		<put name="bundle" value="TITLES_RESOURCES" />
-		<!-- <put name="titleF" value="/commons/functionalities/title.jsp" />  -->
-		<!-- <put name="titleF" value="&#47;commons&#47;functionalities&#47;title&#46;jsp" /> -->
         <put name="head" value="/commons/blank.jsp"/>
 		<put name="serviceName" value="/commons/blank.jsp" type="string"/>
 		<put name="navGeral" value="/generalNavigationBar.jsp" />
