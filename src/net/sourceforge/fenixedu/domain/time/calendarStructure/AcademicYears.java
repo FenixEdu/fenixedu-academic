@@ -27,4 +27,9 @@ public class AcademicYears extends AcademicPeriod {
 	return getValue();
     }
 
+    @Override
+    public AcademicPeriod getPossibleChild() {
+	return getValue() > 1 ? AcademicPeriod.YEAR : AcademicPeriod.SEMESTER;
+    }
+
 }

@@ -27,4 +27,12 @@ public class AcademicTrimesters extends AcademicPeriod {
 	return AcademicPeriodType.academicTrimesters();
     }
 
+    /**
+     * For now, nothing smaller than a trimester is supported
+     */
+    @Override
+    public AcademicPeriod getPossibleChild() {
+	return null;
+    }
+
 }

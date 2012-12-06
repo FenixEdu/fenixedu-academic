@@ -77,4 +77,23 @@ public abstract class AcademicPeriod extends BaseSingleFieldPeriod {
     public static Set<AcademicPeriod> values() {
 	return Collections.unmodifiableSet(new HashSet<AcademicPeriod>(academicPeriods.values()));
     }
+
+    public boolean isSmaller(final AcademicPeriod input) {
+	return this.compareTo(input) > 0;
+    }
+
+    public boolean isSmallerOrEquals(final AcademicPeriod input) {
+	return this.compareTo(input) >= 0;
+    }
+
+    public boolean isBigger(final AcademicPeriod input) {
+	return this.compareTo(input) < 0;
+    }
+
+    public boolean isBiggerOrEquals(final AcademicPeriod input) {
+	return this.compareTo(input) <= 0;
+    }
+
+    abstract public AcademicPeriod getPossibleChild();
+
 }
