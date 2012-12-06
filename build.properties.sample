@@ -360,8 +360,11 @@ webServices.PaymentManagement.password=p
 externalServices.koha.username=abc
 externalServices.koha.password=123
 
-external.application.workflow.equivalences.uri=<URL da aplica��o>/rest/equivalenceProcess/
-external.application.workflow.equivalences.uri.secret=password
+#This workflow process now uses jersey so it uses its credentials
+external.application.workflow.equivalences.uri=http://localhost:8080/dot/jersey/equivalenceplan/acceptNewProcess
+jersey.username=jersey
+jersey.password=password
+
 #------------------------------------------------------------------------------
 # Miscellaneous 
 #------------------------------------------------------------------------------
