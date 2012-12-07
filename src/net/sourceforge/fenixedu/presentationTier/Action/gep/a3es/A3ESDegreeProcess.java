@@ -53,10 +53,9 @@ import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 import com.sun.jersey.api.client.Client;
 import com.sun.jersey.api.client.ClientResponse;
 import com.sun.jersey.api.client.WebResource;
-import com.sun.jersey.api.client.filter.LoggingFilter;
 
 public class A3ESDegreeProcess implements Serializable {
-    private static final String BASE_URL = "http://formacao.a3es.pt/iportal.php";
+    private static final String BASE_URL = "http://www.a3es.pt/si/iportal.php";
 
     private static final String API_PROCESS = "api_process";
 
@@ -108,8 +107,6 @@ public class A3ESDegreeProcess implements Serializable {
 
     public A3ESDegreeProcess() {
 	super();
-	this.user = "pep33461";
-	this.password = "ydata7us";
 	this.executionSemester = ExecutionSemester.readActualExecutionSemester();
     }
 
@@ -252,7 +249,6 @@ public class A3ESDegreeProcess implements Serializable {
 
     protected WebResource webResource() {
 	Client client = Client.create();
-	client.addFilter(new LoggingFilter(System.out));
 	return client.resource(BASE_URL);
     }
 
