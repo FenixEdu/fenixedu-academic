@@ -18,6 +18,11 @@ public class ProfessorshipManagementLog extends ProfessorshipManagementLog_Base 
 	return new ProfessorshipManagementLog(ec, description);
     }
 
+    public static ProfessorshipManagementLog createLog(ExecutionCourse ec, String bundle, String key, String... args) {
+	final String label = generateLabelDescription(bundle, key, args);
+	return createProfessorshipManagementLog(ec, label);
+    }
+
     @Override
     public ExecutionCourseLogTypes getExecutionCourseLogType() {
 	return ExecutionCourseLogTypes.PROFESSORSHIP;

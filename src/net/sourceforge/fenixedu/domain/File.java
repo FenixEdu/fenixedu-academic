@@ -48,9 +48,11 @@ public abstract class File extends File_Base {
     }
 
     public void storeToContentManager() {
-	final FileDescriptor fileDescriptor = FileManagerFactory.getFactoryInstance().getFileManager().saveFile(
-		getLocalContent().getPath(), getFilename(), isPrivate(), getLocalContent().createMetadata(),
-		new ByteArrayInputStream(getLocalContent().getContent().getBytes()));
+	final FileDescriptor fileDescriptor = FileManagerFactory
+		.getFactoryInstance()
+		.getFileManager()
+		.saveFile(getLocalContent().getPath(), getFilename(), isPrivate(), getLocalContent().createMetadata(),
+			new ByteArrayInputStream(getLocalContent().getContent().getBytes()));
 	setMimeType(fileDescriptor.getMimeType());
 	setChecksum(fileDescriptor.getChecksum());
 	setChecksumAlgorithm(fileDescriptor.getChecksumAlgorithm());
@@ -79,8 +81,8 @@ public abstract class File extends File_Base {
 	}
 	InputStream inputStream = null;
 	try {
-	    inputStream = FileManagerFactory.getFactoryInstance().getFileManager().retrieveFile(
-		    getExternalStorageIdentification());
+	    inputStream = FileManagerFactory.getFactoryInstance().getFileManager()
+		    .retrieveFile(getExternalStorageIdentification());
 	    return ByteArray.toBytes(inputStream);
 	} catch (IOException e) {
 	    throw new Error(e);
@@ -106,8 +108,8 @@ public abstract class File extends File_Base {
 	    return ACTION_PATH + getExternalId();
 	}
 
-	return FileManagerFactory.getFactoryInstance().getFileManager().formatDownloadUrl(getExternalStorageIdentification(),
-		getFilename());
+	return FileManagerFactory.getFactoryInstance().getFileManager()
+		.formatDownloadUrl(getExternalStorageIdentification(), getFilename());
     }
 
     public void delete() {
@@ -169,11 +171,12 @@ public abstract class File extends File_Base {
 
     @Override
     public void setPermittedGroup(Group permittedGroup) {
-        super.setPermittedGroup(permittedGroup);
-        if (!hasLocalContent()) {
-            final boolean isPublic = permittedGroup == null || permittedGroup instanceof EveryoneGroup;
-            FileManagerFactory.getFactoryInstance().getContentFileManager().changeFilePermissions(getExternalStorageIdentification(), !isPublic);
-        }
+	super.setPermittedGroup(permittedGroup);
+	if (!hasLocalContent()) {
+	    final boolean isPublic = permittedGroup == null || permittedGroup instanceof EveryoneGroup;
+	    FileManagerFactory.getFactoryInstance().getContentFileManager()
+		    .changeFilePermissions(getExternalStorageIdentification(), !isPublic);
+	}
     }
 
 }

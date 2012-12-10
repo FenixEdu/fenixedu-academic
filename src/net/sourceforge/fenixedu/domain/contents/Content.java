@@ -9,7 +9,9 @@ import java.util.Map;
 import java.util.Set;
 import java.util.UUID;
 
+import net.sourceforge.fenixedu.domain.Item;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
+import net.sourceforge.fenixedu.domain.Section;
 import net.sourceforge.fenixedu.domain.Site;
 import net.sourceforge.fenixedu.domain.accessControl.EveryoneGroup;
 import net.sourceforge.fenixedu.domain.accessControl.Group;
@@ -156,10 +158,14 @@ public abstract class Content extends Content_Base {
      */
     public void delete() {
 	checkDeletion();
-	// While you would think the following line is redundant (it is also done in
-	// deleteDomainObject(), we need to know that the object is being delete beforehand.
-	// Some content override the getInitialContet() method (for example) and always 
-	// return a value, unless the object has already been disconnected from root.
+	// While you would think the following line is redundant (it is also
+	// done in
+	// deleteDomainObject(), we need to know that the object is being delete
+	// beforehand.
+	// Some content override the getInitialContet() method (for example) and
+	// always
+	// return a value, unless the object has already been disconnected from
+	// root.
 	removeRootDomainObject();
 	disconnect();
 	deleteDomainObject();
@@ -440,12 +446,8 @@ public abstract class Content extends Content_Base {
 
     private boolean isNameValid(MultiLanguageString name) {
 	for (String content : name.getAllContents()) {
-	    if (content.indexOf('?') >= 0
-		    || content.indexOf('/') > 0
-		    || content.indexOf('"') > 0
-		    || content.indexOf('+') > 0
-		    || content.indexOf('>') > 0
-		    || content.indexOf('<') > 0) {
+	    if (content.indexOf('?') >= 0 || content.indexOf('/') > 0 || content.indexOf('"') > 0 || content.indexOf('+') > 0
+		    || content.indexOf('>') > 0 || content.indexOf('<') > 0) {
 		return false;
 	    }
 	}
@@ -476,4 +478,42 @@ public abstract class Content extends Content_Base {
     public boolean isUnitSite() {
 	return false;
     }
+
+    public void logRemoveFunctionalityCall(FunctionalityCall functionalityCall) {
+	Content cont = getUniqueParentContainer();
+	if (cont != null) {
+	    cont.logRemoveFunctionalityCall(functionalityCall);
+	}
+    }
+
+    public void logDeleteNode() {
+    }
+
+    public void logCreateItemtoSection(Item item) {
+    }
+
+    public void logEditItemtoSection(Item item) {
+    }
+
+    public void logDeleteItemtoSection(Item item) {
+    }
+
+    public void logEditItemPermission(Item item) {
+    }
+
+    public void logEditSectionPermission(Section section) {
+    }
+
+    public void logAddFileToItem(Item item, Section section, Content childContent) {
+    }
+
+    public void logEditFileToItem(Attachment attachment, Section section) {
+    }
+
+    public void logItemFilePermittedGroup(Attachment attachment, Section section) {
+    }
+
+    public void logSectionInsertFile(Content childContent, Section section) {
+    }
+
 }

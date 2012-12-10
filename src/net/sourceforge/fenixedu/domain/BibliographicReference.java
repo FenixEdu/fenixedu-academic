@@ -2,6 +2,8 @@ package net.sourceforge.fenixedu.domain;
 
 import java.util.Comparator;
 
+import net.sourceforge.fenixedu.util.BundleUtil;
+
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.comparators.ComparatorChain;
 import org.apache.commons.collections.comparators.NullComparator;
@@ -40,9 +42,38 @@ public class BibliographicReference extends BibliographicReference_Base {
 	setReference(reference);
 	setYear(year);
 	setOptional(optional);
+	ExecutionCourse executionCourse = getExecutionCourse();
+	final String type;
+	if (optional) {
+	    type = BundleUtil.getStringFromResourceBundle("resources.ApplicationResources",
+		    "option.bibliographicReference.optional");
+	} else {
+	    type = BundleUtil.getStringFromResourceBundle("resources.ApplicationResources",
+		    "option.bibliographicReference.recommended");
+	}
+	CurricularManagementLog.createLog(executionCourse, "resources.MessagingResources",
+		"log.executionCourse.curricular.bibliographic.edited", type, title, executionCourse.getName(),
+		executionCourse.getDegreePresentationString());
     }
 
     public void delete() {
+	ExecutionCourse executionCourse = getExecutionCourse();
+	String blBibliographicReference = getTitle();
+	Boolean optional = getOptional();
+
+	final String type;
+	if (optional) {
+	    type = BundleUtil.getStringFromResourceBundle("resources.ApplicationResources",
+		    "option.bibliographicReference.optional");
+	} else {
+	    type = BundleUtil.getStringFromResourceBundle("resources.ApplicationResources",
+		    "option.bibliographicReference.recommended");
+	}
+
+	CurricularManagementLog.createLog(executionCourse, "resources.MessagingResources",
+		"log.executionCourse.curricular.bibliographic.removed", type, blBibliographicReference,
+		executionCourse.getName(), executionCourse.getDegreePresentationString());
+
 	removeExecutionCourse();
 	removeRootDomainObject();
 	super.deleteDomainObject();

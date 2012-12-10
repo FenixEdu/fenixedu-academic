@@ -30,6 +30,7 @@ import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicSemesterCE
 import net.sourceforge.fenixedu.domain.time.calendarStructure.TeacherCreditsFillingCE;
 import net.sourceforge.fenixedu.domain.time.calendarStructure.TeacherCreditsFillingForDepartmentAdmOfficeCE;
 import net.sourceforge.fenixedu.domain.time.calendarStructure.TeacherCreditsFillingForTeacherCE;
+import net.sourceforge.fenixedu.util.Month;
 import net.sourceforge.fenixedu.util.PeriodState;
 
 import org.joda.time.DateMidnight;
@@ -112,6 +113,24 @@ public class ExecutionSemester extends ExecutionSemester_Base implements Compara
     public ExecutionSemester getNextExecutionPeriod() {
 	AcademicSemesterCE semester = getAcademicInterval().plusSemester(1);
 	return semester != null ? ExecutionSemester.getExecutionPeriod(semester) : null;
+    }
+
+    public List<Month> getSemesterMonths() {
+
+	int monthStart = getAcademicInterval().getStart().getMonthOfYear();
+	int monthEnd = getAcademicInterval().getEnd().getMonthOfYear();
+
+	if (monthStart > monthEnd) {
+	    monthEnd += 12;
+	}
+
+	ArrayList<Month> result = new ArrayList<Month>();
+
+	for (int i = monthStart; i <= monthEnd; i++) {
+	    result.add(Month.fromInt(i > 12 ? i - 12 : i));
+	}
+
+	return result;
     }
 
     public ExecutionSemester getPreviousExecutionPeriod() {

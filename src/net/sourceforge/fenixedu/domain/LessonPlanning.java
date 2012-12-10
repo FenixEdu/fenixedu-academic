@@ -27,6 +27,10 @@ public class LessonPlanning extends LessonPlanning_Base {
 	setPlanning(planning);
 	setLessonType(lessonType);
 	setExecutionCourse(executionCourse);
+
+	CurricularManagementLog.createLog(executionCourse, "resources.MessagingResources",
+		"log.executionCourse.curricular.planning.added", title.getContent(), lessonType.getFullNameTipoAula(),
+		executionCourse.getNome(), executionCourse.getDegreePresentationString());
     }
 
     public void delete() {
@@ -35,6 +39,10 @@ public class LessonPlanning extends LessonPlanning_Base {
     }
 
     public void deleteWithoutReOrder() {
+	CurricularManagementLog.createLog(getExecutionCourse(), "resources.MessagingResources",
+		"log.executionCourse.curricular.planning.removed", getTitle().getContent(),
+		getLessonType().getFullNameTipoAula(), getExecutionCourse().getNome(), getExecutionCourse()
+			.getDegreePresentationString());
 	super.setExecutionCourse(null);
 	removeRootDomainObject();
 	deleteDomainObject();
@@ -117,7 +125,8 @@ public class LessonPlanning extends LessonPlanning_Base {
 	StringBuilder builder = new StringBuilder();
 	builder.append(BundleUtil.getStringFromResourceBundle("resources.ApplicationResources", "label.lesson")).append(" ");
 	builder.append(getOrderOfPlanning()).append(" (");
-	builder.append(BundleUtil.getStringFromResourceBundle("resources.EnumerationResources", getLessonType().getName())).append(") - ");
+	builder.append(BundleUtil.getStringFromResourceBundle("resources.EnumerationResources", getLessonType().getName()))
+		.append(") - ");
 	builder.append(getTitle().getContent());
 	return builder.toString();
     }

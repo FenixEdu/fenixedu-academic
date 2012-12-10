@@ -178,8 +178,8 @@
 		<put name="body" value="/teacher/submitTFC_bd.jsp"></put>		
 	</definition>
 	<definition name="df.page.chooseDegreeForFinalWorkProposal" extends="definition.teacher.two-column">
-	    <put name="bundle" value="TITLES_RESOURCES"/>
-        <put name="title" value="private.teacher.dissertations.proposals"/>
+		<put name="bundle" value="TITLES_RESOURCES"/>
+		<put name="title" value="private.teacher.dissertations.proposals"/>
 		<put name="navLocal" value="/teacher/commons/navigationBarIndex.jsp"/>
 		<put name="body" value="/teacher/chooseDegreeForFinalWorkProposal_bd.jsp"/>
 	</definition>

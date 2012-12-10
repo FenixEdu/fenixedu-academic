@@ -3,11 +3,14 @@ package net.sourceforge.fenixedu.domain.messaging;
 import java.util.Comparator;
 import java.util.Iterator;
 
+import net.sourceforge.fenixedu.domain.ContentManagementLog;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionCourseBoardPermittedGroupType;
 import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.Site;
 import net.sourceforge.fenixedu.domain.accessControl.Group;
+import net.sourceforge.fenixedu.domain.contents.Attachment;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.presentationTier.servlets.filters.ContentInjectionRewriter;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
@@ -113,8 +116,9 @@ public class ExecutionCourseAnnouncementBoard extends ExecutionCourseAnnouncemen
 	return true;
     }
 
-    public String getSite() {
-	return null;
+    @Override
+    public Site getSite() {
+	return getExecutionCourse().getSite();
     }
 
     public String getSiteParamForAnnouncementBoard(Announcement announcement) {
@@ -129,6 +133,34 @@ public class ExecutionCourseAnnouncementBoard extends ExecutionCourseAnnouncemen
 	actionPath.append("=");
 	actionPath.append(executionCourse.getSite().getReversePath());
 	return base + actionPath.toString();
+    }
+
+    @Override
+    public void logCreate(Announcement announcement) {
+	ContentManagementLog.createLog(this.getExecutionCourse(), "resources.MessagingResources",
+		"log.executionCourse.content.announcement.added", announcement.getName().getContent(), this.getExecutionCourse()
+			.getNome(), this.getExecutionCourse().getDegreePresentationString());
+    }
+
+    @Override
+    public void logEdit(Announcement announcement) {
+	ContentManagementLog.createLog(this.getExecutionCourse(), "resources.MessagingResources",
+		"log.executionCourse.content.announcement.edited", announcement.getName().getContent(), this.getExecutionCourse()
+			.getNome(), this.getExecutionCourse().getDegreePresentationString());
+    }
+
+    @Override
+    public void logRemove(Announcement announcement) {
+	ContentManagementLog.createLog(this.getExecutionCourse(), "resources.MessagingResources",
+		"log.executionCourse.content.announcement.removed", announcement.getName().getContent(), this
+			.getExecutionCourse().getNome(), this.getExecutionCourse().getDegreePresentationString());
+    }
+
+    @Override
+    public void logAddFile(Attachment attachment) {
+	ContentManagementLog.createLog(getExecutionCourse(), "resources.MessagingResources",
+		"log.executionCourse.content.file.added", attachment.getName().getContent(), getExecutionCourse().getNome(),
+		getExecutionCourse().getDegreePresentationString());
     }
 
 }

@@ -75,10 +75,11 @@ public class Section extends Section_Base {
     // required
     public void edit(MultiLanguageString name, Section nextSection, Group permittedGroup) {
 	setModificationDate(new YearMonthDay());
-
 	setName(name);
 	setNextSection(nextSection);
 	setPermittedGroup(permittedGroup);
+	Site st = getSite();
+	st.logEditSection(this);
     }
 
     @Override
@@ -128,13 +129,13 @@ public class Section extends Section_Base {
 	if (section != null) {
 	    setSectionOrder(section.getUniqueParentExplicitOrderNode().getNodeOrder());
 	} else {
-	    Collection<Section> sections = getUniqueParentExplicitOrderNode().getParent()
-		    .getOrderedChildren(Section.class);
+	    Collection<Section> sections = getUniqueParentExplicitOrderNode().getParent().getOrderedChildren(Section.class);
 	    setSectionOrder(sections.size() - 1);
 	}
     }
 
-    public void insertItem(MultiLanguageString itemName, MultiLanguageString itemInformation, Integer insertItemOrder, Boolean showName) {
+    public void insertItem(MultiLanguageString itemName, MultiLanguageString itemInformation, Integer insertItemOrder,
+	    Boolean showName) {
 	new Item(this, itemName, itemInformation, insertItemOrder, showName);
     }
 
@@ -160,7 +161,7 @@ public class Section extends Section_Base {
 	sections.addAll(getAssociatedSections());
 	return sections;
     }
-    
+
     public SortedSet<Section> getOrderedVisibleSubSections() {
 	final SortedSet<Section> sections = new TreeSet<Section>(Section.COMPARATOR_BY_ORDER);
 	for (Section section : getAssociatedSections()) {
@@ -170,7 +171,7 @@ public class Section extends Section_Base {
 	}
 	return sections;
     }
-    
+
     public boolean getShowSubSectionTree() {
 	return getShowSubSections() != null && getShowSubSections() && !getOrderedVisibleSubSections().isEmpty();
     }
@@ -381,7 +382,33 @@ public class Section extends Section_Base {
 
     @Override
     protected Node createChildNode(Content childContent) {
+	if (getSite() != null) {
+	    if (childContent instanceof Attachment) {
+		getSite().logSectionInsertFile(childContent, this);
+	    } else {
+		getSite().logSectionInsertInstitutional(childContent, this);
+	    }
+	}
 	return new ExplicitOrderNode(this, childContent);
+    }
+
+    @Override
+    protected void disconnectContent() {
+	if (getSite() != null) {
+	    getSite().logRemoveSection(this);
+	}
+	super.disconnectContent();
+    }
+
+    @Override
+    public void logAddFile(Attachment attachment) {
+	if (getSite() != null) {
+	    getSite().logAddFile(attachment);
+	}
+    }
+
+    public void logEditSectionPermission() {
+	getSite().logEditSectionPermission(this);
     }
 
 }

@@ -15,6 +15,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.student.GroupEnrolment;
 import net.sourceforge.fenixedu.domain.util.icalendar.EventBean;
+import net.sourceforge.fenixedu.util.BundleUtil;
 import net.sourceforge.fenixedu.util.EvaluationType;
 
 import org.joda.time.DateTime;
@@ -33,8 +34,8 @@ public class Project extends Project_Base {
 			for (final ExecutionCourse executionCourse : project.getAssociatedExecutionCoursesSet()) {
 			    for (Attends attend : executionCourse.getAttendsSet()) {
 				try {
-				    GroupEnrolment.run(grouping.getIdInternal(), null, ++groupCount, new ArrayList<String>(), attend
-					    .getRegistration().getStudent().getPerson().getUsername());
+				    GroupEnrolment.run(grouping.getIdInternal(), null, ++groupCount, new ArrayList<String>(),
+					    attend.getRegistration().getStudent().getPerson().getUsername());
 				} catch (FenixServiceException e) {
 				    // TODO Auto-generated catch block
 				    e.printStackTrace();
@@ -81,6 +82,8 @@ public class Project extends Project_Base {
 	if (gradeScale != null) {
 	    this.setGradeScale(gradeScale);
 	}
+
+	logCreate();
     }
 
     public void edit(String name, Date begin, Date end, String description, Boolean onlineSubmissionsAllowed,
@@ -109,6 +112,8 @@ public class Project extends Project_Base {
 	final List<Department> departmentsList = getDeparments();
 	departmentsList.clear();
 	departmentsList.addAll(departments);
+
+	logEdit();
     }
 
     private void setOnlineSubmissionProperties(Boolean onlineSubmissionsAllowed, Integer maxSubmissionsToKeep, Grouping grouping) {
@@ -192,9 +197,9 @@ public class Project extends Project_Base {
 	    return true;
 	}
     }
-    
+
     public boolean isCanComment() {
-	for(ExecutionCourse executionCourse : getAssociatedExecutionCourses()) {
+	for (ExecutionCourse executionCourse : getAssociatedExecutionCourses()) {
 	    final Professorship professorship = executionCourse.getProfessorshipForCurrentUser();
 	    if (professorship != null) {
 		return true;
@@ -202,13 +207,14 @@ public class Project extends Project_Base {
 	}
 	return false;
     }
-    
+
     @Override
     public void delete() {
 	if (!getProjectSubmissions().isEmpty()) {
 	    throw new DomainException("error.project.cannotDeleteBecauseHasSubmissionsAssociated");
 	}
 
+	logRemove();
 	removeGrouping();
 	super.delete();
     }
@@ -318,30 +324,36 @@ public class Project extends Project_Base {
 	return result;
     }
 
+    @Deprecated
+    public java.util.Date getProjectBegin() {
+	org.joda.time.DateTime dt = getProjectBeginDateTime();
+	return (dt == null) ? null : new java.util.Date(dt.getMillis());
+    }
 
-	@Deprecated
-	public java.util.Date getProjectBegin(){
-		org.joda.time.DateTime dt = getProjectBeginDateTime();
-		return (dt == null) ? null : new java.util.Date(dt.getMillis());
-	}
+    @Deprecated
+    public void setProjectBegin(java.util.Date date) {
+	if (date == null)
+	    setProjectBeginDateTime(null);
+	else
+	    setProjectBeginDateTime(new org.joda.time.DateTime(date.getTime()));
+    }
 
-	@Deprecated
-	public void setProjectBegin(java.util.Date date){
-		if(date == null) setProjectBeginDateTime(null);
-		else setProjectBeginDateTime(new org.joda.time.DateTime(date.getTime()));
-	}
+    @Deprecated
+    public java.util.Date getProjectEnd() {
+	org.joda.time.DateTime dt = getProjectEndDateTime();
+	return (dt == null) ? null : new java.util.Date(dt.getMillis());
+    }
 
-	@Deprecated
-	public java.util.Date getProjectEnd(){
-		org.joda.time.DateTime dt = getProjectEndDateTime();
-		return (dt == null) ? null : new java.util.Date(dt.getMillis());
-	}
+    @Deprecated
+    public void setProjectEnd(java.util.Date date) {
+	if (date == null)
+	    setProjectEndDateTime(null);
+	else
+	    setProjectEndDateTime(new org.joda.time.DateTime(date.getTime()));
+    }
 
-	@Deprecated
-	public void setProjectEnd(java.util.Date date){
-		if(date == null) setProjectEndDateTime(null);
-		else setProjectEndDateTime(new org.joda.time.DateTime(date.getTime()));
-	}
-
-
+    @Override
+    public String getPresentationName() {
+	return BundleUtil.getStringFromResourceBundle("resources.ApplicationResources", "label.project") + " " + getName();
+    }
 }

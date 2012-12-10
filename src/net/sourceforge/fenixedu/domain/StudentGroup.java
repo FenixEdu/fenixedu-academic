@@ -5,6 +5,7 @@
 package net.sourceforge.fenixedu.domain;
 
 import java.util.Comparator;
+import java.util.List;
 
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
@@ -60,6 +61,13 @@ public class StudentGroup extends StudentGroup_Base {
     }
 
     public void delete() {
+	List<ExecutionCourse> ecs = getGrouping().getExecutionCourses();
+	for (ExecutionCourse ec : ecs) {
+	    GroupsAndShiftsManagementLog.createLog(ec, "resources.MessagingResources",
+		    "log.executionCourse.groupAndShifts.grouping.group.removed", getGroupNumber().toString(), getGrouping()
+			    .getName(), ec.getNome(), ec.getDegreePresentationString());
+
+	}
 	// teacher type of deletion after project submission
 	if (hasAnyProjectSubmissions() && this.getGrouping().isPersonTeacher(AccessControl.getPerson())) {
 	    this.setValid(false);

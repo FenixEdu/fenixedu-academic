@@ -25,4 +25,14 @@ public class FunctionalityCall extends FunctionalityCall_Base {
 	removeFunctionality();
 	super.disconnect();
     }
+
+    @Override
+    public void logDeleteNode() {
+	Content cont = getUniqueParentContainer();
+	if (cont != null) {
+	    cont.logRemoveFunctionalityCall(this);
+	}
+	super.logDeleteNode();
+    }
+
 }

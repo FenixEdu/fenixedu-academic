@@ -11,8 +11,10 @@ import java.util.TreeSet;
 import net.sourceforge.fenixedu.domain.FileContent;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
+import net.sourceforge.fenixedu.domain.Site;
 import net.sourceforge.fenixedu.domain.accessControl.Group;
 import net.sourceforge.fenixedu.domain.contents.Attachment;
+import net.sourceforge.fenixedu.domain.contents.Container;
 import net.sourceforge.fenixedu.domain.contents.Content;
 import net.sourceforge.fenixedu.domain.contents.Node;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
@@ -447,4 +449,24 @@ public abstract class AnnouncementBoard extends AnnouncementBoard_Base {
     public FileContent addFileToBoard(String fileName, byte[] content, String creatorName) {
 	return new PublicBoardFileContent(fileName, content, creatorName, this);
     }
+
+    public void logCreate(Announcement announcement) {
+    }
+
+    public void logEdit(Announcement announcement) {
+    }
+
+    public void logRemove(Announcement announcement) {
+    }
+
+    public Site getSite() {
+	for (final Node node : getParentsSet()) {
+	    final Container parent = node.getParent();
+	    if (parent instanceof Site) {
+		return (Site) parent;
+	    }
+	}
+	return null;
+    }
+
 }

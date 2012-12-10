@@ -425,9 +425,8 @@ abstract public class WrittenEvaluation extends WrittenEvaluation_Base {
     protected void edit(Date day, Date beginning, Date end, List<ExecutionCourse> executionCoursesToAssociate,
 	    List<DegreeModuleScope> curricularCourseScopesToAssociate, List<AllocatableSpace> rooms, GradeScale gradeScale) {
 
-	setAttributesAndAssociateRooms(day, beginning, end, executionCoursesToAssociate, curricularCourseScopesToAssociate,
-		rooms);
-	
+	setAttributesAndAssociateRooms(day, beginning, end, executionCoursesToAssociate, curricularCourseScopesToAssociate, rooms);
+
 	if (getGradeScale() != gradeScale) {
 	    if (gradeScale != null) {
 		setGradeScale(gradeScale);
@@ -435,7 +434,7 @@ abstract public class WrittenEvaluation extends WrittenEvaluation_Base {
 		setGradeScale(GradeScale.TYPE20);
 	    }
 	}
-	
+
 	checkIntervalBetweenEvaluations();
     }
 
@@ -444,6 +443,7 @@ abstract public class WrittenEvaluation extends WrittenEvaluation_Base {
 	if (hasAnyWrittenEvaluationEnrolments()) {
 	    throw new DomainException("error.notAuthorizedWrittenEvaluationDelete.withStudent");
 	}
+	logRemove();
 	deleteAllVigilanciesAssociated();
 	deleteAllRoomOccupations();
 	getAssociatedCurricularCourseScope().clear();
@@ -465,6 +465,11 @@ abstract public class WrittenEvaluation extends WrittenEvaluation_Base {
 	this.setEnrollmentEndDayDate(enrolmentEndDay);
 	this.setEnrollmentBeginTimeDate(enrolmentBeginTime);
 	this.setEnrollmentEndTimeDate(enrolmentEndTime);
+	for (ExecutionCourse ec : getAssociatedExecutionCourses()) {
+	    EvaluationManagementLog.createLog(ec, "resources.MessagingResources",
+		    "log.executionCourse.evaluation.generic.edited.enrolment", getPresentationName(), ec.getName(),
+		    ec.getDegreePresentationString());
+	}
     }
 
     private void checkEnrolmentDates(final Date enrolmentBeginDay, final Date enrolmentEndDay, final Date enrolmentBeginTime,
@@ -547,6 +552,13 @@ abstract public class WrittenEvaluation extends WrittenEvaluation_Base {
 		break;
 	    }
 	}
+
+	for (ExecutionCourse ec : getAssociatedExecutionCourses()) {
+	    EvaluationManagementLog.createLog(ec, "resources.MessagingResources",
+		    "log.executionCourse.evaluation.generic.edited.rooms.distributed", getPresentationName(), ec.getName(),
+		    ec.getDegreePresentationString());
+	}
+
     }
 
     public void checkIfCanDistributeStudentsByRooms() {
@@ -557,9 +569,10 @@ abstract public class WrittenEvaluation extends WrittenEvaluation_Base {
 	final Date todayDate = Calendar.getInstance().getTime();
 	final Date evaluationDateAndTime;
 	try {
-	    evaluationDateAndTime = DateFormatUtil.parse("yyyy/MM/dd HH:mm", DateFormatUtil.format("yyyy/MM/dd ", this
-		    .getDayDate())
-		    + DateFormatUtil.format("HH:mm", this.getBeginningDate()));
+	    evaluationDateAndTime = DateFormatUtil.parse(
+		    "yyyy/MM/dd HH:mm",
+		    DateFormatUtil.format("yyyy/MM/dd ", this.getDayDate())
+			    + DateFormatUtil.format("HH:mm", this.getBeginningDate()));
 	} catch (ParseException e) {
 	    // This should never happen, the string where obtained from other
 	    // dates.
@@ -803,8 +816,8 @@ abstract public class WrittenEvaluation extends WrittenEvaluation_Base {
 
     // couldn't find a smarter way to conver ymdhms to DateTiem
     private DateTime convertTimes(YearMonthDay yearMonthDay, HourMinuteSecond hourMinuteSecond) {
-	return new DateTime(yearMonthDay.getYear(), yearMonthDay.getMonthOfYear(), yearMonthDay.getDayOfMonth(), hourMinuteSecond
-		.getHour(), hourMinuteSecond.getMinuteOfHour(), hourMinuteSecond.getSecondOfMinute(), 0);
+	return new DateTime(yearMonthDay.getYear(), yearMonthDay.getMonthOfYear(), yearMonthDay.getDayOfMonth(),
+		hourMinuteSecond.getHour(), hourMinuteSecond.getMinuteOfHour(), hourMinuteSecond.getSecondOfMinute(), 0);
     }
 
     protected List<EventBean> getAllEvents(String description, Registration registration, String scheme, String serverName,
@@ -815,7 +828,7 @@ abstract public class WrittenEvaluation extends WrittenEvaluation_Base {
 	String courseName = "";
 	ExecutionCourse executionCourse = null;
 	if (this.getAttendingExecutionCoursesFor(registration).size() > 1) {
-	    Iterator<ExecutionCourse> it = this.getAttendingExecutionCoursesFor(registration).iterator();	    
+	    Iterator<ExecutionCourse> it = this.getAttendingExecutionCoursesFor(registration).iterator();
 	    for (executionCourse = it.next(); it.hasNext(); executionCourse = it.next()) {
 		if (it.hasNext()) {
 		    courseName += executionCourse.getSigla() + "; ";
@@ -829,16 +842,16 @@ abstract public class WrittenEvaluation extends WrittenEvaluation_Base {
 	}
 
 	if (this.getEnrollmentBeginDayDateYearMonthDay() != null) {
-	    DateTime enrollmentBegin = convertTimes(this.getEnrollmentBeginDayDateYearMonthDay(), this
-		    .getEnrollmentBeginTimeDateHourMinuteSecond());
-	    DateTime enrollmentEnd = convertTimes(this.getEnrollmentEndDayDateYearMonthDay(), this
-		    .getEnrollmentEndTimeDateHourMinuteSecond());
+	    DateTime enrollmentBegin = convertTimes(this.getEnrollmentBeginDayDateYearMonthDay(),
+		    this.getEnrollmentBeginTimeDateHourMinuteSecond());
+	    DateTime enrollmentEnd = convertTimes(this.getEnrollmentEndDayDateYearMonthDay(),
+		    this.getEnrollmentEndTimeDateHourMinuteSecond());
 
 	    result.add(new EventBean("Inicio das inscri��es para " + description + " : " + courseName, enrollmentBegin,
 		    enrollmentBegin.plusHours(1), false, "Sistema F�nix", url + "/privado", null));
 
-	    result.add(new EventBean("Fim das inscri��es para " + description + " : " + courseName, enrollmentEnd
-		    .minusHours(1), enrollmentEnd, false, "Sistema F�nix", url + "/privado", null));
+	    result.add(new EventBean("Fim das inscri��es para " + description + " : " + courseName, enrollmentEnd.minusHours(1),
+		    enrollmentEnd, false, "Sistema F�nix", url + "/privado", null));
 	}
 
 	String room = "";
@@ -884,95 +897,107 @@ abstract public class WrittenEvaluation extends WrittenEvaluation_Base {
 	builder.append(")");
 	return builder.toString();
     }
-    
-    
-    public Interval getDurationInterval(){
+
+    public Interval getDurationInterval() {
 	return new Interval(getBeginningDateTime(), getEndDateTime());
     }
 
-	@Deprecated
-	public java.util.Date getBeginningDate(){
-		net.sourceforge.fenixedu.util.HourMinuteSecond hms = getBeginningDateHourMinuteSecond();
-		return (hms == null) ? null : new java.util.Date(0, 0, 1, hms.getHour(), hms.getMinuteOfHour(), hms.getSecondOfMinute());
-	}
+    @Deprecated
+    public java.util.Date getBeginningDate() {
+	net.sourceforge.fenixedu.util.HourMinuteSecond hms = getBeginningDateHourMinuteSecond();
+	return (hms == null) ? null : new java.util.Date(0, 0, 1, hms.getHour(), hms.getMinuteOfHour(), hms.getSecondOfMinute());
+    }
 
-	@Deprecated
-	public void setBeginningDate(java.util.Date date){
-		if(date == null) setBeginningDateHourMinuteSecond(null);
-		else setBeginningDateHourMinuteSecond(net.sourceforge.fenixedu.util.HourMinuteSecond.fromDateFields(date));
-	}
+    @Deprecated
+    public void setBeginningDate(java.util.Date date) {
+	if (date == null)
+	    setBeginningDateHourMinuteSecond(null);
+	else
+	    setBeginningDateHourMinuteSecond(net.sourceforge.fenixedu.util.HourMinuteSecond.fromDateFields(date));
+    }
 
-	@Deprecated
-	public java.util.Date getDayDate(){
-		org.joda.time.YearMonthDay ymd = getDayDateYearMonthDay();
-		return (ymd == null) ? null : new java.util.Date(ymd.getYear() - 1900, ymd.getMonthOfYear() - 1, ymd.getDayOfMonth());
-	}
+    @Deprecated
+    public java.util.Date getDayDate() {
+	org.joda.time.YearMonthDay ymd = getDayDateYearMonthDay();
+	return (ymd == null) ? null : new java.util.Date(ymd.getYear() - 1900, ymd.getMonthOfYear() - 1, ymd.getDayOfMonth());
+    }
 
-	@Deprecated
-	public void setDayDate(java.util.Date date){
-		if(date == null) setDayDateYearMonthDay(null);
-		else setDayDateYearMonthDay(org.joda.time.YearMonthDay.fromDateFields(date));
-	}
+    @Deprecated
+    public void setDayDate(java.util.Date date) {
+	if (date == null)
+	    setDayDateYearMonthDay(null);
+	else
+	    setDayDateYearMonthDay(org.joda.time.YearMonthDay.fromDateFields(date));
+    }
 
-	@Deprecated
-	public java.util.Date getEndDate(){
-		net.sourceforge.fenixedu.util.HourMinuteSecond hms = getEndDateHourMinuteSecond();
-		return (hms == null) ? null : new java.util.Date(0, 0, 1, hms.getHour(), hms.getMinuteOfHour(), hms.getSecondOfMinute());
-	}
+    @Deprecated
+    public java.util.Date getEndDate() {
+	net.sourceforge.fenixedu.util.HourMinuteSecond hms = getEndDateHourMinuteSecond();
+	return (hms == null) ? null : new java.util.Date(0, 0, 1, hms.getHour(), hms.getMinuteOfHour(), hms.getSecondOfMinute());
+    }
 
-	@Deprecated
-	public void setEndDate(java.util.Date date){
-		if(date == null) setEndDateHourMinuteSecond(null);
-		else setEndDateHourMinuteSecond(net.sourceforge.fenixedu.util.HourMinuteSecond.fromDateFields(date));
-	}
+    @Deprecated
+    public void setEndDate(java.util.Date date) {
+	if (date == null)
+	    setEndDateHourMinuteSecond(null);
+	else
+	    setEndDateHourMinuteSecond(net.sourceforge.fenixedu.util.HourMinuteSecond.fromDateFields(date));
+    }
 
-	@Deprecated
-	public java.util.Date getEnrollmentBeginDayDate(){
-		org.joda.time.YearMonthDay ymd = getEnrollmentBeginDayDateYearMonthDay();
-		return (ymd == null) ? null : new java.util.Date(ymd.getYear() - 1900, ymd.getMonthOfYear() - 1, ymd.getDayOfMonth());
-	}
+    @Deprecated
+    public java.util.Date getEnrollmentBeginDayDate() {
+	org.joda.time.YearMonthDay ymd = getEnrollmentBeginDayDateYearMonthDay();
+	return (ymd == null) ? null : new java.util.Date(ymd.getYear() - 1900, ymd.getMonthOfYear() - 1, ymd.getDayOfMonth());
+    }
 
-	@Deprecated
-	public void setEnrollmentBeginDayDate(java.util.Date date){
-		if(date == null) setEnrollmentBeginDayDateYearMonthDay(null);
-		else setEnrollmentBeginDayDateYearMonthDay(org.joda.time.YearMonthDay.fromDateFields(date));
-	}
+    @Deprecated
+    public void setEnrollmentBeginDayDate(java.util.Date date) {
+	if (date == null)
+	    setEnrollmentBeginDayDateYearMonthDay(null);
+	else
+	    setEnrollmentBeginDayDateYearMonthDay(org.joda.time.YearMonthDay.fromDateFields(date));
+    }
 
-	@Deprecated
-	public java.util.Date getEnrollmentBeginTimeDate(){
-		net.sourceforge.fenixedu.util.HourMinuteSecond hms = getEnrollmentBeginTimeDateHourMinuteSecond();
-		return (hms == null) ? null : new java.util.Date(0, 0, 1, hms.getHour(), hms.getMinuteOfHour(), hms.getSecondOfMinute());
-	}
+    @Deprecated
+    public java.util.Date getEnrollmentBeginTimeDate() {
+	net.sourceforge.fenixedu.util.HourMinuteSecond hms = getEnrollmentBeginTimeDateHourMinuteSecond();
+	return (hms == null) ? null : new java.util.Date(0, 0, 1, hms.getHour(), hms.getMinuteOfHour(), hms.getSecondOfMinute());
+    }
 
-	@Deprecated
-	public void setEnrollmentBeginTimeDate(java.util.Date date){
-		if(date == null) setEnrollmentBeginTimeDateHourMinuteSecond(null);
-		else setEnrollmentBeginTimeDateHourMinuteSecond(net.sourceforge.fenixedu.util.HourMinuteSecond.fromDateFields(date));
-	}
+    @Deprecated
+    public void setEnrollmentBeginTimeDate(java.util.Date date) {
+	if (date == null)
+	    setEnrollmentBeginTimeDateHourMinuteSecond(null);
+	else
+	    setEnrollmentBeginTimeDateHourMinuteSecond(net.sourceforge.fenixedu.util.HourMinuteSecond.fromDateFields(date));
+    }
 
-	@Deprecated
-	public java.util.Date getEnrollmentEndDayDate(){
-		org.joda.time.YearMonthDay ymd = getEnrollmentEndDayDateYearMonthDay();
-		return (ymd == null) ? null : new java.util.Date(ymd.getYear() - 1900, ymd.getMonthOfYear() - 1, ymd.getDayOfMonth());
-	}
+    @Deprecated
+    public java.util.Date getEnrollmentEndDayDate() {
+	org.joda.time.YearMonthDay ymd = getEnrollmentEndDayDateYearMonthDay();
+	return (ymd == null) ? null : new java.util.Date(ymd.getYear() - 1900, ymd.getMonthOfYear() - 1, ymd.getDayOfMonth());
+    }
 
-	@Deprecated
-	public void setEnrollmentEndDayDate(java.util.Date date){
-		if(date == null) setEnrollmentEndDayDateYearMonthDay(null);
-		else setEnrollmentEndDayDateYearMonthDay(org.joda.time.YearMonthDay.fromDateFields(date));
-	}
+    @Deprecated
+    public void setEnrollmentEndDayDate(java.util.Date date) {
+	if (date == null)
+	    setEnrollmentEndDayDateYearMonthDay(null);
+	else
+	    setEnrollmentEndDayDateYearMonthDay(org.joda.time.YearMonthDay.fromDateFields(date));
+    }
 
-	@Deprecated
-	public java.util.Date getEnrollmentEndTimeDate(){
-		net.sourceforge.fenixedu.util.HourMinuteSecond hms = getEnrollmentEndTimeDateHourMinuteSecond();
-		return (hms == null) ? null : new java.util.Date(0, 0, 1, hms.getHour(), hms.getMinuteOfHour(), hms.getSecondOfMinute());
-	}
+    @Deprecated
+    public java.util.Date getEnrollmentEndTimeDate() {
+	net.sourceforge.fenixedu.util.HourMinuteSecond hms = getEnrollmentEndTimeDateHourMinuteSecond();
+	return (hms == null) ? null : new java.util.Date(0, 0, 1, hms.getHour(), hms.getMinuteOfHour(), hms.getSecondOfMinute());
+    }
 
-	@Deprecated
-	public void setEnrollmentEndTimeDate(java.util.Date date){
-		if(date == null) setEnrollmentEndTimeDateHourMinuteSecond(null);
-		else setEnrollmentEndTimeDateHourMinuteSecond(net.sourceforge.fenixedu.util.HourMinuteSecond.fromDateFields(date));
-	}
-
+    @Deprecated
+    public void setEnrollmentEndTimeDate(java.util.Date date) {
+	if (date == null)
+	    setEnrollmentEndTimeDateHourMinuteSecond(null);
+	else
+	    setEnrollmentEndTimeDateHourMinuteSecond(net.sourceforge.fenixedu.util.HourMinuteSecond.fromDateFields(date));
+    }
 
 }

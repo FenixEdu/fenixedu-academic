@@ -39,8 +39,8 @@ public class AddStudentsToDistributedTest extends FenixService {
 	    if (studentTestQuestionExample.getQuestion().getSubQuestions() == null
 		    || studentTestQuestionExample.getQuestion().getSubQuestions().size() == 0) {
 		try {
-		    new ParseSubQuestion().parseSubQuestion(studentTestQuestionExample.getQuestion(), contextPath.replace('\\',
-			    '/'));
+		    new ParseSubQuestion().parseSubQuestion(studentTestQuestionExample.getQuestion(),
+			    contextPath.replace('\\', '/'));
 		} catch (ParseQuestionException e) {
 		    throw new InvalidArgumentsServiceException();
 		}

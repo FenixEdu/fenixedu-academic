@@ -48,10 +48,10 @@ public class DeleteWrittenEvaluation extends FenixService {
 	    String time = writtenEvaluation.getBeginningDateHourMinuteSecond().toString();
 	    String beginDateString = date.getDayOfMonth() + "-" + date.getMonthOfYear() + "-" + date.getYear();
 
-	    String subject = BundleUtil.getStringFromResourceBundle("resources.VigilancyResources", "email.convoke.subject", new String[] {
-		    writtenEvaluation.getName(), group.getName(), beginDateString, time });
-	    String body = BundleUtil.getStringFromResourceBundle("resources.VigilancyResources", "label.writtenEvaluationDeletedMessage",
-		    new String[] { writtenEvaluation.getName(), beginDateString, time });
+	    String subject = BundleUtil.getStringFromResourceBundle("resources.VigilancyResources", "email.convoke.subject",
+		    new String[] { writtenEvaluation.getName(), group.getName(), beginDateString, time });
+	    String body = BundleUtil.getStringFromResourceBundle("resources.VigilancyResources",
+		    "label.writtenEvaluationDeletedMessage", new String[] { writtenEvaluation.getName(), beginDateString, time });
 	    for (Vigilancy vigilancy : writtenEvaluation.getVigilancies()) {
 		Person person = vigilancy.getVigilantWrapper().getPerson();
 		tos.add(person);

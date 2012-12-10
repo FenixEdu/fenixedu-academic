@@ -10,6 +10,7 @@ import net.sourceforge.fenixedu.domain.space.AllocatableSpace;
 import net.sourceforge.fenixedu.domain.space.WrittenEvaluationSpaceOccupation;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.util.icalendar.EventBean;
+import net.sourceforge.fenixedu.util.BundleUtil;
 import net.sourceforge.fenixedu.util.Season;
 import pt.utl.ist.fenix.tools.util.DateFormatUtil;
 
@@ -32,6 +33,7 @@ public class Exam extends Exam_Base {
 	    this.setGradeScale(gradeScale);
 	}
 	checkIntervalBetweenEvaluations();
+	logCreate();
     }
 
     public void edit(Date examDay, Date examStartTime, Date examEndTime, List<ExecutionCourse> executionCoursesToAssociate,
@@ -50,6 +52,7 @@ public class Exam extends Exam_Base {
 		gradeScale);
 	this.setSeason(season);
 	checkIntervalBetweenEvaluations();
+	logEdit();
     }
 
     private boolean checkScopeAndSeasonConstrains(List<ExecutionCourse> executionCoursesToAssociate,
@@ -167,7 +170,7 @@ public class Exam extends Exam_Base {
     public boolean isForSeason(final Season season) {
 	return this.getSeason().equals(season);
     }
-    
+
     public boolean isSpecialSeason() {
 	return isForSeason(Season.SPECIAL_SEASON_OBJ);
     }
@@ -181,5 +184,11 @@ public class Exam extends Exam_Base {
     @Override
     public List<EventBean> getAllEvents(Registration registration, String scheme, String serverName, int serverPort) {
 	return getAllEvents("Exame (" + this.getSeason() + ")", registration, scheme, serverName, serverPort);
+    }
+
+    @Override
+    public String getPresentationName() {
+	return BundleUtil.getStringFromResourceBundle("resources.ApplicationResources", "label.exam") + " "
+		+ BundleUtil.getStringFromResourceBundle("resources.ApplicationResources", getSeason().getKey());
     }
 }

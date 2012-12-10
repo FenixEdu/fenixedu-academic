@@ -89,5 +89,6 @@ public class SectionCreator implements Serializable {
 	section.setNextSection(getNextSection());
 	section.setPermittedGroup(getPermittedGroup());
 	section.setVisible(getVisible());
+	site.logCreateSection(section);
     }
 }

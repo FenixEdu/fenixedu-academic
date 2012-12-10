@@ -181,3 +181,33 @@
     </slot>
     <slot name="thesisPresentationState" key="label.thesis.state"/>
 </schema>
+
+<schema name="executionCourseLog.logTypes" type="net.sourceforge.fenixedu.domain.ExecutionCourseLog$ExecutionCourseLogTypes">
+	<slot name="qualifiedName"/>
+</schema>
+<schema name="executionCourseLog.professorship" type="net.sourceforge.fenixedu.domain.Professorship" bundle="APPLICATION_RESOURCES">
+	<slot name="person.istUsername"/>
+	<slot name="person.name" />
+</schema>
+
+<schema name="professorship.view.properties" type="net.sourceforge.fenixedu.domain.ProfessorshipPermissions" bundle="APPLICATION_RESOURCES">
+		<slot name="personalization" key="link.personalizationOptions"/>
+		<slot name="siteArchive"  key="link.executionCourse.archive.generate"/>
+		<slot name="announcements" key="link.announcements"/>
+		<slot name="sections" key="link.teacher.executionCourseManagement.foruns"/>
+		<slot name="summaries" key="link.summaries"/>
+		<slot name="students" key="link.students"/>
+		<slot name="planning" key="link.lessonPlannings"/>
+		<slot name="evaluationSpecific" key="link.adHocEvaluations"/>
+		<slot name="evaluationWorksheets" key="link.onlineTests.evaluation"/>
+		<slot name="evaluationProject" key="link.projects.evaluation"/>
+		<slot name="evaluationTests" key="link.writtenTests.evaluation"/>
+		<slot name="evaluationExams" key="link.exams.evaluation"/>
+		<slot name="evaluationFinal" key="link.finalEvaluation"/>
+		<slot name="worksheets" key="link.testsManagement"/>
+		<slot name="groups" key="link.groupsManagement"/>
+		<slot name="shift" key="label.shifts"/>
+		<slot name="evaluationMethod" key="link.evaluationMethod"/>
+		<slot name="bibliografy" key="link.bibliography"/>
+		<setter signature="logEditProfessorship()"/>
+	</schema>

@@ -18,6 +18,7 @@ import net.sourceforge.fenixedu.domain.space.EventSpaceOccupation;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.util.icalendar.EventBean;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
+import net.sourceforge.fenixedu.util.BundleUtil;
 import net.sourceforge.fenixedu.util.EvaluationType;
 
 import org.joda.time.Interval;
@@ -47,6 +48,7 @@ public class WrittenTest extends WrittenTest_Base {
 	    this.setGradeScale(gradeScale);
 	}
 	checkIntervalBetweenEvaluations();
+	logCreate();
     }
 
     public void edit(Date testDate, Date testStartTime, Date testEndTime, List<ExecutionCourse> executionCoursesToAssociate,
@@ -69,6 +71,7 @@ public class WrittenTest extends WrittenTest_Base {
 	    this.setGradeScale(gradeScale);
 	}
 	checkIntervalBetweenEvaluations();
+	logEdit();
     }
 
     @Override
@@ -220,6 +223,13 @@ public class WrittenTest extends WrittenTest_Base {
 		removeRoomOccupation(room);
 	    }
 	}
+
+	for (ExecutionCourse ec : getAssociatedExecutionCourses()) {
+	    EvaluationManagementLog.createLog(ec, "resources.MessagingResources",
+		    "log.executionCourse.evaluation.generic.edited.rooms", getPresentationName(), ec.getName(),
+		    ec.getDegreePresentationString());
+	}
+
     }
 
     @Override
@@ -261,5 +271,11 @@ public class WrittenTest extends WrittenTest_Base {
 
     public String getRequestRoomSentDateString() {
 	return getRequestRoomSentDate().toString("dd/MM/yyyy HH:mm");
+    }
+
+    @Override
+    public String getPresentationName() {
+	return BundleUtil.getStringFromResourceBundle("resources.ApplicationResources", "label.written.test") + " "
+		+ getDescription();
     }
 }

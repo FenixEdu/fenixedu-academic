@@ -391,4 +391,22 @@ public abstract class Site extends Site_Base {
 	super.checkDisconnected();
     }
 
+    public void logCreateSection(Section section) {
+    }
+
+    public void logEditSection(Section section) {
+    }
+
+    public void logRemoveSection(Section section) {
+    }
+
+    public void logRemoveFile(Attachment attachment) {
+    }
+
+    public void logEditFile(Attachment attachment) {
+    }
+
+    public void logSectionInsertInstitutional(Content childContent, Section section) {
+    }
+
 }

@@ -3,6 +3,8 @@ package net.sourceforge.fenixedu.applicationTier.Servico.person.vigilancy;
 import java.util.Collections;
 
 import net.sourceforge.fenixedu.applicationTier.FenixService;
+import net.sourceforge.fenixedu.domain.EvaluationManagementLog;
+import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.WrittenEvaluation;
 import net.sourceforge.fenixedu.domain.accessControl.VigilancyGroup;
@@ -25,6 +27,11 @@ public class ChangeConvokeActive extends FenixService {
 
 	convoke.setActive(bool);
 	sendEmailNotification(bool, person, convoke);
+	for (ExecutionCourse ec : convoke.getAssociatedExecutionCourses()) {
+	    EvaluationManagementLog.createLog(ec, "resources.MessagingResources",
+		    "log.executionCourse.evaluation.generic.edited.vigilancies", convoke.getWrittenEvaluation()
+			    .getPresentationName(), ec.getName(), ec.getDegreePresentationString());
+	}
     }
 
     private static void sendEmailNotification(Boolean bool, Person person, Vigilancy convoke) {
@@ -47,8 +54,8 @@ public class ChangeConvokeActive extends FenixService {
 	String time = writtenEvaluation.getBeginningDateHourMinuteSecond().toString();
 	String beginDateString = date.getDayOfMonth() + "-" + date.getMonthOfYear() + "-" + date.getYear();
 
-	String subject = BundleUtil.getStringFromResourceBundle("resources.VigilancyResources",
-		"email.convoke.subject", new String[] { writtenEvaluation.getName(), group.getName(), beginDateString, time });
+	String subject = BundleUtil.getStringFromResourceBundle("resources.VigilancyResources", "email.convoke.subject",
+		new String[] { writtenEvaluation.getName(), group.getName(), beginDateString, time });
 
 	new Message(PersonSender.newInstance(person), new ConcreteReplyTo(replyTo).asCollection(), new Recipient(
 		new VigilancyGroup(convoke)).asCollection(), Collections.EMPTY_LIST, Collections.EMPTY_LIST, subject,
@@ -62,11 +69,14 @@ public class ChangeConvokeActive extends FenixService {
 	DateTime beginDate = writtenEvaluation.getBeginningDateTime();
 	String date = beginDate.getDayOfMonth() + "-" + beginDate.getMonthOfYear() + "-" + beginDate.getYear();
 
-	return BundleUtil.getStringFromResourceBundle("resources.VigilancyResources",
-		"email.convoke.active.body", new String[] { convoke.getVigilantWrapper().getPerson().getName(),
-		(bool) ? BundleUtil.getStringFromResourceBundle("resources.VigilancyResources", "email.convoke.convokedAgain") :
-		    BundleUtil.getStringFromResourceBundle("resources.VigilancyResources",
-			    "email.convoke.uncovoked"), writtenEvaluation.getFullName(),
-		date, writtenEvaluation.getBeginningDateHourMinuteSecond().toString() });
+	return BundleUtil.getStringFromResourceBundle(
+		"resources.VigilancyResources",
+		"email.convoke.active.body",
+		new String[] {
+			convoke.getVigilantWrapper().getPerson().getName(),
+			(bool) ? BundleUtil.getStringFromResourceBundle("resources.VigilancyResources",
+				"email.convoke.convokedAgain") : BundleUtil.getStringFromResourceBundle(
+				"resources.VigilancyResources", "email.convoke.uncovoked"), writtenEvaluation.getFullName(),
+			date, writtenEvaluation.getBeginningDateHourMinuteSecond().toString() });
     }
 }

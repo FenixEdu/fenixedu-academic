@@ -63,6 +63,10 @@ public class Summary extends Summary_Base {
 	setRootDomainObject(RootDomainObject.getInstance());
 	fillSummaryWithInfo(title, summaryText, studentsNumber, isExtraLesson, professorship, teacherName, teacher, shift,
 		lesson, date, room, hour, type, taught);
+
+	ContentManagementLog.createLog(professorship.getExecutionCourse(), "resources.MessagingResources",
+		"log.executionCourse.content.summary.added", title.getContent(), professorship.getExecutionCourse().getNome(),
+		professorship.getExecutionCourse().getDegreePresentationString());
     }
 
     public void edit(MultiLanguageString title, MultiLanguageString summaryText, Integer studentsNumber, Boolean isExtraLesson,
@@ -71,6 +75,10 @@ public class Summary extends Summary_Base {
 
 	fillSummaryWithInfo(title, summaryText, studentsNumber, isExtraLesson, professorship, teacherName, teacher, shift,
 		lesson, date, room, hour, type, taught);
+
+	ContentManagementLog.createLog(professorship.getExecutionCourse(), "resources.MessagingResources",
+		"log.executionCourse.content.summary.edited", title.getContent(), professorship.getExecutionCourse().getNome(),
+		professorship.getExecutionCourse().getDegreePresentationString());
     }
 
     private void fillSummaryWithInfo(MultiLanguageString title, MultiLanguageString summaryText, Integer studentsNumber,
@@ -99,8 +107,8 @@ public class Summary extends Summary_Base {
 	if (isExtraLesson) {
 	    super.setLessonInstance(null);
 	    setRoom(room);
-	    HourMinuteSecond hourMinuteSecond = new HourMinuteSecond(hour.get(DateTimeFieldType.hourOfDay()), hour
-		    .get(DateTimeFieldType.minuteOfHour()), 0);
+	    HourMinuteSecond hourMinuteSecond = new HourMinuteSecond(hour.get(DateTimeFieldType.hourOfDay()),
+		    hour.get(DateTimeFieldType.minuteOfHour()), 0);
 	    setSummaryHourHourMinuteSecond(hourMinuteSecond);
 	} else {
 	    setRoom(lesson.getSala());
@@ -113,6 +121,18 @@ public class Summary extends Summary_Base {
     }
 
     public void delete() {
+
+	String summaryTitle, pfsECoursePresentation, pfsECourseNome;
+	ExecutionCourse pfsECourse;
+
+	summaryTitle = getTitle().getContent();
+	pfsECourse = getProfessorship().getExecutionCourse();
+	pfsECoursePresentation = getProfessorship().getExecutionCourse().getDegreePresentationString();
+	pfsECourseNome = getProfessorship().getExecutionCourse().getNome();
+
+	ContentManagementLog.createLog(pfsECourse, "resources.MessagingResources", "log.executionCourse.content.summary.removed",
+		summaryTitle, pfsECourseNome, pfsECoursePresentation);
+
 	super.setExecutionCourse(null);
 	super.setShift(null);
 	super.setLessonInstance(null);
@@ -121,6 +141,7 @@ public class Summary extends Summary_Base {
 	removeTeacher();
 	removeRootDomainObject();
 	deleteDomainObject();
+
     }
 
     @jvstm.cps.ConsistencyPredicate
@@ -299,41 +320,46 @@ public class Summary extends Summary_Base {
 		new TimeOfDay(time.getHour(), time.getMinuteOfHour(), time.getSecondOfMinute(), 0));
     }
 
-	@Deprecated
-	public java.util.Date getLastModifiedDate(){
-		org.joda.time.DateTime dt = getLastModifiedDateDateTime();
-		return (dt == null) ? null : new java.util.Date(dt.getMillis());
-	}
+    @Deprecated
+    public java.util.Date getLastModifiedDate() {
+	org.joda.time.DateTime dt = getLastModifiedDateDateTime();
+	return (dt == null) ? null : new java.util.Date(dt.getMillis());
+    }
 
-	@Deprecated
-	public void setLastModifiedDate(java.util.Date date){
-		if(date == null) setLastModifiedDateDateTime(null);
-		else setLastModifiedDateDateTime(new org.joda.time.DateTime(date.getTime()));
-	}
+    @Deprecated
+    public void setLastModifiedDate(java.util.Date date) {
+	if (date == null)
+	    setLastModifiedDateDateTime(null);
+	else
+	    setLastModifiedDateDateTime(new org.joda.time.DateTime(date.getTime()));
+    }
 
-	@Deprecated
-	public java.util.Date getSummaryDate(){
-		org.joda.time.YearMonthDay ymd = getSummaryDateYearMonthDay();
-		return (ymd == null) ? null : new java.util.Date(ymd.getYear() - 1900, ymd.getMonthOfYear() - 1, ymd.getDayOfMonth());
-	}
+    @Deprecated
+    public java.util.Date getSummaryDate() {
+	org.joda.time.YearMonthDay ymd = getSummaryDateYearMonthDay();
+	return (ymd == null) ? null : new java.util.Date(ymd.getYear() - 1900, ymd.getMonthOfYear() - 1, ymd.getDayOfMonth());
+    }
 
-	@Deprecated
-	public void setSummaryDate(java.util.Date date){
-		if(date == null) setSummaryDateYearMonthDay(null);
-		else setSummaryDateYearMonthDay(org.joda.time.YearMonthDay.fromDateFields(date));
-	}
+    @Deprecated
+    public void setSummaryDate(java.util.Date date) {
+	if (date == null)
+	    setSummaryDateYearMonthDay(null);
+	else
+	    setSummaryDateYearMonthDay(org.joda.time.YearMonthDay.fromDateFields(date));
+    }
 
-	@Deprecated
-	public java.util.Date getSummaryHour(){
-		net.sourceforge.fenixedu.util.HourMinuteSecond hms = getSummaryHourHourMinuteSecond();
-		return (hms == null) ? null : new java.util.Date(0, 0, 1, hms.getHour(), hms.getMinuteOfHour(), hms.getSecondOfMinute());
-	}
+    @Deprecated
+    public java.util.Date getSummaryHour() {
+	net.sourceforge.fenixedu.util.HourMinuteSecond hms = getSummaryHourHourMinuteSecond();
+	return (hms == null) ? null : new java.util.Date(0, 0, 1, hms.getHour(), hms.getMinuteOfHour(), hms.getSecondOfMinute());
+    }
 
-	@Deprecated
-	public void setSummaryHour(java.util.Date date){
-		if(date == null) setSummaryHourHourMinuteSecond(null);
-		else setSummaryHourHourMinuteSecond(net.sourceforge.fenixedu.util.HourMinuteSecond.fromDateFields(date));
-	}
-
+    @Deprecated
+    public void setSummaryHour(java.util.Date date) {
+	if (date == null)
+	    setSummaryHourHourMinuteSecond(null);
+	else
+	    setSummaryHourHourMinuteSecond(net.sourceforge.fenixedu.util.HourMinuteSecond.fromDateFields(date));
+    }
 
 }

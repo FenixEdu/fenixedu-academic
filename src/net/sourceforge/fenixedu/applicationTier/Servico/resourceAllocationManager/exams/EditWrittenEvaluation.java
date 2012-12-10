@@ -117,7 +117,6 @@ public class EditWrittenEvaluation extends FenixService {
 		}
 	    }
 	}
-
     }
 
     private boolean timeModificationIsBiggerThanFiveMinutes(Date writtenEvaluationStartTime, Date beginningDate) {

@@ -58,4 +58,26 @@ public abstract class Evaluation extends Evaluation_Base {
 	return false;
     }
 
+    public String getPresentationName() {
+	return null;
+    }
+
+    protected void logCreate() {
+	logAuxBasic("log.executionCourse.evaluation.generic.created");
+    }
+
+    protected void logEdit() {
+	logAuxBasic("log.executionCourse.evaluation.generic.edited");
+    }
+
+    protected void logRemove() {
+	logAuxBasic("log.executionCourse.evaluation.generic.removed");
+    }
+
+    private void logAuxBasic(String key) {
+	for (ExecutionCourse ec : getAssociatedExecutionCourses()) {
+	    EvaluationManagementLog.createLog(ec, "resources.MessagingResources", key, getPresentationName(), ec.getName(),
+		    ec.getDegreePresentationString());
+	}
+    }
 }

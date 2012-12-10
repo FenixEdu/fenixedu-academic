@@ -102,11 +102,17 @@ public class Professorship extends Professorship_Base implements ICreditsEventOr
 	    executionCourse.moveSummariesFromTeacherToProfessorship(person.getTeacher(), professorShip);
 	}
 
+	ProfessorshipManagementLog.createLog(professorShip.getExecutionCourse(), "resources.MessagingResources",
+		"log.executionCourse.professorship.added", professorShip.getPerson().getPresentationName(), professorShip
+			.getExecutionCourse().getNome(), professorShip.getExecutionCourse().getDegreePresentationString());
 	return professorShip;
     }
 
     public void delete() {
 	if (canBeDeleted()) {
+	    ProfessorshipManagementLog.createLog(getExecutionCourse(), "resources.MessagingResources",
+		    "log.executionCourse.professorship.removed", getPerson().getPresentationName(), getExecutionCourse()
+			    .getNome(), getExecutionCourse().getDegreePresentationString());
 	    removeExecutionCourse();
 	    removePerson();
 	    if (super.getPermissions() != null) {
@@ -407,4 +413,5 @@ public class Professorship extends Professorship_Base implements ICreditsEventOr
 	lessonNumber += getSupportLessonsCount();
 	return lessonNumber;
     }
+
 }

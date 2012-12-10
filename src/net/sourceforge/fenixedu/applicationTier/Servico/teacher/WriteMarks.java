@@ -8,6 +8,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceMultipleException;
 import net.sourceforge.fenixedu.domain.Attends;
 import net.sourceforge.fenixedu.domain.Evaluation;
+import net.sourceforge.fenixedu.domain.EvaluationManagementLog;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.Mark;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
@@ -145,6 +146,10 @@ public class WriteMarks {
 	if (!exceptionList.isEmpty()) {
 	    throw new FenixServiceMultipleException(exceptionList);
 	}
+
+	EvaluationManagementLog.createLog(executionCourse, "resources.MessagingResources",
+		"log.executionCourse.evaluation.generic.edited.marks", evaluation.getPresentationName(),
+		executionCourse.getName(), executionCourse.getDegreePresentationString());
     }
 
     private static Attends findAttend(final ExecutionCourse executionCourse, final Integer attendId) {

@@ -117,7 +117,6 @@
 <p style="color: #888;">
 	<em><bean:message key="message.section.reorder.tip" bundle="SITE_RESOURCES"/></em>
 </p>
-
 </logic:notEmpty>
 <!-- Functionalities -->
 

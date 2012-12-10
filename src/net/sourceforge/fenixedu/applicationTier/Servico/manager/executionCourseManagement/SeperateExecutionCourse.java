@@ -58,8 +58,8 @@ public class SeperateExecutionCourse extends FenixService {
     private static void transferCurricularCourses(final ExecutionCourse originExecutionCourse,
 	    final ExecutionCourse destinationExecutionCourse, final Integer[] curricularCourseIdsToTransfer) {
 	for (final Integer curricularCourseID : curricularCourseIdsToTransfer) {
-	    final CurricularCourse curricularCourse = (CurricularCourse) findDomainObjectByID(originExecutionCourse
-		    .getAssociatedCurricularCoursesSet(), curricularCourseID);
+	    final CurricularCourse curricularCourse = (CurricularCourse) findDomainObjectByID(
+		    originExecutionCourse.getAssociatedCurricularCoursesSet(), curricularCourseID);
 	    originExecutionCourse.removeAssociatedCurricularCourses(curricularCourse);
 	    destinationExecutionCourse.addAssociatedCurricularCourses(curricularCourse);
 	}
@@ -130,15 +130,15 @@ public class SeperateExecutionCourse extends FenixService {
     }
 
     private static ExecutionCourse createNewExecutionCourse(ExecutionCourse originExecutionCourse) {
-	final String sigla = getUniqueExecutionCourseCode(originExecutionCourse.getNome(), originExecutionCourse
-		.getExecutionPeriod(), originExecutionCourse.getSigla());
+	final String sigla = getUniqueExecutionCourseCode(originExecutionCourse.getNome(),
+		originExecutionCourse.getExecutionPeriod(), originExecutionCourse.getSigla());
 
 	final ExecutionCourse destinationExecutionCourse = new ExecutionCourse(originExecutionCourse.getNome(), sigla,
 		originExecutionCourse.getExecutionPeriod(), null);
 
 	for (CourseLoad courseLoad : originExecutionCourse.getCourseLoads()) {
-	    new CourseLoad(destinationExecutionCourse, courseLoad.getType(), courseLoad.getUnitQuantity(), courseLoad
-		    .getTotalQuantity());
+	    new CourseLoad(destinationExecutionCourse, courseLoad.getType(), courseLoad.getUnitQuantity(),
+		    courseLoad.getTotalQuantity());
 	}
 
 	for (final Professorship professorship : originExecutionCourse.getProfessorships()) {

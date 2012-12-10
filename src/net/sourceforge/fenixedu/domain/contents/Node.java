@@ -54,6 +54,11 @@ public abstract class Node extends Node_Base implements MenuEntry, Comparable<No
      * Sibling nodes are reordered if needed.
      */
     public void delete() {
+	final Content child = getChild();
+	if (child != null) {
+	    child.logDeleteNode();
+	}
+
 	removeRootDomainObject();
 	removeParent();
 	removeChild();

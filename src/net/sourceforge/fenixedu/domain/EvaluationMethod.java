@@ -32,4 +32,11 @@ public class EvaluationMethod extends EvaluationMethod_Base {
 	super.deleteDomainObject();
     }
 
+    @Override
+    public void setEvaluationElements(MultiLanguageString evaluationElements) {
+	ContentManagementLog.createLog(this.getExecutionCourse(), "resources.MessagingResources",
+		"log.executionCourse.curricular.evaluation.method", this.getExecutionCourse().getNome(), this
+			.getExecutionCourse().getDegreePresentationString());
+	super.setEvaluationElements(evaluationElements);
+    }
 }

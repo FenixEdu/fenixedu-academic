@@ -136,8 +136,8 @@ public class CreateScormFile extends CreateFileContent {
 	extraScormParam = new ThreadLocal<ScormMetaDataHash>();
 	extraScormParam.set(args.getScormParameters());
 
-	super.run(args.getSite(), args.getContainer(), args.getFile(), args.getOriginalFilename(), args.getDisplayName(), args
-		.getPermittedGroup(), args.getPerson(), args.getEducationalResourceType());
+	super.run(args.getSite(), args.getContainer(), args.getFile(), args.getOriginalFilename(), args.getDisplayName(),
+		args.getPermittedGroup(), args.getPerson(), args.getEducationalResourceType());
     }
 
     @Override

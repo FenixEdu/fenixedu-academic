@@ -14,6 +14,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgume
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExportGrouping;
 import net.sourceforge.fenixedu.domain.Grouping;
+import net.sourceforge.fenixedu.domain.GroupsAndShiftsManagementLog;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Professorship;
 import net.sourceforge.fenixedu.domain.Teacher;
@@ -83,9 +84,28 @@ public class DeleteProjectProposal extends FenixService {
 	    }
 	}
 
+	List<ExecutionCourse> ecs = groupProperties.getExecutionCourses();
+	StringBuilder sb = new StringBuilder();
+	sb.setLength(0);
+
+	// proposal deleted is in same executioCourse
+	if (startExecutionCourse.getExternalId().compareTo(groupingExecutionCourse.getExecutionCourse().getExternalId()) == 0) {
+	    for (ExecutionCourse ec : ecs) {
+		GroupsAndShiftsManagementLog.createLog(ec, "resources.MessagingResources",
+			"log.executionCourse.groupAndShifts.grouping.exportGroup.droppedSelf", groupProperties.getName(),
+			startExecutionCourse.getNome(), startExecutionCourse.getDegreePresentationString());
+	    }
+	} else {
+	    for (ExecutionCourse ec : ecs) {
+		GroupsAndShiftsManagementLog.createLog(ec, "resources.MessagingResources",
+			"log.executionCourse.groupAndShifts.grouping.exportGroup.dropped", groupProperties.getName(),
+			startExecutionCourse.getNome(), startExecutionCourse.getDegreePresentationString(),
+			groupingExecutionCourse.getExecutionCourse().getName(), groupingExecutionCourse.getExecutionCourse()
+				.getDegreePresentationString());
+	    }
+	}
 	groupingExecutionCourse.delete();
 
 	return true;
     }
-
 }

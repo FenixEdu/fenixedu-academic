@@ -8,6 +8,10 @@ import net.sourceforge.fenixedu.domain.accessControl.CompetenceCourseGroup;
 import net.sourceforge.fenixedu.domain.accessControl.DegreesOfExecutionCourseGroup;
 import net.sourceforge.fenixedu.domain.accessControl.ExecutionCourseTeachersAndStudentsGroup;
 import net.sourceforge.fenixedu.domain.accessControl.ExecutionCourseTeachersGroup;
+import net.sourceforge.fenixedu.domain.contents.Attachment;
+import net.sourceforge.fenixedu.domain.contents.Content;
+import net.sourceforge.fenixedu.domain.contents.FunctionalityCall;
+import net.sourceforge.fenixedu.domain.contents.Node;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.messaging.ExecutionCourseForum;
 import net.sourceforge.fenixedu.injectionCode.IGroup;
@@ -167,4 +171,140 @@ public class ExecutionCourseSite extends ExecutionCourseSite_Base {
 	// don't call super.setNormalizedName() !
     }
 
+    @Override
+    public void logCreateSection(Section section) {
+	ContentManagementLog.createLog(getSiteExecutionCourse(), "resources.MessagingResources",
+		"log.executionCourse.content.section.created", section.getName().getContent(),
+		getSiteExecutionCourse().getNome(), getSiteExecutionCourse().getDegreePresentationString());
+
+    }
+
+    @Override
+    public void logEditSection(Section section) {
+	ContentManagementLog.createLog(getSiteExecutionCourse(), "resources.MessagingResources",
+		"log.executionCourse.content.section.edited", section.getName().getContent(), getSiteExecutionCourse().getNome(),
+		getSiteExecutionCourse().getDegreePresentationString());
+    }
+
+    @Override
+    public void logRemoveSection(Section section) {
+	ContentManagementLog.createLog(getSiteExecutionCourse(), "resources.MessagingResources",
+		"log.executionCourse.content.section.removed", section.getName().getContent(),
+		getSiteExecutionCourse().getNome(), getSiteExecutionCourse().getDegreePresentationString());
+    }
+
+    @Override
+    public void logRemoveFile(Attachment attachment) {
+	ContentManagementLog.createLog(getSiteExecutionCourse(), "resources.MessagingResources",
+		"log.executionCourse.content.file.removed", attachment.getName().getContent(),
+		getSiteExecutionCourse().getNome(), getSiteExecutionCourse().getDegreePresentationString());
+    }
+
+    @Override
+    public void logEditFile(Attachment attachment) {
+	ContentManagementLog.createLog(getSiteExecutionCourse(), "resources.MessagingResources",
+		"log.executionCourse.content.file.edited", attachment.getName().getContent(), getSiteExecutionCourse().getNome(),
+		getSiteExecutionCourse().getDegreePresentationString());
+    }
+
+    @Override
+    protected Node createChildNode(Content childContent) {
+	ContentManagementLog.createLog(getSiteExecutionCourse(), "resources.MessagingResources",
+		"log.executionCourse.content.section.institutional", childContent.getName().getContent(),
+		getSiteExecutionCourse().getNome(), getSiteExecutionCourse().getDegreePresentationString());
+	return super.createChildNode(childContent);
+    }
+
+    @Override
+    public void logRemoveFunctionalityCall(FunctionalityCall functionalityCall) {
+	ContentManagementLog.createLog(getSiteExecutionCourse(), "resources.MessagingResources",
+		"log.executionCourse.content.section.remove.institutional", functionalityCall.getName().getContent(),
+		getSiteExecutionCourse().getNome(), getSiteExecutionCourse().getDegreePresentationString());
+    }
+
+    @Override
+    public void logCreateItemtoSection(Item item) {
+	ContentManagementLog
+		.createLog(getSiteExecutionCourse(), "resources.MessagingResources",
+			"log.executionCourse.content.section.item.created", item.getName().getContent(), item.getSection()
+				.getName().getContent(), getSiteExecutionCourse().getNome(), getSiteExecutionCourse()
+				.getDegreePresentationString());
+    }
+
+    @Override
+    public void logEditItemtoSection(Item item) {
+	ContentManagementLog
+		.createLog(getSiteExecutionCourse(), "resources.MessagingResources",
+			"log.executionCourse.content.section.item.edited", item.getName().getContent(), item.getSection()
+				.getName().getContent(), getSiteExecutionCourse().getNome(), getSiteExecutionCourse()
+				.getDegreePresentationString());
+    }
+
+    @Override
+    public void logDeleteItemtoSection(Item item) {
+	ContentManagementLog
+		.createLog(getSiteExecutionCourse(), "resources.MessagingResources",
+			"log.executionCourse.content.section.item.deleted", item.getName().getContent(), item.getSection()
+				.getName().getContent(), getSiteExecutionCourse().getNome(), getSiteExecutionCourse()
+				.getDegreePresentationString());
+    }
+
+    @Override
+    public void logEditItemPermission(Item item) {
+	ContentManagementLog
+		.createLog(getSiteExecutionCourse(), "resources.MessagingResources",
+			"log.executionCourse.content.section.item.permitted", item.getName().getContent(), item.getSection()
+				.getName().getContent(), getSiteExecutionCourse().getNome(), getSiteExecutionCourse()
+				.getDegreePresentationString());
+    }
+
+    @Override
+    public void logSectionInsertInstitutional(Content childContent, Section section) {
+	ContentManagementLog.createLog(getSiteExecutionCourse(), "resources.MessagingResources",
+		"log.executionCourse.content.section.item.insert.institutional", childContent.getName().getContent(), section
+			.getName().getContent(), getSiteExecutionCourse().getNome(), getSiteExecutionCourse()
+			.getDegreePresentationString());
+    }
+
+    @Override
+    public void logEditSectionPermission(Section section) {
+	ContentManagementLog.createLog(getSiteExecutionCourse(), "resources.MessagingResources",
+		"log.executionCourse.content.section.permitted", section.getName().getContent(), getSiteExecutionCourse()
+			.getNome(), getSiteExecutionCourse().getDegreePresentationString());
+    }
+
+    @Override
+    public void logAddFileToItem(Item item, Section section, Content childContent) {
+	ContentManagementLog.createLog(getSiteExecutionCourse(), "resources.MessagingResources",
+		"log.executionCourse.content.section.item.add.file", childContent.getName().getContent(), item.getName()
+			.getContent(), section.getName().getContent(), getSiteExecutionCourse().getNome(),
+		getSiteExecutionCourse().getDegreePresentationString());
+    }
+
+    @Override
+    public void logEditFileToItem(Attachment attachment, Section section) {
+	ContentManagementLog
+		.createLog(getSiteExecutionCourse(), "resources.MessagingResources",
+			"log.executionCourse.content.section.item.edit.file", attachment.getName().getContent(), section
+				.getName().getContent(), getSiteExecutionCourse().getNome(), getSiteExecutionCourse()
+				.getDegreePresentationString());
+    }
+
+    @Override
+    public void logItemFilePermittedGroup(Attachment attachment, Section section) {
+	ContentManagementLog
+		.createLog(getSiteExecutionCourse(), "resources.MessagingResources",
+			"log.executionCourse.content.section.file.permitted", attachment.getName().getContent(), section
+				.getName().getContent(), getSiteExecutionCourse().getNome(), getSiteExecutionCourse()
+				.getDegreePresentationString());
+    }
+
+    @Override
+    public void logSectionInsertFile(Content childContent, Section section) {
+	ContentManagementLog
+		.createLog(getSiteExecutionCourse(), "resources.MessagingResources",
+			"log.executionCourse.content.section.file.insert", childContent.getName().getContent(), section.getName()
+				.getContent(), getSiteExecutionCourse().getNome(), getSiteExecutionCourse()
+				.getDegreePresentationString());
+    }
 }

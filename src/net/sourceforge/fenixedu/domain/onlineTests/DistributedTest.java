@@ -14,6 +14,8 @@ import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
+import net.sourceforge.fenixedu.domain.EvaluationManagementLog;
+import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.util.tests.Response;
@@ -39,6 +41,11 @@ public class DistributedTest extends DistributedTest_Base {
     }
 
     public void delete() {
+	ExecutionCourse ec = (ExecutionCourse) getTestScope().getDomainObject();
+	EvaluationManagementLog.createLog(ec, "resources.MessagingResources",
+		"log.executionCourse.evaluation.tests.distribution.removed", getEvaluationTitle(), getBeginDateTimeFormatted(),
+		ec.getName(), ec.getDegreePresentationString());
+
 	for (; hasAnyDistributedTestQuestions(); getDistributedTestQuestions().get(0).delete())
 	    ;
 	for (; hasAnyStudentsLogs(); getStudentsLogs().get(0).delete())
@@ -408,53 +415,60 @@ public class DistributedTest extends DistributedTest_Base {
 	return result.concat(Integer.valueOf(getEndHour().get(Calendar.MINUTE)).toString());
     }
 
-	@Deprecated
-	public java.util.Date getBeginDateDate(){
-		org.joda.time.YearMonthDay ymd = getBeginDateDateYearMonthDay();
-		return (ymd == null) ? null : new java.util.Date(ymd.getYear() - 1900, ymd.getMonthOfYear() - 1, ymd.getDayOfMonth());
-	}
+    @Deprecated
+    public java.util.Date getBeginDateDate() {
+	org.joda.time.YearMonthDay ymd = getBeginDateDateYearMonthDay();
+	return (ymd == null) ? null : new java.util.Date(ymd.getYear() - 1900, ymd.getMonthOfYear() - 1, ymd.getDayOfMonth());
+    }
 
-	@Deprecated
-	public void setBeginDateDate(java.util.Date date){
-		if(date == null) setBeginDateDateYearMonthDay(null);
-		else setBeginDateDateYearMonthDay(org.joda.time.YearMonthDay.fromDateFields(date));
-	}
+    @Deprecated
+    public void setBeginDateDate(java.util.Date date) {
+	if (date == null)
+	    setBeginDateDateYearMonthDay(null);
+	else
+	    setBeginDateDateYearMonthDay(org.joda.time.YearMonthDay.fromDateFields(date));
+    }
 
-	@Deprecated
-	public java.util.Date getBeginHourDate(){
-		net.sourceforge.fenixedu.util.HourMinuteSecond hms = getBeginHourDateHourMinuteSecond();
-		return (hms == null) ? null : new java.util.Date(0, 0, 1, hms.getHour(), hms.getMinuteOfHour(), hms.getSecondOfMinute());
-	}
+    @Deprecated
+    public java.util.Date getBeginHourDate() {
+	net.sourceforge.fenixedu.util.HourMinuteSecond hms = getBeginHourDateHourMinuteSecond();
+	return (hms == null) ? null : new java.util.Date(0, 0, 1, hms.getHour(), hms.getMinuteOfHour(), hms.getSecondOfMinute());
+    }
 
-	@Deprecated
-	public void setBeginHourDate(java.util.Date date){
-		if(date == null) setBeginHourDateHourMinuteSecond(null);
-		else setBeginHourDateHourMinuteSecond(net.sourceforge.fenixedu.util.HourMinuteSecond.fromDateFields(date));
-	}
+    @Deprecated
+    public void setBeginHourDate(java.util.Date date) {
+	if (date == null)
+	    setBeginHourDateHourMinuteSecond(null);
+	else
+	    setBeginHourDateHourMinuteSecond(net.sourceforge.fenixedu.util.HourMinuteSecond.fromDateFields(date));
+    }
 
-	@Deprecated
-	public java.util.Date getEndDateDate(){
-		org.joda.time.YearMonthDay ymd = getEndDateDateYearMonthDay();
-		return (ymd == null) ? null : new java.util.Date(ymd.getYear() - 1900, ymd.getMonthOfYear() - 1, ymd.getDayOfMonth());
-	}
+    @Deprecated
+    public java.util.Date getEndDateDate() {
+	org.joda.time.YearMonthDay ymd = getEndDateDateYearMonthDay();
+	return (ymd == null) ? null : new java.util.Date(ymd.getYear() - 1900, ymd.getMonthOfYear() - 1, ymd.getDayOfMonth());
+    }
 
-	@Deprecated
-	public void setEndDateDate(java.util.Date date){
-		if(date == null) setEndDateDateYearMonthDay(null);
-		else setEndDateDateYearMonthDay(org.joda.time.YearMonthDay.fromDateFields(date));
-	}
+    @Deprecated
+    public void setEndDateDate(java.util.Date date) {
+	if (date == null)
+	    setEndDateDateYearMonthDay(null);
+	else
+	    setEndDateDateYearMonthDay(org.joda.time.YearMonthDay.fromDateFields(date));
+    }
 
-	@Deprecated
-	public java.util.Date getEndHourDate(){
-		net.sourceforge.fenixedu.util.HourMinuteSecond hms = getEndHourDateHourMinuteSecond();
-		return (hms == null) ? null : new java.util.Date(0, 0, 1, hms.getHour(), hms.getMinuteOfHour(), hms.getSecondOfMinute());
-	}
+    @Deprecated
+    public java.util.Date getEndHourDate() {
+	net.sourceforge.fenixedu.util.HourMinuteSecond hms = getEndHourDateHourMinuteSecond();
+	return (hms == null) ? null : new java.util.Date(0, 0, 1, hms.getHour(), hms.getMinuteOfHour(), hms.getSecondOfMinute());
+    }
 
-	@Deprecated
-	public void setEndHourDate(java.util.Date date){
-		if(date == null) setEndHourDateHourMinuteSecond(null);
-		else setEndHourDateHourMinuteSecond(net.sourceforge.fenixedu.util.HourMinuteSecond.fromDateFields(date));
-	}
-
+    @Deprecated
+    public void setEndHourDate(java.util.Date date) {
+	if (date == null)
+	    setEndHourDateHourMinuteSecond(null);
+	else
+	    setEndHourDateHourMinuteSecond(net.sourceforge.fenixedu.util.HourMinuteSecond.fromDateFields(date));
+    }
 
 }

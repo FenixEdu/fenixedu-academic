@@ -46,7 +46,14 @@
             </html:link>
         </li>
         </logic:equal>
-        
+        <logic:equal name="professorshipPermissions" property="summaries" value="true">
+		<li>
+			<html:link page="/searchECLog.do?method=prepareInit" paramId="objectCode" paramName="executionCourse" paramProperty="externalId">
+				<bean:message key="link.executionCourse.log"/>
+			</html:link>
+		</li>
+		</logic:equal>
+		
 	<li class="navheader"><bean:message key="label.executionCourseManagement.menu.communication"/></li>
 		<logic:equal name="professorshipPermissions" property="announcements" value="true">
 		<li>

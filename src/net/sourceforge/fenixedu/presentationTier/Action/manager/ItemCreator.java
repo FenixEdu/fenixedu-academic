@@ -92,5 +92,6 @@ public class ItemCreator implements Serializable {
 	item.setPermittedGroup(getPermittedGroup());
 	item.setVisible(isVisible());
 	item.setShowName(isShowName());
+	item.logCreateItemtoSection();
     }
 }

@@ -348,6 +348,7 @@
         <property name="eachLayout" value="values"/>
         <property name="saveOptions" value="true"/>
     </slot>
+    <setter signature="logEditItemtoSection()"/>
 </schema>
 <schema name="site.section.item.edit.group"
         type="net.sourceforge.fenixedu.domain.Item"
@@ -628,6 +629,7 @@
         <property name="eachLayout" value="values"/>
         <property name="saveOptions" value="true"/>
     </slot>
+    <setter signature="logEditFile()"/>
 </schema>
 
 <schema name="site.item.file.basic" type="net.sourceforge.fenixedu.domain.FileContent" bundle="SITE_RESOURCES">
@@ -665,6 +667,7 @@
         <property name="eachLayout" value="values"/>
         <property name="saveOptions" value="true"/>
     </slot>
+    <setter signature="logEditSectionPermission()"/>
 </schema>
 
 <schema name="item.group.edit" type="net.sourceforge.fenixedu.domain.Item">
@@ -674,6 +677,7 @@
         <property name="eachLayout" value="values"/>
         <property name="saveOptions" value="true"/>
     </slot>
+    <setter signature="logEditItemPermission()"/>
 </schema>
 
 <schema name="permittedGroup.class.text" type="java.lang.Object">
@@ -697,6 +701,7 @@
         <property name="eachLayout" value="values"/>
         <property name="saveOptions" value="true"/>
     </slot>
+    <setter signature="logItemFilePermittedGroup()"/>
 </schema>
 
 <schema name="item.file.create" type="net.sourceforge.fenixedu.presentationTier.Action.manager.FileContentCreationBean" bundle="SITE_RESOURCES">

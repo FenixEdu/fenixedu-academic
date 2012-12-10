@@ -23,8 +23,8 @@ public class FileContent extends FileContent_Base {
 	setAttachment(attachment);
     }
 
-    public FileContent(Attachment attachment, VirtualPath path, String filename, String displayName, Collection<FileSetMetaData> metadata,
-	    byte[] content, Group group) {
+    public FileContent(Attachment attachment, VirtualPath path, String filename, String displayName,
+	    Collection<FileSetMetaData> metadata, byte[] content, Group group) {
 	this(attachment);
 	init(path, filename, displayName, metadata, content, group);
     }
@@ -71,5 +71,23 @@ public class FileContent extends FileContent_Base {
     @Override
     public void setDisplayName(String displayName) {
 	super.setDisplayName(processDisplayName(displayName));
+	final Attachment attachment = getAttachment();
+	if (attachment != null) {
+	    attachment.logEditFileToItem();
+	}
+    }
+
+    public void logEditFile() {
+	final Attachment attachment = getAttachment();
+	if (attachment != null) {
+	    attachment.logEditFile();
+	}
+    }
+
+    public void logItemFilePermittedGroup() {
+	final Attachment attachment = getAttachment();
+	if (attachment != null) {
+	    attachment.logItemFilePermittedGroup();
+	}
     }
 }

@@ -5,6 +5,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
+import net.sourceforge.fenixedu.domain.ContentManagementLog;
 import net.sourceforge.fenixedu.domain.File;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.contents.Node;
@@ -272,8 +273,12 @@ public class Announcement extends Announcement_Base {
 	    final AnnouncementNode announcementNode = getAnnouncementNode();
 	    if (announcementNode == null) {
 		new AnnouncementNode(announcementBoard, this);
-	    } else if (announcementNode.getParent() != announcementBoard) {
-		announcementNode.setParent(announcementBoard);
+		announcementBoard.logCreate(this);
+	    } else {
+		if (announcementNode.getParent() != announcementBoard) {
+		    announcementNode.setParent(announcementBoard);
+		}
+		announcementBoard.logEdit(this);
 	    }
 	    super.setApproved(announcementBoard.getInitialAnnouncementsApprovedState());
 	}
@@ -364,6 +369,15 @@ public class Announcement extends Announcement_Base {
 
     @Override
     protected void disconnectContent() {
+
+	AnnouncementBoard ab = getAnnouncementBoard();
+	if (ab instanceof ExecutionCourseAnnouncementBoard) {
+	    ExecutionCourseAnnouncementBoard ecab = (ExecutionCourseAnnouncementBoard) ab;
+	    ContentManagementLog.createLog(ecab.getExecutionCourse(), "resources.MessagingResources",
+		    "log.executionCourse.content.announcement.removed", getName().getContent(), ecab.getExecutionCourse()
+			    .getNome(), ecab.getExecutionCourse().getDegreePresentationString());
+	}
+
 	for (final AnnouncementCategory category : getCategories()) {
 	    removeCategories(category);
 	}
@@ -394,16 +408,16 @@ public class Announcement extends Announcement_Base {
     protected boolean checkStickyAndPublicationBegin() {
 	return (getSticky() == true && getPublicationBegin() != null) || getSticky() == false || getSticky() == null;
     }
-    
+
     private Integer getMaxPriority() {
 	Integer maxPriority = 0;
-	    for(Announcement announcement : this.getAnnouncementBoard().getAnnouncements()){
+	for (Announcement announcement : this.getAnnouncementBoard().getAnnouncements()) {
 	    if (announcement.getSticky()) {
-		    if (!announcement.equals(this) && announcement.superGetPriority() > maxPriority) {
-			maxPriority = announcement.getPriority();
-		    }
+		if (!announcement.equals(this) && announcement.superGetPriority() > maxPriority) {
+		    maxPriority = announcement.getPriority();
 		}
 	    }
+	}
 	return maxPriority;
     }
 
@@ -425,7 +439,7 @@ public class Announcement extends Announcement_Base {
 	    }
 	    Collections.sort(stickyAnnouncements, new Comparator<Announcement>() {
 		@Override
-		public int compare(Announcement a1,Announcement a2){
+		public int compare(Announcement a1, Announcement a2) {
 		    return (a1.getPriority() <= a2.getPriority() ? -1 : 1);
 		};
 	    });
@@ -459,8 +473,8 @@ public class Announcement extends Announcement_Base {
 	return (super.getSticky() == null ? false : super.getSticky());
     }
 
-    @Override 
-    public void setSticky(Boolean sticky){
+    @Override
+    public void setSticky(Boolean sticky) {
 	if (!sticky && getSticky() == true && this.getAnnouncementBoard() != null) {
 	    updateOtherAnnouncementPriorities(getPriority(), this);
 	    setPriority(-1);
@@ -472,7 +486,7 @@ public class Announcement extends Announcement_Base {
     }
 
     private void updateOtherAnnouncementPriorities(int priority, Announcement targetAnnouncement) {
-	for(Announcement announcement:this.getAnnouncementBoard().getAnnouncements()){
+	for (Announcement announcement : this.getAnnouncementBoard().getAnnouncements()) {
 	    if (!announcement.equals(targetAnnouncement) && announcement.getSticky() && announcement.getPriority() > priority) {
 		announcement.setPriority(announcement.getPriority() - 1);
 	    }

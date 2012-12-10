@@ -206,7 +206,9 @@ public class Grouping extends Grouping_Base {
 	exportGrouping.setProposalState(new ProposalState(ProposalState.CRIADOR));
 
 	addGroupingToAttends(grouping, executionCourse.getAttends());
-
+	GroupsAndShiftsManagementLog.createLog(executionCourse, "resources.MessagingResources",
+		"log.executionCourse.groupAndShifts.grouping.added", grouping.getName(), executionCourse.getNome(),
+		executionCourse.getDegreePresentationString());
 	return grouping;
     }
 
@@ -310,6 +312,13 @@ public class Grouping extends Grouping_Base {
 	if (shiftType == null) {
 	    unEnrollStudentGroups(this.getStudentGroups());
 	}
+
+	List<ExecutionCourse> ecs = getExecutionCourses();
+	for (ExecutionCourse ec : ecs) {
+	    GroupsAndShiftsManagementLog.createLog(ec, "resources.MessagingResources",
+		    "log.executionCourse.groupAndShifts.grouping.edited", getName(), ec.getNome(),
+		    ec.getDegreePresentationString());
+	}
     }
 
     private boolean isShiftTypeEqual(ShiftType shiftType) {
@@ -372,9 +381,30 @@ public class Grouping extends Grouping_Base {
 	else
 	    newStudentGroup = new StudentGroup(groupNumber, this);
 
+	StringBuilder sbStudentNumbers = new StringBuilder("");
+	sbStudentNumbers.setLength(0);
 	for (Registration registration : students) {
 	    Attends attend = getStudentAttend(registration);
 	    newStudentGroup.addAttends(attend);
+	    if (sbStudentNumbers.length() != 0) {
+		sbStudentNumbers.append(", " + registration.getNumber().toString());
+	    } else {
+		sbStudentNumbers.append(registration.getNumber().toString());
+	    }
+	}
+
+	final String labelKey;
+	if (sbStudentNumbers.length() == 0) {
+	    labelKey = "log.executionCourse.groupAndShifts.grouping.group.added.empty";
+	} else {
+	    labelKey = "log.executionCourse.groupAndShifts.grouping.group.added";
+	}
+
+	List<ExecutionCourse> ecs = getExecutionCourses();
+	for (ExecutionCourse ec : ecs) {
+	    GroupsAndShiftsManagementLog.createLog(ec, "resources.MessagingResources", labelKey, groupNumber.toString(),
+		    getName(), Integer.toString(students.size()), sbStudentNumbers.toString(), ec.getNome(),
+		    ec.getDegreePresentationString());
 	}
     }
 
@@ -394,6 +424,13 @@ public class Grouping extends Grouping_Base {
 
 	if (!super.getStudentGroups().isEmpty()) {
 	    throw new DomainException(this.getClass().getName(), "");
+	}
+
+	List<ExecutionCourse> ecs = getExecutionCourses();
+	for (ExecutionCourse ec : ecs) {
+	    GroupsAndShiftsManagementLog.createLog(ec, "resources.MessagingResources",
+		    "log.executionCourse.groupAndShifts.grouping.removed", getName(), ec.getNome(),
+		    ec.getDegreePresentationString());
 	}
 
 	List<Attends> attends = this.getAttends();
@@ -531,30 +568,32 @@ public class Grouping extends Grouping_Base {
 	return this.getStudentGroups().contains(studentGroups);
     }
 
+    @Deprecated
+    public java.util.Date getEnrolmentBeginDayDate() {
+	org.joda.time.DateTime dt = getEnrolmentBeginDayDateDateTime();
+	return (dt == null) ? null : new java.util.Date(dt.getMillis());
+    }
 
-	@Deprecated
-	public java.util.Date getEnrolmentBeginDayDate(){
-		org.joda.time.DateTime dt = getEnrolmentBeginDayDateDateTime();
-		return (dt == null) ? null : new java.util.Date(dt.getMillis());
-	}
+    @Deprecated
+    public void setEnrolmentBeginDayDate(java.util.Date date) {
+	if (date == null)
+	    setEnrolmentBeginDayDateDateTime(null);
+	else
+	    setEnrolmentBeginDayDateDateTime(new org.joda.time.DateTime(date.getTime()));
+    }
 
-	@Deprecated
-	public void setEnrolmentBeginDayDate(java.util.Date date){
-		if(date == null) setEnrolmentBeginDayDateDateTime(null);
-		else setEnrolmentBeginDayDateDateTime(new org.joda.time.DateTime(date.getTime()));
-	}
+    @Deprecated
+    public java.util.Date getEnrolmentEndDayDate() {
+	org.joda.time.DateTime dt = getEnrolmentEndDayDateDateTime();
+	return (dt == null) ? null : new java.util.Date(dt.getMillis());
+    }
 
-	@Deprecated
-	public java.util.Date getEnrolmentEndDayDate(){
-		org.joda.time.DateTime dt = getEnrolmentEndDayDateDateTime();
-		return (dt == null) ? null : new java.util.Date(dt.getMillis());
-	}
-
-	@Deprecated
-	public void setEnrolmentEndDayDate(java.util.Date date){
-		if(date == null) setEnrolmentEndDayDateDateTime(null);
-		else setEnrolmentEndDayDateDateTime(new org.joda.time.DateTime(date.getTime()));
-	}
-
+    @Deprecated
+    public void setEnrolmentEndDayDate(java.util.Date date) {
+	if (date == null)
+	    setEnrolmentEndDayDateDateTime(null);
+	else
+	    setEnrolmentEndDayDateDateTime(new org.joda.time.DateTime(date.getTime()));
+    }
 
 }

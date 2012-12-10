@@ -18,6 +18,11 @@ public class CurricularManagementLog extends CurricularManagementLog_Base {
 	return new CurricularManagementLog(ec, description);
     }
 
+    public static CurricularManagementLog createLog(ExecutionCourse ec, String bundle, String key, String... args) {
+	final String label = generateLabelDescription(bundle, key, args);
+	return createCurricularManagementLog(ec, label);
+    }
+
     @Override
     public ExecutionCourseLogTypes getExecutionCourseLogType() {
 	return ExecutionCourseLogTypes.CURRICULAR;

@@ -200,6 +200,9 @@ public class Item extends Item_Base {
 
     @Override
     protected Node createChildNode(Content childContent) {
+	final Section section = getSection();
+	final Site site = section.getSite();
+	site.logAddFileToItem(this, section, childContent);
 	return new ExplicitOrderNode(this, childContent, Boolean.TRUE);
     }
 
@@ -220,4 +223,32 @@ public class Item extends Item_Base {
     public Content getInitialContent() {
 	return null;
     }
+
+    public void logCreateItemtoSection() {
+	final Site site = getSection().getSite();
+	site.logCreateItemtoSection(this);
+    }
+
+    public void logEditItemtoSection() {
+	final Site site = getSection().getSite();
+	site.logEditItemtoSection(this);
+    }
+
+    @Override
+    protected void disconnectContent() {
+	Section section = getSection();
+	if (section != null) {
+	    Site site = section.getSite();
+	    if (site != null) {
+		site.logDeleteItemtoSection(this);
+	    }
+	}
+	super.disconnectContent();
+    }
+
+    public void logEditItemPermission() {
+	final Site site = getSection().getSite();
+	site.logEditItemPermission(this);
+    }
+
 }

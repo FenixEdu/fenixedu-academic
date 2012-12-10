@@ -6,6 +6,7 @@ import java.util.List;
 import net.sourceforge.fenixedu.domain.Evaluation;
 import net.sourceforge.fenixedu.domain.GradeScale;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
+import net.sourceforge.fenixedu.util.BundleUtil;
 import net.sourceforge.fenixedu.util.EvaluationType;
 
 public class OnlineTest extends OnlineTest_Base {
@@ -34,7 +35,14 @@ public class OnlineTest extends OnlineTest_Base {
 
     @Override
     public void delete() {
+	logRemove();
 	removeDistributedTest();
 	super.delete();
+    }
+
+    @Override
+    public String getPresentationName() {
+	return BundleUtil.getStringFromResourceBundle("resources.ApplicationResources", "label.online.test") + " "
+		+ getDistributedTest().getEvaluationTitle();
     }
 }

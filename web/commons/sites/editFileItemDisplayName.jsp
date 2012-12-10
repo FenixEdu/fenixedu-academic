@@ -24,7 +24,6 @@
 	</logic:notPresent>
 </h2>
 
-
 <bean:define id="url" value="<%=  actionName + "?method=section&sectionID=" + sectionID +"&" + context %>"/>
 <logic:present name="item">
 	<bean:define id="itemID" name="item" property="idInternal" />

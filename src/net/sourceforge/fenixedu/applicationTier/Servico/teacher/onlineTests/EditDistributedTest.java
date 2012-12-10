@@ -10,6 +10,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgume
 import net.sourceforge.fenixedu.dataTransferObject.comparators.CalendarDateComparator;
 import net.sourceforge.fenixedu.dataTransferObject.comparators.CalendarHourComparator;
 import net.sourceforge.fenixedu.domain.Attends;
+import net.sourceforge.fenixedu.domain.EvaluationManagementLog;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.Mark;
 import net.sourceforge.fenixedu.domain.onlineTests.DistributedTest;
@@ -94,6 +95,10 @@ public class EditDistributedTest extends FenixService {
 		}
 	    }
 	}
+
+	EvaluationManagementLog.createLog(executionCourse, "resources.MessagingResources",
+		"log.executionCourse.evaluation.tests.distribution.edited", distributedTest.getEvaluationTitle(),
+		executionCourse.getName(), executionCourse.getDegreePresentationString());
     }
 
 }

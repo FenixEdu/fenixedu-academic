@@ -5,6 +5,7 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.util.BundleUtil;
 import net.sourceforge.fenixedu.util.EvaluationType;
 
 /**
@@ -95,5 +96,10 @@ public class FinalEvaluation extends FinalEvaluation_Base {
     @Override
     public boolean isFinal() {
 	return true;
+    }
+
+    @Override
+    public String getPresentationName() {
+	return BundleUtil.getStringFromResourceBundle("resources.ApplicationResources", "label.final.evaluation");
     }
 }

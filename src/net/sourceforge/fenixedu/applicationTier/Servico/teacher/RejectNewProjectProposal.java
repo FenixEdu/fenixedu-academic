@@ -15,6 +15,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorized
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExportGrouping;
 import net.sourceforge.fenixedu.domain.Grouping;
+import net.sourceforge.fenixedu.domain.GroupsAndShiftsManagementLog;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Professorship;
 import net.sourceforge.fenixedu.domain.Teacher;
@@ -85,6 +86,16 @@ public class RejectNewProjectProposal extends FenixService {
 	}
 
 	Person senderPerson = groupPropertiesExecutionCourse.getSenderPerson();
+
+	List<ExecutionCourse> ecs = groupProperties.getExecutionCourses();
+	GroupsAndShiftsManagementLog.createLog(executionCourse, "resources.MessagingResources",
+		"log.executionCourse.groupAndShifts.grouping.exportGroup.rejected", groupProperties.getName(),
+		executionCourse.getNome(), executionCourse.getDegreePresentationString());
+	for (ExecutionCourse ec : ecs) {
+	    GroupsAndShiftsManagementLog.createLog(ec, "resources.MessagingResources",
+		    "log.executionCourse.groupAndShifts.grouping.exportGroup.rejected", groupProperties.getName(),
+		    executionCourse.getNome(), executionCourse.getDegreePresentationString());
+	}
 
 	groupPropertiesExecutionCourse.delete();
 

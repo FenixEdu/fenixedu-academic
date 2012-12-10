@@ -17,6 +17,7 @@ import net.sourceforge.fenixedu.domain.Attends;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExportGrouping;
 import net.sourceforge.fenixedu.domain.Grouping;
+import net.sourceforge.fenixedu.domain.GroupsAndShiftsManagementLog;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Professorship;
 import net.sourceforge.fenixedu.domain.Teacher;
@@ -136,6 +137,13 @@ public class NewProjectProposal extends FenixService {
 	    }
 	}
 
+	List<ExecutionCourse> ecs = groupProperties.getExecutionCourses();
+	for (ExecutionCourse ec : ecs) {
+	    GroupsAndShiftsManagementLog.createLog(ec, "resources.MessagingResources",
+		    "log.executionCourse.groupAndShifts.grouping.exportGroup.added", groupProperties.getName(),
+		    startExecutionCourse.getNome(), startExecutionCourse.getDegreePresentationString(),
+		    goalExecutionCourse.getName(), goalExecutionCourse.getDegreePresentationString());
+	}
 	return result;
     }
 

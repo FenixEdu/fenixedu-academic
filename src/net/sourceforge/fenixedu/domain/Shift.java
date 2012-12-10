@@ -358,6 +358,9 @@ public class Shift extends Shift_Base {
     public boolean reserveForStudent(final Registration registration) {
 	final boolean result = getLotacao().intValue() > getStudentsCount();
 	if (result || isResourceAllocationManager()) {
+	    GroupsAndShiftsManagementLog.createLog(getExecutionCourse(), "resources.MessagingResources",
+		    "log.executionCourse.groupAndShifts.shifts.attends.added", registration.getNumber().toString(), getNome(),
+		    getExecutionCourse().getNome(), getExecutionCourse().getDegreePresentationString());
 	    addStudents(registration);
 	}
 	return result;
@@ -517,6 +520,9 @@ public class Shift extends Shift_Base {
     @Service
     public void removeAttendFromShift(Registration registration, ExecutionCourse executionCourse) {
 
+	GroupsAndShiftsManagementLog.createLog(getExecutionCourse(), "resources.MessagingResources",
+		"log.executionCourse.groupAndShifts.shifts.attends.removed", registration.getNumber().toString(), getNome(),
+		getExecutionCourse().getNome(), getExecutionCourse().getDegreePresentationString());
 	registration.removeShifts(this);
 
 	ExecutionCourseSender sender = ExecutionCourseSender.newInstance(executionCourse);

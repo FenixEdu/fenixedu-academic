@@ -59,6 +59,7 @@ import net.sourceforge.fenixedu.domain.tests.NewTestGroup;
 import net.sourceforge.fenixedu.domain.tests.TestGroupStatus;
 import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicInterval;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
+import net.sourceforge.fenixedu.util.BundleUtil;
 import net.sourceforge.fenixedu.util.ProposalState;
 import net.sourceforge.fenixedu.util.domain.OrderedRelationAdapter;
 
@@ -231,6 +232,11 @@ public class ExecutionCourse extends ExecutionCourse_Base {
 
     public void copySectionsAndItemsFrom(final ExecutionCourse executionCourseFrom) {
 	this.getSite().copySectionsAndItemsFrom(executionCourseFrom.getSite());
+	String ecFrom = executionCourseFrom.getName();
+	String ecFromPresentation = executionCourseFrom.getDegreePresentationString();
+
+	ContentManagementLog.createLog(this, "resources.MessagingResources", "log.executionCourse.content.section.import",
+		ecFrom, ecFromPresentation, this.getName(), this.getDegreePresentationString());
     }
 
     public void createEvaluationMethod(final MultiLanguageString evaluationElements) {
@@ -267,6 +273,18 @@ public class ExecutionCourse extends ExecutionCourse_Base {
 	bibliographicReference.setYear(year);
 	bibliographicReference.setOptional(optional);
 	bibliographicReference.setExecutionCourse(this);
+
+	final String type;
+	if (optional) {
+	    type = BundleUtil.getStringFromResourceBundle("resources.ApplicationResources",
+		    "option.bibliographicReference.optional");
+	} else {
+	    type = BundleUtil.getStringFromResourceBundle("resources.ApplicationResources",
+		    "option.bibliographicReference.recommended");
+	}
+	CurricularManagementLog.createLog(this, "resources.MessagingResources",
+		"log.executionCourse.curricular.bibliographic.created", type, title, this.getName(),
+		this.getDegreePresentationString());
     }
 
     public List<BibliographicReference> copyBibliographicReferencesFrom(final ExecutionCourse executionCourseFrom) {
