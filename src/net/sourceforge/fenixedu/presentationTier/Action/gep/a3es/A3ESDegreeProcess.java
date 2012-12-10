@@ -361,20 +361,45 @@ public class A3ESDegreeProcess implements Serializable {
 		}
 	    }
 	}
-	if (!responsibleTeacher) {
-	    Set<Teacher> teachers = getTeachers(executionSemesters);
+	int counter = 1000;
+	List<String> responsibles = new ArrayList<String>();
+	for (Teacher teacher : responsiblesMap.keySet()) {
+	    String responsible = teacher.getPerson().getName() + " (" + responsiblesMap.get(teacher) + ")";
+	    counter -= JSONObject.escape(responsible + ", ").getBytes().length;
+	    responsibles.add(responsible);
+	}
+
+	if (!responsibleTeacher && course.isDissertation()) {
+	    Set<Teacher> teachers = new HashSet<Teacher>();
+	    for (ExecutionCourse executionCourse : course.getAssociatedExecutionCoursesSet()) {
+		if (executionCourse.getExecutionPeriod().getExecutionYear()
+			.equals(executionSemester.getExecutionYear().getPreviousExecutionYear())) {
+		    for (Attends attends : executionCourse.getAttends()) {
+			if (attends.hasEnrolment() && attends.getEnrolment().getThesis() != null) {
+			    for (ThesisEvaluationParticipant thesisEvaluationParticipant : attends.getEnrolment().getThesis()
+				    .getOrientation()) {
+				if (thesisEvaluationParticipant.getPerson().getTeacher() != null
+					&& thesisEvaluationParticipant.getPerson().getTeacher()
+						.isActiveOrHasAuthorizationForSemester(executionCourse.getExecutionPeriod())) {
+				    teachers.add(thesisEvaluationParticipant.getPerson().getTeacher());
+				}
+			    }
+			}
+		    }
+		}
+	    }
 	    for (Teacher teacher : teachers) {
-		Double hours = responsiblesMap.get(teacher);
-		if (hours == null) {
-		    responsiblesMap.put(teacher, 0.0);
+		String responsible = teacher.getPerson().getName() + " (0.0)";
+		if (counter - JSONObject.escape(responsible).getBytes().length < 0) {
+		    break;
+		}
+		if (!responsiblesMap.containsKey(teacher)) {
+		    counter -= JSONObject.escape(responsible + ", ").getBytes().length;
+		    responsibles.add(responsible);
 		}
 	    }
 	}
 
-	List<String> responsibles = new ArrayList<String>();
-	for (Teacher teacher : responsiblesMap.keySet()) {
-	    responsibles.add(teacher.getPerson().getName() + " (" + responsiblesMap.get(teacher) + ")");
-	}
 	return StringUtils.join(responsibles, ", ");
     }
 
