@@ -43,3 +43,4 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "Creation of Domain Operation Log" domainOperationLog.sql
