@@ -356,8 +356,8 @@ public class TeacherCurricularInformation implements Serializable {
 			    && phdIndividualProgramProcess.isActive(executionSemester.getAcademicInterval().toInterval())
 			    && phdIndividualProgramProcess.isGuiderOrAssistentGuider(teacher.getPerson())
 			    && teacher.isActiveOrHasAuthorizationForSemester(executionSemester)) {
-			addLecturedCurricularUnit(phdIndividualProgramProcess.getPhdProgram().getName().getContent(),
-				"Dissertação", "OT", (float) 0);
+			addLecturedCurricularUnit(phdIndividualProgramProcess.getPhdProgram().getAcronym(), "Dissertação", "OT",
+				(float) 0);
 		    }
 		}
 	    }
