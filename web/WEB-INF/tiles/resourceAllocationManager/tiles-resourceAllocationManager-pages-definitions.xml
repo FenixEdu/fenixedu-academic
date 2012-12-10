@@ -137,7 +137,7 @@
 		<put name="body" value="/resourceAllocationManager/roomsPunctualScheduling/finalizeCreationOfRoomsPunctualSchedulings.jsp" />
 	</definition>	
 	<definition name="prepare-view-rooms-punctual-scheduling" extends="definition.sop.roomsManagement" >
-		<put name="bundle" value="TITLES_RESOURCE"/>
+		<put name="bundle" value="TITLES_RESOURCES"/>
 	    <put name="title" value="private.resourcemanagement.rooms.manage.roomsmarkingspot"/>
 		<put name="body" value="/resourceAllocationManager/roomsPunctualScheduling/editRoomsPunctualScheduling.jsp" />
 	</definition>		
