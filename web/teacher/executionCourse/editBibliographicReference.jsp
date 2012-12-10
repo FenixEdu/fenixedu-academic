@@ -25,14 +25,14 @@
 			<tr>
 			<td><bean:message key="message.bibliographicReferenceTitle"/></td>
 			<span class="error"><!-- Error messages go here --><html:errors property="title"/></span>
-			<html:textarea bundle="HTMLALT_RESOURCES" altKey="textarea.title" bundle="HTMLALT_RESOURCES" property="title" cols="56" rows="4"/>
+			<html:textarea bundle="HTMLALT_RESOURCES" altKey="textarea.title" property="title" cols="56" rows="4"/>
 			</tr>
 
 			<tr>
 			<td><bean:message key="message.bibliographicReferenceAuthors"/></td>
 			<td>
 			<span class="error"><!-- Error messages go here --><html:errors property="authors"/></span>
-			<html:textarea bundle="HTMLALT_RESOURCES" altKey="textarea.authors" bundle="HTMLALT_RESOURCES" property="authors" cols="56" rows="4"/>
+			<html:textarea bundle="HTMLALT_RESOURCES" altKey="textarea.authors" property="authors" cols="56" rows="4"/>
 			</td>
 			</tr>
 
@@ -40,7 +40,7 @@
 			<td><bean:message key="message.bibliographicReferenceReference"/>
 			<td>
 			<span class="error"><!-- Error messages go here --><html:errors property="reference"/></span>
-			<html:textarea bundle="HTMLALT_RESOURCES" altKey="textarea.reference" bundle="HTMLALT_RESOURCES" property="reference" cols="56" rows="2"/>
+			<html:textarea bundle="HTMLALT_RESOURCES" altKey="textarea.reference" property="reference" cols="56" rows="2"/>
 			</td>
 			</tr>
 
