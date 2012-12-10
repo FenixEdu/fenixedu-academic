@@ -361,6 +361,16 @@ public class A3ESDegreeProcess implements Serializable {
 		}
 	    }
 	}
+	if (!responsibleTeacher) {
+	    Set<Teacher> teachers = getTeachers(executionSemesters);
+	    for (Teacher teacher : teachers) {
+		Double hours = responsiblesMap.get(teacher);
+		if (hours == null) {
+		    responsiblesMap.put(teacher, 0.0);
+		}
+	    }
+	}
+
 	List<String> responsibles = new ArrayList<String>();
 	for (Teacher teacher : responsiblesMap.keySet()) {
 	    responsibles.add(teacher.getPerson().getName() + " (" + responsiblesMap.get(teacher) + ")");
@@ -387,8 +397,19 @@ public class A3ESDegreeProcess implements Serializable {
     }
 
     protected List<TeacherCurricularInformation> getTeacherCurricularInformation() {
-	Set<Teacher> teachers = new HashSet<Teacher>();
 	List<ExecutionSemester> executionSemesters = getSelectedExecutionSemesters();
+	Set<Teacher> teachers = getTeachers(executionSemesters);
+	List<TeacherCurricularInformation> teacherCurricularInformationList = new ArrayList<TeacherCurricularInformation>();
+	for (Teacher teacher : teachers) {
+	    TeacherCurricularInformation teacherCurricularInformation = new TeacherCurricularInformation(teacher, degree,
+		    executionSemesters);
+	    teacherCurricularInformationList.add(teacherCurricularInformation);
+	}
+	return teacherCurricularInformationList;
+    }
+
+    protected Set<Teacher> getTeachers(List<ExecutionSemester> executionSemesters) {
+	Set<Teacher> teachers = new HashSet<Teacher>();
 	ExecutionYear previousExecutionYear = executionSemester.getExecutionYear().getPreviousExecutionYear();
 	for (final DegreeCurricularPlan degreeCurricularPlan : degree.getDegreeCurricularPlansSet()) {
 	    for (final CurricularCourse course : degreeCurricularPlan.getCurricularCourses()) {
@@ -444,13 +465,7 @@ public class A3ESDegreeProcess implements Serializable {
 		}
 	    }
 	}
-	List<TeacherCurricularInformation> teacherCurricularInformationList = new ArrayList<TeacherCurricularInformation>();
-	for (Teacher teacher : teachers) {
-	    TeacherCurricularInformation teacherCurricularInformation = new TeacherCurricularInformation(teacher, degree,
-		    executionSemesters);
-	    teacherCurricularInformationList.add(teacherCurricularInformation);
-	}
-	return teacherCurricularInformationList;
+	return teachers;
     }
 
     protected Map<JSONObject, String> buildTeacherCurriculumJson() {
