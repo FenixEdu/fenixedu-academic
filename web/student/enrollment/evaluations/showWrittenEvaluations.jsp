@@ -108,7 +108,6 @@
  				<h:panelGroup rendered="#{!manageEvaluationsForStudent.enroledEvaluationsForStudent[evaluation.idInternal]}">
 					<h:outputText value="<td class='eval_green'>#{bundle['label.notEnroled']}</td>" escape="false"/>
 					<h:outputText value="<td>" escape="false"/>
-					<h:outputText value="#{executionCourse.externalId} #{evaluation.externalId}" escape="false"/>
 					<fc:commandLink value="#{bundle['label.enroll']}" action="#{manageEvaluationsForStudent.enrolStudent}">
 						<f:param id="evaluationIDToEnrol" name="evaluationID" value="#{evaluation.idInternal}"/> 
 					</fc:commandLink>
@@ -187,8 +186,8 @@
 				
 				<h:outputText value="</tr>" escape="false"/>
 			</fc:dataRepeater>
-		</h:panelGroup>	
-		
+		</h:panelGroup>
+			
 		<%-- Evaluations Table --%>
 		<h:outputText value="<tr class='eval_title'><td colspan='6'><p><strong>#{bundle['label.evaluationsWithoutEnrolmentPeriod']}:</strong></p></td></tr>" escape="false"/>		
 		<h:outputText value="<tr><th>#{bundle['label.identification']}</th>" escape="false" />
@@ -204,7 +203,6 @@
 		</h:panelGroup>
 		<h:panelGroup rendered="#{!empty manageEvaluationsForStudent.evaluationsWithoutEnrolmentPeriod}">
 			<fc:dataRepeater value="#{manageEvaluationsForStudent.evaluationsWithoutEnrolmentPeriod}" var="evaluation">
-
 				<h:outputText value="<tr><td colspan='6' class='title'>" escape="false" />
 				<fc:dataRepeater value="#{manageEvaluationsForStudent.executionCourses[evaluation.idInternal]}" var="executionCourse">
 					<h:outputText value="#{executionCourse.nome}" escape="false" />
