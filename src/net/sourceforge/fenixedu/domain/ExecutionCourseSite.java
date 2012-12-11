@@ -15,6 +15,7 @@ import net.sourceforge.fenixedu.domain.contents.Node;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.messaging.ExecutionCourseForum;
 import net.sourceforge.fenixedu.injectionCode.IGroup;
+import net.sourceforge.fenixedu.util.BundleUtil;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
@@ -48,6 +49,11 @@ public class ExecutionCourseSite extends ExecutionCourseSite_Base {
 	setAlternativeSite(siteFrom.getAlternativeSite());
 	setInitialStatement(siteFrom.getInitialStatement());
 	setIntroduction(siteFrom.getIntroduction());
+
+	ContentManagementLog.createLog(getSiteExecutionCourse(), "resources.MessagingResources",
+		"log.executionCourse.content.customization.options.import", siteFrom.getSiteExecutionCourse().getName(), siteFrom
+			.getSiteExecutionCourse().getDegreePresentationString(), getSiteExecutionCourse().getNome(),
+		getSiteExecutionCourse().getDegreePresentationString());
     }
 
     @Override
@@ -306,5 +312,22 @@ public class ExecutionCourseSite extends ExecutionCourseSite_Base {
 			"log.executionCourse.content.section.file.insert", childContent.getName().getContent(), section.getName()
 				.getContent(), getSiteExecutionCourse().getNome(), getSiteExecutionCourse()
 				.getDegreePresentationString());
+    }
+
+    @Override
+    public void setLessonPlanningAvailable(Boolean lessonPlanningAvailable) {
+
+	final String avaiable;
+
+	if (lessonPlanningAvailable) {
+	    avaiable = BundleUtil.getStringFromResourceBundle("resources.ApplicationResources", "message.available");
+	} else {
+	    avaiable = BundleUtil.getStringFromResourceBundle("resources.ApplicationResources", "message.not.available");
+	}
+
+	CurricularManagementLog.createLog(getSiteExecutionCourse(), "resources.MessagingResources",
+		"log.executionCourse.curricular.planning.publish", avaiable, getSiteExecutionCourse().getNome(),
+		getSiteExecutionCourse().getDegreePresentationString());
+	super.setLessonPlanningAvailable(lessonPlanningAvailable);
     }
 }

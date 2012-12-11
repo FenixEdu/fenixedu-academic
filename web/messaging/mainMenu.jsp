@@ -2,7 +2,7 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
-<%@page import="net.sourceforge.fenixedu.domain.util.email.Sender"%>
+<%@ page import="net.sourceforge.fenixedu.domain.util.email.Sender" %>
 <html:xhtml/>
 
 <ul>

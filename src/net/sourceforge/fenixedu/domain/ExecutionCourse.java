@@ -245,8 +245,9 @@ public class ExecutionCourse extends ExecutionCourse_Base {
 	}
 
 	final EvaluationMethod evaluationMethod = new EvaluationMethod();
-	evaluationMethod.setEvaluationElements(evaluationElements);
 	evaluationMethod.setExecutionCourse(this);
+	evaluationMethod.setEvaluationElements(evaluationElements);
+
     }
 
     public void copyEvaluationMethodFrom(ExecutionCourse executionCourseFrom) {

@@ -27,6 +27,7 @@
    		<property name="rows" value="15"/>
    		<property name="config" value="advanced" />
    	</slot>	
+   	<setter signature="logEditEditLessonPlanning()"/>
 </schema>
 <schema name="ViewLessonPlanning" type="net.sourceforge.fenixedu.domain.LessonPlanning" bundle="DEFAULT">	
 	<slot name="title" key="label.lessonPlanning.title">

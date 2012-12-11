@@ -130,4 +130,10 @@ public class LessonPlanning extends LessonPlanning_Base {
 	builder.append(getTitle().getContent());
 	return builder.toString();
     }
+
+    public void logEditEditLessonPlanning() {
+	CurricularManagementLog.createLog(getExecutionCourse(), "resources.MessagingResources",
+		"log.executionCourse.curricular.planning.edited", getTitle().getContent(), getLessonType().getFullNameTipoAula(),
+		getExecutionCourse().getNome(), getExecutionCourse().getDegreePresentationString());
+    }
 }
