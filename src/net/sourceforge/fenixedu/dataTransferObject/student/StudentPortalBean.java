@@ -2,6 +2,7 @@ package net.sourceforge.fenixedu.dataTransferObject.student;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
@@ -24,6 +25,8 @@ import net.sourceforge.fenixedu.util.EvaluationType;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.joda.time.DateTime;
+import org.joda.time.Interval;
+import org.joda.time.LocalTime;
 import org.joda.time.YearMonthDay;
 
 import pt.utl.ist.fenix.tools.util.i18n.Language;
@@ -142,19 +145,32 @@ public class StudentPortalBean implements Serializable {
 
 	    public String getStatus() {
 		/*
-		 * <logic:equal name="evaluationAnnouncement" property="evaluationType" value="Agrupamento"> <logic:equal
-		 * name="evaluationAnnouncement" property="registered" value="true"> <tr> </logic:equal> <logic:equal
-		 * name="evaluationAnnouncement" property="registered" value="false"> <logic:equal name="evaluationAnnouncement"
-		 * property="enrolmentPast" value="true"> <tr class="disabled"> </logic:equal> <logic:equal
-		 * name="evaluationAnnouncement" property="enrolmentPast" value="false"> <tr> </logic:equal> </logic:equal>
-		 * </logic:equal> <logic:notEqual name="evaluationAnnouncement" property="evaluationType" value="Agrupamento">
-		 * <logic:equal name="evaluationAnnouncement" property="realizationPast" value="true"> <tr class="disabled">
-		 * </logic:equal> <logic:equal name="evaluationAnnouncement" property="realizationPast" value="false"> <logic:equal
-		 * name="evaluationAnnouncement" property="registered" value="true"> <tr> </logic:equal> <logic:equal
-		 * name="evaluationAnnouncement" property="registered" value="false"> <logic:equal name="evaluationAnnouncement"
-		 * property="enrolmentElapsing" value="true"> <tr class="elapsing"> <bean:define id="evaluationElapsing" value="true"
-		 * /> </logic:equal> <logic:equal name="evaluationAnnouncement" property="enrolmentElapsing" value="false"> <tr>
-		 * </logic:equal> </logic:equal> </logic:equal> </logic:notEqual>
+		 * <logic:equal name="evaluationAnnouncement"
+		 * property="evaluationType" value="Agrupamento"> <logic:equal
+		 * name="evaluationAnnouncement" property="registered"
+		 * value="true"> <tr> </logic:equal> <logic:equal
+		 * name="evaluationAnnouncement" property="registered"
+		 * value="false"> <logic:equal name="evaluationAnnouncement"
+		 * property="enrolmentPast" value="true"> <tr class="disabled">
+		 * </logic:equal> <logic:equal name="evaluationAnnouncement"
+		 * property="enrolmentPast" value="false"> <tr> </logic:equal>
+		 * </logic:equal> </logic:equal> <logic:notEqual
+		 * name="evaluationAnnouncement" property="evaluationType"
+		 * value="Agrupamento"> <logic:equal
+		 * name="evaluationAnnouncement" property="realizationPast"
+		 * value="true"> <tr class="disabled"> </logic:equal>
+		 * <logic:equal name="evaluationAnnouncement"
+		 * property="realizationPast" value="false"> <logic:equal
+		 * name="evaluationAnnouncement" property="registered"
+		 * value="true"> <tr> </logic:equal> <logic:equal
+		 * name="evaluationAnnouncement" property="registered"
+		 * value="false"> <logic:equal name="evaluationAnnouncement"
+		 * property="enrolmentElapsing" value="true"> <tr
+		 * class="elapsing"> <bean:define id="evaluationElapsing"
+		 * value="true" /> </logic:equal> <logic:equal
+		 * name="evaluationAnnouncement" property="enrolmentElapsing"
+		 * value="false"> <tr> </logic:equal> </logic:equal>
+		 * </logic:equal> </logic:notEqual>
 		 */
 
 		if (getEvaluationType().equals("Agrupamento")) {
@@ -201,7 +217,7 @@ public class StudentPortalBean implements Serializable {
 			+ " "
 			+ writtenEvaluation.getBeginningDateTime().getHourOfDay()
 			+ ":"
-			+ ((writtenEvaluation.getBeginningDateTime().getMinuteOfHour() == 0) ? "00" : writtenEvaluation
+			+ (writtenEvaluation.getBeginningDateTime().getMinuteOfHour() == 0 ? "00" : writtenEvaluation
 				.getBeginningDateTime().getMinuteOfHour());
 	    }
 
@@ -209,10 +225,29 @@ public class StudentPortalBean implements Serializable {
 		this.realization = "-";
 	    }
 
+	    private DateTime toDateTime(Calendar date, Calendar time) {
+		if (date == null || time == null) {
+		    return new DateTime((Calendar) null);
+		}
+		return new DateTime(date.getTimeInMillis()).withFields(new LocalTime(time.getTimeInMillis()));
+	    }
+
 	    public void setEnrolment(WrittenEvaluation writtenEvaluation) {
-		this.enrolmentPast = new DateTime(writtenEvaluation.getEnrollmentEndDay()).isBeforeNow();
-		this.enrolmentElapsing = new DateTime(writtenEvaluation.getEnrollmentBeginDay()).isBeforeNow()
-			&& new DateTime(writtenEvaluation.getEnrollmentEndDay()).isAfterNow();
+		final Calendar endDay = writtenEvaluation.getEnrollmentEndDay();
+
+		this.enrolmentPast = new DateTime(endDay).isBeforeNow();
+
+		final Calendar beginDay = writtenEvaluation.getEnrollmentBeginDay();
+
+		final Calendar beginTime = writtenEvaluation.getEnrollmentBeginTime();
+		final Calendar endTime = writtenEvaluation.getEnrollmentEndTime();
+
+		final DateTime beginDateTime = toDateTime(beginDay, beginTime);
+		final DateTime endDateTime = toDateTime(endDay, endTime);
+
+		Interval interval = new Interval(beginDateTime, endDateTime);
+
+		this.enrolmentElapsing = interval.containsNow();
 
 		ResourceBundle resource = ResourceBundle.getBundle("resources.StudentResources", Language.getLocale());
 		if (writtenEvaluation.getEnrollmentBeginDayDateYearMonthDay() != null
