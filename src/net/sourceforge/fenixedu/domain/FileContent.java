@@ -38,8 +38,8 @@ public class FileContent extends FileContent_Base {
     public void delete() {
 	Attachment attachment = getAttachment();
 	if (attachment != null) {
-	    setAttachment(null);
 	    attachment.delete();
+	    setAttachment(null);
 	}
 	super.delete();
     }
