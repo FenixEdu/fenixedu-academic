@@ -226,6 +226,16 @@ public class ExecutionCourse extends ExecutionCourse_Base {
 	return true;
     }
 
+    public boolean isBolonhaDegreeOrMasterDegree() {
+	for (final CurricularCourse curricularCourse : getAssociatedCurricularCourses()) {
+	    DegreeType degreeType = curricularCourse.getDegreeCurricularPlan().getDegree().getDegreeType();
+	    if (degreeType.equals(DegreeType.BOLONHA_DEGREE) || degreeType.equals(DegreeType.BOLONHA_MASTER_DEGREE)) {
+		return true;
+	    }
+	}
+	return false;
+    }
+
     public ExecutionCourseSite createSite() {
 	return new ExecutionCourseSite(this);
     }
@@ -696,6 +706,7 @@ public class ExecutionCourse extends ExecutionCourse_Base {
 
     public static final Comparator<Evaluation> EVALUATION_COMPARATOR = new Comparator<Evaluation>() {
 
+	@Override
 	public int compare(Evaluation evaluation1, Evaluation evaluation2) {
 	    final String evaluation1ComparisonString = evaluationComparisonString(evaluation1);
 	    final String evaluation2ComparisonString = evaluationComparisonString(evaluation2);
@@ -1831,10 +1842,11 @@ public class ExecutionCourse extends ExecutionCourse_Base {
 
     @Override
     public Boolean getAvailableForInquiries() {
-	if (super.getAvailableForInquiries() != null) {
-	    return super.getAvailableForInquiries();
+	if (isBolonhaDegreeOrMasterDegree()) {
+	    if (super.getAvailableForInquiries() != null) {
+		return super.getAvailableForInquiries();
+	    }
 	}
-
 	return Boolean.FALSE;
     }
 
@@ -2280,8 +2292,7 @@ public class ExecutionCourse extends ExecutionCourse_Base {
     }
 
     /*
-     * This method returns the portuguese name and the english name with the
-     * rules implemented in getNome() method
+     * This method returns the portuguese name and the english name with the rules implemented in getNome() method
      */
     public MultiLanguageString getNameI18N() {
 	MultiLanguageString nameI18N = new MultiLanguageString();
