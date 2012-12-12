@@ -299,8 +299,14 @@ public class StringFormatter {
      * @return
      */
     public static String normalize(String string) {
-	String spacesReplacedString = removeDuplicateSpaces(string.trim());
-	return StringNormalizer.normalize(spacesReplacedString).toLowerCase();
+	String result = null;
+
+	if (StringUtils.isNotBlank(string)) {
+	    String spacesReplacedString = removeDuplicateSpaces(string.trim());
+	    result = StringNormalizer.normalize(spacesReplacedString).toLowerCase();
+	}
+
+	return result;
     }
 
     protected static String removeDuplicateSpaces(String string) {
