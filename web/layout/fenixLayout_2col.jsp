@@ -14,7 +14,7 @@
 	    <tiles:useAttribute name="bundle" id="bundleT" ignore="true"/>
 	    <logic:present name="bundleT">
 	    	<logic:present name="titleK">
-		    		<bean:message key="<%= titleK.toString() %>" bundle="<%= bundleT.toString() %>"/>
+		    		<bean:message key="<%= (String)titleK %>" bundle="<%= (String)bundleT %>"/>
 	    	</logic:present>
 	    </logic:present>
 	     <logic:notPresent name="bundleT">

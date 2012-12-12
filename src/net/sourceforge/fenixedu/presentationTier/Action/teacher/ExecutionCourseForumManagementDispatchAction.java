@@ -12,18 +12,10 @@ import net.sourceforge.fenixedu.presentationTier.Action.messaging.ForunsManageme
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
+
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
-import pt.ist.fenixWebFramework.struts.annotations.Forward;
-import pt.ist.fenixWebFramework.struts.annotations.Forwards;
-import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 /**
  * 
@@ -31,11 +23,9 @@ import pt.ist.fenixWebFramework.struts.annotations.Tile;
  * @author pcma
  */
 @Mapping(module = "teacher", path = "/executionCourseForumManagement", scope = "request", parameter = "method")
-@Forwards(value = {
-		@Forward(name = "viewForum", path = "view-forum"),
-		@Forward(name = "viewThread", path = "view-thread"),
-		@Forward(name = "createThreadAndMessage", path = "create-thread-and-message"),
-		@Forward(name = "viewForuns", path = "view-foruns") })
+@Forwards(value = { @Forward(name = "viewForum", path = "view-forum"), @Forward(name = "viewThread", path = "view-thread"),
+	@Forward(name = "createThreadAndMessage", path = "create-thread-and-message"),
+	@Forward(name = "viewForuns", path = "view-foruns") })
 public class ExecutionCourseForumManagementDispatchAction extends ForunsManagement {
 
     @Override

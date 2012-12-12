@@ -1,5 +1,6 @@
 <%@ taglib uri="/WEB-INF/struts-tiles.tld" prefix="tiles" %>
 <tiles:insert definition="df.layout.two-column.teacher" beanName="" flush="true">
+	<tiles:put name="title" value="private.teacher.management.groups"/>
   <tiles:put name="executionCourseName" value="/teacher/executionCourseName.jsp" />
   <tiles:put name="navGeral" value="/teacher/commonNavGeralTeacher.jsp" />
   <tiles:put name="body" value="/teacher/viewAttendsSet_bd.jsp" />

@@ -42,7 +42,6 @@
 	</definition>
 	
 	<definition name="definition.masterDegreeAdministrativeOffice.dfaCandidacy" extends="definition.masterDegreeAdministrativeOffice.masterPage">
-		<put name="title" value = "bla1"/>
 		<put name="navLocal" value="/masterDegreeAdministrativeOffice/candidacy/dfaCandidacyMenu.jsp"/>
 	</definition>
 	

@@ -204,18 +204,23 @@
 	</definition>
 <!-- TESTS DEFINITIONS -->
 	<definition name="tests-First-Page" extends="definition.teacher.testsPage">
+		<put name="title" value="private.teacher.management.bookmarks"/>
 		<put name="body" value="/teacher/onlineTests/testsFirstPage.jsp"></put>		
 	</definition>
 	<definition name="create-Test" extends="definition.teacher.testsPage">
+		<put name="title" value="private.teacher.management.bookmarks"/>
 		<put name="body" value="/teacher/onlineTests/createTest.jsp"></put>		
 	</definition>
 	<definition name="show-Available-Questions" extends="definition.teacher.testsPage">
+		<put name="title" value="private.teacher.management.bookmarks"/>
 		<put name="body" value="/teacher/onlineTests/showAvailableQuestions.jsp"></put>		
 	</definition>
 	<definition name="show-Tests" extends="definition.teacher.testsPage">
+		<put name="title" value="private.teacher.management.bookmarks"/>
 		<put name="body" value="/teacher/onlineTests/showTests.jsp"></put>		
 	</definition>
 	<definition name="prepare-Delete-Test" extends="definition.teacher.testsPage">
+		<put name="title" value="private.teacher.management.bookmarks"/>
 		<put name="body" value="/teacher/onlineTests/prepareDeleteTest.jsp"></put>		
 	</definition>
 	<definition name="show-Student-Test" extends="definition.teacher.testsPage">
@@ -234,6 +239,7 @@
 		<put name="body" value="/teacher/onlineTests/showSimulationCorrection.jsp"></put>
 	</definition>
 	<definition name="show-Student-Test-Log" extends="definition.teacher.testsPage">
+		<put name="title" value="private.teacher.management.bookmarks"/>
 		<put name="body" value="/teacher/onlineTests/showStudentTestLog.jsp"></put>		
 	</definition>
 	<definition name="change-Student-Test-Question" extends="definition.teacher.testsPage">
@@ -249,42 +255,55 @@
 		<put name="body" value="/teacher/onlineTests/chooseAnotherExercise.jsp"></put>		
 	</definition>
 	<definition name="show-Test-Marks" extends="definition.teacher.testsPage">
+		<put name="title" value="private.teacher.management.bookmarks"/>
 		<put name="body" value="/teacher/onlineTests/showTestMarks.jsp"></put>		
 	</definition>
 	<definition name="exercises-First-Page" extends="definition.teacher.testsPage">
+		<put name="title" value="private.teacher.management.bookmarks.exercises"/>
 		<put name="body" value="/teacher/onlineTests/exercisesFirstPage.jsp"></put>		
 	</definition>
 	<definition name="insert-New-Exercise" extends="definition.teacher.testsPage">
+		<put name="title" value="private.teacher.management.bookmarks.exercises"/>
 		<put name="body" value="/teacher/onlineTests/insertNewExercise.jsp"></put>		
 	</definition>
 	<definition name="prepare-Remove-Exercise" extends="definition.teacher.testsPage">
-		<put name="body" value="/teacher/onlineTests/prepareRemoveExercise.jsp"></put>		
+		<put name="title" value="private.teacher.management.bookmarks.exercises"/>
+		<put name="body" value="/teacher/onlineTests/prepareRemoveExercise.jsp"></put>
 	</definition>
 	<definition name="edit-Exercise" extends="definition.teacher.testsPage">
+		<put name="title" value="private.teacher.management.bookmarks.exercises"/>
 		<put name="body" value="/teacher/onlineTests/editExercise.jsp"></put>		
 	</definition>
 	<definition name="insert-Test-Question" extends="definition.teacher.testsPage">
+		<put name="title" value="private.teacher.management.bookmarks"/>
 		<put name="body" value="/teacher/onlineTests/insertTestQuestion.jsp"></put>		
 	</definition>
 	<definition name="edit-Test" extends="definition.teacher.testsPage">
+		<put name="title" value="private.teacher.management.bookmarks"/>
 		<put name="body" value="/teacher/onlineTests/editTest.jsp"></put>		
 	</definition>
 	<definition name="edit-Test-Header" extends="definition.teacher.testsPage">
+		<put name="title" value="private.teacher.management.bookmarks"/>
 		<put name="body" value="/teacher/onlineTests/editTestHeader.jsp"></put>		
 	</definition>
 	<definition name="edit-Test-Question" extends="definition.teacher.testsPage">
+		<put name="title" value="private.teacher.management.bookmarks"/>
 		<put name="body" value="/teacher/onlineTests/editTestQuestion.jsp"></put>		
 	</definition>
 	<definition name="distribute-Test" extends="definition.teacher.testsPage">
+		<put name="title" value="private.teacher.management.bookmarks"/>
 		<put name="body" value="/teacher/onlineTests/distributeTest.jsp"></put>		
 	</definition>
 	<definition name="show-Distributed-Tests" extends="definition.teacher.testsPage">
+		<put name="title" value="private.teacher.management.bookmarks"/>
 		<put name="body" value="/teacher/onlineTests/showDistributedTests.jsp"></put>		
 	</definition>
 	<definition name="distribute-Test-By-Shifts" extends="definition.teacher.testsPage">
+		<put name="title" value="private.teacher.management.bookmarks"/>
 		<put name="body" value="/teacher/onlineTests/distributeTestByShifts.jsp"></put>		
 	</definition>
 	<definition name="distribute-Test-By-Students" extends="definition.teacher.testsPage">
+		<put name="title" value="private.teacher.management.bookmarks"/>
 		<put name="body" value="/teacher/onlineTests/distributeTestByStudents.jsp"></put>		
 	</definition>
 	<definition name="show-Test-Marks-Statistics" extends="definition.teacher.testsPage">
@@ -294,37 +313,48 @@
 		<put name="body" value="/teacher/onlineTests/showTestStatistics.jsp"></put>		
 	</definition>
 	<definition name="edit-Distributed-Test" extends="definition.teacher.testsPage">
+		<put name="title" value="private.teacher.management.bookmarks"/>
 		<put name="body" value="/teacher/onlineTests/editDistributedTest.jsp"></put>
 	</definition>
 	<definition name="add-Shifts-To-Distributed-Test" extends="definition.teacher.testsPage">
+		<put name="title" value="private.teacher.management.bookmarks"/>
 		<put name="body" value="/teacher/onlineTests/addShiftsToDistributedTest.jsp"></put>		
 	</definition>
 	<definition name="add-Students-To-Distributed-Test" extends="definition.teacher.testsPage">
+		<put name="title" value="private.teacher.management.bookmarks"/>
 		<put name="body" value="/teacher/onlineTests/addStudentsToDistributedTest.jsp"></put>		
 	</definition>
 	<definition name="prepare-Delete-Distributed-Test" extends="definition.teacher.testsPage">
+		<put name="title" value="private.teacher.management.bookmarks"/>
 		<put name="body" value="/teacher/onlineTests/prepareDeleteDistributedTest.jsp"></put>		
 	</definition>
 	<definition name="choose-Exercise-Type" extends="definition.teacher.testsPage">
-		<put name="body" value="/teacher/onlineTests/chooseExerciseType.jsp"></put>		
+		<put name="title" value="private.teacher.management.bookmarks.exercises"/>
+		<put name="body" value="/teacher/onlineTests/chooseExerciseType.jsp"></put>
 	</definition>
 	<definition name="prepare-Create-Exercise" extends="definition.teacher.testsPage">
+		<put name="title" value="private.teacher.management.bookmarks.exercises"/>
 		<put name="body" value="/teacher/onlineTests/prepareCreateExercise.jsp"></put>		
 	</definition>
 	<definition name="preview-Exercise" extends="definition.teacher.testsPage">
+		<put name="title" value="private.teacher.management.bookmarks.exercises"/>
 		<put name="body" value="/teacher/onlineTests/previewExercise.jsp"></put>		
 	</definition>
 	<definition name="add-Exercise-Variation" extends="definition.teacher.testsPage">
+		<put name="title" value="private.teacher.management.bookmarks.exercises"/>
 		<put name="body" value="/teacher/onlineTests/addExerciseVariation.jsp"></put>		
 	</definition>
 	<definition name="choose-New-Exercise" extends="definition.teacher.testsPage">
+		<put name="title" value="private.teacher.management.bookmarks.exercises"/>
 		<put name="body" value="/teacher/onlineTests/chooseNewExercise.jsp"></put>		
 	</definition>
 	<definition name="remove-Exercise-Variation" extends="definition.teacher.testsPage">
+		<put name="title" value="private.teacher.management.bookmarks.exercises"/>
 		<put name="body" value="/teacher/onlineTests/removeExerciseVariation.jsp"></put>		
 	</definition>
 	<definition name="validate-Student-Test-Checksum" extends="definition.teacher.testsPage">
-		<put name="body" value="/teacher/onlineTests/validateStudentTestChecksum.jsp"></put>		
+		<put name="title" value="private.teacher.management.bookmarks"/>
+		<put name="body" value="/teacher/onlineTests/validateStudentTestChecksum.jsp"></put>
 	</definition>
 	<!-- END TESTS DEFINITIONS -->	
 	
@@ -402,58 +432,72 @@
 	</definition>
 
     <definition name="execution-course-archive-options" extends="execution-course-administration">
+    	<put name="title" value="private.teacher.generatesitesarchive"/>
         <put name="body" value="/teacher/executionCourse/archiveOptions.jsp" />
     </definition>
 
 	<definition name="manage-execution-course-instructions" extends="execution-course-administration">
+		<put name="title" value="private.teacher.instructions"/>
 		<put name="body" value="/teacher/executionCourse/instructions.jsp" />
 	</definition>
 
 	<definition name="manage-execution-course-program" extends="execution-course-administration">
+		<put name="title" value="private.teacher.courseinformation.program"/>
 		<put name="body" value="/teacher/executionCourse/program.jsp" />
 	</definition>
 
 	<definition name="manage-execution-course-program-create" extends="execution-course-administration">
+		<put name="title" value="private.teacher.courseinformation.program"/>
 		<put name="body" value="/teacher/executionCourse/createProgram.jsp" />
 	</definition>
 
 	<definition name="manage-execution-course-program-edit" extends="execution-course-administration">
+		<put name="title" value="private.teacher.courseinformation.program"/>
 		<put name="body" value="/teacher/executionCourse/editProgram.jsp" />
 	</definition>
 	
 	<definition name="manage-execution-course-objectives" extends="execution-course-administration">
+		<put name="title" value="private.teacher.courseinformation.objectives"/>
 		<put name="body" value="/teacher/executionCourse/objectives.jsp" />
 	</definition>
 
 	<definition name="manage-execution-course-objectives-create" extends="execution-course-administration">
+		<put name="title" value="private.teacher.courseinformation.objectives"/>
 		<put name="body" value="/teacher/executionCourse/createObjectives.jsp" />
 	</definition>
 
 	<definition name="manage-execution-course-objectives-edit" extends="execution-course-administration">
+		<put name="title" value="private.teacher.courseinformation.objectives"/>
 		<put name="body" value="/teacher/executionCourse/editObjectives.jsp" />
 	</definition>
 
 	<definition name="manage-execution-course-evaluationMethod" extends="execution-course-administration">
+		<put name="title" value="private.teacher.courseinformation.assessmentprocess"/>
 		<put name="body" value="/teacher/executionCourse/evaluationMethod.jsp" />
 	</definition>
 
 	<definition name="manage-execution-course-evaluationMethod-import" extends="execution-course-administration">
+		<put name="title" value="private.teacher.courseinformation.assessmentprocess"/>
 		<put name="body" value="/teacher/executionCourse/importEvaluationMethod.jsp" />
 	</definition>
 	
 	<definition name="manage-execution-course-evaluationMethod-edit" extends="execution-course-administration">
+		<put name="title" value="private.teacher.courseinformation.assessmentprocess"/>
 		<put name="body" value="/teacher/executionCourse/editEvaluationMethod.jsp" />
 	</definition>
 
 	<definition name="manage-execution-course-lessonPlannings" extends="execution-course-administration">
+		<put name="title" value="private.teacher.management.planning"/>
 		<put name="body" value="/teacher/executionCourse/lessonPlannings.jsp" />
 	</definition>
 	
 	<definition name="manage-shifts" extends="execution-course-administration">
+		<put name="title" value="private.teacher.management.shifts"/>
 		<put name="body" value="/teacher/executionCourse/manageShifts.jsp" />
 	</definition>
 	
 	<definition name="edit-shift" extends="execution-course-administration">
+		<put name="title" value="private.teacher.management.shifts"/>
 		<put name="body" value="/teacher/executionCourse/editShift.jsp" />
 	</definition>
 	
@@ -462,14 +506,17 @@
 	</definition>
 	
 	<definition name="manage-execution-course-lessonPlanning-create" extends="execution-course-administration">
+		<put name="title" value="private.teacher.management.planning"/>
 		<put name="body" value="/teacher/executionCourse/createLessonPlanning.jsp" />
 	</definition>	
 	
 	<definition name="manage-execution-course-lessonPlannings-import" extends="execution-course-administration">
+		<put name="title" value="private.teacher.management.planning"/>
 		<put name="body" value="/teacher/executionCourse/importLessonPlannings.jsp" />
 	</definition>	
 		
 	<definition name="import-customization-options" extends="execution-course-administration">
+		<put name="title" value="private.teacher.customization"/>
 		<put name="body" value="/teacher/importCustomizationOptions.jsp" />
 	</definition>	
 		
@@ -495,63 +542,77 @@
 	</definition>
 	
 	<definition name="view-foruns" extends="execution-course-administration">
+		<put name="title" value="private.teacher.communication.forums"/>
 		<put name="body" value="/teacher/forums/viewExecutionCourseForuns.jsp" />
 	</definition>
 	
 	<definition name="view-forum" extends="execution-course-administration">
+		<put name="title" value="private.teacher.communication.forums"/>
 		<put name="body-context" value="/teacher/forums/context.jsp"/>
 		<put name="body" value="/commons/forums/viewForum.jsp" />
 	</definition>
 	
 	<definition name="create-thread-and-message" extends="execution-course-administration">
+		<put name="title" value="private.teacher.communication.forums"/>
 		<put name="body-context" value="/teacher/forums/context.jsp"/>
 		<put name="body" value="/commons/forums/createThreadAndMessage.jsp" />
 	</definition>
 	
 	<definition name="view-thread" extends="execution-course-administration">
+		<put name="title" value="private.teacher.communication.forums"/>
 		<put name="body-context" value="/teacher/forums/context.jsp"/>
 		<put name="body" value="/commons/forums/viewThread.jsp" />
 	</definition>
 
     <definition name="manage-execution-course-site-createSection" extends="execution-course-administration">
+    	<put name="title" value="private.teacher.communication.sections"/>
         <put name="body-context" value="/teacher/executionCourse/site/context.jsp" />
     </definition>
 
 	<definition name="manage-execution-course-createSection" extends="manage-execution-course-site-createSection">
+		<put name="title" value="private.teacher.communication.sections"/>
 		<put name="body" value="/commons/sites/createSection.jsp" />
 	</definition>
 
 	<definition name="manage-execution-course-pool" extends="manage-execution-course-site-createSection">
+		<put name="title" value="private.teacher.communication.sections"/>
 		<put name="body" value="/commons/sites/addInstitutionSection.jsp" />
 	</definition>
 	
 	<definition name="manage-execution-course-sectionsManagement" extends="manage-execution-course-site-createSection">
+		<put name="title" value="private.teacher.communication.sections"/>
         <put name="head" value="/commons/renderers/treeRendererHeader.jsp" />
 		<put name="body" value="/teacher/executionCourse/site/sectionsManagement.jsp" />
 	</definition>
 
 	<definition name="manage-execution-course-sections-import" extends="execution-course-administration">
+		<put name="title" value="private.teacher.communication.sections"/>
 		<put name="body" value="/teacher/executionCourse/site/importSections.jsp" />
 	</definition>
 	
 	<definition name="manage-execution-course-section" extends="manage-execution-course-site-createSection">
+        <put name="title" value="private.teacher.communication.sections"/>
         <put name="head" value="/commons/renderers/treeRendererHeader.jsp" />
 		<put name="body" value="/commons/sites/section.jsp" />
 	</definition>
 
 	<definition name="manage-execution-course-editSection" extends="manage-execution-course-site-createSection">
+		<put name="title" value="private.teacher.communication.sections"/>
 		<put name="body" value="/commons/sites/editSection.jsp" />
 	</definition>
 
 	<definition name="manage-execution-course-editFileItemName" extends="manage-execution-course-site-createSection">
+		<put name="title" value="private.teacher.communication.sections"/>
 		<put name="body" value="/commons/sites/editFileItemDisplayName.jsp" />
 	</definition>
 
 	<definition name="manage-execution-course-createItem" extends="manage-execution-course-site-createSection">
+		<put name="title" value="private.teacher.communication.sections"/>
 		<put name="body" value="/commons/sites/createItem.jsp" />
 	</definition>
 	
 	<definition name="professorship-properties" extends="execution-course-administration">
+		<put name="title" value="private.teacher.management.teachers"/>
 		<put name="body" value="/teacher/viewProfessorshipProperties.jsp"></put>
 		<put name="navGeral" value="/teacher/commonNavGeralTeacher.jsp" />
 		<put name="executionCourseName" value="/teacher/executionCourseName.jsp" />
@@ -560,53 +621,65 @@
 	</definition>
 
 	<definition name="manage-execution-course-editItem" extends="manage-execution-course-site-createSection">
+		<put name="title" value="private.teacher.communication.sections"/>
 		<put name="body" value="/commons/sites/editItem.jsp" />
 	</definition>
 
 	<definition name="manage-execution-course-uploadFile" extends="manage-execution-course-site-createSection">
+		<put name="title" value="private.teacher.communication.sections"/>
 		<put name="body" value="/commons/sites/uploadFile.jsp" />
 	</definition>
 
 	<definition name="manage-execution-course-editFile" extends="manage-execution-course-site-createSection">
+		<put name="title" value="private.teacher.communication.sections"/>
 		<put name="body" value="/commons/sites/editFile.jsp" />
 	</definition>
 
 	<definition name="create-scorm" extends="manage-execution-course-site-createSection">
+		<put name="title" value="private.teacher.communication.sections"/>
 		<put name="body" value="/commons/sites/createScorm.jsp" />
 	</definition>
 
 	<definition name="upload-scorm" extends="manage-execution-course-site-createSection">
+		<put name="title" value="private.teacher.communication.sections"/>
 		<put name="body" value="/commons/sites/uploadScorm.jsp" />
 	</definition>
 	
     <definition name="manage-execution-course-organizeItems" extends="manage-execution-course-site-createSection">
+    	<put name="title" value="private.teacher.communication.sections"/>
         <put name="head" value="/commons/renderers/treeRendererHeader.jsp" />
         <put name="body" value="/commons/sites/organizeItems.jsp" />
     </definition>
 
     <definition name="manage-execution-course-organizeFiles" extends="manage-execution-course-site-createSection">
+    	<put name="title" value="private.teacher.communication.sections"/>
         <put name="head" value="/commons/renderers/treeRendererHeader.jsp" />
         <put name="body" value="/commons/sites/organizeFiles.jsp" />
     </definition>
 
     <definition name="manage-execution-course-confirmSectionDelete" extends="manage-execution-course-site-createSection">
+    	<put name="title" value="private.teacher.communication.sections"/>
         <put name="body" value="/commons/sites/confirmSectionDelete.jsp" />
     </definition>
 
     <definition name="manage-execution-course-editSectionPermissions" extends="manage-execution-course-site-createSection">
+    	<put name="title" value="private.teacher.communication.sections"/>
         <put name="body" value="/commons/sites/editSectionPermissions.jsp" />
     </definition>
 
     <definition name="manage-execution-course-editItemPermissions" extends="manage-execution-course-site-createSection">
+    	<put name="title" value="private.teacher.communication.sections"/>
         <put name="body" value="/commons/sites/editItemPermissions.jsp" />
     </definition>
 
 	<!-- =================== MarkSheetManagement ============== -->
 	<definition name="show.evaluationIndex" extends="df.teacher.evaluation-management">
+		<put name="title" value="private.teacher.management.rating"/>
 		<put name="body" value="/teacher/evaluation/evaluationIndex.jsp" />
 	</definition>
 		
 	<definition name="show.markSheetManagement.gradeSubmission.step.one" extends="df.teacher.evaluation-management">
+		<put name="title" value="private.teacher.management.rating"/>
 		<put name="body" value="/teacher/evaluation/gradeSubmission/gradeSubmissionStepOne.jsp" />
 	</definition>
 	
@@ -619,6 +692,7 @@
 	</definition>
 	
 	<definition name="show.markSheetManagement.viewSubmitedMarkSheets" extends="df.teacher.evaluation-management">
+		<put name="title" value="private.teacher.management.rating"/>
 		<put name="body" value="/teacher/evaluation/gradeSubmission/viewSubmitedMarkSheets.jsp" />
 	</definition>
 	
@@ -628,6 +702,7 @@
 
 	<!-- ==== Project Submissions Management === -->
 	<definition name="view-last-project-submission-for-each-group" extends="df.teacher.evaluation-management">
+		<put name="title" value="private.teacher.management.rating"/>
 		<put name="body" value="/teacher/evaluation/viewLastProjectSubmissionForEachGroup.jsp" />
 	</definition>
 	
@@ -649,24 +724,30 @@
 
 	<!--  ==== Vigilants for evaluation ==== -->
 	<definition name="list-vigilants-for-evaluation" extends="df.teacher.evaluation-management">
+		<put name="title" value="private.teacher.management.rating"/>
 		<put name="body" value="/teacher/evaluation/vigilancies/viewVigilancies.jsp" />
 	</definition>
 
 	<definition name="edit-report-for-evaluation" extends="df.teacher.evaluation-management">
+		<put name="title" value="private.teacher.management.bookmarks.rating"/>
 		<put name="body" value="/teacher/evaluation/vigilancies/editVigilanciesReport.jsp" />
 	</definition>
 
 	<!-- ==== Summaries Management === -->
 	<definition name="prepare-insert-summary" extends="execution-course-administration">
+		<put name="title" value="private.teacher.management.summaries"/>
 		<put name="body" value="/teacher/executionCourse/createSummary.jsp" />
 	</definition>		
 	<definition name="prepare-show-summaries" extends="execution-course-administration">
+		<put name="title" value="private.teacher.management.summaries"/>
 		<put name="body" value="/teacher/executionCourse/showSummaries.jsp" />
 	</definition>		
 	<definition name="prepare-insert-complex-summary" extends="execution-course-administration">
+		<put name="title" value="private.teacher.management.summaries"/>
 		<put name="body" value="/teacher/executionCourse/createComplexSummary.jsp" />
 	</definition>		
 		<definition name="show-summaries-calendar" extends="execution-course-administration">
+		<put name="title" value="private.teacher.management.summaries"/>
 		<put name="body" value="/teacher/executionCourse/showSummariesCalendar.jsp" />
 	</definition>		
 		
@@ -814,47 +895,49 @@
 
 	<!-- =================== Announcements ============== -->
 	<definition name="teacher-list-announcements" extends="execution-course-administration">
+		<put name="title" value="private.teacher.communication.announcements"/>
 		<put name="body" value="/teacher/executionCourse/announcements/listBoardAnnouncements.jsp" />
 	</definition>	
 	<definition name="teacher-announcement-uploadFile" extends="execution-course-administration">
+		<put name="title" value="private.teacher.communication.announcements"/>
 		<put name="body" value="/messaging/announcements/uploadFileToBoard.jsp" />
 	</definition>	
 	<definition name="teacher-announcement-editFile" extends="execution-course-administration">
+		<put name="title" value="private.teacher.communication.announcements"/>
 		<put name="body" value="/messaging/announcements/editFileInBoard.jsp" />
 	</definition>	
 	<definition name="teacher-add-announcement" extends="execution-course-administration">
+		<put name="title" value="private.teacher.communication.announcements"/>
 		<put name="body" value="/teacher/executionCourse/announcements/addAnnouncement.jsp" />
 	</definition>		
 	<definition name="teacher-edit-announcement" extends="execution-course-administration">
+		<put name="title" value="private.teacher.communication.announcements"/>
 		<put name="body" value="/teacher/executionCourse/announcements/editAnnouncement.jsp" />
 	</definition>	
 	<definition name="teacher-view-announcement" extends="execution-course-administration">
+		<put name="title" value="private.teacher.communication.announcements"/>
 		<put name="body" value="/teacher/executionCourse/announcements/viewAnnouncement.jsp" />
 	</definition>		
 	<!-- =================== end announcements ============== -->
 
    <!-- =================== Rooms Reserve Management ============== -->
 	<definition name="view-rooms-reserves" extends="df.page.teacher-index">
-		<put name="bundle" value="TITLES_RESOURCES"/>
 		<put name="title" value="private.teacher.roomreservations"/>
 		<put name="body" value="/teacher/roomsReserveManagement/viewRoomsReserves.jsp" />
 	</definition>			
 	<definition name="create-new-rooms-reserve" extends="df.page.teacher-index">
-		<put name="bundle" value="TITLES_RESOURCES"/>
 		<put name="title" value="private.teacher.roomreservations"/>
 		<put name="body" value="/teacher/roomsReserveManagement/createNewRoomsReserve.jsp" />
 	</definition>			
 	<definition name="see-specified-rooms-reserve" extends="df.page.teacher-index">
-		<put name="bundle" value="TITLES_RESOURCES"/>
 		<put name="title" value="private.teacher.roomreservations"/>
 		<put name="body" value="/teacher/roomsReserveManagement/seeSpecifiedRoomsReserve.jsp" />
 	</definition>
 	<definition name="viewSearch" extends="execution-course-administration">
-		<put name="bundle" value="TITLES_RESOURCES"/>
-		<put name="title" value="private.teacher.roomreservations"/>
+		<put name="title" value="private.teacher.management.students"/>
 		<put name="body" value="/teacher/viewAttendsSearch.jsp" />
-	</definition>		
-				
+	</definition>
+
 	<!-- =================== Teaching Inquiries ============== -->	
 	<definition name="teaching-inquiries.inquiryPrePage" extends="definition.teacher.two-column">
 		<put name="navLocal" value="/teacher/commons/executionCourseAdministrationNavbar.jsp"/>

@@ -50,11 +50,11 @@ import pt.ist.fenixWebFramework.struts.annotations.Tile;
 import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 @Mapping(path = "/regentInquiry", module = "teacher")
-@Forwards( {
-	@Forward(name = "inquiryResultsResume", path = "/teacher/inquiries/regentInquiryResultsResume.jsp", tileProperties = @Tile(navLocal = "/teacher/commons/executionCourseAdministrationNavbar.jsp")),
-	@Forward(name = "inquiriesClosed", path = "/teacher/inquiries/regentInquiryClosed.jsp", tileProperties = @Tile(navLocal = "/teacher/commons/executionCourseAdministrationNavbar.jsp")),
-	@Forward(name = "inquiryUnavailable", path = "/teacher/inquiries/regentInquiryUnavailable.jsp", tileProperties = @Tile(navLocal = "/teacher/commons/executionCourseAdministrationNavbar.jsp")),
-	@Forward(name = "regentInquiry", path = "/teacher/inquiries/regentInquiry.jsp", tileProperties = @Tile(navLocal = "/teacher/commons/executionCourseAdministrationNavbar.jsp")) })
+@Forwards({
+	@Forward(name = "inquiryResultsResume", path = "/teacher/inquiries/regentInquiryResultsResume.jsp", tileProperties = @Tile(navLocal = "/teacher/commons/executionCourseAdministrationNavbar.jsp", title = "private.teacher.qucreportsandresults.regent")),
+	@Forward(name = "inquiriesClosed", path = "/teacher/inquiries/regentInquiryClosed.jsp", tileProperties = @Tile(navLocal = "/teacher/commons/executionCourseAdministrationNavbar.jsp", title = "private.teacher.qucreportsandresults.regent")),
+	@Forward(name = "inquiryUnavailable", path = "/teacher/inquiries/regentInquiryUnavailable.jsp", tileProperties = @Tile(navLocal = "/teacher/commons/executionCourseAdministrationNavbar.jsp", title = "private.teacher.qucreportsandresults.regent")),
+	@Forward(name = "regentInquiry", path = "/teacher/inquiries/regentInquiry.jsp", tileProperties = @Tile(navLocal = "/teacher/commons/executionCourseAdministrationNavbar.jsp", title = "private.teacher.qucreportsandresults.regent")) })
 public class RegentInquiryDA extends FenixDispatchAction {
 
     public ActionForward showInquiriesPrePage(ActionMapping actionMapping, ActionForm actionForm, HttpServletRequest request,
@@ -65,8 +65,9 @@ public class RegentInquiryDA extends FenixDispatchAction {
 
 	RegentInquiryTemplate inquiryTemplate = RegentInquiryTemplate.getTemplateByExecutionPeriod(executionCourse
 		.getExecutionPeriod());
-	//if the inquiry doesn't exist or is from the execution period right before the current one and isn't open and has no results,
-	//that means that is not to answer and has no data to see
+	// if the inquiry doesn't exist or is from the execution period right
+	// before the current one and isn't open and has no results,
+	// that means that is not to answer and has no data to see
 	if (inquiryTemplate == null
 		|| (inquiryTemplate.getExecutionPeriod().getNextExecutionPeriod().isCurrent() && !inquiryTemplate.isOpen() && !inquiryTemplate
 			.getExecutionPeriod().hasAnyInquiryResults())) {
@@ -119,12 +120,12 @@ public class RegentInquiryDA extends FenixDispatchAction {
 
 	InquiryResponseState finalState = getFilledState(executionCourse, professorship, inquiryTemplate);
 	InquiryResponseState teacherFilledState = null;
-	if(professorship.getPerson().hasToAnswerTeacherInquiry(professorship)){
-	    teacherFilledState = TeachingInquiryDA.getFilledState(professorship, TeacherInquiryTemplate
-			.getTemplateByExecutionPeriod(executionCourse.getExecutionPeriod()),
-			new ArrayList<TeacherShiftTypeGroupsResumeResult>());
+	if (professorship.getPerson().hasToAnswerTeacherInquiry(professorship)) {
+	    teacherFilledState = TeachingInquiryDA.getFilledState(professorship,
+		    TeacherInquiryTemplate.getTemplateByExecutionPeriod(executionCourse.getExecutionPeriod()),
+		    new ArrayList<TeacherShiftTypeGroupsResumeResult>());
 	} else {
-	    teacherFilledState = InquiryResponseState.COMPLETE;	    
+	    teacherFilledState = InquiryResponseState.COMPLETE;
 	}
 	if (!InquiryResponseState.COMPLETE.equals(teacherFilledState)) {
 	    request.setAttribute("teacherCompletionState", teacherFilledState.getLocalizedName());

@@ -107,7 +107,6 @@
 	</definition>
 		
 	<definition name="alumni.administrativeOfficeServices.documentRequests.viewDocumentRequestsToCreate" extends="alumni.masterPage">
-		<put name="title" value="bla"/>
 		<put name="body" value="/alumni/administrativeOfficeServices/documentRequests/viewDocumentRequestsToCreate.jsp" />
 	</definition>
 
@@ -124,7 +123,6 @@
 	</definition>
 		
 	<definition name="alumni.administrativeOfficeServices.documentRequests.viewDocumentRequest" extends="alumni.masterPage">
-		<put name="title" value="bla2"/>
 		<put name="body" value="/alumni/administrativeOfficeServices/documentRequests/viewDocumentRequest.jsp" />
 	</definition>
 	

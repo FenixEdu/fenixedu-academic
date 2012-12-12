@@ -4,6 +4,7 @@
 <%@ taglib uri="/WEB-INF/struts-tiles.tld" prefix="tiles" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
+<%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <html:html xhtml="true">
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
@@ -18,7 +19,18 @@
 	<script type="text/javascript" src="<%= request.getContextPath() %>/script/gesdis-scripting.js"></script>
 	<script type="text/javascript" src="<%= request.getContextPath() %>/CSS/scripts/hideButtons.js"></script>
 	<jsp:include page="/includeMathJax.jsp" />
-	<title><bean:message key="title.teaching"/></title>
+	<title>
+	    <tiles:useAttribute name="title" id="titleK" ignore="true"/>
+	    <tiles:useAttribute name="bundle" id="bundleT" ignore="true"/>
+	    <logic:present name="bundleT">
+	    	<logic:present name="titleK">
+		    		<bean:message key="<%= titleK.toString() %>" bundle="<%= bundleT.toString() %>"/>
+	    	</logic:present>
+	    </logic:present>
+	     <logic:notPresent name="bundleT">
+	     	<tiles:getAsString name="title" ignore="true"/>
+		</logic:notPresent>
+	</title>
     <tiles:insert attribute="head" ignore="true"/>
     
 <!--[if IE 5]><style>

@@ -36,7 +36,6 @@
     </definition>
     <definition name="search-for-teacherExecutionCourseAssociation-body" 
         extends="teacher-search-form-layout">
-        <put name="title" value="bla6"/>
         <put name="searchInfo" value="label.search.for.teacherExecutionCourseAssociation.management"/>
     </definition>  
     <definition name="show-teacher-professorships-for-management" 

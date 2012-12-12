@@ -20,6 +20,7 @@
  	  	<put name="keywords" value="/messaging/announcements/keywordsHeader.jsp"/>
 	</definition>
 	<definition name="definition.teacher.testsPage" extends="df.layout.two-column.teacher">
+	  <put name="bundle" value="TITLES_RESOURCES"/>	
 	  <put name="serviceName" value="Portal Docente" />	
 	  <put name="executionCourseName" value="/teacher/executionCourseName.jsp" />
 	  <put name="navLocal" value="/teacher/onlineTests/testsNavbar.jsp" />
@@ -102,7 +103,7 @@
 		<put name="body-context" value="/commons/blank.jsp" />  
     	<put name="navLocalExtra" value="/teacher/tutor/tutorMenu.jsp" />
     	<put name="rss" value="/messaging/announcements/rssHeader.jsp"/>
-	 	<put name="keywords" value="/messaging/announcements/keywordsHeader.jsp"/>    	
+	 	<put name="keywords" value="/messaging/announcements/keywordsHeader.jsp"/>
 	</definition>
 
 	<definition name="definition.curriculum.historic" extends="definition.teacher.two-column">
@@ -119,11 +120,9 @@
 	  <put name="navLocal" value="/teacher/commons/navigationBarIndex.jsp"/>
 	  <put name="navGeral" value="/teacher/commonNavGeralTeacher.jsp" />
 	  <put name="body" value="/commons/blank.jsp" />
-	  <put name="footer" value="/teacher/commons/commonFooterTests.jsp" />	  
-	  <put name="title" value="/commons/blank.jsp"/>
+	  <put name="footer" value="/teacher/commons/commonFooterTests.jsp" />
 	  <put name="link" value="/commons/blank.jsp"/>
 	  <put name="rss" value="/messaging/announcements/rssHeader.jsp"/>
  	  <put name="keywords" value="/messaging/announcements/keywordsHeader.jsp"/>	  
 	</definition>	
-	
 </tiles-definitions>

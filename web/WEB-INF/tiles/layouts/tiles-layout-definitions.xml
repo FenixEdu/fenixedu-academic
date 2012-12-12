@@ -4,7 +4,6 @@
 
 <tiles-definitions>
 	<definition name="df.layout.blank" page="/layout/fenixLayout_blank.jsp" >
-		 <put name="title" value="/commons/blank.jsp" />
 		 <put name="bundle" value="TITLES_RESOURCES" />	
 		 <put name="serviceName" value="/commons/blank.jsp" />
 		 <put name="header" value="/commons/blank.jsp" />
@@ -13,7 +12,6 @@
 		 <put name="footer" value="/commons/blank.jsp" />
 	</definition>
 	<definition name="df.layout.one-column" page="/layout/fenixLayout_1col.jsp" >
-		 <put name="title" value="/commons/blank.jsp" />
 		 <put name="bundle" value="TITLES_RESOURCES" />	
 		 <put name="serviceName" value="/commons/blank.jsp" />
 		 <put name="header" value="/commons/blank.jsp" />
@@ -22,9 +20,18 @@
 		 <put name="footer" value="/copyright.jsp" />
 	</definition>
 	<!-- TODO, really no need for this specific teacher layout - check if can be removed -->
-	<definition name="df.layout.two-column.teacher" page="/layout/teacherLayout_2col.jsp" />
+	<definition name="df.layout.two-column.teacher" page="/layout/teacherLayout_2col.jsp">
+		<put name="bundle" value="TITLES_RESOURCES" />
+        <put name="head" value="/commons/blank.jsp"/>
+		<put name="serviceName" value="/commons/blank.jsp" type="string"/>
+		<put name="navGeral" value="/generalNavigationBar.jsp" />
+		<put name="navLocal" value="/commons/blank.jsp" />
+		<put name="body-context" value="/commons/blank.jsp"/>
+		<put name="body" value="/commons/blank.jsp" />
+		<put name="body-inline" value="" />
+		<put name="footer" value="/copyright.jsp" />	
+	</definition>
 	<definition name="df.layout.two-column" page="/layout/fenixLayout_2col.jsp" >
-		<put name="title" value="/commons/blank.jsp" type="string"/>
 		<put name="bundle" value="TITLES_RESOURCES" />
         <put name="head" value="/commons/blank.jsp"/>
 		<put name="serviceName" value="/commons/blank.jsp" type="string"/>
@@ -46,9 +53,8 @@
 		<put name="body" value="/commons/blank.jsp" />
 		<put name="body-inline" value="" />
 		<put name="footer" value="/copyright.jsp" />	
-    </definition>    
+    </definition>
 	<definition name="df.layout.two-column.extra-menu" page="/layout/fenixLayout_2col_extraMenu.jsp" >
-		<put name="title" value="/commons/blank.jsp" />
 		<put name="bundle" value="TITLES_RESOURCES" />
 		<put name="serviceName" value="/commons/blank.jsp" />
 		<put name="navGeral" value="/generalNavigationBar.jsp" />
@@ -59,7 +65,6 @@
 		<put name="footer" value="/copyright.jsp" />	
     </definition>    
 	<definition name="df.layout.two-column-photo" page="/layout/fenixLayout_2col_photo.jsp" >
-		<put name="title" value="/commons/blank.jsp" />
 		<put name="bundle" value="TITLES_RESOURCES" />
 		<put name="serviceName" value="/commons/blank.jsp" />
 		<put name="navGeral" value="/generalNavigationBar.jsp" />
@@ -69,7 +74,6 @@
 		<put name="footer" value="/copyright.jsp" />
   	</definition>
 	<definition name="df.layout.two-column.posGrad" page="/layout/fenixLayout_posGrad.jsp" >
-		<put name="title" value="/commons/blank.jsp" />
 		<put name="bundle" value="TITLES_RESOURCES" />
         <put name="head" value="/commons/blank.jsp" />
 		<put name="serviceName" value="/commons/blank.jsp" />
@@ -103,7 +107,6 @@
 	
 	
 	<definition name="df.layout.two-column.no-navigation" page="/layout/fenixLayout_2col_no_navigation.jsp" >
-		<put name="title" value="/commons/blank.jsp" type="string"/>
 		<put name="bundle" value="TITLES_RESOURCES" />
         <put name="head" value="/commons/blank.jsp"/>
 		<put name="serviceName" value="/commons/blank.jsp" type="string"/>

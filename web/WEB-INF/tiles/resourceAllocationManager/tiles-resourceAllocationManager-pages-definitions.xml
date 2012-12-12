@@ -122,37 +122,30 @@
 	
 	<!-- =================== Rooms Punctual Scheduling  =================== -->	
 	<definition name="prepare-rooms-punctual-scheduling" extends="definition.sop.roomsManagement" >
-		<put name="bundle" value="TITLES_RESOURCES"/>
 	    <put name="title" value="private.resourcemanagement.rooms.manage.roomsmarkingspot"/>
 		<put name="body" value="/resourceAllocationManager/roomsPunctualScheduling/roomsPunctualScheduling.jsp" />
 	</definition>
 	<definition name="prepare-create-room-punctual-scheduling" extends="definition.sop.roomsManagement" >
-		<put name="bundle" value="TITLES_RESOURCES"/>
 	    <put name="title" value="private.resourcemanagement.rooms.manage.roomsmarkingspot"/>
 		<put name="body" value="/resourceAllocationManager/roomsPunctualScheduling/createRoomsPunctualSchedulings.jsp" />
 	</definition>	
 	<definition name="prepare-finalize-creation-of-rooms-punctual-scheduling" extends="definition.sop.roomsManagement" >
-		<put name="bundle" value="TITLES_RESOURCES"/>
 	    <put name="title" value="private.resourcemanagement.rooms.manage.roomsmarkingspot"/>
 		<put name="body" value="/resourceAllocationManager/roomsPunctualScheduling/finalizeCreationOfRoomsPunctualSchedulings.jsp" />
 	</definition>	
 	<definition name="prepare-view-rooms-punctual-scheduling" extends="definition.sop.roomsManagement" >
-		<put name="bundle" value="TITLES_RESOURCES"/>
 	    <put name="title" value="private.resourcemanagement.rooms.manage.roomsmarkingspot"/>
 		<put name="body" value="/resourceAllocationManager/roomsPunctualScheduling/editRoomsPunctualScheduling.jsp" />
 	</definition>		
 	<definition name="see-rooms-reserve-requests" extends="definition.sop.roomsManagement" >
-		<put name="bundle" value="TITLES_RESOURCES"/>
 	    <put name="title" value="private.resourcemanagement.rooms.manage.reservationrequests"/>
 		<put name="body" value="/resourceAllocationManager/roomsPunctualScheduling/seeRoomsReserveRequests.jsp" />
 	</definition>	
 	<definition name="see-specified-rooms-reserve-request" extends="definition.sop.roomsManagement" >
-		<put name="bundle" value="TITLES_RESOURCES"/>
 	    <put name="title" value="private.resourcemanagement.rooms.manage.reservationrequests"/>
 		<put name="body" value="/resourceAllocationManager/roomsPunctualScheduling/seeSpecifiedRoomsReserveRequest.jsp" />
 	</definition>
 	<definition name="see-rooms-punctual-scheduling-history" extends="definition.sop.roomsManagement" >
-		<put name="bundle" value="TITLES_RESOURCES"/>
 	    <put name="title" value="private.resourcemanagement.rooms.manage.roomsmarkingspot"/>
 		<put name="body" value="/resourceAllocationManager/roomsPunctualScheduling/seeRoomsPunctualSchedulingHistory.jsp" />
 	</definition>

@@ -20,16 +20,12 @@ import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 @Forwards({
 	@Forward(name = "showEvents", path = "/academicAdminOffice/payments/otherPartyPayment/showEventsForOtherPartyPayment.jsp", tileProperties = @Tile(title = "private.academicadministrativeoffice.studentoperations.viewstudents")),
-	@Forward(name = "showPaymentsForEvent", path = "/academicAdminOffice/payments/otherPartyPayment/showOtherPartyPaymentsForEvent.jsp", tileProperties = @Tile(title = "wow2")),
-	@Forward(name = "prepareCreate", path = "/academicAdminOffice/payments/otherPartyPayment/prepareCreateOtherPartyPayment.jsp", tileProperties = @Tile(title = "wow3")),
-	@Forward(name = "confirmCreate", path = "/academicAdminOffice/payments/otherPartyPayment/confirmCreateOtherPartyPayment.jsp", tileProperties = @Tile(title = "wow4")),
-	@Forward(name = "showGuide", path = "/academicAdminOffice/payments/otherPartyPayment/showGuideForOtherPartyPayment.jsp", tileProperties = @Tile(title = "wow5")),
-	@Forward(name = "printGuide", path = "/payments/otherPartyPayment/printGuideForOtherPartyPayment.jsp", /*
-													        * useTile
-													        * =
-													        * false
-													        */tileProperties = @Tile(title = "wow6")),
-	@Forward(name = "showOperations", path = "/payments.do?method=showOperations", tileProperties = @Tile(title = "wow7")) })
+	@Forward(name = "showPaymentsForEvent", path = "/academicAdminOffice/payments/otherPartyPayment/showOtherPartyPaymentsForEvent.jsp"),
+	@Forward(name = "prepareCreate", path = "/academicAdminOffice/payments/otherPartyPayment/prepareCreateOtherPartyPayment.jsp"),
+	@Forward(name = "confirmCreate", path = "/academicAdminOffice/payments/otherPartyPayment/confirmCreateOtherPartyPayment.jsp"),
+	@Forward(name = "showGuide", path = "/academicAdminOffice/payments/otherPartyPayment/showGuideForOtherPartyPayment.jsp"),
+	@Forward(name = "printGuide", path = "/payments/otherPartyPayment/printGuideForOtherPartyPayment.jsp"),
+	@Forward(name = "showOperations", path = "/payments.do?method=showOperations") })
 public abstract class OtherPartyPaymentManagementDA extends PaymentsManagementDispatchAction {
 
     public ActionForward showEventsForOtherPartyPayment(ActionMapping mapping, ActionForm form, HttpServletRequest request,

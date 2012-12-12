@@ -56,16 +56,16 @@ import pt.ist.fenixWebFramework.struts.annotations.Tile;
 import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 @Mapping(path = "/teachingInquiry", module = "teacher")
-@Forwards( {
-	@Forward(name = "inquiryPrePage", path = "/teacher/inquiries/inquiryPrePage.jsp", tileProperties = @Tile(navLocal = "/teacher/commons/executionCourseAdministrationNavbar.jsp")),
-	@Forward(name = "inquiryResultsResume", path = "/teacher/inquiries/inquiryResultsResume.jsp", tileProperties = @Tile(navLocal = "/teacher/commons/executionCourseAdministrationNavbar.jsp")),
-	@Forward(name = "inquiriesClosed", path = "/teacher/inquiries/inquiriesClosed.jsp", tileProperties = @Tile(navLocal = "/teacher/commons/executionCourseAdministrationNavbar.jsp")),
-	@Forward(name = "inquiryUnavailable", path = "/teacher/inquiries/inquiryUnavailable.jsp", tileProperties = @Tile(navLocal = "/teacher/commons/executionCourseAdministrationNavbar.jsp")),
-	@Forward(name = "teacherInquiry", path = "/teacher/inquiries/teacherInquiry.jsp", tileProperties = @Tile(navLocal = "/teacher/commons/executionCourseAdministrationNavbar.jsp")),
-	@Forward(name = "showCourseInquiryResult", path = "/inquiries/showCourseInquiryResult.jsp", useTile = false),
-	@Forward(name = "showCourseInquiryResult_v2", path = "/inquiries/showCourseInquiryResult_v2.jsp", useTile = false),
-	@Forward(name = "showTeachingInquiryResult", path = "/inquiries/showTeachingInquiryResult.jsp", useTile = false),
-	@Forward(name = "showTeachingInquiryResult_v2", path = "/inquiries/showTeachingInquiryResult_v2.jsp", useTile = false) })
+@Forwards({
+	@Forward(name = "inquiryPrePage", path = "/teacher/inquiries/inquiryPrePage.jsp", tileProperties = @Tile(navLocal = "/teacher/commons/executionCourseAdministrationNavbar.jsp", title = "private.teacher.qucreportsandresults.teachers")),
+	@Forward(name = "inquiryResultsResume", path = "/teacher/inquiries/inquiryResultsResume.jsp", tileProperties = @Tile(navLocal = "/teacher/commons/executionCourseAdministrationNavbar.jsp", title = "private.teacher.qucreportsandresults.teachers")),
+	@Forward(name = "inquiriesClosed", path = "/teacher/inquiries/inquiriesClosed.jsp", tileProperties = @Tile(navLocal = "/teacher/commons/executionCourseAdministrationNavbar.jsp", title = "private.teacher.qucreportsandresults.teachers")),
+	@Forward(name = "inquiryUnavailable", path = "/teacher/inquiries/inquiryUnavailable.jsp", tileProperties = @Tile(navLocal = "/teacher/commons/executionCourseAdministrationNavbar.jsp", title = "private.teacher.qucreportsandresults.teachers")),
+	@Forward(name = "teacherInquiry", path = "/teacher/inquiries/teacherInquiry.jsp", tileProperties = @Tile(navLocal = "/teacher/commons/executionCourseAdministrationNavbar.jsp", title = "private.teacher.qucreportsandresults.teachers")),
+	@Forward(name = "showCourseInquiryResult", path = "/inquiries/showCourseInquiryResult.jsp", useTile = false, tileProperties = @Tile(title = "private.teacher.qucreportsandresults.teachers")),
+	@Forward(name = "showCourseInquiryResult_v2", path = "/inquiries/showCourseInquiryResult_v2.jsp", useTile = false, tileProperties = @Tile(title = "private.teacher.qucreportsandresults.teachers")),
+	@Forward(name = "showTeachingInquiryResult", path = "/inquiries/showTeachingInquiryResult.jsp", useTile = false, tileProperties = @Tile(title = "private.teacher.qucreportsandresults.teachers")),
+	@Forward(name = "showTeachingInquiryResult_v2", path = "/inquiries/showTeachingInquiryResult_v2.jsp", useTile = false, tileProperties = @Tile(title = "private.teacher.qucreportsandresults.teachers")) })
 public class TeachingInquiryDA extends FenixDispatchAction {
 
     public ActionForward showInquiriesPrePage(ActionMapping actionMapping, ActionForm actionForm, HttpServletRequest request,
@@ -93,8 +93,9 @@ public class TeachingInquiryDA extends FenixDispatchAction {
 
 	TeacherInquiryTemplate inquiryTemplate = TeacherInquiryTemplate.getTemplateByExecutionPeriod(executionCourse
 		.getExecutionPeriod());
-	//if the inquiry doesn't exist or is from the execution period right before the current one and isn't open and has no results,
-	//that means that is not to answer and has no data to see
+	// if the inquiry doesn't exist or is from the execution period right
+	// before the current one and isn't open and has no results,
+	// that means that is not to answer and has no data to see
 	if (inquiryTemplate == null
 		|| (inquiryTemplate.getExecutionPeriod().getNextExecutionPeriod().isCurrent() && !inquiryTemplate.isOpen() && !inquiryTemplate
 			.getExecutionPeriod().hasAnyInquiryResults())) {
@@ -154,8 +155,8 @@ public class TeachingInquiryDA extends FenixDispatchAction {
 		List<InquiryResult> teacherShiftResults = professorship.getInquiryResults(shiftType);
 		if (!teacherShiftResults.isEmpty()) {
 		    TeacherShiftTypeGroupsResumeResult teacherShiftTypeGroupsResumeResult = new TeacherShiftTypeGroupsResumeResult(
-			    professorship, shiftType, ResultPersonCategory.TEACHER, "label.inquiry.shiftType", RenderUtils
-				    .getEnumString(shiftType), false);
+			    professorship, shiftType, ResultPersonCategory.TEACHER, "label.inquiry.shiftType",
+			    RenderUtils.getEnumString(shiftType), false);
 		    InquiryResponseState completionStateType = teacherShiftTypeGroupsResumeResult.getCompletionStateType();
 		    finalState = finalState.compareTo(completionStateType) > 0 ? finalState : completionStateType;
 		    teacherResults.add(teacherShiftTypeGroupsResumeResult);
