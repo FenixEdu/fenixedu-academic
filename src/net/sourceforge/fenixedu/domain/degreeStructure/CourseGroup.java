@@ -41,7 +41,7 @@ public class CourseGroup extends CourseGroup_Base {
 	return result;
     }
 
-    protected CourseGroup() {
+    public CourseGroup() {
 	super();
     }
 
@@ -69,6 +69,7 @@ public class CourseGroup extends CourseGroup_Base {
 	new Context(parentCourseGroup, this, null, begin, end);
     }
 
+    @Override
     public boolean isLeaf() {
 	return false;
     }
@@ -91,11 +92,13 @@ public class CourseGroup extends CourseGroup_Base {
 	}
     }
 
+    @Override
     public Boolean getCanBeDeleted() {
 	return super.getCanBeDeleted() && !hasAnyChildContexts() && !hasAnyOldCourseGroupChangeRequests()
 		&& !hasAnyNewCourseGroupChangeRequests();
     }
 
+    @Override
     public void delete() {
 	if (getCanBeDeleted()) {
 	    super.delete();
@@ -108,6 +111,7 @@ public class CourseGroup extends CourseGroup_Base {
 	}
     }
 
+    @Override
     public void print(StringBuilder dcp, String tabs, Context previousContext) {
 	String tab = tabs + "\t";
 	dcp.append(tab);
@@ -121,6 +125,7 @@ public class CourseGroup extends CourseGroup_Base {
 	}
     }
 
+    @Override
     public boolean isRoot() {
 	return false;
     }
@@ -480,6 +485,7 @@ public class CourseGroup extends CourseGroup_Base {
 	return result;
     }
 
+    @Override
     public Set<CourseGroup> getParentCourseGroups() {
 	final Set<CourseGroup> result = new HashSet<CourseGroup>();
 	for (final Context context : getParentContexts()) {

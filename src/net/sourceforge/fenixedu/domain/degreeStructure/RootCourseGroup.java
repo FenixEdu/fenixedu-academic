@@ -11,7 +11,7 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
 public class RootCourseGroup extends RootCourseGroup_Base {
 
-    protected RootCourseGroup() {
+    public RootCourseGroup() {
 	super();
     }
 
@@ -49,6 +49,7 @@ public class RootCourseGroup extends RootCourseGroup_Base {
 	return true;
     }
 
+    @Override
     public void delete() {
 	if (!getCanBeDeleted()) {
 	    throw new DomainException("courseGroup.notEmptyCourseGroupContexts");
