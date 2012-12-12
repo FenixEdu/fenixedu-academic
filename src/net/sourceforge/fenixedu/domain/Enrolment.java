@@ -73,7 +73,7 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
 	}
     };
 
-    static final private Comparator<Enrolment> COMPARATOR_BY_LATEST_ENROLMENT_EVALUATION = new Comparator<Enrolment>() {
+    static final public Comparator<Enrolment> COMPARATOR_BY_LATEST_ENROLMENT_EVALUATION = new Comparator<Enrolment>() {
 	@Override
 	final public int compare(Enrolment o1, Enrolment o2) {
 	    return EnrolmentEvaluation.COMPARATOR_BY_EXAM_DATE.compare(o1.getLatestEnrolmentEvaluation(),
