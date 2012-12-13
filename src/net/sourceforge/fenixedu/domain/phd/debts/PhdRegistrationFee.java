@@ -31,6 +31,10 @@ public class PhdRegistrationFee extends PhdRegistrationFee_Base {
     private void checkProcess(PhdIndividualProgramProcess process) {
 	check(process, "error.PhdRegistrationFee.process.cannot.be.null");
 
+	if (process.getWhenFormalizedRegistration() == null) {
+	    throw new DomainException("error.PhdRegistrationFee.process.no.registration.formalization.date");
+	}
+
 	if (process.hasRegistrationFee()) {
 	    throw new DomainException("error.PhdRegistrationFee.process.already.has.registration.fee");
 	}
