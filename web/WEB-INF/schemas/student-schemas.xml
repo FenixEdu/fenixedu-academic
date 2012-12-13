@@ -320,7 +320,7 @@
             <property name="required" value="true"/>
             <property name="typeMessage" value="student.thesis.document.type"/>
             <property name="acceptedTypes" value="application/pdf"/>
-            <property name="maxSize" value="67108864"/>
+            <property name="maxSize" value="67108247"/>
         </validator>
         
         <property name="size" value="60"/>
