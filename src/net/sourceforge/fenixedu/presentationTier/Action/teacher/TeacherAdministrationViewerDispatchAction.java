@@ -1289,6 +1289,18 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
 		enrolmentEndDay.set(Calendar.SECOND, 0);
 	    }
 	}
+
+	int compareDate = enrolmentBeginDay.compareTo(enrolmentEndDay);
+
+	if (compareDate > 0) {
+	    ActionErrors actionErrors = new ActionErrors();
+	    ActionError error = null;
+	    error = new ActionError("error.manager.wrongDates");
+	    actionErrors.add("error.manager.wrongDates", error);
+	    saveErrors(request, actionErrors);
+	    return prepareCreateGroupProperties(mapping, form, request, response);
+	}
+
 	infoGroupProperties.setEnrolmentEndDay(enrolmentEndDay);
 
 	Integer objectCode = getObjectCode(request);
@@ -1487,6 +1499,18 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
 		enrolmentEndDay.set(Calendar.SECOND, 0);
 	    }
 	}
+
+	int compareDate = enrolmentBeginDay.compareTo(enrolmentEndDay);
+
+	if (compareDate > 0) {
+	    ActionErrors actionErrors = new ActionErrors();
+	    ActionError error = null;
+	    error = new ActionError("error.manager.wrongDates");
+	    actionErrors.add("error.manager.wrongDates", error);
+	    saveErrors(request, actionErrors);
+	    return prepareEditGroupProperties(mapping, form, request, response);
+	}
+
 	InfoGrouping infoGroupProperties = new InfoGrouping();
 	infoGroupProperties.setIdInternal(groupPropertiesCode);
 	infoGroupProperties.setEnrolmentBeginDay(enrolmentBeginDay);
