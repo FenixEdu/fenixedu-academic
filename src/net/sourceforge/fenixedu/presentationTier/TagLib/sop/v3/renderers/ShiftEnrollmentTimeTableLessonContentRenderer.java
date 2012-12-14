@@ -3,9 +3,11 @@
  */
 package net.sourceforge.fenixedu.presentationTier.TagLib.sop.v3.renderers;
 
+import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoLesson;
 import net.sourceforge.fenixedu.dataTransferObject.InfoLessonInstance;
 import net.sourceforge.fenixedu.dataTransferObject.InfoShowOccupation;
+import net.sourceforge.fenixedu.domain.Site;
 import net.sourceforge.fenixedu.presentationTier.TagLib.sop.v3.LessonSlot;
 import net.sourceforge.fenixedu.presentationTier.TagLib.sop.v3.LessonSlotContentRendererShift;
 
@@ -41,16 +43,28 @@ public class ShiftEnrollmentTimeTableLessonContentRenderer implements LessonSlot
 
 	if (showOccupation instanceof InfoLesson) {
 	    InfoLesson lesson = (InfoLesson) showOccupation;
-	    strBuffer.append("<span class=\"float-left\"><a href=\"");
-	    strBuffer.append(context).append("/publico/executionCourse.do?method=firstPage&amp;executionCourseID=");
-	    strBuffer.append(lesson.getInfoShift().getInfoDisciplinaExecucao().getIdInternal()).append("\">");
-	    strBuffer.append(lesson.getInfoShift().getInfoDisciplinaExecucao().getSigla()).append("</a>");
-	    strBuffer.append("&nbsp;(").append(lesson.getInfoShift().getShiftTypesCodePrettyPrint()).append(")&nbsp;");
+
+	    final InfoExecutionCourse infoExecutionCourse = lesson.getInfoShift().getInfoDisciplinaExecucao();
+	    final Site site = infoExecutionCourse.getExecutionCourse().getSite();
+
+	    strBuffer.append("<span class=\"float-left\">");
+	    // CONTENT / CHECKSUM prefixes have to be right before <a> tag
+	    if (site.isPublic()) {
+		strBuffer
+			.append(pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX);
+	    } else {
+		strBuffer.append(pt.ist.fenixWebFramework.servlets.filters.contentRewrite.RequestRewriter.HAS_CONTEXT_PREFIX);
+	    }
+	    strBuffer.append("<a href=\"").append(context);
+	    strBuffer.append(site.getReversePath());
+	    strBuffer.append("\">");
+	    strBuffer.append(infoExecutionCourse.getSigla()).append("</a>");
+	    strBuffer.append("&nbsp;").append("&nbsp;(").append(lesson.getInfoShift().getShiftTypesCodePrettyPrint())
+		    .append(")&nbsp;");
 
 	    if (lesson.getInfoRoomOccupation() != null) {
 		strBuffer.append(lesson.getInfoRoomOccupation().getInfoRoom().getNome());
 	    }
-
 	    strBuffer.append("</span>");
 
 	    return strBuffer;
@@ -58,17 +72,25 @@ public class ShiftEnrollmentTimeTableLessonContentRenderer implements LessonSlot
 	} else if (showOccupation instanceof InfoLessonInstance) {
 
 	    InfoLessonInstance lesson = (InfoLessonInstance) showOccupation;
+	    final InfoExecutionCourse infoExecutionCourse = lesson.getInfoShift().getInfoDisciplinaExecucao();
+	    final Site site = infoExecutionCourse.getExecutionCourse().getSite();
 
-	    strBuffer.append("<span class=\"float-left\"><a href=\"");
-	    strBuffer.append(context).append("/publico/executionCourse.do?method=firstPage&amp;executionCourseID=");
-	    strBuffer.append(lesson.getInfoShift().getInfoDisciplinaExecucao().getIdInternal()).append("\">");
-	    strBuffer.append(lesson.getInfoShift().getInfoDisciplinaExecucao().getSigla()).append("</a>");
-	    strBuffer.append("&nbsp;(").append(lesson.getShiftTypeCodesPrettyPrint()).append(")&nbsp;");
+	    strBuffer.append("<span class=\"float-left\">");
+	    // CONTENT / CHECKSUM prefixes have to be right before <a> tag
+	    if (site.isPublic()) {
+		strBuffer
+			.append(pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX);
+	    } else {
+		strBuffer.append(pt.ist.fenixWebFramework.servlets.filters.contentRewrite.RequestRewriter.HAS_CONTEXT_PREFIX);
+	    }
+	    strBuffer.append("<a href=\"").append(context);
+	    strBuffer.append(infoExecutionCourse.getExecutionCourse().getSite().getReversePath());
+	    strBuffer.append("\">");
+	    strBuffer.append("&nbsp;").append("&nbsp;(").append(lesson.getShiftTypeCodesPrettyPrint()).append(")&nbsp;");
 
 	    if (lesson.getInfoRoomOccupation() != null) {
 		strBuffer.append(lesson.getInfoRoomOccupation().getInfoRoom().getNome());
 	    }
-
 	    strBuffer.append("</span>");
 
 	    return strBuffer;

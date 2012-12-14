@@ -42,7 +42,9 @@
 
 		<ul class="mtop1 mbottom2">
 			<li>
-				<html:link page="<%="/studentShiftEnrollmentManagerLoockup.do?method=" + link + "&amp;registrationOID=" + registrationOID.toString() %>"><strong><bean:message bundle="STUDENT_RESOURCES" key="link.shift.enrollment.item1" /></strong></html:link>
+				<html:link page="<%="/studentShiftEnrollmentManagerLoockup.do?method=" + link + "&amp;registrationOID=" + registrationOID.toString() %>">
+					<strong><bean:message bundle="STUDENT_RESOURCES" key="link.shift.enrollment.item1" /></strong>
+				</html:link>
 			</li>
 			<li>
 				<html:link page="/studentTimeTable.do?method=showTimeTable" target="_blank" paramId="registrationId" paramName="registrationOID">
