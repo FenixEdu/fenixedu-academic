@@ -77,6 +77,7 @@
 <p class="mvert1">
     <span class="error0">
         <html:errors property="unableToStoreFile"/>
+        <html:errors property="fileMaxSizeExceeded"/>
         <html:errors property="section" bundle="SITE_RESOURCES"/>
     </span>
 </p>
