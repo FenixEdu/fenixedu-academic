@@ -36,7 +36,7 @@
 <tiles:useAttribute name="bundle" id="bundleT" ignore="true" />
 <logic:present name="bundleT">
 	<logic:present name="titleK">
-		<bean:message name="titleK" bundle="<%= (String)bundleT %>" /> -
+		<bean:message name="titleK" bundle="<%= bundleT.toString() %>" /> -
 		<bean:message key="institution.name" bundle="GLOBAL_RESOURCES" />
 	</logic:present>
 </logic:present>

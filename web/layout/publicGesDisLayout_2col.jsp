@@ -34,7 +34,7 @@
 <tiles:useAttribute name="bundle" id="bundleT" ignore="true" />
 <logic:present name="bundleT">
 	<logic:present name="titleK">
-		<bean:message name="titleK" bundle="<%= (String)bundleT %>" /> -
+		<bean:message name="titleK" bundle="<%= bundleT.toString() %>" /> -
 	</logic:present>
 	<logic:present name="<%= FilterFunctionalityContext.CONTEXT_KEY %>">
 		<bean:define id="contentContext" name="<%= FilterFunctionalityContext.CONTEXT_KEY %>" property="selectedContainer" type="net.sourceforge.fenixedu.domain.contents.Content"/>
