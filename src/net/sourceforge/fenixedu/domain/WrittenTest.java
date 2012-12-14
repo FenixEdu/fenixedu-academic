@@ -21,6 +21,7 @@ import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.util.BundleUtil;
 import net.sourceforge.fenixedu.util.EvaluationType;
 
+import org.joda.time.DateTime;
 import org.joda.time.Interval;
 import org.joda.time.YearMonthDay;
 
@@ -78,8 +79,8 @@ public class WrittenTest extends WrittenTest_Base {
     @Checked("WrittenTestPredicates.changeDatePredicate")
     public void setDayDate(Date date) {
 	final IUserView requestor = AccessControl.getUserView();
-	if (hasTimeTableManagerPrivledges(requestor) || hasCoordinatorPrivledges(requestor)
-		|| (isTeacher(requestor) && allowedPeriod(date))) {
+	if (hasTimeTableManagerPrivledges(requestor) || hasCoordinatorPrivledges(requestor) || isTeacher(requestor)
+		&& allowedPeriod(date)) {
 	    super.setDayDate(date);
 	} else {
 	    throw new DomainException("not.authorized.to.set.this.date");
@@ -89,8 +90,11 @@ public class WrittenTest extends WrittenTest_Base {
     private void checkEvaluationDate(final Date writtenEvaluationDate, final List<ExecutionCourse> executionCoursesToAssociate) {
 
 	for (final ExecutionCourse executionCourse : executionCoursesToAssociate) {
-	    if (executionCourse.getExecutionPeriod().getBeginDate().after(writtenEvaluationDate)
-		    || executionCourse.getExecutionPeriod().getEndDate().before(writtenEvaluationDate)) {
+	    final long beginDate = executionCourse.getExecutionPeriod().getBeginDate().getTime();
+	    final long endDate = executionCourse.getExecutionPeriod().getEndDate().getTime();
+	    final DateTime endDateTime = new DateTime(endDate);
+	    final Interval interval = new Interval(beginDate, endDateTime.plusDays(1).getMillis());
+	    if (!interval.contains(writtenEvaluationDate.getTime())) {
 		throw new DomainException("error.invalidWrittenTestDate");
 	    }
 	}
