@@ -73,6 +73,8 @@ import pt.utl.ist.fenix.tools.util.FileUtils;
  */
 public abstract class SiteManagementDA extends FenixDispatchAction {
 
+    private static final int MAX_FILE_SIZE = 67108247;
+
     @Override
     public ActionForward execute(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
@@ -410,8 +412,14 @@ public abstract class SiteManagementDA extends FenixDispatchAction {
 	    formFileInputStream = bean.getFile();
 	    if (formFileInputStream == null) {
 		addErrorMessage(request, "unableToStoreFile", "errors.unableToStoreFile", bean.getFileName());
-		return (service.equalsIgnoreCase("CreateScormPackage") ? prepareCreateScormFile(mapping, form, request, response)
-			: uploadFile(mapping, form, request, response));
+		return service.equalsIgnoreCase("CreateScormPackage") ? prepareCreateScormFile(mapping, form, request, response)
+			: uploadFile(mapping, form, request, response);
+	    }
+
+	    if (bean.getFileSize() > MAX_FILE_SIZE) {
+		addErrorMessage(request, "fileMaxSizeExceeded", "errors.file.max.size.exceeded", MAX_FILE_SIZE);
+		return service.equalsIgnoreCase("CreateScormPackage") ? prepareCreateScormFile(mapping, form, request, response)
+			: uploadFile(mapping, form, request, response);
 	    }
 
 	    file = FileUtils.copyToTemporaryFile(formFileInputStream);
@@ -421,8 +429,8 @@ public abstract class SiteManagementDA extends FenixDispatchAction {
 	} catch (FileManagerException e) {
 	    addErrorMessage(request, "unableToStoreFile", "errors.unableToStoreFile", bean.getFileName());
 
-	    return (service.equalsIgnoreCase("CreateScormPackage") ? prepareCreateScormFile(mapping, form, request, response)
-		    : uploadFile(mapping, form, request, response));
+	    return service.equalsIgnoreCase("CreateScormPackage") ? prepareCreateScormFile(mapping, form, request, response)
+		    : uploadFile(mapping, form, request, response);
 
 	} finally {
 	    if (formFileInputStream != null) {
@@ -524,8 +532,8 @@ public abstract class SiteManagementDA extends FenixDispatchAction {
 	    file = FileUtils.copyToTemporaryFile(formFileInputStream);
 
 	    final Object[] args = { new CreateScormFile.CreateScormFileItemForItemArgs(site, container, file, bean.getFileName(),
-		    displayName, bean.getPermittedGroup(), bean.getMetaInformation(), getLoggedPerson(request), bean
-			    .getEducationalLearningResourceType()) };
+		    displayName, bean.getPermittedGroup(), bean.getMetaInformation(), getLoggedPerson(request),
+		    bean.getEducationalLearningResourceType()) };
 
 	    executeService("CreateScormFile", args);
 	} catch (DomainException e) {
