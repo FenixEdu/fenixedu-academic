@@ -353,7 +353,6 @@ public class Message extends Message_Base {
 
     public int getRecipientsWithEmailCount() {
 	int count = 0;
-	long start = System.currentTimeMillis();
 	for (Recipient recipient : getRecipients()) {
 	    final Set<Person> elements = recipient.getMembers().getElements();
 	    for (Person person : elements) {
@@ -362,8 +361,6 @@ public class Message extends Message_Base {
 		}
 	    }
 	}
-	long end = System.currentTimeMillis();
-	System.out.println("getRecipientsWithEmailCount time : " + (end - start) + "ms");
 	return count;
     }
 
