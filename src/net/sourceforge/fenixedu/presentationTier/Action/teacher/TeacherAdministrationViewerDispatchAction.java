@@ -1290,9 +1290,9 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
 	    }
 	}
 
-	int compareDate = enrolmentBeginDay.compareTo(enrolmentEndDay);
+	float compareDate = enrolmentBeginDay.compareTo(enrolmentEndDay);
 
-	if (compareDate > 0) {
+	if (compareDate >= 0.0) {
 	    ActionErrors actionErrors = new ActionErrors();
 	    ActionError error = null;
 	    error = new ActionError("error.manager.wrongDates");
@@ -1500,9 +1500,9 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
 	    }
 	}
 
-	int compareDate = enrolmentBeginDay.compareTo(enrolmentEndDay);
+	float compareDate = enrolmentBeginDay.compareTo(enrolmentEndDay);
 
-	if (compareDate > 0) {
+	if (compareDate >= 0.0) {
 	    ActionErrors actionErrors = new ActionErrors();
 	    ActionError error = null;
 	    error = new ActionError("error.manager.wrongDates");
