@@ -10,8 +10,8 @@ import java.util.Calendar;
 import java.util.Collections;
 import java.util.Hashtable;
 import java.util.List;
-import java.util.Set;
 import java.util.Map.Entry;
+import java.util.Set;
 
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
@@ -413,8 +413,8 @@ public class ExercisesManagementAction extends FenixDispatchAction {
 
     public ActionForward addNewCondition(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) {
-	((DynaActionForm) form).set("optionNumber", new Integer(((Integer) ((DynaActionForm) form).get("optionNumber"))
-		.intValue() + 1));
+	((DynaActionForm) form).set("optionNumber",
+		new Integer(((Integer) ((DynaActionForm) form).get("optionNumber")).intValue() + 1));
 	Integer[] signal = (Integer[]) ((DynaActionForm) form).get("signal");
 	if (signal != null && signal.length != 0) {
 	    Integer[] newSignal = new Integer[signal.length + 1];
@@ -503,8 +503,8 @@ public class ExercisesManagementAction extends FenixDispatchAction {
 	    }
 	    ((DynaActionForm) form).set("correctOptions", correctOptions);
 	}
-	((DynaActionForm) form).set("optionNumber", new Integer(((Integer) ((DynaActionForm) form).get("optionNumber"))
-		.intValue() - 1));
+	((DynaActionForm) form).set("optionNumber",
+		new Integer(((Integer) ((DynaActionForm) form).get("optionNumber")).intValue() - 1));
 	return prepareCreateExercise(mapping, form, request, response);
     }
 
@@ -591,7 +591,7 @@ public class ExercisesManagementAction extends FenixDispatchAction {
 	    return mapping.findForward("addExerciseVariation");
 	} else if (!(xmlZipFile.getContentType().equals("application/x-zip-compressed")
 		|| xmlZipFile.getContentType().equals("text/xml") || xmlZipFile.getContentType().equals("application/xml") || (xmlZipFile
-		.getContentType().equals("application/zip")))) {
+		    .getContentType().equals("application/zip")))) {
 	    error(request, "FileNotExist", "error.badXmlZipFile");
 	    return mapping.findForward("addExerciseVariation");
 	}
@@ -649,7 +649,7 @@ public class ExercisesManagementAction extends FenixDispatchAction {
 	    return mapping.findForward("insertNewExercise");
 	} else if (!(xmlZipFile.getContentType().equals("application/x-zip-compressed")
 		|| xmlZipFile.getContentType().equals("text/xml") || xmlZipFile.getContentType().equals("application/xml") || (xmlZipFile
-		.getContentType().equals("application/zip")))) {
+		    .getContentType().equals("application/zip")))) {
 	    error(request, "FileNotExist", "error.badXmlZipFile");
 	    return mapping.findForward("insertNewExercise");
 	}
@@ -809,10 +809,12 @@ public class ExercisesManagementAction extends FenixDispatchAction {
 
 	try {
 	    ServiceUtils
-		    .executeService("ChangeStudentTestQuestion", new Object[] { executionCourseId, null, variationCode, null,
-			    null, new TestQuestionChangesType(TestQuestionChangesType.CHANGE_VARIATION), new Boolean(true),
-			    new TestQuestionStudentsChangesType(TestQuestionStudentsChangesType.ALL_STUDENTS),
-			    request.getContextPath() });
+		    .executeService(
+			    "ChangeStudentTestQuestion",
+			    new Object[] { executionCourseId, null, variationCode, null, null,
+				    new TestQuestionChangesType(TestQuestionChangesType.CHANGE_VARIATION), new Boolean(true),
+				    new TestQuestionStudentsChangesType(TestQuestionStudentsChangesType.ALL_STUDENTS),
+				    request.getContextPath() });
 
 	} catch (FenixServiceException e) {
 	    throw new FenixActionException(e);
@@ -825,11 +827,11 @@ public class ExercisesManagementAction extends FenixDispatchAction {
 	    HttpServletResponse response) throws FenixActionException, FenixFilterException {
 	final Integer variationCode = getCodeFromRequest(request, "variationCode");
 	Question question = rootDomainObject.readQuestionByOID(variationCode);
-	response.setContentType("text/plain");
+	response.setContentType("text/plain; charset=utf-8");
 	response.setHeader("Content-disposition", "attachment; filename=" + question.getXmlFileName());
 	try {
 	    final ServletOutputStream writer = response.getOutputStream();
-	    writer.print(question.getXmlFile());
+	    writer.write(question.getXmlFile().getBytes());
 	    writer.flush();
 	    response.flushBuffer();
 	} catch (IOException e) {
