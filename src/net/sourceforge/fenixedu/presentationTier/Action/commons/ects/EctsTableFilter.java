@@ -96,6 +96,9 @@ public class EctsTableFilter implements Serializable {
 
     public String getContent() throws IOException {
 	if (content == null) {
+	    if (getInputStream() == null) {
+		throw new IOException();
+	    }
 	    content = FileUtils.readFile(getInputStream());
 	}
 	return content;

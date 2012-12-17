@@ -11,7 +11,7 @@ public enum EctsTableType {
 	switch (this) {
 	case ENROLMENT:
 	    return Collections.unmodifiableList(Arrays.asList(EctsTableLevel.COMPETENCE_COURSE, EctsTableLevel.DEGREE,
-		    EctsTableLevel.CURRICULAR_YEAR));
+		    EctsTableLevel.CURRICULAR_YEAR, EctsTableLevel.SCHOOL));
 	case GRADUATION:
 	    return Collections.unmodifiableList(Arrays.asList(EctsTableLevel.DEGREE, EctsTableLevel.CYCLE));
 	default:

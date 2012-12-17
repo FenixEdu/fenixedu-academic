@@ -12,6 +12,8 @@ import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicInterval;
 
 import org.joda.time.DateTime;
 
+import pt.ist.fenixWebFramework.services.Service;
+
 public class EctsTableIndex extends EctsTableIndex_Base {
     public EctsTableIndex(AcademicInterval year) {
 	super();
@@ -40,6 +42,12 @@ public class EctsTableIndex extends EctsTableIndex_Base {
 	    return readByYearProcessable(year.getPreviousAcademicInterval(), processingDate);
 	}
 	throw new NoEctsComparabilityTableFound(year);
+    }
+    
+    @Service
+    public static EctsTableIndex readOrCreateByYear(AcademicInterval year) {
+	EctsTableIndex index = readByYear(year);
+	return index == null ? new EctsTableIndex(year) : index;
     }
 
     public EctsCompetenceCourseConversionTable getEnrolmentTableBy(CompetenceCourse competenceCourse) {
@@ -75,6 +83,16 @@ public class EctsTableIndex extends EctsTableIndex_Base {
 			&& unitTable.getCycle().equals(cycleType)) {
 		    return unitTable;
 		}
+	    }
+	}
+	return null;
+    }
+    
+    public EctsInstitutionConversionTable getEnrolmentTableBy(Unit unit) {
+	for (EctsConversionTable table : getTableSet()) {
+	    if (table instanceof EctsInstitutionConversionTable) {
+		EctsInstitutionConversionTable unitTable = (EctsInstitutionConversionTable) table;
+		return unitTable;
 	    }
 	}
 	return null;

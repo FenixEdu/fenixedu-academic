@@ -55,18 +55,30 @@
                                 type="net.sourceforge.fenixedu.presentationTier.Action.commons.ects.EctsTableFilter">
                                 <fr:slot name="inputStream" key="label.ects.tablesManagement.importTables" required="true">
                                     <fr:property name="fileNameSlot" value="filename" />
+                                    <fr:property name="onChangeEvent" value="testValidFileInput(this.id);" />
                                 </fr:slot>
                             </fr:schema>
                             <fr:layout name="tabular">
                                 <fr:property name="classes" value="tstylenone" />
                             </fr:layout>
                         </fr:edit></td>
-                        <td><html:submit>
+                        <td><html:submit styleId="importButton" disabled="true">
                             <bean:message bundle="GEP_RESOURCES" key="button.ects.tablesManagement.importTables" />
                         </html:submit></td>
                     </tr>
                 </table>
             </fr:form>
+            
+            <script type="text/javascript">
+            	function testValidFileInput (id) {
+            		var filePath = $("#"+id).val();
+            		if (filePath === "") {
+            			$("#importButton").attr("disabled", "disabled");
+            		} else {
+            			$("#importButton").removeAttr("disabled");
+            		}
+            	};
+            </script>
 
             <bean:define id="interval" name="filter" property="executionInterval.resumedRepresentationInStringFormat" />
             <bean:define id="ectsType" name="filter" property="type.name" />

@@ -28,7 +28,7 @@ public class EctsCompetenceCourseConversionTable extends EctsCompetenceCourseCon
 
     @Service
     public static void createConversionTable(CompetenceCourse competence, AcademicInterval year, String[] table) {
-	EctsCompetenceCourseConversionTable conversion = EctsTableIndex.readByYear(year).getEnrolmentTableBy(
+	EctsCompetenceCourseConversionTable conversion = EctsTableIndex.readOrCreateByYear(year).getEnrolmentTableBy(
 		competence);
 	EctsComparabilityTable ectsTable = EctsComparabilityTable.fromStringArray(table);
 	if (conversion != null) {

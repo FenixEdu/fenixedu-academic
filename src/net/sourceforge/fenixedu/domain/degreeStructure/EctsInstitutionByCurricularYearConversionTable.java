@@ -30,7 +30,7 @@ public class EctsInstitutionByCurricularYearConversionTable extends EctsInstitut
     @Service
     public static void createConversionTable(Unit ist, AcademicInterval year, CycleType cycleType,
 	    CurricularYear curricularYear, String[] table) {
-	EctsInstitutionByCurricularYearConversionTable conversion = EctsTableIndex.readByYear(year).getEnrolmentTableBy(ist,
+	EctsInstitutionByCurricularYearConversionTable conversion = EctsTableIndex.readOrCreateByYear(year).getEnrolmentTableBy(ist,
 		curricularYear, cycleType);
 	EctsComparabilityTable ectsTable = EctsComparabilityTable.fromStringArray(table);
 	if (conversion != null) {

@@ -29,7 +29,7 @@ public class EctsDegreeByCurricularYearConversionTable extends EctsDegreeByCurri
     @Service
     public static void createConversionTable(Degree degree, AcademicInterval year, CurricularYear curricularYear,
 	    String[] table) {
-	EctsDegreeByCurricularYearConversionTable conversion = EctsTableIndex.readByYear(year).getEnrolmentTableBy(degree,
+	EctsDegreeByCurricularYearConversionTable conversion = EctsTableIndex.readOrCreateByYear(year).getEnrolmentTableBy(degree,
 		curricularYear);
 	EctsComparabilityTable ectsTable = EctsComparabilityTable.fromStringArray(table);
 	if (conversion != null) {

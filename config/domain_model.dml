@@ -3449,6 +3449,9 @@ class DomainObject {
 
     class degreeStructure.EctsCurricularYearConversionTable extends degreeStructure.EctsConversionTable {
     }
+    
+    class degreeStructure.EctsInstitutionConversionTable extends degreeStructure.EctsConversionTable {
+    }
 
     class degreeStructure.EctsDegreeByCurricularYearConversionTable extends degreeStructure.EctsCurricularYearConversionTable {
     }
@@ -10900,6 +10903,15 @@ relation CurricularYearEctsCurricularYearConversionTable {
         multiplicity 1..1;
     }
     degreeStructure.EctsCurricularYearConversionTable playsRole ectsConversionTables {
+        multiplicity *;
+    }
+}
+
+relation SchoolEctsInstitutionConversionTable {
+    organizationalStructure.Unit playsRole school {
+        multiplicity 1..1;
+    }
+    degreeStructure.EctsInstitutionConversionTable playsRole ectsInstitutionConversionTables {
         multiplicity *;
     }
 }

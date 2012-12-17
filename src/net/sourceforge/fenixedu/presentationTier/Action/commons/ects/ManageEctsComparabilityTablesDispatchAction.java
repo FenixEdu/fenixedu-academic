@@ -26,11 +26,13 @@ import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
 import net.sourceforge.fenixedu.domain.degreeStructure.EctsComparabilityPercentages;
 import net.sourceforge.fenixedu.domain.degreeStructure.EctsComparabilityTable;
 import net.sourceforge.fenixedu.domain.degreeStructure.EctsCompetenceCourseConversionTable;
+import net.sourceforge.fenixedu.domain.degreeStructure.EctsConversionTable;
 import net.sourceforge.fenixedu.domain.degreeStructure.EctsCycleGraduationGradeConversionTable;
 import net.sourceforge.fenixedu.domain.degreeStructure.EctsDegreeByCurricularYearConversionTable;
 import net.sourceforge.fenixedu.domain.degreeStructure.EctsDegreeGraduationGradeConversionTable;
 import net.sourceforge.fenixedu.domain.degreeStructure.EctsGraduationGradeConversionTable;
 import net.sourceforge.fenixedu.domain.degreeStructure.EctsInstitutionByCurricularYearConversionTable;
+import net.sourceforge.fenixedu.domain.degreeStructure.EctsInstitutionConversionTable;
 import net.sourceforge.fenixedu.domain.degreeStructure.EctsTableIndex;
 import net.sourceforge.fenixedu.domain.degreeStructure.IEctsConversionTable;
 import net.sourceforge.fenixedu.domain.degreeStructure.NullEctsConversionTable;
@@ -192,6 +194,8 @@ public class ManageEctsComparabilityTablesDispatchAction extends FenixDispatchAc
 	    return processEnrolmentByDegreeStatus(filter);
 	case CURRICULAR_YEAR:
 	    return processEnrolmentByCurricularYearStatus(filter);
+	case SCHOOL:
+	    return processEnrolmentByInstitutionStatus(filter);
 	default:
 	    return Collections.emptySet();
 	}
@@ -205,6 +209,8 @@ public class ManageEctsComparabilityTablesDispatchAction extends FenixDispatchAc
 	    return exportEnrolmentByDegreeTemplate(filter);
 	case CURRICULAR_YEAR:
 	    return exportEnrolmentByCurricularYearTemplate(filter);
+	case SCHOOL:
+	    return exportEnrolmentByInstitutionTemplate(filter);
 	default:
 	    throw new Error();
 	}
@@ -220,6 +226,9 @@ public class ManageEctsComparabilityTablesDispatchAction extends FenixDispatchAc
 	    break;
 	case CURRICULAR_YEAR:
 	    importEnrolmentByCurricularYearTables(executionInterval, file);
+	    break;
+	case SCHOOL:
+	    importEnrolmentByInstitutionTables(executionInterval, file);
 	    break;
 	}
     }
@@ -264,7 +273,7 @@ public class ManageEctsComparabilityTablesDispatchAction extends FenixDispatchAc
 	    if ((competenceCourse.getCurricularStage() == CurricularStage.PUBLISHED || competenceCourse.getCurricularStage() == CurricularStage.APPROVED)
 		    && competenceCourse.hasActiveScopesInExecutionYear(year)
 		    && competenceCourse.getActiveEnrollments(year).size() > 0) {
-		EctsCompetenceCourseConversionTable table = EctsTableIndex.readByYear(filter.getExecutionInterval())
+		EctsCompetenceCourseConversionTable table = EctsTableIndex.readOrCreateByYear(filter.getExecutionInterval())
 			.getEnrolmentTableBy(competenceCourse);
 		if (table != null) {
 		    tables.add(table);
@@ -345,7 +354,7 @@ public class ManageEctsComparabilityTablesDispatchAction extends FenixDispatchAc
 			    || degree.getDegreeType().equals(DegreeType.BOLONHA_INTEGRATED_MASTER_DEGREE) || degree
 			    .getDegreeType().equals(DegreeType.BOLONHA_ADVANCED_SPECIALIZATION_DIPLOMA))) {
 		for (int i = 1; i <= degree.getDegreeType().getYears(); i++) {
-		    EctsDegreeByCurricularYearConversionTable table = EctsTableIndex.readByYear(filter.getExecutionInterval())
+		    EctsDegreeByCurricularYearConversionTable table = EctsTableIndex.readOrCreateByYear(filter.getExecutionInterval())
 			    .getEnrolmentTableBy(degree, CurricularYear.readByYear(i));
 		    if (table != null) {
 			tables.add(table);
@@ -415,7 +424,7 @@ public class ManageEctsComparabilityTablesDispatchAction extends FenixDispatchAc
 		years = Collections.emptyList();
 	    }
 	    for (Integer year : years) {
-		EctsInstitutionByCurricularYearConversionTable table = EctsTableIndex.readByYear(filter.getExecutionInterval())
+		EctsInstitutionByCurricularYearConversionTable table = EctsTableIndex.readOrCreateByYear(filter.getExecutionInterval())
 			.getEnrolmentTableBy(ist, CurricularYear.readByYear(year), cycle);
 		if (table != null) {
 		    tables.add(table);
@@ -463,6 +472,44 @@ public class ManageEctsComparabilityTablesDispatchAction extends FenixDispatchAc
 	    }
 	}
     }
+    
+    private Set<IEctsConversionTable> processEnrolmentByInstitutionStatus(EctsTableFilter filter){
+	final Unit ist = UnitUtils.readInstitutionUnit();
+	Set<IEctsConversionTable> tables = new HashSet<IEctsConversionTable>();
+	EctsConversionTable table = EctsTableIndex.readOrCreateByYear(filter.getExecutionInterval()).getEnrolmentTableBy(ist);
+	if (table != null) {
+	    tables.add(table);
+	} else {
+	    tables.add(new NullEctsConversionTable(ist));
+	}
+	return tables;
+    }
+    
+    private SheetData<IEctsConversionTable> exportEnrolmentByInstitutionTemplate(EctsTableFilter filter) {
+	SheetData<IEctsConversionTable> builder = new SheetData<IEctsConversionTable>(processEnrolmentByInstitutionStatus(filter)) {
+
+	    @Override
+	    protected void makeLine(IEctsConversionTable table) {
+		EctsComparabilityTable ects = table.getEctsTable();
+		for (int i = 10; i <= 20; i++) {
+		    addCell(i + "", !ects.convert(i).equals(GradeScale.NA) ? ects.convert(i) : null);
+		}
+	    }
+	    
+	};
+	return builder;
+    }
+    
+    @Service
+    private void importEnrolmentByInstitutionTables(AcademicInterval executionInterval, String file) {
+	for (String line : file.split("\n")) {
+	    if (!line.startsWith("10")) {
+		String[] table = fillArray(line.split(SEPARATOR), 11);
+		final Unit ist = UnitUtils.readInstitutionUnit();
+		EctsInstitutionConversionTable.createConversionTable(ist, executionInterval, table);
+	    }
+	}
+    }
 
     private Set<IEctsConversionTable> processGraduationByDegreeStatus(EctsTableFilter filter) {
 	ExecutionYear year = (ExecutionYear) ExecutionYear.getExecutionInterval(filter.getExecutionInterval());
@@ -474,7 +521,7 @@ public class ManageEctsComparabilityTablesDispatchAction extends FenixDispatchAc
 			    || degree.getDegreeType().equals(DegreeType.BOLONHA_INTEGRATED_MASTER_DEGREE) || degree
 			    .getDegreeType().equals(DegreeType.BOLONHA_ADVANCED_SPECIALIZATION_DIPLOMA))) {
 		for (CycleType cycle : degree.getDegreeType().getCycleTypes()) {
-		    EctsDegreeGraduationGradeConversionTable table = EctsTableIndex.readByYear(filter.getExecutionInterval())
+		    EctsDegreeGraduationGradeConversionTable table = EctsTableIndex.readOrCreateByYear(filter.getExecutionInterval())
 			    .getGraduationTableBy(degree, cycle);
 		    if (table != null) {
 			tables.add(table);
@@ -542,7 +589,7 @@ public class ManageEctsComparabilityTablesDispatchAction extends FenixDispatchAc
 	final Unit ist = UnitUtils.readInstitutionUnit();
 	Set<IEctsConversionTable> tables = new HashSet<IEctsConversionTable>();
 	for (CycleType cycle : CycleType.getSortedValues()) {
-	    EctsGraduationGradeConversionTable table = EctsTableIndex.readByYear(filter.getExecutionInterval())
+	    EctsGraduationGradeConversionTable table = EctsTableIndex.readOrCreateByYear(filter.getExecutionInterval())
 		    .getGraduationTableBy(cycle);
 	    if (table != null) {
 		tables.add(table);
