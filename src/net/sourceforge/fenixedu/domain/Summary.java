@@ -64,9 +64,9 @@ public class Summary extends Summary_Base {
 	fillSummaryWithInfo(title, summaryText, studentsNumber, isExtraLesson, professorship, teacherName, teacher, shift,
 		lesson, date, room, hour, type, taught);
 
-	ContentManagementLog.createLog(professorship.getExecutionCourse(), "resources.MessagingResources",
-		"log.executionCourse.content.summary.added", title.getContent(), professorship.getExecutionCourse().getNome(),
-		professorship.getExecutionCourse().getDegreePresentationString());
+	ContentManagementLog.createLog(shift.getExecutionCourse(), "resources.MessagingResources",
+		"log.executionCourse.content.summary.added", title.getContent(), shift.getPresentationName(), shift
+			.getExecutionCourse().getNome(), shift.getExecutionCourse().getDegreePresentationString());
     }
 
     public void edit(MultiLanguageString title, MultiLanguageString summaryText, Integer studentsNumber, Boolean isExtraLesson,
@@ -76,9 +76,9 @@ public class Summary extends Summary_Base {
 	fillSummaryWithInfo(title, summaryText, studentsNumber, isExtraLesson, professorship, teacherName, teacher, shift,
 		lesson, date, room, hour, type, taught);
 
-	ContentManagementLog.createLog(professorship.getExecutionCourse(), "resources.MessagingResources",
-		"log.executionCourse.content.summary.edited", title.getContent(), professorship.getExecutionCourse().getNome(),
-		professorship.getExecutionCourse().getDegreePresentationString());
+	ContentManagementLog.createLog(shift.getExecutionCourse(), "resources.MessagingResources",
+		"log.executionCourse.content.summary.edited", title.getContent(), shift.getPresentationName(), shift
+			.getExecutionCourse().getNome(), shift.getExecutionCourse().getDegreePresentationString());
     }
 
     private void fillSummaryWithInfo(MultiLanguageString title, MultiLanguageString summaryText, Integer studentsNumber,
@@ -122,16 +122,9 @@ public class Summary extends Summary_Base {
 
     public void delete() {
 
-	String summaryTitle, pfsECoursePresentation, pfsECourseNome;
-	ExecutionCourse pfsECourse;
-
-	summaryTitle = getTitle().getContent();
-	pfsECourse = getProfessorship().getExecutionCourse();
-	pfsECoursePresentation = getProfessorship().getExecutionCourse().getDegreePresentationString();
-	pfsECourseNome = getProfessorship().getExecutionCourse().getNome();
-
-	ContentManagementLog.createLog(pfsECourse, "resources.MessagingResources", "log.executionCourse.content.summary.removed",
-		summaryTitle, pfsECourseNome, pfsECoursePresentation);
+	ContentManagementLog.createLog(getShift().getExecutionCourse(), "resources.MessagingResources",
+		"log.executionCourse.content.summary.removed", getTitle().getContent(), getShift().getPresentationName(),
+		getShift().getExecutionCourse().getNome(), getShift().getExecutionCourse().getDegreePresentationString());
 
 	super.setExecutionCourse(null);
 	super.setShift(null);
