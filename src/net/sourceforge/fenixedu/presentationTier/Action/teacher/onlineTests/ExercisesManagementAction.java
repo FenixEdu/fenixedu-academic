@@ -833,7 +833,7 @@ public class ExercisesManagementAction extends FenixDispatchAction {
 	    writer.flush();
 	    response.flushBuffer();
 	} catch (IOException e) {
-	    throw new FenixActionException();
+	    throw new FenixActionException(e);
 	}
 	return null;
     }
