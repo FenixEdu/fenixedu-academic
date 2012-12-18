@@ -320,13 +320,19 @@ public class A3ESDegreeProcess implements Serializable {
 		List<String> references = new ArrayList<String>();
 		for (BibliographicReference reference : competence.getBibliographicReferences(executionSemester)
 			.getMainBibliographicReferences()) {
-		    references.add(reference.getReference());
+		    references.add(extractReference(reference));
 		}
 		json.put("q-6.2.1.9", StringUtils.join(references, "; "));
 		jsons.put(json, output.toString());
 	    }
 	}
 	return jsons;
+    }
+
+    private static String extractReference(BibliographicReference reference) {
+	return StringUtils.join(
+		new String[] { reference.getTitle(), reference.getAuthors(), reference.getYear(), reference.getReference() },
+		", ");
     }
 
     private String cut(String field, String content, StringBuilder output, int size) {
