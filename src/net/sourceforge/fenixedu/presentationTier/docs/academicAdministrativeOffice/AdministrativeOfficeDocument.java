@@ -301,7 +301,7 @@ public class AdministrativeOfficeDocument extends FenixReport {
 	final StringBuilder result = new StringBuilder();
 
 	if (person.getParishOfBirth() == null) {
-	    throw new DomainException("error.personWithoutParishOfBirth");
+	    return "";
 	}
 
 	final String parishOfBirth = prettyPrint ? StringFormatter.prettyPrint(person.getParishOfBirth()) : person
