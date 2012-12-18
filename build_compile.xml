@@ -623,7 +623,7 @@
 		<taskdef name="jrc" classname="net.sf.jasperreports.ant.JRAntCompileTask">
 			<classpath refid="class.path.lib.ref" />
 		</taskdef>
-		<jrc destdir="${build.home.reports}" srcdir="${reports}">
+		<jrc compiler="net.sf.jasperreports.engine.design.JRJavacCompiler" destdir="${build.home.reports}" srcdir="${reports}">
 			<classpath refid="class.path.lib.ref" />
 			<classpath>
 				<pathelement path="${build.home.webinf.classes};" />
