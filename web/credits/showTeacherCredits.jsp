@@ -29,11 +29,6 @@
 
 
 
-<%--
-<p><html:link page='<%= "/annualTeachingCreditsDocument.do?method=getAnnualTeachingCreditsPdf" %>'>
-		pdf
-</html:link></p>
- --%>
 	<logic:notEmpty name="teacherBean" property="annualTeachingCredits">
 		<fr:view name="teacherBean" property="annualTeachingCredits">
 			<fr:schema bundle="TEACHER_CREDITS_SHEET_RESOURCES" type="net.sourceforge.fenixedu.domain.credits.util.TeacherCreditsBean">

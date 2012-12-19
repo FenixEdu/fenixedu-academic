@@ -77,21 +77,4 @@ public abstract class ViewTeacherCreditsDA extends FenixDispatchAction {
 	return viewAnnualTeachingCredits(mapping, form, request, response);
     }
 
-    public ActionForward getAnnualTeachingCreditsPdf(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) throws NumberFormatException, FenixServiceException, Exception {
-
-	Teacher teacher = (Teacher) request.getAttribute("teacher");
-	ExecutionYear executionYear = (ExecutionYear) request.getAttribute("executionYear");
-
-	AnnualTeachingCreditsBean annualTeachingCreditsBean = null;
-	AnnualTeachingCredits annualTeachingCredits = AnnualTeachingCredits.readByYearAndTeacher(executionYear, teacher);
-	if (annualTeachingCredits != null) {
-	    annualTeachingCreditsBean = new AnnualTeachingCreditsBean(annualTeachingCredits, RoleType.TEACHER);
-	} else {
-	    annualTeachingCreditsBean = new AnnualTeachingCreditsBean(executionYear, teacher, RoleType.TEACHER);
-	}
-	request.setAttribute("annualTeachingCreditsBean", annualTeachingCreditsBean);
-	return mapping.findForward("showAnnualTeacherCredits");
-    }
-
 }

@@ -22,20 +22,21 @@ import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 @Mapping(module = "scientificCouncil", path = "/annualTeachingCreditsDocument", scope = "request", parameter = "method")
 @Forwards(value = { @Forward(name = "showAnnualTeacherCreditsDocument", path = "/credits/showAnnualTeacherCreditsDocument.jsp", tileProperties = @Tile(head = "/commons/blank.jsp", navGeral = "/commons/blank.jsp", navLocal = "/commons/blank.jsp", bodyContext = "/commons/blank.jsp", extend = "df.layout.blank")) })
-public class AnnualTeacherCreditsDocumentsDA extends FenixDispatchAction {
+public abstract class AnnualTeacherCreditsDocumentsDA extends FenixDispatchAction {
 
-    public ActionForward getAnnualTeachingCreditsPdf(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) throws NumberFormatException, FenixServiceException, Exception {
+    public abstract ActionForward getAnnualTeachingCreditsPdf(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) throws NumberFormatException, FenixServiceException, Exception;
 
+    protected ActionForward getTeacherCreditsDocument(ActionMapping mapping, HttpServletRequest request, RoleType roleType) {
 	Teacher teacher = (Teacher) request.getAttribute("teacher");
 	ExecutionYear executionYear = (ExecutionYear) request.getAttribute("executionYear");
 
 	AnnualTeachingCreditsBean annualTeachingCreditsBean = null;
 	AnnualTeachingCredits annualTeachingCredits = AnnualTeachingCredits.readByYearAndTeacher(executionYear, teacher);
 	if (annualTeachingCredits != null) {
-	    annualTeachingCreditsBean = new AnnualTeachingCreditsBean(annualTeachingCredits, RoleType.DEPARTMENT_MEMBER);
+	    annualTeachingCreditsBean = new AnnualTeachingCreditsBean(annualTeachingCredits, roleType);
 	} else {
-	    annualTeachingCreditsBean = new AnnualTeachingCreditsBean(executionYear, teacher, RoleType.DEPARTMENT_MEMBER);
+	    annualTeachingCreditsBean = new AnnualTeachingCreditsBean(executionYear, teacher, roleType);
 	}
 	request.setAttribute("annualTeachingCreditsBean", annualTeachingCreditsBean);
 	return mapping.findForward("showAnnualTeacherCreditsDocument");

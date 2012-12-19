@@ -57,13 +57,19 @@ $(document).ready(function() {
 <bean:define id="executionYearOid" name="annualTeachingCreditsBean" property="executionYear.externalId"/>
 <bean:define id="roleType" name="annualTeachingCreditsBean" property="roleType"/>
 
-
 <div class="infoop2">
 	<ul>
 		<li><a href="https://fenix.ist.utl.pt/conselhocientifico/topo/servico-docente/regulamento-de-prestacao-de-servico-dos-docentes-do-ist">Regulamento de Prestação de Serviço dos Docentes do IST</a></li>
 		<li><a href="http://fenix.ist.utl.pt/conselhocientifico/topo/servico-docente/glossario-do-rsd-(versao-19-9-2012)">Glossário do RSD (versão 19-9-2012)</a></li>
 	</ul>
 </div>
+
+<logic:notEqual name="roleType" value="DEPARTMENT_MEMBER">
+	<p><html:link page='<%= "/annualTeachingCreditsDocument.do?method=getAnnualTeachingCreditsPdf&teacherOid="+teacherId+"&executionYearOid=" + executionYearOid %>'>
+		<bean:message key="label.exportToPDF"  bundle="TEACHER_CREDITS_SHEET_RESOURCES"/>
+	</html:link></p>
+</logic:notEqual>
+
 <bean:define id="areCreditsCalculated" name="annualTeachingCreditsBean" property="areCreditsCalculated"/>
 <logic:equal name="areCreditsCalculated" value="true">
 	<logic:equal name="roleType" value="SCIENTIFIC_COUNCIL">

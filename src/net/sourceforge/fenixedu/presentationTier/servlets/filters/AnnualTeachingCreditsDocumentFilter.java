@@ -4,8 +4,6 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.net.MalformedURLException;
-import java.util.ArrayList;
-import java.util.List;
 
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
@@ -34,6 +32,7 @@ import org.xml.sax.SAXException;
 
 import pt.ist.fenixWebFramework.FenixWebFramework;
 import pt.ist.fenixWebFramework.servlets.filters.contentRewrite.ResponseWrapper;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 import com.lowagie.text.DocumentException;
 
@@ -51,47 +50,45 @@ public class AnnualTeachingCreditsDocumentFilter implements Filter {
 
     @Override
     public void doFilter(ServletRequest arg0, ServletResponse arg1, FilterChain arg2) throws IOException, ServletException {
-	List<Teacher> teachers = new ArrayList<Teacher>();
-	teachers.add(Teacher.readByIstId("ist13499"));
-
 	HttpServletRequest request = (HttpServletRequest) arg0;
 	ResponseWrapper response = (ResponseWrapper) arg1;
 
-	ExecutionYear executionYear = ExecutionYear.readCurrentExecutionYear();
+	Teacher teacher = AbstractDomainObject.fromExternalId(request.getParameter("teacherOid"));
+	ExecutionYear executionYear = AbstractDomainObject.fromExternalId(request.getParameter("executionYearOid"));
 	ByteArrayOutputStream pdfStreamToReturn = null;
-	for (Teacher teacher : teachers) {
+
+	try {
+	    request.setAttribute("teacher", teacher);
+	    request.setAttribute("executionYear", executionYear);
+	    arg2.doFilter(arg0, arg1);
+	    String responseHtml = clean(response.getContent());
+	    DocumentBuilder builder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
+	    Document doc = builder.parse(new ByteArrayInputStream(responseHtml.getBytes()));
+	    patchLinks(doc, request);
+	    ITextRenderer renderer = new ITextRenderer();
+	    renderer.setDocument(doc, "");
+	    renderer.layout();
+	    ByteArrayOutputStream pdfStream = new ByteArrayOutputStream();
+	    renderer.createPDF(pdfStream);
+	    pdfStreamToReturn = pdfStream;
+	} catch (ParserConfigurationException e) {
+	    e.printStackTrace();
+	} catch (SAXException e) {
+	    e.printStackTrace();
+	} catch (DocumentException e) {
+	    e.printStackTrace();
+	} finally {
 	    try {
-		request.setAttribute("teacher", teacher);
-		request.setAttribute("executionYear", executionYear);
-		arg2.doFilter(arg0, arg1);
-		String responseHtml = clean(response.getContent());
-		DocumentBuilder builder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
-		Document doc = builder.parse(new ByteArrayInputStream(responseHtml.getBytes()));
-		patchLinks(doc, request);
-		ITextRenderer renderer = new ITextRenderer();
-		renderer.setDocument(doc, "");
-		renderer.layout();
-		ByteArrayOutputStream pdfStream = new ByteArrayOutputStream();
-		renderer.createPDF(pdfStream);
-		pdfStreamToReturn = pdfStream;
-	    } catch (ParserConfigurationException e) {
-		e.printStackTrace();
-	    } catch (SAXException e) {
-		e.printStackTrace();
-	    } catch (DocumentException e) {
-		e.printStackTrace();
-	    } finally {
 		response.reset();
-		try {
-		    response.flushBuffer();
-		} catch (IOException e) {
-		    e.printStackTrace();
-		}
+		response.flushBuffer();
+	    } catch (IOException e) {
+		e.printStackTrace();
 	    }
 	}
-	// response.sendRedirect(buildRedirectURL(request));
 	response.getOutputStream().write(pdfStreamToReturn.toByteArray());
 	response.setContentType("application/pdf");
+	response.setHeader("Content-disposition",
+		"attachment; filename=" + teacher.getTeacherId() + "_" + executionYear.getName() + ".pdf");
 	response.getOutputStream().close();
     }
 
@@ -106,15 +103,6 @@ public class AnnualTeachingCreditsDocumentFilter implements Filter {
 	    e.printStackTrace();
 	}
 	return StringUtils.EMPTY;
-    }
-
-    private String buildRedirectURL(HttpServletRequest request) {
-	String url = "/scientificCouncil/credits.do?method=selectTeacher&contentContextPath_PATH=/scientificCouncil";
-
-	String urlWithChecksum = pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter
-		.injectChecksumInUrl(request.getContextPath(), url);
-
-	return request.getContextPath() + urlWithChecksum;
     }
 
     private void patchLinks(Document doc, HttpServletRequest request) {
