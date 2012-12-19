@@ -145,7 +145,7 @@ public class EctsTableIndex extends EctsTableIndex_Base {
 
     protected Grade convertGradeToEcts(Degree degree, CurriculumLine curriculumLine, Grade grade) {
 	if (curriculumLine.getParentCycleCurriculumGroup() == null) {
-	    throw new NoEctsComparabilityTableFound(curriculumLine);
+	    return convertGradeToEcts(RootDomainObject.getInstance().getInstitutionUnit(), curriculumLine, grade);
 	}
 	CurricularYear curricularYear = CurricularYear.readByYear(curriculumLine.getParentCycleCurriculumGroup()
 		.getCurriculum(curriculumLine.getExecutionYear()).getCurricularYear());
@@ -160,6 +160,14 @@ public class EctsTableIndex extends EctsTableIndex_Base {
 	EctsConversionTable table = getEnrolmentTableBy(unit, curricularYear, cycleType);
 	if (table != null)
 	    return table.convert(grade);
+	throw new NoEctsComparabilityTableFound(curriculumLine);
+    }
+    
+    protected Grade convertGradeToEcts(Unit unit, CurriculumLine curriculumLine, Grade grade) {
+	EctsConversionTable table = getEnrolmentTableBy(unit);
+	if (table != null) {
+	    return table.convert(grade);
+	}
 	throw new NoEctsComparabilityTableFound(curriculumLine);
     }
 
