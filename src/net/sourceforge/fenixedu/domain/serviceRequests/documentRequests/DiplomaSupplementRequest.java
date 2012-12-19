@@ -19,6 +19,8 @@ import net.sourceforge.fenixedu.domain.student.curriculum.CycleConclusionProcess
 
 import org.joda.time.DateTime;
 
+import pt.utl.ist.fenix.tools.util.i18n.Language;
+
 public class DiplomaSupplementRequest extends DiplomaSupplementRequest_Base implements IDiplomaSupplementRequest,
 IRectorateSubmissionBatchDocumentEntry {
 
@@ -30,6 +32,7 @@ IRectorateSubmissionBatchDocumentEntry {
 	this();
 	super.init(bean);
 	checkParameters(bean);
+	setLanguage(Language.pt);
     }
 
     @Override
