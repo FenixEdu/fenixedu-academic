@@ -5,6 +5,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.space.DeleteMaterialSpaceOccupation;
 import net.sourceforge.fenixedu.dataTransferObject.spaceManager.MaterialTypeBean;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.space.MaterialSpaceOccupation;
@@ -17,8 +18,6 @@ import org.apache.struts.action.ActionMapping;
 
 import pt.ist.fenixWebFramework.renderers.components.state.IViewState;
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
-import pt.ist.fenixWebFramework.services.ServiceManager;
-import pt.ist.fenixWebFramework.services.ServiceManagerException;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
@@ -27,7 +26,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Tile;
 @Mapping(module = "SpaceManager", path = "/manageMaterialSpaceOccupations", scope = "session", parameter = "method")
 @Forwards(value = {
 	@Forward(name = "prepareEditMaterialSpaceOccupation", path = "/spaceManager/editMaterialSpaceOccupation.jsp"),
-	@Forward(name = "showMaterialSpaceOccupations", path = "/spaceManager/manageMaterialSpaceOccupations.jsp", tileProperties = @Tile(  title = "private.spacemanagement.searchspaces")),
+	@Forward(name = "showMaterialSpaceOccupations", path = "/spaceManager/manageMaterialSpaceOccupations.jsp", tileProperties = @Tile(title = "private.spacemanagement.searchspaces")),
 	@Forward(name = "insertMaterialOccupation", path = "/spaceManager/insertNewMaterialOccupation.jsp"),
 	@Forward(name = "chooseMaterialType", path = "/spaceManager/insertNewMaterialOccupation.jsp") })
 public class ManageMaterialSpaceOccupationsDA extends FenixDispatchAction {
@@ -74,15 +73,10 @@ public class ManageMaterialSpaceOccupationsDA extends FenixDispatchAction {
 	    HttpServletResponse response) throws FenixFilterException, FenixServiceException {
 
 	MaterialSpaceOccupation materialOccupation = getMaterialOccupationFromParameter(request);
-	Class occupationClass = materialOccupation.getMaterial().getMaterialSpaceOccupationSubClass();
 
 	try {
-	    ServiceManager.invokeServiceByName(
-		    "net.sourceforge.fenixedu.applicationTier.Servico.space.DeleteMaterialSpaceOccupation", "run",
-		    new Object[] { occupationClass.cast(materialOccupation) });
+	    DeleteMaterialSpaceOccupation.run(materialOccupation);
 	} catch (DomainException e) {
-	    addActionMessage(request, e.getMessage());
-	} catch (ServiceManagerException e) {
 	    addActionMessage(request, e.getMessage());
 	}
 	readAndSetSpaceInformation(request);

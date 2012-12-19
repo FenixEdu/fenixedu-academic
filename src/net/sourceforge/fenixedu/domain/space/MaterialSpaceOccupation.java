@@ -23,6 +23,7 @@ public abstract class MaterialSpaceOccupation extends MaterialSpaceOccupation_Ba
 	super();
     }
 
+    @Override
     public void delete() {
 	super.setMaterial(null);
 	super.delete();
