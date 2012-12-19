@@ -25,4 +25,11 @@ public class IdentificationCard extends IdentificationCard_Base {
 	setLastModifiedDate(lastModifiedDate);
 	setModifiedBy(modifiedBy);
     }
+
+    @Override
+    public void delete() {
+	removeCard();
+	removeModifiedBy();
+	super.delete();
+    }
 }

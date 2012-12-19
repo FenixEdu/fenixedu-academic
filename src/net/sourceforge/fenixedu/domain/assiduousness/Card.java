@@ -17,4 +17,10 @@ public class Card extends Card_Base {
 	setType(cardType);
     }
 
+    public void delete() {
+	getIdentificationCardsSet().clear();
+	removeRootDomainObject();
+	deleteDomainObject();
+    }
+
 }
