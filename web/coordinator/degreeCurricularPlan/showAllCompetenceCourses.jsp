@@ -102,7 +102,7 @@
 			<h:outputText rendered="#{competenceCourseLoad.autonomousWorkHours != 0.0}" value="<li>#{scouncilBundle['autonomousWork']}: " escape="false"/>
 			<h:outputText rendered="#{competenceCourseLoad.autonomousWorkHours != 0.0}" value="#{competenceCourseLoad.autonomousWorkHours} h/#{scouncilBundle['lowerCase.semester']}</li>" escape="false"/>
 	
-			<h:outputText value="<li><strong>#{scouncilBundle['ectsCredits']}: "escape="false"/>
+			<h:outputText value="<li><strong>#{scouncilBundle['ectsCredits']}: " escape="false"/>
 			<h:outputText value="#{competenceCourseLoad.ectsCredits}</strong></li>" escape="false"/>
 			<h:outputText value="</ul>" escape="false"/>
 		</fc:dataRepeater>	

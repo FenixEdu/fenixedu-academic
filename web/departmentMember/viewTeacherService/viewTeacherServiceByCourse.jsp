@@ -49,7 +49,7 @@
 	
 	<h:outputText value="<p class='mtop15'>Visualizar por: <a href='viewTeacherService.faces?selectedExecutionYearID=#{viewTeacherService.selectedExecutionYearID}'>" escape="false"/>
 	<h:outputText value="#{bundle['label.teacherService.navigateByTeacher']}" escape="false"/>		
-	<h:outputText value="</a> "escape="false"/>
+	<h:outputText value="</a> " escape="false"/>
 	<h:outputText value=" #{bundle['label.teacherService.separator']} " escape="false"/>
 	<h:outputText value=" <b>#{bundle['label.teacherService.navigateByCourse']}</b>" escape="false"/>
 	

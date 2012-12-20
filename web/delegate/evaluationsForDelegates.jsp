@@ -21,7 +21,7 @@
 		<h:outputText value="#{delegatesBundle['label.delegates.degreeEvaluations']}"/>
 		<h:outputText value="</h2>" escape="false"/>
 				
-		<h:outputText rendered="#{empty evaluationsForDelegates.degree.mostRecentDegreeCurricularPlan}" value="<p><em>#{bundleApplication['error.curricularPlanHasNoExecutionDegreesInNotClosedYears']}</em></p>"escape="false"/>
+		<h:outputText rendered="#{empty evaluationsForDelegates.degree.mostRecentDegreeCurricularPlan}" value="<p><em>#{bundleApplication['error.curricularPlanHasNoExecutionDegreesInNotClosedYears']}</em></p>" escape="false"/>
 		
 		<h:panelGroup rendered="#{!empty evaluationsForDelegates.degree.mostRecentDegreeCurricularPlan}">
 			<h:outputText value="<p>#{delegatesBundle['label.delegates.evaluations.curricularPlan']}: " escape="false"/>
