@@ -14,8 +14,8 @@ public class GiafInterfaceFile extends GiafInterfaceFile_Base {
 
     public GiafInterfaceFile(GiafInterfaceBean giafInterfaceBean, GiafInterfaceDocument giafInterfaceDocument) {
 	super();
-	init(getFilePath(), giafInterfaceBean.getFilename(), giafInterfaceBean.getFilename(), null, giafInterfaceBean
-		.getFileByteArray(), createPermittedGroup());
+	init(getFilePath(), giafInterfaceBean.getFilename(), giafInterfaceBean.getFilename(), null,
+		giafInterfaceBean.getFileByteArray(), createPermittedGroup());
 	setGiafInterfaceDocument(giafInterfaceDocument);
     }
 
@@ -30,5 +30,11 @@ public class GiafInterfaceFile extends GiafInterfaceFile_Base {
 	List<ManagementGroups> managementGroups = RootDomainObject.getInstance().getManagementGroups();
 	return new GroupUnion(managementGroups.iterator().next().getAssiduousnessManagers(), managementGroups.iterator().next()
 		.getAssiduousnessSectionStaff());
+    }
+
+    @Override
+    public void delete() {
+	removeGiafInterfaceDocument();
+	super.delete();
     }
 }
