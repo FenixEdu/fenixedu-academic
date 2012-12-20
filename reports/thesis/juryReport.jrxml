@@ -188,7 +188,7 @@
 			<textField isStretchWithOverflow="true">
 				<reportElement x="0" y="337" width="467" height="20"/>
 				<textElement lineSpacing="Double">
-					<font fontName="Times New Roman" size="12" isUnderline="true"/>
+					<font fontName="Arial Unicode MS" size="12" isUnderline="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{thesisTitle}]]></textFieldExpression>
 			</textField>
