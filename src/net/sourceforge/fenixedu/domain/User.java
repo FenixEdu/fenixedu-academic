@@ -1,12 +1,8 @@
 package net.sourceforge.fenixedu.domain;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import javax.crypto.KeyGenerator;
 import javax.crypto.SecretKey;
 
-import net.sourceforge.fenixedu.domain.assiduousness.IdentificationCard;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.util.ByteArray;
 
@@ -51,16 +47,6 @@ public class User extends User_Base {
 	    }
 	}
 	return null;
-    }
-
-    public List<IdentificationCard> getIdentificationCards() {
-	List<IdentificationCard> cards = new ArrayList<IdentificationCard>();
-	for (Identification identification : this.getIdentifications()) {
-	    if (identification instanceof IdentificationCard) {
-		cards.add((IdentificationCard) identification);
-	    }
-	}
-	return cards;
     }
 
     public void delete() {
@@ -113,42 +99,46 @@ public class User extends User_Base {
 	return username == null || ((username.length() == 8 || username.length() == 9) && username.startsWith("ist"));
     }
 
+    @Deprecated
+    public java.util.Date getCurrentLoginDateTime() {
+	org.joda.time.DateTime dt = getCurrentLoginDateTimeDateTime();
+	return (dt == null) ? null : new java.util.Date(dt.getMillis());
+    }
 
-	@Deprecated
-	public java.util.Date getCurrentLoginDateTime(){
-		org.joda.time.DateTime dt = getCurrentLoginDateTimeDateTime();
-		return (dt == null) ? null : new java.util.Date(dt.getMillis());
-	}
+    @Deprecated
+    public void setCurrentLoginDateTime(java.util.Date date) {
+	if (date == null)
+	    setCurrentLoginDateTimeDateTime(null);
+	else
+	    setCurrentLoginDateTimeDateTime(new org.joda.time.DateTime(date.getTime()));
+    }
 
-	@Deprecated
-	public void setCurrentLoginDateTime(java.util.Date date){
-		if(date == null) setCurrentLoginDateTimeDateTime(null);
-		else setCurrentLoginDateTimeDateTime(new org.joda.time.DateTime(date.getTime()));
-	}
+    @Deprecated
+    public java.util.Date getLastLoginDateTime() {
+	org.joda.time.DateTime dt = getLastLoginDateTimeDateTime();
+	return (dt == null) ? null : new java.util.Date(dt.getMillis());
+    }
 
-	@Deprecated
-	public java.util.Date getLastLoginDateTime(){
-		org.joda.time.DateTime dt = getLastLoginDateTimeDateTime();
-		return (dt == null) ? null : new java.util.Date(dt.getMillis());
-	}
+    @Deprecated
+    public void setLastLoginDateTime(java.util.Date date) {
+	if (date == null)
+	    setLastLoginDateTimeDateTime(null);
+	else
+	    setLastLoginDateTimeDateTime(new org.joda.time.DateTime(date.getTime()));
+    }
 
-	@Deprecated
-	public void setLastLoginDateTime(java.util.Date date){
-		if(date == null) setLastLoginDateTimeDateTime(null);
-		else setLastLoginDateTimeDateTime(new org.joda.time.DateTime(date.getTime()));
-	}
+    @Deprecated
+    public java.util.Date getLogout() {
+	org.joda.time.DateTime dt = getLogoutDateTime();
+	return (dt == null) ? null : new java.util.Date(dt.getMillis());
+    }
 
-	@Deprecated
-	public java.util.Date getLogout(){
-		org.joda.time.DateTime dt = getLogoutDateTime();
-		return (dt == null) ? null : new java.util.Date(dt.getMillis());
-	}
-
-	@Deprecated
-	public void setLogout(java.util.Date date){
-		if(date == null) setLogoutDateTime(null);
-		else setLogoutDateTime(new org.joda.time.DateTime(date.getTime()));
-	}
-
+    @Deprecated
+    public void setLogout(java.util.Date date) {
+	if (date == null)
+	    setLogoutDateTime(null);
+	else
+	    setLogoutDateTime(new org.joda.time.DateTime(date.getTime()));
+    }
 
 }

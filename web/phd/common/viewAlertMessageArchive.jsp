@@ -4,7 +4,7 @@
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr" %>
 
 <%@page import="net.sourceforge.fenixedu.util.BundleUtil"%>
-<%@page import="net.sourceforge.fenixedu.dataTransferObject.assiduousness.YearMonth"%>
+<%@page import="net.sourceforge.fenixedu.dataTransferObject.phd.YearMonth"%>
 
 <style>
 .unreadSubject { font-weight: bold; background: #fafaea !important; }
@@ -40,7 +40,7 @@
 </logic:present>
 <fr:form>
 	<fr:edit id="yearMonthBean" name="yearMonthBean">
-		<fr:schema type="net.sourceforge.fenixedu.dataTransferObject.assiduousness.YearMonth" bundle="PHD_RESOURCES">
+		<fr:schema type="net.sourceforge.fenixedu.dataTransferObject.phd.YearMonth" bundle="PHD_RESOURCES">
 			<fr:slot name="yearString" key="label.year" bundle="PHD_RESOURCES" layout="menu-select-postback">
 				<fr:property name="nullOptionHidden" value="true" />
 				<fr:property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.CivilYearsProvider$CivilYearsProviderDescendingOrder" />

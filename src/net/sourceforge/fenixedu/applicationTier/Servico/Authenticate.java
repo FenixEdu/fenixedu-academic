@@ -37,10 +37,8 @@ import org.apache.commons.lang.CharEncoding;
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.joda.time.DateTime;
-import org.joda.time.LocalDate;
 
 import pt.ist.fenixWebFramework.FenixWebFramework;
-import pt.ist.fenixframework.FenixFrameworkInitializer;
 import pt.ist.fenixframework.pstm.AbstractDomainObject;
 import pt.ist.fenixframework.pstm.Transaction;
 import pt.utl.ist.fenix.tools.util.FileUtils;
@@ -299,7 +297,8 @@ public class Authenticate extends FenixService implements Serializable {
     public static CASReceipt getCASReceipt(final String serverName, final String casTicket, final String requestURL)
 	    throws UnsupportedEncodingException, CASAuthenticationException {
 	final String casValidateUrl = FenixWebFramework.getConfig().getCasConfig(serverName).getCasValidateUrl();
-	final String casServiceUrl = URLEncoder.encode(requestURL.replace("http://", "https://").replace(":8080", ""), CharEncoding.UTF_8);
+	final String casServiceUrl = URLEncoder.encode(requestURL.replace("http://", "https://").replace(":8080", ""),
+		CharEncoding.UTF_8);
 
 	ProxyTicketValidator pv = new ProxyTicketValidator();
 	pv.setCasValidateUrl(casValidateUrl);
@@ -311,7 +310,6 @@ public class Authenticate extends FenixService implements Serializable {
     }
 
     protected Collection<Role> getInfoRoles(Person person, final Set allowedRoles) {
-	final String username = person.getUsername();
 	final Set<Role> personRoles = person.getPersonRolesSet();
 
 	final Map<RoleType, Role> infoRoles = new HashMap<RoleType, Role>(personRoles.size());
@@ -321,8 +319,6 @@ public class Authenticate extends FenixService implements Serializable {
 		infoRoles.put(roleType, role);
 	    }
 	}
-
-	filterRoles(infoRoles, person);
 	return infoRoles.values();
     }
 
@@ -334,26 +330,6 @@ public class Authenticate extends FenixService implements Serializable {
 	    }
 	}
 	return new HashSet(0);
-    }
-
-    protected void filterRoles(final Map<RoleType, Role> infoRoles, Person person) {
-	filterEmployeeRoleForTeachers(infoRoles, person);
-    }
-
-    protected void filterEmployeeRoleForTeachers(Map<RoleType, Role> infoRoles, Person person) {
-	if (!personHasAssiduousness(person)) {
-	    infoRoles.remove(RoleType.EMPLOYEE);
-	}
-    }
-
-    private boolean personHasAssiduousness(Person person) {
-	if (person.hasEmployee()) {
-	    LocalDate currentDate = new LocalDate();
-	    if (person.getEmployee().hasAssiduousness()) {
-		return person.getEmployee().getAssiduousness().isStatusActive(currentDate, currentDate);
-	    }
-	}
-	return false;
     }
 
     public IUserView mock(final Person person, final String requestURL) {

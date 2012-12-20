@@ -4,26 +4,8 @@
 <tiles-definitions>
 	<definition name="definition.personnelSection.masterPage" extends="df.layout.two-column">
 		<put name="title" value="private.staffarea"/>
-		<put name="bundle" value="TITLES_RESOURCES" />
-		<put name="serviceName" value="Área de Pessoal"/>
-  		<put name="navLocal" value="/personnelSection/assiduousnessMenu.jsp"/>
-		<put name="navGeral" value="/commons/commonGeneralNavigationBar.jsp"/>
-		<put name="body-context" value="/commons/blank.jsp"/>
-		<put name="body" value="/commons/blank.jsp"/>
-	</definition>
-	<definition name="definition.managementAssiduousness.masterPage" extends="df.layout.two-column">
-		<put name="title" value="private.staffarea"/>
-		<put name="bundle" value="TITLES_RESOURCES" />
-		<put name="serviceName" value="Gestão de Assiduidade"/>
-  		<put name="navLocal" value="/personnelSection/assiduousnessMenu.jsp"/>
-		<put name="navGeral" value="/commons/commonGeneralNavigationBar.jsp"/>
-		<put name="body-context" value="/commons/blank.jsp"/>
-		<put name="body" value="/commons/blank.jsp"/>
-	</definition>
-	<definition name="definition.payrollSection.masterPage" extends="df.layout.two-column">
-		<put name="title" value="Gestão de Vencimentos"/>
-		<put name="serviceName" value="Gestão de Vencimentos"/>
-  		<put name="navLocal" value="/personnelSection/assiduousnessMenu.jsp"/>
+		<put name="serviceName" value="Secção de Pessoal"/>
+  		<put name="navLocal" value="/commons/functionalities/side-menu.jsp"/>
 		<put name="navGeral" value="/commons/commonGeneralNavigationBar.jsp"/>
 		<put name="body-context" value="/commons/blank.jsp"/>
 		<put name="body" value="/commons/blank.jsp"/>

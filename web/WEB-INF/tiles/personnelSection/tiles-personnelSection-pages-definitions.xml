@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE tiles-definitions PUBLIC "-//Apache Software Foundation//DTD Tiles Configuration 1.1//EN" "http://jakarta.apache.org/struts/dtds/tiles-config_1_1.dtd">
+<!-- Tiles definitions -->
+<tiles-definitions>
+	<definition name="personnel.intranet" extends="definition.personnelSection.masterPage">
+    	<put name="body-context" value="/personnelSection/unitFunctionalities/context.jsp"/>
+    </definition>
+	<definition name="manage-persisted-groups" extends="personnel.intranet">
+       <put name="body" value="/commons/PersistentMemberGroups/managePersistedGroups.jsp"/>  
+    </definition>          
+    
+	<definition name="create-persisted-group" extends="personnel.intranet">
+       <put name="body" value="/commons/PersistentMemberGroups/createPersistedGroup.jsp"/>  
+    </definition>          
+    
+   	<definition name="edit-persisted-group" extends="personnel.intranet">
+       <put name="body" value="/commons/PersistentMemberGroups/editPersistedGroup.jsp"/>  
+    </definition>          
+
+   	<definition name="upload-file" extends="personnel.intranet">
+       <put name="body" value="/commons/PersistentMemberGroups/editPersistedGroup.jsp"/>  
+    </definition>        
+
+	<definition name="edit-uploaders" extends="personnel.intranet">
+       <put name="body" value="/commons/PersistentMemberGroups/configureUploaders.jsp"/>  
+    </definition>  
+    
+   	<definition name="upload-file" extends="personnel.intranet">
+       <put name="body" value="/commons/unitFiles/uploadFile.jsp"/>  
+    </definition>        
+
+   	<definition name="manage-files" extends="personnel.intranet">
+       <put name="body" value="/commons/unitFiles/manageFiles.jsp"/>  
+    </definition>        
+
+   	<definition name="edit-file" extends="personnel.intranet">
+       <put name="body" value="/commons/unitFiles/editFile.jsp"/>  
+    </definition>      
+	<definition name="manage-people-search" extends="definition.personnelSection.masterPage">
+		<put name="body" value="/personnelSection/people/searchPeople.jsp"/>
+	</definition>
+	<definition name="manage-people-create" extends="definition.personnelSection.masterPage">
+		<put name="body" value="/personnelSection/people/createPerson.jsp"/>
+	</definition>
+	<definition name="manage-people-create-fill-info" extends="definition.personnelSection.masterPage">
+		<put name="body" value="/personnelSection/people/createPersonFillInfo.jsp"/>
+	</definition>
+	<definition name="manage-people-view-person" extends="definition.personnelSection.masterPage">
+		<put name="body" value="/personnelSection/people/viewPerson.jsp" />
+	</definition>
+	<definition name="partyContacts.createPartyContact" extends="definition.personnelSection.masterPage">
+		 <put name="body" value="/manager/personManagement/contacts/createPartyContact.jsp"/>
+	</definition>
+	<definition name="partyContacts.editPartyContact" extends="definition.personnelSection.masterPage">
+		 <put name="body" value="/manager/personManagement/contacts/editPartyContact.jsp"/>
+	</definition>
+	<definition name="professionalInformation-showProfessionalInformation" extends="definition.personnelSection.masterPage">
+		 <put name="body" value="/manager/personManagement/contracts/showProfessionalInformation.jsp"/>
+	</definition>
+	<definition name="qualification-showQualifications" extends="definition.personnelSection.masterPage">
+		 <put name="body" value="/manager/qualifications/showQualifications.jsp"/>
+	</definition>
+	<definition name="qualification-qualification" extends="definition.personnelSection.masterPage">
+		 <put name="body" value="/manager/qualifications/qualification.jsp"/>
+	</definition>
+	<definition name="findPerson" extends="definition.personnelSection.masterPage" >
+		<put name="body" value="/manager/personManagement/findPerson.jsp" />
+	</definition>
+	<definition name="displayPerson" extends="definition.personnelSection.masterPage" >
+		<put name="body" value="/manager/personManagement/displayPerson.jsp" />
+	</definition>
+</tiles-definitions>

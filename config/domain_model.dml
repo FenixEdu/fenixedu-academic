@@ -77,15 +77,6 @@ enum net.sourceforge.fenixedu.domain.accounting.events.PenaltyExemptionJustifica
 enum net.sourceforge.fenixedu.domain.accounting.events.candidacy.CandidacyExemptionJustificationType                      as CandidacyExemptionJustificationType;
 enum net.sourceforge.fenixedu.domain.accounting.events.gratuity.GratuityExemptionJustificationType                        as GratuityExemptionJustificationType;
 enum net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOfficeType                                        as AdministrativeOfficeType;
-enum net.sourceforge.fenixedu.domain.assiduousness.util.AnulationState                                                    as AnulationState;
-enum net.sourceforge.fenixedu.domain.assiduousness.util.AssiduousnessState                                                as AssiduousnessState;
-enum net.sourceforge.fenixedu.domain.assiduousness.util.CardState                                                         as CardState;
-enum net.sourceforge.fenixedu.domain.assiduousness.util.CardType                                                          as CardType;
-enum net.sourceforge.fenixedu.domain.assiduousness.util.ClosedMonthDocumentType                                           as ClosedMonthDocumentType;
-enum net.sourceforge.fenixedu.domain.assiduousness.util.DayType                                                           as DayType;
-enum net.sourceforge.fenixedu.domain.assiduousness.util.JustificationGroup                                                as JustificationGroup;
-enum net.sourceforge.fenixedu.domain.assiduousness.util.JustificationType                                                 as JustificationType;
-enum net.sourceforge.fenixedu.domain.assiduousness.util.ScheduleClockingType                                              as ScheduleClockingType;
 enum net.sourceforge.fenixedu.domain.branch.BranchType                                                                    as OldBranchType;
 enum net.sourceforge.fenixedu.domain.candidacy.Ingression                                                                 as Ingression;
 enum net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyProcessState                                               as CandidacyProcessState;
@@ -131,7 +122,6 @@ enum net.sourceforge.fenixedu.domain.person.Gender                              
 enum net.sourceforge.fenixedu.domain.person.IDDocumentType                                                                as IDDocumentType;
 enum net.sourceforge.fenixedu.domain.person.MaritalStatus                                                                 as MaritalStatus;
 enum net.sourceforge.fenixedu.domain.person.RoleType                                                                      as RoleType;
-enum net.sourceforge.fenixedu.domain.personnelSection.payrollSection.bonus.util.BonusType                                 as BonusType;
 enum net.sourceforge.fenixedu.domain.research.activity.CooperationType                                                    as CooperationType;
 enum net.sourceforge.fenixedu.domain.research.activity.EventType                                                          as activity.EventType;
 enum net.sourceforge.fenixedu.domain.research.activity.Participation.ResearchActivityParticipationRole                    as ResearchActivityParticipationRole;
@@ -263,22 +253,6 @@ valueType net.sourceforge.fenixedu.domain.accessControl.Group as Group {
     }
 
     internalizeWith fromString();
-}
-
-valueType net.sourceforge.fenixedu.domain.assiduousness.WorkWeek as WorkWeek {
-    externalizeWith {
-        String net.sourceforge.fenixedu.domain.assiduousness.Externalization.externalizeWorkWeek();
-    }
-
-    internalizeWith net.sourceforge.fenixedu.domain.assiduousness.Externalization.internalizeWorkWeek();
-}
-
-valueType net.sourceforge.fenixedu.domain.assiduousness.util.PartialList as PartialList {
-    externalizeWith {
-        String exportAsString();
-    }
-
-    internalizeWith importFromString();
 }
 
 valueType net.sourceforge.fenixedu.domain.degreeStructure.BibliographicReferences as BibliographicReferences {
@@ -1493,11 +1467,6 @@ class DomainObject {
         class Login extends Identification {
             Boolean isPassInKerberos;
             String password;
-        }
-
-        class assiduousness.IdentificationCard extends Identification {
-            CardState cardState;
-            DateTime lastModifiedDate;
         }
 
     class InsuranceValue extends DomainObject {
@@ -2759,336 +2728,6 @@ class DomainObject {
     class administrativeOffice.AdministrativeOffice extends DomainObject {
         AdministrativeOfficeType administrativeOfficeType;
     }
-
-    class assiduousness.Assiduousness extends DomainObject {
-    }
-
-    class assiduousness.AssiduousnessCampusHistory extends DomainObject {
-        LocalDate beginDate;
-        LocalDate endDate;
-        DateTime lastModifiedDate;
-    }
-
-    class assiduousness.AssiduousnessClosedMonth extends DomainObject {
-        Double accumulatedArticle66;
-        Double accumulatedUnjustified;
-        Double article17;
-        Double article66;
-        Duration balance;
-        Duration balanceToDiscount;
-        Duration holidayBalance;
-        Duration saturdayBalance;
-        Duration sundayBalance;
-        Double tolerance;
-        Integer unjustifiedDays;
-        Integer accumulatedArticle66Days;
-        Integer accumulatedUnjustifiedDays;
-        Double vacations;
-        Integer maximumWorkingDays;
-        Integer workedDaysWithBonusDaysDiscount;
-        Integer workedDaysWithA17DaysDiscount;
-        Integer workedDaysWithA17VacationsDaysDiscount;
-        Duration totalWorkedTime;
-        Duration totalWorkedTimeForA17Vacations;
-        Duration finalBalance;
-        Duration finalBalanceToCompensate;
-        LocalDate beginDate;
-        LocalDate endDate;
-        Boolean isCorrection;
-        DateTime lastModifiedDate;
-    }
-    
-    class assiduousness.AssiduousnessClosedDay extends DomainObject {
-        LocalDate day;
-        String schedule;
-        Duration balance;
-        Duration unjustified;
-        String notes;
-        String clockings;
-        Duration holidayBalance;
-        Duration saturdayBalance;
-        Duration sundayBalance;
-        Duration extraWorkFirstLevel;
-        Duration extraWorkSecondLevel;
-        Duration extraWorkSecondLevelWithLimit;
-        Duration nightlyExtraWorkFirstLevel;
-        Duration nightlyExtraWorkSecondLevel;
-        Duration nightlyExtraWorkSecondLevelWithLimit;
-        Duration nightlyWorkBalance;        
-        Boolean unjustifiedDay;
-        Boolean isCorrection;
-        DateTime lastModifiedDate;
-    }
-
-    class assiduousness.AssiduousnessExemption extends DomainObject {
-        Integer year;
-        String description;
-    }
-    
-    class assiduousness.AssiduousnessExemptionShift extends DomainObject {
-        PartialList partialShift;
-    }
-
-    class assiduousness.AssiduousnessExtraWork extends DomainObject {
-        Duration firstLevelBalance;
-        Duration nightBalance;
-        Duration secondLevelBalance;
-        Duration secondLevelBalanceWithLimit;
-        Duration firstLevelNightBalance;
-        Duration secondLevelNightBalance;
-        Duration secondLevelNightBalanceWithLimit;
-        Integer nightExtraWorkDays;
-        Duration unjustified;
-        Boolean isCorrection;
-        DateTime lastModifiedDate;
-    }
-
-    class assiduousness.AssiduousnessRecord extends DomainObject {
-        DateTime date;
-        Integer oracleSequence;
-    }
-
-        class assiduousness.Clocking extends assiduousness.AssiduousnessRecord {
-        }
-
-        class assiduousness.Justification extends assiduousness.AssiduousnessRecord {
-            DateTime lastModifiedDate;
-            String notes;
-        }
-
-            class assiduousness.Anulation extends assiduousness.Justification {
-                AnulationState state;
-            }
-
-            class assiduousness.Leave extends assiduousness.Justification {
-                WorkWeek aplicableWeekDays;
-                Duration duration;
-                LocalDate referenceDate;
-            }
-
-            class assiduousness.MissingClocking extends assiduousness.Justification {
-            }
-
-    class assiduousness.AssiduousnessRecordMonthIndex extends DomainObject {
-        Partial partialYearMonth;
-    }
-
-    class assiduousness.AssiduousnessStatus extends DomainObject {
-        String description;
-        DateTime lastModifiedDate;
-        AssiduousnessState state;
-    }
-
-    class assiduousness.AssiduousnessStatusHistory extends DomainObject {
-        LocalDate beginDate;
-        LocalDate endDate;
-        DateTime lastModifiedDate;
-    }
-
-    class assiduousness.AssiduousnessVacations extends DomainObject {
-        Double accumulatedDays;
-        Double ageDays;
-        Double antiquityDays;
-        Double accumulatedArticle17Days;
-        Double bonusDays;
-        Double extraWorkDays;
-        DateTime lastModifiedDate;
-        Double lastYearExtraWorkDays;
-        Double lowTimeVacationsDays;
-        Double normalDays;
-        Double normalWithLeavesDiscount;
-        Integer year;
-        Double imprescriptibleAccumulatedDays;
-    }
-
-    class assiduousness.Card extends DomainObject {
-        Integer cardId;
-        CardType type;
-    }
-
-    class assiduousness.ClockUnit extends DomainObject {
-        String acronym;
-        String name;
-    }
-
-    class assiduousness.ClosedMonth extends DomainObject {
-        Boolean closedForBalance;
-        Boolean closedForExtraWork;
-        Partial closedYearMonth;
-        DateTime closedForBalanceDate;
-        Boolean intensionToCloseForBalance;
-    }
-
-    class assiduousness.ClosedMonthDocument extends DomainObject {
-        ClosedMonthDocumentType closedMonthDocumentType;
-        DateTime createdWhen;
-    }
-    
-    class assiduousness.GiafInterfaceDocument extends DomainObject {
-        DateTime createdWhen;
-    }
-    
-    class assiduousness.GiafInterfaceFile extends File {
-    }
-    
-    class assiduousness.ClosedMonthFile extends File {
-    }
-
-    class assiduousness.ClosedMonthJustification extends DomainObject {
-        Duration justificationDuration;
-        Boolean isCorrection;
-        DateTime lastModifiedDate;
-    }
-
-    class assiduousness.EmployeeExtraWorkAuthorization extends DomainObject {
-        Boolean auxiliarPersonel;
-        Boolean executiveAuxiliarPersonel;
-        DateTime lastModifiedDate;
-        Boolean nightExtraWork;
-        Boolean normalExtraWork;
-        Boolean normalExtraWorkPlusOneHundredHours;
-        Boolean normalExtraWorkPlusTwoHours;
-        Boolean weeklyRestExtraWork;
-    }
-
-    class assiduousness.ExtraWorkAuthorization extends DomainObject {
-        YearMonthDay beginDate;
-        YearMonthDay endDate;
-        DateTime lastModifiedDate;
-    }
-
-    class assiduousness.ExtraWorkRequest extends DomainObject {
-        Double accumulatedNightVacationsAmount;
-        Double accumulatedNormalVacationsAmount;
-        Boolean addToVacations;
-        Boolean addToWeekRestTime;
-        Double amount;
-        Boolean approved;
-        Integer extraNightDays;
-        Integer extraNightHours;
-        Integer extraNightHoursFirstLevel;
-        Integer extraNightHoursSecondLevel;
-        Double holidayAmount;
-        Integer holidayHours;
-        Partial hoursDoneInPartialDate;
-        DateTime lastModifiedDate;
-        Integer nightHours;
-        Double nightVacationsAmount;
-        Integer nightVacationsDays;
-        Double normalVacationsAmount;
-        Integer normalVacationsDays;
-        Partial partialPayingDate;
-        Integer requestedExtraNightHours;
-        Integer requestedExtraNightDays;
-        Integer requestedHolidayHours;
-        Integer requestedNightHours;
-        Integer requestedSaturdayHours;
-        Integer requestedSundayHours;
-        Integer requestedWorkdayHours;
-        Double saturdayAmount;
-        Integer saturdayHours;
-        Double sundayAmount;
-        Integer sundayHours;
-        Integer workdayHours;
-        Integer workdayFirstLevelHours;
-        Integer workdaySecondLevelHours;
-        Double workdayFirstLevelAmount;
-        Double workdaySecondLevelAmount;
-        Double extraNightFirstLevelAmount;
-        Double extraNightSecondLevelAmount;
-        Double extraNightMealAmount;
-    }
-
-    class assiduousness.JustificationMotive extends DomainObject {
-        Boolean accumulate;
-        String acronym;
-        Boolean active;
-        Boolean actualWorkTime;
-        DayType dayType;
-        String description;
-        String giafCodeContractedStatus;
-        String giafCodeOtherStatus;
-        String giafCodeAdistStatus;
-        String giafCodeIstIdStatus;
-        JustificationGroup justificationGroup;
-        JustificationType justificationType;
-        DateTime lastModifiedDate;
-        Boolean discountBonus;
-        Boolean discountA17;
-        Boolean discountA17Vacations;
-        Boolean inExercise;
-        Boolean isJustificationForUnjustifiedDays;
-        Boolean isJustificationForArticle66Days;
-        Boolean processingInCurrentMonth;
-        Boolean hasReferenceDate;
-    }
-
-    class assiduousness.Meal extends DomainObject {
-        LocalTime beginMealBreak;
-        LocalTime endMealBreak;
-        Duration mandatoryMealDiscount;
-        Duration minimumMealBreakInterval;
-    }
-
-    class assiduousness.Periodicity extends DomainObject {
-        Integer workWeekNumber;
-    }
-
-    class assiduousness.Schedule extends DomainObject {
-        LocalDate beginDate;
-        LocalDate endDate;
-        Boolean exception;
-        DateTime lastModifiedDate;
-    }
-
-    class assiduousness.UnitExtraWorkAmount extends DomainObject {
-        Double spent;
-        Integer year;
-    }
-
-    class assiduousness.UnitExtraWorkMovement extends DomainObject {
-        Double amount;
-        DateTime date;
-    }
-
-    class assiduousness.WorkPeriod extends DomainObject {
-        LocalTime firstPeriod;
-        Duration firstPeriodDuration;
-        LocalTime secondPeriod;
-        Duration secondPeriodDuration;
-    }
-
-    class assiduousness.WorkSchedule extends DomainObject {
-        WorkWeek workWeek;
-    }
-
-    class assiduousness.WorkScheduleType extends DomainObject {
-        String acronym;
-        LocalDate beginValidDate;
-        LocalTime clockingTime;
-        Duration clockingTimeDuration;
-        LocalDate endValidDate;
-        DateTime lastModifiedDate;
-        ScheduleClockingType scheduleClockingType;
-        LocalTime workTime;
-        Duration workTimeDuration;
-    }
-
-        class assiduousness.ContinuousSchedule extends assiduousness.WorkScheduleType {
-        }
-
-        class assiduousness.FlexibleSchedule extends assiduousness.WorkScheduleType {
-        }
-
-        class assiduousness.HalfTimeSchedule extends assiduousness.WorkScheduleType {
-        }
-
-        class assiduousness.HourExemptionSchedule extends assiduousness.WorkScheduleType {
-        }
-
-        class assiduousness.ScheduleExemption extends assiduousness.WorkScheduleType {
-        }
-
 
     class candidacy.Candidacy extends DomainObject {
         Integer number;
@@ -6764,25 +6403,6 @@ class personnelSection.contracts.Absence extends DomainObject {
     Boolean isSabaticalOrEquivalent (REQUIRED);
 }
 
-class personnelSection.payrollSection.bonus.AnualBonusInstallment extends DomainObject {
-    Integer year;
-    Partial paymentPartialDate;
-    PartialList assiduousnessPartials;
-}
-
-class personnelSection.payrollSection.bonus.EmployeeBonusInstallment extends DomainObject {
-    BonusType bonusType;
-    Double value;
-    Integer costCenterCode;
-    String subCostCenterCode;
-    Integer explorationUnit;
-}
-
-class personnelSection.payrollSection.bonus.EmployeeMonthlyBonusInstallment extends DomainObject {
-    Partial partialYearMonth;
-    Double value;
-}
-
 class library.LibraryCard extends DomainObject {
     String userName;
     String unitName;    
@@ -10425,123 +10045,6 @@ relation ArticleAssociationArticle {
     research.result.publication.Article playsRole article;
 }
 
-relation AssiduousnessAssiduousnessCampusHistory {
-    assiduousness.Assiduousness playsRole assiduousness;
-    assiduousness.AssiduousnessCampusHistory playsRole assiduousnessCampusHistories {
-        multiplicity *;
-    }
-}
-
-relation AssiduousnessAssiduousnessRecord {
-    assiduousness.Assiduousness playsRole assiduousness;
-    assiduousness.AssiduousnessRecord playsRole assiduousnessRecords {
-        multiplicity *;
-    }
-}
-
-relation AssiduousnessAssiduousnessStatusHistory {
-    assiduousness.Assiduousness playsRole assiduousness;
-    assiduousness.AssiduousnessStatusHistory playsRole assiduousnessStatusHistories {
-        multiplicity *;
-    }
-}
-
-relation AssiduousnessCampusHistoryCampus {
-    space.Campus playsRole campus;
-    assiduousness.AssiduousnessCampusHistory playsRole assiduousnessCampusHistories {
-        multiplicity *;
-    }
-}
-
-relation AssiduousnessClosedMonthAssiduousnessStatusHistory {
-    assiduousness.AssiduousnessStatusHistory playsRole assiduousnessStatusHistory;
-    assiduousness.AssiduousnessClosedMonth playsRole assiduousnessClosedMonths {
-        multiplicity *;
-    }
-}
-
-relation AssiduousnessExemptionAssiduousnessExemptionShift {
-    assiduousness.AssiduousnessExemption playsRole assiduousnessExemption;
-    assiduousness.AssiduousnessExemptionShift playsRole assiduousnessExemptionShifts {
-        multiplicity *;
-    }
-}
-
-relation AssiduousnessEmployeeExtraWorkAuthorization {
-    assiduousness.Assiduousness playsRole assiduousness;
-    assiduousness.EmployeeExtraWorkAuthorization playsRole employeeExtraWorkAuthorizations {
-        multiplicity *;
-    }
-}
-
-relation AssiduousnessExtraWorkAssiduousnessClosedMonth {
-    assiduousness.AssiduousnessClosedMonth playsRole assiduousnessClosedMonth;
-    assiduousness.AssiduousnessExtraWork playsRole assiduousnessExtraWorks {
-        multiplicity *;
-    }
-}
-
-relation AssiduousnessExtraWorkClosedMonth {
-    assiduousness.ClosedMonth playsRole correctedOnClosedMonth;
-    assiduousness.AssiduousnessExtraWork playsRole assiduousnessExtraWorksCorrections {
-        multiplicity *;
-    }
-}
-
-relation AssiduousnessClosedDayAssiduousnessClosedMonth {
-    assiduousness.AssiduousnessClosedMonth playsRole assiduousnessClosedMonth;
-    assiduousness.AssiduousnessClosedDay playsRole assiduousnessClosedDays {
-        multiplicity *;
-    }
-}
-
-relation AssiduousnessClosedDayClosedMonth {
-    assiduousness.ClosedMonth playsRole correctedOnClosedMonth;
-    assiduousness.AssiduousnessClosedDay playsRole assiduousnessClosedDaysCorrections {
-        multiplicity *;
-    }
-}
-
-relation AssiduousnessExtraWorkRequest {
-    assiduousness.Assiduousness playsRole assiduousness;
-    assiduousness.ExtraWorkRequest playsRole extraWorkRequests {
-        multiplicity *;
-    }
-}
-
-relation AssiduousnessExtraWorkWorkScheduleType {
-    assiduousness.WorkScheduleType playsRole workScheduleType;
-    assiduousness.AssiduousnessExtraWork playsRole assiduousnessExtraWorks {
-        multiplicity *;
-    }
-}
-
-relation AssiduousnessRecordAnulation {
-    assiduousness.Anulation playsRole anulation;
-    assiduousness.AssiduousnessRecord playsRole anulatedAssiduousnessRecord;
-}
-
-relation AssiduousnessSchedule {
-    assiduousness.Schedule playsRole schedules {
-        multiplicity *;
-    }
-    assiduousness.Assiduousness playsRole assiduousness;
-}
-
-relation AssiduousnessStatusAssiduousnessStatusHistory {
-    assiduousness.AssiduousnessStatus playsRole assiduousnessStatus;
-    assiduousness.AssiduousnessStatusHistory playsRole assiduousnessStatusHistories {
-        multiplicity *;
-    }
-}
-
-relation AssiduousnessVacationsAssiduousness {
-    assiduousness.Assiduousness playsRole assiduousness;
-    assiduousness.AssiduousnessVacations playsRole AssiduousnessVacations {
-        multiplicity *;
-    }
-}
-
 relation AttendsEnrolment {
     Attends playsRole attends {
         multiplicity *;
@@ -10743,13 +10246,6 @@ relation CandidateSituationMasterDegreeCandidate {
     MasterDegreeCandidate playsRole masterDegreeCandidate;
 }
 
-relation CardIdentificationCard {
-    assiduousness.IdentificationCard playsRole identificationCards {
-        multiplicity *;
-    }
-    assiduousness.Card playsRole card;
-}
-
 relation CareerTeacher {
     teacher.Career playsRole associatedCareers {
         multiplicity *;
@@ -10780,72 +10276,6 @@ relation ChoiceMultipleChoiceQuestion {
         multiplicity *;
     }
     tests.NewMultipleChoiceQuestion playsRole multipleChoiceQuestion;
-}
-
-relation ClockUnitClocking {
-    assiduousness.Clocking playsRole clockings {
-        multiplicity *;
-    }
-    assiduousness.ClockUnit playsRole clockUnit;
-}
-
-relation AssiduousnessClosedMonthClosedMonth {
-    assiduousness.ClosedMonth playsRole correctedOnClosedMonth;
-    assiduousness.AssiduousnessClosedMonth playsRole assiduousnessClosedMonthsCorrections {
-        multiplicity *;
-    }
-}
-
-relation ClosedMonthAssiduousnessClosedMonth {
-    assiduousness.ClosedMonth playsRole closedMonth;
-    assiduousness.AssiduousnessClosedMonth playsRole assiduousnessClosedMonths {
-        multiplicity *;
-    }
-}
-
-relation ClosedMonthJustificationAssiduousnessClosedMonth {
-    assiduousness.AssiduousnessClosedMonth playsRole assiduousnessClosedMonth;
-    assiduousness.ClosedMonthJustification playsRole closedMonthJustifications {
-        multiplicity *;
-    }
-}
-
-relation ClosedMonthJustificationClosedMonth {
-    assiduousness.ClosedMonth playsRole correctedOnClosedMonth;
-    assiduousness.ClosedMonthJustification playsRole closedMonthJustificationCorrections {
-        multiplicity *;
-    }
-}
-
-relation ClosedMonthJustificationJustificationMotive {
-    assiduousness.JustificationMotive playsRole justificationMotive;
-    assiduousness.ClosedMonthJustification playsRole closedMonthJustifications {
-        multiplicity *;
-    }
-}
-
-relation EmployeeGiafInterfaceDocument {
-    Employee playsRole modifiedBy;
-    assiduousness.GiafInterfaceDocument playsRole giafInterfaceDocuments {
-        multiplicity *;
-    }
-}
-
-relation GiafInterfaceFileGiafInterfaceDocument {
-    assiduousness.GiafInterfaceFile playsRole giafInterfaceFile;
-    assiduousness.GiafInterfaceDocument playsRole giafInterfaceDocument;
-}
-
-relation ClosedMonthClosedMonthDocument {
-    assiduousness.ClosedMonth playsRole closedMonth;
-    assiduousness.ClosedMonthDocument playsRole closedMonthDocuments {
-        multiplicity *;
-    }
-}
-
-relation ClosedMonthDocumentClosedMonthFile {
-    assiduousness.ClosedMonthDocument playsRole closedMonthDocument;
-    assiduousness.ClosedMonthFile playsRole closedMonthFile;
 }
 
 relation CompetenceCourseDepartment {
@@ -11565,84 +10995,9 @@ relation DomainObjectActionLogPerson {
     }
 }
 
-relation EmployeeAssiduousness {
-    Employee playsRole employee;
-    assiduousness.Assiduousness playsRole assiduousness;
-}
-
-relation EmployeeAssiduousnessCampusHistory {
-    Employee playsRole modifiedBy;
-    assiduousness.AssiduousnessCampusHistory playsRole modifiedCampusHistories {
-        multiplicity *;
-    }
-}
-
-relation EmployeeAssiduousnessStatus {
-    Employee playsRole modifiedBy;
-    assiduousness.AssiduousnessStatus playsRole modifiedAssiduousnessStatus {
-        multiplicity *;
-    }
-}
-
-relation EmployeeAssiduousnessStatusHistory {
-    Employee playsRole modifiedBy;
-    assiduousness.AssiduousnessStatusHistory playsRole modifiedAssiduousnessStatusHistory {
-        multiplicity *;
-    }
-}
-
 relation EmployeeCreditNote {
     Employee playsRole employee;
     accounting.CreditNote playsRole creditNotes {
-        multiplicity *;
-    }
-}
-
-relation EmployeeExtraWorkAuthorization {
-    Employee playsRole modifiedBy;
-    assiduousness.ExtraWorkAuthorization playsRole modifiedExtraWorkAuthorizations {
-        multiplicity *;
-    }
-}
-
-relation EmployeeExtraWorkAuthorizationEmployee {
-    Employee playsRole modifiedBy;
-    assiduousness.EmployeeExtraWorkAuthorization playsRole modifiedEmployeeExtraWorkAuthorizations {
-        multiplicity *;
-    }
-}
-
-relation EmployeeExtraWorkAuthorizationExtraWorkAuthorization {
-    assiduousness.ExtraWorkAuthorization playsRole extraWorkAuthorization;
-    assiduousness.EmployeeExtraWorkAuthorization playsRole employeeExtraWorkAuthorizations {
-        multiplicity *;
-    }
-}
-
-relation EmployeeExtraWorkRequest {
-    Employee playsRole modifiedBy;
-    assiduousness.ExtraWorkRequest playsRole modifiedExtraWorkRequests {
-        multiplicity *;
-    }
-}
-
-relation EmployeeBonusInstallmentAnualBonusInstallment {
-    personnelSection.payrollSection.bonus.AnualBonusInstallment playsRole anualBonusInstallment;
-    personnelSection.payrollSection.bonus.EmployeeBonusInstallment playsRole employeeBonusInstallments {
-        multiplicity *;
-    }
-}
-
-relation EmployeeBonusInstallmentEmployee {
-    Employee playsRole employee;
-    personnelSection.payrollSection.bonus.EmployeeBonusInstallment playsRole employeeBonusInstallments {
-        multiplicity *;
-    }
-}
-
-relation EmployeeMonthlyBonusInstallmentEmployeeBonusInstallment {
-    personnelSection.payrollSection.bonus.EmployeeBonusInstallment playsRole employeeBonusInstallment;
-    personnelSection.payrollSection.bonus.EmployeeMonthlyBonusInstallment playsRole employeeMonthlyBonusInstallments {
         multiplicity *;
     }
 }
@@ -11682,37 +11037,9 @@ relation EmployeeHistoricWorkingPlaceCostCenter {
     CostCenter playsRole workingPlaceCostCenter;
 }
 
-relation EmployeeIdentificationCard {
-    Employee playsRole modifiedBy;
-    assiduousness.IdentificationCard playsRole modifiedIdentificationCards {
-        multiplicity *;
-    }
-}
-
-relation EmployeeJustification {
-    Employee playsRole modifiedBy;
-    assiduousness.Justification playsRole modifiedJustifications {
-        multiplicity *;
-    }
-}
-
-relation EmployeeJustificationMotive {
-    Employee playsRole modifiedBy;
-    assiduousness.JustificationMotive playsRole modifiedJustificationMotives {
-        multiplicity *;
-    }
-}
-
 relation EmployeePerson {
     Employee playsRole employee;
     Person playsRole person;
-}
-
-relation EmployeeWorkScheduleType {
-    Employee playsRole modifiedBy;
-    assiduousness.WorkScheduleType playsRole modifiedWorkScheduleTypes {
-        multiplicity *;
-    }
 }
 
 relation FakeEnrollmentPerson {
@@ -12258,27 +11585,6 @@ relation ExternalRegistrationDataInstitution {
 relation ExternalRegistrationDataRegistration {
     student.ExternalRegistrationData playsRole externalRegistrationData;
     student.Registration playsRole registration;
-}
-
-relation ExtraWorkAuthorizationPayingUnit {
-    organizationalStructure.Unit playsRole payingUnit;
-    assiduousness.ExtraWorkAuthorization playsRole extraPayingUnitAuthorizations {
-        multiplicity *;
-    }
-}
-
-relation ExtraWorkAuthorizationWorkingUnit {
-    organizationalStructure.Unit playsRole workingUnit;
-    assiduousness.ExtraWorkAuthorization playsRole extraWorkingUnitAuthorizations {
-        multiplicity *;
-    }
-}
-
-relation ExtraWorkRequestUnit {
-    organizationalStructure.Unit playsRole unit;
-    assiduousness.ExtraWorkRequest playsRole extraWorkRequests {
-        multiplicity *;
-    }
 }
 
 relation FirstYearShiftsCapacityLogWithExecutionSemester {
@@ -12884,13 +12190,6 @@ relation JournalIssueArticleAssociation {
 relation JournalIssueScientificJournal {
     research.activity.ScientificJournal playsRole scientificJournal;
     research.activity.JournalIssue playsRole journalIssues {
-        multiplicity *;
-    }
-}
-
-relation JustificationMotiveJustification {
-    assiduousness.JustificationMotive playsRole justificationMotive;
-    assiduousness.Justification playsRole justifications {
         multiplicity *;
     }
 }
@@ -14596,83 +13895,6 @@ relation RootDomainObjectArticleAssociation {
     }
 }
 
-relation RootDomainObjectAssiduousness {
-    RootDomainObject playsRole rootDomainObject;
-    assiduousness.Assiduousness playsRole assiduousnesss {
-        multiplicity *;
-    }
-}
-
-relation RootDomainObjectAssiduousnessCampusHistory {
-    RootDomainObject playsRole rootDomainObject;
-    assiduousness.AssiduousnessCampusHistory playsRole assiduousnessCampusHistories {
-        multiplicity *;
-    }
-}
-
-relation RootDomainObjectAssiduousnessClosedDay {
-    RootDomainObject playsRole rootDomainObject;
-    assiduousness.AssiduousnessClosedDay playsRole assiduousnessClosedDays {
-        multiplicity *;
-    }
-}
-
-relation RootDomainObjectAssiduousnessClosedMonth {
-    RootDomainObject playsRole rootDomainObject;
-    assiduousness.AssiduousnessClosedMonth playsRole assiduousnessClosedMonths {
-        multiplicity *;
-    }
-}
-
-relation RootDomainObjectAssiduousnessExtraWork {
-    RootDomainObject playsRole rootDomainObject;
-    assiduousness.AssiduousnessExtraWork playsRole assiduousnessExtraWorks {
-        multiplicity *;
-    }
-}
-
-relation RootDomainObjectAssiduousnessExemption {
-    RootDomainObject playsRole rootDomainObject;
-    assiduousness.AssiduousnessExemption playsRole assiduousnessExemptions {
-        multiplicity *;
-    }
-}
-
-relation RootDomainObjectAssiduousnessExemptionShift {
-    RootDomainObject playsRole rootDomainObject;
-    assiduousness.AssiduousnessExemptionShift playsRole assiduousnessExemptionShifts {
-        multiplicity *;
-    }
-}
-
-relation RootDomainObjectAssiduousnessRecord {
-    RootDomainObject playsRole rootDomainObject;
-    assiduousness.AssiduousnessRecord playsRole assiduousnessRecords {
-        multiplicity *;
-    }
-}
-
-relation RootDomainObjectAssiduousnessStatus {
-    RootDomainObject playsRole rootDomainObject;
-    assiduousness.AssiduousnessStatus playsRole assiduousnessStatus {
-        multiplicity *;
-    }
-}
-
-relation RootDomainObjectAssiduousnessStatusHistory {
-    RootDomainObject playsRole rootDomainObject;
-    assiduousness.AssiduousnessStatusHistory playsRole assiduousnessStatusHistory {
-        multiplicity *;
-    }
-}
-
-relation RootDomainObjectAssiduousnessVacations {
-    RootDomainObject playsRole rootDomainObject;
-    assiduousness.AssiduousnessVacations playsRole assiduousnessVacations {
-        multiplicity *;
-    }
-}
-
 relation RootDomainObjectAttends {
     RootDomainObject playsRole rootDomainObject;
     Attends playsRole attendss {
@@ -14736,13 +13958,6 @@ relation RootDomainObjectCandidateSituation {
     }
 }
 
-relation RootDomainObjectCard {
-    RootDomainObject playsRole rootDomainObject;
-    assiduousness.Card playsRole cards {
-        multiplicity *;
-    }
-}
-
 relation RootDomainObjectCareer {
     RootDomainObject playsRole rootDomainObject;
     teacher.Career playsRole careers {
@@ -14760,41 +13975,6 @@ relation RootDomainObjectCaseStudy {
 relation RootDomainObjectCaseStudyChoice {
     RootDomainObject playsRole rootDomainObject;
     Seminaries.CaseStudyChoice playsRole caseStudyChoices {
-        multiplicity *;
-    }
-}
-
-relation RootDomainObjectClockUnit {
-    RootDomainObject playsRole rootDomainObject;
-    assiduousness.ClockUnit playsRole clockUnits {
-        multiplicity *;
-    }
-}
-
-relation RootDomainObjectClosedMonth {
-    RootDomainObject playsRole rootDomainObject;
-    assiduousness.ClosedMonth playsRole closedMonths {
-        multiplicity *;
-    }
-}
-
-relation RootDomainObjectClosedMonthDocument {
-    RootDomainObject playsRole rootDomainObject;
-    assiduousness.ClosedMonthDocument playsRole closedMonthDocuments {
-        multiplicity *;
-    }
-}
-
-relation RootDomainObjectGiafInterfaceDocument {
-    RootDomainObject playsRole rootDomainObject;
-    assiduousness.GiafInterfaceDocument playsRole giafInterfaceDocuments {
-        multiplicity *;
-    }
-}
-
-relation RootDomainObjectClosedMonthJustification {
-    RootDomainObject playsRole rootDomainObject;
-    assiduousness.ClosedMonthJustification playsRole closedMonthJustifications {
         multiplicity *;
     }
 }
@@ -15119,13 +14299,6 @@ relation RootDomainObjectEmployee {
     }
 }
 
-relation RootDomainObjectEmployeeExtraWorkAuthorization {
-    RootDomainObject playsRole rootDomainObject;
-    assiduousness.EmployeeExtraWorkAuthorization playsRole employeeExtraWorkAuthorizations {
-        multiplicity *;
-    }
-}
-
 relation RootDomainObjectEmployeeHistoric {
     RootDomainObject playsRole rootDomainObject;
     EmployeeHistoric playsRole employeeHistorics {
@@ -15309,20 +14482,6 @@ relation RootDomainObjectExternalInstitutionUnit {
 relation RootDomainObjectExternalRegistrationData {
     RootDomainObject playsRole rootDomainObject;
     student.ExternalRegistrationData playsRole externalRegistrationDatas {
-        multiplicity *;
-    }
-}
-
-relation RootDomainObjectExtraWorkAuthorization {
-    RootDomainObject playsRole rootDomainObject;
-    assiduousness.ExtraWorkAuthorization playsRole extraWorkAuthorizations {
-        multiplicity *;
-    }
-}
-
-relation RootDomainObjectExtraWorkRequest {
-    RootDomainObject playsRole rootDomainObject;
-    assiduousness.ExtraWorkRequest playsRole extraWorkRequests {
         multiplicity *;
     }
 }
@@ -15666,13 +14825,6 @@ relation RootDomainObjectJournalIssues {
     }
 }
 
-relation RootDomainObjectJustificationMotive {
-    RootDomainObject playsRole rootDomainObject;
-    assiduousness.JustificationMotive playsRole justificationMotives {
-        multiplicity *;
-    }
-}
-
 relation RootDomainObjectLesson {
     RootDomainObject playsRole rootDomainObject;
     Lesson playsRole lessons {
@@ -15753,13 +14905,6 @@ relation RootDomainObjectMasterDegreeThesis {
 relation RootDomainObjectMasterDegreeThesisDataVersion {
     RootDomainObject playsRole rootDomainObject;
     MasterDegreeThesisDataVersion playsRole masterDegreeThesisDataVersions {
-        multiplicity *;
-    }
-}
-
-relation RootDomainObjectMeal {
-    RootDomainObject playsRole rootDomainObject;
-    assiduousness.Meal playsRole meals {
         multiplicity *;
     }
 }
@@ -15977,13 +15122,6 @@ relation RootDomainObjectPaymentPhase {
 relation RootDomainObjectPaymentPlan {
     RootDomainObject playsRole rootDomainObject;
     accounting.PaymentPlan playsRole paymentPlans {
-        multiplicity *;
-    }
-}
-
-relation RootDomainObjectPeriodicity {
-    RootDomainObject playsRole rootDomainObject;
-    assiduousness.Periodicity playsRole periodicities {
         multiplicity *;
     }
 }
@@ -16306,13 +15444,6 @@ relation RootDomainObjectRole {
 relation RootDomainObjectRoomClassification {
     RootDomainObject playsRole rootDomainObject;
     space.RoomClassification playsRole roomClassification {
-        multiplicity *;
-    }
-}
-
-relation RootDomainObjectSchedule {
-    RootDomainObject playsRole rootDomainObject;
-    assiduousness.Schedule playsRole schedules {
         multiplicity *;
     }
 }
@@ -16800,20 +15931,6 @@ relation RootDomainObjectTSDTeacher {
     }
 }
 
-relation RootDomainObjectUnitExtraWorkAmount {
-    RootDomainObject playsRole rootDomainObject;
-    assiduousness.UnitExtraWorkAmount playsRole unitsExtraWorkAmounts {
-        multiplicity *;
-    }
-}
-
-relation RootDomainObjectUnitExtraWorkMovement {
-    RootDomainObject playsRole rootDomainObject;
-    assiduousness.UnitExtraWorkMovement playsRole unitsExtraWorkMovements {
-        multiplicity *;
-    }
-}
-
 relation RootDomainObjectUnitName {
     RootDomainObject playsRole rootDomainObject;
     organizationalStructure.UnitName playsRole unitName {
@@ -16889,27 +16006,6 @@ relation RootDomainObjectWeeklyWorkLoad {
     }
 }
 
-relation RootDomainObjectWorkPeriod {
-    RootDomainObject playsRole rootDomainObject;
-    assiduousness.WorkPeriod playsRole workPeriods {
-        multiplicity *;
-    }
-}
-
-relation RootDomainObjectWorkSchedule {
-    RootDomainObject playsRole rootDomainObject;
-    assiduousness.WorkSchedule playsRole workSchedules {
-        multiplicity *;
-    }
-}
-
-relation RootDomainObjectWorkScheduleType {
-    RootDomainObject playsRole rootDomainObject;
-    assiduousness.WorkScheduleType playsRole workScheduleTypes {
-        multiplicity *;
-    }
-}
-
 relation RootDomainObjectWrittenEvaluationEnrolment {
     RootDomainObject playsRole rootDomainObject;
     WrittenEvaluationEnrolment playsRole writtenEvaluationEnrolments {
@@ -16934,22 +16030,6 @@ relation RootDomainVigilancy {
 relation RootDomainVigilantGroup {
     RootDomainObject playsRole rootDomainObject;
     vigilancy.VigilantGroup playsRole vigilantGroups {
-        multiplicity *;
-    }
-}
-
-relation ScheduleEmployee {
-    assiduousness.Schedule playsRole modifiedSchedules {
-        multiplicity *;
-    }
-    Employee playsRole modifiedBy;
-}
-
-relation ScheduleWorkSchedule {
-    assiduousness.Schedule playsRole schedules {
-        multiplicity *;
-    }
-    assiduousness.WorkSchedule playsRole workSchedules {
         multiplicity *;
     }
 }
@@ -17857,20 +16937,6 @@ relation UnitCampus {
     }
 }
 
-relation UnitExtraWorkAmountUnit {
-    organizationalStructure.Unit playsRole unit;
-    assiduousness.UnitExtraWorkAmount playsRole unitExtraWorkAmounts {
-        multiplicity *;
-    }
-}
-
-relation UnitExtraWorkAmountUnitExtraWorkMovement {
-    assiduousness.UnitExtraWorkAmount playsRole unitExtraWorkAmount;
-    assiduousness.UnitExtraWorkMovement playsRole unitExtraWorkMovements {
-        multiplicity *;
-    }
-}
-
 relation UnitFilePerson {
     Person playsRole uploader;
     UnitFile playsRole uploadedFiles {
@@ -18069,41 +17135,6 @@ relation WeeklyOcupationTeacher {
     Teacher playsRole teacher;
 }
 
-relation WorkSchedulePeriodicity {
-    assiduousness.WorkSchedule playsRole workSchedules {
-        multiplicity *;
-    }
-    assiduousness.Periodicity playsRole periodicity;
-}
-
-relation WorkScheduleTypeFixedWorkPeriod {
-    assiduousness.WorkPeriod playsRole fixedWorkPeriod;
-    assiduousness.WorkScheduleType playsRole fixedWorkScheduleTypes {
-        multiplicity *;
-    }
-}
-
-relation WorkScheduleTypeMeal {
-    assiduousness.Meal playsRole meal;
-    assiduousness.WorkScheduleType playsRole workScheduleTypes {
-        multiplicity *;
-    }
-}
-
-relation WorkScheduleTypeNormalWorkPeriod {
-    assiduousness.WorkPeriod playsRole normalWorkPeriod;
-    assiduousness.WorkScheduleType playsRole normalWorkScheduleTypes {
-        multiplicity *;
-    }
-}
-
-relation WorkScheduleWorkScheduleType {
-    assiduousness.WorkSchedule playsRole workSchedules {
-        multiplicity *;
-    }
-    assiduousness.WorkScheduleType playsRole workScheduleType;
-}
-
 relation WrittenEvaluationContext {
     WrittenEvaluation playsRole associatedWrittenEvaluations {
         multiplicity *;
@@ -18260,27 +17291,6 @@ relation CourseLoadShift {
 relation CourseLoadLessonInstance {
     CourseLoad playsRole courseLoad;
     LessonInstance playsRole lessonInstances {
-        multiplicity *;
-    }
-}
-
-relation AnualBonusInstallmentRootDomainObject {
-    RootDomainObject playsRole rootDomainObject;
-    personnelSection.payrollSection.bonus.AnualBonusInstallment playsRole anualBonusInstallments {
-        multiplicity *;
-    }
-}
-
-relation EmployeeBonusInstallmentRootDomainObject {
-    RootDomainObject playsRole rootDomainObject;
-    personnelSection.payrollSection.bonus.EmployeeBonusInstallment playsRole employeeBonusInstallments{
-        multiplicity *;
-    }
-}
-
-relation EmployeeMonthlyBonusInstallmentRootDomainObject {
-    RootDomainObject playsRole rootDomainObject;
-    personnelSection.payrollSection.bonus.EmployeeMonthlyBonusInstallment playsRole employeeMonthlyBonusInstallments{
         multiplicity *;
     }
 }
@@ -19508,29 +18518,6 @@ relation StudentCandidacyCountryOfResidence {
     }
     
     Country playsRole countryOfResidence;
-}
-
-relation RootDomainObjectAssiduousnessRecordMonthIndex {
-    RootDomainObject playsRole rootDomainObject;
-    assiduousness.AssiduousnessRecordMonthIndex playsRole assiduousnessRecordMonthIndexs {
-        multiplicity *;
-    }
-}
-
-relation AssiduousnessAssiduousnessRecordMonthIndex {
-    assiduousness.Assiduousness playsRole assiduousness;
-    assiduousness.AssiduousnessRecordMonthIndex playsRole assiduousnessRecordMonthIndexs {
-        multiplicity *;
-    }
-}
-
-relation AssiduousnessRecordAssiduousnessRecordMonthIndex {
-    assiduousness.AssiduousnessRecordMonthIndex playsRole assiduousnessRecordMonthIndex {
-        multiplicity *;
-    }
-    assiduousness.AssiduousnessRecord playsRole assiduousnessRecords {
-        multiplicity *;
-    }
 }
 
 relation StudentCandidacyGrantOwnerProvider {

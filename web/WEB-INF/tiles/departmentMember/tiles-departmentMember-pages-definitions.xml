@@ -42,27 +42,6 @@
         <put name="body" value="/credits/notes/listCreditsNotes.jsp"/>
     </definition>
     
-    <!-- Assiduousness Responsible -->    
-    <definition name="show-employee-list" extends="departmentMember.masterPage">
-        <put name="title" value="private.department.responsibleforattendance.staff" />
-		<put name="body" value="/assiduousnessResponsible/showEmployeeList.jsp" />
-	</definition>
-	<definition name="show-employee-work-sheet" extends="departmentMember.masterPage">
-		<put name="body" value="/assiduousnessResponsible/showWorkSheet.jsp" />
-	</definition>
-	<definition name="show-clockings" extends="departmentMember.masterPage">
-		<put name="body" value="/assiduousnessResponsible/showClockings.jsp" />
-	</definition>
-	<definition name="show-justifications" extends="departmentMember.masterPage">
-		<put name="body" value="/assiduousnessResponsible/showJustifications.jsp" />
-	</definition>
-	<definition name="show-schedule" extends="departmentMember.masterPage">
-		<put name="body" value="/assiduousnessResponsible/showSchedule.jsp" />
-	</definition>
-	<definition name="show-vacations" extends="departmentMember.masterPage">
-		<put name="body" value="/assiduousnessResponsible/showVacations.jsp" />
-	</definition>
-
 <!-- Teacher Service Distribution -->	
 	<definition name="df.page.teacherServiceDistribution.showTSDProcessMainOptions" extends="departmentMember.masterPage">
 	    <put name="title" value="private.department.distribution" /> 

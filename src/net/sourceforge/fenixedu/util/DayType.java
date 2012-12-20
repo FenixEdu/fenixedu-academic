@@ -1,4 +1,4 @@
-package net.sourceforge.fenixedu.domain.assiduousness.util;
+package net.sourceforge.fenixedu.util;
 
 public enum DayType {
     WORKDAY, EVERYDAY, SPECIFIC_DAYS

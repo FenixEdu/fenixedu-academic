@@ -707,13 +707,6 @@ public class RootDomainObject extends RootDomainObject_Base {
     }
 
     @Deprecated
-    public net.sourceforge.fenixedu.domain.assiduousness.AssiduousnessRecord readAssiduousnessRecordByOID(Integer idInternal) {
-	final net.sourceforge.fenixedu.domain.assiduousness.AssiduousnessRecord domainObject = (net.sourceforge.fenixedu.domain.assiduousness.AssiduousnessRecord) pt.ist.fenixframework.pstm.Transaction
-		.readDomainObject(net.sourceforge.fenixedu.domain.assiduousness.AssiduousnessRecord.class.getName(), idInternal);
-	return (domainObject == null || domainObject.getRootDomainObject() == null) ? null : domainObject;
-    }
-
-    @Deprecated
     public net.sourceforge.fenixedu.domain.student.YearDelegateCourseInquiry readYearDelegateCourseInquiryByOID(Integer idInternal) {
 	final net.sourceforge.fenixedu.domain.student.YearDelegateCourseInquiry domainObject = (net.sourceforge.fenixedu.domain.student.YearDelegateCourseInquiry) pt.ist.fenixframework.pstm.Transaction
 		.readDomainObject(net.sourceforge.fenixedu.domain.student.YearDelegateCourseInquiry.class.getName(), idInternal);
@@ -778,13 +771,6 @@ public class RootDomainObject extends RootDomainObject_Base {
     public net.sourceforge.fenixedu.domain.contents.Content readContentByOID(Integer idInternal) {
 	final net.sourceforge.fenixedu.domain.contents.Content domainObject = (net.sourceforge.fenixedu.domain.contents.Content) pt.ist.fenixframework.pstm.Transaction
 		.readDomainObject(net.sourceforge.fenixedu.domain.contents.Content.class.getName(), idInternal);
-	return (domainObject == null || domainObject.getRootDomainObject() == null) ? null : domainObject;
-    }
-
-    @Deprecated
-    public net.sourceforge.fenixedu.domain.assiduousness.Schedule readScheduleByOID(Integer idInternal) {
-	final net.sourceforge.fenixedu.domain.assiduousness.Schedule domainObject = (net.sourceforge.fenixedu.domain.assiduousness.Schedule) pt.ist.fenixframework.pstm.Transaction
-		.readDomainObject(net.sourceforge.fenixedu.domain.assiduousness.Schedule.class.getName(), idInternal);
 	return (domainObject == null || domainObject.getRootDomainObject() == null) ? null : domainObject;
     }
 
@@ -881,21 +867,6 @@ public class RootDomainObject extends RootDomainObject_Base {
     public net.sourceforge.fenixedu.domain.tests.NewPermissionUnit readNewPermissionUnitByOID(Integer idInternal) {
 	final net.sourceforge.fenixedu.domain.tests.NewPermissionUnit domainObject = (net.sourceforge.fenixedu.domain.tests.NewPermissionUnit) pt.ist.fenixframework.pstm.Transaction
 		.readDomainObject(net.sourceforge.fenixedu.domain.tests.NewPermissionUnit.class.getName(), idInternal);
-	return (domainObject == null || domainObject.getRootDomainObject() == null) ? null : domainObject;
-    }
-
-    @Deprecated
-    public net.sourceforge.fenixedu.domain.assiduousness.AssiduousnessExemption readAssiduousnessExemptionByOID(Integer idInternal) {
-	final net.sourceforge.fenixedu.domain.assiduousness.AssiduousnessExemption domainObject = (net.sourceforge.fenixedu.domain.assiduousness.AssiduousnessExemption) pt.ist.fenixframework.pstm.Transaction
-		.readDomainObject(net.sourceforge.fenixedu.domain.assiduousness.AssiduousnessExemption.class.getName(),
-			idInternal);
-	return (domainObject == null || domainObject.getRootDomainObject() == null) ? null : domainObject;
-    }
-
-    @Deprecated
-    public net.sourceforge.fenixedu.domain.assiduousness.WorkScheduleType readWorkScheduleTypeByOID(Integer idInternal) {
-	final net.sourceforge.fenixedu.domain.assiduousness.WorkScheduleType domainObject = (net.sourceforge.fenixedu.domain.assiduousness.WorkScheduleType) pt.ist.fenixframework.pstm.Transaction
-		.readDomainObject(net.sourceforge.fenixedu.domain.assiduousness.WorkScheduleType.class.getName(), idInternal);
 	return (domainObject == null || domainObject.getRootDomainObject() == null) ? null : domainObject;
     }
 
@@ -1020,13 +991,6 @@ public class RootDomainObject extends RootDomainObject_Base {
     }
 
     @Deprecated
-    public net.sourceforge.fenixedu.domain.assiduousness.WorkSchedule readWorkScheduleByOID(Integer idInternal) {
-	final net.sourceforge.fenixedu.domain.assiduousness.WorkSchedule domainObject = (net.sourceforge.fenixedu.domain.assiduousness.WorkSchedule) pt.ist.fenixframework.pstm.Transaction
-		.readDomainObject(net.sourceforge.fenixedu.domain.assiduousness.WorkSchedule.class.getName(), idInternal);
-	return (domainObject == null || domainObject.getRootDomainObject() == null) ? null : domainObject;
-    }
-
-    @Deprecated
     public net.sourceforge.fenixedu.domain.onlineTests.TestQuestion readTestQuestionByOID(Integer idInternal) {
 	final net.sourceforge.fenixedu.domain.onlineTests.TestQuestion domainObject = (net.sourceforge.fenixedu.domain.onlineTests.TestQuestion) pt.ist.fenixframework.pstm.Transaction
 		.readDomainObject(net.sourceforge.fenixedu.domain.onlineTests.TestQuestion.class.getName(), idInternal);
@@ -1073,15 +1037,6 @@ public class RootDomainObject extends RootDomainObject_Base {
     public net.sourceforge.fenixedu.domain.GuideSituation readGuideSituationByOID(Integer idInternal) {
 	final net.sourceforge.fenixedu.domain.GuideSituation domainObject = (net.sourceforge.fenixedu.domain.GuideSituation) pt.ist.fenixframework.pstm.Transaction
 		.readDomainObject(net.sourceforge.fenixedu.domain.GuideSituation.class.getName(), idInternal);
-	return (domainObject == null || domainObject.getRootDomainObject() == null) ? null : domainObject;
-    }
-
-    @Deprecated
-    public net.sourceforge.fenixedu.domain.assiduousness.AssiduousnessStatusHistory readAssiduousnessStatusHistoryByOID(
-	    Integer idInternal) {
-	final net.sourceforge.fenixedu.domain.assiduousness.AssiduousnessStatusHistory domainObject = (net.sourceforge.fenixedu.domain.assiduousness.AssiduousnessStatusHistory) pt.ist.fenixframework.pstm.Transaction
-		.readDomainObject(net.sourceforge.fenixedu.domain.assiduousness.AssiduousnessStatusHistory.class.getName(),
-			idInternal);
 	return (domainObject == null || domainObject.getRootDomainObject() == null) ? null : domainObject;
     }
 
@@ -1228,13 +1183,6 @@ public class RootDomainObject extends RootDomainObject_Base {
     }
 
     @Deprecated
-    public net.sourceforge.fenixedu.domain.assiduousness.ClosedMonth readClosedMonthByOID(Integer idInternal) {
-	final net.sourceforge.fenixedu.domain.assiduousness.ClosedMonth domainObject = (net.sourceforge.fenixedu.domain.assiduousness.ClosedMonth) pt.ist.fenixframework.pstm.Transaction
-		.readDomainObject(net.sourceforge.fenixedu.domain.assiduousness.ClosedMonth.class.getName(), idInternal);
-	return (domainObject == null || domainObject.getRootDomainObject() == null) ? null : domainObject;
-    }
-
-    @Deprecated
     public net.sourceforge.fenixedu.domain.gratuity.masterDegree.SibsPaymentFileEntry readSibsPaymentFileEntryByOID(
 	    Integer idInternal) {
 	final net.sourceforge.fenixedu.domain.gratuity.masterDegree.SibsPaymentFileEntry domainObject = (net.sourceforge.fenixedu.domain.gratuity.masterDegree.SibsPaymentFileEntry) pt.ist.fenixframework.pstm.Transaction
@@ -1320,24 +1268,9 @@ public class RootDomainObject extends RootDomainObject_Base {
     }
 
     @Deprecated
-    public net.sourceforge.fenixedu.domain.assiduousness.ExtraWorkAuthorization readExtraWorkAuthorizationByOID(Integer idInternal) {
-	final net.sourceforge.fenixedu.domain.assiduousness.ExtraWorkAuthorization domainObject = (net.sourceforge.fenixedu.domain.assiduousness.ExtraWorkAuthorization) pt.ist.fenixframework.pstm.Transaction
-		.readDomainObject(net.sourceforge.fenixedu.domain.assiduousness.ExtraWorkAuthorization.class.getName(),
-			idInternal);
-	return (domainObject == null || domainObject.getRootDomainObject() == null) ? null : domainObject;
-    }
-
-    @Deprecated
     public net.sourceforge.fenixedu.domain.Employee readEmployeeByOID(Integer idInternal) {
 	final net.sourceforge.fenixedu.domain.Employee domainObject = (net.sourceforge.fenixedu.domain.Employee) pt.ist.fenixframework.pstm.Transaction
 		.readDomainObject(net.sourceforge.fenixedu.domain.Employee.class.getName(), idInternal);
-	return (domainObject == null || domainObject.getRootDomainObject() == null) ? null : domainObject;
-    }
-
-    @Deprecated
-    public net.sourceforge.fenixedu.domain.assiduousness.AssiduousnessStatus readAssiduousnessStatusByOID(Integer idInternal) {
-	final net.sourceforge.fenixedu.domain.assiduousness.AssiduousnessStatus domainObject = (net.sourceforge.fenixedu.domain.assiduousness.AssiduousnessStatus) pt.ist.fenixframework.pstm.Transaction
-		.readDomainObject(net.sourceforge.fenixedu.domain.assiduousness.AssiduousnessStatus.class.getName(), idInternal);
 	return (domainObject == null || domainObject.getRootDomainObject() == null) ? null : domainObject;
     }
 
@@ -1472,13 +1405,6 @@ public class RootDomainObject extends RootDomainObject_Base {
     public net.sourceforge.fenixedu.domain.GratuitySituation readGratuitySituationByOID(Integer idInternal) {
 	final net.sourceforge.fenixedu.domain.GratuitySituation domainObject = (net.sourceforge.fenixedu.domain.GratuitySituation) pt.ist.fenixframework.pstm.Transaction
 		.readDomainObject(net.sourceforge.fenixedu.domain.GratuitySituation.class.getName(), idInternal);
-	return (domainObject == null || domainObject.getRootDomainObject() == null) ? null : domainObject;
-    }
-
-    @Deprecated
-    public net.sourceforge.fenixedu.domain.assiduousness.JustificationMotive readJustificationMotiveByOID(Integer idInternal) {
-	final net.sourceforge.fenixedu.domain.assiduousness.JustificationMotive domainObject = (net.sourceforge.fenixedu.domain.assiduousness.JustificationMotive) pt.ist.fenixframework.pstm.Transaction
-		.readDomainObject(net.sourceforge.fenixedu.domain.assiduousness.JustificationMotive.class.getName(), idInternal);
 	return (domainObject == null || domainObject.getRootDomainObject() == null) ? null : domainObject;
     }
 
@@ -2406,16 +2332,6 @@ public class RootDomainObject extends RootDomainObject_Base {
 		return getUtilEmailMessagesSet();
 	    }
 	});
-	closureAccessMap.put(net.sourceforge.fenixedu.domain.assiduousness.AssiduousnessRecord.class.getName(),
-		new DomainObjectReader() {
-		    public DomainObject readDomainObjectByOID(final Integer idInternal) {
-			return readAssiduousnessRecordByOID(idInternal);
-		    }
-
-		    public java.util.Set readAllDomainObjects() {
-			return getAssiduousnessRecordsSet();
-		    }
-		});
 	closureAccessMap.put(net.sourceforge.fenixedu.domain.student.YearDelegateCourseInquiry.class.getName(),
 		new DomainObjectReader() {
 		    public DomainObject readDomainObjectByOID(final Integer idInternal) {
@@ -2509,15 +2425,6 @@ public class RootDomainObject extends RootDomainObject_Base {
 
 	    public java.util.Set readAllDomainObjects() {
 		return getContentsSet();
-	    }
-	});
-	closureAccessMap.put(net.sourceforge.fenixedu.domain.assiduousness.Schedule.class.getName(), new DomainObjectReader() {
-	    public DomainObject readDomainObjectByOID(final Integer idInternal) {
-		return readScheduleByOID(idInternal);
-	    }
-
-	    public java.util.Set readAllDomainObjects() {
-		return getSchedulesSet();
 	    }
 	});
 	closureAccessMap.put(
@@ -2644,26 +2551,6 @@ public class RootDomainObject extends RootDomainObject_Base {
 		return getPermissionUnitsSet();
 	    }
 	});
-	closureAccessMap.put(net.sourceforge.fenixedu.domain.assiduousness.AssiduousnessExemption.class.getName(),
-		new DomainObjectReader() {
-		    public DomainObject readDomainObjectByOID(final Integer idInternal) {
-			return readAssiduousnessExemptionByOID(idInternal);
-		    }
-
-		    public java.util.Set readAllDomainObjects() {
-			return getAssiduousnessExemptionsSet();
-		    }
-		});
-	closureAccessMap.put(net.sourceforge.fenixedu.domain.assiduousness.WorkScheduleType.class.getName(),
-		new DomainObjectReader() {
-		    public DomainObject readDomainObjectByOID(final Integer idInternal) {
-			return readWorkScheduleTypeByOID(idInternal);
-		    }
-
-		    public java.util.Set readAllDomainObjects() {
-			return getWorkScheduleTypesSet();
-		    }
-		});
 	closureAccessMap.put(net.sourceforge.fenixedu.domain.EnrolmentEvaluation.class.getName(), new DomainObjectReader() {
 	    public DomainObject readDomainObjectByOID(final Integer idInternal) {
 		return readEnrolmentEvaluationByOID(idInternal);
@@ -2821,16 +2708,6 @@ public class RootDomainObject extends RootDomainObject_Base {
 		return getCountrysSet();
 	    }
 	});
-	closureAccessMap.put(net.sourceforge.fenixedu.domain.assiduousness.WorkSchedule.class.getName(),
-		new DomainObjectReader() {
-		    public DomainObject readDomainObjectByOID(final Integer idInternal) {
-			return readWorkScheduleByOID(idInternal);
-		    }
-
-		    public java.util.Set readAllDomainObjects() {
-			return getWorkSchedulesSet();
-		    }
-		});
 	closureAccessMap.put(net.sourceforge.fenixedu.domain.onlineTests.TestQuestion.class.getName(), new DomainObjectReader() {
 	    public DomainObject readDomainObjectByOID(final Integer idInternal) {
 		return readTestQuestionByOID(idInternal);
@@ -2896,16 +2773,6 @@ public class RootDomainObject extends RootDomainObject_Base {
 		return getGuideSituationsSet();
 	    }
 	});
-	closureAccessMap.put(net.sourceforge.fenixedu.domain.assiduousness.AssiduousnessStatusHistory.class.getName(),
-		new DomainObjectReader() {
-		    public DomainObject readDomainObjectByOID(final Integer idInternal) {
-			return readAssiduousnessStatusHistoryByOID(idInternal);
-		    }
-
-		    public java.util.Set readAllDomainObjects() {
-			return getAssiduousnessStatusHistorySet();
-		    }
-		});
 	closureAccessMap.put(net.sourceforge.fenixedu.domain.Grouping.class.getName(), new DomainObjectReader() {
 	    public DomainObject readDomainObjectByOID(final Integer idInternal) {
 		return readGroupingByOID(idInternal);
@@ -3095,15 +2962,6 @@ public class RootDomainObject extends RootDomainObject_Base {
 			return getAcademicServiceRequestsSet();
 		    }
 		});
-	closureAccessMap.put(net.sourceforge.fenixedu.domain.assiduousness.ClosedMonth.class.getName(), new DomainObjectReader() {
-	    public DomainObject readDomainObjectByOID(final Integer idInternal) {
-		return readClosedMonthByOID(idInternal);
-	    }
-
-	    public java.util.Set readAllDomainObjects() {
-		return getClosedMonthsSet();
-	    }
-	});
 	closureAccessMap.put(net.sourceforge.fenixedu.domain.gratuity.masterDegree.SibsPaymentFileEntry.class.getName(),
 		new DomainObjectReader() {
 		    public DomainObject readDomainObjectByOID(final Integer idInternal) {
@@ -3211,16 +3069,6 @@ public class RootDomainObject extends RootDomainObject_Base {
 			return getTeacherDegreeFinalProjectStudentsSet();
 		    }
 		});
-	closureAccessMap.put(net.sourceforge.fenixedu.domain.assiduousness.ExtraWorkAuthorization.class.getName(),
-		new DomainObjectReader() {
-		    public DomainObject readDomainObjectByOID(final Integer idInternal) {
-			return readExtraWorkAuthorizationByOID(idInternal);
-		    }
-
-		    public java.util.Set readAllDomainObjects() {
-			return getExtraWorkAuthorizationsSet();
-		    }
-		});
 	closureAccessMap.put(net.sourceforge.fenixedu.domain.Employee.class.getName(), new DomainObjectReader() {
 	    public DomainObject readDomainObjectByOID(final Integer idInternal) {
 		return readEmployeeByOID(idInternal);
@@ -3230,16 +3078,6 @@ public class RootDomainObject extends RootDomainObject_Base {
 		return getEmployeesSet();
 	    }
 	});
-	closureAccessMap.put(net.sourceforge.fenixedu.domain.assiduousness.AssiduousnessStatus.class.getName(),
-		new DomainObjectReader() {
-		    public DomainObject readDomainObjectByOID(final Integer idInternal) {
-			return readAssiduousnessStatusByOID(idInternal);
-		    }
-
-		    public java.util.Set readAllDomainObjects() {
-			return getAssiduousnessStatusSet();
-		    }
-		});
 	closureAccessMap.put(net.sourceforge.fenixedu.domain.research.ResearchInterest.class.getName(), new DomainObjectReader() {
 	    public DomainObject readDomainObjectByOID(final Integer idInternal) {
 		return readResearchInterestByOID(idInternal);
@@ -3413,16 +3251,6 @@ public class RootDomainObject extends RootDomainObject_Base {
 		return getGratuitySituationsSet();
 	    }
 	});
-	closureAccessMap.put(net.sourceforge.fenixedu.domain.assiduousness.JustificationMotive.class.getName(),
-		new DomainObjectReader() {
-		    public DomainObject readDomainObjectByOID(final Integer idInternal) {
-			return readJustificationMotiveByOID(idInternal);
-		    }
-
-		    public java.util.Set readAllDomainObjects() {
-			return getJustificationMotivesSet();
-		    }
-		});
 	closureAccessMap.put(net.sourceforge.fenixedu.domain.contacts.PartyContact.class.getName(), new DomainObjectReader() {
 	    public DomainObject readDomainObjectByOID(final Integer idInternal) {
 		return readPartyContactByOID(idInternal);
@@ -3591,221 +3419,179 @@ public class RootDomainObject extends RootDomainObject_Base {
 	    }
 	});
 	closureAccessMap.put(net.sourceforge.fenixedu.domain.vigilancy.VigilantGroup.class.getName(), new DomainObjectReader() {
-		public DomainObject readDomainObjectByOID(final Integer idInternal) {
-			return readVigilantGroupByOID(idInternal);
-		}
-		public java.util.Set readAllDomainObjects() {
-			return getVigilantGroupsSet();
-		}
+	    public DomainObject readDomainObjectByOID(final Integer idInternal) {
+		return readVigilantGroupByOID(idInternal);
+	    }
+
+	    public java.util.Set readAllDomainObjects() {
+		return getVigilantGroupsSet();
+	    }
 	});
 	closureAccessMap.put(net.sourceforge.fenixedu.domain.vigilancy.VigilantWrapper.class.getName(), new DomainObjectReader() {
-		public DomainObject readDomainObjectByOID(final Integer idInternal) {
-			return readVigilantWrapperByOID(idInternal);
-		}
-		public java.util.Set readAllDomainObjects() {
-			return getVigilantWrappersSet();
-		}
+	    public DomainObject readDomainObjectByOID(final Integer idInternal) {
+		return readVigilantWrapperByOID(idInternal);
+	    }
+
+	    public java.util.Set readAllDomainObjects() {
+		return getVigilantWrappersSet();
+	    }
 	});
-	closureAccessMap.put(net.sourceforge.fenixedu.domain.assiduousness.ExtraWorkRequest.class.getName(), new DomainObjectReader() {
-		public DomainObject readDomainObjectByOID(final Integer idInternal) {
-			return readExtraWorkRequestByOID(idInternal);
-		}
-		public java.util.Set readAllDomainObjects() {
-			return getExtraWorkRequestsSet();
-		}
-	});
-	closureAccessMap.put(net.sourceforge.fenixedu.domain.vigilancy.UnavailablePeriod.class.getName(), new DomainObjectReader() {
-		public DomainObject readDomainObjectByOID(final Integer idInternal) {
+	closureAccessMap.put(net.sourceforge.fenixedu.domain.vigilancy.UnavailablePeriod.class.getName(),
+		new DomainObjectReader() {
+		    public DomainObject readDomainObjectByOID(final Integer idInternal) {
 			return readUnavailablePeriodByOID(idInternal);
-		}
-		public java.util.Set readAllDomainObjects() {
+		    }
+
+		    public java.util.Set readAllDomainObjects() {
 			return getUnavailablePeriodsSet();
-		}
-	});
+		    }
+		});
 	closureAccessMap.put(net.sourceforge.fenixedu.domain.parking.Vehicle.class.getName(), new DomainObjectReader() {
-		public DomainObject readDomainObjectByOID(final Integer idInternal) {
-			return readVehicleByOID(idInternal);
-		}
-		public java.util.Set readAllDomainObjects() {
-			return getVehiclesSet();
-		}
+	    public DomainObject readDomainObjectByOID(final Integer idInternal) {
+		return readVehicleByOID(idInternal);
+	    }
+
+	    public java.util.Set readAllDomainObjects() {
+		return getVehiclesSet();
+	    }
 	});
-	closureAccessMap.put(net.sourceforge.fenixedu.domain.degreeStructure.CompetenceCourseInformationChangeRequest.class.getName(), new DomainObjectReader() {
-		public DomainObject readDomainObjectByOID(final Integer idInternal) {
-			return
-readCompetenceCourseInformationChangeRequestByOID(idInternal);
-		}
-		public java.util.Set readAllDomainObjects() {
+	closureAccessMap.put(
+		net.sourceforge.fenixedu.domain.degreeStructure.CompetenceCourseInformationChangeRequest.class.getName(),
+		new DomainObjectReader() {
+		    public DomainObject readDomainObjectByOID(final Integer idInternal) {
+			return readCompetenceCourseInformationChangeRequestByOID(idInternal);
+		    }
+
+		    public java.util.Set readAllDomainObjects() {
 			return getCompetenceCourseInformationChangeRequestsSet();
-		}
-	});
+		    }
+		});
 	closureAccessMap.put(net.sourceforge.fenixedu.domain.vigilancy.Vigilancy.class.getName(), new DomainObjectReader() {
-		public DomainObject readDomainObjectByOID(final Integer idInternal) {
-			return readVigilancyByOID(idInternal);
-		}
-		public java.util.Set readAllDomainObjects() {
-			return getVigilanciesSet();
-		}
-	});
-	closureAccessMap.put(net.sourceforge.fenixedu.domain.assiduousness.UnitExtraWorkAmount.class.getName(), new DomainObjectReader() {
-		public DomainObject readDomainObjectByOID(final Integer idInternal) {
-			return readUnitExtraWorkAmountByOID(idInternal);
-		}
-		public java.util.Set readAllDomainObjects() {
-			return getUnitsExtraWorkAmountsSet();
-		}
+	    public DomainObject readDomainObjectByOID(final Integer idInternal) {
+		return readVigilancyByOID(idInternal);
+	    }
+
+	    public java.util.Set readAllDomainObjects() {
+		return getVigilanciesSet();
+	    }
 	});
 	closureAccessMap.put(net.sourceforge.fenixedu.domain.LoginRequest.class.getName(), new DomainObjectReader() {
-		public DomainObject readDomainObjectByOID(final Integer idInternal) {
-			return readLoginRequestByOID(idInternal);
-		}
-		public java.util.Set readAllDomainObjects() {
-			return getLoginRequestsSet();
-		}
+	    public DomainObject readDomainObjectByOID(final Integer idInternal) {
+		return readLoginRequestByOID(idInternal);
+	    }
+
+	    public java.util.Set readAllDomainObjects() {
+		return getLoginRequestsSet();
+	    }
 	});
-	closureAccessMap.put(net.sourceforge.fenixedu.domain.research.activity.Cooperation.class.getName(), new DomainObjectReader() {
-		public DomainObject readDomainObjectByOID(final Integer idInternal) {
+	closureAccessMap.put(net.sourceforge.fenixedu.domain.research.activity.Cooperation.class.getName(),
+		new DomainObjectReader() {
+		    public DomainObject readDomainObjectByOID(final Integer idInternal) {
 			return readCooperationByOID(idInternal);
-		}
-		public java.util.Set readAllDomainObjects() {
+		    }
+
+		    public java.util.Set readAllDomainObjects() {
 			return getCooperationsSet();
-		}
-	});
-	closureAccessMap.put(net.sourceforge.fenixedu.domain.research.activity.JournalIssue.class.getName(), new DomainObjectReader() {
-		public DomainObject readDomainObjectByOID(final Integer idInternal) {
+		    }
+		});
+	closureAccessMap.put(net.sourceforge.fenixedu.domain.research.activity.JournalIssue.class.getName(),
+		new DomainObjectReader() {
+		    public DomainObject readDomainObjectByOID(final Integer idInternal) {
 			return readJournalIssueByOID(idInternal);
-		}
-		public java.util.Set readAllDomainObjects() {
+		    }
+
+		    public java.util.Set readAllDomainObjects() {
 			return getJournalIssuesSet();
-		}
-	});
-	closureAccessMap.put(net.sourceforge.fenixedu.domain.research.activity.Participation.class.getName(), new DomainObjectReader() {
-		public DomainObject readDomainObjectByOID(final Integer idInternal) {
+		    }
+		});
+	closureAccessMap.put(net.sourceforge.fenixedu.domain.research.activity.Participation.class.getName(),
+		new DomainObjectReader() {
+		    public DomainObject readDomainObjectByOID(final Integer idInternal) {
 			return readParticipationByOID(idInternal);
-		}
-		public java.util.Set readAllDomainObjects() {
+		    }
+
+		    public java.util.Set readAllDomainObjects() {
 			return getParticipationsSet();
-		}
-	});
+		    }
+		});
 	closureAccessMap.put(net.sourceforge.fenixedu.domain.research.Prize.class.getName(), new DomainObjectReader() {
-		public DomainObject readDomainObjectByOID(final Integer idInternal) {
-			return readPrizeByOID(idInternal);
-		}
-		public java.util.Set readAllDomainObjects() {
-			return getPrizesSet();
-		}
+	    public DomainObject readDomainObjectByOID(final Integer idInternal) {
+		return readPrizeByOID(idInternal);
+	    }
+
+	    public java.util.Set readAllDomainObjects() {
+		return getPrizesSet();
+	    }
 	});
     }
 
-    public net.sourceforge.fenixedu.domain.vigilancy.VigilantGroup readVigilantGroupByOID(Integer idInternal){
-	final net.sourceforge.fenixedu.domain.vigilancy.VigilantGroup domainObject = (net.sourceforge.fenixedu.domain.vigilancy.VigilantGroup)pt.ist.fenixframework.pstm.Transaction.readDomainObject(net.sourceforge.fenixedu.domain.vigilancy.VigilantGroup.class.getName(), idInternal);
+    public net.sourceforge.fenixedu.domain.vigilancy.VigilantGroup readVigilantGroupByOID(Integer idInternal) {
+	final net.sourceforge.fenixedu.domain.vigilancy.VigilantGroup domainObject = (net.sourceforge.fenixedu.domain.vigilancy.VigilantGroup) pt.ist.fenixframework.pstm.Transaction
+		.readDomainObject(net.sourceforge.fenixedu.domain.vigilancy.VigilantGroup.class.getName(), idInternal);
 	return (domainObject == null || domainObject.getRootDomainObject() == null) ? null : domainObject;
     }
 
-    public net.sourceforge.fenixedu.domain.vigilancy.VigilantWrapper readVigilantWrapperByOID(Integer idInternal){
-	final net.sourceforge.fenixedu.domain.vigilancy.VigilantWrapper domainObject = (net.sourceforge.fenixedu.domain.vigilancy.VigilantWrapper) pt.ist.fenixframework.pstm.Transaction.readDomainObject(net.sourceforge.fenixedu.domain.vigilancy.VigilantWrapper.class.getName(), idInternal);
+    public net.sourceforge.fenixedu.domain.vigilancy.VigilantWrapper readVigilantWrapperByOID(Integer idInternal) {
+	final net.sourceforge.fenixedu.domain.vigilancy.VigilantWrapper domainObject = (net.sourceforge.fenixedu.domain.vigilancy.VigilantWrapper) pt.ist.fenixframework.pstm.Transaction
+		.readDomainObject(net.sourceforge.fenixedu.domain.vigilancy.VigilantWrapper.class.getName(), idInternal);
 	return (domainObject == null || domainObject.getRootDomainObject() == null) ? null : domainObject;
     }
 
-    public net.sourceforge.fenixedu.domain.assiduousness.ExtraWorkRequest readExtraWorkRequestByOID(Integer idInternal){
-	final net.sourceforge.fenixedu.domain.assiduousness.ExtraWorkRequest domainObject = (net.sourceforge.fenixedu.domain.assiduousness.ExtraWorkRequest) pt.ist.fenixframework.pstm.Transaction.readDomainObject(net.sourceforge.fenixedu.domain.assiduousness.ExtraWorkRequest.class.getName(), idInternal);
+    public net.sourceforge.fenixedu.domain.vigilancy.UnavailablePeriod readUnavailablePeriodByOID(Integer idInternal) {
+	final net.sourceforge.fenixedu.domain.vigilancy.UnavailablePeriod domainObject = (net.sourceforge.fenixedu.domain.vigilancy.UnavailablePeriod) pt.ist.fenixframework.pstm.Transaction
+		.readDomainObject(net.sourceforge.fenixedu.domain.vigilancy.UnavailablePeriod.class.getName(), idInternal);
 	return (domainObject == null || domainObject.getRootDomainObject() == null) ? null : domainObject;
     }
 
-	public net.sourceforge.fenixedu.domain.vigilancy.UnavailablePeriod
-readUnavailablePeriodByOID(Integer idInternal){
-		final net.sourceforge.fenixedu.domain.vigilancy.UnavailablePeriod
-domainObject =
-(net.sourceforge.fenixedu.domain.vigilancy.UnavailablePeriod)
-pt.ist.fenixframework.pstm.Transaction.readDomainObject(net.sourceforge.fenixedu.domain.vigilancy.UnavailablePeriod.class.getName(), idInternal);
-return (domainObject == null || domainObject.getRootDomainObject() ==
-null) ? null : domainObject;
-	}
+    public net.sourceforge.fenixedu.domain.parking.Vehicle readVehicleByOID(Integer idInternal) {
+	final net.sourceforge.fenixedu.domain.parking.Vehicle domainObject = (net.sourceforge.fenixedu.domain.parking.Vehicle) pt.ist.fenixframework.pstm.Transaction
+		.readDomainObject(net.sourceforge.fenixedu.domain.parking.Vehicle.class.getName(), idInternal);
+	return (domainObject == null || domainObject.getRootDomainObject() == null) ? null : domainObject;
+    }
 
-	public net.sourceforge.fenixedu.domain.parking.Vehicle
-readVehicleByOID(Integer idInternal){
-		final net.sourceforge.fenixedu.domain.parking.Vehicle domainObject =
-(net.sourceforge.fenixedu.domain.parking.Vehicle)
-pt.ist.fenixframework.pstm.Transaction.readDomainObject(net.sourceforge.fenixedu.domain.parking.Vehicle.class.getName(), idInternal);
-return (domainObject == null || domainObject.getRootDomainObject() ==
-null) ? null : domainObject;
-	}
+    public net.sourceforge.fenixedu.domain.degreeStructure.CompetenceCourseInformationChangeRequest readCompetenceCourseInformationChangeRequestByOID(
+	    Integer idInternal) {
+	final net.sourceforge.fenixedu.domain.degreeStructure.CompetenceCourseInformationChangeRequest domainObject = (net.sourceforge.fenixedu.domain.degreeStructure.CompetenceCourseInformationChangeRequest) pt.ist.fenixframework.pstm.Transaction
+		.readDomainObject(
+			net.sourceforge.fenixedu.domain.degreeStructure.CompetenceCourseInformationChangeRequest.class.getName(),
+			idInternal);
+	return (domainObject == null || domainObject.getRootDomainObject() == null) ? null : domainObject;
+    }
 
-	public
-net.sourceforge.fenixedu.domain.degreeStructure.CompetenceCourseInformationChangeRequest readCompetenceCourseInformationChangeRequestByOID(Integer idInternal){
-		final
-net.sourceforge.fenixedu.domain.degreeStructure.CompetenceCourseInformationChangeRequest domainObject = (net.sourceforge.fenixedu.domain.degreeStructure.CompetenceCourseInformationChangeRequest) pt.ist.fenixframework.pstm.Transaction.readDomainObject(net.sourceforge.fenixedu.domain.degreeStructure.CompetenceCourseInformationChangeRequest.class.getName(), idInternal);
-return (domainObject == null || domainObject.getRootDomainObject() ==
-null) ? null : domainObject;
-	}
+    public net.sourceforge.fenixedu.domain.vigilancy.Vigilancy readVigilancyByOID(Integer idInternal) {
+	final net.sourceforge.fenixedu.domain.vigilancy.Vigilancy domainObject = (net.sourceforge.fenixedu.domain.vigilancy.Vigilancy) pt.ist.fenixframework.pstm.Transaction
+		.readDomainObject(net.sourceforge.fenixedu.domain.vigilancy.Vigilancy.class.getName(), idInternal);
+	return (domainObject == null || domainObject.getRootDomainObject() == null) ? null : domainObject;
+    }
 
-	public net.sourceforge.fenixedu.domain.vigilancy.Vigilancy
-readVigilancyByOID(Integer idInternal){
-		final net.sourceforge.fenixedu.domain.vigilancy.Vigilancy domainObject
-= (net.sourceforge.fenixedu.domain.vigilancy.Vigilancy)
-pt.ist.fenixframework.pstm.Transaction.readDomainObject(net.sourceforge.fenixedu.domain.vigilancy.Vigilancy.class.getName(), idInternal);
-return (domainObject == null || domainObject.getRootDomainObject() ==
-null) ? null : domainObject;
-	}
+    public net.sourceforge.fenixedu.domain.LoginRequest readLoginRequestByOID(Integer idInternal) {
+	final net.sourceforge.fenixedu.domain.LoginRequest domainObject = (net.sourceforge.fenixedu.domain.LoginRequest) pt.ist.fenixframework.pstm.Transaction
+		.readDomainObject(net.sourceforge.fenixedu.domain.LoginRequest.class.getName(), idInternal);
+	return (domainObject == null || domainObject.getRootDomainObject() == null) ? null : domainObject;
+    }
 
-	public
-net.sourceforge.fenixedu.domain.assiduousness.UnitExtraWorkAmount
-readUnitExtraWorkAmountByOID(Integer idInternal){
-		final
-net.sourceforge.fenixedu.domain.assiduousness.UnitExtraWorkAmount
-domainObject =
-(net.sourceforge.fenixedu.domain.assiduousness.UnitExtraWorkAmount)
-pt.ist.fenixframework.pstm.Transaction.readDomainObject(net.sourceforge.fenixedu.domain.assiduousness.UnitExtraWorkAmount.class.getName(), idInternal);
-return (domainObject == null || domainObject.getRootDomainObject() ==
-null) ? null : domainObject;
-	}
+    public net.sourceforge.fenixedu.domain.research.activity.Cooperation readCooperationByOID(Integer idInternal) {
+	final net.sourceforge.fenixedu.domain.research.activity.Cooperation domainObject = (net.sourceforge.fenixedu.domain.research.activity.Cooperation) pt.ist.fenixframework.pstm.Transaction
+		.readDomainObject(net.sourceforge.fenixedu.domain.research.activity.Cooperation.class.getName(), idInternal);
+	return (domainObject == null || domainObject.getRootDomainObject() == null) ? null : domainObject;
+    }
 
-	public net.sourceforge.fenixedu.domain.LoginRequest
-readLoginRequestByOID(Integer idInternal){
-		final net.sourceforge.fenixedu.domain.LoginRequest domainObject =
-(net.sourceforge.fenixedu.domain.LoginRequest)
-pt.ist.fenixframework.pstm.Transaction.readDomainObject(net.sourceforge.fenixedu.domain.LoginRequest.class.getName(), idInternal);
-return (domainObject == null || domainObject.getRootDomainObject() ==
-null) ? null : domainObject;
-	}
+    public net.sourceforge.fenixedu.domain.research.activity.JournalIssue readJournalIssueByOID(Integer idInternal) {
+	final net.sourceforge.fenixedu.domain.research.activity.JournalIssue domainObject = (net.sourceforge.fenixedu.domain.research.activity.JournalIssue) pt.ist.fenixframework.pstm.Transaction
+		.readDomainObject(net.sourceforge.fenixedu.domain.research.activity.JournalIssue.class.getName(), idInternal);
+	return (domainObject == null || domainObject.getRootDomainObject() == null) ? null : domainObject;
+    }
 
-	public net.sourceforge.fenixedu.domain.research.activity.Cooperation
-readCooperationByOID(Integer idInternal){
-		final net.sourceforge.fenixedu.domain.research.activity.Cooperation
-domainObject =
-(net.sourceforge.fenixedu.domain.research.activity.Cooperation)
-pt.ist.fenixframework.pstm.Transaction.readDomainObject(net.sourceforge.fenixedu.domain.research.activity.Cooperation.class.getName(), idInternal);
-return (domainObject == null || domainObject.getRootDomainObject() ==
-null) ? null : domainObject;
-	}
+    public net.sourceforge.fenixedu.domain.research.activity.Participation readParticipationByOID(Integer idInternal) {
+	final net.sourceforge.fenixedu.domain.research.activity.Participation domainObject = (net.sourceforge.fenixedu.domain.research.activity.Participation) pt.ist.fenixframework.pstm.Transaction
+		.readDomainObject(net.sourceforge.fenixedu.domain.research.activity.Participation.class.getName(), idInternal);
+	return (domainObject == null || domainObject.getRootDomainObject() == null) ? null : domainObject;
+    }
 
-	public net.sourceforge.fenixedu.domain.research.activity.JournalIssue
-readJournalIssueByOID(Integer idInternal){
-		final net.sourceforge.fenixedu.domain.research.activity.JournalIssue
-domainObject =
-(net.sourceforge.fenixedu.domain.research.activity.JournalIssue)
-pt.ist.fenixframework.pstm.Transaction.readDomainObject(net.sourceforge.fenixedu.domain.research.activity.JournalIssue.class.getName(), idInternal);
-return (domainObject == null || domainObject.getRootDomainObject() ==
-null) ? null : domainObject;
-	}
-
-	public net.sourceforge.fenixedu.domain.research.activity.Participation
-readParticipationByOID(Integer idInternal){
-		final net.sourceforge.fenixedu.domain.research.activity.Participation
-domainObject =
-(net.sourceforge.fenixedu.domain.research.activity.Participation)
-pt.ist.fenixframework.pstm.Transaction.readDomainObject(net.sourceforge.fenixedu.domain.research.activity.Participation.class.getName(), idInternal);
-return (domainObject == null || domainObject.getRootDomainObject() ==
-null) ? null : domainObject;
-	}
-
-	public net.sourceforge.fenixedu.domain.research.Prize
-readPrizeByOID(Integer idInternal){
-		final net.sourceforge.fenixedu.domain.research.Prize domainObject =
-(net.sourceforge.fenixedu.domain.research.Prize)
-pt.ist.fenixframework.pstm.Transaction.readDomainObject(net.sourceforge.fenixedu.domain.research.Prize.class.getName(), idInternal);
-return (domainObject == null || domainObject.getRootDomainObject() ==
-null) ? null : domainObject;
-	}
+    public net.sourceforge.fenixedu.domain.research.Prize readPrizeByOID(Integer idInternal) {
+	final net.sourceforge.fenixedu.domain.research.Prize domainObject = (net.sourceforge.fenixedu.domain.research.Prize) pt.ist.fenixframework.pstm.Transaction
+		.readDomainObject(net.sourceforge.fenixedu.domain.research.Prize.class.getName(), idInternal);
+	return (domainObject == null || domainObject.getRootDomainObject() == null) ? null : domainObject;
+    }
 
 }

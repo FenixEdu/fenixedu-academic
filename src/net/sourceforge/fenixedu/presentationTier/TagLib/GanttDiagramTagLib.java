@@ -11,7 +11,7 @@ import javax.servlet.jsp.tagext.TagSupport;
 
 import net.sourceforge.fenixedu.domain.Holiday;
 import net.sourceforge.fenixedu.domain.Lesson;
-import net.sourceforge.fenixedu.domain.assiduousness.util.DayType;
+import net.sourceforge.fenixedu.util.DayType;
 import net.sourceforge.fenixedu.util.Month;
 import net.sourceforge.fenixedu.util.renderer.GanttDiagram;
 import net.sourceforge.fenixedu.util.renderer.GanttDiagramEvent;

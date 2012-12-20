@@ -232,7 +232,6 @@
             <!-- ============================================================ -->
             <!-- =======  USE CASE : Edit Teacher WORK SERVICE ================================== -->
             <!-- =======  USE CASE : Edit Teacher DEGREE FINAL PROJECT STUDENT =========== -->
-            <!-- Assiduousness Responsible -->
             <!-- Teacher Service Distribution -->
             <action type="net.sourceforge.fenixedu.presentationTier.Action.departmentMember.teacherServiceDistribution.TSDProcessAction" input="/tsdProcess.do?method=prepareForEmptyTSDProcessCreation&amp;page=0" scope="request" parameter="method" name="tsdProcessForm" path="/tsdProcess">
                   <forward path="df.page.teacherServiceDistribution.showTSDProcessMainOptions" name="showMain"></forward>
@@ -301,7 +300,6 @@
       <message-resources null="false" key="DEPARTMENT_ADM_OFFICE_RESOURCES" parameter="resources.DepartmentAdmOfficeResources"></message-resources>
       <message-resources null="false" parameter="resources.DepartmentMemberResources"></message-resources>
       <message-resources null="false" key="GLOBAL_RESOURCES" parameter="resources.GlobalResources"></message-resources>
-      <message-resources null="false" key="ASSIDUOUSNESS_RESOURCES" parameter="resources.AssiduousnessResources"></message-resources>
       <message-resources null="false" key="SCIENTIFIC_COUNCIL_RESOURCES" parameter="resources.ScientificCouncilResources"></message-resources>
       <message-resources null="false" key="RESEARCHER_RESOURCES" parameter="resources.ResearcherResources"></message-resources>
       <message-resources null="false" key="APPLICATION_RESOURCES" parameter="resources.ApplicationResources"></message-resources>

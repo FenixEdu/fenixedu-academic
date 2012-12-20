@@ -5,16 +5,16 @@ import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
-@Mapping(module = "employee", path = "/protocols", scope = "request", parameter = "method")
+@Mapping(module = "directiveCouncil", path = "/protocols", scope = "request", parameter = "method")
 @Forwards(value = {
-	@Forward(name = "search-protocols", path = "/protocols/searchProtocols.jsp", tileProperties = @Tile(  title = "private.employee.protocols.protocols")),
-	@Forward(name = "renew-protocol", path = "/protocols/renewProtocol.jsp", tileProperties = @Tile(  title = "private.employee.protocols.protocols")),
-	@Forward(name = "show-protocols", path = "/protocols/showProtocols.jsp", tileProperties = @Tile(  title = "private.employee.protocols.protocols")),
-	@Forward(name = "show-protocol-alerts", path = "/protocols/showProtocolAlerts.jsp", tileProperties = @Tile(  title = "private.employee.protocols.protocols")),
-	@Forward(name = "create-protocol", path = "/protocols/createProtocol.jsp", tileProperties = @Tile(  title = "private.employee.protocols.protocols")),
-	@Forward(name = "view-protocol-details", path = "/protocols/viewProtocolDetails.jsp", tileProperties = @Tile(  title = "private.employee.protocols.protocols")),
-	@Forward(name = "view-protocol", path = "/protocols/viewProtocol.jsp", tileProperties = @Tile(  title = "private.employee.protocols.protocols")),
-	@Forward(name = "edit-protocol-history", path = "/protocols/editProtocolHistory.jsp", tileProperties = @Tile(  title = "private.employee.protocols.protocols")) })
+	@Forward(name = "search-protocols", path = "/protocols/searchProtocols.jsp", tileProperties = @Tile(title = "private.employee.protocols.protocols")),
+	@Forward(name = "renew-protocol", path = "/protocols/renewProtocol.jsp", tileProperties = @Tile(title = "private.employee.protocols.protocols")),
+	@Forward(name = "show-protocols", path = "/protocols/showProtocols.jsp", tileProperties = @Tile(title = "private.employee.protocols.protocols")),
+	@Forward(name = "show-protocol-alerts", path = "/protocols/showProtocolAlerts.jsp", tileProperties = @Tile(title = "private.employee.protocols.protocols")),
+	@Forward(name = "create-protocol", path = "/protocols/createProtocol.jsp", tileProperties = @Tile(title = "private.employee.protocols.protocols")),
+	@Forward(name = "view-protocol-details", path = "/protocols/viewProtocolDetails.jsp", tileProperties = @Tile(title = "private.employee.protocols.protocols")),
+	@Forward(name = "view-protocol", path = "/protocols/viewProtocol.jsp", tileProperties = @Tile(title = "private.employee.protocols.protocols")),
+	@Forward(name = "edit-protocol-history", path = "/protocols/editProtocolHistory.jsp", tileProperties = @Tile(title = "private.employee.protocols.protocols")) })
 public class ProtocolsDispatchActionForEmployee extends
 	net.sourceforge.fenixedu.presentationTier.Action.protocols.ProtocolsDispatchAction {
 }

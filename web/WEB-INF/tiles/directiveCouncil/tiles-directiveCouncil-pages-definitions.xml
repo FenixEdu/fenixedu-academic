@@ -19,17 +19,6 @@
     <definition name="df.page.evaluation.method.control" extends="definition.directiveCouncil.masterPage">
         <put name="body" value="/directiveCouncil/evaluationMethodControl.jsp"/>
     </definition>
-    <definition name="show-assiduousness-structure" extends="definition.directiveCouncil.masterPage">
-        <put name="body" value="/directiveCouncil/assiduousnessStructure/showAssiduousnessStructure.jsp"/>
-    </definition>
-    <definition name="edit-assiduousness-person-function" extends="definition.directiveCouncil.masterPage">
-        <put name="body" value="/directiveCouncil/assiduousnessStructure/editAssiduousnessPersonFunction.jsp"/>
-    </definition>
-     <definition name="create-assiduousness-person-function" extends="definition.directiveCouncil.masterPage">
-     	<put name="bundle" value="TITLES_RESOURCES"/>
-        <put name="title" value="private.steeringcouncil.structuresiadap"/>
-        <put name="body" value="/directiveCouncil/assiduousnessStructure/createAssiduousnessPersonFunction.jsp"/>
-    </definition>
      <definition name="df.page.card.generation.firstPage" extends="definition.directiveCouncil.masterPage">
         <put name="body" value="/directiveCouncil/cardGeneration/cardGenerationFirstPage.jsp"/>
     </definition>

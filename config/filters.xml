@@ -20,20 +20,6 @@
     </filter>
 
     <filter>
-        <name>AssiduousnessManagementGroup</name>
-        <implementationClass>net.sourceforge.fenixedu.applicationTier.Filtro.AssiduousnessManagementGroup</implementationClass>
-        <description></description>
-        <isTransactional>false</isTransactional>
-    </filter>
-
-    <filter>
-        <name>AssiduousnessResponsibleAuthorization</name>
-        <implementationClass>net.sourceforge.fenixedu.applicationTier.Filtro.AssiduousnessResponsibleAuthorizationFilter</implementationClass>
-        <description></description>
-        <isTransactional>false</isTransactional>
-    </filter>
-
-    <filter>
         <name>BolonhaManagerAuthorization</name>
         <implementationClass>net.sourceforge.fenixedu.applicationTier.Filtro.BolonhaManagerAuthorizationFilter</implementationClass>
         <description></description>

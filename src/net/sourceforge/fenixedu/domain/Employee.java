@@ -14,8 +14,6 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.AccountabilityTyp
 import net.sourceforge.fenixedu.domain.organizationalStructure.Contract;
 import net.sourceforge.fenixedu.domain.organizationalStructure.DepartmentUnit;
 import net.sourceforge.fenixedu.domain.organizationalStructure.EmployeeContract;
-import net.sourceforge.fenixedu.domain.organizationalStructure.FunctionType;
-import net.sourceforge.fenixedu.domain.organizationalStructure.PersonFunction;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.personnelSection.contracts.GiafProfessionalData;
@@ -43,7 +41,6 @@ public class Employee extends Employee_Base {
 	setCreationDate(new DateTime());
 	setPerson(person);
 	setWorkingHours(0);
-	setAssiduousness(null);
 	setRootDomainObject(RootDomainObject.getInstance());
     }
 
@@ -275,14 +272,6 @@ public class Employee extends Employee_Base {
     public AdministrativeOffice getAdministrativeOffice() {
 	AdministrativeOffice administrativeOffice = getCurrentWorkingPlace() == null ? null : getCurrentWorkingPlace()
 		.getAdministrativeOffice();
-	if (administrativeOffice == null) {
-	    for (PersonFunction personFunction : getPerson().getPersonFunctions(AccountabilityTypeEnum.ASSIDUOUSNESS_STRUCTURE)) {
-		if (personFunction.getFunction().getFunctionType().equals(FunctionType.ASSIDUOUSNESS_RESPONSIBLE)
-			&& personFunction.getUnit() != null && personFunction.getUnit().getAdministrativeOffice() != null) {
-		    administrativeOffice = personFunction.getUnit().getAdministrativeOffice();
-		}
-	    }
-	}
 	return administrativeOffice;
     }
 

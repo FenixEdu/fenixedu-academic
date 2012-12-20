@@ -287,24 +287,6 @@
     </service>
 
     <service>
-        <name>CloseAssiduousnessMonth</name>
-        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.assiduousness.CloseAssiduousnessMonth</implementationClass>
-        <isTransactional>true</isTransactional>
-        <filterChains>
-            <chain name="AssiduousnessManagementAuthorization"/>
-        </filterChains>
-    </service>
-
-    <service>
-        <name>CloseExtraWorkMonth</name>
-        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.assiduousness.CloseExtraWorkMonth</implementationClass>
-        <isTransactional>true</isTransactional>
-        <filterChains>
-            <chain name="AssiduousnessManagementAuthorization"/>
-        </filterChains>
-    </service>
-
-    <service>
         <name>CloseTSDProcessPhase</name>
         <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.teacherServiceDistribution.CloseTSDProcessPhase</implementationClass>
         <isTransactional>true</isTransactional>
@@ -453,15 +435,6 @@
         <isTransactional>true</isTransactional>
         <filterChains>
             <chain name="ManagerOrDegreeAdministrativeOfficeAuthorization"/>
-        </filterChains>
-    </service>
-
-    <service>
-        <name>CreateEmployeeExceptionSchedule</name>
-        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.assiduousness.CreateEmployeeExceptionSchedule</implementationClass>
-        <isTransactional>true</isTransactional>
-        <filterChains>
-            <chain name="AssiduousnessManagementAuthorization"/>
         </filterChains>
     </service>
 
@@ -841,24 +814,6 @@
     </service>
 
     <service>
-        <name>DeleteAssiduousnessExemption</name>
-        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.assiduousness.DeleteAssiduousnessExemption</implementationClass>
-        <isTransactional>true</isTransactional>
-        <filterChains>
-            <chain name="AssiduousnessManagementAuthorization"/>
-        </filterChains>
-    </service>
-
-    <service>
-        <name>DeleteAssiduousnessStatusHistory</name>
-        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.assiduousness.DeleteAssiduousnessStatusHistory</implementationClass>
-        <isTransactional>true</isTransactional>
-        <filterChains>
-            <chain name="AssiduousnessManagementAuthorization"/>
-        </filterChains>
-    </service>
-
-    <service>
         <name>DeleteBibliographicReference</name>
         <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.teacher.DeleteBibliographicReference</implementationClass>
         <isTransactional>true</isTransactional>
@@ -873,15 +828,6 @@
         <isTransactional>true</isTransactional>
         <filterChains>
             <chain name="CareerTeacherAuthorization"/>
-        </filterChains>
-    </service>
-
-    <service>
-        <name>DeleteClocking</name>
-        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.assiduousness.DeleteClocking</implementationClass>
-        <isTransactional>true</isTransactional>
-        <filterChains>
-            <chain name="AssiduousnessManagementAuthorization"/>
         </filterChains>
     </service>
 
@@ -981,15 +927,6 @@
         <isTransactional>true</isTransactional>
         <filterChains>
             <chain name="ExternalActivityTeacherAuthorization"/>
-        </filterChains>
-    </service>
-
-    <service>
-        <name>DeleteExtraWorkRequest</name>
-        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.assiduousness.DeleteExtraWorkRequest</implementationClass>
-        <isTransactional>true</isTransactional>
-        <filterChains>
-            <chain name="AssiduousnessManagementAuthorization"/>
         </filterChains>
     </service>
 
@@ -1161,15 +1098,6 @@
         <isTransactional>true</isTransactional>
         <filterChains>
             <chain name="ManagerOrAcademicAdministrativeOfficeAuthorization"/>
-        </filterChains>
-    </service>
-
-    <service>
-        <name>DeleteSchedule</name>
-        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.assiduousness.DeleteSchedule</implementationClass>
-        <isTransactional>true</isTransactional>
-        <filterChains>
-            <chain name="AssiduousnessManagementAuthorization"/>
         </filterChains>
     </service>
 
@@ -1503,15 +1431,6 @@
         <isTransactional>true</isTransactional>
         <filterChains>
             <chain name="ExecutionCourseLecturingTeacherAuthorization"/>
-        </filterChains>
-    </service>
-
-    <service>
-        <name>EditEmployeeExceptionSchedule</name>
-        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.assiduousness.EditEmployeeExceptionSchedule</implementationClass>
-        <isTransactional>true</isTransactional>
-        <filterChains>
-            <chain name="AssiduousnessManagementAuthorization"/>
         </filterChains>
     </service>
 
@@ -2244,24 +2163,6 @@
     </service>
 
     <service>
-        <name>OpenClosedMonth</name>
-        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.assiduousness.OpenClosedMonth</implementationClass>
-        <isTransactional>true</isTransactional>
-        <filterChains>
-            <chain name="AssiduousnessManagementAuthorization"/>
-        </filterChains>
-    </service>
-
-    <service>
-        <name>OpenExtraWorkClosedMonth</name>
-        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.assiduousness.OpenExtraWorkClosedMonth</implementationClass>
-        <isTransactional>true</isTransactional>
-        <filterChains>
-            <chain name="AssiduousnessManagementAuthorization"/>
-        </filterChains>
-    </service>
-
-    <service>
         <name>OpenTSDProcessPhase</name>
         <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.teacherServiceDistribution.OpenTSDProcessPhase</implementationClass>
         <isTransactional>true</isTransactional>
@@ -2373,15 +2274,6 @@
         <isTransactional>true</isTransactional>
         <filterChains>
             <chain name="ReadCurriculumHistoricAuthorization"/>
-        </filterChains>
-    </service>
-
-    <service>
-        <name>ReadAssiduousnessResponsibleWorkSheet</name>
-        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.assiduousness.ReadAssiduousnessWorkSheet</implementationClass>
-        <isTransactional>true</isTransactional>
-        <filterChains>
-            <chain name="AssiduousnessResponsibleAuthorization"/>
         </filterChains>
     </service>
 
@@ -3485,15 +3377,6 @@
     </service>
 
     <service>
-        <name>RestoreClocking</name>
-        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.assiduousness.RestoreClocking</implementationClass>
-        <isTransactional>true</isTransactional>
-        <filterChains>
-            <chain name="AssiduousnessManagementAuthorization"/>
-        </filterChains>
-    </service>
-
-    <service>
         <name>ReviewProjectAccess</name>
         <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.projectsManagement.ReviewProjectAccess</implementationClass>
         <isTransactional>true</isTransactional>
@@ -3521,13 +3404,6 @@
    	<service>
         <name>SearchPartyByNif</name>
         <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.commons.SearchPartyByNif</implementationClass>
-        <isTransactional>true</isTransactional>
-        <filterChains />
-    </service>
-
-    <service>
-        <name>SearchActiveEmployeeAssiduousness</name>
-        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.commons.searchers.SearchActiveEmployeeAssiduousness</implementationClass>
         <isTransactional>true</isTransactional>
         <filterChains />
     </service>
@@ -3570,13 +3446,6 @@
     <service>
         <name>SearchDistrictSubdivisions</name>
         <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.commons.searchers.SearchDistrictSubdivisions</implementationClass>
-        <isTransactional>true</isTransactional>
-        <filterChains />
-    </service>
-
-    <service>
-        <name>SearchEmployeeAssiduousness</name>
-        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.commons.searchers.SearchEmployeeAssiduousness</implementationClass>
         <isTransactional>true</isTransactional>
         <filterChains />
     </service>
@@ -4086,15 +3955,6 @@
         <isTransactional>true</isTransactional>
         <filterChains>
             <chain name="CreditsServicesAuthorization"/>
-        </filterChains>
-    </service>
-
-    <service>
-        <name>UpdateExtraWorkClosedMonth</name>
-        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.assiduousness.UpdateExtraWorkClosedMonth</implementationClass>
-        <isTransactional>true</isTransactional>
-        <filterChains>
-            <chain name="AssiduousnessManagementAuthorization"/>
         </filterChains>
     </service>
 

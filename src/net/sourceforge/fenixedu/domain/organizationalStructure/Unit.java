@@ -33,8 +33,6 @@ import net.sourceforge.fenixedu.domain.UnitSite;
 import net.sourceforge.fenixedu.domain.accessControl.PersistentGroup;
 import net.sourceforge.fenixedu.domain.accessControl.PersistentGroupMembers;
 import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
-import net.sourceforge.fenixedu.domain.assiduousness.ExtraWorkRequest;
-import net.sourceforge.fenixedu.domain.assiduousness.UnitExtraWorkAmount;
 import net.sourceforge.fenixedu.domain.contacts.PartyContactType;
 import net.sourceforge.fenixedu.domain.contacts.PhysicalAddress;
 import net.sourceforge.fenixedu.domain.contacts.PhysicalAddressData;
@@ -62,13 +60,9 @@ import net.sourceforge.fenixedu.domain.vigilancy.VigilantGroup;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.injectionCode.IGroup;
 import net.sourceforge.fenixedu.util.BundleUtil;
-import net.sourceforge.fenixedu.util.Month;
 import net.sourceforge.fenixedu.util.domain.OrderedRelationAdapter;
 
 import org.apache.commons.lang.StringUtils;
-import org.joda.time.DateTimeFieldType;
-import org.joda.time.DurationFieldType;
-import org.joda.time.Partial;
 import org.joda.time.YearMonthDay;
 
 import pt.ist.fenixWebFramework.services.Service;
@@ -219,16 +213,14 @@ public class Unit extends Unit_Base {
     private boolean canBeDeleted() {
 	return (!hasAnyParents() || (getParentsCount() == 1 && getParentUnits().size() == 1)) && !hasAnyChilds()
 		&& !hasAnyFunctions() && !hasAnyVigilantGroups() && !hasAnyAssociatedNonAffiliatedTeachers()
-		&& !hasAnyPayedGuides() && !hasAnyPayedReceipts() && !hasAnyExtraPayingUnitAuthorizations()
-		&& !hasAnyExtraWorkingUnitAuthorizations() && !hasAnyExternalCurricularCourses()
+		&& !hasAnyPayedGuides() && !hasAnyPayedReceipts() && !hasAnyExternalCurricularCourses()
 		&& !hasAnyResultUnitAssociations() && !hasUnitServiceAgreementTemplate() && !hasAnyResearchInterests()
 		&& !hasAnyProjectParticipations() && !hasAnyParticipations() && !hasAnyBoards()
 		&& (!hasSite() || getSite().isDeletable()) && !hasAnyOwnedReceipts() && !hasAnyCreatedReceipts()
 		&& !hasAnyProtocols() && !hasAnyPartnerProtocols() && !hasAnyPrecedentDegreeInformations()
 		&& !hasAnyCandidacyPrecedentDegreeInformations() && !hasAnyUnitSpaceOccupations() && !hasAnyExamCoordinators()
-		&& !hasAnyExtraWorkRequests() && !hasAnyExternalRegistrationDatas() && !hasAnyUnitExtraWorkAmounts()
-		&& !hasAnyCooperation() && !hasAnyFiles() && !hasAnyPersistentGroups() && !hasAnyExternalCourseLoadRequests()
-		&& !hasAnyExternalProgramCertificateRequests();
+		&& !hasAnyExternalRegistrationDatas() && !hasAnyCooperation() && !hasAnyFiles() && !hasAnyPersistentGroups()
+		&& !hasAnyExternalCourseLoadRequests() && !hasAnyExternalProgramCertificateRequests();
     }
 
     @Override
@@ -1189,57 +1181,6 @@ public class Unit extends Unit_Base {
 	return getPartyName();
     }
 
-    public List<ExtraWorkRequest> getExtraWorkRequests(int year, Month month, int hoursDoneInYear, Month hoursDoneInMonth) {
-	Partial partialDate = new Partial().with(DateTimeFieldType.year(), year).with(DateTimeFieldType.monthOfYear(),
-		month.ordinal() + 1);
-	Partial hoursDonePartialDate = new Partial().with(DateTimeFieldType.year(), hoursDoneInYear).with(
-		DateTimeFieldType.monthOfYear(), hoursDoneInMonth.ordinal() + 1);
-	List<ExtraWorkRequest> extraWorkRequestList = new ArrayList<ExtraWorkRequest>();
-	for (ExtraWorkRequest extraWorkRequest : getExtraWorkRequests()) {
-	    if (extraWorkRequest.getPartialPayingDate().equals(partialDate)
-		    && extraWorkRequest.getHoursDoneInPartialDate().equals(hoursDonePartialDate)) {
-		extraWorkRequestList.add(extraWorkRequest);
-	    }
-	}
-	return extraWorkRequestList;
-    }
-
-    public List<ExtraWorkRequest> getExtraWorkRequestsPayingYear(Integer year) {
-	List<ExtraWorkRequest> extraWorkRequestList = new ArrayList<ExtraWorkRequest>();
-	for (ExtraWorkRequest extraWorkRequest : getExtraWorkRequests()) {
-	    Partial partialPayingDate = extraWorkRequest.getPartialPayingDate().withFieldAdded(DurationFieldType.months(), 1);
-	    if (partialPayingDate.get(DateTimeFieldType.year()) == year) {
-		extraWorkRequestList.add(extraWorkRequest);
-	    }
-	}
-	return extraWorkRequestList;
-    }
-
-    public List<ExtraWorkRequest> getExtraWorkRequestsByDoneAndPayingDates(Integer doneYear, Month doneMonth, Integer payingYear,
-	    Month payingMonth) {
-	Partial donePartialDate = new Partial().with(DateTimeFieldType.year(), doneYear).with(DateTimeFieldType.monthOfYear(),
-		doneMonth.ordinal() + 1);
-	Partial payingPartialDate = new Partial().with(DateTimeFieldType.year(), payingYear).with(
-		DateTimeFieldType.monthOfYear(), payingMonth.ordinal() + 1);
-	List<ExtraWorkRequest> extraWorkRequestList = new ArrayList<ExtraWorkRequest>();
-	for (ExtraWorkRequest extraWorkRequest : getExtraWorkRequests()) {
-	    if (extraWorkRequest.getHoursDoneInPartialDate().equals(donePartialDate)
-		    && extraWorkRequest.getPartialPayingDate().equals(payingPartialDate)) {
-		extraWorkRequestList.add(extraWorkRequest);
-	    }
-	}
-	return extraWorkRequestList;
-    }
-
-    public UnitExtraWorkAmount getUnitExtraWorkAmountByYear(Integer year) {
-	for (UnitExtraWorkAmount unitExtraWorkAmount : getUnitExtraWorkAmounts()) {
-	    if (unitExtraWorkAmount.getYear().equals(year)) {
-		return unitExtraWorkAmount;
-	    }
-	}
-	return null;
-    }
-
     public List<IGroup> getUserDefinedGroups() {
 	final List<IGroup> groups = new ArrayList<IGroup>();
 	for (final PersistentGroupMembers persistentMembers : this.getPersistentGroups()) {
@@ -1726,29 +1667,32 @@ public class Unit extends Unit_Base {
 	return Boolean.FALSE;
     }
 
-	@Deprecated
-	public java.util.Date getBeginDate(){
-		org.joda.time.YearMonthDay ymd = getBeginDateYearMonthDay();
-		return (ymd == null) ? null : new java.util.Date(ymd.getYear() - 1900, ymd.getMonthOfYear() - 1, ymd.getDayOfMonth());
-	}
+    @Deprecated
+    public java.util.Date getBeginDate() {
+	org.joda.time.YearMonthDay ymd = getBeginDateYearMonthDay();
+	return (ymd == null) ? null : new java.util.Date(ymd.getYear() - 1900, ymd.getMonthOfYear() - 1, ymd.getDayOfMonth());
+    }
 
-	@Deprecated
-	public void setBeginDate(java.util.Date date){
-		if(date == null) setBeginDateYearMonthDay(null);
-		else setBeginDateYearMonthDay(org.joda.time.YearMonthDay.fromDateFields(date));
-	}
+    @Deprecated
+    public void setBeginDate(java.util.Date date) {
+	if (date == null)
+	    setBeginDateYearMonthDay(null);
+	else
+	    setBeginDateYearMonthDay(org.joda.time.YearMonthDay.fromDateFields(date));
+    }
 
-	@Deprecated
-	public java.util.Date getEndDate(){
-		org.joda.time.YearMonthDay ymd = getEndDateYearMonthDay();
-		return (ymd == null) ? null : new java.util.Date(ymd.getYear() - 1900, ymd.getMonthOfYear() - 1, ymd.getDayOfMonth());
-	}
+    @Deprecated
+    public java.util.Date getEndDate() {
+	org.joda.time.YearMonthDay ymd = getEndDateYearMonthDay();
+	return (ymd == null) ? null : new java.util.Date(ymd.getYear() - 1900, ymd.getMonthOfYear() - 1, ymd.getDayOfMonth());
+    }
 
-	@Deprecated
-	public void setEndDate(java.util.Date date){
-		if(date == null) setEndDateYearMonthDay(null);
-		else setEndDateYearMonthDay(org.joda.time.YearMonthDay.fromDateFields(date));
-	}
-
+    @Deprecated
+    public void setEndDate(java.util.Date date) {
+	if (date == null)
+	    setEndDateYearMonthDay(null);
+	else
+	    setEndDateYearMonthDay(org.joda.time.YearMonthDay.fromDateFields(date));
+    }
 
 }

@@ -1,9 +1,8 @@
-package net.sourceforge.fenixedu.dataTransferObject.assiduousness;
+package net.sourceforge.fenixedu.dataTransferObject.phd;
 
 import java.io.Serializable;
 
 import net.sourceforge.fenixedu.dataTransferObject.alumni.formation.IFormation;
-import net.sourceforge.fenixedu.domain.assiduousness.ClosedMonth;
 import net.sourceforge.fenixedu.util.Month;
 
 import org.joda.time.DateTimeFieldType;
@@ -82,30 +81,6 @@ public class YearMonth implements Serializable, IFormation {
 	this.firstYear = firstYear;
     }
 
-    public boolean getIsThisYearMonthClosed() {
-	Partial yearMonth = new Partial().with(DateTimeFieldType.monthOfYear(), getMonth().ordinal() + 1).with(
-		DateTimeFieldType.year(), getYear());
-	return ClosedMonth.isMonthClosed(yearMonth);
-    }
-
-    public boolean getIsThisYearMonthClosedForExtraWork() {
-	Partial yearMonth = new Partial().with(DateTimeFieldType.monthOfYear(), getMonth().ordinal() + 1).with(
-		DateTimeFieldType.year(), getYear());
-	return ClosedMonth.isMonthClosedForExtraWork(yearMonth);
-    }
-
-    public boolean getCanCloseMonth() {
-	Partial yearMonth = new Partial().with(DateTimeFieldType.monthOfYear(), getMonth().ordinal() + 1).with(
-		DateTimeFieldType.year(), getYear());
-	return ClosedMonth.getCanCloseMonth(yearMonth);
-    }
-
-    public boolean getCanOpenMonth() {
-	Partial yearMonth = new Partial().with(DateTimeFieldType.monthOfYear(), getMonth().ordinal() + 1).with(
-		DateTimeFieldType.year(), getYear());
-	return ClosedMonth.getCanOpenMonth(yearMonth);
-    }
-
     public void addMonth() {
 	if (getNumberOfMonth() == 12) {
 	    setMonth(Month.values()[0]);
@@ -131,11 +106,6 @@ public class YearMonth implements Serializable, IFormation {
     @Override
     public boolean equals(Object obj) {
 	return ((YearMonth) obj).getYear().equals(getYear()) && ((YearMonth) obj).getMonth().equals(getMonth());
-    }
-
-    public boolean getIntensionToCloseForBalance() {
-	ClosedMonth closedMonth = ClosedMonth.getClosedMonth(this);
-	return closedMonth != null ? closedMonth.getIntensionToCloseForBalance() : false;
     }
 
 }

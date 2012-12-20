@@ -2,7 +2,7 @@ package net.sourceforge.fenixedu.util.renderer;
 
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.assiduousness.util.DayType;
+import net.sourceforge.fenixedu.util.DayType;
 
 import org.joda.time.Interval;
 

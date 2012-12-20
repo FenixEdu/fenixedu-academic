@@ -11,9 +11,6 @@
                   <form-property type="java.lang.String" name="degree"></form-property>
                   <form-property type="java.lang.String" name="situation"></form-property>
             </form-bean>
-            <form-bean dynamic="true" type="org.apache.struts.validator.DynaValidatorForm" name="assiduousnessForm">
-                  <form-property type="java.lang.String" name="method"></form-property>
-            </form-bean>
       </form-beans>
       <!-- ========== Global Exception Definitions ============================== -->
       <global-exceptions>
@@ -32,6 +29,7 @@
       <controller processorClass="net.sourceforge.fenixedu.presentationTier.processor.FenixRequestProcessorWithTiles"></controller>
       <!-- ========== Message Resources Definitions ============================ -->
       <message-resources null="false" key="GLOBAL_RESOURCES" parameter="resources.GlobalResources"></message-resources>
+      <message-resources null="false" key="SCIENTIFIC_COUNCIL_RESOURCES" parameter="resources.ScientificCouncilResources"></message-resources>
       <message-resources null="false" key="DEFAULT" parameter="resources.ApplicationResources"></message-resources>
       <message-resources null="false" key="APPLICATION_RESOURCES" parameter="resources.ApplicationResources"></message-resources>
       <message-resources null="false" key="PORTAL_RESOURCES" parameter="resources.PortalResources"></message-resources>

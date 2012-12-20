@@ -4,29 +4,6 @@
       <data-sources></data-sources>
       <!-- ========== Form Bean Definitions ================================== -->
       <form-beans type="org.apache.struts.action.ActionFormBean">
-            <form-bean dynamic="true" type="org.apache.struts.validator.DynaValidatorForm" name="employeeForm">
-                  <form-property type="java.lang.String" name="employeeNumber"></form-property>
-                  <form-property type="java.lang.String" name="method"></form-property>
-                  <form-property type="java.lang.String" name="action"></form-property>
-                  <form-property type="java.lang.Integer" name="page"></form-property>
-                  <form-property type="java.lang.String" name="employeeID"></form-property>
-                  <form-property type="java.lang.String" name="workScheduleID"></form-property>
-                  <form-property type="java.lang.String" name="addWorkWeek"></form-property>
-                  <form-property type="java.lang.String" name="workWeek"></form-property>
-                  <form-property type="java.lang.String" name="year"></form-property>
-                  <form-property type="java.lang.String" name="month"></form-property>
-            </form-bean>
-            <form-bean dynamic="true" type="org.apache.struts.validator.DynaValidatorForm" name="extraWorkAuthorizationForm">
-                  <form-property type="java.lang.String" name="method"></form-property>
-                  <form-property type="java.lang.String" name="addEmployee"></form-property>
-            </form-bean>
-            <form-bean dynamic="true" type="org.apache.struts.validator.DynaValidatorForm" name="parametrizationForm">
-                  <form-property type="java.lang.String" name="method"></form-property>
-                  <form-property type="java.lang.String" name="rowIndex"></form-property>
-            </form-bean>
-            <form-bean dynamic="true" type="org.apache.struts.validator.DynaValidatorForm" name="extraWorkForm">
-                  <form-property type="java.lang.String" name="action"></form-property>
-            </form-bean>
             <form-bean dynamic="true" type="org.apache.struts.validator.DynaValidatorForm" name="findPersonForm">
                   <form-property type="java.lang.String" name="name"></form-property>
                   <form-property type="java.lang.String" name="email"></form-property>
@@ -48,44 +25,10 @@
       <!-- ========== Action Mapping Definitions =============================== -->
       <action-mappings type="org.apache.struts.action.ActionMapping">
             <action forward="managementAssiduousnessWelcome" type="net.sourceforge.fenixedu.presentationTier.Action.base.FenixForwardAction" path="/index"></action>
-            <action input="/employeeAssiduousness.do?method=prepareAssociateEmployeeWorkSchedule" validate="true" scope="request" parameter="method" type="net.sourceforge.fenixedu.presentationTier.Action.managementAssiduousness.EmployeeAssiduousnessDispatchAction" name="employeeForm" path="/employeeAssiduousness">
-                  <exception handler="net.sourceforge.fenixedu.presentationTier.config.FenixDomainExceptionHandler" key="" type="net.sourceforge.fenixedu.domain.exceptions.DomainException"></exception>
-                  <forward path="show-employee-work-sheet" name="show-employee-work-sheet"></forward>
-                  <forward path="show-justifications" name="show-justifications"></forward>
-                  <forward path="prepare-associate-schedule" name="prepare-associate-schedule"></forward>
-                  <forward path="associate-schedule" name="associate-schedule"></forward>
-                  <forward path="show-clockings" name="show-clockings"></forward>
-                  <forward path="create-missing-clocking-month" name="create-missing-clocking-month"></forward>
-                  <forward path="insert-justification" name="insert-justification"></forward>
-                  <forward path="associate-exception-schedule" name="associate-exception-schedule"></forward>
-                  <forward path="show-schedule" name="show-schedule"></forward>
-                  <forward path="edit-status" name="edit-status"></forward>
-                  <forward path="show-status" name="show-status"></forward>
-                  <forward path="edit-schedule-dates" name="edit-schedule-dates"></forward>
-            </action>
-            <action input="/employeeExceptionSchedule.do?method=prepareAssociateExceptionWorkSchedule" validate="true" scope="request" parameter="method" type="net.sourceforge.fenixedu.presentationTier.Action.managementAssiduousness.EmployeeAssiduousnessDispatchAction" name="employeeForm" path="/employeeExceptionSchedule">
-                  <exception handler="net.sourceforge.fenixedu.presentationTier.config.FenixDomainExceptionHandler" key="" type="net.sourceforge.fenixedu.domain.exceptions.DomainException"></exception>
-                  <forward path="associate-exception-schedule" name="associate-exception-schedule"></forward>
-                  <forward path="show-schedule" name="show-schedule"></forward>
-            </action>
-            <action input="/createExtraWorkAuthorization.do?method=prepareCreateExtraWorkAuthorization" name="extraWorkAuthorizationForm" scope="request" parameter="method" type="net.sourceforge.fenixedu.presentationTier.Action.managementAssiduousness.AssiduousnessExtraWorkDispatchAction" path="/createExtraWorkAuthorization">
-                  <exception handler="net.sourceforge.fenixedu.presentationTier.config.FenixDomainExceptionHandler" key="" type="net.sourceforge.fenixedu.domain.exceptions.DomainException"></exception>
-                  <forward path="create-extra-work-authorization" name="create-extra-work-authorization"></forward>
-                  <forward path="show-extra-work-authorization" name="show-extra-work-authorization"></forward>
-                  <forward path="view-extra-work-authorization" name="view-extra-work-authorization"></forward>
-            </action>
-            <action input="/manageExtraWorkAuthorization.do?method=prepareEditExtraWorkAuthorization" name="extraWorkAuthorizationForm" scope="request" parameter="method" type="net.sourceforge.fenixedu.presentationTier.Action.managementAssiduousness.AssiduousnessExtraWorkDispatchAction" path="/manageExtraWorkAuthorization">
-                  <exception handler="net.sourceforge.fenixedu.presentationTier.config.FenixDomainExceptionHandler" key="" type="net.sourceforge.fenixedu.domain.exceptions.DomainException"></exception>
-                  <forward path="edit-extra-work-authorization" name="edit-extra-work-authorization"></forward>
-                  <forward path="show-extra-work-authorizations" name="show-extra-work-authorizations"></forward>
-                  <forward path="view-extra-work-authorization" name="view-extra-work-authorization"></forward>
-            </action>
       </action-mappings>
       <!-- ========== Controller Configuration ================================ -->
       <controller processorClass="net.sourceforge.fenixedu.presentationTier.processor.FenixRequestProcessorWithTiles"></controller>
       <!-- ========== Message Resources Definitions ============================ -->
-      <message-resources null="false" parameter="resources.AssiduousnessResources"></message-resources>
-      <message-resources null="false" key="ASSIDUOUSNESS_RESOURCES" parameter="resources.AssiduousnessResources"></message-resources>
       <message-resources null="false" key="GLOBAL_RESOURCES" parameter="resources.GlobalResources"></message-resources>
       <message-resources null="false" key="APPLICATION_RESOURCES" parameter="resources.ApplicationResources"></message-resources>
       <message-resources null="false" key="RESEARCHER_RESOURCES" parameter="resources.ResearcherResources"></message-resources>
@@ -95,23 +38,14 @@
       <message-resources null="false" key="TITLES_RESOURCES" parameter="resources.TitlesResources"></message-resources>
       <!-- ========== Plug Ins Configuration ================================= -->
       <plug-in className="org.apache.struts.validator.ValidatorPlugIn">
-            <set-property value="/WEB-INF/validator-rules.xml,/WEB-INF/fenix-validator-rules.xml,/WEB-INF/conf/validation-managementAssiduousness.xml" property="pathnames"></set-property>
+            <set-property value="/WEB-INF/validator-rules.xml,/WEB-INF/fenix-validator-rules.xml" property="pathnames"></set-property>
       </plug-in>
-      <!--
-	<plug-in className="org.apache.struts.tiles.TilesPlugin" >
-		<set-property property="definitions-config"
-					  value="/WEB-INF/tiles/layouts/tiles-layout-definitions.xml,/WEB-INF/tiles/personnelSection/tiles-personnelSection-definitions.xml,
-					  /WEB-INF/tiles/personnelSection/tiles-managementAssiduousness-pages-definitions.xml,/WEB-INF/tiles/personnelSection/tiles-payrollSection-pages-definitions.xml" />
-		<set-property property="moduleAware" value="true" />
-		<set-property property="definitions-parser-validate" value="true" />
-	</plug-in>
-	-->
       <plug-in className="pt.ist.fenixWebFramework.struts.tiles.FenixTilesPlugin">
-            <set-property value="/WEB-INF/tiles/layouts/tiles-layout-definitions.xml,/WEB-INF/tiles/personnelSection/tiles-personnelSection-definitions.xml, /WEB-INF/tiles/personnelSection/tiles-managementAssiduousness-pages-definitions.xml,/WEB-INF/tiles/personnelSection/tiles-payrollSection-pages-definitions.xml" property="definitions-config"></set-property>
+            <set-property value="/WEB-INF/tiles/layouts/tiles-layout-definitions.xml,/WEB-INF/tiles/personnelSection/tiles-personnelSection-definitions.xml, /WEB-INF/tiles/personnelSection/tiles-personnelSection-pages-definitions.xml" property="definitions-config"></set-property>
             <set-property value="true" property="moduleAware"></set-property>
             <set-property value="true" property="definitions-parser-validate"></set-property>
             <set-property value="pt.ist.fenixWebFramework.struts.tiles.FenixDefinitionsFactory" property="factoryClassname"></set-property>
-            <set-property value="definition.managementAssiduousness.masterPage" property="defaultTileDefinition"></set-property>
+            <set-property value="definition.personnelSection.masterPage" property="defaultTileDefinition"></set-property>
       </plug-in>
       <plug-in className="pt.ist.fenixWebFramework.renderers.plugin.RenderersPlugin">
             <set-property value="/WEB-INF/fenix-renderers-config.xml" property="config"></set-property>

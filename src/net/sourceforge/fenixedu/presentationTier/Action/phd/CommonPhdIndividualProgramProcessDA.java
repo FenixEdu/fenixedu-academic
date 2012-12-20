@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.caseHandling.ExecuteProcessActivity;
-import net.sourceforge.fenixedu.dataTransferObject.assiduousness.YearMonth;
+import net.sourceforge.fenixedu.dataTransferObject.phd.YearMonth;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
@@ -163,8 +163,8 @@ abstract public class CommonPhdIndividualProgramProcessDA extends PhdProcessDA {
     public ActionForward viewAlertMessages(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) {
 
-	TreeSet<PhdAlertMessage> orderedMessages = new TreeSet<PhdAlertMessage>(Collections
-		.reverseOrder(PhdAlertMessage.COMPARATOR_BY_WHEN_CREATED_AND_ID));
+	TreeSet<PhdAlertMessage> orderedMessages = new TreeSet<PhdAlertMessage>(
+		Collections.reverseOrder(PhdAlertMessage.COMPARATOR_BY_WHEN_CREATED_AND_ID));
 	orderedMessages.addAll(getLoggedPerson(request).getPhdAlertMessages());
 	ArrayList<PhdAlertMessage> lastMessages = new ArrayList<PhdAlertMessage>();
 	lastMessages.addAll(orderedMessages);
@@ -178,8 +178,8 @@ abstract public class CommonPhdIndividualProgramProcessDA extends PhdProcessDA {
     public ActionForward viewUnreadAlertMessages(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) {
 
-	TreeSet<PhdAlertMessage> orderedMessages = new TreeSet<PhdAlertMessage>(Collections
-		.reverseOrder(PhdAlertMessage.COMPARATOR_BY_WHEN_CREATED_AND_ID));
+	TreeSet<PhdAlertMessage> orderedMessages = new TreeSet<PhdAlertMessage>(
+		Collections.reverseOrder(PhdAlertMessage.COMPARATOR_BY_WHEN_CREATED_AND_ID));
 	orderedMessages.addAll(getLoggedPerson(request).getUnreadedPhdAlertMessages());
 
 	request.setAttribute("unread", "true");
@@ -201,8 +201,8 @@ abstract public class CommonPhdIndividualProgramProcessDA extends PhdProcessDA {
 	}
 	Month month = yearMonthBean.getMonth();
 
-	TreeSet<PhdAlertMessage> orderedMessages = new TreeSet<PhdAlertMessage>(Collections
-		.reverseOrder(PhdAlertMessage.COMPARATOR_BY_WHEN_CREATED_AND_ID));
+	TreeSet<PhdAlertMessage> orderedMessages = new TreeSet<PhdAlertMessage>(
+		Collections.reverseOrder(PhdAlertMessage.COMPARATOR_BY_WHEN_CREATED_AND_ID));
 	if (month == null) {
 	    for (PhdAlertMessage message : getLoggedPerson(request).getPhdAlertMessages()) {
 		if (year == message.getWhenCreated().getYear()) {
@@ -251,8 +251,8 @@ abstract public class CommonPhdIndividualProgramProcessDA extends PhdProcessDA {
     public ActionForward viewProcessAlertMessages(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) {
 
-	TreeSet<PhdAlertMessage> orderedMessages = new TreeSet<PhdAlertMessage>(Collections
-		.reverseOrder(PhdAlertMessage.COMPARATOR_BY_WHEN_CREATED_AND_ID));
+	TreeSet<PhdAlertMessage> orderedMessages = new TreeSet<PhdAlertMessage>(
+		Collections.reverseOrder(PhdAlertMessage.COMPARATOR_BY_WHEN_CREATED_AND_ID));
 	orderedMessages.addAll(getProcess(request).getAlertMessagesForLoggedPerson());
 	ArrayList<PhdAlertMessage> lastMessages = new ArrayList<PhdAlertMessage>();
 	lastMessages.addAll(orderedMessages);
@@ -266,8 +266,8 @@ abstract public class CommonPhdIndividualProgramProcessDA extends PhdProcessDA {
     public ActionForward viewUnreadProcessAlertMessages(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) {
 
-	TreeSet<PhdAlertMessage> orderedMessages = new TreeSet<PhdAlertMessage>(Collections
-		.reverseOrder(PhdAlertMessage.COMPARATOR_BY_WHEN_CREATED_AND_ID));
+	TreeSet<PhdAlertMessage> orderedMessages = new TreeSet<PhdAlertMessage>(
+		Collections.reverseOrder(PhdAlertMessage.COMPARATOR_BY_WHEN_CREATED_AND_ID));
 	orderedMessages.addAll(getProcess(request).getUnreadAlertMessagesForLoggedPerson());
 
 	request.setAttribute("unread", "true");
@@ -291,8 +291,8 @@ abstract public class CommonPhdIndividualProgramProcessDA extends PhdProcessDA {
 	}
 	Month month = yearMonthBean.getMonth();
 
-	TreeSet<PhdAlertMessage> orderedMessages = new TreeSet<PhdAlertMessage>(Collections
-		.reverseOrder(PhdAlertMessage.COMPARATOR_BY_WHEN_CREATED_AND_ID));
+	TreeSet<PhdAlertMessage> orderedMessages = new TreeSet<PhdAlertMessage>(
+		Collections.reverseOrder(PhdAlertMessage.COMPARATOR_BY_WHEN_CREATED_AND_ID));
 	if (month == null) {
 	    for (PhdAlertMessage message : getProcess(request).getAlertMessagesForLoggedPerson()) {
 		if (year == message.getWhenCreated().getYear()) {
@@ -356,8 +356,8 @@ abstract public class CommonPhdIndividualProgramProcessDA extends PhdProcessDA {
 	    }
 	    return viewAlertMessages(mapping, form, request, response);
 	}
-	request.setAttribute("processAlertMessagesToNotify", getProcess(request).getUnreadedAlertMessagesFor(
-		getLoggedPerson(request)));
+	request.setAttribute("processAlertMessagesToNotify",
+		getProcess(request).getUnreadedAlertMessagesFor(getLoggedPerson(request)));
 	if (unread) {
 	    return viewUnreadProcessAlertMessages(mapping, form, request, response);
 	}
