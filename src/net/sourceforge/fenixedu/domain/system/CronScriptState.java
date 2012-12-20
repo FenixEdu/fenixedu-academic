@@ -170,4 +170,11 @@ public class CronScriptState extends CronScriptState_Base {
 	return CollectionUtils.constructSortedSet(getCronScriptInvocationsSet(), CronScriptInvocation.COMPARATOR_BY_START_TIME);
     }
 
+    public void delete() {
+	removeRootDomainObject();
+	for (final CronScriptInvocation cronScriptInvocation : getCronScriptInvocations()) {
+	    cronScriptInvocation.delete();
+	}
+	deleteDomainObject();
+    }
 }
