@@ -11,6 +11,13 @@
                   <form-property type="java.lang.String" name="degree"></form-property>
                   <form-property type="java.lang.String" name="situation"></form-property>
             </form-bean>
+            <form-bean dynamic="true" type="org.apache.struts.validator.DynaValidatorForm" name="protocolsForm">
+                  <form-property type="java.lang.String" name="method"></form-property>
+                  <form-property type="java.lang.String" name="responsibleID"></form-property>
+                  <form-property type="java.lang.String" name="unitID"></form-property>
+                  <form-property type="java.lang.String" name="fileID"></form-property>
+                  <form-property type="java.lang.String" name="fileName"></form-property>
+            </form-bean>
       </form-beans>
       <!-- ========== Global Exception Definitions ============================== -->
       <global-exceptions>
