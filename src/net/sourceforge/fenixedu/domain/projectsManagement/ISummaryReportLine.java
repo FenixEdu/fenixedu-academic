@@ -61,4 +61,8 @@ public interface ISummaryReportLine {
     public abstract String getType();
 
     public abstract void setType(String type);
+
+    public abstract Double getPartnersTransfers();
+
+    public abstract void setPartnersTransfers(Double partnersTransfers);
 }

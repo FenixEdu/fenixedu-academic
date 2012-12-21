@@ -79,6 +79,7 @@
 			<td class="report-hdr"><bean:message key="label.budget" /></td>
 			<td class="report-hdr"><bean:message key="label.maxFinance" /></td>
 			<td class="report-hdr"><bean:message key="link.revenue" /></td>
+			<td class="report-hdr"><bean:message key="label.partnersTransfers" /></td>
 			<td class="report-hdr"><bean:message key="link.expenses" /></td>
 			<td class="report-hdr"><bean:message key="label.adiantPorJust" /></td>
 			<td class="report-hdr"><bean:message key="label.treasuryBalance" /></td>
@@ -94,6 +95,7 @@
 				<td class="<%= "report-td-" + (lineIndex.intValue() % 2) %>" align="right"><report:formatDoubleValue name="line" property="budget" /></td>
 				<td class="<%= "report-td-" + (lineIndex.intValue() % 2) %>" align="right"><report:formatDoubleValue name="line" property="maxFinance" /></td>
 				<td class="<%= "report-td-" + (lineIndex.intValue() % 2) %>" align="right"><report:formatDoubleValue name="line" property="revenue" /></td>
+				<td class="<%= "report-td-" + (lineIndex.intValue() % 2) %>" align="right"><report:formatDoubleValue name="line" property="partnersTransfers" /></td>
 				<td class="<%= "report-td-" + (lineIndex.intValue() % 2) %>" align="right"><report:formatDoubleValue name="line" property="expense" /></td>
 				<td class="<%= "report-td-" + (lineIndex.intValue() % 2) %>" align="right"><report:formatDoubleValue name="line"
 					property="adiantamentosPorJustificar" /></td>
@@ -111,7 +113,8 @@
 			<td class="report-line-total"><report:sumColumn id="summaryLines" column="8" /></td>
 			<td class="report-line-total"><report:sumColumn id="summaryLines" column="9" /></td>
 			<td class="report-line-total"><report:sumColumn id="summaryLines" column="10" /></td>
-			<td class="report-line-total-last"><report:sumColumn id="summaryLines" column="11" /></td>
+			<td class="report-line-total"><report:sumColumn id="summaryLines" column="11" /></td>
+			<td class="report-line-total-last"><report:sumColumn id="summaryLines" column="12" /></td>
 		</tr>
 	</table>
 	<logic:empty name="infoSummaryReport" property="lines">

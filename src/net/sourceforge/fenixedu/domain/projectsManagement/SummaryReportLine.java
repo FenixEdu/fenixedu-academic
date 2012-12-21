@@ -28,6 +28,8 @@ public class SummaryReportLine implements Serializable, ISummaryReportLine {
 
     private Double revenue;
 
+    private Double partnersTransfers;
+
     private Double expense;
 
     private Double adiantamentosPorJustificar;
@@ -140,5 +142,13 @@ public class SummaryReportLine implements Serializable, ISummaryReportLine {
 
     public void setType(String type) {
 	this.type = type;
+    }
+
+    public Double getPartnersTransfers() {
+	return partnersTransfers;
+    }
+
+    public void setPartnersTransfers(Double partnersTransfers) {
+	this.partnersTransfers = partnersTransfers;
     }
 }

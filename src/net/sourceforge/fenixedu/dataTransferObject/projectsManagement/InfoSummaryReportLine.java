@@ -35,6 +35,8 @@ public class InfoSummaryReportLine extends InfoReportLine {
 
     private Double revenue;
 
+    private Double partnersTransfers;
+
     private Double expense;
 
     private Double adiantamentosPorJustificar;
@@ -149,6 +151,14 @@ public class InfoSummaryReportLine extends InfoReportLine {
 	this.type = type;
     }
 
+    public Double getPartnersTransfers() {
+	return partnersTransfers;
+    }
+
+    public void setPartnersTransfers(Double partnersTransfers) {
+	this.partnersTransfers = partnersTransfers;
+    }
+
     public void copyFromDomain(ISummaryReportLine summaryReportLine) {
 	if (summaryReportLine != null) {
 	    setCoordinatorCode(summaryReportLine.getCoordinatorCode());
@@ -159,6 +169,7 @@ public class InfoSummaryReportLine extends InfoReportLine {
 	    setBudget(summaryReportLine.getBudget());
 	    setMaxFinance(summaryReportLine.getMaxFinance());
 	    setRevenue(summaryReportLine.getRevenue());
+	    setPartnersTransfers(summaryReportLine.getPartnersTransfers());
 	    setExpense(summaryReportLine.getExpense());
 	    setAdiantamentosPorJustificar(summaryReportLine.getAdiantamentosPorJustificar());
 	    setTreasuryBalance(summaryReportLine.getTreasuryBalance());
@@ -206,18 +217,21 @@ public class InfoSummaryReportLine extends InfoReportLine {
 	cell.setCellValue(getString("link.revenue"));
 	cell.setCellStyle(excelStyle.getHeaderStyle());
 	cell = row.createCell((short) 7);
-	cell.setCellValue(getString("link.expenses"));
+	cell.setCellValue(getString("label.partnersTransfers"));
 	cell.setCellStyle(excelStyle.getHeaderStyle());
 	cell = row.createCell((short) 8);
-	cell.setCellValue(getString("label.toExecute.adiantamentosReport"));
+	cell.setCellValue(getString("link.expenses"));
 	cell.setCellStyle(excelStyle.getHeaderStyle());
 	cell = row.createCell((short) 9);
-	cell.setCellValue(getString("label.treasuryBalance"));
+	cell.setCellValue(getString("label.toExecute.adiantamentosReport"));
 	cell.setCellStyle(excelStyle.getHeaderStyle());
 	cell = row.createCell((short) 10);
-	cell.setCellValue(getString("label.toExecute.cabimentosReport"));
+	cell.setCellValue(getString("label.treasuryBalance"));
 	cell.setCellStyle(excelStyle.getHeaderStyle());
 	cell = row.createCell((short) 11);
+	cell.setCellValue(getString("label.toExecute.cabimentosReport"));
+	cell.setCellStyle(excelStyle.getHeaderStyle());
+	cell = row.createCell((short) 12);
 	cell.setCellValue(getString("label.budgetBalance"));
 	cell.setCellStyle(excelStyle.getHeaderStyle());
     }
@@ -239,52 +253,36 @@ public class InfoSummaryReportLine extends InfoReportLine {
 	cell.setCellStyle(excelStyle.getStringStyle());
 	cell = row.createCell((short) 4);
 	cell.setCellValue(getBudget().doubleValue());
-	if (getBudget().doubleValue() < 0)
-	    cell.setCellStyle(excelStyle.getDoubleNegativeStyle());
-	else
-	    cell.setCellStyle(excelStyle.getDoubleStyle());
+	cell.setCellStyle(getBudget().doubleValue() < 0 ? excelStyle.getDoubleNegativeStyle() : excelStyle.getDoubleStyle());
 	cell = row.createCell((short) 5);
 	cell.setCellValue(getMaxFinance().doubleValue());
-	if (getMaxFinance().doubleValue() < 0)
-	    cell.setCellStyle(excelStyle.getDoubleNegativeStyle());
-	else
-	    cell.setCellStyle(excelStyle.getDoubleStyle());
+	cell.setCellStyle(getMaxFinance().doubleValue() < 0 ? excelStyle.getDoubleNegativeStyle() : excelStyle.getDoubleStyle());
 	cell = row.createCell((short) 6);
 	cell.setCellValue(getRevenue().doubleValue());
-	if (getRevenue().doubleValue() < 0)
-	    cell.setCellStyle(excelStyle.getDoubleNegativeStyle());
-	else
-	    cell.setCellStyle(excelStyle.getDoubleStyle());
+	cell.setCellStyle(getRevenue().doubleValue() < 0 ? excelStyle.getDoubleNegativeStyle() : excelStyle.getDoubleStyle());
 	cell = row.createCell((short) 7);
-	cell.setCellValue(getExpense().doubleValue());
-	if (getExpense().doubleValue() < 0)
-	    cell.setCellStyle(excelStyle.getDoubleNegativeStyle());
-	else
-	    cell.setCellStyle(excelStyle.getDoubleStyle());
+	cell.setCellValue(getPartnersTransfers().doubleValue());
+	cell.setCellStyle(getPartnersTransfers().doubleValue() < 0 ? excelStyle.getDoubleNegativeStyle() : excelStyle
+		.getDoubleStyle());
 	cell = row.createCell((short) 8);
-	cell.setCellValue(getAdiantamentosPorJustificar().doubleValue());
-	if (getAdiantamentosPorJustificar().doubleValue() < 0)
-	    cell.setCellStyle(excelStyle.getDoubleNegativeStyle());
-	else
-	    cell.setCellStyle(excelStyle.getDoubleStyle());
+	cell.setCellValue(getExpense().doubleValue());
+	cell.setCellStyle(getExpense().doubleValue() < 0 ? excelStyle.getDoubleNegativeStyle() : excelStyle.getDoubleStyle());
 	cell = row.createCell((short) 9);
-	cell.setCellValue(getTreasuryBalance().doubleValue());
-	if (getTreasuryBalance().doubleValue() < 0)
-	    cell.setCellStyle(excelStyle.getDoubleNegativeStyle());
-	else
-	    cell.setCellStyle(excelStyle.getDoubleStyle());
+	cell.setCellValue(getAdiantamentosPorJustificar().doubleValue());
+	cell.setCellStyle(getAdiantamentosPorJustificar().doubleValue() < 0 ? excelStyle.getDoubleNegativeStyle() : excelStyle
+		.getDoubleStyle());
 	cell = row.createCell((short) 10);
-	cell.setCellValue(getCabimentoPorExecutar().doubleValue());
-	if (getCabimentoPorExecutar().doubleValue() < 0)
-	    cell.setCellStyle(excelStyle.getDoubleNegativeStyle());
-	else
-	    cell.setCellStyle(excelStyle.getDoubleStyle());
+	cell.setCellValue(getTreasuryBalance().doubleValue());
+	cell.setCellStyle(getTreasuryBalance().doubleValue() < 0 ? excelStyle.getDoubleNegativeStyle() : excelStyle
+		.getDoubleStyle());
 	cell = row.createCell((short) 11);
+	cell.setCellValue(getCabimentoPorExecutar().doubleValue());
+	cell.setCellStyle(getCabimentoPorExecutar().doubleValue() < 0 ? excelStyle.getDoubleNegativeStyle() : excelStyle
+		.getDoubleStyle());
+	cell = row.createCell((short) 12);
 	cell.setCellValue(getBudgetBalance().doubleValue());
-	if (getBudgetBalance().doubleValue() < 0)
-	    cell.setCellStyle(excelStyle.getDoubleNegativeStyle());
-	else
-	    cell.setCellStyle(excelStyle.getDoubleStyle());
+	cell.setCellStyle(getBudgetBalance().doubleValue() < 0 ? excelStyle.getDoubleNegativeStyle() : excelStyle
+		.getDoubleStyle());
     }
 
     @Override
@@ -293,7 +291,7 @@ public class InfoSummaryReportLine extends InfoReportLine {
 	HSSFCell cell = row.createCell((short) 0);
 	cell.setCellStyle(excelStyle.getStringStyle());
 	cell.setCellValue(getString("label.total"));
-	for (int i = 4; i <= 11; i++) {
+	for (int i = 4; i <= 12; i++) {
 	    CellReference cellRef1 = new CellReference(1, i);
 	    CellReference cellRef2 = new CellReference(((short) row.getRowNum() - 1), i);
 	    cell = row.createCell((short) i);
@@ -312,14 +310,16 @@ public class InfoSummaryReportLine extends InfoReportLine {
 	case 6:
 	    return getRevenue();
 	case 7:
-	    return getExpense();
+	    return getPartnersTransfers();
 	case 8:
-	    return getAdiantamentosPorJustificar();
+	    return getExpense();
 	case 9:
-	    return getTreasuryBalance();
+	    return getAdiantamentosPorJustificar();
 	case 10:
-	    return getCabimentoPorExecutar();
+	    return getTreasuryBalance();
 	case 11:
+	    return getCabimentoPorExecutar();
+	case 12:
 	    return getBudgetBalance();
 	default:
 	    return null;
