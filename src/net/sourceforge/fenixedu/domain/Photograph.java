@@ -20,6 +20,7 @@ import net.sourceforge.fenixedu.domain.contacts.EmailAddress;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.util.email.Message;
 import net.sourceforge.fenixedu.domain.util.email.Recipient;
+import net.sourceforge.fenixedu.domain.util.email.Sender;
 import net.sourceforge.fenixedu.domain.util.email.SystemSender;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.util.ByteArray;
@@ -38,7 +39,7 @@ public class Photograph extends Photograph_Base implements Comparable<Photograph
 
     private static final String RESOURCE_BUNDLE_NAME = "resources.PersonalInformationResources";
 
-    private static final String REJECTION_MAIL_SENDER = "noreply@ist.utl.pt";
+    private static final String REJECTION_MAIL_SENDER = Sender.getNoreplyMail();
 
     private static final String REJECTION_MAIL_SENDER_KEY = "photo.email.sender.rejection";
 

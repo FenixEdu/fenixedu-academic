@@ -25,6 +25,6 @@ public class ResearchUnitBasedSender extends ResearchUnitBasedSender_Base {
 
     @Service
     public static ResearchUnitBasedSender newInstance(Unit unit) {
-	return new ResearchUnitBasedSender(unit, "noreply@ist.utl.pt", new ResearchUnitElementGroup((ResearchUnit) unit));
+	return new ResearchUnitBasedSender(unit, Sender.getNoreplyMail(), new ResearchUnitElementGroup((ResearchUnit) unit));
     }
 }

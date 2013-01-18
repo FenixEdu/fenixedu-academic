@@ -20,7 +20,7 @@ public class CoordinatorSender extends CoordinatorSender_Base {
     public CoordinatorSender(Degree degree) {
 	super();
 	setDegree(degree);
-	setFromAddress("noreply@ist.utl.pt");
+	setFromAddress(Sender.getNoreplyMail());
 	addReplyTos(new CurrentUserReplyTo());
 	setMembers(new DegreeAllCoordinatorsGroup(degree));
 	setFromName(getMembers().getName());

@@ -159,6 +159,6 @@ public class UnitBasedSender extends UnitBasedSender_Base {
 
     @Service
     public static UnitBasedSender newInstance(Unit unit) {
-	return new UnitBasedSender(unit, "noreply@ist.utl.pt", new UnitMembersGroup(unit));
+	return new UnitBasedSender(unit, Sender.getNoreplyMail(), new UnitMembersGroup(unit));
     }
 }

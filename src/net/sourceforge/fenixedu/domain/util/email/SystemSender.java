@@ -9,7 +9,7 @@ public class SystemSender extends SystemSender_Base {
     public SystemSender() {
 	super();
 	setMembers(new RoleGroup(Role.getRoleByRoleType(RoleType.MANAGER)));
-	setFromAddress("noreply@ist.utl.pt");
+	setFromAddress(Sender.getNoreplyMail());
 	setFromName("Sistema Fénix");
 	setSystemRootDomainObject(getRootDomainObject());
     }

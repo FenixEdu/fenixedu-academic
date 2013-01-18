@@ -18,6 +18,8 @@ import pt.ist.fenixWebFramework.services.Service;
 
 public class Sender extends Sender_Base {
 
+    static private String NOREPLY_MAIL = "noreply@ist.utl.pt";
+
     public static Comparator<Sender> COMPARATOR_BY_FROM_NAME = new Comparator<Sender>() {
 
 	@Override
@@ -53,6 +55,10 @@ public class Sender extends Sender_Base {
 	}
 	removeRootDomainObject();
 	deleteDomainObject();
+    }
+
+    static public String getNoreplyMail() {
+	return NOREPLY_MAIL;
     }
 
     public static boolean hasAvailableSender() {

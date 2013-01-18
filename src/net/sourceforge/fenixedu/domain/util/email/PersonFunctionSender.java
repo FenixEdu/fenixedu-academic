@@ -28,7 +28,7 @@ public class PersonFunctionSender extends PersonFunctionSender_Base {
 	Person person = personFunction.getPerson();
 	setFromName(fromName);
 	setPersonFunction(personFunction);
-	setFromAddress("noreply@ist.utl.pt");
+	setFromAddress(Sender.getNoreplyMail());
 	addReplyTos(new CurrentUserReplyTo());
 	setMembers(new PersonGroup(person));
 	getRecipients().addAll(Recipient.newInstance(getPossibleReceivers(person)));

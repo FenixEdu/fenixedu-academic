@@ -31,7 +31,7 @@ public class DepartmentMemberBasedSender extends DepartmentMemberBasedSender_Bas
 
     @Service
     public static DepartmentMemberBasedSender newInstance(final Unit unit) {
-	return new DepartmentMemberBasedSender(unit, "noreply@ist.utl.pt", new UnitMembersGroup(unit));
+	return new DepartmentMemberBasedSender(unit, Sender.getNoreplyMail(), new UnitMembersGroup(unit));
     }
 
 }

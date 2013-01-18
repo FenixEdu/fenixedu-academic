@@ -33,7 +33,7 @@ public class ExecutionCourseSender extends ExecutionCourseSender_Base {
 	super();
 	setCourse(executionCourse);
 	setFromName(getFromName(executionCourse));
-	setFromAddress("noreply@ist.utl.pt");
+	setFromAddress(Sender.getNoreplyMail());
 	addReplyTos(new ExecutionCourseReplyTo());
 	addReplyTos(new CurrentUserReplyTo());
 	setMembers(new ExecutionCourseTeachersGroup(executionCourse));

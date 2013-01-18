@@ -8,7 +8,7 @@ public class PersonSender extends PersonSender_Base {
 
     public PersonSender() {
 	super();
-	setFromAddress("noreply@ist.utl.pt");
+	setFromAddress(Sender.getNoreplyMail());
 	addReplyTos(new CurrentUserReplyTo());
     }
 
