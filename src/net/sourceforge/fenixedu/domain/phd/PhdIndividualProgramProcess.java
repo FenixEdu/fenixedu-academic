@@ -14,6 +14,7 @@ import java.util.TreeSet;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.caseHandling.StartActivity;
 import net.sourceforge.fenixedu.commons.CollectionUtils;
+import net.sourceforge.fenixedu.domain.AcademicProgram;
 import net.sourceforge.fenixedu.domain.Alert;
 import net.sourceforge.fenixedu.domain.CompetenceCourse;
 import net.sourceforge.fenixedu.domain.Coordinator;
@@ -25,6 +26,8 @@ import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Qualification;
 import net.sourceforge.fenixedu.domain.QualificationBean;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
+import net.sourceforge.fenixedu.domain.accessControl.academicAdministration.AcademicAuthorizationGroup;
+import net.sourceforge.fenixedu.domain.accessControl.academicAdministration.AcademicOperationType;
 import net.sourceforge.fenixedu.domain.accounting.events.AdministrativeOfficeFeeAndInsuranceEvent;
 import net.sourceforge.fenixedu.domain.accounting.events.insurance.InsuranceEvent;
 import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
@@ -191,6 +194,39 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
 	activities.add(new AbandonIndividualProgramProcess());
     }
 
+    /**
+     * Checks whether the specified user is allowed to manage this process.
+     */
+    @Override
+    public boolean isAllowedToManageProcess(IUserView userView) {
+	Set<AcademicProgram> programs = AcademicAuthorizationGroup.getProgramsForOperation(userView.getPerson(),
+		AcademicOperationType.MANAGE_PHD_PROCESSES);
+
+	return programs.contains(this.getPhdProgram());
+    }
+
+    public boolean isCurrentUserAllowedToManageProcess() {
+	return isAllowedToManageProcess(AccessControl.getUserView());
+    }
+
+    /**
+     * Checks whether the specified user has permission to manage this process,
+     * as well as its state
+     */
+    public boolean isAllowedToManageProcessState(IUserView userView) {
+	if (!isAllowedToManageProcess(userView))
+	    return false;
+
+	Set<AcademicProgram> programs = AcademicAuthorizationGroup.getProgramsForOperation(userView.getPerson(),
+		AcademicOperationType.MANAGE_PHD_PROCESS_STATE);
+
+	return programs.contains(this.getPhdProgram());
+    }
+
+    public boolean isCurrentUserAllowedToManageProcessState() {
+	return isAllowedToManageProcessState(AccessControl.getUserView());
+    }
+
     @StartActivity
     static public class CreateCandidacy extends PhdIndividualProgramProcessActivity {
 
@@ -233,8 +269,7 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
 		    result = bean.getPersonBean().getPerson();
 		} else {
 		    /*
-		     * if person never had any identity in the system then let
-		     * edit information
+		     * if person never had any identity in the system then let edit information
 		     */
 		    result = bean.getPersonBean().getPerson().edit(bean.getPersonBean());
 		}
@@ -282,9 +317,8 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
 
     /*
      * 
-     * TODO: Refactor -> Participants should be shared at PhdProcessesManager
-     * level, and each PhdProgram should also have phdparticipants as
-     * coordinators
+     * TODO: Refactor -> Participants should be shared at PhdProcessesManager level, and each PhdProgram should also have
+     * phdparticipants as coordinators
      */
     private void updatePhdParticipantsWithCoordinators() {
 	for (final Person person : getCoordinatorsFor(getExecutionYear())) {
@@ -698,7 +732,9 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
     }
 
     public boolean isRegistrationAvailable() {
-	return hasRegistration();
+	return hasRegistration()
+		&& AcademicAuthorizationGroup.getProgramsForOperation(AccessControl.getPerson(),
+			AcademicOperationType.MANAGE_REGISTRATIONS).contains(getRegistration().getDegree());
     }
 
     @Override
@@ -716,11 +752,11 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
 
     public void cancelDebts(final Person person) {
 	if (hasCandidacyProcess() && !getCandidacyProcess().hasAnyPayments()) {
-	    getCandidacyProcess().cancelDebt(person.getEmployee());
+	    getCandidacyProcess().cancelDebt(person);
 	}
 
 	if (hasRegistrationFee() && !getRegistrationFee().hasAnyPayments()) {
-	    getRegistrationFee().cancel(person.getEmployee());
+	    getRegistrationFee().cancel(person);
 	}
     }
 
@@ -974,8 +1010,7 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
 			result = bean.getPersonBean().getPerson();
 		    } else {
 			/*
-			 * if person never had any identity in the system then
-			 * let edit information
+			 * if person never had any identity in the system then let edit information
 			 */
 			result = bean.getPersonBean().getPerson().editByPublicCandidate(bean.getPersonBean());
 		    }
@@ -1351,6 +1386,10 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
 	    }
 	}
 	return false;
+    }
+
+    public AdministrativeOffice getAdministrativeOffice() {
+	return hasPhdProgram() ? getPhdProgram().getAdministrativeOffice() : null;
     }
 
 }

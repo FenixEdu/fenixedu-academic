@@ -35,11 +35,11 @@ public class Under23TransportsDeclarationRequest extends Under23TransportsDeclar
 
 	if (academicServiceRequestBean.isNew()) {
 	    AcademicServiceRequestSituation.create(this, new AcademicServiceRequestBean(
-		    AcademicServiceRequestSituationType.PROCESSING, academicServiceRequestBean.getEmployee()));
+		    AcademicServiceRequestSituationType.PROCESSING, academicServiceRequestBean.getResponsible()));
 
 	} else if (academicServiceRequestBean.isToConclude()) {
 	    AcademicServiceRequestSituation.create(this, new AcademicServiceRequestBean(
-		    AcademicServiceRequestSituationType.DELIVERED, academicServiceRequestBean.getEmployee()));
+		    AcademicServiceRequestSituationType.DELIVERED, academicServiceRequestBean.getResponsible()));
 	}
     }
 
@@ -67,10 +67,10 @@ public class Under23TransportsDeclarationRequest extends Under23TransportsDeclar
     public boolean isPossibleToSendToOtherEntity() {
 	return false;
     }
-    
+
     @Override
     public boolean isManagedWithRectorateSubmissionBatch() {
-        return false;
+	return false;
     }
 
     @Override

@@ -12,11 +12,11 @@ public class EditPersonalInformation extends PhdIndividualProgramProcessActivity
 	// no precondition to check
     }
 
-	@Override
+    @Override
     protected PhdIndividualProgramProcess executeActivity(PhdIndividualProgramProcess process, IUserView userView, Object object) {
 
-	    final Person person = process.getPerson();
-	if (isMasterDegreeAdministrativeOfficeEmployee(userView)) {
+	final Person person = process.getPerson();
+	if (process.isAllowedToManageProcess(userView)) {
 	    person.edit((PersonBean) object);
 	} else if (!person.hasAnyPersonRoles() && !person.hasUser() && !person.hasStudent()
 		&& process.getCandidacyProcess().isPublicCandidacy()) {

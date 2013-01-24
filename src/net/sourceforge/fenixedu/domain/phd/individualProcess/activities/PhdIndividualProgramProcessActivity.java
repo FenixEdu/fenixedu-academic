@@ -6,7 +6,6 @@ import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.caseHandling.Activity;
 import net.sourceforge.fenixedu.domain.caseHandling.PreConditionNotValidException;
-import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess;
 import net.sourceforge.fenixedu.domain.phd.log.PhdLog;
 import net.sourceforge.fenixedu.domain.util.email.Message;
@@ -32,11 +31,6 @@ public abstract class PhdIndividualProgramProcessActivity extends Activity<PhdIn
     }
 
     abstract protected void activityPreConditions(final PhdIndividualProgramProcess process, final IUserView userView);
-
-    static public boolean isMasterDegreeAdministrativeOfficeEmployee(IUserView userView) {
-	return userView != null && userView.hasRoleType(RoleType.ACADEMIC_ADMINISTRATIVE_OFFICE)
-		&& userView.getPerson().getEmployeeAdministrativeOffice().isMasterDegree();
-    }
 
     @Override
     protected void log(PhdIndividualProgramProcess process, IUserView userView, Object object) {

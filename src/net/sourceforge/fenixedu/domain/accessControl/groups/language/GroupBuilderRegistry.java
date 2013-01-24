@@ -63,7 +63,6 @@ import net.sourceforge.fenixedu.domain.accessControl.GroupingGroup;
 import net.sourceforge.fenixedu.domain.accessControl.IfTrueGroup;
 import net.sourceforge.fenixedu.domain.accessControl.InstitutionSiteManagers;
 import net.sourceforge.fenixedu.domain.accessControl.InternalPersonGroup;
-import net.sourceforge.fenixedu.domain.accessControl.MasterDegreeAdministrativeOfficeGroup;
 import net.sourceforge.fenixedu.domain.accessControl.MasterDegreeCoordinatorsGroup;
 import net.sourceforge.fenixedu.domain.accessControl.NoOneGroup;
 import net.sourceforge.fenixedu.domain.accessControl.NotUpdatedAlumniInfoForSpecificTimeGroup;
@@ -89,6 +88,8 @@ import net.sourceforge.fenixedu.domain.accessControl.UnitEmployeesGroup;
 import net.sourceforge.fenixedu.domain.accessControl.UnitMembersGroup;
 import net.sourceforge.fenixedu.domain.accessControl.VigilancyGroup;
 import net.sourceforge.fenixedu.domain.accessControl.WebSiteManagersGroup;
+import net.sourceforge.fenixedu.domain.accessControl.academicAdministration.AcademicAuthorizationGroup;
+import net.sourceforge.fenixedu.domain.accessControl.academicAdministration.AcademicAuthorizationGroup.AcademicAuthorizationGroupBuilder;
 import net.sourceforge.fenixedu.domain.accessControl.groups.ActiveStudentsFromDegreeTypeGroup;
 import net.sourceforge.fenixedu.domain.accessControl.groups.DepartmentAdministrativeOfficeGroup;
 import net.sourceforge.fenixedu.domain.accessControl.groups.DepartmentPresidentGroup;
@@ -269,8 +270,6 @@ public class GroupBuilderRegistry {
 	register("departmentAdministrativeOfficeGroup", DepartmentAdministrativeOfficeGroup.class,
 		new DepartmentAdministrativeOfficeGroup.Builder());
 	register("vigilancyGroup", VigilancyGroup.class, new VigilancyGroup.Builder());
-	register("masterDegreeAdministrativeOfficeGroup", MasterDegreeAdministrativeOfficeGroup.class,
-		new MasterDegreeAdministrativeOfficeGroup.Builder());
 	register("activeStudentsFromDegreeTypeGroup", ActiveStudentsFromDegreeTypeGroup.class,
 		new ActiveStudentsFromDegreeTypeGroup.Builder());
 	register("cerimonyInquiryGroup", CerimonyInquiryGroup.class, new CerimonyInquiryGroup.Builder());
@@ -284,6 +283,7 @@ public class GroupBuilderRegistry {
 	register("projectDepartmentAccessGroup", ProjectDepartmentAccessGroup.class, new ProjectDepartmentAccessGroup.Builder());
 
 	register("searchDegreeStudentsGroup", SearchDegreeStudentsGroup.class, new SearchDegreeStudentsGroup.Builder());
+	register("academic", AcademicAuthorizationGroup.class, new AcademicAuthorizationGroupBuilder());
 
 	registerGroupsWithNoArguments();
     }

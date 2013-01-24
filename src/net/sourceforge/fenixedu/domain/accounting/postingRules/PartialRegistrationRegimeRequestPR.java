@@ -9,8 +9,6 @@ import net.sourceforge.fenixedu.util.Money;
 
 import org.joda.time.DateTime;
 
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
-
 public class PartialRegistrationRegimeRequestPR extends PartialRegistrationRegimeRequestPR_Base {
 
     protected PartialRegistrationRegimeRequestPR() {
@@ -91,7 +89,7 @@ public class PartialRegistrationRegimeRequestPR extends PartialRegistrationRegim
 	return mostRecent;
     }
 
-    @Checked("PostingRulePredicates.editPredicate")
+    @Override
     public PartialRegistrationRegimeRequestPR edit(final Money fixedAmount) {
 	return new PartialRegistrationRegimeRequestPR(getExecutionYear(), getServiceAgreementTemplate(), fixedAmount);
     }

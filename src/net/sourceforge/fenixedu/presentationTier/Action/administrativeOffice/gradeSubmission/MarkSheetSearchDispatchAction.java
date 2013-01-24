@@ -1,6 +1,3 @@
-/*
- * Created on May 5, 2006
- */
 package net.sourceforge.fenixedu.presentationTier.Action.administrativeOffice.gradeSubmission;
 
 import java.text.ParseException;
@@ -13,9 +10,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
+import net.sourceforge.fenixedu.applicationTier.Servico.administrativeOffice.gradeSubmission.SearchMarkSheets;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.applicationTier.Servico.manager.RemoveGradesFromConfirmedMarkSheet;
 import net.sourceforge.fenixedu.dataTransferObject.degreeAdministrativeOffice.gradeSubmission.MarkSheetManagementSearchBean;
 import net.sourceforge.fenixedu.dataTransferObject.degreeAdministrativeOffice.gradeSubmission.MarkSheetSearchResultBean;
@@ -25,7 +22,6 @@ import net.sourceforge.fenixedu.domain.MarkSheet;
 import net.sourceforge.fenixedu.domain.MarkSheetState;
 import net.sourceforge.fenixedu.domain.MarkSheetType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -40,14 +36,14 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixWebFramework.struts.annotations.Tile;
 import pt.utl.ist.fenix.tools.util.DateFormatUtil;
 
-@Mapping(path = "/markSheetManagement", module = "academicAdminOffice", formBean = "markSheetManagementForm", input = "/academicAdminOffice/gradeSubmission/markSheetManagement.jsp")
+@Mapping(path = "/markSheetManagement", module = "academicAdministration", formBean = "markSheetManagementForm", input = "/academicAdminOffice/gradeSubmission/markSheetManagement.jsp")
 @Forwards({
-	@Forward(name = "searchMarkSheet", path = "/academicAdminOffice/gradeSubmission/markSheetManagement.jsp", tileProperties = @Tile(title = "private.academicadministrativeoffice.marksheets.marksheetmanagement")),
-	@Forward(name = "viewMarkSheet", path = "/academicAdminOffice/gradeSubmission/viewMarkSheet.jsp", tileProperties = @Tile(title = "private.academicadministrativeoffice.marksheets.marksheetmanagement")),
-	@Forward(name = "removeMarkSheet", path = "/academicAdminOffice/gradeSubmission/removeMarkSheet.jsp", tileProperties = @Tile(title = "private.academicadministrativeoffice.marksheets.marksheetmanagement")),
-	@Forward(name = "searchMarkSheetFilled", path = "/markSheetManagement.do?method=prepareSearchMarkSheetFilled", tileProperties = @Tile(title = "private.academicadministrativeoffice.marksheets.marksheetmanagement")),
-	@Forward(name = "confirmMarkSheet", path = "/academicAdminOffice/gradeSubmission/confirmMarkSheet.jsp", tileProperties = @Tile(title = "private.academicadministrativeoffice.marksheets.marksheetmanagement")),
-	@Forward(name = "choosePrinter", path = "/printMarkSheet.do?method=choosePrinterMarkSheet", tileProperties = @Tile(title = "private.academicadministrativeoffice.marksheets.marksheetmanagement")) })
+	@Forward(name = "searchMarkSheet", path = "/academicAdminOffice/gradeSubmission/markSheetManagement.jsp"),
+	@Forward(name = "viewMarkSheet", path = "/academicAdminOffice/gradeSubmission/viewMarkSheet.jsp"),
+	@Forward(name = "removeMarkSheet", path = "/academicAdminOffice/gradeSubmission/removeMarkSheet.jsp"),
+	@Forward(name = "searchMarkSheetFilled", path = "/markSheetManagement.do?method=prepareSearchMarkSheetFilled"),
+	@Forward(name = "confirmMarkSheet", path = "/academicAdminOffice/gradeSubmission/confirmMarkSheet.jsp"),
+	@Forward(name = "choosePrinter", path = "/printMarkSheet.do?method=choosePrinterMarkSheet") })
 public class MarkSheetSearchDispatchAction extends MarkSheetDispatchAction {
 
     public ActionForward prepareSearchMarkSheet(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
@@ -82,20 +78,16 @@ public class MarkSheetSearchDispatchAction extends MarkSheetDispatchAction {
     }
 
     private ActionForward searchMarkSheets(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-	    HttpServletResponse response, MarkSheetManagementSearchBean searchBean) throws FenixFilterException,
-	    FenixServiceException {
+	    HttpServletResponse response, MarkSheetManagementSearchBean searchBean) throws FenixServiceException {
 
 	ActionMessages actionMessages = createActionMessages();
 	try {
-	    Map<MarkSheetType, MarkSheetSearchResultBean> result = (Map<MarkSheetType, MarkSheetSearchResultBean>) ServiceUtils
-		    .executeService("SearchMarkSheets", new Object[] { searchBean });
+	    Map<MarkSheetType, MarkSheetSearchResultBean> result = SearchMarkSheets.run(searchBean);
 
 	    request.setAttribute("edit", searchBean);
 	    request.setAttribute("searchResult", result);
 	    request.setAttribute("url", buildSearchUrl(searchBean));
 
-	} catch (NotAuthorizedException e) {
-	    addMessage(request, actionMessages, "error.notAuthorized");
 	} catch (InvalidArgumentsServiceException e) {
 	    addMessage(request, actionMessages, e.getMessage());
 	}

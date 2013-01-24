@@ -5,10 +5,8 @@
 
 <html:xhtml/>
 
-<logic:present role="ACADEMIC_ADMINISTRATIVE_OFFICE">
 
-
-<em><bean:message key="label.academicAdminOffice" bundle="ACADEMIC_OFFICE_RESOURCES"/></em>
+<br />
 <h2><bean:message key="label.externalUnits" bundle="ACADEMIC_OFFICE_RESOURCES"/></h2>
 
 
@@ -48,4 +46,3 @@
 
 </logic:present>
 
-</logic:present>

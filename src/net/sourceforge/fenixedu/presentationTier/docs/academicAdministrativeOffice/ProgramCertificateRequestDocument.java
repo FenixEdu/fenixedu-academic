@@ -8,7 +8,6 @@ import java.util.ResourceBundle;
 
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.Curriculum;
-import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.Person;
@@ -18,10 +17,10 @@ import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.degreeStructure.BibliographicReferences;
 import net.sourceforge.fenixedu.domain.degreeStructure.Context;
 import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
+import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.organizationalStructure.UniversityUnit;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.ProgramCertificateRequest;
 import net.sourceforge.fenixedu.domain.student.Registration;
-import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.util.HtmlToTextConverterUtil;
 
 import org.apache.commons.lang.StringUtils;
@@ -56,19 +55,16 @@ public class ProgramCertificateRequestDocument extends AdministrativeOfficeDocum
 	addParameter("programsDescription", getProgramsDescription());
 	addParameter("degreeDescription", getDegreeDescription());
 
-	final Employee employee = AccessControl.getPerson().getEmployee();
+	AdministrativeOffice administrativeOffice = getAdministrativeOffice();
+	Unit adminOfficeUnit = administrativeOffice.getUnit();
+	Person activeUnitCoordinator = adminOfficeUnit.getActiveUnitCoordinator();
 
-	Person activeUnitCoordinator = employee.getCurrentWorkingPlace().getActiveUnitCoordinator();
-	addParameter("administrativeOfficeCoordinatorName", activeUnitCoordinator
-		.getName());
-	addParameter("administrativeOfficeName", employee.getCurrentWorkingPlace().getName());
+	addParameter("administrativeOfficeCoordinatorName", activeUnitCoordinator.getName());
+	addParameter("administrativeOfficeName", getMLSTextContent(adminOfficeUnit.getPartyName()));
 	addParameter("institutionName", RootDomainObject.getInstance().getInstitutionUnit().getName());
 	addParameter("universityName", UniversityUnit.getInstitutionsUniversityUnit().getName());
-	LocalDate date = new LocalDate();
 
-	addParameter("day", date.toString(DD, getLocale()) + " de " + date.toString(MMMM_YYYY, getLocale()));
-
-	AdministrativeOffice administrativeOffice = employee.getCurrentWorkingPlace().getAdministrativeOffice();
+	addParameter("day", new LocalDate().toString(DD_MMMM_YYYY, getLocale()));
 
 	addParameter("coordinatorSignature", coordinatorSignature(administrativeOffice, activeUnitCoordinator));
 	addParameter("coordinatorWithoutArticle", coordinatorSignatureWithoutArticle(administrativeOffice, activeUnitCoordinator));
@@ -188,10 +184,10 @@ public class ProgramCertificateRequestDocument extends AdministrativeOfficeDocum
     }
 
     static abstract public class ProgramInformation implements Serializable {
-	private String degree;
-	private String degreeCurricularPlan;
-	private String curricularCourse;
-	private List<ContextInformation> contexts;
+	private final String degree;
+	private final String degreeCurricularPlan;
+	private final String curricularCourse;
+	private final List<ContextInformation> contexts;
 
 	public ProgramInformation(final Enrolment enrolment) {
 	    this.degree = enrolment.getCurricularCourse().getDegree().getName();
@@ -232,12 +228,12 @@ public class ProgramCertificateRequestDocument extends AdministrativeOfficeDocum
     }
 
     static public class BolonhaProgramInformation extends ProgramInformation {
-	private String program;
-	private String weigth;
-	private String prerequisites;
-	private String objectives;
-	private String evaluationMethod;
-	private List<BibliographicInformation> bibliographics;
+	private final String program;
+	private final String weigth;
+	private final String prerequisites;
+	private final String objectives;
+	private final String evaluationMethod;
+	private final List<BibliographicInformation> bibliographics;
 
 	public BolonhaProgramInformation(final Enrolment enrolment) {
 	    super(enrolment);
@@ -322,8 +318,8 @@ public class ProgramCertificateRequestDocument extends AdministrativeOfficeDocum
     }
 
     static public class ContextInformation {
-	private String name;
-	private String period;
+	private final String name;
+	private final String period;
 
 	public ContextInformation(final Context context) {
 	    this.name = context.getParentCourseGroup().getOneFullName();
@@ -340,10 +336,10 @@ public class ProgramCertificateRequestDocument extends AdministrativeOfficeDocum
     }
 
     static public class BibliographicInformation {
-	private String authors;
-	private String title;
-	private String reference;
-	private String year;
+	private final String authors;
+	private final String title;
+	private final String reference;
+	private final String year;
 
 	public BibliographicInformation(final String authors, final String title, final String reference, final String year) {
 	    this.authors = authors;

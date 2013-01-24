@@ -10,10 +10,9 @@ public class UploadDocuments extends PhdIndividualProgramProcessActivity {
     }
 
     @Override
-    protected PhdIndividualProgramProcess executeActivity(PhdIndividualProgramProcess process, IUserView userView,
-    	Object object) {
-        process.getCandidacyProcess().executeActivity(userView,
+    protected PhdIndividualProgramProcess executeActivity(PhdIndividualProgramProcess process, IUserView userView, Object object) {
+	process.getCandidacyProcess().executeActivity(userView,
 		net.sourceforge.fenixedu.domain.phd.candidacy.activities.UploadDocuments.class.getSimpleName(), object);
-        return process;
+	return process;
     }
 }

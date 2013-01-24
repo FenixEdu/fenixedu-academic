@@ -2,14 +2,13 @@ package net.sourceforge.fenixedu.dataTransferObject.serviceRequests;
 
 import java.io.Serializable;
 
-import net.sourceforge.fenixedu.domain.Employee;
+import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequestSituationType;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.CertificateRequest;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequest;
 
 public class DocumentRequestEditBean implements Serializable {
-
-    private Employee employee;
+    private Person responsible;
 
     private DocumentRequest documentRequest;
 
@@ -23,9 +22,9 @@ public class DocumentRequestEditBean implements Serializable {
 
     }
 
-    public DocumentRequestEditBean(DocumentRequest documentRequest, Employee employee) {
+    public DocumentRequestEditBean(DocumentRequest documentRequest, Person responsible) {
 	setDocumentRequest(documentRequest);
-	setEmployee(employee);
+	setResponsible(responsible);
 	setAcademicServiceRequestSituationType(documentRequest.getAcademicServiceRequestSituationType());
 	setJustification(documentRequest.getActiveSituation().getJustification());
 
@@ -42,12 +41,12 @@ public class DocumentRequestEditBean implements Serializable {
 	this.documentRequest = documentRequest;
     }
 
-    public Employee getEmployee() {
-	return this.employee;
+    public Person getResponsible() {
+	return responsible;
     }
 
-    public void setEmployee(Employee employee) {
-	this.employee = employee;
+    public void setResponsible(Person responsible) {
+	this.responsible = responsible;
     }
 
     public AcademicServiceRequestSituationType getAcademicServiceRequestSituationType() {

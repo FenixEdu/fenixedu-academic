@@ -10,18 +10,17 @@ public class AddCustomAlert extends PhdIndividualProgramProcessActivity {
 
     @Override
     protected void activityPreConditions(PhdIndividualProgramProcess process, IUserView userView) {
-        if (!PhdIndividualProgramProcess.isMasterDegreeAdministrativeOfficeEmployee(userView)) {
-    	throw new PreConditionNotValidException();
-        }
+	if (!process.isAllowedToManageProcess(userView)) {
+	    throw new PreConditionNotValidException();
+	}
     }
 
     @Override
-    protected PhdIndividualProgramProcess executeActivity(PhdIndividualProgramProcess process, IUserView userView,
-    	Object object) {
+    protected PhdIndividualProgramProcess executeActivity(PhdIndividualProgramProcess process, IUserView userView, Object object) {
 
-        new PhdCustomAlert((PhdCustomAlertBean) object);
+	new PhdCustomAlert((PhdCustomAlertBean) object);
 
-        return process;
+	return process;
     }
 
 }

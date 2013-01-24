@@ -28,8 +28,8 @@ import pt.ist.fenixframework.pstm.AbstractDomainObject;
  * @author - Shezad Anavarali (shezad@ist.utl.pt)
  * 
  */
-@Mapping(path = "/studentStatutes", module = "academicAdminOffice")
-@Forwards({ @Forward(name = "manageStatutes", path = "/academicAdminOffice/manageStatutes.jsp", tileProperties = @Tile(title = "private.academicadministrativeoffice.studentoperations.viewstudents")) })
+@Mapping(path = "/studentStatutes", module = "academicAdministration")
+@Forwards({ @Forward(name = "manageStatutes", path = "/academicAdminOffice/manageStatutes.jsp") })
 public class StudentStatutesDA extends FenixDispatchAction {
 
     public ActionForward prepare(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,

@@ -6,7 +6,6 @@ import java.util.ResourceBundle;
 
 import net.sf.jasperreports.engine.JRException;
 import net.sourceforge.fenixedu.dataTransferObject.serviceRequests.AcademicServiceRequestBean;
-import net.sourceforge.fenixedu.dataTransferObject.serviceRequests.AcademicServiceRequestCreateBean;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.accounting.EventType;
 import net.sourceforge.fenixedu.domain.accounting.events.serviceRequests.PhdRegistryDiplomaRequestEvent;
@@ -44,15 +43,11 @@ public class PhdRegistryDiplomaRequest extends PhdRegistryDiplomaRequest_Base im
     }
 
     @Override
-    protected void init(AcademicServiceRequestCreateBean bean) {
-	throw new DomainException("invoke init(PhdDocumentRequestCreateBean)");
-    }
-
-    @Override
     protected void init(PhdAcademicServiceRequestCreateBean bean) {
 	throw new DomainException("invoke init(PhdDocumentRequestCreateBean)");
     }
 
+    @Override
     protected void init(final PhdDocumentRequestCreateBean bean) {
 	checkParameters(bean);
 	super.init(bean);
@@ -215,7 +210,7 @@ public class PhdRegistryDiplomaRequest extends PhdRegistryDiplomaRequest_Base im
 	    }
 	} else if (academicServiceRequestBean.isToCancelOrReject()) {
 	    if (hasEvent()) {
-		getEvent().cancel(academicServiceRequestBean.getEmployee());
+		getEvent().cancel(academicServiceRequestBean.getResponsible());
 	    }
 
 	    if (academicServiceRequestBean.isToCancel()) {
@@ -241,7 +236,7 @@ public class PhdRegistryDiplomaRequest extends PhdRegistryDiplomaRequest_Base im
     @Override
     public byte[] generateDocument() {
 	try {
-	    final List<AdministrativeOfficeDocument> documents = (List<AdministrativeOfficeDocument>) AdministrativeOfficeDocument.AdministrativeOfficeDocumentCreator
+	    final List<AdministrativeOfficeDocument> documents = AdministrativeOfficeDocument.AdministrativeOfficeDocumentCreator
 		    .create(this);
 
 	    String latexThesisTitle = getPhdIndividualProgramProcess().getLatexThesisTitle();
@@ -290,4 +285,8 @@ public class PhdRegistryDiplomaRequest extends PhdRegistryDiplomaRequest_Base im
 			getExternalId(), getRectorateSubmissionBatch().getExternalId());
     }
 
+    @Override
+    public boolean isProgrammeLinkVisible() {
+	return getPhdIndividualProgramProcess().isCurrentUserAllowedToManageProcess();
+    }
 }

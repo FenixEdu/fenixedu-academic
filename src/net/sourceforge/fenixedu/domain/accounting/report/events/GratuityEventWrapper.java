@@ -8,13 +8,13 @@ import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.accounting.Installment;
 import net.sourceforge.fenixedu.domain.accounting.events.gratuity.GratuityEvent;
 import net.sourceforge.fenixedu.domain.accounting.events.gratuity.GratuityEventWithPaymentPlan;
-import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOfficeType;
+import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
 import net.sourceforge.fenixedu.domain.student.EnrolmentModel;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 public class GratuityEventWrapper implements Wrapper {
 
-    private GratuityEvent event;
+    private final GratuityEvent event;
 
     public GratuityEventWrapper(final GratuityEvent event) {
 	this.event = event;
@@ -119,14 +119,8 @@ public class GratuityEventWrapper implements Wrapper {
     }
 
     @Override
-    public AdministrativeOfficeType getRelatedAcademicOfficeType() {
-	if (event.isDfaGratuityEvent()) {
-	    return AdministrativeOfficeType.MASTER_DEGREE;
-	} else if (event.isSpecializationDegreeRegistrationEvent()) {
-	    return AdministrativeOfficeType.MASTER_DEGREE;
-	}
-
-	return AdministrativeOfficeType.DEGREE;
+    public AdministrativeOffice getRelatedAcademicOffice() {
+	return event.getAdministrativeOffice();
     }
 
     public List<InstallmentWrapper> getInstallments() {
@@ -135,12 +129,12 @@ public class GratuityEventWrapper implements Wrapper {
 	if (this.event.isGratuityEventWithPaymentPlan()) {
 	    GratuityEventWithPaymentPlan gratuityEventWithPaymentPlan = (GratuityEventWithPaymentPlan) this.event;
 	    List<Installment> installments = gratuityEventWithPaymentPlan.getInstallments();
-	    
+
 	    for (Installment installment : installments) {
 		wrappers.add(new GratuityEventInstallmentWrapper(gratuityEventWithPaymentPlan, installment));
 	    }
 	}
-	
+
 	return wrappers;
     }
 

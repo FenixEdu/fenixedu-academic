@@ -65,7 +65,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.utl.ist.fenix.tools.util.Pair;
 
-@Mapping(path = "/phdThesisProcess", module = "academicAdminOffice")
+@Mapping(path = "/phdThesisProcess", module = "academicAdministration")
 @Forwards({
 
 @Forward(name = "requestJuryElements", path = "/phd/thesis/academicAdminOffice/requestJuryElements.jsp"),
@@ -1018,6 +1018,7 @@ public class PhdThesisProcessDA extends CommonPhdThesisProcessDA {
 	return mapping.findForward("viewLogs");
     }
 
+    @SuppressWarnings("unchecked")
     protected List<PhdProgramDocumentUploadBean> getDocumentsToUpload() {
 	return (List<PhdProgramDocumentUploadBean>) getObjectFromViewState("documentsToUpload");
     }

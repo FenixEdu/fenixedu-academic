@@ -120,8 +120,15 @@ public class PaymentManagementDA extends FenixDispatchAction {
 		result.addAll(searchUsername(searchString));
 		result.addAll(searchNumber(searchString));
 		result.addAll(searchStudentNumber(searchString));
+		result.addAll(searchPaymentCode(searchString));
 	    }
 	    return result;
+	}
+
+	private Collection<Person> searchPaymentCode(final String paymentCode) {
+	    final SearchParameters searchParameters = new SearchParameters();
+	    searchParameters.setPaymentCode(paymentCode);
+	    return search(searchParameters);
 	}
 
 	private Collection<Person> searchName(final String name) {
@@ -437,11 +444,9 @@ public class PaymentManagementDA extends FenixDispatchAction {
 	final Event event = paymentBean.getEvent();
 	final User currentUser = AccessControl.getPerson().getUser();
 
-	final CreatePaymentsForEvents service = new CreatePaymentsForEvents();
-	final Receipt receipt = service.run(currentUser, paymentBean.getEntryDTOsForPayment(), PaymentMode.CASH, false,
-		paymentBean.getPaymentDateTime(), event.getPerson(), paymentBean.getContributorParty(),
-		paymentBean.getContributorParty() == null ? paymentBean.getContributorName() : null,
-		getReceiptCreatorUnit(request), paymentBean.getEvent().getOwnerUnit());
+	final Receipt receipt = CreatePaymentsForEvents.run(currentUser, paymentBean.getEntryDTOsForPayment(), PaymentMode.CASH,
+		false, paymentBean.getPaymentDateTime(), event.getPerson(), paymentBean.getContributorParty(),
+		paymentBean.getContributorParty() == null ? paymentBean.getContributorName() : null);
 	request.setAttribute("receipt", receipt);
 
 	return viewEvent(event, mapping, request);
@@ -456,10 +461,6 @@ public class PaymentManagementDA extends FenixDispatchAction {
 	final SearchBean searchBean = new SearchBean();
 	searchBean.setSearchString(person.getUsername());
 	return searchPeople(searchBean, mapping, request);
-    }
-
-    protected Unit getReceiptCreatorUnit(HttpServletRequest request) {
-	return getUserView(request).getPerson().getEmployee().getCurrentWorkingPlace();
     }
 
 }

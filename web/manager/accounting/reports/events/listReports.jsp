@@ -47,6 +47,7 @@
 				<fr:slot name="person.name" />
 				<fr:slot name="requestDate" />
 				<fr:slot name="jobEndTime" />
+				<fr:slot name="forAdministrativeOffice.unit.name" />
 			</fr:schema>
 			
 			<fr:layout name="tabular">
@@ -88,6 +89,7 @@
 				<fr:slot name="requestDate" />
 				<fr:slot name="jobStartTime" />
 				<fr:slot name="person.name" />
+				<fr:slot name="forAdministrativeOffice.unit.name" />
 				<fr:slot name="isNotDoneAndCancelled" />				
 			</fr:schema>
 

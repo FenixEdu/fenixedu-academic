@@ -34,7 +34,7 @@ public class DegreeUnit extends DegreeUnit_Base {
 	    Boolean canBeResponsibleOfSpaces, Campus campus) {
 
 	DegreeUnit degreeUnit = new DegreeUnit();
-	degreeUnit.init(unitName, unitNameCard, costCenterCode, acronym, beginDate, endDate, webAddress, classification,
+	degreeUnit.init(unitName, unitNameCard, costCenterCode, acronym, beginDate, endDate, webAddress, classification, null,
 		canBeResponsibleOfSpaces, campus);
 	degreeUnit.setDegree(degree);
 	degreeUnit.addParentUnit(parentUnit, accountabilityType);

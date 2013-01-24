@@ -5,12 +5,9 @@
 
 <html:xhtml/>
 
-<logic:present role="ACADEMIC_ADMINISTRATIVE_OFFICE">
-
 <bean:define id="processId" name="process" property="externalId" />
 
 <%-- ### Title #### --%>
-<em><bean:message  key="label.phd.academicAdminOffice.breadcrumb" bundle="PHD_RESOURCES"/></em>
 <h2><bean:message key="title.phd.conclusionProcesses" bundle="PHD_RESOURCES" /></h2>
 <%-- ### End of Title ### --%>
 
@@ -66,5 +63,3 @@
 		</fr:layout>	
 	</fr:view>
 </logic:notEmpty>
-
-</logic:present>

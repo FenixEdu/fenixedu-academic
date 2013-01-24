@@ -587,7 +587,7 @@
 					<textElement textAlignment="Center" verticalAlignment="Middle">
 						<font size="12"/>
 					</textElement>
-				<textFieldExpression   class="java.lang.String"><![CDATA[$P{markSheet}.getCreationEmployee().getRoleLoginAlias()]]></textFieldExpression>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$P{markSheet}.getCreator().getUserAliass()]]></textFieldExpression>
 				</textField>
 				<staticText>
 					<reportElement

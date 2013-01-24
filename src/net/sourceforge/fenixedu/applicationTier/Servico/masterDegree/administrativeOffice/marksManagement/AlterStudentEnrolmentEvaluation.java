@@ -5,7 +5,6 @@ import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoEnrolmentEvaluation;
-import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.EnrolmentEvaluation;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Teacher;
@@ -19,14 +18,11 @@ public class AlterStudentEnrolmentEvaluation extends FenixService {
 
     @Service
     public static void run(Integer curricularCourseCode, Integer enrolmentEvaluationCode,
-	    InfoEnrolmentEvaluation infoEnrolmentEvaluation, String teacherId, IUserView userView)
-	    throws FenixServiceException {
+	    InfoEnrolmentEvaluation infoEnrolmentEvaluation, String teacherId, IUserView userView) throws FenixServiceException {
 
 	Person person = userView.getPerson();
 	if (person == null)
 	    throw new NonExistingServiceException();
-
-	Employee employee = person.getEmployee();
 
 	Teacher teacher = Teacher.readByIstId(teacherId);
 	if (teacher == null)
@@ -36,10 +32,10 @@ public class AlterStudentEnrolmentEvaluation extends FenixService {
 	if (enrolmentEvaluationCopy == null)
 	    throw new NonExistingServiceException();
 
-	enrolmentEvaluationCopy
-		.alterStudentEnrolmentEvaluationForMasterDegree(infoEnrolmentEvaluation.getGradeValue(), employee, teacher
-			.getPerson(), infoEnrolmentEvaluation.getEnrolmentEvaluationType(), infoEnrolmentEvaluation
-			.getGradeAvailableDate(), infoEnrolmentEvaluation.getExamDate(), infoEnrolmentEvaluation.getObservation());
+	enrolmentEvaluationCopy.alterStudentEnrolmentEvaluationForMasterDegree(infoEnrolmentEvaluation.getGradeValue(), person,
+		teacher.getPerson(), infoEnrolmentEvaluation.getEnrolmentEvaluationType(),
+		infoEnrolmentEvaluation.getGradeAvailableDate(), infoEnrolmentEvaluation.getExamDate(),
+		infoEnrolmentEvaluation.getObservation());
 
     }
 

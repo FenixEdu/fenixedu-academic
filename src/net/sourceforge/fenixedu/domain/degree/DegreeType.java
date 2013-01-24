@@ -703,10 +703,12 @@ public enum DegreeType {
 
     abstract protected String filteredName(final Locale locale);
 
+    @Deprecated
     public AdministrativeOfficeType getAdministrativeOfficeType() {
 	return administrativeOfficeType();
     }
 
+    @Deprecated
     abstract protected AdministrativeOfficeType administrativeOfficeType();
 
     public Collection<CycleType> getCycleTypes() {

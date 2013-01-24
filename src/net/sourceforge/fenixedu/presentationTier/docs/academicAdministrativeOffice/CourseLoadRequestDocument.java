@@ -6,17 +6,16 @@ import java.util.List;
 import java.util.ResourceBundle;
 
 import net.sourceforge.fenixedu.domain.CurricularCourse;
-import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
+import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.organizationalStructure.UniversityUnit;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.CourseLoadRequest;
 import net.sourceforge.fenixedu.domain.student.Registration;
-import net.sourceforge.fenixedu.injectionCode.AccessControl;
 
 import org.apache.commons.lang.StringUtils;
 import org.joda.time.LocalDate;
@@ -44,17 +43,16 @@ public class CourseLoadRequestDocument extends AdministrativeOfficeDocument {
 	addParameter("studentNumber", getStudentNumber());
 	addParameter("degreeDescription", getDegreeDescription());
 
-	final Employee employee = AccessControl.getPerson().getEmployee();
+	AdministrativeOffice administrativeOffice = getAdministrativeOffice();
+	Unit adminOfficeUnit = administrativeOffice.getUnit();
+	Person activeUnitCoordinator = adminOfficeUnit.getActiveUnitCoordinator();
 
-	Person activeUnitCoordinator = employee.getCurrentWorkingPlace().getActiveUnitCoordinator();
-	addParameter("administrativeOfficeCoordinatorName", activeUnitCoordinator
-		.getName());
-	addParameter("administrativeOfficeName", employee.getCurrentWorkingPlace().getName());
+	addParameter("administrativeOfficeCoordinatorName", activeUnitCoordinator.getName());
+	addParameter("administrativeOfficeName", getMLSTextContent(adminOfficeUnit.getPartyName()));
 	addParameter("institutionName", RootDomainObject.getInstance().getInstitutionUnit().getName());
 	addParameter("universityName", UniversityUnit.getInstitutionsUniversityUnit().getName());
-	addParameter("day", new LocalDate().toString(DD_MMMM_YYYY, getLocale()));
 
-	AdministrativeOffice administrativeOffice = employee.getCurrentWorkingPlace().getAdministrativeOffice();
+	addParameter("day", new LocalDate().toString(DD_MMMM_YYYY, getLocale()));
 
 	addParameter("coordinatorSignature", coordinatorSignature(administrativeOffice, activeUnitCoordinator));
 	addParameter("adminOfficeIntroMessage", adminOfficeIntroMessage(administrativeOffice, activeUnitCoordinator));
@@ -142,21 +140,21 @@ public class CourseLoadRequestDocument extends AdministrativeOfficeDocument {
 	addParameter("dissertationsList", dissertations);
 
 	for (final Enrolment enrolment : getDocumentRequest().getEnrolmentsSet()) {
-	    
+
 	    if (enrolment.isBolonhaDegree()) {
-		
+
 		if (enrolment.isDissertation()) {
 		    dissertations.add(new BolonhaCourseLoadEntry(enrolment));
 		} else {
 		    bolonha.add(new BolonhaCourseLoadEntry(enrolment));
 		}
-		
+
 	    } else {
 		preBolonha.add(new PreBolonhaCourseLoadEntry(enrolment));
 	    }
-	    
+
 	}
-	
+
 	Collections.sort(bolonha);
 	Collections.sort(preBolonha);
 	Collections.sort(dissertations);
@@ -198,6 +196,7 @@ public class CourseLoadRequestDocument extends AdministrativeOfficeDocument {
 	    this.year = year;
 	}
 
+	@Override
 	public int compareTo(CourseLoadEntry other) {
 	    return getCurricularCourseName().compareTo(other.getCurricularCourseName());
 	}

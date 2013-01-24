@@ -1,8 +1,8 @@
 package net.sourceforge.fenixedu.domain.student.registrationStates;
 
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.accessControl.PermissionType;
-import net.sourceforge.fenixedu.domain.accessControl.academicAdminOffice.AdministrativeOfficePermission;
+import net.sourceforge.fenixedu.domain.accessControl.academicAdministration.AcademicAuthorizationGroup;
+import net.sourceforge.fenixedu.domain.accessControl.academicAdministration.AcademicOperationType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequestType;
@@ -29,9 +29,9 @@ public class ConcludedState extends ConcludedState_Base {
 
 	init(registration, person, dateTime);
 	registration.getPerson().addPersonRoleByRoleType(RoleType.ALUMNI);
-//	if (registration.getStudent().getRegistrationsCount() == 1) {
-//	    registration.getPerson().removeRoleByType(RoleType.STUDENT);
-//	}
+	// if (registration.getStudent().getRegistrationsCount() == 1) {
+	// registration.getPerson().removeRoleByType(RoleType.STUDENT);
+	// }
     }
 
     @Override
@@ -42,15 +42,9 @@ public class ConcludedState extends ConcludedState_Base {
 
     private void checkRulesToDelete() {
 	final Person person = AccessControl.getPerson();
-	if (person != null) {
-	    final AdministrativeOfficePermission permission = person.getEmployeeAdministrativeOffice().getPermission(
-		    PermissionType.REPEAT_CONCLUSION_PROCESS, person.getEmployeeCampus());
-	    if (permission != null && permission.isAppliable(getRegistration())) {
-		if (permission.isMember(person)) {
-		    return;
-		}
-	    }
-	}
+	if (AcademicAuthorizationGroup.getProgramsForOperation(person, AcademicOperationType.REPEAT_CONCLUSION_PROCESS).contains(
+		this.getRegistration().getDegree()))
+	    return;
 
 	if (!getRegistration().getSucessfullyFinishedDocumentRequests(DocumentRequestType.DEGREE_FINALIZATION_CERTIFICATE)
 		.isEmpty()) {

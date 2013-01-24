@@ -9,13 +9,11 @@ import net.sourceforge.fenixedu.domain.phd.conclusion.PhdConclusionProcess;
 import net.sourceforge.fenixedu.domain.phd.conclusion.PhdConclusionProcessBean;
 import net.sourceforge.fenixedu.domain.phd.thesis.PhdThesisProcess;
 
-import org.joda.time.DateTime;
-
 public class ConcludePhdProcess extends PhdThesisActivity {
 
     @Override
     protected void activityPreConditions(PhdThesisProcess process, IUserView userView) {
-	if (!PhdThesisProcess.isMasterDegreeAdministrativeOfficeEmployee(userView)) {
+	if (!process.isAllowedToManageProcess(userView)) {
 	    throw new PreConditionNotValidException();
 	}
 
@@ -35,7 +33,6 @@ public class ConcludePhdProcess extends PhdThesisActivity {
 	PhdConclusionProcess.create(bean, userView.getPerson());
 
 	PhdIndividualProgramProcess individualProgramProcess = process.getIndividualProgramProcess();
-	DateTime stateDate = individualProgramProcess.getThesisProcess().getConclusionDate().toDateTimeAtStartOfDay();
 
 	if (!PhdIndividualProgramProcessState.CONCLUDED.equals(individualProgramProcess.getActiveState())) {
 	    individualProgramProcess.createState(PhdIndividualProgramProcessState.CONCLUDED, userView.getPerson(), "");

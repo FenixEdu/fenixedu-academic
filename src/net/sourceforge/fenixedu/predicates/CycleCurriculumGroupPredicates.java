@@ -1,8 +1,8 @@
 package net.sourceforge.fenixedu.predicates;
 
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.accessControl.PermissionType;
-import net.sourceforge.fenixedu.domain.accessControl.academicAdminOffice.AdministrativeOfficePermission;
+import net.sourceforge.fenixedu.domain.accessControl.academicAdministration.AcademicAuthorizationGroup;
+import net.sourceforge.fenixedu.domain.accessControl.academicAdministration.AcademicOperationType;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CycleCurriculumGroup;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
@@ -20,22 +20,9 @@ public class CycleCurriculumGroupPredicates {
 		return true;
 	    }
 
-	    if (!person.isAdministrativeOfficeEmployee()) {
-		return false;
-	    }
-
-	    final AdministrativeOfficePermission permission = getPermissionByType(PermissionType.MANAGE_CONCLUSION);
-	    if (permission == null || !permission.isAppliable(cycleCurriculumGroup)) {
-		return true;
-	    }
-
-	    return permission.isMember(person);
+	    return AcademicAuthorizationGroup.getProgramsForOperation(person, AcademicOperationType.MANAGE_CONCLUSION).contains(
+		    cycleCurriculumGroup.getRegistration().getDegree());
 	}
     };
-
-    static private final AdministrativeOfficePermission getPermissionByType(final PermissionType type) {
-	final Person person = AccessControl.getPerson();
-	return person.getEmployeeAdministrativeOffice().getPermission(type, person.getEmployeeCampus());
-    }
 
 }

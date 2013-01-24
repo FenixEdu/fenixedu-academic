@@ -1,22 +1,21 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.accounting.gratuity;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.dataTransferObject.accounting.penaltyExemption.CreateInstallmentPenaltyExemptionBean;
-import net.sourceforge.fenixedu.domain.Employee;
+import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.accounting.Installment;
 import net.sourceforge.fenixedu.domain.accounting.events.gratuity.exemption.penalty.InstallmentPenaltyExemption;
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.ist.fenixWebFramework.services.Service;
 
-public class CreateInstallmentPenaltyExemption extends FenixService {
+public class CreateInstallmentPenaltyExemption {
 
-    @Checked("RolePredicates.ACADEMIC_ADMINISTRATIVE_OFFICE_PREDICATE")
+    @Checked("AcademicPredicates.MANAGE_STUDENT_PAYMENTS")
     @Service
-    public static void run(final Employee employee, final CreateInstallmentPenaltyExemptionBean penaltyExemptionBean) {
+    public static void run(final Person responsible, final CreateInstallmentPenaltyExemptionBean penaltyExemptionBean) {
 	for (final Installment installment : penaltyExemptionBean.getInstallments()) {
-	    new InstallmentPenaltyExemption(penaltyExemptionBean.getJustificationType(), penaltyExemptionBean
-		    .getGratuityEventWithPaymentPlan(), employee, installment, penaltyExemptionBean.getReason(),
-		    penaltyExemptionBean.getDispatchDate());
+	    new InstallmentPenaltyExemption(penaltyExemptionBean.getJustificationType(),
+		    penaltyExemptionBean.getGratuityEventWithPaymentPlan(), responsible, installment,
+		    penaltyExemptionBean.getReason(), penaltyExemptionBean.getDispatchDate());
 	}
     }
 

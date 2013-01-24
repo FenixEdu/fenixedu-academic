@@ -13,7 +13,6 @@ import net.sourceforge.fenixedu.domain.accounting.EventType;
 import net.sourceforge.fenixedu.domain.accounting.events.dfa.DFACandidacyEvent;
 import net.sourceforge.fenixedu.domain.accounting.serviceAgreements.DegreeCurricularPlanServiceAgreement;
 import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
-import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOfficeType;
 import net.sourceforge.fenixedu.domain.util.workflow.Operation;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 
@@ -89,8 +88,7 @@ public class DFACandidacy extends DFACandidacy_Base {
 	addCandidacyDocuments(new CandidacyDocument("second.habilitation.certificate"));
 	addCandidacyDocuments(new CandidacyDocument("interest.letter"));
 
-	final AdministrativeOffice administrativeOffice = AdministrativeOffice
-		.readByAdministrativeOfficeType(AdministrativeOfficeType.MASTER_DEGREE);
+	final AdministrativeOffice administrativeOffice = executionDegree.getDegree().getAdministrativeOffice();
 	new DFACandidacyEvent(administrativeOffice, person, this);
 	new DegreeCurricularPlanServiceAgreement(person, executionDegree.getDegreeCurricularPlan().getServiceAgreementTemplate());
     }
@@ -125,7 +123,7 @@ public class DFACandidacy extends DFACandidacy_Base {
 	for (Event event : getPerson().getEventsByEventType(EventType.CANDIDACY_ENROLMENT)) {
 	    DFACandidacyEvent candidacyEvent = (DFACandidacyEvent) event;
 	    if (candidacyEvent.getCandidacy() == this) {
-		candidacyEvent.cancel(AccessControl.getPerson().getEmployee());
+		candidacyEvent.cancel(AccessControl.getPerson());
 	    }
 	}
     }
@@ -158,7 +156,7 @@ public class DFACandidacy extends DFACandidacy_Base {
 		&& person.getProfession() != null && person.getMaritalStatus() != null
 		&& person.getDateOfBirthYearMonthDay() != null && person.getCountry() != null && person.getNameOfFather() != null
 		&& person.getNameOfMother() != null && person.hasDefaultPhysicalAddress() && person
-		.getInstitutionalOrDefaultEmailAddressValue() != null);
+		    .getInstitutionalOrDefaultEmailAddressValue() != null);
     }
 
 }

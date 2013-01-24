@@ -1,17 +1,16 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.accounting;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
-import net.sourceforge.fenixedu.domain.Employee;
+import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.accounting.Receipt;
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.ist.fenixWebFramework.services.Service;
 
-public class AnnulReceipt extends FenixService {
+public class AnnulReceipt {
 
-    @Checked("RolePredicates.MANAGER_PREDICATE")
+    @Checked("AcademicPredicates.MANAGE_PAYMENTS")
     @Service
-    public static void run(final Employee employee, final Receipt receipt) {
-	receipt.annul(employee);
+    public static void run(final Person responsible, final Receipt receipt) {
+	receipt.annul(responsible);
     }
 
 }

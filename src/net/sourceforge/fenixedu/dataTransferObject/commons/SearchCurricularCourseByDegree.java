@@ -4,19 +4,28 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Set;
 
+import net.sourceforge.fenixedu.dataTransferObject.academicAdministration.DegreeByExecutionYearBean;
+import net.sourceforge.fenixedu.domain.AcademicProgram;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
+import net.sourceforge.fenixedu.domain.DomainObject;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
+import net.sourceforge.fenixedu.domain.ExecutionYear;
+import net.sourceforge.fenixedu.domain.accessControl.academicAdministration.AcademicAuthorizationGroup;
+import net.sourceforge.fenixedu.domain.accessControl.academicAdministration.AcademicOperationType;
 import net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule;
-
+import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import pt.ist.fenixWebFramework.rendererExtensions.converters.DomainObjectKeyConverter;
-
 import pt.ist.fenixWebFramework.renderers.DataProvider;
 import pt.ist.fenixWebFramework.renderers.components.converters.BiDirectionalConverter;
 import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
 
+/**
+ * This class provides the degrees for the StandaloneIndividualCandidacy
+ */
 public class SearchCurricularCourseByDegree implements Serializable {
 
     private ExecutionSemester executionSemester;
@@ -92,11 +101,15 @@ public class SearchCurricularCourseByDegree implements Serializable {
 	@Override
 	public Object provide(Object source, Object currentValue) {
 
+	    Set<AcademicProgram> programs = AcademicAuthorizationGroup.getProgramsForOperation(AccessControl.getPerson(),
+		    AcademicOperationType.MANAGE_INDIVIDUAL_CANDIDACIES);
+
 	    final SearchCurricularCourseByDegree bean = (SearchCurricularCourseByDegree) source;
 	    final List<DegreeByExecutionYearBean> result = new ArrayList<DegreeByExecutionYearBean>();
 
 	    for (final Degree degree : Degree.readBolonhaDegrees()) {
-		result.add(new DegreeByExecutionYearBean(degree, bean.getExecutionSemester().getExecutionYear()));
+		if (programs.contains(degree))
+		    result.add(new DegreeByExecutionYearBean(degree, bean.getExecutionSemester().getExecutionYear()));
 	    }
 
 	    Collections.sort(result);
@@ -109,7 +122,14 @@ public class SearchCurricularCourseByDegree implements Serializable {
 
 		@Override
 		public Object convert(Class type, Object value) {
-		    return DegreeByExecutionYearBean.buildFrom((String) value);
+		    String key = (String) value;
+		    if (key == null || key.isEmpty()) {
+			return null;
+		    }
+		    final String[] values = key.split(":");
+		    final Degree degree = (Degree) DomainObject.fromOID(Long.valueOf(values[0]).longValue());
+		    final ExecutionYear year = (ExecutionYear) DomainObject.fromOID(Long.valueOf(values[1]).longValue());
+		    return new DegreeByExecutionYearBean(degree, year);
 		}
 
 		@Override

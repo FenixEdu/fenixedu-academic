@@ -1,15 +1,14 @@
 package net.sourceforge.fenixedu.presentationTier.docs.academicAdministrativeOffice;
 
-import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.accounting.EventType;
+import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.organizationalStructure.UniversityUnit;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequest;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.IDocumentRequest;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.IRSDeclarationRequest;
 import net.sourceforge.fenixedu.domain.student.Registration;
-import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.util.Money;
 import net.sourceforge.fenixedu.util.StringUtils;
 
@@ -64,8 +63,8 @@ public class IRSDeclaration extends AdministrativeOfficeDocument {
 	addParameter("documentIdType", documentIdType.toString());
 
 	final String documentIdNumber = person.getDocumentIdNumber();
-	addParameter("documentIdNumber", StringUtils.multipleLineRightPad(documentIdNumber, LINE_LENGTH
-		- documentIdType.toString().length(), END_CHAR));
+	addParameter("documentIdNumber",
+		StringUtils.multipleLineRightPad(documentIdNumber, LINE_LENGTH - documentIdType.toString().length(), END_CHAR));
     }
 
     final private void setAmounts(final Person person, final Integer civilYear) {
@@ -75,8 +74,8 @@ public class IRSDeclaration extends AdministrativeOfficeDocument {
 	final StringBuilder eventTypes = new StringBuilder();
 	final StringBuilder payedAmounts = new StringBuilder();
 	if (!gratuityPayedAmount.isZero()) {
-	    eventTypes.append("- ").append(getEnumerationBundle().getString(EventType.GRATUITY.getQualifiedName())).append(
-		    LINE_BREAK);
+	    eventTypes.append("- ").append(getEnumerationBundle().getString(EventType.GRATUITY.getQualifiedName()))
+		    .append(LINE_BREAK);
 	    payedAmounts.append("*").append(gratuityPayedAmount.toPlainString()).append("Eur").append(LINE_BREAK);
 	}
 	if (!othersPayedAmount.isZero()) {
@@ -103,11 +102,12 @@ public class IRSDeclaration extends AdministrativeOfficeDocument {
     }
 
     final private void setEmployeeFields() {
-	final Employee employee = AccessControl.getPerson().getEmployee();
+	Unit adminOfficeUnit = getAdministrativeOffice().getUnit();
+	addParameter("administrativeOfficeCoordinator", adminOfficeUnit.getActiveUnitCoordinator());
+	addParameter("administrativeOfficeName", getMLSTextContent(adminOfficeUnit.getPartyName()));
 
-	addParameter("administrativeOfficeCoordinator", employee.getCurrentWorkingPlace().getActiveUnitCoordinator());
-	addParameter("administrativeOfficeName", employee.getCurrentWorkingPlace().getName());
-	addParameter("employeeLocation", AccessControl.getPerson().getEmployee().getCurrentCampus().getLocation());
+	addParameter("employeeLocation", adminOfficeUnit.getCampus().getLocation());
+
     }
 
 }

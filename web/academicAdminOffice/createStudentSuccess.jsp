@@ -3,6 +3,7 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
+<%@ taglib uri="/WEB-INF/academic.tld" prefix="academic" %>
 
 <em><bean:message key="label.academicAdminOffice" bundle="ACADEMIC_OFFICE_RESOURCES"/></em>
 <h2><bean:message key="label.student.create" bundle="ACADEMIC_OFFICE_RESOURCES"/></h2>
@@ -34,9 +35,12 @@
 		<html:link action="<%="/createStudent.do?method=printRegistrationDeclarationTemplate&amp;registrationID=" + registrationID%>" target="_blank"><bean:message key="link.student.printRegistrationDeclaration" bundle="ACADEMIC_OFFICE_RESOURCES"/></html:link>
 	</li>
 --%>
+<bean:define id="program" name="registration" property="degree" type="net.sourceforge.fenixedu.domain.AcademicProgram"/>
+<academic:allowed operation="SERVICE_REQUESTS" program="<%= program %>">
 	<li>
 		<html:link action="/documentRequestsManagement.do?method=prepareCreateDocumentRequest&schema=DocumentRequestCreateBean.chooseDocumentRequestQuickType" paramId="registrationId" paramName="registration" paramProperty="idInternal">
 			<bean:message key="link.student.createSchoolRegistrationDeclarationRequest" bundle="ACADEMIC_OFFICE_RESOURCES"/>
 		</html:link>	
-	</li>		
+	</li>
+</academic:allowed>
 </ul>

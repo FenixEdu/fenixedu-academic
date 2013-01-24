@@ -13,12 +13,15 @@ import java.util.TreeSet;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.caseHandling.StartActivity;
+import net.sourceforge.fenixedu.domain.AcademicProgram;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.ExecutionInterval;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.QueueJob;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.Teacher;
+import net.sourceforge.fenixedu.domain.accessControl.academicAdministration.AcademicAuthorizationGroup;
+import net.sourceforge.fenixedu.domain.accessControl.academicAdministration.AcademicOperationType;
 import net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyProcessBean;
 import net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyProcessState;
 import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyPersonalDetails;
@@ -33,6 +36,7 @@ import net.sourceforge.fenixedu.domain.candidacyProcess.secondCycle.SecondCycleI
 import net.sourceforge.fenixedu.domain.caseHandling.Activity;
 import net.sourceforge.fenixedu.domain.caseHandling.PreConditionNotValidException;
 import net.sourceforge.fenixedu.domain.caseHandling.Process;
+import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.period.MobilityApplicationPeriod;
 import net.sourceforge.fenixedu.domain.person.RoleType;
@@ -45,9 +49,12 @@ import org.joda.time.DateTime;
 
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 
+import com.google.common.collect.Sets;
+
 public class MobilityApplicationProcess extends MobilityApplicationProcess_Base {
 
     static final public Comparator<IndividualCandidacyProcess> COMPARATOR_BY_CANDIDACY_PERSON = new Comparator<IndividualCandidacyProcess>() {
+	@Override
 	public int compare(IndividualCandidacyProcess o1, IndividualCandidacyProcess o2) {
 	    return IndividualCandidacyPersonalDetails.COMPARATOR_BY_NAME_AND_ID.compare(o1.getPersonalDetails(),
 		    o2.getPersonalDetails());
@@ -105,7 +112,7 @@ public class MobilityApplicationProcess extends MobilityApplicationProcess_Base 
 	removeRootDomainObject();
 	deleteDomainObject();
     }
-    
+
     public void resetConfigurations() {
 	if (getChildProcessesCount() > 0) {
 	    throw new DomainException("error.mobility.application.process.cant.delete.configurations.it.has.applications");
@@ -120,29 +127,32 @@ public class MobilityApplicationProcess extends MobilityApplicationProcess_Base 
 	    template.delete();
 	}
     }
-    
+
     public void preLoadLastConfigurations() {
-	// Get very last process (independently of its season, 1st or 2nd semester)
+	// Get very last process (independently of its season, 1st or 2nd
+	// semester)
 	MobilityApplicationProcess lastProcess = getLastSeasonProcess(null);
-	
+
 	// Copy all openings from previous process
 	Set<MobilityQuota> lastSeasonQuotas = lastProcess.getCandidacyPeriod().getMobilityQuotasSet();
 	for (MobilityQuota quota : lastSeasonQuotas) {
-	    new MobilityQuota(getApplicationPeriod(), quota.getDegree(), quota.getMobilityAgreement(), quota.getNumberOfOpenings());
+	    new MobilityQuota(getApplicationPeriod(), quota.getDegree(), quota.getMobilityAgreement(),
+		    quota.getNumberOfOpenings());
 	}
-	
+
 	// Copy all coordinators from previous process
 	Set<MobilityCoordinator> lastSeasonCoordinators = lastProcess.getCoordinatorsSet();
 	for (MobilityCoordinator coord : lastSeasonCoordinators) {
 	    new MobilityCoordinator(this, coord.getTeacher(), coord.getDegree());
 	}
-	
+
 	// Copy all email templates
 	for (MobilityEmailTemplate template : lastProcess.getApplicationPeriod().getEmailTemplates()) {
-	    MobilityEmailTemplate.create(getApplicationPeriod(), template.getMobilityProgram(), template.getType(), template.getSubject(), template.getBody());
+	    MobilityEmailTemplate.create(getApplicationPeriod(), template.getMobilityProgram(), template.getType(),
+		    template.getSubject(), template.getBody());
 	}
     }
-    
+
     private MobilityApplicationProcess getLastSeasonProcess(ErasmusApplyForSemesterType forSemester) {
 	MobilityApplicationProcess lastProcess = null;
 	Boolean lookForSameSeasonType = (forSemester != null);
@@ -231,13 +241,20 @@ public class MobilityApplicationProcess extends MobilityApplicationProcess_Base 
 
     @Override
     public boolean canExecuteActivity(IUserView userView) {
-	return isDegreeAdministrativeOfficeEmployee(userView) || userView.hasRoleType(RoleType.INTERNATIONAL_RELATION_OFFICE)
+	return isAllowedToManageProcess(userView) || userView.hasRoleType(RoleType.INTERNATIONAL_RELATION_OFFICE)
 		|| userView.hasRoleType(RoleType.COORDINATOR);
     }
 
-    static private boolean isDegreeAdministrativeOfficeEmployee(IUserView userView) {
-	return userView.hasRoleType(RoleType.ACADEMIC_ADMINISTRATIVE_OFFICE)
-		&& userView.getPerson().getEmployeeAdministrativeOffice().isDegree();
+    private static final Set<DegreeType> ALLOWED_DEGREE_TYPES = Sets.newHashSet(DegreeType.BOLONHA_MASTER_DEGREE,
+	    DegreeType.BOLONHA_INTEGRATED_MASTER_DEGREE);
+
+    static private boolean isAllowedToManageProcess(IUserView userView) {
+	for (AcademicProgram program : AcademicAuthorizationGroup.getProgramsForOperation(userView.getPerson(),
+		AcademicOperationType.MANAGE_CANDIDACY_PROCESSES)) {
+	    if (program.getDegreeType() != null && ALLOWED_DEGREE_TYPES.contains(program.getDegreeType()))
+		return true;
+	}
+	return false;
     }
 
     static private boolean isGriOfficeEmployee(IUserView userView) {
@@ -303,6 +320,7 @@ public class MobilityApplicationProcess extends MobilityApplicationProcess_Base 
 	return null;
     }
 
+    @Override
     public MobilityApplicationPeriod getCandidacyPeriod() {
 	return (MobilityApplicationPeriod) super.getCandidacyPeriod();
     }
@@ -423,7 +441,7 @@ public class MobilityApplicationProcess extends MobilityApplicationProcess_Base 
 
 	@Override
 	public void checkPreConditions(MobilityApplicationProcess process, IUserView userView) {
-	    if (!isDegreeAdministrativeOfficeEmployee(userView)) {
+	    if (!isAllowedToManageProcess(userView)) {
 		throw new PreConditionNotValidException();
 	    }
 	}
@@ -440,7 +458,7 @@ public class MobilityApplicationProcess extends MobilityApplicationProcess_Base 
 
 	@Override
 	public void checkPreConditions(MobilityApplicationProcess process, IUserView userView) {
-	    if (!isDegreeAdministrativeOfficeEmployee(userView)) {
+	    if (!isAllowedToManageProcess(userView)) {
 		throw new PreConditionNotValidException();
 	    }
 	}

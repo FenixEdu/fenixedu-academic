@@ -1,6 +1,6 @@
 package net.sourceforge.fenixedu.domain.accounting.events;
 
-import net.sourceforge.fenixedu.domain.Employee;
+import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.accounting.Event;
 import net.sourceforge.fenixedu.domain.accounting.Exemption;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
@@ -34,12 +34,11 @@ public class AdministrativeOfficeFeeAndInsurancePenaltyExemption extends Adminis
     }
 
     public AdministrativeOfficeFeeAndInsurancePenaltyExemption(final PenaltyExemptionJustificationType penaltyExemptionType,
-	    final AdministrativeOfficeFeeAndInsuranceEvent administrativeOfficeFeeAndInsuranceEvent, final Employee employee,
+	    final AdministrativeOfficeFeeAndInsuranceEvent administrativeOfficeFeeAndInsuranceEvent, final Person responsible,
 	    final String reason, final YearMonthDay directiveCouncilDispatchDate) {
 	this();
-	super
-		.init(penaltyExemptionType, administrativeOfficeFeeAndInsuranceEvent, employee, reason,
-			directiveCouncilDispatchDate);
+	super.init(penaltyExemptionType, administrativeOfficeFeeAndInsuranceEvent, responsible, reason,
+		directiveCouncilDispatchDate);
     }
 
 }

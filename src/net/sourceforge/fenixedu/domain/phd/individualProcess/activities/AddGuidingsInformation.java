@@ -16,6 +16,7 @@ public class AddGuidingsInformation extends PhdIndividualProgramProcessActivity 
 	// no precondition to check
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     protected PhdIndividualProgramProcess executeActivity(PhdIndividualProgramProcess process, IUserView userView, Object object) {
 	for (final PhdParticipantBean bean : (List<PhdParticipantBean>) object) {

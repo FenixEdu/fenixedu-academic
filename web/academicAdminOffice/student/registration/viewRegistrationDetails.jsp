@@ -2,19 +2,19 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr" %>
+<%@ taglib uri="/WEB-INF/academic.tld" prefix="academic" %>
 
 <%@page import="net.sourceforge.fenixedu.domain.ExecutionYear"%>
 
 <html:xhtml/>
 
-<logic:present role="ACADEMIC_ADMINISTRATIVE_OFFICE">
+	<bean:define id="registration" name="registration" scope="request" type="net.sourceforge.fenixedu.domain.student.Registration"/>
 
 	<div style="float: right;">
 		<bean:define id="personID" name="registration" property="student.person.idInternal"/>
 		<html:img align="middle" src="<%= request.getContextPath() +"/person/retrievePersonalPhoto.do?method=retrieveByID&amp;personCode="+personID.toString()%>" altKey="personPhoto" bundle="IMAGE_RESOURCES" styleClass="showphoto"/>
 	</div>
 
-	<em><bean:message key="label.academicAdminOffice" bundle="ACADEMIC_OFFICE_RESOURCES"/></em>
 	<h2><bean:message key="label.visualizeRegistration" bundle="ACADEMIC_OFFICE_RESOURCES"/></h2>
 	
 
@@ -62,7 +62,7 @@
 	<logic:notPresent name="registration" property="ingression">
 		<h3 class="mtop2 mbottom05 separator2"><bean:message key="label.registrationDetails" bundle="ACADEMIC_OFFICE_RESOURCES"/></h3>
 	</logic:notPresent>
-	
+	<bean:define id="registration" name="registration" type="net.sourceforge.fenixedu.domain.student.Registration"/>
 
 
 
@@ -91,7 +91,7 @@
 		</td>
 		
 		<td style="vertical-align: top; padding-top: 1em;">
-			
+			<academic:allowed operation="MANAGE_REGISTRATIONS" program="<%= registration.getDegree() %>">
 			<p class="mtop0 pleft1 asd">
 				<span class="dblock pbottom03">
 					<img src="<%= request.getContextPath() %>/images/dotist_post.gif" alt="<bean:message key="dotist_post" bundle="IMAGE_RESOURCES" />" />
@@ -133,26 +133,30 @@
 						</html:link>
 					</span>	
 				</logic:equal>
-				<logic:equal name="registration" property="qualifiedToRegistrationConclusionProcess" value="true">
-					<span class="dblock pbottom03">	
-						<img src="<%= request.getContextPath() %>/images/dotist_post.gif" alt="<bean:message key="dotist_post" bundle="IMAGE_RESOURCES" />" />
-						<html:link page="/registration.do?method=prepareRegistrationConclusionProcess" paramId="registrationId" paramName="registration" paramProperty="idInternal">
-							<bean:message key="student.registrationConclusionProcess" bundle="ACADEMIC_OFFICE_RESOURCES"/>
-						</html:link>
-					</span>	
-				</logic:equal>
+				<academic:allowed operation="MANAGE_CONCLUSION" program="<%= registration.getDegree() %>">
+					<logic:equal name="registration" property="qualifiedToRegistrationConclusionProcess" value="true">
+						<span class="dblock pbottom03">	
+							<img src="<%= request.getContextPath() %>/images/dotist_post.gif" alt="<bean:message key="dotist_post" bundle="IMAGE_RESOURCES" />" />
+							<html:link page="/registration.do?method=prepareRegistrationConclusionProcess" paramId="registrationId" paramName="registration" paramProperty="idInternal">
+								<bean:message key="student.registrationConclusionProcess" bundle="ACADEMIC_OFFICE_RESOURCES"/>
+							</html:link>
+						</span>	
+					</logic:equal>
+				</academic:allowed>
 				<span class="dblock pbottom03">	
 					<img src="<%= request.getContextPath() %>/images/dotist_post.gif" alt="<bean:message key="dotist_post" bundle="IMAGE_RESOURCES" />" />
 					<html:link page="/registration.do?method=showRegimes" paramId="registrationId" paramName="registration" paramProperty="idInternal">
 						<bean:message key="student.regimes" bundle="ACADEMIC_OFFICE_RESOURCES"/>
 					</html:link>
 				</span>
+				<academic:allowed operation="STUDENT_ENROLMENTS" program="<%= registration.getDegree() %>">
 				<span class="dblock pbottom03">	
 					<img src="<%= request.getContextPath() %>/images/dotist_post.gif" alt="<bean:message key="dotist_post" bundle="IMAGE_RESOURCES" />" />
 					<html:link page="/registration.do?method=viewAttends" paramId="registrationId" paramName="registration" paramProperty="idInternal">
 						<bean:message key="student.registrationViewAttends" bundle="ACADEMIC_OFFICE_RESOURCES"/>
 					</html:link>
-				</span>				
+				</span>
+				</academic:allowed>		
 				<span class="dblock pbottom03">	
 					<img src="<%= request.getContextPath() %>/images/dotist_post.gif" alt="<bean:message key="dotist_post" bundle="IMAGE_RESOURCES" />" />
 					<html:link page="/student/scholarship/report/utlScholarshipReport.do?method=viewResultsOnRegistration" paramId="registrationId" paramName="registration" paramProperty="externalId">
@@ -160,12 +164,14 @@
 					</html:link>
 				</span>				
 			</p>
-		
+			</academic:allowed>
 		</td>
 	</tr>
 </table>
 	
 	<logic:notEmpty name="registration" property="phdIndividualProgramProcess">
+		<academic:allowed operation="MANAGE_PHD_PROCESSES" program="<%= registration.getPhdIndividualProgramProcess().getPhdProgram() %>">
+		
 		<%-- Phd Individual Program Process --%>
 		<bean:define id="phdProcess" name="registration" property="phdIndividualProgramProcess" />
 		<h3 class="mbottom05 mtop25 separator2"><bean:message key="PhdIndividualProgramProcess" bundle="PHD_RESOURCES"/></h3>
@@ -186,12 +192,14 @@
 				<bean:message key="link.net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess.view" bundle="PHD_RESOURCES" />
 			</html:link>
 		</p>
+		</academic:allowed>
 	</logic:notEmpty>
 	
 	
 	
 	<%-- Curricular Plans --%>
 	
+	<academic:allowed operation="MANAGE_REGISTRATIONS" program="<%= registration.getDegree() %>">
 	<h3 class="mbottom05 mtop25 separator2"><bean:message key="label.studentCurricularPlans" bundle="ACADEMIC_OFFICE_RESOURCES"/></h3>
 	
 	<fr:view name="registration" property="sortedStudentCurricularPlans" schema="student.studentCurricularPlans" >
@@ -203,6 +211,7 @@
 			<fr:property name="key(enrol)" value="link.student.enrolInCourses"/>
 			<fr:property name="bundle(enrol)" value="ACADEMIC_OFFICE_RESOURCES"/>
 			<fr:property name="contextRelative(enrol)" value="true"/>      
+			<fr:property name="visibleIf(enrol)" value="allowedToManageEnrolments" />
 			<fr:property name="order(enrol)" value="1"/>
 
 			<fr:property name="linkFormat(setEvaluations)" value="/curriculumValidation.do?method=prepareCurriculumValidation&amp;studentCurricularPlanId=${externalId}" />
@@ -223,6 +232,7 @@
 			<fr:property name="bundle(createAccountingEvents)" value="ACADEMIC_OFFICE_RESOURCES"/>
 			<fr:property name="contextRelative(createAccountingEvents)" value="true"/>      	
 			<fr:property name="order(createAccountingEvents)" value="3"/>
+			<fr:property name="visibleIf(createAccountingEvents)" value="allowedToManageAccountingEvents"/>      					
 	
 		</fr:layout>
 	</fr:view>
@@ -230,7 +240,7 @@
 	<p class="mtop0">
 		<span>
 			<img src="<%= request.getContextPath() %>/images/dotist_post.gif" alt="<bean:message key="dotist_post" bundle="IMAGE_RESOURCES" />" />
-			<html:link page="/viewCurriculum.do?method=prepare" paramId="registrationOID" paramName="registration" paramProperty="idInternal">
+			<html:link page="/viewStudentCurriculum.do?method=prepare" paramId="registrationOID" paramName="registration" paramProperty="idInternal">
 				<bean:message key="link.registration.viewStudentCurricularPlans" bundle="ACADEMIC_OFFICE_RESOURCES"/>
 			</html:link>
 		</span>
@@ -251,10 +261,12 @@
 		</logic:equal> --%>
 	</p>
 	
+	</academic:allowed>
 	
 	
 	<%-- Academic Services --%>
 	
+	<academic:allowed operation="SERVICE_REQUESTS">
 	<h3 class="mtop25 mbottom05 separator2"><bean:message key="academic.services" bundle="ACADEMIC_OFFICE_RESOURCES"/></h3>
 	<bean:define id="registration" name="registration" scope="request" type="net.sourceforge.fenixedu.domain.student.Registration"/>
 	<p>
@@ -308,6 +320,7 @@
                         <fr:property name="linkFormat(payments)" value="<%="/payments.do?method=showOperations" + "&personId=${registration.person.idInternal}" %>"/>
                         <fr:property name="key(payments)" value="payments"/>
                         <fr:property name="visibleIfNot(payments)" value="isPayed"/>
+						<fr:property name="visibleIf(payments)" value="paymentsAccessible"/>
 
                         <fr:property name="linkFormat(processing)" value="/academicServiceRequestsManagement.do?method=processNewAcademicServiceRequest&amp;academicServiceRequestId=${idInternal}"/>
                         <fr:property name="key(processing)" value="processing"/>
@@ -368,6 +381,7 @@
     		</logic:empty>
         </p>
     </logic:iterate>
+    </academic:allowed>
 
 	<%-- Precedence Info --%>
 	
@@ -390,5 +404,3 @@
 		</li>
 	</ul>
 	--%>
-
-</logic:present>

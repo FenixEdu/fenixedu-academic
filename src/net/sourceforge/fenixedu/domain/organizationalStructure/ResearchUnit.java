@@ -39,7 +39,7 @@ public class ResearchUnit extends ResearchUnit_Base {
 	    String webAddress, UnitClassification classification, Boolean canBeResponsibleOfSpaces, Campus campus) {
 
 	ResearchUnit researchUnit = new ResearchUnit();
-	researchUnit.init(name, unitNameCard, costCenterCode, acronym, beginDate, endDate, webAddress, classification,
+	researchUnit.init(name, unitNameCard, costCenterCode, acronym, beginDate, endDate, webAddress, classification, null,
 		canBeResponsibleOfSpaces, campus);
 	researchUnit.addParentUnit(parentUnit, accountabilityType);
 

@@ -10,7 +10,7 @@ public class AddState extends PhdProgramCandidacyProcessActivity {
 
     @Override
     protected void activityPreConditions(PhdProgramCandidacyProcess process, IUserView userView) {
-	if (!isMasterDegreeAdministrativeOfficeEmployee(userView)) {
+	if (!process.isAllowedToManageProcess(userView)) {
 	    throw new PreConditionNotValidException();
 	}
     }
@@ -19,10 +19,10 @@ public class AddState extends PhdProgramCandidacyProcessActivity {
     protected PhdProgramCandidacyProcess executeActivity(PhdProgramCandidacyProcess process, IUserView userView, Object object) {
 	PhdProgramCandidacyProcessBean bean = (PhdProgramCandidacyProcessBean) object;
 
-	    PhdCandidacyProcessState.createStateWithGivenStateDate(process, bean.getState(), userView.getPerson(), "", bean
+	PhdCandidacyProcessState.createStateWithGivenStateDate(process, bean.getState(), userView.getPerson(), "", bean
 		.getStateDate().toDateTimeAtStartOfDay());
 
-	    return process;
+	return process;
     }
 
 }

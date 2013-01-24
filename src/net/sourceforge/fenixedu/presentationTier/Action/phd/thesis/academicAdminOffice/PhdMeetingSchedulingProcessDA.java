@@ -30,7 +30,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 
-@Mapping(path = "/phdMeetingSchedulingProcess", module = "academicAdminOffice")
+@Mapping(path = "/phdMeetingSchedulingProcess", module = "academicAdministration")
 @Forwards({
 
 	@Forward(name = "requestScheduleFirstThesisMeeting", path = "/phd/thesis/academicAdminOffice/requestScheduleFirstThesisMeeting.jsp"),
@@ -148,6 +148,7 @@ public class PhdMeetingSchedulingProcessDA extends CommonPhdThesisProcessDA {
     // End of schedule thesis meeting request
 
     // Schedule thesis meeting
+    @Override
     public ActionForward prepareScheduleThesisMeeting(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) {
 
@@ -168,12 +169,14 @@ public class PhdMeetingSchedulingProcessDA extends CommonPhdThesisProcessDA {
 	bean.setMailBody(AlertService.getBodyText(process, "message.phd.thesis.schedule.thesis.meeting.default.body"));
     }
 
+    @Override
     public ActionForward scheduleThesisMeetingInvalid(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) {
 	request.setAttribute("thesisProcessBean", getThesisProcessBean());
 	return mapping.findForward("scheduleThesisMeeting");
     }
 
+    @Override
     public ActionForward scheduleThesisMeetingPostback(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) {
 	request.setAttribute("thesisProcessBean", getThesisProcessBean());
@@ -181,6 +184,7 @@ public class PhdMeetingSchedulingProcessDA extends CommonPhdThesisProcessDA {
 	return mapping.findForward("scheduleThesisMeeting");
     }
 
+    @Override
     public ActionForward scheduleThesisMeeting(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) {
 

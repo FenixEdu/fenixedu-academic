@@ -4,15 +4,11 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr"%>
 
-<logic:present role="ACADEMIC_ADMINISTRATIVE_OFFICE">
-
 <bean:define id="personId" name="paymentsManagementDTO" property="person.idInternal" />
 <fr:form action='<%= "/payments.do?personId=" + personId %>'>
 
 	<input type="hidden" name="method" value=""/>
 
-	
-	<em><bean:message key="label.payments" bundle="ACADEMIC_OFFICE_RESOURCES"/></em>
 	<h2><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="title.payments.currentEvents" /></h2>
 	
 	<logic:messagesPresent message="true" property="context">
@@ -78,5 +74,3 @@
 	</logic:empty>
 
 </fr:form>
-
-</logic:present>

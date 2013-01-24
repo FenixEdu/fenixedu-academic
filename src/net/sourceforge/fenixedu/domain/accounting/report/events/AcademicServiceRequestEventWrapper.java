@@ -4,8 +4,7 @@ import java.math.BigDecimal;
 
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.accounting.events.serviceRequests.AcademicServiceRequestEvent;
-import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOfficeType;
-import net.sourceforge.fenixedu.domain.degree.DegreeType;
+import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
 import net.sourceforge.fenixedu.domain.phd.serviceRequests.PhdAcademicServiceRequest;
 import net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequest;
 import net.sourceforge.fenixedu.domain.serviceRequests.RegistrationAcademicServiceRequest;
@@ -14,14 +13,15 @@ import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 public class AcademicServiceRequestEventWrapper implements Wrapper {
 
-    private AcademicServiceRequestEvent event;
-    private AcademicServiceRequest request;
+    private final AcademicServiceRequestEvent event;
+    private final AcademicServiceRequest request;
 
     public AcademicServiceRequestEventWrapper(AcademicServiceRequestEvent event) {
 	this.event = event;
 	this.request = event.getAcademicServiceRequest();
     }
 
+    @Override
     public String getStudentNumber() {
 	if (request.getPerson().hasStudent()) {
 	    return request.getPerson().getStudent().getNumber().toString();
@@ -30,6 +30,7 @@ public class AcademicServiceRequestEventWrapper implements Wrapper {
 	return "-";
     }
 
+    @Override
     public String getStudentName() {
 	return request.getPerson().getName();
     }
@@ -39,6 +40,7 @@ public class AcademicServiceRequestEventWrapper implements Wrapper {
 	return event.getPerson().getDefaultEmailAddressValue();
     }
 
+    @Override
     public String getRegistrationStartDate() {
 	if (request.isRequestForRegistration()) {
 	    return ((RegistrationAcademicServiceRequest) request).getRegistration().getStartDate().toString("dd/MM/yyyy");
@@ -47,10 +49,12 @@ public class AcademicServiceRequestEventWrapper implements Wrapper {
 	return "-";
     }
 
+    @Override
     public String getExecutionYear() {
 	return getForExecutionYear().getName();
     }
 
+    @Override
     public String getDegreeName() {
 	if (request.isRequestForRegistration()) {
 	    return ((RegistrationAcademicServiceRequest) request).getRegistration().getDegree().getNameI18N()
@@ -60,6 +64,7 @@ public class AcademicServiceRequestEventWrapper implements Wrapper {
 	return "-";
     }
 
+    @Override
     public String getDegreeType() {
 	if (request.isRequestForRegistration()) {
 	    return ((RegistrationAcademicServiceRequest) request).getRegistration().getDegreeType().getLocalizedName();
@@ -68,6 +73,7 @@ public class AcademicServiceRequestEventWrapper implements Wrapper {
 	return "-";
     }
 
+    @Override
     public String getPhdProgramName() {
 	if (request.isRequestForPhd()) {
 	    return ((PhdAcademicServiceRequest) request).getPhdIndividualProgramProcess().getPhdProgram().getName()
@@ -77,6 +83,7 @@ public class AcademicServiceRequestEventWrapper implements Wrapper {
 	return "-";
     }
 
+    @Override
     public String getEnrolledECTS() {
 	if (request.isRequestForRegistration()) {
 	    Registration registration = ((RegistrationAcademicServiceRequest) request).getRegistration();
@@ -88,6 +95,7 @@ public class AcademicServiceRequestEventWrapper implements Wrapper {
 	return "-";
     }
 
+    @Override
     public String getRegime() {
 	if (request.isRequestForRegistration()) {
 	    Registration registration = ((RegistrationAcademicServiceRequest) request).getRegistration();
@@ -99,6 +107,7 @@ public class AcademicServiceRequestEventWrapper implements Wrapper {
 	return "-";
     }
 
+    @Override
     public String getEnrolmentModel() {
 	if (request.isRequestForRegistration()) {
 	    Registration registration = ((RegistrationAcademicServiceRequest) request).getRegistration();
@@ -113,14 +122,17 @@ public class AcademicServiceRequestEventWrapper implements Wrapper {
 	return "-";
     }
 
+    @Override
     public String getResidenceYear() {
 	return "-";
     }
 
+    @Override
     public String getResidenceMonth() {
 	return "-";
     }
 
+    @Override
     public String getStudiesType() {
 	if (request.isRequestForRegistration()) {
 	    return Wrapper.REGISTRATION_STUDIES;
@@ -147,30 +159,8 @@ public class AcademicServiceRequestEventWrapper implements Wrapper {
     }
 
     @Override
-    public AdministrativeOfficeType getRelatedAcademicOfficeType() {
-	if (request.isRequestForRegistration()) {
-	    Registration registration = ((RegistrationAcademicServiceRequest) request).getRegistration();
-
-	    DegreeType degreeType = registration.getDegreeType();
-
-	    switch (degreeType) {
-	    case DEGREE:
-	    case BOLONHA_DEGREE:
-	    case BOLONHA_INTEGRATED_MASTER_DEGREE:
-	    case BOLONHA_MASTER_DEGREE:
-		return AdministrativeOfficeType.DEGREE;
-	    case MASTER_DEGREE:
-	    case BOLONHA_ADVANCED_FORMATION_DIPLOMA:
-	    case BOLONHA_ADVANCED_SPECIALIZATION_DIPLOMA:
-		return AdministrativeOfficeType.MASTER_DEGREE;
-	    }
-	}
-
-	if (request.isRequestForPhd()) {
-	    return AdministrativeOfficeType.MASTER_DEGREE;
-	}
-
-	return null;
+    public AdministrativeOffice getRelatedAcademicOffice() {
+	return event.getAdministrativeOffice();
     }
 
 }

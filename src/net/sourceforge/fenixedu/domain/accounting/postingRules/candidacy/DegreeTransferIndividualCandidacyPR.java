@@ -26,8 +26,6 @@ import net.sourceforge.fenixedu.util.Money;
 
 import org.joda.time.DateTime;
 
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
-
 public class DegreeTransferIndividualCandidacyPR extends DegreeTransferIndividualCandidacyPR_Base {
 
     private DegreeTransferIndividualCandidacyPR() {
@@ -139,8 +137,8 @@ public class DegreeTransferIndividualCandidacyPR extends DegreeTransferIndividua
     }
 
     @Override
-    protected Set<AccountingTransaction> internalProcess(User user, Collection<EntryDTO> entryDTOs, Event event, Account fromAccount,
-	    Account toAccount, AccountingTransactionDetailDTO transactionDetail) {
+    protected Set<AccountingTransaction> internalProcess(User user, Collection<EntryDTO> entryDTOs, Event event,
+	    Account fromAccount, Account toAccount, AccountingTransactionDetailDTO transactionDetail) {
 	if (entryDTOs.size() != 1) {
 	    throw new DomainException("error.DegreeTransferIndividualCandidacyPR.invalid.number.of.entryDTOs");
 	}
@@ -154,12 +152,11 @@ public class DegreeTransferIndividualCandidacyPR extends DegreeTransferIndividua
     private void checkIfCanAddAmount(final Money amountToPay, final Event event, final DateTime when) {
 	if (amountToPay.compareTo(calculateTotalAmountToPay(event, when)) < 0) {
 	    throw new DomainExceptionWithLabelFormatter(
-		    "error.DegreeTransferIndividualCandidacyPR.amount.being.payed.must.match.amount.to.pay", event
-			    .getDescriptionForEntryType(getEntryType()));
+		    "error.DegreeTransferIndividualCandidacyPR.amount.being.payed.must.match.amount.to.pay",
+		    event.getDescriptionForEntryType(getEntryType()));
 	}
     }
 
-    @Checked("PostingRulePredicates.editPredicate")
     public DegreeTransferIndividualCandidacyPR edit(final Money amountForInstitutionStudent, final Money amountForExternalStudent) {
 	deactivate();
 	return new DegreeTransferIndividualCandidacyPR(new DateTime(), null, getServiceAgreementTemplate(),

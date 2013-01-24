@@ -5,7 +5,6 @@
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr"%>
 <%@ taglib uri="/WEB-INF/app.tld" prefix="app" %>
 
-<logic:present role="ACADEMIC_ADMINISTRATIVE_OFFICE">
 	<em><bean:message key="label.payments" bundle="ACADEMIC_OFFICE_RESOURCES"/></em>
 	<h2><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.payments.exemptions" /></h2>
 
@@ -105,5 +104,3 @@
 			</html:submit>
 		</p>
 	</fr:form>
-
-</logic:present>

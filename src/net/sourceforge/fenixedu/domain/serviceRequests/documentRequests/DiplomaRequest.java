@@ -190,7 +190,7 @@ public class DiplomaRequest extends DiplomaRequest_Base implements IDiplomaReque
 	}
 
 	if (academicServiceRequestBean.isToCancelOrReject() && hasEvent() && getEvent().isOpen()) {
-	    getEvent().cancel(academicServiceRequestBean.getEmployee());
+	    getEvent().cancel(academicServiceRequestBean.getResponsible());
 	}
     }
 
@@ -233,7 +233,7 @@ public class DiplomaRequest extends DiplomaRequest_Base implements IDiplomaReque
 
 	// #####################################################
 
-	if (!concludedSituation.getEmployee().equals(deliveredSituation.getEmployee())) {
+	if (!concludedSituation.getCreator().equals(deliveredSituation.getCreator())) {
 	    return false;
 	}
 	if (!concludedSituation.getAcademicServiceRequestSituationType().equals(AcademicServiceRequestSituationType.CONCLUDED)) {
@@ -251,7 +251,7 @@ public class DiplomaRequest extends DiplomaRequest_Base implements IDiplomaReque
 
 	// #####################################################
 
-	if (!receivedSituation.getEmployee().equals(deliveredSituation.getEmployee())) {
+	if (!receivedSituation.getCreator().equals(deliveredSituation.getCreator())) {
 	    return false;
 	}
 	if (!receivedSituation.getAcademicServiceRequestSituationType().equals(
@@ -270,7 +270,7 @@ public class DiplomaRequest extends DiplomaRequest_Base implements IDiplomaReque
 
 	// #####################################################
 
-	if (!sentSituation.getEmployee().equals(deliveredSituation.getEmployee())) {
+	if (!sentSituation.getCreator().equals(deliveredSituation.getCreator())) {
 	    return false;
 	}
 	if (!sentSituation.getAcademicServiceRequestSituationType().equals(
@@ -292,7 +292,7 @@ public class DiplomaRequest extends DiplomaRequest_Base implements IDiplomaReque
 
 	// #####################################################
 
-	if (!processedSituation.getEmployee().equals(deliveredSituation.getEmployee())) {
+	if (!processedSituation.getCreator().equals(deliveredSituation.getCreator())) {
 	    return false;
 	}
 	if (!processedSituation.getAcademicServiceRequestSituationType().equals(AcademicServiceRequestSituationType.PROCESSING)) {
@@ -313,7 +313,7 @@ public class DiplomaRequest extends DiplomaRequest_Base implements IDiplomaReque
 
 	// #####################################################
 
-	if (!newSituation.getEmployee().equals(deliveredSituation.getEmployee())) {
+	if (!newSituation.getCreator().equals(deliveredSituation.getCreator())) {
 	    return false;
 	}
 	if (!newSituation.getAcademicServiceRequestSituationType().equals(AcademicServiceRequestSituationType.NEW)) {
@@ -436,7 +436,7 @@ public class DiplomaRequest extends DiplomaRequest_Base implements IDiplomaReque
     }
 
     @Override
-    @Checked("AcademicServiceRequestPredicates.REVERT_TO_PROCESSING_STATE")
+    @Checked("AcademicPredicates.SERVICE_REQUESTS_REVERT_TO_PROCESSING_STATE")
     public void revertToProcessingState() {
 	internalRevertToProcessingState();
     }
@@ -511,4 +511,8 @@ public class DiplomaRequest extends DiplomaRequest_Base implements IDiplomaReque
 		+ getIdInternal();
     }
 
+    @Override
+    public boolean isProgrammeLinkVisible() {
+	return getRegistration().isAllowedToManageRegistration();
+    }
 }

@@ -9,8 +9,6 @@ import net.sourceforge.fenixedu.util.Money;
 
 import org.joda.time.DateTime;
 
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
-
 public class CertificateRequestWithoutBasePR extends CertificateRequestWithoutBasePR_Base {
 
     protected CertificateRequestWithoutBasePR() {
@@ -39,7 +37,7 @@ public class CertificateRequestWithoutBasePR extends CertificateRequestWithoutBa
         	? money : maximumAmount;
     }
 
-    @Checked("PostingRulePredicates.editPredicate")
+    @Override
     public CertificateRequestPR edit(final Money baseAmount, final Money amountPerUnit, final Money amountPerPage,
 	    final Money maximumAmount) {
 	deactivate();

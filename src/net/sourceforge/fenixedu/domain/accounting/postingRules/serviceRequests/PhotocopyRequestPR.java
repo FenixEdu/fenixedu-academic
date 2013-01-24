@@ -11,8 +11,6 @@ import net.sourceforge.fenixedu.util.Money;
 
 import org.joda.time.DateTime;
 
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
-
 public class PhotocopyRequestPR extends PhotocopyRequestPR_Base {
 
     protected PhotocopyRequestPR() {
@@ -26,7 +24,6 @@ public class PhotocopyRequestPR extends PhotocopyRequestPR_Base {
 		baseAmount, amountPerPage);
     }
 
-    @Checked("PostingRulePredicates.editPredicate")
     public PhotocopyRequestPR edit(final Money baseAmount, final Money amountPerUnit) {
 	deactivate();
 	return new PhotocopyRequestPR(getServiceAgreementTemplate(), new DateTime().minus(1000), null, baseAmount, amountPerUnit);

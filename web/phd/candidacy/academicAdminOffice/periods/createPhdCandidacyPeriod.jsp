@@ -6,10 +6,7 @@
 
 <%@page import="net.sourceforge.fenixedu.domain.phd.individualProcess.activities.EditPhdParticipant"%>
 
-<logic:present role="ACADEMIC_ADMINISTRATIVE_OFFICE">
-
 <%-- ### Title #### --%>
-<em><bean:message  key="label.phd.academicAdminOffice.breadcrumb" bundle="PHD_RESOURCES"/></em>
 <h2><bean:message key="title.phd.candidacy.periods" bundle="PHD_RESOURCES" /></h2>
 <%-- ### End of Title ### --%>
 
@@ -33,7 +30,7 @@
 	<fr:edit id="phdCandidacyPeriodBean.create" name="phdCandidacyPeriodBean">
 		<fr:schema bundle="PHD_RESOURCES" type="net.sourceforge.fenixedu.domain.phd.candidacy.PhdCandidacyPeriodBean">
 			<fr:slot name="type" required="true" />
-			<fr:slot name="executionYear" layout="menu-select">
+			<fr:slot name="executionYear" layout="menu-select" required="true">
 				<fr:property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.Action.phd.ExecutionYearsProvider" />
 				<fr:property name="format" value="${name}" />
 			</fr:slot>
@@ -54,5 +51,3 @@
 	<html:cancel bundle="HTMLALT_RESOURCES" altKey="cancel.cancel" ><bean:message bundle="PHD_RESOURCES" key="label.cancel"/></html:cancel>
 	
 </fr:form>
-
-</logic:present>

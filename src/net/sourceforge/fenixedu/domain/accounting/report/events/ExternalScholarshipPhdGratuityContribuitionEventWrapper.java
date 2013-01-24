@@ -2,13 +2,13 @@ package net.sourceforge.fenixedu.domain.accounting.report.events;
 
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.accounting.Event;
-import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOfficeType;
+import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
 import net.sourceforge.fenixedu.domain.phd.debts.ExternalScholarshipPhdGratuityContribuitionEvent;
 import net.sourceforge.fenixedu.domain.phd.debts.PhdGratuityEvent;
 import net.sourceforge.fenixedu.domain.student.Student;
 
 public class ExternalScholarshipPhdGratuityContribuitionEventWrapper implements Wrapper {
-    private ExternalScholarshipPhdGratuityContribuitionEvent event;
+    private final ExternalScholarshipPhdGratuityContribuitionEvent event;
 
     public ExternalScholarshipPhdGratuityContribuitionEventWrapper(Event event) {
 	this.event = (ExternalScholarshipPhdGratuityContribuitionEvent) event;
@@ -23,6 +23,7 @@ public class ExternalScholarshipPhdGratuityContribuitionEventWrapper implements 
     private Student getStudent() {
 	return getPhdGratuityEvent().getPerson().getStudent();
     }
+
     @Override
     public String getStudentNumber() {
 	Student student = getStudent();
@@ -113,8 +114,8 @@ public class ExternalScholarshipPhdGratuityContribuitionEventWrapper implements 
     }
 
     @Override
-    public AdministrativeOfficeType getRelatedAcademicOfficeType() {
-	return AdministrativeOfficeType.MASTER_DEGREE;
+    public AdministrativeOffice getRelatedAcademicOffice() {
+	return getPhdGratuityEvent().getPhdIndividualProgramProcess().getAdministrativeOffice();
     }
 
 }

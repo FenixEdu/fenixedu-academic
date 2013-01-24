@@ -36,7 +36,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.utl.ist.fenix.tools.util.StringNormalizer;
 
 @Mapping(path = "/SIBSPayments", module = "manager")
-@Forwards( { @Forward(name = "prepareUploadSIBSPaymentFiles", path = "/manager/payments/prepareUploadSIBSPaymentFiles.jsp") })
+@Forwards({ @Forward(name = "prepareUploadSIBSPaymentFiles", path = "/manager/payments/prepareUploadSIBSPaymentFiles.jsp") })
 public class SIBSPaymentsDA extends FenixDispatchAction {
 
     static private final String PAYMENT_FILE_EXTENSION = "INP";
@@ -157,12 +157,12 @@ public class SIBSPaymentsDA extends FenixDispatchAction {
 
     private static String getMessage(Exception ex) {
 	String message = (ex.getMessage() == null) ? ex.getClass().getSimpleName() : ex.getMessage();
-	
+
 	ResourceBundle bundle = ResourceBundle.getBundle("resources/ManagerResources");
 	if (bundle.containsKey(message)) {
 	    return bundle.getString(message);
 	}
-	
+
 	return message;
     }
 
@@ -247,8 +247,7 @@ public class SIBSPaymentsDA extends FenixDispatchAction {
 	}
     }
 
-    private void processCode(SibsIncommingPaymentFileDetailLine detailLine, Person person, ProcessResult result)
-	    throws Exception {
+    private void processCode(SibsIncommingPaymentFileDetailLine detailLine, Person person, ProcessResult result) throws Exception {
 
 	final PaymentCode paymentCode = getPaymentCode(detailLine, result);
 
@@ -257,8 +256,8 @@ public class SIBSPaymentsDA extends FenixDispatchAction {
 	    throw new Exception();
 	}
 
-	final PaymentCode codeToProcess = getPaymentCodeToProcess(paymentCode, ExecutionYear.readByDateTime(detailLine
-		.getWhenOccuredTransaction()), result);
+	final PaymentCode codeToProcess = getPaymentCodeToProcess(paymentCode,
+		ExecutionYear.readByDateTime(detailLine.getWhenOccuredTransaction()), result);
 
 	if (codeToProcess.getState() == PaymentCodeState.INVALID) {
 	    result.addMessage("warning.manager.SIBS.invalidCode", codeToProcess.getCode());
@@ -268,8 +267,8 @@ public class SIBSPaymentsDA extends FenixDispatchAction {
 	    result.addMessage("warning.manager.SIBS.codeAlreadyProcessed", codeToProcess.getCode());
 	}
 
-	codeToProcess.process(person, detailLine.getAmount(), detailLine.getWhenOccuredTransaction(), detailLine
-		.getSibsTransactionId(), StringUtils.EMPTY);
+	codeToProcess.process(person, detailLine.getAmount(), detailLine.getWhenOccuredTransaction(),
+		detailLine.getSibsTransactionId(), StringUtils.EMPTY);
 
     }
 
@@ -283,7 +282,7 @@ public class SIBSPaymentsDA extends FenixDispatchAction {
     }
 
     private PaymentCode getPaymentCodeToProcess(final PaymentCode paymentCode, ExecutionYear executionYear, ProcessResult result) {
-	
+
 	final PaymentCodeMapping mapping = paymentCode.getOldPaymentCodeMapping(executionYear);
 
 	final PaymentCode codeToProcess;
@@ -298,7 +297,7 @@ public class SIBSPaymentsDA extends FenixDispatchAction {
 	} else {
 	    codeToProcess = paymentCode;
 	}
-	
+
 	return codeToProcess;
     }
 

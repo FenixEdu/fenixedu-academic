@@ -111,7 +111,7 @@ public class AccountingTransaction extends AccountingTransaction_Base {
 	throw new DomainException("error.accounting.accountingTransaction.cannot.remove.entries");
     }
 
-    @Checked("RolePredicates.MANAGER_PREDICATE")
+    @Checked("AcademicPredicates.MANAGE_PAYMENTS")
     @Override
     public void setEvent(Event event) {
 	super.setEvent(event);
@@ -204,18 +204,18 @@ public class AccountingTransaction extends AccountingTransaction_Base {
 	return reimburse(responsibleUser, paymentMode, amountToReimburse, comments, true, reimburseDate);
     }
 
-    @Checked("RolePredicates.MANAGER_PREDICATE")
+    @Checked("AcademicPredicates.MANAGE_PAYMENTS")
     public AccountingTransaction reimburseWithoutRules(User responsibleUser, PaymentMode paymentMode, Money amountToReimburse) {
 	return reimburseWithoutRules(responsibleUser, paymentMode, amountToReimburse, null);
     }
 
-    @Checked("RolePredicates.MANAGER_PREDICATE")
+    @Checked("AcademicPredicates.MANAGE_PAYMENTS")
     public AccountingTransaction reimburseWithoutRules(User responsibleUser, PaymentMode paymentMode, Money amountToReimburse,
 	    String comments) {
 	return reimburse(responsibleUser, paymentMode, amountToReimburse, comments, false);
     }
 
-    @Checked("RolePredicates.MANAGER_PREDICATE")
+    @Checked("AcademicPredicates.MANAGE_PAYMENTS")
     public void annul(final User responsibleUser, final String reason) {
 
 	if (StringUtils.isEmpty(reason)) {
@@ -308,7 +308,7 @@ public class AccountingTransaction extends AccountingTransaction_Base {
 	return getFromAccount().getParty() == party;
     }
 
-    @Checked("RolePredicates.MANAGER_PREDICATE")
+    @Checked("AcademicPredicates.MANAGE_PAYMENTS")
     public void delete() {
 
 	super.setAdjustedTransaction(null);

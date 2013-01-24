@@ -28,9 +28,9 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixWebFramework.struts.annotations.Tile;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 
-@Mapping(path = "/editCandidacyInformation", module = "academicAdminOffice")
+@Mapping(path = "/editCandidacyInformation", module = "academicAdministration")
 @Forwards({
-	@Forward(name = "editCandidacyInformation", path = "/academicAdminOffice/student/registration/editCandidacyInformation.jsp", tileProperties = @Tile(title = "private.academicadministrativeoffice.studentoperations.viewstudents")),
+	@Forward(name = "editCandidacyInformation", path = "/academicAdminOffice/student/registration/editCandidacyInformation.jsp"),
 	@Forward(name = "visualizeStudent", path = "/student.do?method=visualizeStudent") })
 public class EditCandidacyInformationDA extends FenixDispatchAction {
 

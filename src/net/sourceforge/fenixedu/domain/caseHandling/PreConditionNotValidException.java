@@ -5,7 +5,7 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 public class PreConditionNotValidException extends DomainException {
 
     public PreConditionNotValidException() {
-	super();
+	super("error.precondition.not.valid", (String[]) null);
     }
 
     public PreConditionNotValidException(final String key, final String... args) {

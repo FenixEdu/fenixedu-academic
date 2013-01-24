@@ -33,14 +33,13 @@ import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice
 import net.sourceforge.fenixedu.domain.candidacy.Candidacy;
 import net.sourceforge.fenixedu.domain.candidacy.StudentCandidacy;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.util.Money;
-import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
 
 import org.joda.time.DateTime;
 import org.joda.time.YearMonthDay;
 
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.utl.ist.fenix.tools.resources.LabelFormatter;
 import dml.runtime.RelationAdapter;
 
@@ -68,11 +67,6 @@ public class AdministrativeOfficeFeeAndInsuranceEvent extends AdministrativeOffi
 
     protected AdministrativeOfficeFeeAndInsuranceEvent() {
 	super();
-	check();
-    }
-
-    @Checked("RolePredicates.MANAGER_OR_ACADEMIC_ADMINISTRATIVE_OFFICE_PREDICATE")
-    private void check() {
     }
 
     public AdministrativeOfficeFeeAndInsuranceEvent(AdministrativeOffice administrativeOffice, Person person,

@@ -75,7 +75,7 @@ public enum PhdProgramCandidacyProcessState implements PhdProcessStateType {
 	    return Arrays.asList(PENDING_FOR_COORDINATOR_OPINION);
 	}
 
-	return Collections.EMPTY_LIST;
+	return Collections.emptyList();
     }
 
 }

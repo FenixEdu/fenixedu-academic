@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
+import net.sourceforge.fenixedu.applicationTier.Servico.administrativeOffice.dismissal.DeleteCredits;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.administrativeOffice.dismissal.DismissalBean;
 import net.sourceforge.fenixedu.dataTransferObject.administrativeOffice.dismissal.DismissalBean.DismissalType;
@@ -38,13 +39,13 @@ import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
-@Mapping(path = "/studentDismissals", module = "academicAdminOffice", formBean = "studentDismissalForm")
+@Mapping(path = "/studentDismissals", module = "academicAdministration", formBean = "studentDismissalForm")
 @Forwards({
-	@Forward(name = "manage", path = "/academicAdminOffice/dismissal/managementDismissals.jsp", tileProperties = @Tile(title = "private.academicadministrativeoffice.studentoperations.viewstudents")),
-	@Forward(name = "chooseEquivalents", path = "/academicAdminOffice/dismissal/chooseEquivalents.jsp", tileProperties = @Tile(title = "private.academicadministrativeoffice.studentoperations.viewstudents")),
-	@Forward(name = "visualizeRegistration", path = "/student.do?method=visualizeRegistration", tileProperties = @Tile(title = "private.academicadministrativeoffice.studentoperations.viewstudents")),
-	@Forward(name = "chooseDismissalEnrolments", path = "/academicAdminOffice/dismissal/chooseDismissalEnrolments.jsp", tileProperties = @Tile(title = "private.academicadministrativeoffice.studentoperations.viewstudents")),
-	@Forward(name = "confirmCreateDismissals", path = "/academicAdminOffice/dismissal/confirmCreateDismissals.jsp", tileProperties = @Tile(title = "private.academicadministrativeoffice.studentoperations.viewstudents"))
+	@Forward(name = "manage", path = "/academicAdminOffice/dismissal/managementDismissals.jsp"),
+	@Forward(name = "chooseEquivalents", path = "/academicAdminOffice/dismissal/chooseEquivalents.jsp"),
+	@Forward(name = "visualizeRegistration", path = "/student.do?method=visualizeRegistration"),
+	@Forward(name = "chooseDismissalEnrolments", path = "/academicAdminOffice/dismissal/chooseDismissalEnrolments.jsp"),
+	@Forward(name = "confirmCreateDismissals", path = "/academicAdminOffice/dismissal/confirmCreateDismissals.jsp")
 
 })
 public class StudentDismissalsDA extends FenixDispatchAction {
@@ -230,12 +231,8 @@ public class StudentDismissalsDA extends FenixDispatchAction {
 	return manage(mapping, form, request, response);
     }
 
-    protected void executeCreateDismissalService(DismissalBean dismissalBean) throws FenixFilterException, FenixServiceException {
-	executeService(getServiceName(), new Object[] { dismissalBean });
-    }
-
-    protected String getServiceName() {
-	return "";
+    protected void executeCreateDismissalService(DismissalBean dismissalBean) throws FenixServiceException {
+	// Do nothing, the dismissals MUST be created in the concrete classes
     }
 
     public ActionForward deleteCredits(ActionMapping mapping, ActionForm form, HttpServletRequest request,
@@ -245,7 +242,7 @@ public class StudentDismissalsDA extends FenixDispatchAction {
 	final StudentCurricularPlan studentCurricularPlan = getSCP(request);
 
 	try {
-	    executeService("DeleteCredits", new Object[] { studentCurricularPlan, creditsIDs });
+	    DeleteCredits.run(studentCurricularPlan, creditsIDs);
 	} catch (final IllegalDataAccessException e) {
 	    addActionMessage(request, "error.notAuthorized");
 

@@ -1,6 +1,6 @@
 package net.sourceforge.fenixedu.domain.accounting.events;
 
-import net.sourceforge.fenixedu.domain.Employee;
+import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.accounting.AcademicEvent;
 import net.sourceforge.fenixedu.domain.accounting.Event;
 import net.sourceforge.fenixedu.domain.accounting.Exemption;
@@ -38,11 +38,11 @@ public class AcademicEventExemption extends AcademicEventExemption_Base {
 	super();
     }
 
-    public AcademicEventExemption(final Employee employee, final AcademicEvent event, final Money value,
+    public AcademicEventExemption(final Person responsible, final AcademicEvent event, final Money value,
 	    final AcademicEventJustificationType justificationType, final LocalDate dispatchDate, final String reason) {
 
 	this();
-	super.init(employee, event, createJustification(justificationType, dispatchDate, reason));
+	super.init(responsible, event, createJustification(justificationType, dispatchDate, reason));
 
 	check(value, "error.AcademicEventExemption.invalid.amount");
 	setValue(value);
@@ -63,8 +63,7 @@ public class AcademicEventExemption extends AcademicEventExemption_Base {
 
     private void checkRulesToDelete() {
 	if (getEvent().hasAnyPayments()) {
-	    throw new DomainException(
-		    "error.accounting.events.candidacy.AcademicEventExemption.cannot.delete.event.has.payments");
+	    throw new DomainException("error.accounting.events.candidacy.AcademicEventExemption.cannot.delete.event.has.payments");
 	}
     }
 
@@ -73,10 +72,9 @@ public class AcademicEventExemption extends AcademicEventExemption_Base {
     }
 
     @Service
-    static public AcademicEventExemption create(final Employee employee, final AcademicEvent event,
-	    final Money value, final AcademicEventJustificationType justificationType, final LocalDate dispatchDate,
-	    final String reason) {
-	return new AcademicEventExemption(employee, event, value, justificationType, dispatchDate, reason);
+    static public AcademicEventExemption create(final Person responsible, final AcademicEvent event, final Money value,
+	    final AcademicEventJustificationType justificationType, final LocalDate dispatchDate, final String reason) {
+	return new AcademicEventExemption(responsible, event, value, justificationType, dispatchDate, reason);
     }
 
     @Override

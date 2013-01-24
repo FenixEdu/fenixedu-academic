@@ -9,7 +9,6 @@ import java.util.Set;
 
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.Enrolment;
-import net.sourceforge.fenixedu.domain.accessControl.academicAdminOffice.AdministrativeOfficePermission;
 import net.sourceforge.fenixedu.domain.curricularRules.ICurricularRule;
 import net.sourceforge.fenixedu.domain.curricularRules.executors.ruleExecutors.EnrolmentResultType;
 import net.sourceforge.fenixedu.domain.curriculum.EnrollmentCondition;
@@ -29,11 +28,8 @@ public class StudentCurricularPlanExtraEnrolmentManager extends StudentCurricula
 	    return;
 	}
 
-	final AdministrativeOfficePermission permission = getUpdateRegistrationAfterConclusionProcessPermission();
-	if (permission != null && permission.isAppliable(getRegistration())) {
-	    if (!permission.isMember(getResponsiblePerson())) {
-		throw new DomainException("error.permissions.cannot.update.registration.after.conclusion.process");
-	    }
+	if (getRegistration().isRegistrationConclusionProcessed()) {
+	    checkUpdateRegistrationAfterConclusion();
 	}
 
 	checkEnrolingDegreeModules();
@@ -73,7 +69,7 @@ public class StudentCurricularPlanExtraEnrolmentManager extends StudentCurricula
 
 	for (final IDegreeModuleToEvaluate degreeModuleToEvaluate : enrolmentContext.getDegreeModulesToEvaluate()) {
 	    if (degreeModuleToEvaluate.isEnroling() && degreeModuleToEvaluate.getDegreeModule().isCurricularCourse()) {
-		result.put(degreeModuleToEvaluate, Collections.EMPTY_SET);
+		result.put(degreeModuleToEvaluate, Collections.<ICurricularRule> emptySet());
 	    }
 	}
 	return result;

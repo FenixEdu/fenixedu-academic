@@ -110,7 +110,7 @@ public class PhdFinalizationCertificateRequest extends PhdFinalizationCertificat
     @Override
     public byte[] generateDocument() {
 	try {
-	    final List<AdministrativeOfficeDocument> documents = (List<AdministrativeOfficeDocument>) AdministrativeOfficeDocument.AdministrativeOfficeDocumentCreator
+	    final List<AdministrativeOfficeDocument> documents = AdministrativeOfficeDocument.AdministrativeOfficeDocumentCreator
 		    .create(this);
 
 	    String latexThesisTitle = getPhdIndividualProgramProcess().getLatexThesisTitle();

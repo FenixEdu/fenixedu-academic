@@ -5,6 +5,7 @@ package net.sourceforge.fenixedu.domain.phd.thesis.activities;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.accessControl.academicAdministration.AcademicOperationType;
 import net.sourceforge.fenixedu.domain.caseHandling.PreConditionNotValidException;
 import net.sourceforge.fenixedu.domain.phd.PhdProgramDocumentUploadBean;
 import net.sourceforge.fenixedu.domain.phd.alert.AlertService;
@@ -16,7 +17,7 @@ public class SubmitJuryElementsDocuments extends PhdThesisActivity {
 
     @Override
     protected void activityPreConditions(PhdThesisProcess process, IUserView userView) {
-	if (PhdThesisProcess.isMasterDegreeAdministrativeOfficeEmployee(userView)) {
+	if (process.isAllowedToManageProcess(userView)) {
 	    return;
 	}
 
@@ -80,7 +81,7 @@ public class SubmitJuryElementsDocuments extends PhdThesisActivity {
 
 	case JURY_ELEMENTS:
 	    if (process.getIndividualProgramProcess().isCoordinatorForPhdProgram(person)) {
-		AlertService.alertAcademicOffice(process.getIndividualProgramProcess(), getThesisProcessPermission(),
+		AlertService.alertAcademicOffice(process.getIndividualProgramProcess(), AcademicOperationType.VIEW_PHD_THESIS_ALERTS,
 			"message.phd.alert.jury.elements.submitted.subject", "message.phd.alert.jury.elements.submitted.body");
 	    }
 	    break;

@@ -1,6 +1,6 @@
 package net.sourceforge.fenixedu.domain.accounting.events;
 
-import net.sourceforge.fenixedu.domain.Employee;
+import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.accounting.Event;
 import net.sourceforge.fenixedu.domain.accounting.Exemption;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
@@ -34,10 +34,10 @@ public class ImprovementOfApprovedEnrolmentPenaltyExemption extends ImprovementO
     }
 
     public ImprovementOfApprovedEnrolmentPenaltyExemption(final PenaltyExemptionJustificationType penaltyExemptionType,
-	    final ImprovementOfApprovedEnrolmentEvent improvementOfApprovedEnrolmentEvent, final Employee employee,
+	    final ImprovementOfApprovedEnrolmentEvent improvementOfApprovedEnrolmentEvent, final Person responsible,
 	    final String comments, final YearMonthDay directiveCouncilDispatchDate) {
 	this();
-	super.init(penaltyExemptionType, improvementOfApprovedEnrolmentEvent, employee, comments, directiveCouncilDispatchDate);
+	super.init(penaltyExemptionType, improvementOfApprovedEnrolmentEvent, responsible, comments, directiveCouncilDispatchDate);
     }
 
 }

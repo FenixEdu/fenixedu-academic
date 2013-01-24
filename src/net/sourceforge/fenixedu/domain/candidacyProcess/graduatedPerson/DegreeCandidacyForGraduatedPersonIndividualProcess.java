@@ -3,12 +3,16 @@ package net.sourceforge.fenixedu.domain.candidacyProcess.graduatedPerson;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.caseHandling.StartActivity;
+import net.sourceforge.fenixedu.domain.AcademicProgram;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
+import net.sourceforge.fenixedu.domain.accessControl.academicAdministration.AcademicAuthorizationGroup;
+import net.sourceforge.fenixedu.domain.accessControl.academicAdministration.AcademicOperationType;
 import net.sourceforge.fenixedu.domain.candidacy.Ingression;
 import net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyProcess;
 import net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyProcessDocumentUploadBean;
@@ -21,12 +25,12 @@ import net.sourceforge.fenixedu.domain.caseHandling.Activity;
 import net.sourceforge.fenixedu.domain.caseHandling.PreConditionNotValidException;
 import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.student.PrecedentDegreeInformation;
 
 public class DegreeCandidacyForGraduatedPersonIndividualProcess extends DegreeCandidacyForGraduatedPersonIndividualProcess_Base {
 
     static private List<Activity> activities = new ArrayList<Activity>();
+
     static {
 	activities.add(new CandidacyPayment());
 	activities.add(new EditCandidacyPersonalInformation());
@@ -68,12 +72,14 @@ public class DegreeCandidacyForGraduatedPersonIndividualProcess extends DegreeCa
 
     }
 
+    @Override
     protected void checkParameters(final CandidacyProcess candidacyProcess) {
 	if (candidacyProcess == null || !candidacyProcess.hasCandidacyPeriod()) {
 	    throw new DomainException("error.DegreeCandidacyForGraduatedPersonIndividualProcess.invalid.candidacy.process");
 	}
     }
 
+    @Override
     protected void createIndividualCandidacy(IndividualCandidacyProcessBean bean) {
 	new DegreeCandidacyForGraduatedPerson(this, (DegreeCandidacyForGraduatedPersonIndividualProcessBean) bean);
     }
@@ -90,7 +96,7 @@ public class DegreeCandidacyForGraduatedPersonIndividualProcess extends DegreeCa
 
     @Override
     public boolean canExecuteActivity(final IUserView userView) {
-	return isDegreeAdministrativeOfficeEmployee(userView);
+	return isAllowedToManageProcess(this, userView);
     }
 
     @Override
@@ -133,15 +139,16 @@ public class DegreeCandidacyForGraduatedPersonIndividualProcess extends DegreeCa
 
     // static information
 
-    static private boolean isDegreeAdministrativeOfficeEmployee(IUserView userView) {
-	return userView.hasRoleType(RoleType.ACADEMIC_ADMINISTRATIVE_OFFICE)
-		&& userView.getPerson().getEmployeeAdministrativeOffice().isDegree();
+    static private boolean isAllowedToManageProcess(DegreeCandidacyForGraduatedPersonIndividualProcess process, IUserView userView) {
+	Set<AcademicProgram> programs = AcademicAuthorizationGroup.getProgramsForOperation(userView.getPerson(),
+		AcademicOperationType.MANAGE_INDIVIDUAL_CANDIDACIES);
+
+	if (process == null || process.getCandidacy() == null)
+	    return false;
+
+	return programs.contains(process.getCandidacy().getSelectedDegree());
     }
 
-    static private boolean isCoordenator(IUserView userView){
-	return userView.hasRoleType(RoleType.COORDINATOR);
-    }
-    
     @StartActivity
     static public class IndividualCandidacyInformation extends Activity<DegreeCandidacyForGraduatedPersonIndividualProcess> {
 
@@ -168,7 +175,7 @@ public class DegreeCandidacyForGraduatedPersonIndividualProcess extends DegreeCa
 
 	@Override
 	public void checkPreConditions(DegreeCandidacyForGraduatedPersonIndividualProcess process, IUserView userView) {
-	    if (!isDegreeAdministrativeOfficeEmployee(userView)) {
+	    if (!isAllowedToManageProcess(process, userView)) {
 		throw new PreConditionNotValidException();
 	    }
 
@@ -190,7 +197,7 @@ public class DegreeCandidacyForGraduatedPersonIndividualProcess extends DegreeCa
 	@Override
 	public void checkPreConditions(DegreeCandidacyForGraduatedPersonIndividualProcess process, IUserView userView) {
 
-	    if (!isDegreeAdministrativeOfficeEmployee(userView)) {
+	    if (!isAllowedToManageProcess(process, userView)) {
 		throw new PreConditionNotValidException();
 	    }
 
@@ -213,7 +220,7 @@ public class DegreeCandidacyForGraduatedPersonIndividualProcess extends DegreeCa
 	@Override
 	public void checkPreConditions(DegreeCandidacyForGraduatedPersonIndividualProcess process, IUserView userView) {
 
-	    if (!isDegreeAdministrativeOfficeEmployee(userView)) {
+	    if (!isAllowedToManageProcess(process, userView)) {
 		throw new PreConditionNotValidException();
 	    }
 	}
@@ -236,14 +243,14 @@ public class DegreeCandidacyForGraduatedPersonIndividualProcess extends DegreeCa
 
 	@Override
 	public void checkPreConditions(DegreeCandidacyForGraduatedPersonIndividualProcess process, IUserView userView) {
-	    if (!isDegreeAdministrativeOfficeEmployee(userView) && !isCoordenator(userView)) {
+	    if (!isAllowedToManageProcess(process, userView)) {
 		throw new PreConditionNotValidException();
 	    }
 
 	    if (process.isCandidacyCancelled() || !process.isCandidacyDebtPayed()) {
 		throw new PreConditionNotValidException();
 	    }
-	    
+
 	    if (!process.isSentToCoordinator()) {
 		throw new PreConditionNotValidException();
 	    }
@@ -253,7 +260,8 @@ public class DegreeCandidacyForGraduatedPersonIndividualProcess extends DegreeCa
 	protected DegreeCandidacyForGraduatedPersonIndividualProcess executeActivity(
 		DegreeCandidacyForGraduatedPersonIndividualProcess process, IUserView userView, Object object) {
 	    DegreeCandidacyForGraduatedPersonIndividualCandidacyResultBean bean = (DegreeCandidacyForGraduatedPersonIndividualCandidacyResultBean) object;
-	    DegreeCandidacyForGraduatedPersonSeriesGade degreeCandidacyForGraduatedPersonSeriesGade = process.getCandidacy().getDegreeCandidacyForGraduatedPersonSeriesGadeForDegree(bean.getDegree());
+	    DegreeCandidacyForGraduatedPersonSeriesGade degreeCandidacyForGraduatedPersonSeriesGade = process.getCandidacy()
+		    .getDegreeCandidacyForGraduatedPersonSeriesGadeForDegree(bean.getDegree());
 	    degreeCandidacyForGraduatedPersonSeriesGade.setAffinity(bean.getAffinity());
 	    degreeCandidacyForGraduatedPersonSeriesGade.setDegreeNature(bean.getDegreeNature());
 	    degreeCandidacyForGraduatedPersonSeriesGade.setCandidacyGrade(bean.getGrade());
@@ -262,11 +270,12 @@ public class DegreeCandidacyForGraduatedPersonIndividualProcess extends DegreeCa
 	    return process;
 	}
     }
+
     static private class ChangeIndividualCandidacyState extends Activity<DegreeCandidacyForGraduatedPersonIndividualProcess> {
 
 	@Override
 	public void checkPreConditions(DegreeCandidacyForGraduatedPersonIndividualProcess process, IUserView userView) {
-	    if (!isDegreeAdministrativeOfficeEmployee(userView)) {
+	    if (!isAllowedToManageProcess(process, userView)) {
 		throw new PreConditionNotValidException();
 	    }
 
@@ -284,19 +293,20 @@ public class DegreeCandidacyForGraduatedPersonIndividualProcess extends DegreeCa
 	}
 
 	@Override
-	protected DegreeCandidacyForGraduatedPersonIndividualProcess executeActivity(DegreeCandidacyForGraduatedPersonIndividualProcess process,
-		IUserView userView, Object object) {
+	protected DegreeCandidacyForGraduatedPersonIndividualProcess executeActivity(
+		DegreeCandidacyForGraduatedPersonIndividualProcess process, IUserView userView, Object object) {
 	    DegreeCandidacyForGraduatedPersonIndividualCandidacyResultBean bean = (DegreeCandidacyForGraduatedPersonIndividualCandidacyResultBean) object;
 	    process.getCandidacy().setState(bean.getState());
 	    return process;
 	}
-	
+
     }
+
     static private class CancelCandidacy extends Activity<DegreeCandidacyForGraduatedPersonIndividualProcess> {
 
 	@Override
 	public void checkPreConditions(DegreeCandidacyForGraduatedPersonIndividualProcess process, IUserView userView) {
-	    if (!isDegreeAdministrativeOfficeEmployee(userView)) {
+	    if (!isAllowedToManageProcess(process, userView)) {
 		throw new PreConditionNotValidException();
 	    }
 
@@ -317,7 +327,7 @@ public class DegreeCandidacyForGraduatedPersonIndividualProcess extends DegreeCa
 
 	@Override
 	public void checkPreConditions(DegreeCandidacyForGraduatedPersonIndividualProcess process, IUserView userView) {
-	    if (!isDegreeAdministrativeOfficeEmployee(userView)) {
+	    if (!isAllowedToManageProcess(process, userView)) {
 		throw new PreConditionNotValidException();
 	    }
 
@@ -427,10 +437,10 @@ public class DegreeCandidacyForGraduatedPersonIndividualProcess extends DegreeCa
 
 	@Override
 	public void checkPreConditions(DegreeCandidacyForGraduatedPersonIndividualProcess process, IUserView userView) {
-	    if (!isDegreeAdministrativeOfficeEmployee(userView)) {
+	    if (!isAllowedToManageProcess(process, userView)) {
 		throw new PreConditionNotValidException();
 	    }
-	    
+
 	    if (process.isCandidacyCancelled()) {
 		throw new PreConditionNotValidException();
 	    }
@@ -449,7 +459,7 @@ public class DegreeCandidacyForGraduatedPersonIndividualProcess extends DegreeCa
 
 	@Override
 	public void checkPreConditions(DegreeCandidacyForGraduatedPersonIndividualProcess process, IUserView userView) {
-	    if (!isDegreeAdministrativeOfficeEmployee(userView)) {
+	    if (!isAllowedToManageProcess(process, userView)) {
 		throw new PreConditionNotValidException();
 	    }
 
@@ -471,7 +481,7 @@ public class DegreeCandidacyForGraduatedPersonIndividualProcess extends DegreeCa
 
 	@Override
 	public void checkPreConditions(DegreeCandidacyForGraduatedPersonIndividualProcess process, IUserView userView) {
-	    if (!isDegreeAdministrativeOfficeEmployee(userView)) {
+	    if (!isAllowedToManageProcess(process, userView)) {
 		throw new PreConditionNotValidException();
 	    }
 
@@ -554,7 +564,7 @@ public class DegreeCandidacyForGraduatedPersonIndividualProcess extends DegreeCa
 
 	@Override
 	public void checkPreConditions(DegreeCandidacyForGraduatedPersonIndividualProcess process, IUserView userView) {
-	    if (!isDegreeAdministrativeOfficeEmployee(userView)) {
+	    if (!isAllowedToManageProcess(process, userView)) {
 		throw new PreConditionNotValidException();
 	    }
 	}
@@ -577,7 +587,7 @@ public class DegreeCandidacyForGraduatedPersonIndividualProcess extends DegreeCa
 
 	@Override
 	public void checkPreConditions(DegreeCandidacyForGraduatedPersonIndividualProcess process, IUserView userView) {
-	    if (!isDegreeAdministrativeOfficeEmployee(userView)) {
+	    if (!isAllowedToManageProcess(process, userView)) {
 		throw new PreConditionNotValidException();
 	    }
 
@@ -598,7 +608,7 @@ public class DegreeCandidacyForGraduatedPersonIndividualProcess extends DegreeCa
 
 	@Override
 	public void checkPreConditions(DegreeCandidacyForGraduatedPersonIndividualProcess process, IUserView userView) {
-	    if (!isDegreeAdministrativeOfficeEmployee(userView)) {
+	    if (!isAllowedToManageProcess(process, userView)) {
 		throw new PreConditionNotValidException();
 	    }
 

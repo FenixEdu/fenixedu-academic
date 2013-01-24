@@ -19,7 +19,7 @@ public class SectionUnit extends SectionUnit_Base {
 	    String webAddress, UnitClassification classification, Boolean canBeResponsibleOfSpaces, Campus campus) {
 
 	SectionUnit sectionUnit = new SectionUnit();
-	sectionUnit.init(name, unitNameCard, costCenterCode, acronym, beginDate, endDate, webAddress, classification,
+	sectionUnit.init(name, unitNameCard, costCenterCode, acronym, beginDate, endDate, webAddress, classification, null,
 		canBeResponsibleOfSpaces, campus);
 	sectionUnit.addParentUnit(parentUnit, accountabilityType);
 

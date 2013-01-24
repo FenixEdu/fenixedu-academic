@@ -1,6 +1,6 @@
 package net.sourceforge.fenixedu.domain.accounting.events;
 
-import net.sourceforge.fenixedu.domain.Employee;
+import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.accounting.Event;
 import net.sourceforge.fenixedu.domain.accounting.events.gratuity.GratuityEvent;
@@ -17,15 +17,15 @@ abstract public class PenaltyExemption extends PenaltyExemption_Base {
     }
 
     protected PenaltyExemption(final PenaltyExemptionJustificationType justificationType, final GratuityEvent gratuityEvent,
-	    final Employee employee, final String comments, final YearMonthDay dispatchDate) {
+	    final Person responsible, final String comments, final YearMonthDay dispatchDate) {
 	this();
-	init(justificationType, gratuityEvent, employee, comments, dispatchDate);
+	init(justificationType, gratuityEvent, responsible, comments, dispatchDate);
     }
 
-    protected void init(PenaltyExemptionJustificationType justificationType, Event event, Employee employee, String reason,
+    protected void init(PenaltyExemptionJustificationType justificationType, Event event, Person responsible, String reason,
 	    YearMonthDay dispatchDate) {
 	checkParameters(justificationType);
-	super.init(employee, event, PenaltyExemptionJustificationFactory.create(this, justificationType, reason, dispatchDate));
+	super.init(responsible, event, PenaltyExemptionJustificationFactory.create(this, justificationType, reason, dispatchDate));
 	event.recalculateState(new DateTime());
 
     }
@@ -38,9 +38,9 @@ abstract public class PenaltyExemption extends PenaltyExemption_Base {
     }
 
     @Override
-    public void setEmployee(Employee employee) {
+    public void setResponsible(Person responsible) {
 	throw new DomainException(
-		"error.net.sourceforge.fenixedu.domain.accounting.events.gratuity.exemption.penalty.PenaltyExemption.cannot.modify.employee");
+		"error.net.sourceforge.fenixedu.domain.accounting.events.gratuity.exemption.penalty.PenaltyExemption.cannot.modify.responsible");
     }
 
     public PenaltyExemptionJustificationType getJustificationType() {

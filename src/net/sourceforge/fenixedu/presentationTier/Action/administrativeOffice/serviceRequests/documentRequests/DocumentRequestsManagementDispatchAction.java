@@ -3,7 +3,9 @@ package net.sourceforge.fenixedu.presentationTier.Action.administrativeOffice.se
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
@@ -15,10 +17,12 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.applicationTier.factoryExecutors.DocumentRequestCreator;
 import net.sourceforge.fenixedu.dataTransferObject.degreeAdministrativeOffice.serviceRequest.documentRequest.certificates.ExamDateCertificateExamSelectionBean;
 import net.sourceforge.fenixedu.dataTransferObject.serviceRequests.DocumentRequestCreateBean;
+import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.Exam;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
-import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
+import net.sourceforge.fenixedu.domain.accessControl.academicAdministration.AcademicAuthorizationGroup;
+import net.sourceforge.fenixedu.domain.accessControl.academicAdministration.AcademicOperationType;
 import net.sourceforge.fenixedu.domain.documents.GeneratedDocument;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequest;
@@ -27,6 +31,7 @@ import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.Document
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.IDocumentRequest;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
+import net.sourceforge.fenixedu.presentationTier.Action.administrativeOffice.serviceRequests.AcademicServiceRequestsManagementDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.util.StringUtils;
 
@@ -41,14 +46,14 @@ import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
-@Mapping(path = "/documentRequestsManagement", module = "academicAdminOffice")
+@Mapping(path = "/documentRequestsManagement", module = "academicAdministration", formBeanClass = AcademicServiceRequestsManagementDispatchAction.AcademicServiceRequestsManagementForm.class)
 @Forwards({
-	@Forward(name = "printDocument", path = "/academicAdminOffice/serviceRequests/documentRequests/printDocument.jsp", tileProperties = @Tile(title = "private.academicadministrativeoffice.studentoperations.viewstudents")),
-	@Forward(name = "createDocumentRequests", path = "/academicAdminOffice/serviceRequests/documentRequests/createDocumentRequests.jsp", tileProperties = @Tile(title = "private.academicadministrativeoffice.studentoperations.viewstudents")),
-	@Forward(name = "viewDocumentRequestsToCreate", path = "/academicAdminOffice/serviceRequests/documentRequests/viewDocumentRequestsToCreate.jsp", tileProperties = @Tile(title = "private.academicadministrativeoffice.studentoperations.viewstudents")),
-	@Forward(name = "chooseExamsToCreateExamDateCertificateRequest", path = "/academicAdminOffice/serviceRequests/documentRequests/chooseExamsToCreateExamDateCertificateRequest.jsp", tileProperties = @Tile(title = "private.academicadministrativeoffice.academicservices.newrequests")),
-	@Forward(name = "viewRegistrationDetails", path = "/academicAdminOffice/student/registration/viewRegistrationDetails.jsp", tileProperties = @Tile(title = "private.academicadministrativeoffice.academicservices.newrequests")),
-	@Forward(name = "processNewAcademicServiceRequest", path = "/academicServiceRequestsManagement.do?method=processNewAcademicServiceRequest", tileProperties = @Tile(title = "private.academicadministrativeoffice.academicservices.newrequests"))
+	@Forward(name = "printDocument", path = "/academicAdminOffice/serviceRequests/documentRequests/printDocument.jsp"),
+	@Forward(name = "createDocumentRequests", path = "/academicAdminOffice/serviceRequests/documentRequests/createDocumentRequests.jsp"),
+	@Forward(name = "viewDocumentRequestsToCreate", path = "/academicAdminOffice/serviceRequests/documentRequests/viewDocumentRequestsToCreate.jsp"),
+	@Forward(name = "chooseExamsToCreateExamDateCertificateRequest", path = "/academicAdminOffice/serviceRequests/documentRequests/chooseExamsToCreateExamDateCertificateRequest.jsp"),
+	@Forward(name = "viewRegistrationDetails", path = "/academicAdminOffice/student/registration/viewRegistrationDetails.jsp"),
+	@Forward(name = "processNewAcademicServiceRequest", path = "/academicServiceRequestsManagement.do?method=processNewAcademicServiceRequest")
 
 })
 public class DocumentRequestsManagementDispatchAction extends FenixDispatchAction {
@@ -355,8 +360,15 @@ public class DocumentRequestsManagementDispatchAction extends FenixDispatchActio
 
 	final DocumentRequestCreateBean documentRequestCreateBean = getRenderedObject();
 	if (documentRequestCreateBean.isToUseAll()) {
-	    documentRequestCreateBean.setEnrolments(documentRequestCreateBean.getStudent().getApprovedEnrolments(
-		    getAdministrativeOffice()));
+	    Set<Degree> degrees = AcademicAuthorizationGroup.getDegreesForOperation(AccessControl.getPerson(),
+		    AcademicOperationType.SERVICE_REQUESTS);
+	    Set<Enrolment> aprovedEnrolments = new HashSet<Enrolment>();
+	    for (Degree degree : degrees) {
+		for (final Registration registration : documentRequestCreateBean.getStudent().getRegistrationsFor(degree)) {
+		    aprovedEnrolments.addAll(registration.getApprovedEnrolments());
+		}
+	    }
+	    documentRequestCreateBean.setEnrolments(new ArrayList<Enrolment>(aprovedEnrolments));
 	} else {
 	    documentRequestCreateBean.setEnrolments(new ArrayList<Enrolment>());
 	}
@@ -365,9 +377,5 @@ public class DocumentRequestsManagementDispatchAction extends FenixDispatchActio
 	setAdditionalInformationSchemaName(request, documentRequestCreateBean);
 
 	return mapping.findForward("createDocumentRequests");
-    }
-
-    private AdministrativeOffice getAdministrativeOffice() {
-	return AccessControl.getPerson().getEmployeeAdministrativeOffice();
     }
 }

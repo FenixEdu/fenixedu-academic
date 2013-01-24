@@ -27,8 +27,8 @@ import pt.ist.fenixWebFramework.struts.annotations.Tile;
  * 
  */
 
-@Mapping(path = "/manageIngression", module = "academicAdminOffice", formBeanClass = FenixActionForm.class)
-@Forwards({ @Forward(name = "showEditIngression", path = "/academicAdminOffice/manageIngression.jsp", tileProperties = @Tile(title = "private.academicadministrativeoffice.studentoperations.viewstudents")) })
+@Mapping(path = "/manageIngression", module = "academicAdministration", formBeanClass = FenixActionForm.class)
+@Forwards({ @Forward(name = "showEditIngression", path = "/academicAdminOffice/manageIngression.jsp") })
 public class ManageIngressionDA extends FenixDispatchAction {
 
     private Registration getRegistration(final HttpServletRequest request) {

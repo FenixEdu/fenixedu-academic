@@ -2,6 +2,7 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr" %>
+<%@ taglib uri="/WEB-INF/academic.tld" prefix="academic" %>
 <html:xhtml/>
 
 <em><bean:message key="label.candidacies" bundle="APPLICATION_RESOURCES"/></em>
@@ -12,13 +13,14 @@
 
 <br/>
 
-
+<academic:allowed operation="MANAGE_STUDENT_PAYMENTS">
 <logic:equal name="process" property="isCandidacyInternal" value="true">
 	<bean:define id="personId" name="process" property="candidacy.personalDetails.person.idInternal" />
 	<html:link action='<%= "payments.do?method=showOperations&amp;personId=" + personId.toString() %>' target="_blank">
 		<bean:message key="label.payments.management" bundle="APPLICATION_RESOURCES"/>	
 	</html:link>
 </logic:equal>
+</academic:allowed>
 
 <logic:equal name="process" property="isCandidacyInternal" value="false">
 	<bean:message key="label.payments.no.payments"/>

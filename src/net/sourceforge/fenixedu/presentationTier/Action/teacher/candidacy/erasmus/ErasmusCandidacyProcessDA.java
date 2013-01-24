@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.presentationTier.Action.teacher.candidacy.erasmus;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -10,8 +11,8 @@ import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyProcess;
 import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyProcess;
-import net.sourceforge.fenixedu.domain.candidacyProcess.mobility.MobilityIndividualApplicationProcess;
 import net.sourceforge.fenixedu.domain.candidacyProcess.mobility.MobilityApplicationProcess;
+import net.sourceforge.fenixedu.domain.candidacyProcess.mobility.MobilityIndividualApplicationProcess;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.presentationTier.Action.masterDegree.coordinator.CoordinatedDegreeInfo;
@@ -46,7 +47,7 @@ public class ErasmusCandidacyProcessDA extends
 
     @Override
     protected List<IndividualCandidacyProcess> getChildProcesses(final CandidacyProcess process, HttpServletRequest request) {
-	List<IndividualCandidacyProcess> processes = super.getChildProcesses(process, request);
+	Collection<IndividualCandidacyProcess> processes = super.getChildProcesses(process, request);
 
 	List<IndividualCandidacyProcess> result = new ArrayList<IndividualCandidacyProcess>();
 
@@ -82,6 +83,7 @@ public class ErasmusCandidacyProcessDA extends
 
     public static class ErasmusCandidacyDegreesProvider implements DataProvider {
 
+	@Override
 	public Object provide(Object source, Object currentValue) {
 	    ChooseDegreeBean bean = (ChooseDegreeBean) source;
 
@@ -89,6 +91,7 @@ public class ErasmusCandidacyProcessDA extends
 	    return ((MobilityApplicationProcess) bean.getCandidacyProcess()).getDegreesAssociatedToTeacherAsCoordinator(teacher);
 	}
 
+	@Override
 	public Converter getConverter() {
 	    return new DomainObjectKeyConverter();
 	}

@@ -7,6 +7,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.TreeMap;
 
 import javax.servlet.http.HttpServletRequest;
@@ -14,15 +15,16 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.UnableToPrintServiceException;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
+import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.MarkSheet;
+import net.sourceforge.fenixedu.domain.accessControl.academicAdministration.AcademicAuthorizationGroup;
+import net.sourceforge.fenixedu.domain.accessControl.academicAdministration.AcademicOperationType;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
 import net.sourceforge.fenixedu.util.StringUtils;
 
 import org.apache.commons.collections.comparators.ReverseComparator;
@@ -33,6 +35,16 @@ import org.apache.struts.action.ActionMessages;
 import org.apache.struts.action.DynaActionForm;
 import org.apache.struts.util.LabelValueBean;
 
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+
+@Mapping(path = "/printMarkSheet", module = "academicAdministration", formBean = "printMarkSheetForm", input = "/printMarkSheet.do?method=choosePrinterMarkSheet&amp;page=0")
+@Forwards({
+	@Forward(name = "choosePrinterMarkSheet", path = "/academicAdminOffice/gradeSubmission/choosePrinterMarkSheet_bd.jsp"),
+	@Forward(name = "choosePrinterMarkSheetsWeb", path = "/academicAdminOffice/gradeSubmission/choosePrinterMarkSheetsWeb_bd.jsp"),
+	@Forward(name = "searchMarkSheetFilled", path = "/markSheetManagement.do?method=prepareSearchMarkSheetFilled"),
+	@Forward(name = "searchMarkSheet", path = "/markSheetManagement.do?method=prepareSearchMarkSheet") })
 public class PrintMarkSheetDispatchAction extends MarkSheetDispatchAction {
 
     public ActionForward searchMarkSheet(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
@@ -73,8 +85,8 @@ public class PrintMarkSheetDispatchAction extends MarkSheetDispatchAction {
 
 	final Employee employee = AccessControl.getPerson().getEmployee();
 
-	final Collection<MarkSheet> webMarkSheetsNotPrinted = executionSemester.getWebMarkSheetsNotPrinted(employee
-		.getAdministrativeOffice(), degreeCurricularPlan, employee.getCurrentCampus());
+	final Collection<MarkSheet> webMarkSheetsNotPrinted = executionSemester.getWebMarkSheetsNotPrinted(
+		AccessControl.getPerson(), degreeCurricularPlan);
 
 	request.setAttribute("executionPeriod", executionSemester);
 	request.setAttribute("curricularCourseMap", buildMapWithCurricularCoursesAndNumberOfMarkSheets(webMarkSheetsNotPrinted));
@@ -98,11 +110,11 @@ public class PrintMarkSheetDispatchAction extends MarkSheetDispatchAction {
 	Collections.sort(dcps, DegreeCurricularPlan.COMPARATOR_BY_PRESENTATION_NAME);
 
 	final List<LabelValueBean> result = new ArrayList<LabelValueBean>();
-	for (final DegreeCurricularPlan dcp : dcps) {
+	Set<Degree> degreesForMarksheets = AcademicAuthorizationGroup.getDegreesForOperation(AccessControl.getPerson(),
+		AcademicOperationType.MANAGE_MARKSHEETS);
 
-	    if (dcp.getCurrentCampus() == employee.getCurrentCampus()
-		    && dcp.getDegreeType().getAdministrativeOfficeType() == employee.getAdministrativeOffice()
-			    .getAdministrativeOfficeType()) {
+	for (final DegreeCurricularPlan dcp : dcps) {
+	    if (degreesForMarksheets.contains(dcp.getDegree())) {
 		result.add(new LabelValueBean(dcp.getPresentationName(semester.getExecutionYear()), dcp.getIdInternal()
 			.toString()));
 	    }
@@ -133,14 +145,15 @@ public class PrintMarkSheetDispatchAction extends MarkSheetDispatchAction {
     private Map<CurricularCourse, Integer> buildMapWithCurricularCoursesAndNumberOfMarkSheets(
 	    Collection<MarkSheet> webMarkSheetsNotPrinted) {
 	final Map<CurricularCourse, Integer> result = new TreeMap<CurricularCourse, Integer>(new Comparator<CurricularCourse>() {
+	    @Override
 	    public int compare(CurricularCourse o1, CurricularCourse o2) {
 		return o1.getName().compareTo(o2.getName());
 	    }
 	});
 	for (final MarkSheet markSheet : webMarkSheetsNotPrinted) {
 	    Integer markSheetNumber = result.get(markSheet.getCurricularCourse());
-	    result.put(markSheet.getCurricularCourse(), (markSheetNumber == null) ? Integer.valueOf(1) : Integer
-		    .valueOf(markSheetNumber.intValue() + 1));
+	    result.put(markSheet.getCurricularCourse(),
+		    (markSheetNumber == null) ? Integer.valueOf(1) : Integer.valueOf(markSheetNumber.intValue() + 1));
 	}
 	return result;
     }
@@ -173,11 +186,9 @@ public class PrintMarkSheetDispatchAction extends MarkSheetDispatchAction {
 	String markSheetString = form.getString("markSheet");
 	MarkSheet markSheet = rootDomainObject.readMarkSheetByOID(Integer.valueOf(markSheetString));
 	ActionMessages actionMessages = new ActionMessages();
+
 	try {
-	    ServiceUtils.executeService("PrintMarkSheet", new Object[] { markSheet, printerName });
-	} catch (NotAuthorizedException e) {
-	    addMessage(request, actionMessages, "error.notAuthorized");
-	    return mapping.getInputForward();
+	    MarkSheet.printMarksheet(markSheet, printerName);
 	} catch (UnableToPrintServiceException e) {
 	    request.setAttribute("markSheet", markSheetString);
 	    addMessage(request, actionMessages, e.getMessage());
@@ -195,13 +206,9 @@ public class PrintMarkSheetDispatchAction extends MarkSheetDispatchAction {
 	final ActionMessages actionMessages = new ActionMessages();
 
 	try {
-	    final Employee employee = AccessControl.getPerson().getEmployee();
-	    ServiceUtils.executeService("PrintMarkSheets", new Object[] {
-		    getExecutionSemester(form).getWebMarkSheetsNotPrinted(employee.getAdministrativeOffice(),
-			    getDegreeCurricularPlan(form), employee.getCurrentCampus()), printerName });
-	} catch (NotAuthorizedException e) {
-	    addMessage(request, actionMessages, "error.notAuthorized");
-	    return mapping.getInputForward();
+	    MarkSheet.printMarksheets(
+		    getExecutionSemester(form).getWebMarkSheetsNotPrinted(AccessControl.getPerson(),
+			    getDegreeCurricularPlan(form)), AccessControl.getPerson(), printerName);
 	} catch (UnableToPrintServiceException e) {
 	    addMessage(request, actionMessages, e.getMessage());
 	    return choosePrinterMarkSheetsWeb(mapping, actionForm, request, response);

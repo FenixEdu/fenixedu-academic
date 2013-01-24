@@ -39,7 +39,7 @@ public class ScientificAreaUnit extends ScientificAreaUnit_Base {
 
 	ScientificAreaUnit scientificAreaUnit = new ScientificAreaUnit();
 	scientificAreaUnit.init(name, unitNameCard, costCenterCode, acronym, beginDate, endDate, webAddress, classification,
-		canBeResponsibleOfSpaces, campus);
+		null, canBeResponsibleOfSpaces, campus);
 	scientificAreaUnit.addParentUnit(parentUnit, accountabilityType);
 
 	checkIfAlreadyExistsOneScientificAreaUnitWithSameAcronymAndName(scientificAreaUnit);

@@ -126,14 +126,14 @@ public class StudentReingressionRequest extends StudentReingressionRequest_Base 
 	    }
 	} else if (academicServiceRequestBean.isToConclude()) {
 	    AcademicServiceRequestSituation.create(this, new AcademicServiceRequestBean(
-		    AcademicServiceRequestSituationType.DELIVERED, academicServiceRequestBean.getEmployee()));
+		    AcademicServiceRequestSituationType.DELIVERED, academicServiceRequestBean.getResponsible()));
 	}
     }
 
     @Override
     protected void internalChangeState(AcademicServiceRequestBean academicServiceRequestBean) {
 	if (academicServiceRequestBean.isToCancelOrReject() && hasEvent()) {
-	    getEvent().cancel(academicServiceRequestBean.getEmployee());
+	    getEvent().cancel(academicServiceRequestBean.getResponsible());
 
 	} else if (academicServiceRequestBean.isToProcess()) {
 	    if (isPayable() && !isPayed()) {
@@ -142,8 +142,8 @@ public class StudentReingressionRequest extends StudentReingressionRequest_Base 
 	    academicServiceRequestBean.setSituationDate(getActiveSituation().getSituationDate().toYearMonthDay());
 
 	} else if (academicServiceRequestBean.isToConclude() && hasExecutionDegree()) {
-	    final RegistrationState state = RegistrationStateCreator.createState(getRegistration(), academicServiceRequestBean
-		    .getEmployee().getPerson(), academicServiceRequestBean.getFinalSituationDate(),
+	    final RegistrationState state = RegistrationStateCreator.createState(getRegistration(),
+		    academicServiceRequestBean.getResponsible(), academicServiceRequestBean.getFinalSituationDate(),
 		    RegistrationStateType.REGISTERED);
 
 	    if (getRegistration().getActiveState() != state) {
@@ -172,9 +172,9 @@ public class StudentReingressionRequest extends StudentReingressionRequest_Base 
 
     @Override
     public boolean isManagedWithRectorateSubmissionBatch() {
-        return false;
+	return false;
     }
-    
+
     @Override
     public boolean isAvailableForTransitedRegistrations() {
 	return false;

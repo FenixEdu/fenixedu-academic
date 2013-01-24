@@ -48,7 +48,7 @@ public class StorePersonalPhoto extends FenixService {
 		PhotoType.INSTITUTIONAL));
     }
 
-    @Checked("RolePredicates.ACADEMIC_ADMINISTRATIVE_OFFICE_PREDICATE")
+    @Checked("AcademicPredicates.MANAGE_PHD_PROCESSES")
     @Service
     static public void uploadPhoto(final PhotographUploadBean photoBean, final Person person) throws FileNotFoundException,
 	    IOException {

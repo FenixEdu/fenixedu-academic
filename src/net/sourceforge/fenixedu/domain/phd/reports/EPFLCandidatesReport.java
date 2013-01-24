@@ -8,6 +8,7 @@ import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramCollaborationType
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess;
 import net.sourceforge.fenixedu.domain.phd.SearchPhdIndividualProgramProcessBean;
 import net.sourceforge.fenixedu.domain.phd.ThesisSubjectOrder;
+import net.sourceforge.fenixedu.injectionCode.AccessControl;
 
 import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
@@ -16,7 +17,7 @@ import org.joda.time.YearMonthDay;
 
 public class EPFLCandidatesReport extends PhdReport {
 
-    private ResourceBundle bundle;
+    private final ResourceBundle bundle;
 
     public EPFLCandidatesReport(HSSFWorkbook workbook) {
 	super(workbook);
@@ -39,7 +40,7 @@ public class EPFLCandidatesReport extends PhdReport {
 
 	int i = 2;
 	for (PhdIndividualProgramProcess process : processes) {
-	    if (isProcessFromEPFL(process)) {
+	    if (isProcessFromEPFL(process) && process.isAllowedToManageProcess(AccessControl.getUserView())) {
 		HSSFRow row = sheet.createRow(i);
 
 		fillRow(process, row);
@@ -63,8 +64,8 @@ public class EPFLCandidatesReport extends PhdReport {
 
     private boolean isProcessFromEPFL(PhdIndividualProgramProcess process) {
 	return (process.getCandidacyProcess().getPublicPhdCandidacyPeriod() != null && process.getCandidacyProcess()
-	    .getPublicPhdCandidacyPeriod().isEpflCandidacyPeriod())
-	    || PhdIndividualProgramCollaborationType.EPFL == process.getCollaborationType();
+		.getPublicPhdCandidacyPeriod().isEpflCandidacyPeriod())
+		|| PhdIndividualProgramCollaborationType.EPFL == process.getCollaborationType();
     }
 
     private void fillRow(PhdIndividualProgramProcess process, HSSFRow row) {
@@ -90,14 +91,14 @@ public class EPFLCandidatesReport extends PhdReport {
 	addCellValue(row, onNullEmptyString(focusArea), 6);
 	addCellValue(row, onNullEmptyString(phdProgramName), 7);
 	addCellValue(row, onNullEmptyString(externalPhdProgram), 8);
-	
+
 	int column = 9;
 	Set<ThesisSubjectOrder> thesisSubjectOrdersSet = process.getThesisSubjectOrdersSet();
 
 	for (ThesisSubjectOrder thesisSubjectOrder : thesisSubjectOrdersSet) {
 	    addCellValue(row, onNullEmptyString(thesisSubjectOrder.getThesisSubject().getName().getContent()), column++);
 	}
-	
+
     }
 
     @Override

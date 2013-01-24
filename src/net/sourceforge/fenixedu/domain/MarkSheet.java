@@ -1,17 +1,24 @@
 package net.sourceforge.fenixedu.domain;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
 import java.util.ResourceBundle;
 import java.util.Set;
 import java.util.TreeSet;
 
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.UnableToPrintServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.degreeAdministrativeOffice.gradeSubmission.MarkSheetEnrolmentEvaluationBean;
-import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
-import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOfficeType;
+import net.sourceforge.fenixedu.domain.accessControl.academicAdministration.AcademicAuthorizationGroup;
+import net.sourceforge.fenixedu.domain.accessControl.academicAdministration.AcademicOperationType;
 import net.sourceforge.fenixedu.domain.curriculum.EnrollmentState;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.exceptions.EnrolmentNotPayedException;
@@ -21,11 +28,13 @@ import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.predicates.MarkSheetPredicates;
 import net.sourceforge.fenixedu.util.EnrolmentEvaluationState;
 import net.sourceforge.fenixedu.util.FenixDigestUtils;
+import net.sourceforge.fenixedu.util.report.ReportsUtils;
 
 import org.apache.commons.collections.comparators.ComparatorChain;
 import org.joda.time.DateTime;
 
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
+import pt.ist.fenixWebFramework.services.Service;
 import pt.utl.ist.fenix.tools.util.DateFormatUtil;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 
@@ -93,13 +102,13 @@ public class MarkSheet extends MarkSheet_Base {
 
     private MarkSheet(CurricularCourse curricularCourse, ExecutionSemester executionSemester, Teacher responsibleTeacher,
 	    Date evaluationDate, MarkSheetType markSheetType, MarkSheetState markSheetState, Boolean submittedByTeacher,
-	    Collection<MarkSheetEnrolmentEvaluationBean> evaluationBeans, Employee employee) {
+	    Collection<MarkSheetEnrolmentEvaluationBean> evaluationBeans, Person creator) {
 
 	this();
 	checkParameters(curricularCourse, executionSemester, responsibleTeacher, evaluationDate, markSheetType, markSheetState,
-		evaluationBeans, employee);
+		evaluationBeans, creator);
 	init(curricularCourse, executionSemester, responsibleTeacher, evaluationDate, markSheetType, markSheetState,
-		submittedByTeacher, employee);
+		submittedByTeacher, creator);
 
 	if (hasMarkSheetState(MarkSheetState.RECTIFICATION_NOT_CONFIRMED)) {
 	    addEnrolmentEvaluationsWithoutResctrictions(responsibleTeacher, evaluationBeans,
@@ -112,50 +121,50 @@ public class MarkSheet extends MarkSheet_Base {
 
     public static MarkSheet createNormal(CurricularCourse curricularCourse, ExecutionSemester executionSemester,
 	    Teacher responsibleTeacher, Date evaluationDate, MarkSheetType markSheetType, Boolean submittedByTeacher,
-	    Collection<MarkSheetEnrolmentEvaluationBean> evaluationBeans, Employee employee) {
+	    Collection<MarkSheetEnrolmentEvaluationBean> evaluationBeans, Person creator) {
 
 	return new MarkSheet(curricularCourse, executionSemester, responsibleTeacher, evaluationDate, markSheetType,
-		MarkSheetState.NOT_CONFIRMED, submittedByTeacher, evaluationBeans, employee);
+		MarkSheetState.NOT_CONFIRMED, submittedByTeacher, evaluationBeans, creator);
     }
 
     public static MarkSheet createOldNormal(CurricularCourse curricularCourse, ExecutionSemester executionSemester,
 	    Teacher responsibleTeacher, Date evaluationDate, MarkSheetType markSheetType,
-	    Collection<MarkSheetEnrolmentEvaluationBean> evaluationBeans, Employee employee) {
+	    Collection<MarkSheetEnrolmentEvaluationBean> evaluationBeans, Person creator) {
 
 	return new OldMarkSheet(curricularCourse, executionSemester, responsibleTeacher, evaluationDate, markSheetType,
-		MarkSheetState.NOT_CONFIRMED, evaluationBeans, employee);
+		MarkSheetState.NOT_CONFIRMED, evaluationBeans, creator);
     }
 
     public static MarkSheet createRectification(CurricularCourse curricularCourse, ExecutionSemester executionSemester,
 	    Teacher responsibleTeacher, Date evaluationDate, MarkSheetType markSheetType, String reason,
-	    MarkSheetEnrolmentEvaluationBean evaluationBean, Employee employee) {
+	    MarkSheetEnrolmentEvaluationBean evaluationBean, Person creator) {
 
 	MarkSheet markSheet = new MarkSheet(curricularCourse, executionSemester, responsibleTeacher, evaluationDate,
-		markSheetType, MarkSheetState.RECTIFICATION_NOT_CONFIRMED, Boolean.FALSE, (evaluationBean != null) ? Collections
-			.singletonList(evaluationBean) : null, employee);
+		markSheetType, MarkSheetState.RECTIFICATION_NOT_CONFIRMED, Boolean.FALSE,
+		(evaluationBean != null) ? Collections.singletonList(evaluationBean) : null, creator);
 	markSheet.setReason(reason);
 	return markSheet;
     }
 
     public static MarkSheet createOldRectification(CurricularCourse curricularCourse, ExecutionSemester executionSemester,
 	    Teacher responsibleTeacher, Date evaluationDate, MarkSheetType markSheetType, String reason,
-	    MarkSheetEnrolmentEvaluationBean evaluationBean, Employee employee) {
+	    MarkSheetEnrolmentEvaluationBean evaluationBean, Person creator) {
 
 	Collection<MarkSheetEnrolmentEvaluationBean> beans = (evaluationBean != null) ? Collections.singletonList(evaluationBean)
 		: null;
 
 	MarkSheet markSheet = new OldMarkSheet(curricularCourse, executionSemester, responsibleTeacher, evaluationDate,
-		markSheetType, MarkSheetState.RECTIFICATION_NOT_CONFIRMED, beans, employee);
+		markSheetType, MarkSheetState.RECTIFICATION_NOT_CONFIRMED, beans, creator);
 	markSheet.setReason(reason);
 	return markSheet;
     }
 
     private void checkParameters(CurricularCourse curricularCourse, ExecutionSemester executionSemester,
 	    Teacher responsibleTeacher, Date evaluationDate, MarkSheetType markSheetType, MarkSheetState markSheetState,
-	    Collection<MarkSheetEnrolmentEvaluationBean> evaluationBeans, Employee employee) {
+	    Collection<MarkSheetEnrolmentEvaluationBean> evaluationBeans, Person creator) {
 
 	if (curricularCourse == null || executionSemester == null || responsibleTeacher == null || evaluationDate == null
-		|| markSheetType == null || markSheetState == null || employee == null) {
+		|| markSheetType == null || markSheetState == null || creator == null) {
 	    throw new DomainException("error.markSheet.invalid.arguments");
 	}
 	if (evaluationBeans == null || evaluationBeans.size() == 0) {
@@ -220,9 +229,9 @@ public class MarkSheet extends MarkSheet_Base {
 	    if (occupationPeriod == null) {
 		throw new DomainException("error.evaluationDateNotInExamsPeriod");
 	    } else {
-		throw new DomainException("error.evaluationDateNotInExamsPeriod.withEvaluationDateAndPeriodDates", DateFormatUtil
-			.format("dd/MM/yyyy", evaluationDate), occupationPeriod.getStartYearMonthDay().toString("dd/MM/yyyy"),
-			occupationPeriod.getEndYearMonthDay().toString("dd/MM/yyyy"));
+		throw new DomainException("error.evaluationDateNotInExamsPeriod.withEvaluationDateAndPeriodDates",
+			DateFormatUtil.format("dd/MM/yyyy", evaluationDate), occupationPeriod.getStartYearMonthDay().toString(
+				"dd/MM/yyyy"), occupationPeriod.getEndYearMonthDay().toString("dd/MM/yyyy"));
 	    }
 	}
     }
@@ -233,7 +242,7 @@ public class MarkSheet extends MarkSheet_Base {
 
     protected void init(CurricularCourse curricularCourse, ExecutionSemester executionSemester, Teacher responsibleTeacher,
 	    Date evaluationDate, MarkSheetType markSheetType, MarkSheetState markSheetState, Boolean submittedByTeacher,
-	    Employee employee) {
+	    Person creator) {
 
 	setMarkSheetState(markSheetState);
 	setCurricularCourse(curricularCourse);
@@ -242,7 +251,7 @@ public class MarkSheet extends MarkSheet_Base {
 	setEvaluationDate(evaluationDate);
 	setMarkSheetType(markSheetType);
 	setSubmittedByTeacher(submittedByTeacher);
-	setCreationEmployee(employee);
+	setCreator(creator);
     }
 
     @Checked("MarkSheetPredicates.editPredicate")
@@ -253,8 +262,8 @@ public class MarkSheet extends MarkSheet_Base {
 
 	for (final MarkSheetEnrolmentEvaluationBean evaluationBean : evaluationBeans) {
 
-	    checkIfEvaluationDateIsInExamsPeriod(getCurricularCourse(), executionDegree, getExecutionPeriod(), evaluationBean
-		    .getEvaluationDate(), getMarkSheetType());
+	    checkIfEvaluationDateIsInExamsPeriod(getCurricularCourse(), executionDegree, getExecutionPeriod(),
+		    evaluationBean.getEvaluationDate(), getMarkSheetType());
 
 	    final EnrolmentEvaluation enrolmentEvaluation = evaluationBean.getEnrolment().addNewEnrolmentEvaluation(
 		    enrolmentEvaluationState, getMarkSheetType().getEnrolmentEvaluationType(), responsibleTeacher.getPerson(),
@@ -294,8 +303,8 @@ public class MarkSheet extends MarkSheet_Base {
     private void addEnrolmentEvaluationToMarkSheet(Teacher responsibleTeacher, EnrolmentEvaluationState enrolmentEvaluationState,
 	    final MarkSheetEnrolmentEvaluationBean evaluationBean, ExecutionDegree executionDegree) {
 
-	checkIfEvaluationDateIsInExamsPeriod(getCurricularCourse(), executionDegree, getExecutionPeriod(), evaluationBean
-		.getEvaluationDate(), getMarkSheetType());
+	checkIfEvaluationDateIsInExamsPeriod(getCurricularCourse(), executionDegree, getExecutionPeriod(),
+		evaluationBean.getEvaluationDate(), getMarkSheetType());
 
 	EnrolmentEvaluation enrolmentEvaluation = evaluationBean.getEnrolment()
 		.getEnrolmentEvaluationByEnrolmentEvaluationStateAndType(enrolmentEvaluationState,
@@ -341,8 +350,9 @@ public class MarkSheet extends MarkSheet_Base {
 	} else {
 	    checkIfTeacherIsResponsibleOrCoordinator(getCurricularCourse(), getExecutionPeriod(), responsibleTeacher,
 		    getMarkSheetType());
-	    checkIfEvaluationDateIsInExamsPeriod(getCurricularCourse(), getExecutionDegree(getCurricularCourse(),
-		    getExecutionPeriod()), getExecutionPeriod(), newEvaluationDate, getMarkSheetType());
+	    checkIfEvaluationDateIsInExamsPeriod(getCurricularCourse(),
+		    getExecutionDegree(getCurricularCourse(), getExecutionPeriod()), getExecutionPeriod(), newEvaluationDate,
+		    getMarkSheetType());
 
 	    Date oldEvaluationDate = getEvaluationDateDateTime().toDate();
 	    setResponsibleTeacher(responsibleTeacher);
@@ -454,17 +464,17 @@ public class MarkSheet extends MarkSheet_Base {
     }
 
     @Checked("MarkSheetPredicates.confirmPredicate")
-    public void confirm(Employee employee) {
-	if (employee == null) {
+    public void confirm(Person validator) {
+	if (validator == null) {
 	    throw new DomainException("error.markSheet.invalid.arguments");
 	}
 	if (isNotConfirmed()) {
-	    setConfirmationEmployee(employee);
+	    setValidator(validator);
 
 	    Set<Enrolment> inDebtEnrolments = new HashSet<Enrolment>();
 	    for (final EnrolmentEvaluation enrolmentEvaluation : this.getEnrolmentEvaluationsSet()) {
 		try {
-		    enrolmentEvaluation.confirmSubmission(getEnrolmentEvaluationStateToConfirm(), employee, "");
+		    enrolmentEvaluation.confirmSubmission(getEnrolmentEvaluationStateToConfirm(), validator, "");
 		} catch (EnrolmentNotPayedException e) {
 		    inDebtEnrolments.add(e.getEnrolment());
 		}
@@ -511,8 +521,8 @@ public class MarkSheet extends MarkSheet_Base {
 	removeExecutionPeriod();
 	removeCurricularCourse();
 	removeResponsibleTeacher();
-	removeConfirmationEmployee();
-	removeCreationEmployee();
+	removeValidator();
+	removeCreator();
 
 	if (hasMarkSheetState(MarkSheetState.RECTIFICATION_NOT_CONFIRMED)) {
 	    changeRectifiedEnrolmentEvaluationToPreviowsState();
@@ -530,9 +540,8 @@ public class MarkSheet extends MarkSheet_Base {
     private void changeRectifiedEnrolmentEvaluationToPreviowsState() {
 
 	/*
-	 * This is not common, but if by any reason the rectified marksheet was
-	 * removed from system and rectified enrolment evaluation was removed
-	 * too, no enrolment evaluation will be available
+	 * This is not common, but if by any reason the rectified marksheet was removed from system and rectified enrolment evaluation
+	 * was removed too, no enrolment evaluation will be available
 	 */
 	if (!hasAnyEnrolmentEvaluations()) {
 	    return;
@@ -574,6 +583,66 @@ public class MarkSheet extends MarkSheet_Base {
 	return null;
     }
 
+    @Service
+    static public void printMarksheet(MarkSheet markSheet, String printerName) throws FenixServiceException {
+	if (markSheet == null) {
+	    throw new InvalidArgumentsServiceException("mark sheet cannot be null");
+	}
+	if (!markSheet.isRectification()) {
+	    printMarkSheet(markSheet, printerName);
+	} else {
+	    printRectificationMarkSheet(markSheet, printerName);
+	}
+	if (!markSheet.getPrinted()) {
+	    markSheet.setPrinted(Boolean.TRUE);
+	}
+    }
+
+    @Service
+    static public void printMarksheets(final Collection<MarkSheet> markSheets, final Person person, final String printerName)
+	    throws FenixServiceException {
+	for (final MarkSheet markSheet : markSheets) {
+	    if (markSheet.canManage(person)) {
+		try {
+		    printMarksheet(markSheet, printerName);
+		} catch (InvalidArgumentsServiceException e) {
+
+		}
+	    }
+	}
+    }
+
+    static private void printRectificationMarkSheet(MarkSheet markSheet, String printerName) throws UnableToPrintServiceException {
+	final EnrolmentEvaluation rectification = markSheet.getEnrolmentEvaluationsSet().iterator().next();
+
+	Map<String, Object> parameters = new HashMap<String, Object>();
+	parameters.put("markSheet", markSheet);
+	parameters.put("checkSum", FenixDigestUtils.getPrettyCheckSum(markSheet.getCheckSum()));
+	parameters.put("rectification", rectification);
+	parameters.put("rectified", rectification.getRectified());
+	ResourceBundle bundle = ResourceBundle.getBundle("resources.ReportsResources", Language.getLocale());
+
+	boolean result = ReportsUtils.printReport("markSheetRectification", parameters, bundle, Collections.emptyList(),
+		printerName);
+	if (!result) {
+	    throw new UnableToPrintServiceException("error.print.failed");
+	}
+    }
+
+    static private void printMarkSheet(MarkSheet markSheet, String printerName) throws UnableToPrintServiceException {
+	Map<String, Object> parameters = new HashMap<String, Object>();
+	parameters.put("markSheet", markSheet);
+	parameters.put("checkSum", FenixDigestUtils.getPrettyCheckSum(markSheet.getCheckSum()));
+	ResourceBundle bundle = ResourceBundle.getBundle("resources.ReportsResources", Language.getLocale());
+	List<EnrolmentEvaluation> evaluations = new ArrayList<EnrolmentEvaluation>(markSheet.getEnrolmentEvaluations());
+	Collections.sort(evaluations, EnrolmentEvaluation.SORT_BY_STUDENT_NUMBER);
+
+	boolean result = ReportsUtils.printReport("markSheet", parameters, bundle, evaluations, printerName);
+	if (!result) {
+	    throw new UnableToPrintServiceException("error.print.failed");
+	}
+    }
+
     /*
      * Override: Getters and Setters
      */
@@ -597,20 +666,20 @@ public class MarkSheet extends MarkSheet_Base {
     }
 
     @Override
-    public void removeConfirmationEmployee() {
+    public void removeValidator() {
 	if (isConfirmed()) {
 	    throw new DomainException("error.markSheet.already.confirmed");
 	} else {
-	    super.removeConfirmationEmployee();
+	    super.removeValidator();
 	}
     }
 
     @Override
-    public void removeCreationEmployee() {
+    public void removeCreator() {
 	if (isConfirmed()) {
 	    throw new DomainException("error.markSheet.already.confirmed");
 	} else {
-	    super.removeCreationEmployee();
+	    super.removeCreator();
 	}
     }
 
@@ -691,20 +760,20 @@ public class MarkSheet extends MarkSheet_Base {
     }
 
     @Override
-    public void setConfirmationEmployee(Employee confirmationEmployee) {
+    public void setValidator(Person validator) {
 	if (isConfirmed()) {
 	    throw new DomainException("error.markSheet.already.confirmed");
 	} else {
-	    super.setConfirmationEmployee(confirmationEmployee);
+	    super.setValidator(validator);
 	}
     }
 
     @Override
-    public void setCreationEmployee(Employee creationEmployee) {
+    public void setCreator(Person creator) {
 	if (isConfirmed()) {
 	    throw new DomainException("error.markSheet.already.confirmed");
 	} else {
-	    super.setCreationEmployee(creationEmployee);
+	    super.setCreator(creator);
 	}
     }
 
@@ -804,13 +873,10 @@ public class MarkSheet extends MarkSheet_Base {
 	return FenixDigestUtils.getPrettyCheckSum(getCheckSum());
     }
 
-    public boolean canManage(final Employee employee) {
-	final DegreeCurricularPlan degreeCurricularPlan = getCurricularCourse().getDegreeCurricularPlan();
-	return degreeCurricularPlan.canManageMarkSheetsForExecutionPeriod(employee, getExecutionPeriod());
-    }
-
-    public AdministrativeOfficeType getAdministrativeOfficeType() {
-	return getCurricularCourse().getDegreeType().getAdministrativeOfficeType();
+    public boolean canManage(final Person person) {
+	Set<Degree> degreesForOperation = AcademicAuthorizationGroup.getDegreesForOperation(person,
+		AcademicOperationType.MANAGE_MARKSHEETS);
+	return degreesForOperation.contains(getCurricularCourse().getDegreeCurricularPlan().getDegree());
     }
 
     @Checked("RolePredicates.MANAGER_PREDICATE")
@@ -823,7 +889,7 @@ public class MarkSheet extends MarkSheet_Base {
 		super.setMarkSheetState(MarkSheetState.RECTIFICATION_NOT_CONFIRMED);
 	    }
 
-	    setConfirmationEmployee(null);
+	    setValidator(null);
 	    setConfirmationDateDateTime(null);
 
 	    for (EnrolmentEvaluation enrolmentEvaluation : getEnrolmentEvaluationsSet()) {
@@ -847,7 +913,7 @@ public class MarkSheet extends MarkSheet_Base {
 	enrolmentEvaluation.setGrade(Grade.createEmptyGrade());
 	enrolmentEvaluation.setCheckSum(null);
 	enrolmentEvaluation.setExamDateYearMonthDay(null);
-	enrolmentEvaluation.removeEmployee();
+	enrolmentEvaluation.removePerson();
 	enrolmentEvaluation.setGradeAvailableDateYearMonthDay(null);
 	enrolmentEvaluation.removePersonResponsibleForGrade();
 	enrolmentEvaluation.removeRectified();
@@ -884,14 +950,14 @@ public class MarkSheet extends MarkSheet_Base {
 
     public String getStateDiscription() {
 	StringBuilder stringBuilder = new StringBuilder();
-	final ResourceBundle enumerationResources = ResourceBundle.getBundle("resources.EnumerationResources", Language
-		.getLocale());
+	final ResourceBundle enumerationResources = ResourceBundle.getBundle("resources.EnumerationResources",
+		Language.getLocale());
 	stringBuilder.append(enumerationResources.getString(getMarkSheetState().getName()).trim());
 	if (getSubmittedByTeacher()) {
-	    final ResourceBundle academicResources = ResourceBundle.getBundle("resources.AcademicAdminOffice", Language
-		    .getLocale());
-	    stringBuilder.append(" (").append(academicResources.getString("label.markSheet.submittedByTeacher").trim()).append(
-		    ")");
+	    final ResourceBundle academicResources = ResourceBundle.getBundle("resources.AcademicAdminOffice",
+		    Language.getLocale());
+	    stringBuilder.append(" (").append(academicResources.getString("label.markSheet.submittedByTeacher").trim())
+		    .append(")");
 	}
 	return stringBuilder.toString();
     }
@@ -910,10 +976,6 @@ public class MarkSheet extends MarkSheet_Base {
 
     public String getCurricularCourseAcronym() {
 	return getCurricularCourse().getAcronym(getExecutionPeriod());
-    }
-
-    public boolean isFor(AdministrativeOffice administrativeOffice) {
-	return getAdministrativeOfficeType().equals(administrativeOffice.getAdministrativeOfficeType());
     }
 
     public boolean isFor(DegreeCurricularPlan dcp) {

@@ -17,8 +17,7 @@ public class RequestPublicPresentationSeminarComission extends PhdIndividualProg
 	    throw new PreConditionNotValidException();
 	}
 
-	if (!PhdIndividualProgramProcess.isMasterDegreeAdministrativeOfficeEmployee(userView)
-		&& !process.isGuider(userView.getPerson())) {
+	if (!process.isAllowedToManageProcess(userView) && !process.isGuider(userView.getPerson())) {
 	    throw new PreConditionNotValidException();
 	}
     }

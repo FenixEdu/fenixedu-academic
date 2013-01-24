@@ -3,14 +3,11 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr"%>
+<%@ taglib uri="/WEB-INF/academic.tld" prefix="academic" %>
 
-<logic:present role="ACADEMIC_ADMINISTRATIVE_OFFICE">
-
-	<em><bean:message bundle="ACADEMIC_OFFICE_RESOURCES"  key="label.academicAdminOffice" /></em>
+<h2><bean:message key="label.curriculum.validation.student.enrolment.without.rules" bundle="ACADEMIC_OFFICE_RESOURCES"/></h2>
 	
-	<h2><bean:message key="label.curriculum.validation.student.enrolment.without.rules" bundle="ACADEMIC_OFFICE_RESOURCES"/></h2>
-	
-	<bean:define id="studentCurricularPlanId" name="studentCurricularPlan" property="externalId"/>
+<bean:define id="studentCurricularPlanId" name="studentCurricularPlan" property="externalId"/>
 
 <p>
 	<html:link page="<%= "/curriculumValidation.do?method=prepareCurriculumValidation&amp;studentCurricularPlanId=" + studentCurricularPlanId  %>">
@@ -38,14 +35,17 @@
 		</fr:edit>
 	</fr:form>
 	
+	<bean:define id="studentCurricularPlan" name="studentCurricularPlan" type="net.sourceforge.fenixedu.domain.StudentCurricularPlan"/>
 	<bean:define id="executionSemesterId" name="bolonhaStudentEnrollmentBean" property="executionPeriod.externalId" />
-	<ul class="mbottom2">
-		<li>
-			<html:link page="<%= "/curriculumValidation.do?method=prepareSetEvaluations&amp;studentCurricularPlanId=" + studentCurricularPlanId + "&amp;executionSemesterId=" + executionSemesterId %>">
-				<bean:message key="label.curriculum.validation.continue" bundle="ACADEMIC_OFFICE_RESOURCES" />
-			</html:link>
-		</li>
-	</ul>
+	<academic:allowed operation="MANAGE_MARKSHEETS" program="<%= studentCurricularPlan.getRegistration().getDegree() %>">
+		<ul class="mbottom2">
+			<li>
+				<html:link page="<%= "/curriculumValidation.do?method=prepareSetEvaluations&amp;studentCurricularPlanId=" + studentCurricularPlanId + "&amp;executionSemesterId=" + executionSemesterId %>">
+					<bean:message key="label.curriculum.validation.continue" bundle="ACADEMIC_OFFICE_RESOURCES" />
+				</html:link>
+			</li>
+		</ul>
+	</academic:allowed>
 	
 	<bean:define id="student" name="bolonhaStudentEnrollmentBean" property="studentCurricularPlan.registration.student" />
 	
@@ -88,7 +88,7 @@
 		</p>
 		<p class="mtop025 mbottom1">
 			<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" onclick="this.form.method.value='enrolInDegreeModules';"><bean:message bundle="APPLICATION_RESOURCES"  key="label.save"/></html:submit>
-			<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.back" onclick="this.form.method.value='backToStudentEnrollments';"><bean:message bundle="APPLICATION_RESOURCES"  key="label.back"/></html:submit>			
+			<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.back" onclick="this.form.method.value='prepareCurriculumValidation';"><bean:message bundle="APPLICATION_RESOURCES"  key="label.back"/></html:submit>			
 		</p>
 		
 		<fr:edit id="bolonhaStudentEnrolments" name="bolonhaStudentEnrollmentBean">
@@ -104,7 +104,7 @@
 		<p class="mtop15 mbottom05"><bean:message bundle="APPLICATION_RESOURCES"  key="label.saveChanges.message"/>:</p>
 		<p class="mtop05 mbottom1">
 			<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" onclick="this.form.method.value='enrolInDegreeModules';"><bean:message bundle="APPLICATION_RESOURCES"  key="label.save"/></html:submit>
-			<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.back" onclick="this.form.method.value='backToStudentEnrollments';"><bean:message bundle="APPLICATION_RESOURCES"  key="label.back"/></html:submit>
+			<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.back" onclick="this.form.method.value='prepareCurriculumValidation';"><bean:message bundle="APPLICATION_RESOURCES"  key="label.back"/></html:submit>
 		</p>
 	
 	</html:form>
@@ -133,6 +133,3 @@
 </table>
 
 </logic:equal>
-
-
-</logic:present>

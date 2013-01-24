@@ -1,7 +1,6 @@
 package net.sourceforge.fenixedu.domain.phd.individualProcess.activities;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
-import net.sourceforge.fenixedu.domain.accessControl.PermissionType;
 import net.sourceforge.fenixedu.domain.caseHandling.PreConditionNotValidException;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess;
@@ -18,11 +17,7 @@ public class ActivatePhdProgramProcessInCandidacyState extends PhdIndividualProg
 
     @Override
     public void activityPreConditions(PhdIndividualProgramProcess process, IUserView userView) {
-	if (!PhdIndividualProgramProcess.isMasterDegreeAdministrativeOfficeEmployee(userView)) {
-	    throw new PreConditionNotValidException();
-	}
-
-	if (!hasPermissionFor(userView, PermissionType.MANAGE_PHD_PROCESS_STATES)) {
+	if (!process.isAllowedToManageProcessState(userView)) {
 	    throw new PreConditionNotValidException();
 	}
 
@@ -45,8 +40,8 @@ public class ActivatePhdProgramProcessInCandidacyState extends PhdIndividualProg
 		    "error.PhdIndividualProgramProcess.set.candidacy.state.previous.active.state.is.not.candidacy");
 	}
 
-	PhdProgramProcessState.createWithGivenStateDate(process, process.getLastActiveState().getType(),
-		userView.getPerson(), "", bean.getStateDate().toDateTimeAtStartOfDay());
+	PhdProgramProcessState.createWithGivenStateDate(process, process.getLastActiveState().getType(), userView.getPerson(),
+		"", bean.getStateDate().toDateTimeAtStartOfDay());
 
 	return process;
     }

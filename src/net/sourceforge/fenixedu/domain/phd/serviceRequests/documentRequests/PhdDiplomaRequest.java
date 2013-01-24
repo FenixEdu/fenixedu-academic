@@ -6,7 +6,6 @@ import java.util.ResourceBundle;
 
 import net.sf.jasperreports.engine.JRException;
 import net.sourceforge.fenixedu.dataTransferObject.serviceRequests.AcademicServiceRequestBean;
-import net.sourceforge.fenixedu.dataTransferObject.serviceRequests.AcademicServiceRequestCreateBean;
 import net.sourceforge.fenixedu.domain.accounting.EventType;
 import net.sourceforge.fenixedu.domain.accounting.events.serviceRequests.PhdDiplomaRequestEvent;
 import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
@@ -41,15 +40,11 @@ public class PhdDiplomaRequest extends PhdDiplomaRequest_Base implements IDiplom
     }
 
     @Override
-    protected void init(AcademicServiceRequestCreateBean bean) {
-	throw new DomainException("invoke init(PhdDocumentRequestCreateBean)");
-    }
-
-    @Override
     protected void init(PhdAcademicServiceRequestCreateBean bean) {
 	throw new DomainException("invoke init(PhdDocumentRequestCreateBean)");
     }
 
+    @Override
     protected void init(final PhdDocumentRequestCreateBean bean) {
 	checkParameters(bean);
 	super.init(bean);
@@ -169,7 +164,7 @@ public class PhdDiplomaRequest extends PhdDiplomaRequest_Base implements IDiplom
 
 	if (academicServiceRequestBean.isToProcess()) {
 	    if (!getPhdIndividualProgramProcess().isConclusionProcessed()) {
-		throw new PhdDomainOperationException("error.phdDiploma.registrationNotSubmitedToConclusionProcess");
+		throw new PhdDomainOperationException("error.registryDiploma.registrationNotSubmitedToConclusionProcess");
 	    }
 
 	    if (isPayable() && !isPayed()) {
@@ -183,7 +178,7 @@ public class PhdDiplomaRequest extends PhdDiplomaRequest_Base implements IDiplom
 	    }
 	} else if (academicServiceRequestBean.isToCancelOrReject()) {
 	    if (hasEvent()) {
-		getEvent().cancel(academicServiceRequestBean.getEmployee());
+		getEvent().cancel(academicServiceRequestBean.getResponsible());
 	    }
 	}
     }
@@ -252,15 +247,20 @@ public class PhdDiplomaRequest extends PhdDiplomaRequest_Base implements IDiplom
 		.format("/phdAcademicServiceRequestManagement.do?method=prepareReceiveOnRectorate&amp;phdAcademicServiceRequestId=%s&amp;batchOid=%s",
 			getExternalId(), getRectorateSubmissionBatch().getExternalId());
     }
-    
+
+    @Override
+    public boolean isProgrammeLinkVisible() {
+	return getPhdIndividualProgramProcess().isCurrentUserAllowedToManageProcess();
+    }
+
     @Override
     public byte[] generateDocument() {
 	try {
-	    final List<AdministrativeOfficeDocument> documents = (List<AdministrativeOfficeDocument>) AdministrativeOfficeDocument.AdministrativeOfficeDocumentCreator
+	    final List<AdministrativeOfficeDocument> documents = AdministrativeOfficeDocument.AdministrativeOfficeDocumentCreator
 		    .create(this);
 
 	    String latexThesisTitle = getPhdIndividualProgramProcess().getLatexThesisTitle();
-	    
+
 	    for (AdministrativeOfficeDocument administrativeOfficeDocument : documents) {
 		administrativeOfficeDocument.addParameter("useLatex", !StringUtils.isEmpty(latexThesisTitle));
 	    }

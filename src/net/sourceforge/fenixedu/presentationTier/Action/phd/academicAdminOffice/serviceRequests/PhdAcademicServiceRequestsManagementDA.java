@@ -24,15 +24,14 @@ import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 
-@Mapping(path = "/phdAcademicServiceRequestManagement", module = "academicAdminOffice")
+@Mapping(path = "/phdAcademicServiceRequestManagement", module = "academicAdministration")
 @Forwards({
 	@Forward(name = "prepareCreateNewRequest", path = "/phd/academicAdminOffice/serviceRequests/prepareCreateNewRequest.jsp"),
 	@Forward(name = "viewPhdAcademicServiceRequestsHistoric", path = "/phd/academicAdminOffice/serviceRequests/viewPhdAcademicServiceRequestsHistoric.jsp"),
 	@Forward(name = "viewRequest", path = "/phd/academicAdminOffice/serviceRequests/viewRequest.jsp"),
 	@Forward(name = "prepareProcessNewState", path = "/phd/academicAdminOffice/serviceRequests/prepareProcessNewState.jsp"),
 	@Forward(name = "processReceiveNewStateOnRectorate", path = "/phd/academicAdminOffice/serviceRequests/document/diploma/rectorate/processReceiveNewState.jsp"),
-	@Forward(name = "editDocumentDisplacement", path = "/phd/academicAdminOffice/serviceRequests/editDocumentDisplacement.jsp")
-})
+	@Forward(name = "editDocumentDisplacement", path = "/phd/academicAdminOffice/serviceRequests/editDocumentDisplacement.jsp") })
 public class PhdAcademicServiceRequestsManagementDA extends PhdDA {
 
     @Override
@@ -218,26 +217,28 @@ public class PhdAcademicServiceRequestsManagementDA extends PhdDA {
 	request.setAttribute("phdAcademicServiceRequestBean", getPhdAcademicServiceRequestBean());
 	return mapping.findForward("prepareProcessNewState");
     }
-    
-    public ActionForward prepareEditDocumentDisplacement(final ActionMapping mapping, final ActionForm form, final HttpServletRequest request, final HttpServletResponse response) {
+
+    public ActionForward prepareEditDocumentDisplacement(final ActionMapping mapping, final ActionForm form,
+	    final HttpServletRequest request, final HttpServletResponse response) {
 	PhdAcademicServiceRequest academicServiceRequest = getPhdAcademicServiceRequest(request);
-	
+
 	PhdAcademicServiceRequestDisplacementBean bean = new PhdAcademicServiceRequestDisplacementBean(academicServiceRequest);
 	request.setAttribute("phdAcademicServiceRequest", academicServiceRequest);
 	request.setAttribute("bean", bean);
-	
+
 	return mapping.findForward("editDocumentDisplacement");
     }
-    
-    public ActionForward editDocumentDisplacement(final ActionMapping mapping, final ActionForm form, final HttpServletRequest request, final HttpServletResponse response) {
+
+    public ActionForward editDocumentDisplacement(final ActionMapping mapping, final ActionForm form,
+	    final HttpServletRequest request, final HttpServletResponse response) {
 	PhdAcademicServiceRequest academicServiceRequest = getPhdAcademicServiceRequest(request);
 	PhdAcademicServiceRequestDisplacementBean bean = getRenderedObject("bean");
-	
+
 	academicServiceRequest.editDisplacement(bean);
-	
+
 	return viewAcademicServiceRequest(mapping, form, request, response);
     }
-    
+
     public ActionForward editDocumentDisplacementInvalid(final ActionMapping mapping, final ActionForm form,
 	    final HttpServletRequest request, final HttpServletResponse response) {
 	PhdAcademicServiceRequest academicServiceRequest = getPhdAcademicServiceRequest(request);
@@ -245,8 +246,8 @@ public class PhdAcademicServiceRequestsManagementDA extends PhdDA {
 
 	request.setAttribute("phdAcademicServiceRequest", academicServiceRequest);
 	request.setAttribute("bean", bean);
-	
-	return mapping.findForward("editDocumentDisplacement");	
+
+	return mapping.findForward("editDocumentDisplacement");
     }
 
     protected PhdAcademicServiceRequestBean getPhdAcademicServiceRequestBean() {

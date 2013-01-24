@@ -12,16 +12,16 @@ import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.accessControl.FixedSetGroup;
 import net.sourceforge.fenixedu.domain.accessControl.Group;
-import net.sourceforge.fenixedu.domain.accessControl.MasterDegreeAdministrativeOfficeGroup;
-import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
-import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOfficeType;
-import net.sourceforge.fenixedu.domain.organizationalStructure.AdministrativeOfficeUnit;
+import net.sourceforge.fenixedu.domain.accessControl.academicAdministration.AcademicAuthorizationGroup;
+import net.sourceforge.fenixedu.domain.accessControl.academicAdministration.AcademicOperationType;
+import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.phd.InternalPhdParticipant;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess;
 import net.sourceforge.fenixedu.domain.phd.PhdParticipant;
-import net.sourceforge.fenixedu.domain.phd.PhdProcessesManager;
-import net.sourceforge.fenixedu.domain.phd.permissions.PhdPermissionType;
+import net.sourceforge.fenixedu.domain.phd.PhdProgram;
 import net.sourceforge.fenixedu.domain.util.email.Message;
+import net.sourceforge.fenixedu.domain.util.email.Recipient;
+import net.sourceforge.fenixedu.domain.util.email.ReplyTo;
 import net.sourceforge.fenixedu.domain.util.email.UnitBasedSender;
 
 import org.joda.time.LocalDate;
@@ -132,9 +132,9 @@ public class AlertService {
 		toNotify.add(((InternalPhdParticipant) guiding).getPerson());
 	    } else {
 		guiding.ensureExternalAccess();
-		new Message(RootDomainObject.getInstance().getSystemSender(), Collections.EMPTY_LIST, Collections.EMPTY_LIST,
-			getSubjectPrefixed(process, subjectKey), getBodyText(process, bodyKey), Collections.singleton(guiding
-				.getEmail()));
+		new Message(RootDomainObject.getInstance().getSystemSender(), Collections.<ReplyTo> emptyList(),
+			Collections.<Recipient> emptyList(), getSubjectPrefixed(process, subjectKey), getBodyText(process,
+				bodyKey), Collections.singleton(guiding.getEmail()));
 	    }
 	}
 
@@ -157,9 +157,9 @@ public class AlertService {
 		toNotify.add(((InternalPhdParticipant) guiding).getPerson());
 	    } else {
 		guiding.ensureExternalAccess();
-		new Message(RootDomainObject.getInstance().getSystemSender(), Collections.EMPTY_LIST, Collections.EMPTY_LIST,
-			getSubjectPrefixed(process, subjectMessage), getBodyText(process, bodyMessage), Collections
-				.singleton(guiding.getEmail()));
+		new Message(RootDomainObject.getInstance().getSystemSender(), Collections.<ReplyTo> emptyList(),
+			Collections.<Recipient> emptyList(), getSubjectPrefixed(process, subjectMessage), getBodyText(process,
+				bodyMessage), Collections.singleton(guiding.getEmail()));
 	    }
 	}
 
@@ -178,44 +178,36 @@ public class AlertService {
 	alertBean.setSubject(getSubjectPrefixed(process, subjectKey));
 	alertBean.setBody(getBodyText(process, bodyKey));
 	alertBean.setFireDate(new LocalDate());
-	alertBean.setTargetGroup(new MasterDegreeAdministrativeOfficeGroup());
+	alertBean.setTargetGroup(new AcademicAuthorizationGroup(AcademicOperationType.MANAGE_PHD_PROCESSES, process
+		.getPhdProgram()));
 
 	new PhdCustomAlert(alertBean);
     }
 
-    static public void alertAcademicOffice(PhdIndividualProgramProcess process, PhdPermissionType permissionType,
+    static public void alertAcademicOffice(PhdIndividualProgramProcess process, AcademicOperationType permissionType,
 	    String subjectKey, String bodyKey) {
 	final PhdCustomAlertBean alertBean = new PhdCustomAlertBean(process, true, false, true);
 	alertBean.setSubject(getSubjectPrefixed(process, subjectKey));
 	alertBean.setBody(getBodyText(process, bodyKey));
 	alertBean.setFireDate(new LocalDate());
-	alertBean.setTargetGroup(getTargetGroup(permissionType));
+	alertBean.setTargetGroup(getTargetGroup(permissionType, process.getPhdProgram()));
 
 	new PhdCustomAlert(alertBean);
     }
 
-    static public void alertAcademicOffice(PhdIndividualProgramProcess process, PhdPermissionType permissionType,
+    static public void alertAcademicOffice(PhdIndividualProgramProcess process, AcademicOperationType permissionType,
 	    AlertMessage subjectMessage, AlertMessage bodyMessage) {
 	final PhdCustomAlertBean alertBean = new PhdCustomAlertBean(process, true, false, true);
 	alertBean.setSubject(getSubjectPrefixed(process, subjectMessage));
 	alertBean.setBody(getBodyText(process, bodyMessage));
 	alertBean.setFireDate(new LocalDate());
-	alertBean.setTargetGroup(getTargetGroup(permissionType));
+	alertBean.setTargetGroup(getTargetGroup(permissionType, process.getPhdProgram()));
 
 	new PhdCustomAlert(alertBean);
     }
 
-    static protected AdministrativeOffice getAdministrativeOffice() {
-	return AdministrativeOffice.readByAdministrativeOfficeType(AdministrativeOfficeType.MASTER_DEGREE);
-    }
-
-    static protected PhdProcessesManager getProcessesManager() {
-	return getAdministrativeOffice().getPhdProcessesManager();
-    }
-
-    static private Group getTargetGroup(PhdPermissionType permissionType) {
-	final Group group = getProcessesManager().getPermissionGroup(permissionType);
-	return group != null ? group : new MasterDegreeAdministrativeOfficeGroup();
+    static private Group getTargetGroup(AcademicOperationType permissionType, PhdProgram program) {
+	return new AcademicAuthorizationGroup(permissionType, program);
     }
 
     static public void alertCoordinators(PhdIndividualProgramProcess process, String subjectKey, String bodyKey) {
@@ -267,11 +259,10 @@ public class AlertService {
 	    if (participant.isInternal()) {
 		toNotify.add(((InternalPhdParticipant) participant).getPerson());
 	    } else {
-		AdministrativeOfficeUnit unit = AdministrativeOffice.readMasterDegreeAdministrativeOffice().getUnit();
+		Unit unit = process.getAdministrativeOffice().getUnit();
 		UnitBasedSender sender = unit.getUnitBasedSender().get(0);
-		new Message(sender, Collections.EMPTY_LIST, Collections.EMPTY_LIST,
-			getSubjectPrefixed(process, subject), getBodyText(process, body), Collections.singleton(participant
-				.getEmail()));
+		new Message(sender, Collections.<ReplyTo> emptyList(), Collections.<Recipient> emptyList(), getSubjectPrefixed(
+			process, subject), getBodyText(process, body), Collections.singleton(participant.getEmail()));
 	    }
 	}
 

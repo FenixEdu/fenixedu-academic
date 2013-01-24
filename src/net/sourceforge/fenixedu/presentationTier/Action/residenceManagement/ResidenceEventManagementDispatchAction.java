@@ -97,7 +97,7 @@ public class ResidenceEventManagementDispatchAction extends FenixDispatchAction 
 	ResidenceEvent residenceEvent = (ResidenceEvent) DomainObject.fromOID(Long.parseLong(request.getParameter("event")));
 
 	try {
-	    CancelResidenceEvent.run(residenceEvent, AccessControl.getPerson().getEmployee());
+	    CancelResidenceEvent.run(residenceEvent, AccessControl.getPerson());
 	} catch (DomainException e) {
 	    addErrorMessage(request, e.getMessage(), e.getMessage());
 	}

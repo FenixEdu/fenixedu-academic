@@ -144,6 +144,11 @@ public class PhdThesisProcess extends PhdThesisProcess_Base {
 	activities.add(new UploadDocuments());
     }
 
+    @Override
+    public boolean isAllowedToManageProcess(IUserView userView) {
+	return this.getIndividualProgramProcess().isAllowedToManageProcess(userView);
+    }
+
     private PhdThesisProcess() {
 	super();
     }

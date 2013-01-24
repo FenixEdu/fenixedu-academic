@@ -42,7 +42,7 @@ public class DepartmentUnit extends DepartmentUnit_Base {
 
 	DepartmentUnit departmentUnit = new DepartmentUnit();
 	departmentUnit.init(departmentName, departmentNameCard, costCenterCode, departmentAcronym, beginDate, endDate,
-		webAddress, classification, canBeResponsibleOfSpaces, campus);
+		webAddress, classification, null, canBeResponsibleOfSpaces, campus);
 	departmentUnit.setDepartment(department);
 	departmentUnit.addParentUnit(parentUnit, accountabilityType);
 
@@ -56,7 +56,7 @@ public class DepartmentUnit extends DepartmentUnit_Base {
 
 	final DepartmentUnit departmentUnit = new DepartmentUnit();
 	departmentUnit.init(new MultiLanguageString(Language.getDefaultLanguage(), departmentName), null, null,
-		departmentAcronym, new YearMonthDay(), null, null, null, null, null);
+		departmentAcronym, new YearMonthDay(), null, null, null, null, null, null);
 	if (parentUnit.isCountryUnit()) {
 	    departmentUnit.addParentUnit(parentUnit, AccountabilityType.readByType(AccountabilityTypeEnum.GEOGRAPHIC));
 	} else {

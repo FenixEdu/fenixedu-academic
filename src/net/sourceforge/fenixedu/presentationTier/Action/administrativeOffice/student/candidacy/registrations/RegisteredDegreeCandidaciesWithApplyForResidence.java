@@ -4,7 +4,9 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Set;
 
+import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.candidacy.StudentCandidacy;
@@ -17,15 +19,15 @@ import pt.utl.ist.fenix.tools.util.excel.Spreadsheet.Row;
 
 public class RegisteredDegreeCandidaciesWithApplyForResidence {
 
-    private RegisteredDegreeCandidaciesSelectionBean bean;
+    private final RegisteredDegreeCandidaciesSelectionBean bean;
 
     public RegisteredDegreeCandidaciesWithApplyForResidence(
 	    RegisteredDegreeCandidaciesSelectionBean registeredDegreeCandidaciesSelectionBean) {
 	this.bean = registeredDegreeCandidaciesSelectionBean;
     }
 
-    public List<StudentCandidacy> search() {
-	final List<StudentCandidacy> degreeCandidacies = this.bean.search();
+    public List<StudentCandidacy> search(Set<Degree> allowedDegrees) {
+	final List<StudentCandidacy> degreeCandidacies = this.bean.search(allowedDegrees);
 	final List<StudentCandidacy> result = new ArrayList<StudentCandidacy>();
 
 	for (StudentCandidacy studentCandidacy : degreeCandidacies) {
@@ -38,11 +40,11 @@ public class RegisteredDegreeCandidaciesWithApplyForResidence {
 	return result;
     }
 
-    public Spreadsheet export() {
+    public Spreadsheet export(Set<Degree> allowedDegrees) {
 	final Spreadsheet spreadsheet = new Spreadsheet("Candidatura a Residencia");
 	addHeaders(spreadsheet);
 
-	for (final StudentCandidacy candidacy : search()) {
+	for (final StudentCandidacy candidacy : search(allowedDegrees)) {
 	    addRow(spreadsheet, candidacy);
 	}
 

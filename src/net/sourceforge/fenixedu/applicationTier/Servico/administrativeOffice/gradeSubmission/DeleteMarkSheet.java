@@ -3,16 +3,18 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Servico.administrativeOffice.gradeSubmission;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.MarkSheet;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
+import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import pt.ist.fenixWebFramework.services.Service;
 
-public class DeleteMarkSheet extends FenixService {
+public class DeleteMarkSheet {
 
-    public void run(Integer markSheetID) throws FenixServiceException {
-	MarkSheet markSheet = rootDomainObject.readMarkSheetByOID(markSheetID);
+    @Service
+    public static void run(Integer markSheetID) {
+	MarkSheet markSheet = RootDomainObject.getInstance().readMarkSheetByOID(markSheetID);
 	if (markSheet == null) {
-	    throw new FenixServiceException("error.noMarkSheet");
+	    throw new DomainException("error.noMarkSheet");
 	}
 	markSheet.delete();
     }

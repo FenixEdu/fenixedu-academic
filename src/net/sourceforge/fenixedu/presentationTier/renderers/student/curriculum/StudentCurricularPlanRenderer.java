@@ -17,6 +17,8 @@ import net.sourceforge.fenixedu.domain.IEnrolment;
 import net.sourceforge.fenixedu.domain.OptionalEnrolment;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
+import net.sourceforge.fenixedu.domain.accessControl.academicAdministration.AcademicAuthorizationGroup;
+import net.sourceforge.fenixedu.domain.accessControl.academicAdministration.AcademicOperationType;
 import net.sourceforge.fenixedu.domain.curricularRules.CreditsLimit;
 import net.sourceforge.fenixedu.domain.curricularRules.CurricularRuleType;
 import net.sourceforge.fenixedu.domain.curriculum.EnrolmentEvaluationType;
@@ -122,11 +124,11 @@ public class StudentCurricularPlanRenderer extends InputRenderer {
 
     private final ResourceBundle studentResources = ResourceBundle.getBundle("resources.StudentResources", Language.getLocale());
 
-    private final ResourceBundle enumerationResources = ResourceBundle.getBundle("resources.EnumerationResources", Language
-	    .getLocale());
+    private final ResourceBundle enumerationResources = ResourceBundle.getBundle("resources.EnumerationResources",
+	    Language.getLocale());
 
-    private final ResourceBundle applicationResources = ResourceBundle.getBundle("resources.ApplicationResources", Language
-	    .getLocale());
+    private final ResourceBundle applicationResources = ResourceBundle.getBundle("resources.ApplicationResources",
+	    Language.getLocale());
 
     private OrganizationType organizedBy = OrganizationType.GROUPS;
 
@@ -433,7 +435,6 @@ public class StudentCurricularPlanRenderer extends InputRenderer {
 	    return ExecutionYear.readCurrentExecutionYear();
 	}
 
-	@SuppressWarnings("unchecked")
 	private void generateRowsForExecutionYearsOrganization(HtmlTable mainTable) {
 
 	    if (isToShowEnrolments()) {
@@ -442,10 +443,11 @@ public class StudentCurricularPlanRenderer extends InputRenderer {
 		enrolmentExecutionPeriods.addAll(this.studentCurricularPlan.getEnrolmentsExecutionPeriods());
 
 		for (final ExecutionSemester enrolmentsExecutionPeriod : enrolmentExecutionPeriods) {
-		    generateGroupRowWithText(mainTable, enrolmentsExecutionPeriod.getYear() + ", "
-			    + enrolmentsExecutionPeriod.getName(), true, 0, (CurriculumGroup) null);
-		    generateEnrolmentRows(mainTable, this.studentCurricularPlan
-			    .getEnrolmentsByExecutionPeriod(enrolmentsExecutionPeriod), 0);
+		    generateGroupRowWithText(mainTable,
+			    enrolmentsExecutionPeriod.getYear() + ", " + enrolmentsExecutionPeriod.getName(), true, 0,
+			    (CurriculumGroup) null);
+		    generateEnrolmentRows(mainTable,
+			    this.studentCurricularPlan.getEnrolmentsByExecutionPeriod(enrolmentsExecutionPeriod), 0);
 		}
 	    }
 
@@ -531,7 +533,7 @@ public class StudentCurricularPlanRenderer extends InputRenderer {
 		groupName.append(curriculumGroup.getCreditsConcluded(executionYearContext));
 		groupName.append(")</span>");
 
-		if (isViewerAdministrativeOfficeEmployeeOrManager()) {
+		if (isViewerAdministrativeOfficeEmployeeOrManager(studentCurricularPlan)) {
 		    groupName.append(" <span title=\"");
 		    groupName.append(applicationResources.getString("label.curriculum.credits.legend.approvedCredits"));
 		    groupName.append(" \">, ca(");
@@ -547,8 +549,8 @@ public class StudentCurricularPlanRenderer extends InputRenderer {
 		    groupName.append(")</span>");
 		}
 
-		if (isViewerAdministrativeOfficeEmployeeOrManager() && studentCurricularPlan.isBolonhaDegree()
-			&& creditsLimit != null) {
+		if (isViewerAdministrativeOfficeEmployeeOrManager(studentCurricularPlan)
+			&& studentCurricularPlan.isBolonhaDegree() && creditsLimit != null) {
 		    final ConclusionValue value = curriculumGroup.isConcluded(executionYearContext);
 		    groupName.append(" <em style=\"background-color:" + getBackgroundColor(value) + "; color:" + getColor(value)
 			    + "\"");
@@ -671,10 +673,10 @@ public class StudentCurricularPlanRenderer extends InputRenderer {
 	}
 
 	private void generateCreationDateIfRequired(HtmlTableRow enrolmentRow, DateTime creationDate) {
-	    if (isViewerAdministrativeOfficeEmployeeOrManager()) {
+	    if (isViewerAdministrativeOfficeEmployeeOrManager(studentCurricularPlan)) {
 		if (creationDate != null) {
-		    generateCellWithSpan(enrolmentRow, creationDate.toString(DATE_FORMAT), applicationResources
-			    .getString("creationDate"), getCreationDateCellClass());
+		    generateCellWithSpan(enrolmentRow, creationDate.toString(DATE_FORMAT),
+			    applicationResources.getString("creationDate"), getCreationDateCellClass());
 		} else {
 		    generateCellWithText(enrolmentRow, EMPTY_INFO, getCreationDateCellClass());
 		}
@@ -682,10 +684,10 @@ public class StudentCurricularPlanRenderer extends InputRenderer {
 	}
 
 	private void generateEvaluationDateIfRequired(HtmlTableRow externalEnrolmentRow, YearMonthDay evaluationDate) {
-	    if (isViewerAdministrativeOfficeEmployeeOrManager()) {
+	    if (isViewerAdministrativeOfficeEmployeeOrManager(studentCurricularPlan)) {
 		if (evaluationDate != null) {
-		    generateCellWithSpan(externalEnrolmentRow, evaluationDate.toString(DATE_FORMAT), applicationResources
-			    .getString("creationDate"), getCreationDateCellClass());
+		    generateCellWithSpan(externalEnrolmentRow, evaluationDate.toString(DATE_FORMAT),
+			    applicationResources.getString("creationDate"), getCreationDateCellClass());
 		} else {
 		    generateCellWithText(externalEnrolmentRow, EMPTY_INFO, getCreationDateCellClass());
 		}
@@ -693,7 +695,7 @@ public class StudentCurricularPlanRenderer extends InputRenderer {
 	}
 
 	private void generateCreatorIfRequired(HtmlTableRow enrolmentRow, String createdBy) {
-	    if (isViewerAdministrativeOfficeEmployeeOrManager()) {
+	    if (isViewerAdministrativeOfficeEmployeeOrManager(studentCurricularPlan)) {
 		if (!StringUtils.isEmpty(createdBy)) {
 		    generateCellWithSpan(enrolmentRow, createdBy, applicationResources.getString("creator"),
 			    getCreatorCellClass());
@@ -837,7 +839,7 @@ public class StudentCurricularPlanRenderer extends InputRenderer {
 		generateSpacerCellsIfRequired(enrolmentRow);
 	    }
 
-	    if (!isDismissal && isDetailed() && isViewerAdministrativeOfficeEmployeeOrManager()
+	    if (!isDismissal && isDetailed() && isViewerAdministrativeOfficeEmployeeOrManager(studentCurricularPlan)
 		    && (enrolment.isSpecialSeason() || enrolment.hasImprovement()) || enrolment.hasNormalEvaluationSecondSeason()) {
 		generateEnrolmentEvaluationRows(mainTable, enrolment.getLatestFinalImprovementEnrolmentEvaluation(), level + 1);
 		generateEnrolmentEvaluationRows(mainTable, enrolment.getLatestFinalSpecialSeasonEnrolmentEvaluation(), level + 1);
@@ -920,7 +922,7 @@ public class StudentCurricularPlanRenderer extends InputRenderer {
 	    generateEnrolmentEvaluationTypeCell(enrolmentRow, enrolment);
 	    generateExecutionYearCell(enrolmentRow, enrolment);
 	    generateSemesterCell(enrolmentRow, enrolment);
-	    if (isViewerAdministrativeOfficeEmployeeOrManager()) {
+	    if (isViewerAdministrativeOfficeEmployeeOrManager(studentCurricularPlan)) {
 		generateCellWithText(enrolmentRow, EMPTY_INFO, getCreationDateCellClass()); // enrolment
 		// evaluation
 		// date
@@ -931,7 +933,7 @@ public class StudentCurricularPlanRenderer extends InputRenderer {
 	}
 
 	private void generateGradeResponsibleIfRequired(HtmlTableRow enrolmentRow, Enrolment enrolment) {
-	    if (isViewerAdministrativeOfficeEmployeeOrManager()) {
+	    if (isViewerAdministrativeOfficeEmployeeOrManager(studentCurricularPlan)) {
 		final EnrolmentEvaluation lastEnrolmentEvaluation = enrolment.getLatestEnrolmentEvaluation();
 		if (lastEnrolmentEvaluation != null && lastEnrolmentEvaluation.getPersonResponsibleForGrade() != null) {
 
@@ -948,17 +950,17 @@ public class StudentCurricularPlanRenderer extends InputRenderer {
 	}
 
 	private String getUsername(final Person person) {
-	    if (person.hasEmployee() && person.getEmployee().isAdministrativeOfficeEmployee()) {
-		return person.getEmployee().getRoleLoginAlias();
-	    } else if (person.hasTeacher()) {
+	    if (person.hasTeacher()) {
 		return person.getTeacher().getRoleLoginAlias();
+	    } else if (person.hasEmployee()) {
+		return person.getEmployee().getRoleLoginAlias();
 	    } else {
 		return person.getIstUsername();
 	    }
 	}
 
 	private void generateLastEnrolmentEvaluationExamDateCellIfRequired(HtmlTableRow enrolmentRow, Enrolment enrolment) {
-	    if (isViewerAdministrativeOfficeEmployeeOrManager()) {
+	    if (isViewerAdministrativeOfficeEmployeeOrManager(studentCurricularPlan)) {
 		final EnrolmentEvaluation lastEnrolmentEvaluation = enrolment.getLatestEnrolmentEvaluation();
 		if (lastEnrolmentEvaluation != null && lastEnrolmentEvaluation.getExamDateYearMonthDay() != null) {
 
@@ -980,8 +982,11 @@ public class StudentCurricularPlanRenderer extends InputRenderer {
 	}
 
 	private int calculateSpacerColspan() {
-	    return MAX_LINE_SIZE - MAX_COL_SPAN_FOR_TEXT_ON_CURRICULUM_LINES - COLUMNS_BETWEEN_TEXT_AND_ENROLMENT_EVALUATION_DATE
-		    - (isViewerAdministrativeOfficeEmployeeOrManager() ? LATEST_ENROLMENT_EVALUATION_COLUMNS : 0);
+	    return MAX_LINE_SIZE
+		    - MAX_COL_SPAN_FOR_TEXT_ON_CURRICULUM_LINES
+		    - COLUMNS_BETWEEN_TEXT_AND_ENROLMENT_EVALUATION_DATE
+		    - (isViewerAdministrativeOfficeEmployeeOrManager(studentCurricularPlan) ? LATEST_ENROLMENT_EVALUATION_COLUMNS
+			    : 0);
 	}
 
 	private void generateSemesterCell(final HtmlTableRow row, final ICurriculumEntry entry) {
@@ -1004,8 +1009,9 @@ public class StudentCurricularPlanRenderer extends InputRenderer {
 	private void generateEnrolmentLastEnrolmentEvaluationTypeCell(HtmlTableRow enrolmentRow, Enrolment enrolment) {
 	    final EnrolmentEvaluation lastEnrolmentEvaluation = enrolment.getLatestEnrolmentEvaluation();
 	    if (lastEnrolmentEvaluation != null && lastEnrolmentEvaluation.getEnrolmentEvaluationType() != null) {
-		generateCellWithSpan(enrolmentRow, enumerationResources.getString(lastEnrolmentEvaluation
-			.getEnrolmentEvaluationType().getAcronym()), getLastEnrolmentEvaluationTypeCellClass());
+		generateCellWithSpan(enrolmentRow,
+			enumerationResources.getString(lastEnrolmentEvaluation.getEnrolmentEvaluationType().getAcronym()),
+			getLastEnrolmentEvaluationTypeCellClass());
 	    } else {
 		generateCellWithText(enrolmentRow, EMPTY_INFO, getLastEnrolmentEvaluationTypeCellClass());
 	    }
@@ -1048,14 +1054,18 @@ public class StudentCurricularPlanRenderer extends InputRenderer {
 	}
 
 	private void generateEnrolmentStateCell(HtmlTableRow enrolmentRow, Enrolment enrolment) {
-	    generateCellWithText(enrolmentRow, enrolment.isApproved() ? EMPTY_INFO : enumerationResources.getString(enrolment
-		    .getEnrollmentState().getQualifiedName()), getEnrolmentStateCellClass());
+	    generateCellWithText(
+		    enrolmentRow,
+		    enrolment.isApproved() ? EMPTY_INFO : enumerationResources.getString(enrolment.getEnrollmentState()
+			    .getQualifiedName()), getEnrolmentStateCellClass());
 
 	}
 
 	private void generateEnrolmentTypeCell(HtmlTableRow enrolmentRow, Enrolment enrolment) {
-	    generateCellWithText(enrolmentRow, enrolment.isEnrolmentTypeNormal() ? EMPTY_INFO : enumerationResources
-		    .getString(enrolment.getEnrolmentTypeName()), getEnrolmentTypeCellClass());
+	    generateCellWithText(
+		    enrolmentRow,
+		    enrolment.isEnrolmentTypeNormal() ? EMPTY_INFO : enumerationResources.getString(enrolment
+			    .getEnrolmentTypeName()), getEnrolmentTypeCellClass());
 	}
 
 	private void generateDegreeCurricularPlanCell(final HtmlTableRow enrolmentRow, final Enrolment enrolment) {
@@ -1065,8 +1075,8 @@ public class StudentCurricularPlanRenderer extends InputRenderer {
 	    } else {
 		final HtmlTableCell cell = enrolmentRow.createCell();
 		cell.setClasses(getDegreeCurricularPlanCellClass());
-		cell.setBody(createDegreeCurricularPlanNameLink(enrolment.getDegreeCurricularPlanOfDegreeModule(), enrolment
-			.getExecutionPeriod()));
+		cell.setBody(createDegreeCurricularPlanNameLink(enrolment.getDegreeCurricularPlanOfDegreeModule(),
+			enrolment.getExecutionPeriod()));
 	    }
 
 	}
@@ -1119,8 +1129,8 @@ public class StudentCurricularPlanRenderer extends InputRenderer {
 		inlineContainer.addChild(checkBox);
 	    }
 
-	    inlineContainer.addChild(createCurricularCourseLink(getPresentationNameFor(enrolment), enrolment
-		    .getCurricularCourse()));
+	    inlineContainer.addChild(createCurricularCourseLink(getPresentationNameFor(enrolment),
+		    enrolment.getCurricularCourse()));
 
 	    final HtmlTableCell cell = enrolmentRow.createCell();
 	    cell.setClasses(getLabelCellClass());
@@ -1130,8 +1140,7 @@ public class StudentCurricularPlanRenderer extends InputRenderer {
 
 	private String getPresentationNameFor(final Enrolment enrolment) {
 	    final String code = !StringUtils.isEmpty(enrolment.getCurricularCourse().getCode()) ? enrolment.getCurricularCourse()
-		    .getCode()
-		    + " - " : "";
+		    .getCode() + " - " : "";
 
 	    if (enrolment instanceof OptionalEnrolment) {
 		final OptionalEnrolment optionalEnrolment = (OptionalEnrolment) enrolment;
@@ -1175,7 +1184,7 @@ public class StudentCurricularPlanRenderer extends InputRenderer {
 	    sortedCurriculumGroups.addAll(parentGroup.getCurriculumGroups());
 
 	    for (final CurriculumGroup childGroup : sortedCurriculumGroups) {
-		if (canGenerate(childGroup)) {
+		if (canGenerate(childGroup, studentCurricularPlan)) {
 		    generateRowsForGroupsOrganization(mainTable, childGroup, level);
 		}
 	    }
@@ -1183,8 +1192,9 @@ public class StudentCurricularPlanRenderer extends InputRenderer {
 
     }
 
-    private boolean canGenerate(final CurriculumGroup curriculumGroup) {
-	if (!curriculumGroup.isNoCourseGroupCurriculumGroup() || isViewerAdministrativeOfficeEmployeeOrManager()) {
+    private boolean canGenerate(final CurriculumGroup curriculumGroup, final StudentCurricularPlan studentCurricularPlan) {
+	if (!curriculumGroup.isNoCourseGroupCurriculumGroup()
+		|| isViewerAdministrativeOfficeEmployeeOrManager(studentCurricularPlan)) {
 	    return true;
 	}
 	return ((NoCourseGroupCurriculumGroup) curriculumGroup).isVisible();
@@ -1246,9 +1256,11 @@ public class StudentCurricularPlanRenderer extends InputRenderer {
 	cell.setBody(span);
     }
 
-    private boolean isViewerAdministrativeOfficeEmployeeOrManager() {
+    private boolean isViewerAdministrativeOfficeEmployeeOrManager(final StudentCurricularPlan studentCurricularPlan) {
 	final Person person = AccessControl.getPerson();
-	return person.isAdministrativeOfficeEmployee() || person.hasRole(RoleType.MANAGER);
+	return person.hasRole(RoleType.MANAGER)
+		|| AcademicAuthorizationGroup.getProgramsForOperation(person, AcademicOperationType.STUDENT_ENROLMENTS).contains(
+			studentCurricularPlan.getDegree());
     }
 
 }

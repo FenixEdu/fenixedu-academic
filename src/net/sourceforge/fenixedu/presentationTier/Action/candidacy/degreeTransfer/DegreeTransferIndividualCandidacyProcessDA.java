@@ -31,27 +31,27 @@ import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
-@Mapping(path = "/caseHandlingDegreeTransferIndividualCandidacyProcess", module = "academicAdminOffice", formBeanClass = FenixActionForm.class)
+@Mapping(path = "/caseHandlingDegreeTransferIndividualCandidacyProcess", module = "academicAdministration", formBeanClass = FenixActionForm.class)
 @Forwards({
 	// @Forward(name = "intro", path =
 	// "/candidacy/mainCandidacyProcess.jsp"),
-	@Forward(name = "intro", path = "/caseHandlingDegreeTransferCandidacyProcess.do?method=listProcessAllowedActivities", tileProperties = @Tile(title = "private.academicadministrativeoffice.applications.transfers")),
-	@Forward(name = "list-allowed-activities", path = "/candidacy/degreeTransfer/listIndividualCandidacyActivities.jsp", tileProperties = @Tile(title = "private.academicadministrativeoffice.applications.transfers")),
-	@Forward(name = "prepare-create-new-process", path = "/candidacy/selectPersonForCandidacy.jsp", tileProperties = @Tile(title = "private.academicadministrativeoffice.applications.transfers")),
-	@Forward(name = "fill-personal-information", path = "/candidacy/fillPersonalInformation.jsp", tileProperties = @Tile(title = "private.academicadministrativeoffice.applications.transfers")),
-	@Forward(name = "fill-candidacy-information", path = "/candidacy/degreeTransfer/fillCandidacyInformation.jsp", tileProperties = @Tile(title = "private.academicadministrativeoffice.applications.transfers")),
-	@Forward(name = "prepare-candidacy-payment", path = "/candidacy/candidacyPayment.jsp", tileProperties = @Tile(title = "private.academicadministrativeoffice.applications.transfers")),
-	@Forward(name = "change-state", path = "/candidacy/degreeTransfer/changeState.jsp", tileProperties = @Tile(title = "private.academicadministrativeoffice.applications.transfers")),
-	@Forward(name = "edit-candidacy-personal-information", path = "/candidacy/editPersonalInformation.jsp", tileProperties = @Tile(title = "private.academicadministrativeoffice.applications.transfers")),
-	@Forward(name = "edit-candidacy-information", path = "/candidacy/degreeTransfer/editCandidacyInformation.jsp", tileProperties = @Tile(title = "private.academicadministrativeoffice.applications.transfers")),
-	@Forward(name = "edit-candidacy-curricularCourses-information", path = "/candidacy/degreeTransfer/editCandidacyCurricularCoursesInformation.jsp", tileProperties = @Tile(title = "private.academicadministrativeoffice.applications.transfers")),
-	@Forward(name = "introduce-candidacy-result", path = "/candidacy/degreeTransfer/introduceCandidacyResult.jsp", tileProperties = @Tile(title = "private.academicadministrativeoffice.applications.transfers")),
-	@Forward(name = "cancel-candidacy", path = "/candidacy/cancelCandidacy.jsp", tileProperties = @Tile(title = "private.academicadministrativeoffice.applications.transfers")),
-	@Forward(name = "create-registration", path = "/candidacy/createRegistration.jsp", tileProperties = @Tile(title = "private.academicadministrativeoffice.applications.transfers")),
-	@Forward(name = "prepare-edit-candidacy-documents", path = "/candidacy/editCandidacyDocuments.jsp", tileProperties = @Tile(title = "private.academicadministrativeoffice.applications.transfers")),
-	@Forward(name = "change-process-checked-state", path = "/candidacy/changeProcessCheckedState.jsp", tileProperties = @Tile(title = "private.academicadministrativeoffice.applications.transfers")),
-	@Forward(name = "change-payment-checked-state", path = "/candidacy/changePaymentCheckedState.jsp", tileProperties = @Tile(title = "private.academicadministrativeoffice.applications.transfers")),
-	@Forward(name = "reject-candidacy", path = "/candidacy/rejectCandidacy.jsp", tileProperties = @Tile(title = "private.academicadministrativeoffice.applications.transfers"))
+	@Forward(name = "intro", path = "/caseHandlingDegreeTransferCandidacyProcess.do?method=listProcessAllowedActivities"),
+	@Forward(name = "list-allowed-activities", path = "/candidacy/degreeTransfer/listIndividualCandidacyActivities.jsp"),
+	@Forward(name = "prepare-create-new-process", path = "/candidacy/selectPersonForCandidacy.jsp"),
+	@Forward(name = "fill-personal-information", path = "/candidacy/fillPersonalInformation.jsp"),
+	@Forward(name = "fill-candidacy-information", path = "/candidacy/degreeTransfer/fillCandidacyInformation.jsp"),
+	@Forward(name = "prepare-candidacy-payment", path = "/candidacy/candidacyPayment.jsp"),
+	@Forward(name = "change-state", path = "/candidacy/degreeTransfer/changeState.jsp"),
+	@Forward(name = "edit-candidacy-personal-information", path = "/candidacy/editPersonalInformation.jsp"),
+	@Forward(name = "edit-candidacy-information", path = "/candidacy/degreeTransfer/editCandidacyInformation.jsp"),
+	@Forward(name = "edit-candidacy-curricularCourses-information", path = "/candidacy/degreeTransfer/editCandidacyCurricularCoursesInformation.jsp"),
+	@Forward(name = "introduce-candidacy-result", path = "/candidacy/degreeTransfer/introduceCandidacyResult.jsp"),
+	@Forward(name = "cancel-candidacy", path = "/candidacy/cancelCandidacy.jsp"),
+	@Forward(name = "create-registration", path = "/candidacy/createRegistration.jsp"),
+	@Forward(name = "prepare-edit-candidacy-documents", path = "/candidacy/editCandidacyDocuments.jsp"),
+	@Forward(name = "change-process-checked-state", path = "/candidacy/changeProcessCheckedState.jsp"),
+	@Forward(name = "change-payment-checked-state", path = "/candidacy/changePaymentCheckedState.jsp"),
+	@Forward(name = "reject-candidacy", path = "/candidacy/rejectCandidacy.jsp")
 
 })
 public class DegreeTransferIndividualCandidacyProcessDA extends IndividualCandidacyProcessDA {

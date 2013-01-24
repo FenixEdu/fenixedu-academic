@@ -20,8 +20,8 @@ import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
-@Mapping(path = "/bolonhaStudentEnrollment", module = "academicAdminOffice", formBean = "bolonhaStudentEnrollmentForm")
-@Forwards({ @Forward(name = "showStudentEnrollmentMenu", path = "/studentEnrolments.do?method=prepareFromStudentEnrollmentWithRules", tileProperties = @Tile(title = "private.academicadministrativeoffice.studentoperations.viewstudents")) })
+@Mapping(path = "/bolonhaStudentEnrollment", module = "academicAdministration", formBean = "bolonhaStudentEnrollmentForm")
+@Forwards({ @Forward(name = "showStudentEnrollmentMenu", path = "/studentEnrolments.do?method=prepareFromStudentEnrollmentWithRules") })
 public class AcademicAdminOfficeBolonhaStudentEnrollmentDA extends AbstractBolonhaStudentEnrollmentDA {
 
     @Override

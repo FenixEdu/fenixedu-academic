@@ -7,9 +7,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 import net.sourceforge.fenixedu.dataTransferObject.serviceRequests.IDocumentRequestBean;
-import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOfficeType;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequestType;
-import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import pt.ist.fenixWebFramework.renderers.DataProvider;
 import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
 import pt.ist.fenixWebFramework.renderers.converters.EnumConverter;
@@ -44,15 +42,9 @@ public class DocumentRequestTypeProvider implements DataProvider {
     public Object provide(Object source, Object currentValue, boolean includeQuickDeliveryTypes, boolean includePreBolonhaTypes) {
 
 	IDocumentRequestBean bean = (IDocumentRequestBean) source;
-	AdministrativeOfficeType administrativeOfficeType = AccessControl.getPerson().getEmployee().getAdministrativeOffice()
-		.getAdministrativeOfficeType();
-
 	final Collection<DocumentRequestType> result = new ArrayList<DocumentRequestType>();
 
 	for (final DocumentRequestType documentRequestType : DocumentRequestType.values()) {
-	    if (!documentRequestType.getAdministrativeOfficeTypes().contains(administrativeOfficeType)) {
-		continue;
-	    }
 	    if (!includeQuickDeliveryTypes && documentRequestType.isAllowedToQuickDeliver()) {
 		continue;
 	    }

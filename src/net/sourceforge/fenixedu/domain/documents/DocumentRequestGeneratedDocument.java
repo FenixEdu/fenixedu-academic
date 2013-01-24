@@ -2,6 +2,9 @@ package net.sourceforge.fenixedu.domain.documents;
 
 import net.sourceforge.fenixedu._development.PropertiesManager;
 import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.accessControl.Group;
+import net.sourceforge.fenixedu.domain.accessControl.academicAdministration.AcademicAuthorizationGroup;
+import net.sourceforge.fenixedu.domain.accessControl.academicAdministration.AcademicOperationType;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequest;
@@ -29,6 +32,11 @@ public class DocumentRequestGeneratedDocument extends DocumentRequestGeneratedDo
     }
 
     @Override
+    protected Group computePermittedGroup() {
+	return new AcademicAuthorizationGroup(AcademicOperationType.SERVICE_REQUESTS);
+    }
+
+    @Override
     public void delete() {
 	removeSource();
 	super.delete();
@@ -37,8 +45,7 @@ public class DocumentRequestGeneratedDocument extends DocumentRequestGeneratedDo
     @Service
     public static void store(IDocumentRequest source, String filename, byte[] content) {
 	if (PropertiesManager.getBooleanProperty(CONFIG_DSPACE_DOCUMENT_STORE)) {
-	    new DocumentRequestGeneratedDocument(source, source.getPerson(), AccessControl.getPerson(), filename,
-		    content);
+	    new DocumentRequestGeneratedDocument(source, source.getPerson(), AccessControl.getPerson(), filename, content);
 	}
     }
 }

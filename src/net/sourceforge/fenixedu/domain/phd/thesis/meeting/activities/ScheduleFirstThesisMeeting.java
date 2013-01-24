@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.domain.phd.thesis.meeting.activities;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
+import net.sourceforge.fenixedu.domain.accessControl.academicAdministration.AcademicOperationType;
 import net.sourceforge.fenixedu.domain.caseHandling.PreConditionNotValidException;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess;
@@ -29,7 +30,7 @@ public class ScheduleFirstThesisMeeting extends PhdMeetingSchedulingActivity {
 	    throw new PreConditionNotValidException();
 	}
 
-	if (PhdThesisProcess.isMasterDegreeAdministrativeOfficeEmployee(userView)) {
+	if (process.isAllowedToManageProcess(userView)) {
 	    return;
 	}
 
@@ -80,7 +81,8 @@ public class ScheduleFirstThesisMeeting extends PhdMeetingSchedulingActivity {
 	final AlertMessage body = AlertMessage.create(buildBody(process.getIndividualProgramProcess(), null, bean)).isKey(false)
 		.withPrefix(false);
 
-	AlertService.alertAcademicOffice(process.getIndividualProgramProcess(), getThesisProcessPermission(), subject, body);
+	AlertService.alertAcademicOffice(process.getIndividualProgramProcess(), AcademicOperationType.VIEW_PHD_THESIS_ALERTS, subject,
+		body);
 	AlertService.alertResponsibleCoordinators(process.getIndividualProgramProcess(), subject, body);
 	AlertService.alertGuiders(process.getIndividualProgramProcess(), subject, body);
 

@@ -16,15 +16,9 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.applicationTier.Servico.serviceRequests.ConcludeAcademicServiceRequest;
-import net.sourceforge.fenixedu.applicationTier.Servico.serviceRequests.DeliveredAcademicServiceRequest;
-import net.sourceforge.fenixedu.applicationTier.Servico.serviceRequests.ProcessNewAcademicServiceRequests;
-import net.sourceforge.fenixedu.applicationTier.Servico.serviceRequests.ReceivedAcademicServiceRequestFromExternalEntity;
-import net.sourceforge.fenixedu.applicationTier.Servico.serviceRequests.RejectAcademicServiceRequest;
 import net.sourceforge.fenixedu.applicationTier.Servico.serviceRequests.SendAcademicServiceRequestToExternalEntity;
 import net.sourceforge.fenixedu.applicationTier.factoryExecutors.RegistrationAcademicServiceRequestCreator;
 import net.sourceforge.fenixedu.dataTransferObject.serviceRequests.AcademicServiceRequestBean;
-import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.exceptions.DomainExceptionWithLabelFormatter;
 import net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequest;
@@ -37,7 +31,7 @@ import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DiplomaR
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequest;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
-import net.sourceforge.fenixedu.predicates.AcademicServiceRequestPredicates;
+import net.sourceforge.fenixedu.predicates.AcademicPredicates;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 
 import org.apache.commons.beanutils.BeanComparator;
@@ -57,20 +51,20 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixWebFramework.struts.annotations.Tile;
 import pt.utl.ist.fenix.tools.util.CollectionPager;
 
-@Mapping(path = "/academicServiceRequestsManagement", module = "academicAdminOffice", formBeanClass = AcademicServiceRequestsManagementDispatchAction.AcademicServiceRequestsManagementForm.class)
+@Mapping(path = "/academicServiceRequestsManagement", module = "academicAdministration", formBeanClass = AcademicServiceRequestsManagementDispatchAction.AcademicServiceRequestsManagementForm.class)
 @Forwards({
-	@Forward(name = "viewRegistrationAcademicServiceRequestsHistoric", path = "/academicAdminOffice/serviceRequests/viewRegistrationAcademicServiceRequestsHistoric.jsp", tileProperties = @Tile(title = "private.academicadministrativeoffice.studentoperations.viewstudents")),
-	@Forward(name = "viewAcademicServiceRequest", path = "/academicAdminOffice/serviceRequests/viewAcademicServiceRequest.jsp", tileProperties = @Tile(title = "private.academicadministrativeoffice.studentoperations.viewstudents")),
-	@Forward(name = "viewRegistrationDetails", path = "/academicAdminOffice/student/registration/viewRegistrationDetails.jsp", tileProperties = @Tile(title = "private.academicadministrativeoffice.studentoperations.viewstudents")),
+	@Forward(name = "viewRegistrationAcademicServiceRequestsHistoric", path = "/academicAdminOffice/serviceRequests/viewRegistrationAcademicServiceRequestsHistoric.jsp"),
+	@Forward(name = "viewAcademicServiceRequest", path = "/academicAdminOffice/serviceRequests/viewAcademicServiceRequest.jsp"),
+	@Forward(name = "viewRegistrationDetails", path = "/academicAdminOffice/student/registration/viewRegistrationDetails.jsp"),
 	@Forward(name = "confirmCreateServiceRequest", path = "/academicAdminOffice/serviceRequests/confirmCreateServiceRequest.jsp"),
-	@Forward(name = "prepareRejectAcademicServiceRequest", path = "/academicAdminOffice/serviceRequests/prepareRejectAcademicServiceRequest.jsp", tileProperties = @Tile(title = "private.academicadministrativeoffice.studentoperations.viewstudents")),
+	@Forward(name = "prepareRejectAcademicServiceRequest", path = "/academicAdminOffice/serviceRequests/prepareRejectAcademicServiceRequest.jsp"),
 	@Forward(name = "prepareSendAcademicServiceRequest", path = "/academicAdminOffice/serviceRequests/prepareSendAcademicServiceRequest.jsp"),
 	@Forward(name = "prepareReceiveAcademicServiceRequest", path = "/academicAdminOffice/serviceRequests/prepareReceiveAcademicServiceRequest.jsp"),
-	@Forward(name = "prepareCancelAcademicServiceRequest", path = "/academicAdminOffice/serviceRequests/prepareCancelAcademicServiceRequest.jsp", tileProperties = @Tile(title = "private.academicadministrativeoffice.studentoperations.viewstudents")),
+	@Forward(name = "prepareCancelAcademicServiceRequest", path = "/academicAdminOffice/serviceRequests/prepareCancelAcademicServiceRequest.jsp"),
 	@Forward(name = "prepareConcludeDocumentRequest", path = "/documentRequestsManagement.do?method=prepareConcludeDocumentRequest"),
 	@Forward(name = "prepareConcludeServiceRequest", path = "/academicAdminOffice/serviceRequests/concludeServiceRequest.jsp"),
-	@Forward(name = "prepareCreateServiceRequest", path = "/academicAdminOffice/serviceRequests/prepareCreateServiceRequest.jsp", tileProperties = @Tile(title = "private.academicadministrativeoffice.studentoperations.viewstudents")),
-	@Forward(name = "searchResults", path = "/academicAdminOffice/serviceRequests/searchResults.jsp", tileProperties = @Tile(title = "private.academicadministrativeoffice.academicservices")),
+	@Forward(name = "prepareCreateServiceRequest", path = "/academicAdminOffice/serviceRequests/prepareCreateServiceRequest.jsp"),
+	@Forward(name = "searchResults", path = "/academicAdminOffice/serviceRequests/searchResults.jsp"),
 	@Forward(name = "showCurrentBag", path = "/academicAdminOffice/serviceRequests/showCurrentBag.jsp") })
 public class AcademicServiceRequestsManagementDispatchAction extends FenixDispatchAction {
 
@@ -184,7 +178,7 @@ public class AcademicServiceRequestsManagementDispatchAction extends FenixDispat
     }
 
     private boolean canRevertToProcessingState(final AcademicServiceRequest academicServiceRequest) {
-	return AcademicServiceRequestPredicates.REVERT_TO_PROCESSING_STATE.evaluate(academicServiceRequest)
+	return AcademicPredicates.SERVICE_REQUESTS_REVERT_TO_PROCESSING_STATE.evaluate(academicServiceRequest)
 		&& !academicServiceRequest.isPossibleToSendToOtherEntity();
     }
 
@@ -217,7 +211,7 @@ public class AcademicServiceRequestsManagementDispatchAction extends FenixDispat
 	final RegistrationAcademicServiceRequest academicServiceRequest = getAndSetAcademicServiceRequest(request);
 
 	try {
-	    ProcessNewAcademicServiceRequests.run(academicServiceRequest);
+	    academicServiceRequest.process();
 	    addActionMessage(request, "academic.service.request.processed.with.success");
 	} catch (DomainException ex) {
 	    addActionMessage(request, ex.getKey(), ex.getArgs());
@@ -281,8 +275,7 @@ public class AcademicServiceRequestsManagementDispatchAction extends FenixDispat
 	final AcademicServiceRequestBean requestBean = (AcademicServiceRequestBean) getObjectFromViewState("serviceRequestBean");
 
 	try {
-	    ReceivedAcademicServiceRequestFromExternalEntity.run(serviceRequest, requestBean.getSituationDate(),
-		    requestBean.getJustification());
+	    serviceRequest.receivedFromExternalEntity(requestBean.getSituationDate(), requestBean.getJustification());
 
 	} catch (DomainExceptionWithLabelFormatter ex) {
 	    addActionMessage(request, ex.getKey(), solveLabelFormatterArgs(request, ex.getLabelFormatterArgs()));
@@ -312,7 +305,7 @@ public class AcademicServiceRequestsManagementDispatchAction extends FenixDispat
 	final String justification = ((AcademicServiceRequestsManagementForm) actionForm).getJustification();
 
 	try {
-	    RejectAcademicServiceRequest.run(academicServiceRequest, justification);
+	    academicServiceRequest.reject(justification);
 	} catch (DomainExceptionWithLabelFormatter ex) {
 	    addActionMessage(request, ex.getKey(), solveLabelFormatterArgs(request, ex.getLabelFormatterArgs()));
 	    return mapping.findForward("prepareRejectAcademicServiceRequest");
@@ -339,7 +332,7 @@ public class AcademicServiceRequestsManagementDispatchAction extends FenixDispat
 	final String justification = ((AcademicServiceRequestsManagementForm) actionForm).getJustification();
 
 	try {
-	    executeService("CancelAcademicServiceRequest", new Object[] { academicServiceRequest, justification });
+	    academicServiceRequest.cancel(justification);
 	} catch (DomainExceptionWithLabelFormatter ex) {
 	    addActionMessage(request, ex.getKey(), solveLabelFormatterArgs(request, ex.getLabelFormatterArgs()));
 	    return mapping.findForward("prepareCancelAcademicServiceRequest");
@@ -383,8 +376,8 @@ public class AcademicServiceRequestsManagementDispatchAction extends FenixDispat
 	}
 
 	try {
-	    ConcludeAcademicServiceRequest.run(academicServiceRequest, form.getSendEmailToStudent(), getSituationDate(),
-		    getJustification());
+	    academicServiceRequest.conclude(getSituationDate(), getJustification(),
+		    form.getSendEmailToStudent() != null ? form.getSendEmailToStudent() : true);
 	    addActionMessage(request, "academic.service.request.concluded.with.success");
 
 	    if (academicServiceRequest.isDocumentRequest()
@@ -403,7 +396,7 @@ public class AcademicServiceRequestsManagementDispatchAction extends FenixDispat
 
     private YearMonthDay getSituationDate() {
 	final AcademicServiceRequestBean requestBean = (AcademicServiceRequestBean) getObjectFromViewState("serviceRequestBean");
-	return requestBean == null ? null : requestBean.getSituationDate();
+	return requestBean == null ? new YearMonthDay() : requestBean.getSituationDate();
     }
 
     private String getJustification() {
@@ -417,7 +410,7 @@ public class AcademicServiceRequestsManagementDispatchAction extends FenixDispat
 	final RegistrationAcademicServiceRequest academicServiceRequest = getAndSetAcademicServiceRequest(request);
 
 	try {
-	    DeliveredAcademicServiceRequest.run(academicServiceRequest);
+	    academicServiceRequest.delivered();
 	    addActionMessage(request, "academic.service.request.delivered.with.success");
 	} catch (DomainException ex) {
 	    addActionMessage(request, ex.getKey());
@@ -472,13 +465,9 @@ public class AcademicServiceRequestsManagementDispatchAction extends FenixDispat
 	    }
 
 	    bean = new AcademicServiceRequestBean(AcademicServiceRequestSituationType.valueOf(request
-		    .getParameter("academicSituationType")), getEmployee(), year);
+		    .getParameter("academicSituationType")), AccessControl.getPerson(), year);
 	}
 	return bean;
-    }
-
-    private Employee getEmployee() {
-	return AccessControl.getPerson().getEmployee();
     }
 
     private Comparator getComparator(HttpServletRequest request) {
@@ -516,12 +505,12 @@ public class AcademicServiceRequestsManagementDispatchAction extends FenixDispat
 	for (Iterator<AcademicServiceRequest> iter = remainingRequests.iterator(); iter.hasNext();) {
 	    final AcademicServiceRequest academicServiceRequest = iter.next();
 	    if (bean.getAcademicServiceRequestSituationType() == AcademicServiceRequestSituationType.NEW) {
-		if (!academicServiceRequest.getActiveSituation().hasEmployee()) {
+		if (!academicServiceRequest.getActiveSituation().hasCreator()) {
 		    iter.remove();
 		    result.add(academicServiceRequest);
 		}
 	    } else {
-		if (academicServiceRequest.getActiveSituation().getEmployee() == getEmployee()) {
+		if (AccessControl.getPerson().equals(academicServiceRequest.getActiveSituation().getCreator())) {
 		    iter.remove();
 		    result.add(academicServiceRequest);
 		}

@@ -7,11 +7,11 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import java.util.Map.Entry;
+import java.util.Set;
 
 import net.sourceforge.fenixedu.dataTransferObject.accounting.CreditNoteEntryDTO;
-import net.sourceforge.fenixedu.domain.Employee;
+import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.exceptions.DomainExceptionWithLabelFormatter;
@@ -24,6 +24,7 @@ import pt.utl.ist.fenix.tools.resources.LabelFormatter;
 public class CreditNote extends CreditNote_Base {
 
     public static Comparator<CreditNote> COMPARATOR_BY_NUMBER = new Comparator<CreditNote>() {
+	@Override
 	public int compare(CreditNote leftCreditNote, CreditNote rightCreditNote) {
 	    int comparationResult = leftCreditNote.getNumber().compareTo(rightCreditNote.getNumber());
 	    return (comparationResult == 0) ? leftCreditNote.getIdInternal().compareTo(rightCreditNote.getIdInternal())
@@ -40,16 +41,16 @@ public class CreditNote extends CreditNote_Base {
 	super.setYear(year);
     }
 
-    private CreditNote(final Receipt receipt, final Employee employee) {
+    private CreditNote(final Receipt receipt, final Person responsible) {
 	this();
-	init(receipt, employee);
+	init(receipt, responsible);
     }
 
-    private void init(Receipt receipt, Employee employee) {
-	checkParameters(receipt, employee);
+    private void init(Receipt receipt, Person responsible) {
+	checkParameters(receipt, responsible);
 	checkRulesToCreate(receipt);
 	super.setReceipt(receipt);
-	internalChangeState(employee, CreditNoteState.EMITTED);
+	internalChangeState(responsible, CreditNoteState.EMITTED);
     }
 
     private void checkRulesToCreate(Receipt receipt) {
@@ -59,13 +60,13 @@ public class CreditNote extends CreditNote_Base {
 
     }
 
-    private void checkParameters(Receipt receipt, Employee employee) {
+    private void checkParameters(Receipt receipt, Person responsible) {
 	if (receipt == null) {
 	    throw new DomainException("error.accounting.CreditNote.receipt.cannot.be.null");
 	}
 
-	if (employee == null) {
-	    throw new DomainException("error.accounting.CreditNote.employee.cannot.be.null");
+	if (responsible == null) {
+	    throw new DomainException("error.accounting.CreditNote.responsible.cannot.be.null");
 	}
     }
 
@@ -92,8 +93,8 @@ public class CreditNote extends CreditNote_Base {
     }
 
     @Override
-    public void setEmployee(Employee employee) {
-	throw new DomainException("error.accounting.CreditNote.cannot.modify.employee");
+    public void setResponsible(Person responsible) {
+	throw new DomainException("error.accounting.CreditNote.cannot.modify.responsible");
     }
 
     @Override
@@ -146,7 +147,7 @@ public class CreditNote extends CreditNote_Base {
 	throw new DomainException("error.accounting.CreditNote.cannot.modify.state");
     }
 
-    private void internalChangeState(final Employee employee, CreditNoteState state) {
+    private void internalChangeState(final Person responsible, CreditNoteState state) {
 	super.setWhenUpdated(new DateTime());
 
 	if (getState() != null && getState() != CreditNoteState.EMITTED) {
@@ -154,40 +155,40 @@ public class CreditNote extends CreditNote_Base {
 	}
 
 	super.setState(state);
-	super.setEmployee(employee);
+	super.setResponsible(responsible);
     }
 
-    public void confirm(final Employee employee, final PaymentMode paymentMode) {
-	internalChangeState(employee, CreditNoteState.PAYED);
+    public void confirm(final Person responsible, final PaymentMode paymentMode) {
+	internalChangeState(responsible, CreditNoteState.PAYED);
 
 	for (final CreditNoteEntry creditNoteEntry : getCreditNoteEntriesSet()) {
-	    creditNoteEntry.createAdjustmentAccountingEntry(employee.getPerson().getUser(), paymentMode);
+	    creditNoteEntry.createAdjustmentAccountingEntry(responsible.getUser(), paymentMode);
 	}
 
     }
 
-    public void annul(final Employee employee) {
-	internalChangeState(employee, CreditNoteState.ANNULLED);
+    public void annul(final Person responsible) {
+	internalChangeState(responsible, CreditNoteState.ANNULLED);
     }
 
-    public void changeState(final Employee employee, final PaymentMode paymentMode, final CreditNoteState state) {
+    public void changeState(final Person responsible, final PaymentMode paymentMode, final CreditNoteState state) {
 
 	if (getState() == state) {
 	    return;
 	}
 
 	if (state == CreditNoteState.ANNULLED) {
-	    annul(employee);
+	    annul(responsible);
 	} else if (state == CreditNoteState.PAYED) {
-	    confirm(employee, paymentMode);
+	    confirm(responsible, paymentMode);
 	} else {
 	    throw new DomainException("error.net.sourceforge.fenixedu.domain.accounting.CreditNote.cannot.change.to.given.state");
 	}
 
     }
 
-    public static CreditNote create(Receipt receipt, Employee employee, List<CreditNoteEntryDTO> entryDTOs) {
-	final CreditNote creditNote = new CreditNote(receipt, employee);
+    public static CreditNote create(Receipt receipt, Person responsible, List<CreditNoteEntryDTO> entryDTOs) {
+	final CreditNote creditNote = new CreditNote(receipt, responsible);
 
 	if (entryDTOs == null || entryDTOs.isEmpty()) {
 	    throw new DomainException("error.accounting.CreditNote.cannot.be.created.without.entries");

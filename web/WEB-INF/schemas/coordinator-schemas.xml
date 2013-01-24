@@ -481,6 +481,9 @@
     <slot name="responsible"/>
 </schema>
 
+<schema name="coordinator.name" type="net.sourceforge.fenixedu.domain.Coordinator">
+	<slot name="person.name" />
+</schema>
 
 <schema name="coordinator.commissionTeam.addMember" type="net.sourceforge.fenixedu.dataTransferObject.VariantBean">
     <slot name="integer" key="label.mecanographicNumber">

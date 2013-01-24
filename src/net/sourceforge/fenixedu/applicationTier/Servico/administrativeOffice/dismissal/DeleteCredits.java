@@ -1,13 +1,14 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.administrativeOffice.dismissal;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.studentCurriculum.Credits;
+import pt.ist.fenixWebFramework.services.Service;
 
-public class DeleteCredits extends FenixService {
+public class DeleteCredits {
 
-    public void run(StudentCurricularPlan studentCurricularPlan, String[] creditsIDs) throws FenixServiceException {
+    @Service
+    public static void run(StudentCurricularPlan studentCurricularPlan, String[] creditsIDs) throws FenixServiceException {
 	for (String creditsID : creditsIDs) {
 	    Credits credits = getCreditsByID(studentCurricularPlan, Integer.valueOf(creditsID));
 	    if (credits == null) {
@@ -17,7 +18,7 @@ public class DeleteCredits extends FenixService {
 	}
     }
 
-    private Credits getCreditsByID(StudentCurricularPlan studentCurricularPlan, Integer creditsID) {
+    private static Credits getCreditsByID(StudentCurricularPlan studentCurricularPlan, Integer creditsID) {
 	for (Credits credits : studentCurricularPlan.getCreditsSet()) {
 	    if (credits.getIdInternal().equals(creditsID)) {
 		return credits;

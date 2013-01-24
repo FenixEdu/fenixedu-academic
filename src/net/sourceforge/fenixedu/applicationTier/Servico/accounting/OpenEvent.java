@@ -7,7 +7,7 @@ import pt.ist.fenixWebFramework.services.Service;
 
 public class OpenEvent extends FenixService {
 
-    @Checked("RolePredicates.MANAGER_PREDICATE")
+    @Checked("AcademicPredicates.MANAGE_PAYMENTS")
     @Service
     public static void run(final Event event) {
 	event.open();

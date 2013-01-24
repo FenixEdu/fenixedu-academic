@@ -24,12 +24,6 @@ public class AdministrativeOfficeServiceAgreementTemplate extends Administrative
 
     protected void init(AdministrativeOffice administrativeOffice) {
 	checkParameters(administrativeOffice);
-	super.setAdministrativeOffice(administrativeOffice);
+	addAdministrativeOffice(administrativeOffice);
     }
-
-    @Override
-    public void setAdministrativeOffice(AdministrativeOffice administrativeOffice) {
-	throw new DomainException("error.accounting.serviceAgreementTemplates.enclosing_type.cannot.modify.administrativeOffice");
-    }
-
 }

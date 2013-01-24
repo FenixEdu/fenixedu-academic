@@ -1,22 +1,24 @@
 package net.sourceforge.fenixedu.dataTransferObject.administrativeOffice.lists;
 
-import java.io.Serializable;
 import java.util.Collection;
 
 import net.sourceforge.fenixedu.dataTransferObject.serviceRequests.AcademicServiceRequestBean;
-import net.sourceforge.fenixedu.domain.Employee;
+import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.accessControl.academicAdministration.AcademicAuthorizationGroup;
 import net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequest;
+import net.sourceforge.fenixedu.injectionCode.AccessControl;
 
+import org.joda.time.Interval;
 import org.joda.time.LocalDate;
 
-public class SearchDiplomasBySituationParametersBean extends AcademicServiceRequestBean implements Serializable {
+public class SearchDiplomasBySituationParametersBean extends AcademicServiceRequestBean {
 
     LocalDate searchBegin;
 
     LocalDate searchEnd;
 
-    public SearchDiplomasBySituationParametersBean(final Employee employee) {
-	super(employee, (String) null);
+    public SearchDiplomasBySituationParametersBean(final Person responsible) {
+	super(responsible, (String) null);
     }
 
     public LocalDate getSearchBegin() {
@@ -37,8 +39,9 @@ public class SearchDiplomasBySituationParametersBean extends AcademicServiceRequ
 
     @Override
     public Collection<AcademicServiceRequest> searchAcademicServiceRequests() {
-	return getAdministrativeOffice().searchRegistrationAcademicServiceRequests(getSearchBegin(), getSearchEnd(),
-		getAcademicServiceRequestSituationType(), getCampus());
+	return AcademicAuthorizationGroup.getAcademicServiceRequests(AccessControl.getPerson(), serviceRequestYear,
+		academicServiceRequestSituationType,
+		new Interval(searchBegin.toDateTimeAtStartOfDay(), searchEnd.toDateTimeAtStartOfDay()));
     }
 
 }

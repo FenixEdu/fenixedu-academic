@@ -12,8 +12,6 @@ import net.sourceforge.fenixedu.util.Money;
 
 import org.joda.time.DateTime;
 
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
-
 public class CourseLoadRequestPR extends CourseLoadRequestPR_Base {
 
     protected CourseLoadRequestPR() {
@@ -35,7 +33,6 @@ public class CourseLoadRequestPR extends CourseLoadRequestPR_Base {
 	}
     }
 
-    @Checked("PostingRulePredicates.editPredicate")
     public CourseLoadRequestPR edit(final Money baseAmount, final Money amountFirstPage, final Money amountPerUnit) {
 	deactivate();
 	return new CourseLoadRequestPR(getServiceAgreementTemplate(), new DateTime().minus(1000), null, baseAmount,

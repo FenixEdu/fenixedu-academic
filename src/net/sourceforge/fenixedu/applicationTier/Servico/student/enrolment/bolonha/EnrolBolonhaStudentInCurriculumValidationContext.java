@@ -12,26 +12,27 @@ import net.sourceforge.fenixedu.domain.enrolment.IDegreeModuleToEvaluate;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.CourseLoadRequest;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.ProgramCertificateRequest;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumModule;
+import pt.ist.fenixWebFramework.services.Service;
 
-public class EnrolBolonhaStudentInCurriculumValidationContext extends EnrolBolonhaStudent {
+public class EnrolBolonhaStudentInCurriculumValidationContext {
 
-    @Override
-    public RuleResult run(final StudentCurricularPlan studentCurricularPlan,
-	    final ExecutionSemester executionSemester, final List<IDegreeModuleToEvaluate> degreeModulesToEnrol,
-	    final List<CurriculumModule> curriculumModulesToRemove, final CurricularRuleLevel curricularRuleLevel) {
+    @Service
+    public static RuleResult run(final StudentCurricularPlan studentCurricularPlan, final ExecutionSemester executionSemester,
+	    final List<IDegreeModuleToEvaluate> degreeModulesToEnrol, final List<CurriculumModule> curriculumModulesToRemove,
+	    final CurricularRuleLevel curricularRuleLevel) {
 
-	for(CurriculumModule module : curriculumModulesToRemove) {
+	for (CurriculumModule module : curriculumModulesToRemove) {
 	    if (!module.isEnrolment()) {
 		continue;
 	    }
-	    
+
 	    Enrolment enrolment = (Enrolment) module;
-	    
+
 	    enrolment.getCourseLoadRequestsSet().retainAll(new HashSet<CourseLoadRequest>());
 	    enrolment.getProgramCertificateRequestsSet().retainAll(new HashSet<ProgramCertificateRequest>());
 	}
-	
-	return super.run(studentCurricularPlan, executionSemester, degreeModulesToEnrol, curriculumModulesToRemove,
+
+	return EnrolBolonhaStudent.run(studentCurricularPlan, executionSemester, degreeModulesToEnrol, curriculumModulesToRemove,
 		curricularRuleLevel);
     }
 }

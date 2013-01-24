@@ -122,7 +122,7 @@ public class ExternalCurriculumGroup extends ExternalCurriculumGroup_Base {
     }
 
     @Override
-    @Checked("RolePredicates.MANAGER_OR_ACADEMIC_ADMINISTRATIVE_OFFICE_PREDICATE")
+    @Checked("RegistrationPredicates.MANAGE_CONCLUSION_PROCESS")
     public void conclude() {
 	throw new DomainException("error.ExternalCurriculumGroup.cannot.conclude.external.curriculumGroups");
     }

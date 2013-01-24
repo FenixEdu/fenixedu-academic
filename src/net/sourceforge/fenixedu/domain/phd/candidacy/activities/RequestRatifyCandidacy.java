@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.domain.phd.candidacy.activities;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
+import net.sourceforge.fenixedu.domain.accessControl.academicAdministration.AcademicOperationType;
 import net.sourceforge.fenixedu.domain.caseHandling.PreConditionNotValidException;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.phd.PhdProgramCandidacyProcessState;
@@ -30,12 +31,12 @@ public class RequestRatifyCandidacy extends PhdProgramCandidacyProcessActivity {
 	process.createState(PhdProgramCandidacyProcessState.WAITING_FOR_SCIENTIFIC_COUNCIL_RATIFICATION, userView.getPerson(),
 		bean.getRemarks());
 
-	    if (bean.getGenerateAlert()) {
-	    AlertService.alertAcademicOffice(process.getIndividualProgramProcess(), getCandidacyProcessManagementPermission(),
+	if (bean.getGenerateAlert()) {
+	    AlertService.alertAcademicOffice(process.getIndividualProgramProcess(), AcademicOperationType.VIEW_PHD_CANDIDACY_ALERTS,
 		    "message.phd.alert.candidacy.request.ratify.subject", "message.phd.alert.candidacy.request.ratify.body");
 	}
 
-	    return process;
+	return process;
     }
 
 }

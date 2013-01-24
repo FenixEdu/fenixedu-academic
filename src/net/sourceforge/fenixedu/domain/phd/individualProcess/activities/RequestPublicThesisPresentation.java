@@ -22,7 +22,7 @@ public class RequestPublicThesisPresentation extends PhdIndividualProgramProcess
 	    throw new PreConditionNotValidException();
 	}
 
-	if (!PhdIndividualProgramProcess.isMasterDegreeAdministrativeOfficeEmployee(userView)) {
+	if (!process.isAllowedToManageProcess(userView)) {
 	    throw new PreConditionNotValidException();
 	}
 

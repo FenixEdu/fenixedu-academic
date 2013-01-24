@@ -1,6 +1,6 @@
 package net.sourceforge.fenixedu.domain.phd.debts;
 
-import net.sourceforge.fenixedu.domain.Employee;
+import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.accounting.Event;
 import net.sourceforge.fenixedu.domain.accounting.Exemption;
 import net.sourceforge.fenixedu.domain.accounting.events.PenaltyExemptionJustificationType;
@@ -34,10 +34,10 @@ public class PhdRegistrationFeePenaltyExemption extends PhdRegistrationFeePenalt
     }
 
     public PhdRegistrationFeePenaltyExemption(final PenaltyExemptionJustificationType penaltyExemptionType,
-	    final PhdRegistrationFee event, final Employee employee, final String comments,
+	    final PhdRegistrationFee event, final Person responsible, final String comments,
 	    final YearMonthDay directiveCouncilDispatchDate) {
 	this();
-	super.init(penaltyExemptionType, event, employee, comments, directiveCouncilDispatchDate);
+	super.init(penaltyExemptionType, event, responsible, comments, directiveCouncilDispatchDate);
     }
 
     @Override

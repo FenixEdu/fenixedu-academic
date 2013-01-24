@@ -20,7 +20,6 @@ import net.sourceforge.fenixedu.domain.degreeStructure.NoEctsComparabilityTableF
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.ApprovementMobilityCertificateRequest;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.CertificateRequest;
-import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequest;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.IDocumentRequest;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.RegistrationAgreement;
@@ -52,9 +51,8 @@ public class ApprovementMobilityCertificate extends AdministrativeOfficeDocument
     }
 
     @Override
-    protected DocumentRequest getDocumentRequest() {
-	// TODO Auto-generated method stub
-	return (DocumentRequest) super.getDocumentRequest();
+    protected ApprovementMobilityCertificateRequest getDocumentRequest() {
+	return (ApprovementMobilityCertificateRequest) super.getDocumentRequest();
     }
 
     @Override
@@ -90,7 +88,7 @@ public class ApprovementMobilityCertificate extends AdministrativeOfficeDocument
 
 	for (final CycleCurriculumGroup cycle : cycles) {
 	    if (!cycle.isConclusionProcessed() || isDEARegistration()) {
-		final ApprovementMobilityCertificateRequest request = ((ApprovementMobilityCertificateRequest) getDocumentRequest());
+		final ApprovementMobilityCertificateRequest request = (getDocumentRequest());
 		final Curriculum curriculum = cycle.getCurriculum(request.getFilteringDate());
 		ApprovementMobilityCertificateRequest.filterEntries(entries, request, curriculum);
 	    }
@@ -98,7 +96,7 @@ public class ApprovementMobilityCertificate extends AdministrativeOfficeDocument
     }
 
     final private SortedSet<ICurriculumEntry> mapEntries() {
-	final ApprovementMobilityCertificateRequest request = (ApprovementMobilityCertificateRequest) getDocumentRequest();
+	final ApprovementMobilityCertificateRequest request = getDocumentRequest();
 
 	final SortedSet<ICurriculumEntry> entries = new TreeSet<ICurriculumEntry>(
 		ICurriculumEntry.COMPARATOR_BY_EXECUTION_PERIOD_AND_NAME_AND_ID);
@@ -239,7 +237,7 @@ public class ApprovementMobilityCertificate extends AdministrativeOfficeDocument
 
     @Override
     protected void addPriceFields() {
-	final CertificateRequest certificateRequest = (CertificateRequest) getDocumentRequest();
+	final CertificateRequest certificateRequest = getDocumentRequest();
 	final CertificateRequestPR certificateRequestPR = (CertificateRequestPR) getPostingRule();
 
 	final Money amountPerPage = certificateRequestPR.getAmountPerPage();

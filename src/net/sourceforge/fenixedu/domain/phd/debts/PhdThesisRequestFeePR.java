@@ -8,8 +8,6 @@ import net.sourceforge.fenixedu.util.Money;
 
 import org.joda.time.DateTime;
 
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
-
 public class PhdThesisRequestFeePR extends PhdThesisRequestFeePR_Base {
 
     private PhdThesisRequestFeePR() {
@@ -23,7 +21,6 @@ public class PhdThesisRequestFeePR extends PhdThesisRequestFeePR_Base {
 		serviceAgreementTemplate, fixedAmount);
     }
 
-    @Checked("PostingRulePredicates.editPredicate")
     public PhdThesisRequestFeePR edit(final Money fixedAmount, final Money penaltyAmount) {
 	deactivate();
 	return new PhdThesisRequestFeePR(new DateTime().minus(1000), null, getServiceAgreementTemplate(), fixedAmount);

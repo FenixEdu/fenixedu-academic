@@ -5,9 +5,6 @@
 
 <html:xhtml/>
 
-<logic:present role="ACADEMIC_ADMINISTRATIVE_OFFICE">
-
-	<em><bean:message key="label.academicAdminOffice" bundle="ACADEMIC_OFFICE_RESOURCES"/></em>
 	<h2><bean:message key="student.registrationConclusionProcess" bundle="ACADEMIC_OFFICE_RESOURCES"/></h2>
 	<bean:define id="registrationId" name="registration" property="idInternal" />
 	
@@ -81,5 +78,3 @@
 		<em><strong><bean:message bundle="APPLICATION_RESOURCES" key="label.chooseCycleForRegistrationConclusion.no.cycle"/></strong></em>
 		<br/>
 	</logic:notPresent>		
-
-</logic:present>

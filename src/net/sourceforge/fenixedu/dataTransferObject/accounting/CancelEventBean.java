@@ -2,7 +2,7 @@ package net.sourceforge.fenixedu.dataTransferObject.accounting;
 
 import java.io.Serializable;
 
-import net.sourceforge.fenixedu.domain.Employee;
+import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.accounting.Event;
 
 public class CancelEventBean implements Serializable {
@@ -14,14 +14,13 @@ public class CancelEventBean implements Serializable {
 
     private Event event;
 
-    private Employee employee;
+    private Person responsible;
 
     private String justification;
 
-    public CancelEventBean(final Event event, final Employee employee) {
+    public CancelEventBean(final Event event, final Person responsible) {
 	setEvent(event);
-	setEmployee(employee);
-
+	setResponsible(responsible);
     }
 
     public Event getEvent() {
@@ -32,13 +31,12 @@ public class CancelEventBean implements Serializable {
 	this.event = event;
     }
 
-    public Employee getEmployee() {
-	return this.employee;
-
+    public Person getResponsible() {
+	return responsible;
     }
 
-    public void setEmployee(Employee employee) {
-	this.employee = employee;
+    public void setResponsible(Person responsible) {
+	this.responsible = responsible;
     }
 
     public String getJustification() {

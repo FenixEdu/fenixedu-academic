@@ -28,8 +28,8 @@ public class ReadStudentEnrolmentEvaluation extends FenixService {
 	final InfoEnrolmentEvaluation infoEnrolmentEvaluation = InfoEnrolmentEvaluationWithResponsibleForGrade
 		.newInfoFromDomain(enrolmentEvaluation);
 	infoEnrolmentEvaluation.setInfoPersonResponsibleForGrade(infoTeacher.getInfoPerson());
-	if (enrolmentEvaluation.hasEmployee()) {
-	    infoEnrolmentEvaluation.setInfoEmployee(InfoPerson.newInfoFromDomain(enrolmentEvaluation.getEmployee().getPerson()));
+	if (enrolmentEvaluation.hasPerson()) {
+	    infoEnrolmentEvaluation.setInfoEmployee(InfoPerson.newInfoFromDomain(enrolmentEvaluation.getPerson()));
 	}
 	infoEnrolmentEvaluation.setInfoEnrolment(infoEnrolment);
 	infoEnrolmentEvaluations.add(infoEnrolmentEvaluation);

@@ -6,11 +6,10 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import java.util.Map.Entry;
+import java.util.Set;
 
 import net.sourceforge.fenixedu.domain.Enrolment;
-import net.sourceforge.fenixedu.domain.accessControl.academicAdminOffice.AdministrativeOfficePermission;
 import net.sourceforge.fenixedu.domain.curricularRules.ICurricularRule;
 import net.sourceforge.fenixedu.domain.curricularRules.ImprovementOfApprovedEnrolment;
 import net.sourceforge.fenixedu.domain.curricularRules.executors.ruleExecutors.EnrolmentResultType;
@@ -39,10 +38,10 @@ public class StudentCurricularPlanImprovementOfApprovedEnrolmentManager extends 
 	    throw new DomainException("error.StudentCurricularPlan.cannot.enrol.with.debts.for.previous.execution.years");
 	}
 
-	final AdministrativeOfficePermission permission = getUpdateRegistrationAfterConclusionProcessPermission();
-	if (permission != null) {
-	    checkPermission(permission);
+	if (areModifiedCyclesConcluded()) {
+	    checkUpdateRegistrationAfterConclusion();
 	}
+
     }
 
     private boolean hasRegistrationInValidState() {
@@ -65,6 +64,7 @@ public class StudentCurricularPlanImprovementOfApprovedEnrolmentManager extends 
 
     @Override
     protected void addEnroled() {
+	// Nothing...
     }
 
     @Override
@@ -78,8 +78,8 @@ public class StudentCurricularPlanImprovementOfApprovedEnrolmentManager extends 
 
 		if (moduleEnroledWrapper.getCurriculumModule() instanceof Enrolment) {
 		    final Enrolment enrolment = (Enrolment) moduleEnroledWrapper.getCurriculumModule();
-		    result.put(degreeModuleToEvaluate, Collections
-			    .<ICurricularRule> singleton(new ImprovementOfApprovedEnrolment(enrolment)));
+		    result.put(degreeModuleToEvaluate,
+			    Collections.<ICurricularRule> singleton(new ImprovementOfApprovedEnrolment(enrolment)));
 
 		} else {
 		    throw new DomainException(
@@ -113,7 +113,7 @@ public class StudentCurricularPlanImprovementOfApprovedEnrolmentManager extends 
 	}
 
 	if (!toCreate.isEmpty()) {
-	    getStudentCurricularPlan().createEnrolmentEvaluationForImprovement(toCreate, getResponsiblePerson().getEmployee(),
+	    getStudentCurricularPlan().createEnrolmentEvaluationForImprovement(toCreate, getResponsiblePerson(),
 		    getExecutionSemester());
 	}
     }

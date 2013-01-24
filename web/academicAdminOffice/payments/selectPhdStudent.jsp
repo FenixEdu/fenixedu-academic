@@ -4,11 +4,7 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr" %>
 
-
-<logic:present role="ACADEMIC_ADMINISTRATIVE_OFFICE">
-
 <%-- ### Title #### --%>
-<em><bean:message  key="label.phd.academicAdminOffice.breadcrumb" bundle="PHD_RESOURCES"/></em>
 <h2><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.scolarships.fct" /></h2>
 
 <p class="mtop15 mbottom05"><strong><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.payments.person" /></strong></p>
@@ -41,6 +37,3 @@
 	</em>
 	</p>
 </logic:empty>
-
-</logic:present>
-

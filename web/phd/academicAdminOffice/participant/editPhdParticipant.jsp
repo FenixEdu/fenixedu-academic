@@ -5,10 +5,7 @@
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr" %>
 <%@ taglib uri="/WEB-INF/phd.tld" prefix="phd" %>
 
-<logic:present role="ACADEMIC_ADMINISTRATIVE_OFFICE">
-
 <%-- ### Title #### --%>
-<em><bean:message  key="label.phd.academicAdminOffice.breadcrumb" bundle="PHD_RESOURCES"/></em>
 <h2><bean:message key="label.phd.view.participants" bundle="PHD_RESOURCES" /></h2>
 <%-- ### End of Title ### --%>
 
@@ -76,5 +73,3 @@
 	<html:cancel><bean:message key="label.cancel" bundle="PHD_RESOURCES" /></html:cancel>
 	
 </fr:form>
-
-</logic:present>

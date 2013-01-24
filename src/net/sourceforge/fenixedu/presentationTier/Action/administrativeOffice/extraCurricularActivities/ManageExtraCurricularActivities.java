@@ -1,7 +1,5 @@
 package net.sourceforge.fenixedu.presentationTier.Action.administrativeOffice.extraCurricularActivities;
 
-import java.util.Arrays;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -16,15 +14,8 @@ import org.apache.struts.action.ActionMapping;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.utl.ist.fenix.tools.util.i18n.Language;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
-import pt.ist.fenixWebFramework.struts.annotations.Forward;
-import pt.ist.fenixWebFramework.struts.annotations.Forwards;
-import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
-@Mapping(path = "/manageExtraCurricularActivities", module = "academicAdminOffice")
+@Mapping(path = "/manageExtraCurricularActivities", module = "academicAdministration")
 @Forwards({ @Forward(name = "list", path = "/academicAdminOffice/extraCurricularActivities/listActivities.jsp"),
 	@Forward(name = "create", path = "/academicAdminOffice/extraCurricularActivities/createActivity.jsp"),
 	@Forward(name = "edit", path = "/academicAdminOffice/extraCurricularActivities/editActivity.jsp") })

@@ -4,8 +4,6 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr" %>
 
-<em><bean:message key="label.academicAdminOffice" bundle="ACADEMIC_OFFICE_RESOURCES"/></em>
-
 <html:messages id="message" message="true" bundle="ACADEMIC_OFFICE_RESOURCES">
 	<p>
 		<span class="error0"><!-- Error messages go here --><bean:write name="message" /></span>

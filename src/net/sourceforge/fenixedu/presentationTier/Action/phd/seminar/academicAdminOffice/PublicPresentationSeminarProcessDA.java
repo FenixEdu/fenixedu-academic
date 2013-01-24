@@ -23,7 +23,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 
-@Mapping(path = "/publicPresentationSeminarProcess", module = "academicAdminOffice")
+@Mapping(path = "/publicPresentationSeminarProcess", module = "academicAdministration")
 @Forwards({
 
 @Forward(name = "submitComission", path = "/phd/seminar/academicAdminOffice/submitComission.jsp"),

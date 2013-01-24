@@ -47,7 +47,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.utl.ist.fenix.tools.util.CollectionPager;
 
-@Mapping(path = "/payments", module = "manager")
+@Mapping(path = "/paymentsManagement", module = "manager")
 @Forwards({
 	@Forward(name = "searchPersons", path = "/manager/payments/events/searchPersons.jsp"),
 	@Forward(name = "showEvents", path = "/manager/payments/events/showEvents.jsp"),
@@ -62,9 +62,7 @@ import pt.utl.ist.fenix.tools.util.CollectionPager;
 	@Forward(name = "viewCodes", path = "/manager/payments/codes/viewCodes.jsp"),
 	@Forward(name = "createPaymentCodeMapping", path = "/manager/payments/codes/createPaymentCodeMapping.jsp"),
 	@Forward(name = "changePaymentPlan", path = "/manager/payments/events/changePaymentPlan.jsp"),
-	@Forward(name = "viewEventsForCancellation", path = "/manager/payments/events/viewEventsForCancellation.jsp")
-
-})
+	@Forward(name = "viewEventsForCancellation", path = "/manager/payments/events/viewEventsForCancellation.jsp") })
 public class PaymentsManagementDA extends FenixDispatchAction {
 
     public ActionForward prepareSearchPerson(ActionMapping mapping, ActionForm form, HttpServletRequest request,
@@ -147,7 +145,7 @@ public class PaymentsManagementDA extends FenixDispatchAction {
     public ActionForward prepareCancelEvent(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) {
 
-	request.setAttribute("cancelEventBean", new CancelEventBean(getEvent(request), getLoggedPerson(request).getEmployee()));
+	request.setAttribute("cancelEventBean", new CancelEventBean(getEvent(request), getLoggedPerson(request)));
 
 	return mapping.findForward("editCancelEventJustification");
     }
@@ -158,7 +156,7 @@ public class PaymentsManagementDA extends FenixDispatchAction {
 	final CancelEventBean cancelEventBean = getCancelEventBean();
 
 	try {
-	    CancelEvent.run(cancelEventBean.getEvent(), cancelEventBean.getEmployee(), cancelEventBean.getJustification());
+	    CancelEvent.run(cancelEventBean.getEvent(), cancelEventBean.getResponsible(), cancelEventBean.getJustification());
 	} catch (DomainExceptionWithLabelFormatter ex) {
 
 	    addActionMessage(request, ex.getKey(), solveLabelFormatterArgs(request, ex.getLabelFormatterArgs()));
@@ -223,7 +221,7 @@ public class PaymentsManagementDA extends FenixDispatchAction {
 	final Event event = getEvent(request);
 
 	final TransferPaymentsToOtherEventAndCancelBean transferPaymentsBean = new TransferPaymentsToOtherEventAndCancelBean(
-		event, getLoggedPerson(request).getEmployee());
+		event, getLoggedPerson(request));
 
 	request.setAttribute("transferPaymentsBean", transferPaymentsBean);
 
@@ -237,8 +235,9 @@ public class PaymentsManagementDA extends FenixDispatchAction {
 	final TransferPaymentsToOtherEventAndCancelBean transferPaymentsBean = (TransferPaymentsToOtherEventAndCancelBean) getObjectFromViewState("transferPaymentsBean");
 
 	try {
-	    TransferPaymentsToOtherEventAndCancel.run(transferPaymentsBean.getEmployee(), transferPaymentsBean.getSourceEvent(),
-		    transferPaymentsBean.getTargetEvent(), transferPaymentsBean.getCancelJustification());
+	    TransferPaymentsToOtherEventAndCancel.run(transferPaymentsBean.getResponsible(),
+		    transferPaymentsBean.getSourceEvent(), transferPaymentsBean.getTargetEvent(),
+		    transferPaymentsBean.getCancelJustification());
 	} catch (DomainExceptionWithLabelFormatter ex) {
 
 	    addActionMessage(request, ex.getKey(), solveLabelFormatterArgs(request, ex.getLabelFormatterArgs()));
@@ -331,7 +330,7 @@ public class PaymentsManagementDA extends FenixDispatchAction {
 	    HttpServletResponse response) throws FenixFilterException, FenixServiceException {
 
 	try {
-	    AnnulReceipt.run(getLoggedPerson(request).getEmployee(), getReceipt(request));
+	    AnnulReceipt.run(getLoggedPerson(request), getReceipt(request));
 	} catch (DomainExceptionWithLabelFormatter ex) {
 	    addActionMessage(request, ex.getKey(), solveLabelFormatterArgs(request, ex.getLabelFormatterArgs()));
 	} catch (DomainException ex) {
@@ -483,7 +482,7 @@ public class PaymentsManagementDA extends FenixDispatchAction {
 	    final HttpServletRequest request, final HttpServletResponse response) {
 	Person person = getDomainObject(request, "personId");
 	request.setAttribute("person", person);
-	
+
 	return mapping.findForward("viewEventsForCancellation");
     }
 

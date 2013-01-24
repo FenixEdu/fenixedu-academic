@@ -2,6 +2,7 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr"%>
+<%@ taglib uri="/WEB-INF/academic.tld" prefix="academic" %>
 
 <%@page import="net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequestSituation"%>
 <%@page import="net.sourceforge.fenixedu.domain.serviceRequests.SpecialSeasonRequest"%>
@@ -26,56 +27,45 @@
 	</fr:layout>
 </fr:view>
 
-<!--<logic:present name="academicServiceRequest" property="activeSituation">-->
-<!--	<p class="mbottom025"><strong><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="request.situation"/></strong></p>-->
-<!--	<bean:define id="schema" name="academicServiceRequest" property="activeSituation.class.simpleName" />-->
-<!--	<fr:view name="academicServiceRequest" property="activeSituation" schema="<%= schema.toString() + ".view" %>">-->
-<!--		<fr:layout name="tabular">-->
-<!--			<fr:property name="classes" value="tstyle4 thright thlight mtop025"/>-->
-<!--		<fr:property name="rowClasses" value="tdhl1,,,"/>-->
-<!--		</fr:layout>-->
-<!--	</fr:view>-->
-<!--</logic:present>-->
-
-
-<logic:notEmpty name="academicServiceRequest" property="rectorateSubmissionBatch">
-	<bean:define id="rectorateSubmissionBatch" name="academicServiceRequest" property="rectorateSubmissionBatch" />
+<academic:allowed operation="SERVICE_REQUESTS_RECTORAL_SENDING" office="<%= academicServiceRequest.getAdministrativeOffice() %>">
+	<logic:notEmpty name="academicServiceRequest" property="rectorateSubmissionBatch">
+		<bean:define id="rectorateSubmissionBatch" name="academicServiceRequest" property="rectorateSubmissionBatch" />
+		
+		<p class="mbottom025"><strong><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.rectorateSubmission.batch" /></strong></p> 
 	
-	<p class="mbottom025"><strong><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.rectorateSubmission.batch" /></strong></p> 
-
-    <fr:view name="rectorateSubmissionBatch">
-		<fr:schema 
-			type="net.sourceforge.fenixedu.domain.serviceRequests.RectorateSubmissionBatch"
-			bundle="ACADEMIC_OFFICE_RESOURCES">
-		    <fr:slot name="diplomaDocumentRequestCount" key="label.rectorateSubmission.documentRequestCount" />
-			<fr:slot name="creation" key="label.rectorateSubmission.creation" />
-		    <fr:slot name="creator" key="label.rectorateSubmission.creator" layout="null-as-label">
-		        <fr:property name="subLayout" value="values" />
-		        <fr:property name="subSchema" value="rectorateSubmission.batchIndex.employee"/>
-		    </fr:slot>
-		    <fr:slot name="range" key="label.rectorateSubmission.registryCodeRange" />			
-			<fr:slot name="this" layout="link">
-				<fr:property name="key" value="label.link" />
-				<fr:property name="bundle" value="APPLICATION_RESOURCES" />
-				<fr:property name="linkFormat" value="/rectorateDocumentSubmission.do?batchOid=${externalId}&method=viewBatch" />
-				<fr:property name="blankTarget" value="true" />
-				<fr:property name="contextRelative" value="true" />
-				<fr:property name="moduleRelative" value="true" />
-			</fr:slot>
-		</fr:schema>
-
-        <fr:layout name="tabular">
-            <fr:property name="classes" value="tstyle4 tdcenter thlight mtop05" />
-            <fr:property name="sortBy" value="creation=desc" />
-            <fr:property name="link(view)" value="/rectorateDocumentSubmission.do?method=viewBatch" />
-            <fr:property name="key(view)" value="link.rectorateSubmission.viewBatch" />
-            <fr:property name="param(view)" value="externalId/batchOid" />
-            <fr:property name="bundle(view)" value="ACADEMIC_OFFICE_RESOURCES" />
-            <fr:property name="target(view)" value="blank" />
-        </fr:layout>
-    </fr:view>
+	    <fr:view name="rectorateSubmissionBatch">
+			<fr:schema 
+				type="net.sourceforge.fenixedu.domain.serviceRequests.RectorateSubmissionBatch"
+				bundle="ACADEMIC_OFFICE_RESOURCES">
+			    <fr:slot name="diplomaDocumentRequestCount" key="label.rectorateSubmission.documentRequestCount" />
+				<fr:slot name="creation" key="label.rectorateSubmission.creation" />
+			    <fr:slot name="creator" key="label.rectorateSubmission.creator" layout="null-as-label">
+			        <fr:property name="subLayout" value="values" />
+					<fr:property name="subSchema" value="responsible.name"/>
+			    </fr:slot>
+			    <fr:slot name="range" key="label.rectorateSubmission.registryCodeRange" />			
+				<fr:slot name="this" layout="link" key="label.rectorateSubmission.batch">
+					<fr:property name="key" value="label.view" />
+					<fr:property name="bundle" value="APPLICATION_RESOURCES" />
+					<fr:property name="linkFormat" value="/rectorateDocumentSubmission.do?batchOid=${externalId}&method=viewBatch" />
+					<fr:property name="blankTarget" value="true" />
+					<fr:property name="contextRelative" value="true" />
+					<fr:property name="moduleRelative" value="true" />
+				</fr:slot>
+			</fr:schema>
 	
-</logic:notEmpty>
+	        <fr:layout name="tabular">
+	            <fr:property name="classes" value="tstyle4 tdcenter thlight mtop05" />
+	            <fr:property name="sortBy" value="creation=desc" />
+	            <fr:property name="link(view)" value="/rectorateDocumentSubmission.do?method=viewBatch" />
+	            <fr:property name="key(view)" value="link.rectorateSubmission.viewBatch" />
+	            <fr:property name="param(view)" value="externalId/batchOid" />
+	            <fr:property name="bundle(view)" value="ACADEMIC_OFFICE_RESOURCES" />
+	            <fr:property name="target(view)" value="blank" />
+	        </fr:layout>
+	    </fr:view>
+	</logic:notEmpty>
+</academic:allowed>
 
 <logic:equal name="academicServiceRequest" property="downloadPossible" value="true">
 	<html:link action="/documentRequestsManagement.do?method=downloadDocument" paramId="documentRequestId" paramName="academicServiceRequest" paramProperty="idInternal">
@@ -91,10 +81,10 @@
 			<fr:slot name="academicServiceRequestSituationType" key="label.net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequest.academicServiceRequestSituationType">
 			</fr:slot>
 			<fr:slot name="finalSituationDate" key="label.date"/>
-			<fr:slot name="employee" key="label.net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequest.employee.person.name" layout="null-as-label">
+			<fr:slot name="creator" key="label.net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequest.employee.person.name" layout="null-as-label">
 				<fr:property name="label" value=" - "/>
 				<fr:property name="subLayout" value="values"/>
-				<fr:property name="subSchema" value="responsibleEmployee.name"/>
+				<fr:property name="subSchema" value="responsible.name"/>
 			</fr:slot>
 			<fr:slot name="justification" key="label.net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequest.justification" />
 		</fr:schema>

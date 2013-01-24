@@ -6,12 +6,16 @@ import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.CurricularCourseEquivalence;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.ist.fenixWebFramework.services.Service;
 
 public class CreateCurricularCourseEquivalency extends FenixService {
 
-    @Checked("RolePredicates.MANAGER_OR_OPERATOR_PREDICATE")
+    /*
+     * ACCESSCONTROL
+     * 
+     * This method should check if the admin office should create the
+     * equivalence or not
+     */
     @Service
     public static void run(final Integer degreeCurricularPlanID, final Integer curricularCourseID,
 	    final Integer oldCurricularCourseID) {

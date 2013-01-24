@@ -2,7 +2,7 @@ package net.sourceforge.fenixedu.domain.accounting.events.gratuity;
 
 import java.math.BigDecimal;
 
-import net.sourceforge.fenixedu.domain.Employee;
+import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.accounting.EventState;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.util.Money;
@@ -14,11 +14,11 @@ import pt.ist.fenixWebFramework.security.accessControl.Checked;
 
 public class PercentageGratuityExemption extends PercentageGratuityExemption_Base {
 
-    public PercentageGratuityExemption(final Employee employee, final GratuityEvent gratuityEvent,
+    public PercentageGratuityExemption(final Person responsible, final GratuityEvent gratuityEvent,
 	    final GratuityExemptionJustificationType gratuityExemptionJustificationType, final String reason,
 	    final YearMonthDay dispatchDate, final BigDecimal percentage) {
 	super();
-	init(employee, gratuityExemptionJustificationType, reason, dispatchDate, gratuityEvent, percentage);
+	init(responsible, gratuityExemptionJustificationType, reason, dispatchDate, gratuityEvent, percentage);
     }
 
     public PercentageGratuityExemption(final GratuityEvent gratuityEvent,
@@ -27,13 +27,13 @@ public class PercentageGratuityExemption extends PercentageGratuityExemption_Bas
 	this(null, gratuityEvent, gratuityExemptionJustificationType, reason, dispatchDate, percentage);
     }
 
-    protected void init(Employee employee, GratuityExemptionJustificationType exemptionType, String reason,
+    protected void init(Person responsible, GratuityExemptionJustificationType exemptionType, String reason,
 	    YearMonthDay dispatchDate, GratuityEvent gratuityEvent, BigDecimal percentage) {
 
 	checkParameters(percentage);
 	super.setPercentage(percentage);
 
-	super.init(employee, gratuityEvent, exemptionType, reason, dispatchDate);
+	super.init(responsible, gratuityEvent, exemptionType, reason, dispatchDate);
     }
 
     private void checkParameters(BigDecimal percentage) {

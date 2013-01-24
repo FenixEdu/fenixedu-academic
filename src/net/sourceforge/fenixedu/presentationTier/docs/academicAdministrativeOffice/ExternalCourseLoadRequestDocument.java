@@ -1,11 +1,12 @@
 package net.sourceforge.fenixedu.presentationTier.docs.academicAdministrativeOffice;
 
-import net.sourceforge.fenixedu.domain.Employee;
+import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
+import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
+import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.organizationalStructure.UniversityUnit;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.ExternalCourseLoadRequest;
 import net.sourceforge.fenixedu.domain.student.Registration;
-import net.sourceforge.fenixedu.injectionCode.AccessControl;
 
 import org.apache.commons.lang.StringUtils;
 import org.joda.time.LocalDate;
@@ -35,13 +36,15 @@ public class ExternalCourseLoadRequestDocument extends AdministrativeOfficeDocum
 	addParameter("studentNumber", getStudentNumber());
 	addParameter("degreeDescription", getDegreeDescription());
 
-	final Employee employee = AccessControl.getPerson().getEmployee();
+	AdministrativeOffice administrativeOffice = getAdministrativeOffice();
+	Unit adminOfficeUnit = administrativeOffice.getUnit();
+	Person activeUnitCoordinator = adminOfficeUnit.getActiveUnitCoordinator();
 
-	addParameter("administrativeOfficeCoordinatorName", employee.getCurrentWorkingPlace().getActiveUnitCoordinator()
-		.getName());
-	addParameter("administrativeOfficeName", employee.getCurrentWorkingPlace().getName());
+	addParameter("administrativeOfficeCoordinatorName", activeUnitCoordinator.getName());
+	addParameter("administrativeOfficeName", getMLSTextContent(adminOfficeUnit.getPartyName()));
 	addParameter("institutionName", RootDomainObject.getInstance().getInstitutionUnit().getName());
 	addParameter("universityName", UniversityUnit.getInstitutionsUniversityUnit().getName());
+
 	addParameter("day", new LocalDate().toString(DD_MMMM_YYYY, getLocale()));
 
 	addParameter("numberOfCourseLoads", NumberToWordsConverter.convert(getDocumentRequest().getNumberOfCourseLoads()));

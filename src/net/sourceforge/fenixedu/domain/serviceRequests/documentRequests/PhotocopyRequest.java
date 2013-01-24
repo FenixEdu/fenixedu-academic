@@ -39,7 +39,7 @@ public class PhotocopyRequest extends PhotocopyRequest_Base {
     protected void internalChangeState(AcademicServiceRequestBean academicServiceRequestBean) {
 
 	if (academicServiceRequestBean.isToCancelOrReject() && hasEvent()) {
-	    getEvent().cancel(academicServiceRequestBean.getEmployee());
+	    getEvent().cancel(academicServiceRequestBean.getResponsible());
 
 	} else if (academicServiceRequestBean.isToConclude()) {
 	    if (!hasNumberOfPages()) {
@@ -70,10 +70,10 @@ public class PhotocopyRequest extends PhotocopyRequest_Base {
     public boolean isPossibleToSendToOtherEntity() {
 	return false;
     }
-    
+
     @Override
     public boolean isManagedWithRectorateSubmissionBatch() {
-        return false;
+	return false;
     }
 
     @Override

@@ -87,7 +87,7 @@ public class CreateMarkSheetByTeacher extends FenixService {
 		if (markSheetEnrolmentEvaluationBeans != null) {
 		    MarkSheet markSheet = curricularCourse.createNormalMarkSheet(executionCourse.getExecutionPeriod(),
 			    responsibleTeacher, evaluationDate, markSheetType, Boolean.TRUE, markSheetEnrolmentEvaluationBeans,
-			    responsibleTeacher.getPerson().getEmployee());
+			    responsibleTeacher.getPerson());
 		    enrolmetnEvaluations.addAll(markSheet.getEnrolmentEvaluations());
 		}
 	    }

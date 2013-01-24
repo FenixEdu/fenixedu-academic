@@ -1,8 +1,14 @@
 package net.sourceforge.fenixedu.domain.accounting.report.events;
 
 import java.io.Serializable;
+import java.util.Set;
 
 import net.sourceforge.fenixedu.domain.ExecutionYear;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
+import net.sourceforge.fenixedu.domain.accessControl.academicAdministration.AcademicAuthorizationGroup;
+import net.sourceforge.fenixedu.domain.accessControl.academicAdministration.AcademicOperationType;
+import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
+import net.sourceforge.fenixedu.injectionCode.AccessControl;
 
 import org.joda.time.LocalDate;
 
@@ -16,10 +22,10 @@ public class EventReportQueueJobBean implements Serializable {
     private Boolean exportPhdEvents;
     private Boolean exportResidenceEvents;
     private Boolean exportOthers;
-    private Boolean forDegreeAdministrativeOffice;
-    private Boolean forMasterDegreeAdministrativeOffice;
     private LocalDate beginDate;
     private LocalDate endDate;
+
+    private AdministrativeOffice administrativeOffice;
 
     private ExecutionYear executionYear;
 
@@ -75,22 +81,6 @@ public class EventReportQueueJobBean implements Serializable {
 	this.exportOthers = others;
     }
 
-    public Boolean getForDegreeAdministrativeOffice() {
-	return forDegreeAdministrativeOffice;
-    }
-
-    public void setForDegreeAdministrativeOffice(Boolean forDegreeAdministrativeOffice) {
-	this.forDegreeAdministrativeOffice = forDegreeAdministrativeOffice;
-    }
-
-    public Boolean getForMasterDegreeAdministrativeOffice() {
-	return forMasterDegreeAdministrativeOffice;
-    }
-
-    public void setForMasterDegreeAdministrativeOffice(Boolean forMasterDegreeAdministrativeOffice) {
-	this.forMasterDegreeAdministrativeOffice = forMasterDegreeAdministrativeOffice;
-    }
-
     public LocalDate getBeginDate() {
 	return beginDate;
     }
@@ -107,6 +97,16 @@ public class EventReportQueueJobBean implements Serializable {
 	this.endDate = endDate;
     }
 
+    public AdministrativeOffice getAdministrativeOffice() {
+	return administrativeOffice;
+    }
+
+    public void setAdministrativeOffice(AdministrativeOffice administrativeOffice) {
+	this.administrativeOffice = administrativeOffice;
+	if (administrativeOffice != null)
+	    this.exportPhdEvents = administrativeOffice.getHasAnyPhdProgram();
+    }
+
     public ExecutionYear getExecutionYear() {
 	return executionYear;
     }
@@ -115,10 +115,17 @@ public class EventReportQueueJobBean implements Serializable {
 	this.executionYear = executionYear;
     }
 
+    public Set<AdministrativeOffice> getAvailableOffices() {
+	return AcademicAuthorizationGroup.getOfficesForOperation(AccessControl.getPerson(),
+		AcademicOperationType.MANAGE_EVENT_REPORTS);
+    }
+
+    public Set<AdministrativeOffice> getAvailableOfficesForManager() {
+	return RootDomainObject.getInstance().getAdministrativeOfficesSet();
+    }
+
     public static EventReportQueueJobBean createBeanForManager() {
 	EventReportQueueJobBean bean = new EventReportQueueJobBean();
-	bean.setForDegreeAdministrativeOffice(true);
-	bean.setForMasterDegreeAdministrativeOffice(true);
 
 	bean.setExportGratuityEvents(true);
 	bean.setExportAcademicServiceRequestEvents(true);
@@ -130,25 +137,8 @@ public class EventReportQueueJobBean implements Serializable {
 	return bean;
     }
 
-    public static EventReportQueueJobBean createBeanForDegreeAdministrativeOffice() {
+    public static EventReportQueueJobBean createBeanForAdministrativeOffice() {
 	EventReportQueueJobBean bean = new EventReportQueueJobBean();
-	bean.setForDegreeAdministrativeOffice(true);
-	bean.setForMasterDegreeAdministrativeOffice(false);
-
-	bean.setExportGratuityEvents(true);
-	bean.setExportAcademicServiceRequestEvents(true);
-	bean.setExportIndividualCandidacyEvents(true);
-	bean.setExportPhdEvents(false);
-	bean.setExportResidenceEvents(false);
-	bean.setExportOthers(true);
-
-	return bean;
-    }
-
-    public static EventReportQueueJobBean createBeanForMasterDegreeAdministrativeOffcie() {
-	EventReportQueueJobBean bean = new EventReportQueueJobBean();
-	bean.setForDegreeAdministrativeOffice(false);
-	bean.setForMasterDegreeAdministrativeOffice(true);
 
 	bean.setExportGratuityEvents(true);
 	bean.setExportAcademicServiceRequestEvents(true);

@@ -2,14 +2,19 @@ package net.sourceforge.fenixedu.domain.candidacyProcess.secondCycle;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.Set;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.caseHandling.StartActivity;
 import net.sourceforge.fenixedu.dataTransferObject.person.PersonBean;
+import net.sourceforge.fenixedu.domain.AcademicProgram;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
+import net.sourceforge.fenixedu.domain.accessControl.academicAdministration.AcademicAuthorizationGroup;
+import net.sourceforge.fenixedu.domain.accessControl.academicAdministration.AcademicOperationType;
 import net.sourceforge.fenixedu.domain.accounting.events.candidacy.CandidacyExemptionJustificationType;
 import net.sourceforge.fenixedu.domain.accounting.events.candidacy.SecondCycleIndividualCandidacyEvent;
 import net.sourceforge.fenixedu.domain.accounting.events.candidacy.SecondCycleIndividualCandidacyExemption;
@@ -25,7 +30,6 @@ import net.sourceforge.fenixedu.domain.caseHandling.Activity;
 import net.sourceforge.fenixedu.domain.caseHandling.PreConditionNotValidException;
 import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.domain.period.SecondCycleCandidacyPeriod;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.student.PrecedentDegreeInformation;
 
@@ -52,7 +56,6 @@ public class SecondCycleIndividualCandidacyProcess extends SecondCycleIndividual
 	activities.add(new RejectCandidacy());
 	activities.add(new RevertApplicationToStandBy());
 	activities.add(new CopyIndividualCandidacyToNextCandidacyProcess());
-	activities.add(new SetNotAcceptedState());
     }
 
     private SecondCycleIndividualCandidacyProcess() {
@@ -101,7 +104,7 @@ public class SecondCycleIndividualCandidacyProcess extends SecondCycleIndividual
 
     @Override
     public boolean canExecuteActivity(IUserView userView) {
-	return isDegreeAdministrativeOfficeEmployee(userView) || userView.hasRoleType(RoleType.SCIENTIFIC_COUNCIL)
+	return isAllowedToManageProcess(this, userView) || userView.hasRoleType(RoleType.SCIENTIFIC_COUNCIL)
 		|| userView.hasRoleType(RoleType.COORDINATOR);
     }
 
@@ -182,13 +185,15 @@ public class SecondCycleIndividualCandidacyProcess extends SecondCycleIndividual
 	return (ExecutionYear) super.getCandidacyExecutionInterval();
     }
 
-    static private boolean isDegreeAdministrativeOfficeEmployee(IUserView userView) {
-	return userView.hasRoleType(RoleType.ACADEMIC_ADMINISTRATIVE_OFFICE)
-		&& userView.getPerson().getEmployeeAdministrativeOffice().isDegree();
-    }
-    
-    static private boolean isCoordenator(IUserView userView){
-	return userView.hasRoleType(RoleType.COORDINATOR);
+    static private boolean isAllowedToManageProcess(SecondCycleIndividualCandidacyProcess process, IUserView userView) {
+	Set<AcademicProgram> programs = AcademicAuthorizationGroup.getProgramsForOperation(userView.getPerson(),
+		AcademicOperationType.MANAGE_INDIVIDUAL_CANDIDACIES);
+
+	if (process == null || process.getCandidacy() == null)
+	    return false;
+
+	return !Collections.disjoint(programs, process.getCandidacy().getSelectedDegrees());
+
     }
 
     private void editFormerIstStudentNumber(SecondCycleIndividualCandidacyProcessBean bean) {
@@ -220,7 +225,7 @@ public class SecondCycleIndividualCandidacyProcess extends SecondCycleIndividual
 
 	@Override
 	public void checkPreConditions(SecondCycleIndividualCandidacyProcess process, IUserView userView) {
-	    if (!isDegreeAdministrativeOfficeEmployee(userView)) {
+	    if (!isAllowedToManageProcess(process, userView)) {
 		throw new PreConditionNotValidException();
 	    }
 
@@ -241,7 +246,7 @@ public class SecondCycleIndividualCandidacyProcess extends SecondCycleIndividual
 
 	@Override
 	public void checkPreConditions(SecondCycleIndividualCandidacyProcess process, IUserView userView) {
-	    if (!isDegreeAdministrativeOfficeEmployee(userView)) {
+	    if (!isAllowedToManageProcess(process, userView)) {
 		throw new PreConditionNotValidException();
 	    }
 	    if (process.isCandidacyCancelled()) {
@@ -262,7 +267,7 @@ public class SecondCycleIndividualCandidacyProcess extends SecondCycleIndividual
 
 	@Override
 	public void checkPreConditions(SecondCycleIndividualCandidacyProcess process, IUserView userView) {
-	    if (!isDegreeAdministrativeOfficeEmployee(userView)) {
+	    if (!isAllowedToManageProcess(process, userView)) {
 		throw new PreConditionNotValidException();
 	    }
 	    if (process.isCandidacyCancelled() || process.isCandidacyAccepted() || process.hasRegistrationForCandidacy()) {
@@ -285,7 +290,7 @@ public class SecondCycleIndividualCandidacyProcess extends SecondCycleIndividual
 
 	@Override
 	public void checkPreConditions(SecondCycleIndividualCandidacyProcess process, IUserView userView) {
-	    if (!isDegreeAdministrativeOfficeEmployee(userView) && !isCoordenator(userView)) {
+	    if (!isAllowedToManageProcess(process, userView) && !userView.hasRoleType(RoleType.COORDINATOR)) {
 		throw new PreConditionNotValidException();
 	    }
 
@@ -306,7 +311,8 @@ public class SecondCycleIndividualCandidacyProcess extends SecondCycleIndividual
 	protected SecondCycleIndividualCandidacyProcess executeActivity(SecondCycleIndividualCandidacyProcess process,
 		IUserView userView, Object object) {
 	    SecondCycleIndividualCandidacyResultBean bean = (SecondCycleIndividualCandidacyResultBean) object;
-	    SecondCycleIndividualCandidacySeriesGrade seriesGrade = process.getCandidacy().getSecondCycleIndividualCandidacySeriesGradeForDegree(bean.getDegree());
+	    SecondCycleIndividualCandidacySeriesGrade seriesGrade = process.getCandidacy()
+		    .getSecondCycleIndividualCandidacySeriesGradeForDegree(bean.getDegree());
 	    seriesGrade.setAffinity(bean.getAffinity());
 	    seriesGrade.setProfessionalExperience(bean.getProfessionalExperience());
 	    seriesGrade.setDegreeNature(bean.getDegreeNature());
@@ -323,7 +329,7 @@ public class SecondCycleIndividualCandidacyProcess extends SecondCycleIndividual
 
 	@Override
 	public void checkPreConditions(SecondCycleIndividualCandidacyProcess process, IUserView userView) {
-	    if (!isDegreeAdministrativeOfficeEmployee(userView)) {
+	    if (!isAllowedToManageProcess(process, userView)) {
 		throw new PreConditionNotValidException();
 	    }
 	    if (!process.isCandidacyInStandBy() || process.hasAnyPaymentForCandidacy()) {
@@ -343,7 +349,7 @@ public class SecondCycleIndividualCandidacyProcess extends SecondCycleIndividual
 
 	@Override
 	public void checkPreConditions(SecondCycleIndividualCandidacyProcess process, IUserView userView) {
-	    if (!isDegreeAdministrativeOfficeEmployee(userView)) {
+	    if (!isAllowedToManageProcess(process, userView)) {
 		throw new PreConditionNotValidException();
 	    }
 
@@ -377,11 +383,12 @@ public class SecondCycleIndividualCandidacyProcess extends SecondCycleIndividual
 	    return bean.getSelectedDegree().getLastActiveDegreeCurricularPlan();
 	}
     }
+
     static private class ChangeIndividualCandidacyState extends Activity<SecondCycleIndividualCandidacyProcess> {
 
 	@Override
 	public void checkPreConditions(SecondCycleIndividualCandidacyProcess process, IUserView userView) {
-	    if (!isDegreeAdministrativeOfficeEmployee(userView)) {
+	    if (!isAllowedToManageProcess(process, userView)) {
 		throw new PreConditionNotValidException();
 	    }
 
@@ -405,13 +412,14 @@ public class SecondCycleIndividualCandidacyProcess extends SecondCycleIndividual
 	    process.getCandidacy().setState(bean.getState());
 	    return process;
 	}
-	
+
     }
+
     static private class EditPublicCandidacyPersonalInformation extends Activity<SecondCycleIndividualCandidacyProcess> {
 
 	@Override
 	public void checkPreConditions(SecondCycleIndividualCandidacyProcess process, IUserView userView) {
-		if (!process.isCandidacyInStandBy()) {
+	    if (!process.isCandidacyInStandBy()) {
 		throw new PreConditionNotValidException();
 	    }
 	}
@@ -434,7 +442,7 @@ public class SecondCycleIndividualCandidacyProcess extends SecondCycleIndividual
 
 	@Override
 	public void checkPreConditions(SecondCycleIndividualCandidacyProcess process, IUserView userView) {
-		if (!process.isCandidacyInStandBy()) {
+	    if (!process.isCandidacyInStandBy()) {
 		throw new PreConditionNotValidException();
 	    }
 	}
@@ -458,7 +466,7 @@ public class SecondCycleIndividualCandidacyProcess extends SecondCycleIndividual
 
 	@Override
 	public void checkPreConditions(SecondCycleIndividualCandidacyProcess process, IUserView userView) {
-		if (!process.isCandidacyInStandBy()) {
+	    if (!process.isCandidacyInStandBy()) {
 		throw new PreConditionNotValidException();
 	    }
 	}
@@ -488,10 +496,10 @@ public class SecondCycleIndividualCandidacyProcess extends SecondCycleIndividual
 
 	@Override
 	public void checkPreConditions(SecondCycleIndividualCandidacyProcess process, IUserView userView) {
-	    if (!isDegreeAdministrativeOfficeEmployee(userView)) {
+	    if (!isAllowedToManageProcess(process, userView)) {
 		throw new PreConditionNotValidException();
 	    }
-	    
+
 	    if (process.isCandidacyCancelled()) {
 		throw new PreConditionNotValidException();
 	    }
@@ -510,7 +518,7 @@ public class SecondCycleIndividualCandidacyProcess extends SecondCycleIndividual
 
 	@Override
 	public void checkPreConditions(SecondCycleIndividualCandidacyProcess process, IUserView userView) {
-	    if (!isDegreeAdministrativeOfficeEmployee(userView)) {
+	    if (!isAllowedToManageProcess(process, userView)) {
 		throw new PreConditionNotValidException();
 	    }
 
@@ -549,7 +557,7 @@ public class SecondCycleIndividualCandidacyProcess extends SecondCycleIndividual
 
 	@Override
 	public void checkPreConditions(SecondCycleIndividualCandidacyProcess process, IUserView userView) {
-	    if (!isDegreeAdministrativeOfficeEmployee(userView)) {
+	    if (!isAllowedToManageProcess(process, userView)) {
 		throw new PreConditionNotValidException();
 	    }
 
@@ -571,7 +579,7 @@ public class SecondCycleIndividualCandidacyProcess extends SecondCycleIndividual
 
 	@Override
 	public void checkPreConditions(SecondCycleIndividualCandidacyProcess process, IUserView userView) {
-	    if (!isDegreeAdministrativeOfficeEmployee(userView)) {
+	    if (!isAllowedToManageProcess(process, userView)) {
 		throw new PreConditionNotValidException();
 	    }
 
@@ -646,7 +654,7 @@ public class SecondCycleIndividualCandidacyProcess extends SecondCycleIndividual
 
 	@Override
 	public void checkPreConditions(SecondCycleIndividualCandidacyProcess process, IUserView userView) {
-	    if (!isDegreeAdministrativeOfficeEmployee(userView)) {
+	    if (!isAllowedToManageProcess(process, userView)) {
 		throw new PreConditionNotValidException();
 	    }
 	}
@@ -669,7 +677,7 @@ public class SecondCycleIndividualCandidacyProcess extends SecondCycleIndividual
 
 	@Override
 	public void checkPreConditions(SecondCycleIndividualCandidacyProcess process, IUserView userView) {
-	    if (!isDegreeAdministrativeOfficeEmployee(userView)) {
+	    if (!isAllowedToManageProcess(process, userView)) {
 		throw new PreConditionNotValidException();
 	    }
 	    if (process.isCandidacyCancelled() || !process.isCandidacyInStandBy()) {
@@ -689,7 +697,7 @@ public class SecondCycleIndividualCandidacyProcess extends SecondCycleIndividual
 
 	@Override
 	public void checkPreConditions(SecondCycleIndividualCandidacyProcess process, IUserView userView) {
-	    if (!isDegreeAdministrativeOfficeEmployee(userView)) {
+	    if (!isAllowedToManageProcess(process, userView)) {
 		throw new PreConditionNotValidException();
 	    }
 
@@ -738,7 +746,7 @@ public class SecondCycleIndividualCandidacyProcess extends SecondCycleIndividual
 	@Override
 	public void checkPreConditions(SecondCycleIndividualCandidacyProcess process, IUserView userView) {
 
-	    if (!isDegreeAdministrativeOfficeEmployee(userView)) {
+	    if (!isAllowedToManageProcess(process, userView)) {
 		throw new PreConditionNotValidException();
 	    }
 
@@ -770,7 +778,7 @@ public class SecondCycleIndividualCandidacyProcess extends SecondCycleIndividual
 	    SecondCycleIndividualCandidacyEvent event = (SecondCycleIndividualCandidacyEvent) newProcess.getCandidacy()
 		    .getEvent();
 
-	    new SecondCycleIndividualCandidacyExemption(userView.getPerson().getEmployee(), event,
+	    new SecondCycleIndividualCandidacyExemption(userView.getPerson(), event,
 		    CandidacyExemptionJustificationType.TRANSFERED_APPLICATION);
 
 	    List<IndividualCandidacyDocumentFile> documents = process.getCandidacy().getDocuments();
@@ -790,28 +798,6 @@ public class SecondCycleIndividualCandidacyProcess extends SecondCycleIndividual
 	@Override
 	public Boolean isVisibleForCoordinator() {
 	    return false;
-	}
-
-    }
-
-    private void copyTo(SecondCycleCandidacyPeriod copyDestinationPeriod) {
-	SecondCycleCandidacyProcess secondCycleCandidacyProcess = copyDestinationPeriod.getSecondCycleCandidacyProcess();
-
-    }
-
-    static private class SetNotAcceptedState extends Activity<SecondCycleIndividualCandidacyProcess> {
-
-	@Override
-	public void checkPreConditions(SecondCycleIndividualCandidacyProcess process, IUserView userView) {
-	    throw new PreConditionNotValidException();
-	}
-
-	@Override
-	protected SecondCycleIndividualCandidacyProcess executeActivity(SecondCycleIndividualCandidacyProcess process,
-		IUserView userView, Object object) {
-	    process.getCandidacy().setState(IndividualCandidacyState.NOT_ACCEPTED);
-
-	    return process;
 	}
 
     }

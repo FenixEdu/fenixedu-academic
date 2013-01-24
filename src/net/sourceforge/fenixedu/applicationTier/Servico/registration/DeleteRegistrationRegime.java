@@ -1,11 +1,12 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.registration;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.domain.student.RegistrationRegime;
+import pt.ist.fenixWebFramework.services.Service;
 
-public class DeleteRegistrationRegime extends FenixService {
+public class DeleteRegistrationRegime {
 
-    public void run(final RegistrationRegime regime) {
+    @Service
+    public static void run(final RegistrationRegime regime) {
 	regime.delete();
     }
 }

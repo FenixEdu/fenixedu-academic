@@ -12,8 +12,6 @@ import net.sourceforge.fenixedu.util.Money;
 
 import org.joda.time.DateTime;
 
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
-
 public class ProgramCertificateRequestPR extends ProgramCertificateRequestPR_Base {
 
     protected ProgramCertificateRequestPR() {
@@ -35,7 +33,6 @@ public class ProgramCertificateRequestPR extends ProgramCertificateRequestPR_Bas
 	}
     }
 
-    @Checked("PostingRulePredicates.editPredicate")
     public ProgramCertificateRequestPR edit(final Money certificateAmount, final Money amountFirstPage, final Money amountPerPage) {
 	deactivate();
 	return new ProgramCertificateRequestPR(getServiceAgreementTemplate(), new DateTime().minus(1000), null,

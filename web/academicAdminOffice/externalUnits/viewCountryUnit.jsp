@@ -5,9 +5,7 @@
 
 <html:xhtml/>
 
-<logic:present role="ACADEMIC_ADMINISTRATIVE_OFFICE">
-
-<em><bean:message key="label.academicAdminOffice" bundle="ACADEMIC_OFFICE_RESOURCES"/></em>
+<br />
 <h2><bean:message key="label.externalUnits.country" bundle="ACADEMIC_OFFICE_RESOURCES"/>: <bean:write name="unitResultBean" property="unit.name"/> </h2>
 
 <bean:define id="unitId">&amp;oid=<bean:write name="unitResultBean" property="unit.idInternal"/></bean:define>
@@ -92,5 +90,3 @@
 		<em><bean:message key="label.externalUnits.noExternalCurricularCourses" bundle="ACADEMIC_OFFICE_RESOURCES"/></em>
 	</p>
 </logic:empty>
-
-</logic:present>

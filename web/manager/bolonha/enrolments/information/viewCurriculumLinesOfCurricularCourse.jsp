@@ -5,12 +5,16 @@
 
 <html:xhtml />
 
-<logic:present role="MANAGER">
 
-	<h2><bean:message key="label.curricular.course.from.curriculum" bundle="ACADEMIC_OFFICE_RESOURCES" /> <bean:write name="curricularCourse" property="name" /></h2>
-	
-	<h3><bean:message key="label.student.enrolments" bundle="ACADEMIC_OFFICE_RESOURCES" /></h3>
-	
+<h2><bean:message key="label.curricular.course.from.curriculum" bundle="ACADEMIC_OFFICE_RESOURCES" /> <bean:write name="curricularCourse" property="name" /></h2>
+
+<h3><bean:message key="label.student.enrolments" bundle="ACADEMIC_OFFICE_RESOURCES" /></h3>
+
+<logic:empty name="curricularCourse" property="curriculumModules">
+	<bean:message key="message.curricular.course.has.no.enrolments" bundle="ACADEMIC_OFFICE_RESOURCES" />
+</logic:empty>
+
+<logic:notEmpty name="curricularCourse" property="curriculumModules">	
 	<fr:view name="curricularCourse" property="curriculumModules">
 		<fr:schema bundle="ACADEMIC_OFFICE_RESOURCES" type="net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumLine">
 			<fr:slot name="student.number" key="label.studentNumber" />
@@ -24,5 +28,4 @@
 			<fr:property name="sortBy" value="executionYear.name" />
 		</fr:layout>
 	</fr:view>
-
-</logic:present>
+</logic:notEmpty>

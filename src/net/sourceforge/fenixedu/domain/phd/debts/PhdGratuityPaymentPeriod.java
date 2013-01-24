@@ -9,8 +9,6 @@ import org.joda.time.DateTimeFieldType;
 import org.joda.time.LocalDate;
 import org.joda.time.Partial;
 
-import pt.ist.fenixWebFramework.services.Service;
-
 public class PhdGratuityPaymentPeriod extends PhdGratuityPaymentPeriod_Base {
 
     public PhdGratuityPaymentPeriod(int dayStart, int monthStart, int dayEnd, int monthEnd, int dayLastPayment,
@@ -30,7 +28,7 @@ public class PhdGratuityPaymentPeriod extends PhdGratuityPaymentPeriod_Base {
 
     public PhdGratuityPaymentPeriod(Partial start, Partial end, Partial lastPaymentDay) {
 	super();
-	init(start,end,lastPaymentDay);
+	init(start, end, lastPaymentDay);
     }
 
     public int getMonthStart() {

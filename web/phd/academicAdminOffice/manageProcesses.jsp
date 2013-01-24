@@ -4,11 +4,7 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr" %>
 
-
-<logic:present role="ACADEMIC_ADMINISTRATIVE_OFFICE">
-
 <%-- ### Title #### --%>
-<em><bean:message  key="label.phd.academicAdminOffice.breadcrumb" bundle="PHD_RESOURCES"/></em>
 <h2><bean:message key="label.phd.manageProcesses" bundle="PHD_RESOURCES" /></h2>
 
 <%-- ### End of Title ### --%>
@@ -54,7 +50,7 @@
 		        <fr:property name="saveOptions" value="true"/>
 			</fr:slot>
 			<fr:slot name="phdProgram" layout="menu-select">
-				<fr:property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.Action.phd.PhdProgramsProvider" />
+				<fr:property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.Action.phd.PhdProgramsFilteredProvider" />
 				<fr:property name="format" value="${name}" />
 			</fr:slot>
 			<fr:slot name="processState" layout="menu-select-postback">
@@ -174,7 +170,5 @@
 <%--  ### End of Buttons (e.g. Submit)  ### --%>
 
 </fr:form>
-
-</logic:present>
 
 

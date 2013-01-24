@@ -9,10 +9,7 @@
 <%@page import="net.sourceforge.fenixedu.presentationTier.Action.phd.academicAdminOffice.PhdIndividualProgramProcessDA" %>
 <%@page import="net.sourceforge.fenixedu.domain.phd.email.PhdIndividualProgramProcessEmailBean" %>
 
-<logic:present role="ACADEMIC_ADMINISTRATIVE_OFFICE">
-
 <%-- ### Title #### --%>
-<em><bean:message  key="label.phd.academicAdminOffice.breadcrumb" bundle="PHD_RESOURCES"/></em>
 <h2><bean:message key="label.phd.manage.emails.create" bundle="PHD_RESOURCES" /></h2>
 <%-- ### End of Title ### --%>
 
@@ -193,5 +190,3 @@ div.compose-email table .col2 { width: 700px; }
   	<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit"><bean:message bundle="PHD_RESOURCES" key="label.submit"/></html:submit>	
 </fr:form>
 
-
-</logic:present>

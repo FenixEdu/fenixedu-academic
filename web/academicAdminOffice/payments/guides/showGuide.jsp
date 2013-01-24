@@ -4,9 +4,6 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr" %>
 
-<logic:present role="ACADEMIC_ADMINISTRATIVE_OFFICE">
-
-<em><bean:message key="label.payments" bundle="ACADEMIC_OFFICE_RESOURCES"/></em>
 <h2><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.payments.guide"/></h2>
 
 <p class="mtop15 mbottom05"><strong><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.payments.person"/></strong></p>
@@ -49,5 +46,3 @@
 <logic:empty name="paymentsManagementDTO" property="selectedEntries">
 	<span class="error"><!-- Error messages go here --><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.payments.not.found"/></span>
 </logic:empty>
-
-</logic:present>

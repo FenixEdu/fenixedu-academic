@@ -90,7 +90,7 @@ abstract public class PhdAlert extends PhdAlert_Base {
     }
 
     protected UnitBasedSender getSender() {
-	AdministrativeOffice administrativeOffice = AdministrativeOffice.readMasterDegreeAdministrativeOffice();
+	AdministrativeOffice administrativeOffice = this.getProcess().getAdministrativeOffice();
 	return administrativeOffice.getUnit().getUnitBasedSenderSet().iterator().next();
     }
 }

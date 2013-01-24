@@ -29,7 +29,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 
-@Mapping(path = "/phdAccountingEventsManagement", module = "academicAdminOffice")
+@Mapping(path = "/phdAccountingEventsManagement", module = "academicAdministration")
 @Forwards({ @Forward(name = "chooseEventType", path = "/phd/academicAdminOffice/payments/chooseEventType.jsp"),
 	@Forward(name = "chooseYear", path = "/phd/academicAdminOffice/payments/chooseYear.jsp"),
 	@Forward(name = "chooseYear2", path = "/phd/academicAdminOffice/payments/chooseYear2.jsp"),
@@ -157,8 +157,8 @@ public class PhdAccountingEventsManagementDA extends PhdProcessDA {
 
 	try {
 	    getProcess(request).getThesisProcess().createRequestFee();
-	    addActionMessage("success", request, "message.phd.accounting.events.create.thesis.request.fee.created.with.success");	    
-	} catch(DomainException e) {
+	    addActionMessage("success", request, "message.phd.accounting.events.create.thesis.request.fee.created.with.success");
+	} catch (DomainException e) {
 	    addErrorMessage(request, e.getKey(), e.getArgs());
 	}
 

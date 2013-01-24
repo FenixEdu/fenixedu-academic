@@ -5,9 +5,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.applicationTier.factoryExecutors.DeleteRegistrationActualInfoFactoryExecutor;
 import net.sourceforge.fenixedu.dataTransferObject.student.RegistrationStateBean;
-import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.exceptions.DomainExceptionWithLabelFormatter;
 import net.sourceforge.fenixedu.domain.student.Registration;
@@ -29,9 +27,9 @@ import pt.ist.fenixWebFramework.struts.annotations.Tile;
  * @author - Shezad Anavarali (shezad@ist.utl.pt)
  * 
  */
-@Mapping(path = "/manageRegistrationState", module = "academicAdminOffice")
+@Mapping(path = "/manageRegistrationState", module = "academicAdministration")
 @Forwards({
-	@Forward(name = "showRegistrationStates", path = "/academicAdminOffice/student/registration/manageRegistrationState.jsp", tileProperties = @Tile(title = "private.academicadministrativeoffice.studentoperations.viewstudents")),
+	@Forward(name = "showRegistrationStates", path = "/academicAdminOffice/student/registration/manageRegistrationState.jsp"),
 	@Forward(name = "deleteActualInfoConfirm", path = "/academicAdminOffice/student/registration/deleteRegistrationActualInfo.jsp") })
 public class ManageRegistrationStateDA extends FenixDispatchAction {
 
@@ -70,29 +68,6 @@ public class ManageRegistrationStateDA extends FenixDispatchAction {
 	try {
 	    executeFactoryMethod(new RegistrationStateDeleter(Integer.valueOf(request.getParameter("registrationStateId"))));
 	    addActionMessage(request, "message.success.state.delete");
-	} catch (DomainException e) {
-	    addActionMessage(request, e.getMessage());
-	}
-
-	return prepare(mapping, actionForm, request, response);
-    }
-
-    public ActionForward deleteActualInfoConfirm(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-	    HttpServletResponse response) throws FenixFilterException, FenixServiceException {
-
-	getAndTransportRegistration(request);
-	request.setAttribute("executionYear", ExecutionYear.readCurrentExecutionYear().getYear());
-	return mapping.findForward("deleteActualInfoConfirm");
-    }
-
-    public ActionForward deleteActualInfo(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-	    HttpServletResponse response) throws FenixFilterException, FenixServiceException {
-
-	Registration registration = getAndTransportRegistration(request);
-
-	try {
-	    executeFactoryMethod(new DeleteRegistrationActualInfoFactoryExecutor(registration));
-	    addActionMessage(request, "message.success.deleteActualInfo");
 	} catch (DomainException e) {
 	    addActionMessage(request, e.getMessage());
 	}

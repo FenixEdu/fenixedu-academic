@@ -22,8 +22,8 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorized
 import net.sourceforge.fenixedu.dataTransferObject.administrativeOffice.dismissal.DismissalBean.SelectedCurricularCourse;
 import net.sourceforge.fenixedu.dataTransferObject.administrativeOffice.studentEnrolment.NoCourseGroupEnrolmentBean;
 import net.sourceforge.fenixedu.dataTransferObject.degreeAdministrativeOffice.gradeSubmission.MarkSheetEnrolmentEvaluationBean;
-import net.sourceforge.fenixedu.domain.accessControl.PermissionType;
-import net.sourceforge.fenixedu.domain.accessControl.academicAdminOffice.AdministrativeOfficePermission;
+import net.sourceforge.fenixedu.domain.accessControl.academicAdministration.AcademicAuthorizationGroup;
+import net.sourceforge.fenixedu.domain.accessControl.academicAdministration.AcademicOperationType;
 import net.sourceforge.fenixedu.domain.accounting.events.EnrolmentOutOfPeriodEvent;
 import net.sourceforge.fenixedu.domain.accounting.events.ImprovementOfApprovedEnrolmentEvent;
 import net.sourceforge.fenixedu.domain.accounting.events.gratuity.GratuityEvent;
@@ -141,6 +141,7 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
     };
 
     public static final Comparator<StudentCurricularPlan> COMPARATOR_BY_DEGREE_TYPE = new Comparator<StudentCurricularPlan>() {
+	@Override
 	public int compare(final StudentCurricularPlan studentCurricularPlan1, final StudentCurricularPlan studentCurricularPlan2) {
 	    final DegreeType degreeType1 = studentCurricularPlan1.getDegreeType();
 	    final DegreeType degreeType2 = studentCurricularPlan2.getDegreeType();
@@ -156,6 +157,7 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
     };
 
     static final public Comparator<StudentCurricularPlan> DATE_COMPARATOR = new Comparator<StudentCurricularPlan>() {
+	@Override
 	public int compare(StudentCurricularPlan leftState, StudentCurricularPlan rightState) {
 	    int comparationResult = leftState.getStartDateYearMonthDay().compareTo(rightState.getStartDateYearMonthDay());
 	    return (comparationResult == 0) ? leftState.getIdInternal().compareTo(rightState.getIdInternal()) : comparationResult;
@@ -163,6 +165,7 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
     };
 
     static final public Comparator<StudentCurricularPlan> COMPARATOR_BY_STUDENT_IST_ID = new Comparator<StudentCurricularPlan>() {
+	@Override
 	public int compare(final StudentCurricularPlan redSCP, final StudentCurricularPlan blueSCP) {
 	    return redSCP.getPerson().getUsername() == null ? -1 : (blueSCP.getPerson().getUsername() == null ? 1 : redSCP
 		    .getPerson().getUsername().compareTo(blueSCP.getPerson().getUsername()));
@@ -1224,6 +1227,7 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 
 	List<CurricularCourse> result = (List<CurricularCourse>) CollectionUtils.collect(studentApprovedEnrollments,
 		new Transformer() {
+		    @Override
 		    final public Object transform(Object obj) {
 			Enrolment enrollment = (Enrolment) obj;
 
@@ -1285,6 +1289,7 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 	List studentApprovedEnrollments = getStudentEnrollmentsWithApprovedState();
 
 	List<CurricularCourse> result = (List) CollectionUtils.collect(studentApprovedEnrollments, new Transformer() {
+	    @Override
 	    final public Object transform(Object obj) {
 		Enrolment enrollment = (Enrolment) obj;
 
@@ -1358,6 +1363,7 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 
     final public boolean isCurricularCourseEnrolled(CurricularCourse curricularCourse) {
 	List result = (List) CollectionUtils.collect(getStudentEnrollmentsWithEnrolledState(), new Transformer() {
+	    @Override
 	    final public Object transform(Object obj) {
 		Enrolment enrollment = (Enrolment) obj;
 		return enrollment.getCurricularCourse();
@@ -1660,6 +1666,7 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 
     private List<CurricularCourse> getStudentNotNeedToEnrollCurricularCourses() {
 	return (List<CurricularCourse>) CollectionUtils.collect(getNotNeedToEnrollCurricularCourses(), new Transformer() {
+	    @Override
 	    final public Object transform(Object obj) {
 		NotNeedToEnrollInCurricularCourse notNeedToEnrollInCurricularCourse = (NotNeedToEnrollInCurricularCourse) obj;
 		return notNeedToEnrollInCurricularCourse.getCurricularCourse();
@@ -1979,16 +1986,17 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
     }
 
     // Improvements
-    final public void createEnrolmentEvaluationForImprovement(final Collection<Enrolment> toCreate, final Employee employee,
+    final public void createEnrolmentEvaluationForImprovement(final Collection<Enrolment> toCreate, final Person person,
 	    final ExecutionSemester executionSemester) {
+
 	final Collection<EnrolmentEvaluation> created = new HashSet<EnrolmentEvaluation>();
 
 	for (final Enrolment enrolment : toCreate) {
-	    created.add(enrolment.createEnrolmentEvaluationForImprovement(employee, executionSemester));
+	    created.add(enrolment.createEnrolmentEvaluationForImprovement(person, executionSemester));
 	}
 
 	if (isToPayImprovementOfApprovedEnrolments()) {
-	    new ImprovementOfApprovedEnrolmentEvent(employee.getAdministrativeOffice(), getPerson(), created);
+	    new ImprovementOfApprovedEnrolmentEvent(this.getDegree().getAdministrativeOffice(), getPerson(), created);
 	}
     }
 
@@ -2312,7 +2320,6 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 		cycleType);
     }
 
-    @Checked("RolePredicates.MANAGER_OR_ACADEMIC_ADMINISTRATIVE_OFFICE_PREDICATE")
     final public Credits createNewCreditsDismissal(CourseGroup courseGroup, CurriculumGroup curriculumGroup,
 	    Collection<SelectedCurricularCourse> dismissals, Collection<IEnrolment> enrolments, Double givenCredits,
 	    ExecutionSemester executionSemester) {
@@ -2356,7 +2363,6 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 	return null;
     }
 
-    @Checked("RolePredicates.MANAGER_OR_ACADEMIC_ADMINISTRATIVE_OFFICE_PREDICATE")
     final public Equivalence createNewEquivalenceDismissal(CourseGroup courseGroup, CurriculumGroup curriculumGroup,
 	    Collection<SelectedCurricularCourse> dismissals, Collection<IEnrolment> enrolments, Double givenCredits,
 	    Grade givenGrade, ExecutionSemester executionSemester) {
@@ -2367,7 +2373,6 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 		givenGrade, executionSemester);
     }
 
-    @Checked("RolePredicates.MANAGER_OR_ACADEMIC_ADMINISTRATIVE_OFFICE_PREDICATE")
     final public Substitution createNewSubstitutionDismissal(CourseGroup courseGroup, CurriculumGroup curriculumGroup,
 	    Collection<SelectedCurricularCourse> dismissals, Collection<IEnrolment> enrolments, Double givenCredits,
 	    ExecutionSemester executionSemester) {
@@ -2378,7 +2383,6 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 		executionSemester);
     }
 
-    @Checked("RolePredicates.MANAGER_OR_ACADEMIC_ADMINISTRATIVE_OFFICE_PREDICATE")
     public InternalSubstitution createNewInternalSubstitution(CourseGroup courseGroup, CurriculumGroup curriculumGroup,
 	    Collection<SelectedCurricularCourse> dismissals, Collection<IEnrolment> enrolments, Double givenCredits,
 	    ExecutionSemester executionSemester) {
@@ -2394,32 +2398,37 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 	    final Collection<SelectedCurricularCourse> dismissals) {
 
 	final Person person = AccessControl.getPerson();
-	final AdministrativeOfficePermission permission = getUpdateRegistrationAfterConclusionProcessPermission(person);
 
-	if (permission != null) {
-	    if (courseGroup != null) {
-		final CurriculumGroup group = findCurriculumGroupFor(courseGroup);
-		if (group != null && permission.isAppliable(group.getParentCycleCurriculumGroup())
-			&& !permission.isMember(person)) {
-		    throw new DomainException("error.StudentCurricularPlan.cannot.create.dismissals");
-		}
-	    } else if (curriculumGroup != null) {
-		if (permission.isAppliable(curriculumGroup.getParentCycleCurriculumGroup()) && !permission.isMember(person)) {
-		    throw new DomainException("error.StudentCurricularPlan.cannot.create.dismissals");
-		}
-	    } else {
-		for (final SelectedCurricularCourse selected : dismissals) {
-		    if (permission.isAppliable(selected.getCurriculumGroup().getParentCycleCurriculumGroup())
-			    && !permission.isMember(person)) {
-			throw new DomainException("error.StudentCurricularPlan.cannot.create.dismissals");
-		    }
-		}
-	    }
+	final boolean hasUpdateRegistrationAfterConclusionProcessPermission = AcademicAuthorizationGroup.getProgramsForOperation(
+		person, AcademicOperationType.UPDATE_REGISTRATION_AFTER_CONCLUSION).contains(this.getDegree());
 
-	    if (permission.isAppliable(getRegistration()) && !permission.isMember(person)) {
+	if (courseGroup != null) {
+	    final CurriculumGroup group = findCurriculumGroupFor(courseGroup);
+	    if (group != null && group.getParentCycleCurriculumGroup() != null
+		    && group.getParentCycleCurriculumGroup().isConclusionProcessed()
+		    && !hasUpdateRegistrationAfterConclusionProcessPermission) {
 		throw new DomainException("error.StudentCurricularPlan.cannot.create.dismissals");
 	    }
+	} else if (curriculumGroup != null) {
+	    if (curriculumGroup.getParentCycleCurriculumGroup() != null
+		    && curriculumGroup.getParentCycleCurriculumGroup().isConclusionProcessed()
+		    && !hasUpdateRegistrationAfterConclusionProcessPermission) {
+		throw new DomainException("error.StudentCurricularPlan.cannot.create.dismissals");
+	    }
+	} else {
+	    for (final SelectedCurricularCourse selected : dismissals) {
+		if (selected.getCurriculumGroup().getParentCycleCurriculumGroup() != null
+			&& selected.getCurriculumGroup().getParentCycleCurriculumGroup().isConclusionProcessed()
+			&& !hasUpdateRegistrationAfterConclusionProcessPermission) {
+		    throw new DomainException("error.StudentCurricularPlan.cannot.create.dismissals");
+		}
+	    }
 	}
+
+	if (getRegistration().isRegistrationConclusionProcessed() && !hasUpdateRegistrationAfterConclusionProcessPermission) {
+	    throw new DomainException("error.StudentCurricularPlan.cannot.create.dismissals");
+	}
+
     }
 
     final public Set<DegreeModule> getAllDegreeModules() {
@@ -2572,15 +2581,13 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 	boolean runRules = false;
 	Person responsible = AccessControl.getPerson();
 
-	final AdministrativeOfficePermission permission = getUpdateRegistrationAfterConclusionProcessPermission(responsible);
-
 	for (final CurriculumLineLocationBean curriculumLineLocationBean : moveCurriculumLinesBean.getCurriculumLineLocations()) {
 	    final CurriculumGroup destination = curriculumLineLocationBean.getCurriculumGroup();
 	    final CurriculumLine curriculumLine = curriculumLineLocationBean.getCurriculumLine();
 
 	    if (curriculumLine.getCurriculumGroup() != destination) {
 
-		checkPermission(responsible, permission, curriculumLineLocationBean);
+		checkPermission(responsible, curriculumLineLocationBean);
 
 		if (!destination.canAdd(curriculumLine)) {
 		    throw new DomainException("error.StudentCurricularPlan.cannot.move.curriculum.line.to.curriculum.group",
@@ -2619,15 +2626,13 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
     public void moveCurriculumLinesWithoutRules(final Person responsiblePerson,
 	    final MoveCurriculumLinesBean moveCurriculumLinesBean) {
 
-	final AdministrativeOfficePermission permission = getUpdateRegistrationAfterConclusionProcessPermission(responsiblePerson);
-
 	for (final CurriculumLineLocationBean curriculumLineLocationBean : moveCurriculumLinesBean.getCurriculumLineLocations()) {
 
 	    final CurriculumGroup destination = curriculumLineLocationBean.getCurriculumGroup();
 	    final CurriculumLine curriculumLine = curriculumLineLocationBean.getCurriculumLine();
 
 	    if (curriculumLine.getCurriculumGroup() != destination) {
-		checkPermission(responsiblePerson, permission, curriculumLineLocationBean);
+		checkPermission(responsiblePerson, curriculumLineLocationBean);
 
 		if (curriculumLine.hasExecutionPeriod()
 			&& curriculumLine.getExecutionYear().isBefore(destination.getRegistration().getStartExecutionYear())) {
@@ -2646,26 +2651,22 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 	}
     }
 
-    private void checkPermission(final Person responsiblePerson, final AdministrativeOfficePermission permission,
-	    final CurriculumLineLocationBean bean) {
+    private void checkPermission(final Person responsiblePerson, final CurriculumLineLocationBean bean) {
 
-	if (permission != null && permission.isAppliable(bean.getCurriculumGroup().getParentCycleCurriculumGroup())) {
-	    if (!permission.isMember(responsiblePerson)) {
-		throw new DomainException("error.StudentCurricularPlan.cannot.move.is.not.authorized");
-	    }
+	final boolean hasUpdateRegistrationAfterConclusionPermission = AcademicAuthorizationGroup.getProgramsForOperation(
+		responsiblePerson, AcademicOperationType.UPDATE_REGISTRATION_AFTER_CONCLUSION).contains(this.getDegree());
+
+	if (bean.getCurriculumGroup().getParentCycleCurriculumGroup() != null
+		&& bean.getCurriculumGroup().getParentCycleCurriculumGroup().isConclusionProcessed()
+		&& !hasUpdateRegistrationAfterConclusionPermission) {
+	    throw new DomainException("error.StudentCurricularPlan.cannot.move.is.not.authorized");
 	}
 
-	if (permission != null && permission.isAppliable(bean.getCurriculumLine().getParentCycleCurriculumGroup())) {
-	    if (!permission.isMember(responsiblePerson)) {
-		throw new DomainException("error.StudentCurricularPlan.cannot.move.is.not.authorized");
-	    }
+	if (bean.getCurriculumLine().getParentCycleCurriculumGroup() != null
+		&& bean.getCurriculumLine().getParentCycleCurriculumGroup().isConclusionProcessed()
+		&& !hasUpdateRegistrationAfterConclusionPermission) {
+	    throw new DomainException("error.StudentCurricularPlan.cannot.move.is.not.authorized");
 	}
-    }
-
-    private AdministrativeOfficePermission getUpdateRegistrationAfterConclusionProcessPermission(final Person person) {
-	final AdministrativeOffice office = person.getEmployeeAdministrativeOffice();
-	return office != null ? office.getPermission(PermissionType.UPDATE_REGISTRATION_AFTER_CONCLUSION,
-		person.getEmployeeCampus()) : null;
     }
 
     @SuppressWarnings("unchecked")
@@ -2675,7 +2676,7 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
     }
 
     public AdministrativeOffice getAdministrativeOffice() {
-	return AdministrativeOffice.readByAdministrativeOfficeType(getDegree().getDegreeType().getAdministrativeOfficeType());
+	return getDegree().getAdministrativeOffice();
     }
 
     public CycleCurriculumGroup getCycle(final CycleType cycleType) {
@@ -2790,16 +2791,6 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 	return isBoxStructure() ? getRoot().getNoCourseGroupCurriculumGroups() : new HashSet<NoCourseGroupCurriculumGroup>();
     }
 
-    @Checked("RolePredicates.ACADEMIC_ADMINISTRATIVE_OFFICE_PREDICATE")
-    public void deleteExecutionYearEnrolments(final ExecutionYear executionYear) {
-	for (Enrolment enrolment : getEnrolmentsByExecutionYear(executionYear)) {
-	    if (!enrolment.hasAnyAssociatedMarkSheetOrFinalGrade()) {
-		enrolment.delete();
-	    }
-	}
-
-    }
-
     public boolean hasAnyActiveRegistrationWithFirstCycleAffinity() {
 	final CycleCurriculumGroup firstCycle = getFirstCycle();
 	if (firstCycle == null) {
@@ -2839,12 +2830,12 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 	    final CurriculumGroup curriculumGroup, final OptionalCurricularCourse curricularCourse) {
 
 	final Person person = AccessControl.getPerson();
-	final AdministrativeOfficePermission permission = getUpdateRegistrationAfterConclusionProcessPermission(person);
-	if (permission != null && permission.isAppliable(enrolment.getParentCycleCurriculumGroup())) {
-	    if (!permission.isMember(person)) {
-		throw new DomainException("error.StudentCurricularPlan.cannot.move.is.not.authorized");
-	    }
-	}
+
+	if (enrolment.getParentCycleCurriculumGroup() != null
+		&& enrolment.getParentCycleCurriculumGroup().isConclusionProcessed()
+		&& !AcademicAuthorizationGroup.getProgramsForOperation(person,
+			AcademicOperationType.UPDATE_REGISTRATION_AFTER_CONCLUSION).contains(this.getDegree()))
+	    throw new DomainException("error.StudentCurricularPlan.cannot.move.is.not.authorized");
 
 	if (!hasEnrolments(enrolment)) {
 	    // if we remove this test, then check if enrolment period is before
@@ -2881,12 +2872,12 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
     public Enrolment convertOptionalEnrolmentToEnrolment(final OptionalEnrolment enrolment, final CurriculumGroup curriculumGroup) {
 
 	final Person person = AccessControl.getPerson();
-	final AdministrativeOfficePermission permission = getUpdateRegistrationAfterConclusionProcessPermission(person);
-	if (permission != null && permission.isAppliable(enrolment.getParentCycleCurriculumGroup())) {
-	    if (!permission.isMember(person)) {
-		throw new DomainException("error.StudentCurricularPlan.cannot.move.is.not.authorized");
-	    }
-	}
+
+	if (enrolment.getParentCycleCurriculumGroup() != null
+		&& enrolment.getParentCycleCurriculumGroup().isConclusionProcessed()
+		&& !AcademicAuthorizationGroup.getProgramsForOperation(person,
+			AcademicOperationType.UPDATE_REGISTRATION_AFTER_CONCLUSION).contains(this.getDegree()))
+	    throw new DomainException("error.StudentCurricularPlan.cannot.move.is.not.authorized");
 
 	if (!hasEnrolments(enrolment)) {
 	    // if we remove this test, then check if enrolment period is before
@@ -2938,7 +2929,6 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
     }
 
     @Service
-    @Checked("StudentCurricularPlanPredicates.SET_EVALUATIONS")
     public void setEvaluationsForCurriculumValidation(List<List<MarkSheetEnrolmentEvaluationBean>> enrolmentEvaluationsBeanList) {
 	for (List<MarkSheetEnrolmentEvaluationBean> evaluationsList : enrolmentEvaluationsBeanList) {
 	    setIndividualEvaluationsForCurriculumValidation(evaluationsList);
@@ -2971,7 +2961,7 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 		    enrolmentEvaluationBean.getGradeValue(), new java.util.Date(), enrolmentEvaluationBean.getEvaluationDate(),
 		    enrolmentEvaluationBean.getExecutionSemester(), enrolmentEvaluationBean.getBookReference(),
 		    enrolmentEvaluationBean.getPage(), enrolmentEvaluationBean.getGradeScale());
-	    enrolmentEvaluation.confirmSubmission(AccessControl.getPerson().getEmployee(),
+	    enrolmentEvaluation.confirmSubmission(AccessControl.getPerson(),
 		    ACADEMIC_RESOURCES.getString("message.curriculum.validation.observation"));
 
 	    enrolmentEvaluationBean.setEnrolmentEvaluationSet(Boolean.TRUE);
@@ -2981,7 +2971,6 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
     }
 
     @Service
-    @Checked("StudentCurricularPlanPredicates.SET_EVALUATIONS")
     public void editEndStageDate(LocalDate date) {
 	this.setEndStageDate(date);
     }
@@ -3041,6 +3030,16 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 	    setWhenDateTime(null);
 	else
 	    setWhenDateTime(new org.joda.time.DateTime(date.getTime()));
+    }
+
+    public boolean isAllowedToManageEnrolments() {
+	return AcademicAuthorizationGroup.getProgramsForOperation(AccessControl.getPerson(),
+		AcademicOperationType.STUDENT_ENROLMENTS).contains(this.getDegree());
+    }
+
+    public boolean isAllowedToManageAccountingEvents() {
+	return AcademicAuthorizationGroup.getProgramsForOperation(AccessControl.getPerson(),
+		AcademicOperationType.MANAGE_ACCOUNTING_EVENTS).contains(this.getDegree());
     }
 
 }

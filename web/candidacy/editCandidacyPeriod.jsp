@@ -76,7 +76,6 @@ a {border-bottom: none !important;}
 <bean:define id="processId" name="process" property="idInternal" />
 <bean:define id="processEid" name="process" property="externalId" />
 <bean:define id="processName" name="processName" />
-<bean:define id="preloadLevel" name="preLoadLevel" />
 
 <fr:hasMessages for="candidacyProcessBean" type="conversion">
 	<ul class="nobullet list6">
@@ -98,28 +97,31 @@ a {border-bottom: none !important;}
 </fr:edit>
 <br/>
 
-<h3><bean:message key='<%= "mobilityApplicationProcess.editProcess.preLoadTitle" %>' bundle="CASE_HANDLING_RESOURCES" /></h3>
-<div class="MobilityApplicationProcessCreation-PreLoadConfigurations-Frame">
-	<div class="MobilityApplicationProcessCreation-PreLoadConfigurations-Panel-<%=preloadLevel%>">
-		<div class="MobilityApplicationProcessCreation-PreLoadConfigurations-Link">
-			<a href='<%= request.getContextPath() + "/academicAdminOffice/caseHandling" + processName.toString() + ".do?method=preLoadLastConfigurations&amp;processEid=" + processEid + "&amp;processId=" + processId %>'>
-				<button <% if (preloadLevel == "Error") %> disabled="disabled" <% ; %>type='button'><bean:message key='<%= "mobilityApplicationProcess.editProcess.preLoadButton" %>' bundle="CASE_HANDLING_RESOURCES" /></button>
-			</a>
-		</div>
-		<% 	String iconName = "";
-			if(preloadLevel == "Ok") {
-			    iconName = "/images/accept_gray.gif";
-			}
-			if(preloadLevel == "Warn") {
-			    iconName = "/images/sign_notification.png";
-			}
-			if(preloadLevel == "Error") {
-			    iconName = "/images/iconRemoveOn.png";
-			}
-		%>
-		<div class="MobilityApplicationProcessCreation-PreLoadConfigurations-MessageBox">
-			<img class="MobilityApplicationProcessCreation-PreLoadConfigurations-MessageIcon" src='<%= request.getContextPath() + iconName%>' /> <span class="MobilityApplicationProcessCreation-PreLoadConfigurations-Message-<%=preloadLevel%>"><bean:message key='<%= "mobilityApplicationProcess.editProcess.preLoadMessage" + preloadLevel%>' bundle="CASE_HANDLING_RESOURCES" /></span>
+<logic:present name="preLoadLevel">
+	<bean:define id="preloadLevel" name="preLoadLevel" />
+	<h3><bean:message key='<%= "mobilityApplicationProcess.editProcess.preLoadTitle" %>' bundle="CASE_HANDLING_RESOURCES" /></h3>
+	<div class="MobilityApplicationProcessCreation-PreLoadConfigurations-Frame">
+		<div class="MobilityApplicationProcessCreation-PreLoadConfigurations-Panel-<%=preloadLevel%>">
+			<div class="MobilityApplicationProcessCreation-PreLoadConfigurations-Link">
+				<a href='<%= "caseHandling" + processName.toString() + ".do?method=preLoadLastConfigurations&amp;processEid=" + processEid + "&amp;processId=" + processId %>'>
+					<button <% if (preloadLevel == "Error") %> disabled="disabled" <% ; %>type='button'><bean:message key='<%= "mobilityApplicationProcess.editProcess.preLoadButton" %>' bundle="CASE_HANDLING_RESOURCES" /></button>
+				</a>
+			</div>
+			<% 	String iconName = "";
+				if(preloadLevel == "Ok") {
+				    iconName = "/images/accept_gray.gif";
+				}
+				if(preloadLevel == "Warn") {
+				    iconName = "/images/sign_notification.png";
+				}
+				if(preloadLevel == "Error") {
+				    iconName = "/images/iconRemoveOn.png";
+				}
+			%>
+			<div class="MobilityApplicationProcessCreation-PreLoadConfigurations-MessageBox">
+				<img class="MobilityApplicationProcessCreation-PreLoadConfigurations-MessageIcon" src='<%= request.getContextPath() + iconName%>' /> <span class="MobilityApplicationProcessCreation-PreLoadConfigurations-Message-<%=preloadLevel%>"><bean:message key='<%= "mobilityApplicationProcess.editProcess.preLoadMessage" + preloadLevel%>' bundle="CASE_HANDLING_RESOURCES" /></span>
+			</div>
 		</div>
 	</div>
-</div>
+</logic:present>
 

@@ -10,8 +10,6 @@ import net.sourceforge.fenixedu.util.Money;
 
 import org.joda.time.DateTime;
 
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
-
 public class PhdRegistrationFeePR extends PhdRegistrationFeePR_Base {
 
     private PhdRegistrationFeePR() {
@@ -25,7 +23,6 @@ public class PhdRegistrationFeePR extends PhdRegistrationFeePR_Base {
 		fixedAmount, fixedAmountPenalty);
     }
 
-    @Checked("PostingRulePredicates.editPredicate")
     public PhdRegistrationFeePR edit(final Money fixedAmount, final Money penaltyAmount) {
 	deactivate();
 	return new PhdRegistrationFeePR(new DateTime().minus(1000), null, getServiceAgreementTemplate(), fixedAmount,
@@ -59,8 +56,8 @@ public class PhdRegistrationFeePR extends PhdRegistrationFeePR_Base {
 	}
 
 	final PhdIndividualProgramProcess process = phdEvent.getProcess();
-	return PhdProgramCalendarUtil.countWorkDaysBetween(process.getCandidacyProcess().getWhenRatified(), process
-		.getWhenFormalizedRegistration()) > 20;
+	return PhdProgramCalendarUtil.countWorkDaysBetween(process.getCandidacyProcess().getWhenRatified(),
+		process.getWhenFormalizedRegistration()) > 20;
 
     }
 

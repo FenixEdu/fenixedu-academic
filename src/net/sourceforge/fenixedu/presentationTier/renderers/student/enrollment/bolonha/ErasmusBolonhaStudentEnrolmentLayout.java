@@ -41,7 +41,7 @@ public class ErasmusBolonhaStudentEnrolmentLayout extends BolonhaStudentEnrolmen
 
     protected boolean isAcademicAdminOfficeEmployee() {
 	final Person person = AccessControl.getPerson();
-	return person.hasRole(RoleType.INTERNATIONAL_RELATION_OFFICE) || super.isAcademicAdminOfficeEmployee();
+	return person.hasRole(RoleType.INTERNATIONAL_RELATION_OFFICE) || canPerformStudentEnrolments;
     }
 
     private boolean contains(List<CurricularCourse> curricularCourseList, final IDegreeModuleToEvaluate degreeModule) {
@@ -58,6 +58,7 @@ public class ErasmusBolonhaStudentEnrolmentLayout extends BolonhaStudentEnrolmen
 	}) != null;
     }
 
+    @Override
     protected void generateCurricularCoursesToEnrol(HtmlTable groupTable, StudentCurriculumGroupBean studentCurriculumGroupBean) {
 	final List<IDegreeModuleToEvaluate> coursesToEvaluate = studentCurriculumGroupBean.getSortedDegreeModulesToEvaluate();
 	generateCurricularCoursesToEnrol(groupTable, coursesToEvaluate);

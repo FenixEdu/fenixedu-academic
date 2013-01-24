@@ -5,59 +5,56 @@
 
 <html:xhtml />
 
-<logic:present role="MANAGER">
-	<bean:define id="dcpId" name="degreeCurricularPlan" property="externalId" />
-	<bean:define id="dcpIdInternal" name="degreeCurricularPlan" property="idInternal" />
-	<bean:define id="executionYearId" name="currentExecutionYear" property="idInternal" />
+<bean:define id="dcpId" name="degreeCurricularPlan" property="externalId" />
+<bean:define id="dcpIdInternal" name="degreeCurricularPlan" property="idInternal" />
+<bean:define id="executionYearId" name="currentExecutionYear" property="idInternal" />
 
-	<h2><bean:message key="title.search.curricular.courses" bundle="ACADEMIC_OFFICE_RESOURCES" /></h2>
-	
-	<fr:form action="<%= String.format("/searchCurricularCourses.do?method=search&amp;dcpId=%s", dcpId) %>" >
-		<fr:edit id="searchBean" name="searchBean" visible="false" />
-		
-		<fr:edit id="searchBean-form" name="searchBean">
-			<fr:schema type="net.sourceforge.fenixedu.presentationTier.Action.manager.curricularCourses.SearchCurricularCourseBean" bundle="ACADEMIC_OFFICE_RESOURCES">
-				<fr:slot name="name" required="true" />
-				<fr:slot name="beginExecutionYear" layout="menu-select" >
-					<fr:property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.ExecutionYearsProvider" />
-					<fr:property name="format" value="${name}" />
-				</fr:slot>
-				<fr:slot name="endExecutionYear" layout="menu-select" >
-					<fr:property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.ExecutionYearsProvider" />
-					<fr:property name="format" value="${name}" />
-				</fr:slot>
-			</fr:schema>
-		
-			<fr:destination name="invalid" path="<%= String.format("/searchCurricularCourses.do?method=searchInvalid&amp;dcpId=%s", dcpId) %>" />
+<h2><bean:message key="title.search.curricular.courses" bundle="ACADEMIC_OFFICE_RESOURCES" /></h2>
 
-			<fr:layout name="tabular">
-			</fr:layout>
-		</fr:edit>
-		
-		
-		<p><html:submit><bean:message key="button.search" bundle="ACADEMIC_OFFICE_RESOURCES" /></html:submit></p>
-	</fr:form>
+<fr:form action="<%= String.format("/searchCurricularCourses.do?method=search&amp;dcpId=%s", dcpId) %>" >
+	<fr:edit id="searchBean" name="searchBean" visible="false" />
 	
-	<logic:empty name="results">
-		<bean:message key="message.search.curricular.courses.results.empty" bundle="ACADEMIC_OFFICE_RESOURCES" />
-	</logic:empty>
+	<fr:edit id="searchBean-form" name="searchBean">
+		<fr:schema type="net.sourceforge.fenixedu.presentationTier.Action.manager.curricularCourses.SearchCurricularCourseBean" bundle="ACADEMIC_OFFICE_RESOURCES">
+			<fr:slot name="name" required="true" />
+			<fr:slot name="beginExecutionYear" layout="menu-select" >
+				<fr:property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.ExecutionYearsProvider" />
+				<fr:property name="format" value="${name}" />
+			</fr:slot>
+			<fr:slot name="endExecutionYear" layout="menu-select" >
+				<fr:property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.ExecutionYearsProvider" />
+				<fr:property name="format" value="${name}" />
+			</fr:slot>
+		</fr:schema>
 	
-	<logic:notEmpty name="results">
-		<fr:view name="results">
-			<fr:schema bundle="ACADEMIC_OFFICE_RESOURCES" type="net.sourceforge.fenixedu.domain.degreeStructure.Context">
-				<fr:slot name="childDegreeModule.nameI18N" />
-				<fr:slot name="beginExecutionPeriod.executionYear.name" />
-				<fr:slot name="beginExecutionPeriod.name" />
-			</fr:schema>
-			
-			<fr:layout name="tabular">
+		<fr:destination name="invalid" path="<%= String.format("/searchCurricularCourses.do?method=searchInvalid&amp;dcpId=%s", dcpId) %>" />
 
-				<fr:link 	name="edit" 
-							link="<%= String.format("/bolonha/curricularPlans/editCurricularCourse.faces?degreeCurricularPlanID=%s&contextID=${idInternal}&curricularCourseID=${childDegreeModule.idInternal}&organizeBy=groups&showRules=false&hideCourses=false&action=build&executionYearID=%s", dcpIdInternal, executionYearId) %>"
-							label="label.edit,APPLICATION_RESOURCES"/>
-
-			</fr:layout>
-		</fr:view>
-	</logic:notEmpty>
+		<fr:layout name="tabular">
+		</fr:layout>
+	</fr:edit>
 	
-</logic:present>
+	
+	<p><html:submit><bean:message key="button.search" bundle="ACADEMIC_OFFICE_RESOURCES" /></html:submit></p>
+</fr:form>
+
+<logic:empty name="results">
+	<bean:message key="message.search.curricular.courses.results.empty" bundle="ACADEMIC_OFFICE_RESOURCES" />
+</logic:empty>
+
+<logic:notEmpty name="results">
+	<fr:view name="results">
+		<fr:schema bundle="ACADEMIC_OFFICE_RESOURCES" type="net.sourceforge.fenixedu.domain.degreeStructure.Context">
+			<fr:slot name="childDegreeModule.nameI18N" />
+			<fr:slot name="beginExecutionPeriod.executionYear.name" />
+			<fr:slot name="beginExecutionPeriod.name" />
+		</fr:schema>
+		
+		<fr:layout name="tabular">
+
+			<fr:link 	name="edit" 
+						link="<%= String.format("/bolonha/curricularPlans/editCurricularCourse.faces?degreeCurricularPlanID=%s&contextID=${idInternal}&curricularCourseID=${childDegreeModule.idInternal}&organizeBy=groups&showRules=false&hideCourses=false&action=build&executionYearID=%s", dcpIdInternal, executionYearId) %>"
+						label="label.edit,APPLICATION_RESOURCES"/>
+
+		</fr:layout>
+	</fr:view>
+</logic:notEmpty>

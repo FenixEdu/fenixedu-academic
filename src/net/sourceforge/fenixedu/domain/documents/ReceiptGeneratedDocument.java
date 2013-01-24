@@ -2,8 +2,11 @@ package net.sourceforge.fenixedu.domain.documents;
 
 import net.sourceforge.fenixedu._development.PropertiesManager;
 import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.accessControl.Group;
+import net.sourceforge.fenixedu.domain.accessControl.RoleGroup;
 import net.sourceforge.fenixedu.domain.accounting.Receipt;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
+import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import pt.ist.fenixWebFramework.services.Service;
 
@@ -15,6 +18,11 @@ public class ReceiptGeneratedDocument extends ReceiptGeneratedDocument_Base {
 	super();
 	setSource(source);
 	init(GeneratedDocumentType.RECEIPT, addressee, operator, filename, content);
+    }
+
+    @Override
+    protected Group computePermittedGroup() {
+	return new RoleGroup(RoleType.MANAGER);
     }
 
     @Override

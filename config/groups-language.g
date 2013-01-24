@@ -43,6 +43,7 @@ P_OP : "$P" ;
 E_OP : "$E" ;
 N_OP : "$N" ;
 C_OP : "$C" ;
+O_OP : "$O" ;
 
 NUMBER : ('0'..'9')+;
 
@@ -220,6 +221,9 @@ operator
 	}
 	| C_OP^ LPAREN! argument crp:RPAREN! {
 		expand(#operator, #crp);
+	}
+	| O_OP^ LPAREN! argument orp:RPAREN! {
+		expand(#operator, #orp);
 	}
 	;
 
@@ -455,3 +459,11 @@ classOperator returns [ClassOperator operator]
 	}
 	;
 	
+oidOperator returns [OidOperator operator]
+{
+	Argument arg;
+}
+	: #(O_OP arg=argument) {
+		operator = new OidOperator(arg);
+	}
+	;

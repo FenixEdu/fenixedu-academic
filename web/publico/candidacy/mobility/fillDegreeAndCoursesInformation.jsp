@@ -113,7 +113,7 @@ padding: 0 !important;
 
 	<p class="mbottom05"><bean:message key="message.mobility.select.courses.of.associated.degrees" bundle="ACADEMIC_OFFICE_RESOURCES" /></p>
 	
-	<fr:edit id="degree.course.information.bean" name="degreeCourseInformationBean" schema="ErasmusCandidacyProcess.degreeCourseInformationBean">
+	<fr:edit id="degree.course.information.bean" name="degreeCourseInformationBean" schema="PublicErasmusCandidacyProcess.degreeCourseInformationBean">
 		<fr:layout name="tabular-editable">
 			<fr:property name="classes" value="tstyle5 thlight thright mtop05"/>
 	        <fr:property name="columnClasses" value="width12em,,tdclear tderror1"/>

@@ -96,16 +96,4 @@ PUBLIC "-//Sun Microsystems, Inc.//DTD JSP Tag Library 1.2//EN"
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 	</tag>
-	
-	<tag>
-		<name>permissionFor</name>
-		<tag-class>net.sourceforge.fenixedu.presentationTier.TagLib.phd.PermissionFor</tag-class>
-		<body-content>JSP</body-content>
-		<description>Check if current logged employee has administrative office permission</description>
-		<attribute>
-			<name>permission</name>
-			<required>true</required>
-			<rtexprvalue>true</rtexprvalue>
-		</attribute>
-	</tag>
 </taglib>

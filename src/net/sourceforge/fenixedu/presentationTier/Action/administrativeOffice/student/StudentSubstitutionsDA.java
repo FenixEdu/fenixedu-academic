@@ -3,6 +3,7 @@ package net.sourceforge.fenixedu.presentationTier.Action.administrativeOffice.st
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import net.sourceforge.fenixedu.applicationTier.Servico.administrativeOffice.dismissal.CreateNewSubstitutionDismissal;
 import net.sourceforge.fenixedu.dataTransferObject.administrativeOffice.dismissal.DismissalBean;
 
 import org.apache.struts.action.ActionForm;
@@ -13,7 +14,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 
-@Mapping(path = "/studentSubstitutions", module = "academicAdminOffice", formBean = "studentDismissalForm")
+@Mapping(path = "/studentSubstitutions", module = "academicAdministration", formBean = "studentDismissalForm")
 @Forwards({ @Forward(name = "manage", path = "/academicAdminOffice/dismissal/managementDismissals.jsp"),
 	@Forward(name = "chooseEquivalents", path = "/academicAdminOffice/dismissal/chooseSubstitutionEquivalents.jsp"),
 	@Forward(name = "visualizeRegistration", path = "/student.do?method=visualizeRegistration"),
@@ -37,8 +38,8 @@ public class StudentSubstitutionsDA extends StudentDismissalsDA {
     }
 
     @Override
-    protected String getServiceName() {
-	return "CreateNewSubstitutionDismissal";
+    protected void executeCreateDismissalService(DismissalBean dismissalBean) {
+	CreateNewSubstitutionDismissal.run(dismissalBean);
     }
 
 }

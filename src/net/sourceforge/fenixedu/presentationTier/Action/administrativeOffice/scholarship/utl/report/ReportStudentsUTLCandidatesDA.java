@@ -20,15 +20,14 @@ import org.apache.struts.action.ActionMapping;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
-@Mapping(path = "/reportStudentsUTLCandidates", module = "academicAdminOffice")
+@Mapping(path = "/reportStudentsUTLCandidates", module = "academicAdministration")
 @Forwards({
 
-	@Forward(name = "prepare", path = "/academicAdminOffice/scholarship/utl/report/prepare.jsp", tileProperties = @Tile(title = "private.academicadministrativeoffice.scholarships.utl")),
-	@Forward(name = "showReport", path = "/academicAdminOffice/scholarship/utl/report/showReport.jsp", tileProperties = @Tile(title = "private.academicadministrativeoffice.scholarships.utl")),
-	@Forward(name = "viewDetails", path = "/academicAdminOffice/scholarship/utl/report/viewDetails.jsp", tileProperties = @Tile(title = "private.academicadministrativeoffice.scholarships.utl")),
-	@Forward(name = "prepareForOneStudent", path = "/academicAdminOffice/scholarship/utl/report/prepareForOneStudent.jsp", tileProperties = @Tile(title = "private.academicadministrativeoffice.scholarships.utl")) })
+@Forward(name = "prepare", path = "/academicAdminOffice/scholarship/utl/report/prepare.jsp"),
+	@Forward(name = "showReport", path = "/academicAdminOffice/scholarship/utl/report/showReport.jsp"),
+	@Forward(name = "viewDetails", path = "/academicAdminOffice/scholarship/utl/report/viewDetails.jsp"),
+	@Forward(name = "prepareForOneStudent", path = "/academicAdminOffice/scholarship/utl/report/prepareForOneStudent.jsp") })
 
 public class ReportStudentsUTLCandidatesDA extends FenixDispatchAction {
 
@@ -42,6 +41,10 @@ public class ReportStudentsUTLCandidatesDA extends FenixDispatchAction {
     public ActionForward showReport(final ActionMapping mapping, final ActionForm actionForm, final HttpServletRequest request,
 	    final HttpServletResponse response) throws IOException {
 	ReportStudentsUTLCandidatesBean bean = getRenderedObject("bean");
+
+	if (bean == null || bean.getXlsFile() == null) {
+	    return prepare(mapping, actionForm, request, response);
+	}
 
 	POIFSFileSystem fs = new POIFSFileSystem(bean.getXlsFile());
 	HSSFWorkbook wb = new HSSFWorkbook(fs);
@@ -130,6 +133,10 @@ public class ReportStudentsUTLCandidatesDA extends FenixDispatchAction {
     public ActionForward showReportForOneStudent(final ActionMapping mapping, final ActionForm form,
 	    final HttpServletRequest request, final HttpServletResponse response) {
 	ReportStudentsUTLCandidatesBean bean = getRenderedObject("bean");
+
+	if (bean == null) {
+	    return prepareForOneStudent(mapping, form, request, response);
+	}
 
 	ReportStudentsUTLCandidates report = null;
 	if (bean.getForFirstYear()) {

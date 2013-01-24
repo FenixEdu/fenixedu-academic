@@ -12,9 +12,8 @@ import org.apache.struts.action.ActionMapping;
 
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
-@Forwards({ @Forward(name = "viewRegistrationDetails", path = "/academicAdminOffice/student/registration/viewRegistrationDetails.jsp", tileProperties = @Tile(title = "private.academicadministrativeoffice.studentoperations.viewstudents")) })
+@Forwards({ @Forward(name = "viewRegistrationDetails", path = "/academicAdminOffice/student/registration/viewRegistrationDetails.jsp") })
 public abstract class StudentRegistrationDA extends FenixDispatchAction {
 
     protected Registration getAndSetRegistration(final HttpServletRequest request) {

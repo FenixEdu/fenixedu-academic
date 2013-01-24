@@ -9,8 +9,6 @@ import net.sourceforge.fenixedu.util.Money;
 
 import org.joda.time.DateTime;
 
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
-
 public class ApprovementCertificateRequestPR extends ApprovementCertificateRequestPR_Base {
 
     private ApprovementCertificateRequestPR() {
@@ -41,7 +39,7 @@ public class ApprovementCertificateRequestPR extends ApprovementCertificateReque
 	return totalAmountOfUnits;
     }
 
-    @Checked("PostingRulePredicates.editPredicate")
+    @Override
     public ApprovementCertificateRequestPR edit(Money baseAmount, Money amountPerUnit, Money amountPerPage, Money maximumAmount) {
 
 	deactivate();

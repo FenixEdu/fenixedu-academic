@@ -5,9 +5,7 @@
 
 <html:xhtml/>
 
-<logic:present role="ACADEMIC_ADMINISTRATIVE_OFFICE">
-
-<em><bean:message key="label.academicAdminOffice" bundle="ACADEMIC_OFFICE_RESOURCES"/></em>
+<br />
 <h2><bean:message key="label.delete" bundle="ACADEMIC_OFFICE_RESOURCES"/> <bean:write name="externalCurricularCourse" property="name" /></h2>
 
 <bean:define id="eccId">oid=<bean:write name="externalCurricularCourse" property="idInternal" /></bean:define>
@@ -26,5 +24,3 @@
 	<html:submit><bean:message key="label.yes" bundle="ACADEMIC_OFFICE_RESOURCES"/></html:submit>
 	<html:cancel onclick="this.form.method.value='viewExternalCurricularCourse';"><bean:message key="label.no" bundle="ACADEMIC_OFFICE_RESOURCES"/></html:cancel>
 </html:form>
-
-</logic:present>

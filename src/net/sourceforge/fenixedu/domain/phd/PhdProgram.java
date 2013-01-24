@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.domain.phd;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashSet;
@@ -17,6 +18,7 @@ import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
+import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 
@@ -76,6 +78,16 @@ public class PhdProgram extends PhdProgram_Base {
 	}
     }
 
+    @Override
+    public DegreeType getDegreeType() {
+	return null;
+    }
+
+    @Override
+    public Collection<CycleType> getCycleTypes() {
+	return Collections.singletonList(CycleType.THIRD_CYCLE);
+    }
+
     private boolean hasAcronym(final String acronym) {
 	return getAcronym() != null && getAcronym().equalsIgnoreCase(acronym);
     }
@@ -113,7 +125,7 @@ public class PhdProgram extends PhdProgram_Base {
 
     public Set<Person> getCoordinatorsFor(ExecutionYear executionYear) {
 	if (!hasDegree()) {
-	    return Collections.EMPTY_SET;
+	    return Collections.emptySet();
 	}
 
 	final ExecutionDegree executionDegree = getDegree().getLastActiveDegreeCurricularPlan().getExecutionDegreeByYear(
@@ -153,7 +165,6 @@ public class PhdProgram extends PhdProgram_Base {
 	return getCoordinatorsFor(executionYear).contains(person);
     }
 
-    
     @Service
     static public PhdProgram create(final Degree degree, final MultiLanguageString name, final String acronym) {
 	return new PhdProgram(degree, name, acronym);

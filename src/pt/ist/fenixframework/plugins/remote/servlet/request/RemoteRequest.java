@@ -11,7 +11,7 @@ public abstract class RemoteRequest {
     public void sendResponse(final HttpServletResponse response) throws IOException {
 	response.setStatus(getStatus());
 	response.setContentType(getContentType());
-	response.setCharacterEncoding(getCharacterEncoding());
+//	response.setCharacterEncoding(getCharacterEncoding());
 	Writer writer = new BufferedWriter(new OutputStreamWriter(response.getOutputStream(), getCharacterEncoding()));
 	writer.write("<remote>");
 	writeResponseBody(writer);

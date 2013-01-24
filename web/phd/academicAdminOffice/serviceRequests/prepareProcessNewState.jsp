@@ -74,7 +74,6 @@
 			<fr:property name="classes" value="tstyle2 thlight mtop15" />
 		</fr:layout>	
 
-		<fr:destination name="invalid" path="<%= "/phdAcademicServiceRequestManagement.do?method=processNewStateInvalid&phdAcademicServiceRequestId=" + phdAcademicServiceRequestId %>" />
 		<fr:destination name="cancel" path="<%= "/phdIndividualProgramProcess.do?method=viewProcess&processId=" + phdIndividualProgramProcessId %>" />
 
 	</fr:edit>

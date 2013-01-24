@@ -1,7 +1,10 @@
 package net.sourceforge.fenixedu.domain.documents;
 
 import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.accessControl.Group;
+import net.sourceforge.fenixedu.domain.accessControl.RoleGroup;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.domain.person.RoleType;
 
 import org.joda.time.LocalDate;
 
@@ -20,6 +23,11 @@ public class AnnualIRSDeclarationDocument extends AnnualIRSDeclarationDocument_B
     @Override
     public Person getAddressee() {
 	return (Person) super.getAddressee();
+    }
+
+    @Override
+    protected Group computePermittedGroup() {
+	return new RoleGroup(RoleType.MANAGER);
     }
 
     private void checkRulesToCreate(Person addressee, Integer year) {

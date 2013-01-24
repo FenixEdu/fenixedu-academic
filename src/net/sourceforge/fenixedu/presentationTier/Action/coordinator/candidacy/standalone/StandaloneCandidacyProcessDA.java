@@ -64,24 +64,6 @@ public class StandaloneCandidacyProcessDA extends
     }
 
     @Override
-    public ActionForward prepareExecuteIntroduceCandidacyResults(ActionMapping mapping, ActionForm actionForm,
-	    HttpServletRequest request, HttpServletResponse response) {
-	throw new RuntimeException("not allowed");
-    }
-
-    @Override
-    public ActionForward prepareIntroduceCandidacyResults(ActionMapping mapping, ActionForm actionForm,
-	    HttpServletRequest request, HttpServletResponse response) {
-	throw new RuntimeException("not allowed");
-    }
-
-    @Override
-    public ActionForward executeIntroduceCandidacyResults(ActionMapping mapping, ActionForm actionForm,
-	    HttpServletRequest request, HttpServletResponse response) throws FenixFilterException, FenixServiceException {
-	throw new RuntimeException("not allowed");
-    }
-
-    @Override
     protected List<IndividualCandidacyProcess> getChildProcesses(CandidacyProcess process, HttpServletRequest request) {
 	final DegreeCurricularPlan degreeCurricularPlan = getDegreeCurricularPlan(request);
 	final List<IndividualCandidacyProcess> result = new ArrayList(super.getChildProcesses(process, request));

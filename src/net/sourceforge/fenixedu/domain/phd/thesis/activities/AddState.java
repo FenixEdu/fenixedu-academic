@@ -10,7 +10,7 @@ public class AddState extends PhdThesisActivity {
 
     @Override
     protected void activityPreConditions(PhdThesisProcess process, IUserView userView) {
-	if (!PhdThesisProcess.isMasterDegreeAdministrativeOfficeEmployee(userView)) {
+	if (!process.isAllowedToManageProcess(userView)) {
 	    throw new PreConditionNotValidException();
 	}
     }

@@ -7,8 +7,6 @@ import net.sourceforge.fenixedu.util.Money;
 
 import org.joda.time.DateTime;
 
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
-
 public class DiplomaRequestPR extends DiplomaRequestPR_Base {
 
     protected DiplomaRequestPR() {
@@ -21,7 +19,6 @@ public class DiplomaRequestPR extends DiplomaRequestPR_Base {
     }
 
     @Override
-    @Checked("PostingRulePredicates.editPredicate")
     final public DiplomaRequestPR edit(final Money fixedAmount) {
 	deactivate();
 	return new DiplomaRequestPR(getEntryType(), getEventType(), new DateTime().minus(1000), null,

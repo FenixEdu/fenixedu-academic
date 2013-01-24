@@ -457,47 +457,6 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
 	return result;
     }
 
-    final public EnrolmentEvaluation submitEnrolmentEvaluation(EnrolmentEvaluationType enrolmentEvaluationType,
-	    Mark publishedMark, Employee employee, Person personResponsibleForGrade, Date evaluationDate, String observation) {
-
-	EnrolmentEvaluation enrolmentEvaluation = getEnrolmentEvaluationByEnrolmentEvaluationStateAndType(
-		EnrolmentEvaluationState.TEMPORARY_OBJ, enrolmentEvaluationType);
-
-	// There can be only one enrolmentEvaluation with Temporary State
-	if (enrolmentEvaluation == null) {
-	    enrolmentEvaluation = new EnrolmentEvaluation(this, enrolmentEvaluationType, EnrolmentEvaluationState.TEMPORARY_OBJ,
-		    employee);
-	} else {
-	    enrolmentEvaluation.setEnrolmentEvaluationType(enrolmentEvaluationType);
-	    enrolmentEvaluation.setEnrolmentEvaluationState(EnrolmentEvaluationState.TEMPORARY_OBJ);
-	    enrolmentEvaluation.setEmployee(employee);
-	}
-
-	// teacher responsible for execution course
-	Grade grade = null;
-	if ((publishedMark == null) || (publishedMark.getMark().length() == 0))
-	    grade = Grade.createGrade(GradeScale.NA, getGradeScale());
-	else
-	    grade = Grade.createGrade(publishedMark.getMark(), getGradeScale());
-
-	enrolmentEvaluation.setGrade(grade);
-
-	enrolmentEvaluation.setObservation(observation);
-	enrolmentEvaluation.setPersonResponsibleForGrade(personResponsibleForGrade);
-
-	final YearMonthDay yearMonthDay = new YearMonthDay();
-	enrolmentEvaluation.setGradeAvailableDateYearMonthDay(yearMonthDay);
-	if (evaluationDate != null) {
-	    enrolmentEvaluation.setExamDateYearMonthDay(new YearMonthDay(evaluationDate));
-	} else {
-	    enrolmentEvaluation.setExamDateYearMonthDay(yearMonthDay);
-	}
-
-	enrolmentEvaluation.setCheckSum("");
-
-	return enrolmentEvaluation;
-    }
-
     protected void createEnrolmentEvaluationWithoutGrade() {
 
 	EnrolmentEvaluation enrolmentEvaluation = getEnrolmentEvaluationByEnrolmentEvaluationTypeAndGrade(
@@ -556,10 +515,10 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
 	this.addAttends(new Attends(registration, executionCourse));
     }
 
-    final public EnrolmentEvaluation createEnrolmentEvaluationForImprovement(final Employee employee,
+    final public EnrolmentEvaluation createEnrolmentEvaluationForImprovement(final Person person,
 	    final ExecutionSemester executionSemester) {
 	final EnrolmentEvaluation enrolmentEvaluation = new EnrolmentEvaluation(this, EnrolmentEvaluationType.IMPROVEMENT,
-		EnrolmentEvaluationState.TEMPORARY_OBJ, employee, executionSemester);
+		EnrolmentEvaluationState.TEMPORARY_OBJ, person, executionSemester);
 	createAttendForImprovement(executionSemester);
 	return enrolmentEvaluation;
     }
@@ -656,17 +615,17 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
 	return true;
     }
 
-    final public EnrolmentEvaluation createSpecialSeasonEvaluation(final Employee employee) {
+    final public EnrolmentEvaluation createSpecialSeasonEvaluation(final Person person) {
 	if (getEnrolmentEvaluationType() != EnrolmentEvaluationType.SPECIAL_SEASON && !isApproved()) {
 	    setEnrolmentEvaluationType(EnrolmentEvaluationType.SPECIAL_SEASON);
 	    setEnrollmentState(EnrollmentState.ENROLLED);
 
-	    if (employee == null)
+	    if (person == null)
 		return new EnrolmentEvaluation(this, EnrolmentEvaluationType.SPECIAL_SEASON,
 			EnrolmentEvaluationState.TEMPORARY_OBJ);
 
 	    return new EnrolmentEvaluation(this, EnrolmentEvaluationType.SPECIAL_SEASON, EnrolmentEvaluationState.TEMPORARY_OBJ,
-		    employee);
+		    person);
 	} else {
 	    throw new DomainException("error.invalid.enrolment.state");
 	}
@@ -1094,6 +1053,7 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
     }
 
     final public EnrolmentEvaluation getLatestEnrolmentEvaluation() {
+	//FIXME: different behaviour based on administrative office type is not acceptable, workflows must converge
 	return (getStudentCurricularPlan().getDegreeType().getAdministrativeOfficeType() == AdministrativeOfficeType.DEGREE ? getLatestEnrolmentEvalution(getAllFinalEnrolmentEvaluations())
 		: getLatestEnrolmentEvalution(getEvaluationsSet()));
     }

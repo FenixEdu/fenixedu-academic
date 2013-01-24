@@ -47,7 +47,7 @@ public class SchoolUnit extends SchoolUnit_Base {
 
 	SchoolUnit schoolUnit = new SchoolUnit();
 	schoolUnit.init(schoolName, schoolNameCard, costCenterCode, schoolAcronym, beginDate, endDate, webAddress,
-		classification, canBeResponsibleOfSpaces, campus);
+		classification, null, canBeResponsibleOfSpaces, campus);
 	return createNewUnit(parentUnit, schoolUnit, Boolean.TRUE);
     }
 

@@ -137,7 +137,7 @@ public class RegistryDiplomaRequest extends RegistryDiplomaRequest_Base implemen
 	    }
 	} else if (academicServiceRequestBean.isToCancelOrReject()) {
 	    if (hasEvent()) {
-		getEvent().cancel(academicServiceRequestBean.getEmployee());
+		getEvent().cancel(academicServiceRequestBean.getResponsible());
 	    }
 	    if (getRegistration().isBolonha() && academicServiceRequestBean.isToCancel()) {
 		getDiplomaSupplement().cancel(academicServiceRequestBean.getJustification());
@@ -183,6 +183,7 @@ public class RegistryDiplomaRequest extends RegistryDiplomaRequest_Base implemen
 	throw new DomainException("error.registryDiploma.cannotModifyRequestedCycle");
     }
 
+    @Override
     public LocalDate getConclusionDate() {
 	if (getRegistration().isBolonha()) {
 	    return getRegistration().getLastStudentCurricularPlan().getCycle(getRequestedCycle()).getConclusionProcess()
@@ -192,9 +193,11 @@ public class RegistryDiplomaRequest extends RegistryDiplomaRequest_Base implemen
 	}
     }
 
+    @Override
     public ExecutionYear getConclusionYear() {
 	if (getRegistration().isBolonha()) {
-	    return getRegistration().getLastStudentCurricularPlan().getCycle(getRequestedCycle()).getConclusionProcess().getConclusionYear();
+	    return getRegistration().getLastStudentCurricularPlan().getCycle(getRequestedCycle()).getConclusionProcess()
+		    .getConclusionYear();
 	} else {
 	    return getRegistration().getConclusionProcess().getConclusionYear();
 	}
@@ -243,5 +246,10 @@ public class RegistryDiplomaRequest extends RegistryDiplomaRequest_Base implemen
     public String getReceivedActionLink() {
 	return "/academicServiceRequestsManagement.do?method=prepareReceiveAcademicServiceRequest&amp;academicServiceRequestId="
 		+ getIdInternal();
+    }
+
+    @Override
+    public boolean isProgrammeLinkVisible() {
+	return getRegistration().isAllowedToManageRegistration();
     }
 }

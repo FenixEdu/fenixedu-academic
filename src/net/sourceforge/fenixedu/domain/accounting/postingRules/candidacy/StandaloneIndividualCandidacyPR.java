@@ -11,12 +11,10 @@ import net.sourceforge.fenixedu.util.Money;
 
 import org.joda.time.DateTime;
 
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
-
 public class StandaloneIndividualCandidacyPR extends StandaloneIndividualCandidacyPR_Base {
-    
+
     protected StandaloneIndividualCandidacyPR() {
-        super();
+	super();
     }
 
     public StandaloneIndividualCandidacyPR(DateTime startDate, DateTime endDate,
@@ -46,12 +44,12 @@ public class StandaloneIndividualCandidacyPR extends StandaloneIndividualCandida
 	return amountToPay;
     }
 
-    @Checked("PostingRulePredicates.editPredicate")
+    @Override
     public FixedAmountPR edit(final Money fixedAmount) {
 
 	deactivate();
 	return new FixedAmountPR(getEntryType(), getEventType(), new DateTime().minus(1000), null, getServiceAgreementTemplate(),
 		fixedAmount);
     }
-    
+
 }

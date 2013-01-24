@@ -33,8 +33,8 @@ public class EnrolmentEvaluationLog extends EnrolmentEvaluationLog_Base {
 	setExecutionSemester(enrolmentEvaluation.getEnrolment().getExecutionPeriod().getName());
 	setExamDate(enrolmentEvaluation.getExamDateYearMonthDay() != null ? enrolmentEvaluation.getExamDateYearMonthDay()
 		.toString("dd/MM/yyyy") : "");
-	setEnrolmentEvaluationResponsible(enrolmentEvaluation.getEmployee() != null ? enrolmentEvaluation.getEmployee()
-		.getPerson().getUsername() : "");
+	setEnrolmentEvaluationResponsible(enrolmentEvaluation.getPerson() != null ? enrolmentEvaluation.getPerson().getUsername()
+		: "");
 	setBook(enrolmentEvaluation.getBookReference());
 	setPage(enrolmentEvaluation.getPage());
 	setActionDate(new DateTime().toString());

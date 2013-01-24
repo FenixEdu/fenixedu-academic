@@ -1,13 +1,18 @@
 package net.sourceforge.fenixedu.domain.candidacyProcess.over23;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.Set;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.caseHandling.StartActivity;
+import net.sourceforge.fenixedu.domain.AcademicProgram;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
+import net.sourceforge.fenixedu.domain.accessControl.academicAdministration.AcademicAuthorizationGroup;
+import net.sourceforge.fenixedu.domain.accessControl.academicAdministration.AcademicOperationType;
 import net.sourceforge.fenixedu.domain.candidacy.Ingression;
 import net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyProcess;
 import net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyProcessDocumentUploadBean;
@@ -20,7 +25,6 @@ import net.sourceforge.fenixedu.domain.caseHandling.Activity;
 import net.sourceforge.fenixedu.domain.caseHandling.PreConditionNotValidException;
 import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.domain.person.RoleType;
 
 public class Over23IndividualCandidacyProcess extends Over23IndividualCandidacyProcess_Base {
 
@@ -81,7 +85,7 @@ public class Over23IndividualCandidacyProcess extends Over23IndividualCandidacyP
 
     @Override
     public boolean canExecuteActivity(IUserView userView) {
-	return isDegreeAdministrativeOfficeEmployee(userView);
+	return isAllowedToManageProcess(this, userView);
     }
 
     @Override
@@ -139,9 +143,14 @@ public class Over23IndividualCandidacyProcess extends Over23IndividualCandidacyP
 	return (ExecutionYear) super.getCandidacyExecutionInterval();
     }
 
-    static private boolean isDegreeAdministrativeOfficeEmployee(IUserView userView) {
-	return userView.hasRoleType(RoleType.ACADEMIC_ADMINISTRATIVE_OFFICE)
-		&& userView.getPerson().getEmployeeAdministrativeOffice().isDegree();
+    static private boolean isAllowedToManageProcess(Over23IndividualCandidacyProcess process, IUserView userView) {
+	Set<AcademicProgram> programs = AcademicAuthorizationGroup.getProgramsForOperation(userView.getPerson(),
+		AcademicOperationType.MANAGE_INDIVIDUAL_CANDIDACIES);
+
+	if (process == null || process.getCandidacy() == null)
+	    return false;
+
+	return !Collections.disjoint(programs, process.getCandidacy().getSelectedDegrees());
     }
 
     private void setSpecificIndividualCandidacyDocumentFiles(Over23IndividualCandidacyProcessBean bean) {
@@ -186,7 +195,7 @@ public class Over23IndividualCandidacyProcess extends Over23IndividualCandidacyP
 
 	@Override
 	public void checkPreConditions(Over23IndividualCandidacyProcess process, IUserView userView) {
-	    if (!isDegreeAdministrativeOfficeEmployee(userView)) {
+	    if (!isAllowedToManageProcess(process, userView)) {
 		throw new PreConditionNotValidException();
 	    }
 	    if (process.isCandidacyCancelled()) {
@@ -206,7 +215,7 @@ public class Over23IndividualCandidacyProcess extends Over23IndividualCandidacyP
 
 	@Override
 	public void checkPreConditions(Over23IndividualCandidacyProcess process, IUserView userView) {
-	    if (!isDegreeAdministrativeOfficeEmployee(userView)) {
+	    if (!isAllowedToManageProcess(process, userView)) {
 		throw new PreConditionNotValidException();
 	    }
 	    if (process.isCandidacyCancelled()) {
@@ -227,7 +236,7 @@ public class Over23IndividualCandidacyProcess extends Over23IndividualCandidacyP
 
 	@Override
 	public void checkPreConditions(Over23IndividualCandidacyProcess process, IUserView userView) {
-	    if (!isDegreeAdministrativeOfficeEmployee(userView)) {
+	    if (!isAllowedToManageProcess(process, userView)) {
 		throw new PreConditionNotValidException();
 	    }
 	    if (!process.isInStandBy() || process.isCandidacyCancelled() || process.isCandidacyAccepted()) {
@@ -247,7 +256,7 @@ public class Over23IndividualCandidacyProcess extends Over23IndividualCandidacyP
 
 	@Override
 	public void checkPreConditions(Over23IndividualCandidacyProcess process, IUserView userView) {
-	    if (!isDegreeAdministrativeOfficeEmployee(userView)) {
+	    if (!isAllowedToManageProcess(process, userView)) {
 		throw new PreConditionNotValidException();
 	    }
 
@@ -277,7 +286,7 @@ public class Over23IndividualCandidacyProcess extends Over23IndividualCandidacyP
 
 	@Override
 	public void checkPreConditions(Over23IndividualCandidacyProcess process, IUserView userView) {
-	    if (!isDegreeAdministrativeOfficeEmployee(userView)) {
+	    if (!isAllowedToManageProcess(process, userView)) {
 		throw new PreConditionNotValidException();
 	    }
 
@@ -298,7 +307,7 @@ public class Over23IndividualCandidacyProcess extends Over23IndividualCandidacyP
 
 	@Override
 	public void checkPreConditions(Over23IndividualCandidacyProcess process, IUserView userView) {
-	    if (!isDegreeAdministrativeOfficeEmployee(userView)) {
+	    if (!isAllowedToManageProcess(process, userView)) {
 		throw new PreConditionNotValidException();
 	    }
 
@@ -333,7 +342,7 @@ public class Over23IndividualCandidacyProcess extends Over23IndividualCandidacyP
 
 	@Override
 	public void checkPreConditions(Over23IndividualCandidacyProcess process, IUserView userView) {
-	    if (!isDegreeAdministrativeOfficeEmployee(userView)) {
+	    if (!isAllowedToManageProcess(process, userView)) {
 		throw new PreConditionNotValidException();
 	    }
 
@@ -372,7 +381,7 @@ public class Over23IndividualCandidacyProcess extends Over23IndividualCandidacyP
 
 	@Override
 	public void checkPreConditions(Over23IndividualCandidacyProcess process, IUserView userView) {
-		if (!process.isCandidacyInStandBy()) {
+	    if (!process.isCandidacyInStandBy()) {
 		throw new PreConditionNotValidException();
 	    }
 	}
@@ -396,7 +405,7 @@ public class Over23IndividualCandidacyProcess extends Over23IndividualCandidacyP
 
 	@Override
 	public void checkPreConditions(Over23IndividualCandidacyProcess process, IUserView userView) {
-		if (!process.isCandidacyInStandBy()) {
+	    if (!process.isCandidacyInStandBy()) {
 		throw new PreConditionNotValidException();
 	    }
 	}
@@ -420,7 +429,7 @@ public class Over23IndividualCandidacyProcess extends Over23IndividualCandidacyP
 
 	@Override
 	public void checkPreConditions(Over23IndividualCandidacyProcess process, IUserView userView) {
-		if (!process.isCandidacyInStandBy()) {
+	    if (!process.isCandidacyInStandBy()) {
 		throw new PreConditionNotValidException();
 	    }
 	}
@@ -467,7 +476,7 @@ public class Over23IndividualCandidacyProcess extends Over23IndividualCandidacyP
 
 	@Override
 	public void checkPreConditions(Over23IndividualCandidacyProcess process, IUserView userView) {
-	    if (!isDegreeAdministrativeOfficeEmployee(userView)) {
+	    if (!isAllowedToManageProcess(process, userView)) {
 		throw new PreConditionNotValidException();
 	    }
 
@@ -564,7 +573,7 @@ public class Over23IndividualCandidacyProcess extends Over23IndividualCandidacyP
 
 	@Override
 	public void checkPreConditions(Over23IndividualCandidacyProcess process, IUserView userView) {
-	    if (!isDegreeAdministrativeOfficeEmployee(userView)) {
+	    if (!isAllowedToManageProcess(process, userView)) {
 		throw new PreConditionNotValidException();
 	    }
 
@@ -586,7 +595,7 @@ public class Over23IndividualCandidacyProcess extends Over23IndividualCandidacyP
 
 	@Override
 	public void checkPreConditions(Over23IndividualCandidacyProcess process, IUserView userView) {
-	    if (!isDegreeAdministrativeOfficeEmployee(userView)) {
+	    if (!isAllowedToManageProcess(process, userView)) {
 		throw new PreConditionNotValidException();
 	    }
 	}

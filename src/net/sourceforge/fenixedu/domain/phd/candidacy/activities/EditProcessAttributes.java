@@ -9,16 +9,16 @@ public class EditProcessAttributes extends PhdProgramCandidacyProcessActivity {
 
     @Override
     protected void activityPreConditions(PhdProgramCandidacyProcess process, IUserView userView) {
-	if (!isMasterDegreeAdministrativeOfficeEmployee(userView)) {
+	if (!process.isAllowedToManageProcess(userView)) {
 	    throw new PreConditionNotValidException();
 	}
     }
 
-	@Override
+    @Override
     protected PhdProgramCandidacyProcess executeActivity(PhdProgramCandidacyProcess process, IUserView userView, Object object) {
 	PhdProgramCandidacyProcessBean bean = (PhdProgramCandidacyProcessBean) object;
 
-	    process.setCandidacyDate(bean.getCandidacyDate());
+	process.setCandidacyDate(bean.getCandidacyDate());
 	process.setWhenRatified(bean.getWhenRatified());
 	return process;
     }

@@ -1,6 +1,5 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.administrativeOffice.student;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.dataTransferObject.student.RegistrationConclusionBean;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.student.Registration;
@@ -9,9 +8,12 @@ import net.sourceforge.fenixedu.injectionCode.AccessControl;
 
 import org.joda.time.YearMonthDay;
 
-public class RegistrationConclusionProcess extends FenixService {
+import pt.ist.fenixWebFramework.services.Service;
 
-    public void run(final RegistrationConclusionBean conclusionBean) {
+public class RegistrationConclusionProcess {
+
+    @Service
+    public static void run(final RegistrationConclusionBean conclusionBean) {
 	final Registration registration = conclusionBean.getRegistration();
 
 	if (registration.isBolonha()) {
@@ -40,7 +42,7 @@ public class RegistrationConclusionProcess extends FenixService {
 	}
     }
 
-    private void checkEnteredConclusionDate(final RegistrationConclusionBean conclusionBean) {
+    private static void checkEnteredConclusionDate(final RegistrationConclusionBean conclusionBean) {
 	final YearMonthDay startDate = conclusionBean.getRegistration().getStartDate();
 
 	if (startDate.isAfter(conclusionBean.getEnteredConclusionDate())) {

@@ -9,7 +9,7 @@ public class ValidatedByCandidate extends PhdProgramCandidacyProcessActivity {
     protected void activityPreConditions(PhdProgramCandidacyProcess process, IUserView userView) {
     }
 
-	@Override
+    @Override
     protected PhdProgramCandidacyProcess executeActivity(PhdProgramCandidacyProcess process, IUserView userView, Object object) {
 	process.setValidatedByCandidate(true);
 	return process;

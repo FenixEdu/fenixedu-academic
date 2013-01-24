@@ -9,7 +9,6 @@ import java.util.Set;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.caseHandling.StartActivity;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
-import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
@@ -121,6 +120,11 @@ public class PhdProgramCandidacyProcess extends PhdProgramCandidacyProcess_Base 
 	activities.add(new RemoveCandidacyDocument());
     }
 
+    @Override
+    public boolean isAllowedToManageProcess(IUserView userView) {
+	return this.getIndividualProgramProcess().isAllowedToManageProcess(userView);
+    }
+
     private PhdProgramCandidacyProcess(final PhdProgramCandidacyProcessBean bean, final Person person, boolean isMigratedProcess,
 	    final PhdIndividualProgramProcess individualProgramProcess) {
 	super();
@@ -132,6 +136,8 @@ public class PhdProgramCandidacyProcess extends PhdProgramCandidacyProcess_Base 
 	setCandidacyHashCode(bean.getCandidacyHashCode());
 	PHDProgramCandidacy candidacy = new PHDProgramCandidacy(person);
 	setCandidacy(candidacy);
+
+	setIndividualProgramProcess(individualProgramProcess);
 
 	if (bean.hasDegree()) {
 	    getCandidacy().setExecutionDegree(bean.getExecutionDegree());
@@ -151,7 +157,6 @@ public class PhdProgramCandidacyProcess extends PhdProgramCandidacyProcess_Base 
 	    setPublicPhdCandidacyPeriod(bean.getPhdCandidacyPeriod());
 	}
 
-	setIndividualProgramProcess(individualProgramProcess);
     }
 
     public static boolean hasOnlineApplicationForPeriod(final Person person, PhdCandidacyPeriod phdCandidacyPeriod) {
@@ -223,9 +228,9 @@ public class PhdProgramCandidacyProcess extends PhdProgramCandidacyProcess_Base 
 	return hasEvent() && getEvent().hasAnyPayments();
     }
 
-    public void cancelDebt(final Employee employee) {
+    public void cancelDebt(final Person responsible) {
 	if (hasEvent()) {
-	    getEvent().cancel(employee);
+	    getEvent().cancel(responsible);
 	}
     }
 
@@ -233,6 +238,7 @@ public class PhdProgramCandidacyProcess extends PhdProgramCandidacyProcess_Base 
 	return getIndividualProgramProcess().getProcessNumber();
     }
 
+    @Override
     public Person getPerson() {
 	return getIndividualProgramProcess().getPerson();
     }
@@ -303,8 +309,7 @@ public class PhdProgramCandidacyProcess extends PhdProgramCandidacyProcess_Base 
 
     }
 
-    public PhdProgramCandidacyProcess registrationFormalization(final RegistrationFormalizationBean bean,
-	    final Person responsible) {
+    public PhdProgramCandidacyProcess registrationFormalization(final RegistrationFormalizationBean bean, final Person responsible) {
 
 	if (!hasStudyPlan()) {
 	    throw new DomainException(
@@ -334,6 +339,11 @@ public class PhdProgramCandidacyProcess extends PhdProgramCandidacyProcess_Base 
     private void assertStudyPlanInformation(final RegistrationFormalizationBean bean,
 	    final DegreeCurricularPlan degreeCurricularPlan) {
 	final ExecutionYear executionYear = ExecutionYear.readByDateTime(bean.getWhenStartedStudies());
+
+	if (executionYear == null) {
+	    throw new DomainException("error.phd.candidacy.PhdProgramCandidacyProcess.StudyPlan.invalid.start.date");
+	}
+
 	if (hasCurricularStudyPlan()) {
 	    assertCandidacy(degreeCurricularPlan, executionYear);
 	    assertRegistration(bean, degreeCurricularPlan, executionYear);

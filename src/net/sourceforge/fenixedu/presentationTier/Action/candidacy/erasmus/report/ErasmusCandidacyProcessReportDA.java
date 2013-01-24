@@ -15,7 +15,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 
-@Mapping(path = "/erasmusCandidacyProcessReport", module = "academicAdminOffice")
+@Mapping(path = "/erasmusCandidacyProcessReport", module = "academicAdministration")
 @Forwards({ @Forward(name = "list", path = "/candidacy/erasmus/reports/list.jsp") })
 public class ErasmusCandidacyProcessReportDA extends FenixDispatchAction {
 

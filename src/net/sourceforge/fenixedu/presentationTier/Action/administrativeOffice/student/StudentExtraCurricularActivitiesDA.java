@@ -21,9 +21,10 @@ import pt.ist.fenixWebFramework.struts.annotations.Tile;
 /**
  * @author Pedro Santos (pedro.miguel.santos@ist.utl.pt)
  */
-@Mapping(path = "/studentExtraCurricularActivities", module = "academicAdminOffice")
-@Forwards({ @Forward(name = "manageActivities", path = "/academicAdminOffice/student/extraCurricularActivities/manageActivities.jsp", tileProperties = @Tile(title = "private.academicadministrativeoffice.studentoperations.viewstudents")) })
+@Mapping(path = "/studentExtraCurricularActivities", module = "academicAdministration")
+@Forwards({ @Forward(name = "manageActivities", path = "/academicAdminOffice/student/extraCurricularActivities/manageActivities.jsp") })
 public class StudentExtraCurricularActivitiesDA extends FenixDispatchAction {
+
     public ActionForward prepare(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
 	Student student = DomainObject.fromExternalId(request.getParameter("studentId"));

@@ -2,7 +2,7 @@ package net.sourceforge.fenixedu.domain.accounting.report.events;
 
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.accounting.events.candidacy.IndividualCandidacyEvent;
-import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOfficeType;
+import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
 
 public class IndividualCandidacyEventWrapper implements Wrapper {
     IndividualCandidacyEvent event;
@@ -13,10 +13,10 @@ public class IndividualCandidacyEventWrapper implements Wrapper {
 
     @Override
     public String getStudentNumber() {
-	if(event.getPerson().hasStudent()) {
+	if (event.getPerson().hasStudent()) {
 	    return event.getPerson().getStudent().getNumber().toString();
 	}
-	
+
 	return "-";
     }
 
@@ -101,8 +101,8 @@ public class IndividualCandidacyEventWrapper implements Wrapper {
     }
 
     @Override
-    public AdministrativeOfficeType getRelatedAcademicOfficeType() {
-	return AdministrativeOfficeType.DEGREE;
+    public AdministrativeOffice getRelatedAcademicOffice() {
+	return event.getAdministrativeOffice();
     }
 
 }

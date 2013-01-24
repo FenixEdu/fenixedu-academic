@@ -8,6 +8,7 @@ import java.util.ResourceBundle;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.caseHandling.StartActivity;
 import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.accessControl.academicAdministration.AcademicOperationType;
 import net.sourceforge.fenixedu.domain.caseHandling.Activity;
 import net.sourceforge.fenixedu.domain.caseHandling.PreConditionNotValidException;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
@@ -15,7 +16,6 @@ import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramDocumentType;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess;
 import net.sourceforge.fenixedu.domain.phd.PhdProgramProcessDocument;
 import net.sourceforge.fenixedu.domain.phd.alert.AlertService;
-import net.sourceforge.fenixedu.domain.phd.permissions.PhdPermissionType;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 
 import org.joda.time.LocalDate;
@@ -23,10 +23,6 @@ import org.joda.time.LocalDate;
 public class PublicPresentationSeminarProcess extends PublicPresentationSeminarProcess_Base {
 
     static abstract private class PhdActivity extends Activity<PublicPresentationSeminarProcess> {
-
-	protected PhdPermissionType getPublicPresentationSeminarPermission() {
-	    return PhdPermissionType.PUBLIC_PRESENTATION_SEMINAR_PROCESS_MANAGEMENT;
-	}
 
 	@Override
 	public void checkPreConditions(PublicPresentationSeminarProcess process, IUserView userView) {
@@ -79,7 +75,7 @@ public class PublicPresentationSeminarProcess extends PublicPresentationSeminarP
 		throw new PreConditionNotValidException();
 	    }
 
-	    if (!isMasterDegreeAdministrativeOfficeEmployee(userView)
+	    if (!process.isAllowedToManageProcess(userView)
 		    && !process.getIndividualProgramProcess().isCoordinatorForPhdProgram(userView.getPerson())) {
 		throw new PreConditionNotValidException();
 	    }
@@ -97,7 +93,8 @@ public class PublicPresentationSeminarProcess extends PublicPresentationSeminarP
 		    userView.getPerson(), bean.getRemarks());
 
 	    if (bean.getGenerateAlert()) {
-		AlertService.alertAcademicOffice(process.getIndividualProgramProcess(), getPublicPresentationSeminarPermission(),
+		AlertService.alertAcademicOffice(process.getIndividualProgramProcess(),
+			AcademicOperationType.VIEW_PHD_PUBLIC_PRESENTATION_ALERTS,
 			"message.phd.alert.public.presentation.seminar.comission.validation.subject",
 			"message.phd.alert.public.presentation.seminar.comission.validation.body");
 	    }
@@ -116,7 +113,7 @@ public class PublicPresentationSeminarProcess extends PublicPresentationSeminarP
 		throw new PreConditionNotValidException();
 	    }
 
-	    if (!isMasterDegreeAdministrativeOfficeEmployee(userView))
+	    if (!process.isAllowedToManageProcess(userView))
 		throw new PreConditionNotValidException();
 	}
 
@@ -158,7 +155,7 @@ public class PublicPresentationSeminarProcess extends PublicPresentationSeminarP
 		throw new PreConditionNotValidException();
 	    }
 
-	    if (!isMasterDegreeAdministrativeOfficeEmployee(userView))
+	    if (!process.isAllowedToManageProcess(userView))
 		throw new PreConditionNotValidException();
 	}
 
@@ -169,10 +166,10 @@ public class PublicPresentationSeminarProcess extends PublicPresentationSeminarP
 	    final PublicPresentationSeminarProcessBean bean = (PublicPresentationSeminarProcessBean) object;
 
 	    PublicPresentationSeminarState mostRecentState = process.getMostRecentState();
-	    
+
 	    PublicPresentationSeminarState.createWithGivenStateDate(process,
-		    PublicPresentationSeminarProcessStateType.WAITING_FOR_COMMISSION_CONSTITUTION,
-		    userView.getPerson(), bean.getRemarks(), mostRecentState.getStateDate().plus(5));
+		    PublicPresentationSeminarProcessStateType.WAITING_FOR_COMMISSION_CONSTITUTION, userView.getPerson(),
+		    bean.getRemarks(), mostRecentState.getStateDate().plus(5));
 
 	    if (bean.getGenerateAlert()) {
 		AlertService.alertCoordinators(process.getIndividualProgramProcess(),
@@ -193,7 +190,7 @@ public class PublicPresentationSeminarProcess extends PublicPresentationSeminarP
 		throw new PreConditionNotValidException();
 	    }
 
-	    if (!isMasterDegreeAdministrativeOfficeEmployee(userView)
+	    if (!process.isAllowedToManageProcess(userView)
 		    && !process.getIndividualProgramProcess().isCoordinatorForPhdProgram(userView.getPerson()))
 		throw new PreConditionNotValidException();
 	}
@@ -208,7 +205,8 @@ public class PublicPresentationSeminarProcess extends PublicPresentationSeminarP
 		    userView.getPerson(), bean.getRemarks());
 
 	    if (bean.getGenerateAlert()) {
-		AlertService.alertAcademicOffice(process.getIndividualProgramProcess(), getPublicPresentationSeminarPermission(),
+		AlertService.alertAcademicOffice(process.getIndividualProgramProcess(),
+			AcademicOperationType.VIEW_PHD_PUBLIC_PRESENTATION_ALERTS,
 			"message.phd.alert.public.presentation.seminar.scheduled.presentation.date.subject",
 			"message.phd.alert.public.presentation.seminar.scheduled.presentation.date.body");
 
@@ -233,7 +231,7 @@ public class PublicPresentationSeminarProcess extends PublicPresentationSeminarP
 		throw new PreConditionNotValidException();
 	    }
 
-	    if (!isMasterDegreeAdministrativeOfficeEmployee(userView)
+	    if (!process.isAllowedToManageProcess(userView)
 		    && !process.getIndividualProgramProcess().isGuider(userView.getPerson()))
 		throw new PreConditionNotValidException();
 	}
@@ -250,7 +248,8 @@ public class PublicPresentationSeminarProcess extends PublicPresentationSeminarP
 		    bean.getRemarks());
 
 	    if (bean.getGenerateAlert()) {
-		AlertService.alertAcademicOffice(process.getIndividualProgramProcess(), getPublicPresentationSeminarPermission(),
+		AlertService.alertAcademicOffice(process.getIndividualProgramProcess(),
+			AcademicOperationType.VIEW_PHD_PUBLIC_PRESENTATION_ALERTS,
 			"message.phd.alert.public.presentation.seminar.report.uploaded.subject",
 			"message.phd.alert.public.presentation.seminar.report.uploaded.body");
 	    }
@@ -267,7 +266,7 @@ public class PublicPresentationSeminarProcess extends PublicPresentationSeminarP
 		throw new PreConditionNotValidException();
 	    }
 
-	    if (!isMasterDegreeAdministrativeOfficeEmployee(userView))
+	    if (!process.isAllowedToManageProcess(userView))
 		throw new PreConditionNotValidException();
 	}
 
@@ -311,7 +310,7 @@ public class PublicPresentationSeminarProcess extends PublicPresentationSeminarP
 		throw new PreConditionNotValidException();
 	    }
 
-	    if (!isMasterDegreeAdministrativeOfficeEmployee(userView))
+	    if (!process.isAllowedToManageProcess(userView))
 		throw new PreConditionNotValidException();
 	}
 
@@ -343,7 +342,7 @@ public class PublicPresentationSeminarProcess extends PublicPresentationSeminarP
 		throw new PreConditionNotValidException();
 	    }
 
-	    if (isMasterDegreeAdministrativeOfficeEmployee(userView)
+	    if (process.isAllowedToManageProcess(userView)
 		    || process.getIndividualProgramProcess().isCoordinatorForPhdProgram(userView.getPerson())
 		    || process.getIndividualProgramProcess().isGuiderOrAssistentGuider(userView.getPerson())) {
 		return;
@@ -375,7 +374,7 @@ public class PublicPresentationSeminarProcess extends PublicPresentationSeminarP
 		throw new PreConditionNotValidException();
 	    }
 
-	    if (isMasterDegreeAdministrativeOfficeEmployee(userView)
+	    if (process.isAllowedToManageProcess(userView)
 		    || process.getIndividualProgramProcess().isCoordinatorForPhdProgram(userView.getPerson())
 		    || process.getIndividualProgramProcess().isGuiderOrAssistentGuider(userView.getPerson())) {
 		return;
@@ -408,7 +407,7 @@ public class PublicPresentationSeminarProcess extends PublicPresentationSeminarP
 		throw new PreConditionNotValidException();
 	    }
 
-	    if (!isMasterDegreeAdministrativeOfficeEmployee(userView)) {
+	    if (!process.isAllowedToManageProcess(userView)) {
 		throw new PreConditionNotValidException();
 	    }
 	}
@@ -438,7 +437,7 @@ public class PublicPresentationSeminarProcess extends PublicPresentationSeminarP
 		throw new PreConditionNotValidException();
 	    }
 
-	    if (!isMasterDegreeAdministrativeOfficeEmployee(userView)) {
+	    if (!process.isAllowedToManageProcess(userView)) {
 		throw new PreConditionNotValidException();
 	    }
 	}
@@ -463,7 +462,7 @@ public class PublicPresentationSeminarProcess extends PublicPresentationSeminarP
 
 	@Override
 	protected void activityPreConditions(PublicPresentationSeminarProcess process, IUserView userView) {
-	    if (!isMasterDegreeAdministrativeOfficeEmployee(userView)) {
+	    if (!process.isAllowedToManageProcess(userView)) {
 		throw new PreConditionNotValidException();
 	    }
 	}
@@ -487,7 +486,7 @@ public class PublicPresentationSeminarProcess extends PublicPresentationSeminarP
 
 	@Override
 	protected void activityPreConditions(PublicPresentationSeminarProcess process, IUserView userView) {
-	    if (!isMasterDegreeAdministrativeOfficeEmployee(userView)) {
+	    if (!process.isAllowedToManageProcess(userView)) {
 		throw new PreConditionNotValidException();
 	    }
 	}
@@ -509,7 +508,7 @@ public class PublicPresentationSeminarProcess extends PublicPresentationSeminarP
 
 	@Override
 	protected void activityPreConditions(PublicPresentationSeminarProcess process, IUserView userView) {
-	    if (!isMasterDegreeAdministrativeOfficeEmployee(userView)) {
+	    if (!process.isAllowedToManageProcess(userView)) {
 		throw new PreConditionNotValidException();
 	    }
 	}
@@ -543,6 +542,11 @@ public class PublicPresentationSeminarProcess extends PublicPresentationSeminarP
 	activities.add(new AddState());
 	activities.add(new RemoveLastState());
 	activities.add(new EditProcessAttributes());
+    }
+
+    @Override
+    public boolean isAllowedToManageProcess(IUserView userView) {
+	return this.getIndividualProgramProcess().isAllowedToManageProcess(userView);
     }
 
     private PublicPresentationSeminarProcess(final PhdIndividualProgramProcess individualProcess,

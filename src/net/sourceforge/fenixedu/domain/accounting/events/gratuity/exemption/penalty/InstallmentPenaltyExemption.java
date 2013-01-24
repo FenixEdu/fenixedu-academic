@@ -1,6 +1,6 @@
 package net.sourceforge.fenixedu.domain.accounting.events.gratuity.exemption.penalty;
 
-import net.sourceforge.fenixedu.domain.Employee;
+import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.accounting.Event;
 import net.sourceforge.fenixedu.domain.accounting.Exemption;
 import net.sourceforge.fenixedu.domain.accounting.Installment;
@@ -36,17 +36,17 @@ public class InstallmentPenaltyExemption extends InstallmentPenaltyExemption_Bas
     }
 
     public InstallmentPenaltyExemption(final PenaltyExemptionJustificationType penaltyExemptionType,
-	    final GratuityEventWithPaymentPlan gratuityEventWithPaymentPlan, final Employee employee,
+	    final GratuityEventWithPaymentPlan gratuityEventWithPaymentPlan, final Person responsible,
 	    final Installment installment, final String comments, final YearMonthDay directiveCouncilDispatchDate) {
 	this();
-	init(penaltyExemptionType, gratuityEventWithPaymentPlan, employee, installment, comments, directiveCouncilDispatchDate);
+	init(penaltyExemptionType, gratuityEventWithPaymentPlan, responsible, installment, comments, directiveCouncilDispatchDate);
 
     }
 
     protected void init(PenaltyExemptionJustificationType penaltyExemptionType,
-	    GratuityEventWithPaymentPlan gratuityEventWithPaymentPlan, Employee employee, Installment installment,
+	    GratuityEventWithPaymentPlan gratuityEventWithPaymentPlan, Person responsible, Installment installment,
 	    String comments, YearMonthDay directiveCouncilDispatchDate) {
-	super.init(penaltyExemptionType, gratuityEventWithPaymentPlan, employee, comments, directiveCouncilDispatchDate);
+	super.init(penaltyExemptionType, gratuityEventWithPaymentPlan, responsible, comments, directiveCouncilDispatchDate);
 	checkParameters(installment);
 	checkRulesToCreate(gratuityEventWithPaymentPlan, installment);
 	super.setInstallment(installment);

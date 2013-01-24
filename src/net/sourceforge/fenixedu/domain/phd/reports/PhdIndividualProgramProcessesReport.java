@@ -5,6 +5,7 @@ import java.util.ResourceBundle;
 
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess;
 import net.sourceforge.fenixedu.domain.phd.SearchPhdIndividualProgramProcessBean;
+import net.sourceforge.fenixedu.injectionCode.AccessControl;
 
 import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
@@ -15,7 +16,7 @@ import org.joda.time.YearMonthDay;
 
 public class PhdIndividualProgramProcessesReport extends PhdReport {
 
-    private ResourceBundle bundle;
+    private final ResourceBundle bundle;
 
     public PhdIndividualProgramProcessesReport(HSSFWorkbook workbook) {
 	super(workbook);
@@ -31,9 +32,11 @@ public class PhdIndividualProgramProcessesReport extends PhdReport {
 
 	setHeaders(sheet);
 
-
 	int i = 1;
 	for (PhdIndividualProgramProcess process : processes) {
+	    if (!process.isAllowedToManageProcess(AccessControl.getUserView()))
+		continue;
+
 	    HSSFRow row = sheet.createRow(i);
 
 	    fillRow(process, row);

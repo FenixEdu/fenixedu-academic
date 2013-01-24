@@ -8,14 +8,13 @@ import net.sourceforge.fenixedu.domain.accounting.events.AnnualEvent;
 import net.sourceforge.fenixedu.domain.accounting.events.EnrolmentOutOfPeriodEvent;
 import net.sourceforge.fenixedu.domain.accounting.events.dfa.DfaRegistrationEvent;
 import net.sourceforge.fenixedu.domain.accounting.events.specializationDegree.SpecializationDegreeRegistrationEvent;
-import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOfficeType;
-import net.sourceforge.fenixedu.domain.degree.DegreeType;
+import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
 import net.sourceforge.fenixedu.domain.student.EnrolmentModel;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 public class EventWrapper implements Wrapper {
-    private Event event;
+    private final Event event;
 
     public EventWrapper(Event event) {
 	this.event = event;
@@ -53,6 +52,7 @@ public class EventWrapper implements Wrapper {
 	return executionYear.getName();
     }
 
+    @Override
     public ExecutionYear getForExecutionYear() {
 
 	ExecutionYear executionYear = null;
@@ -96,8 +96,7 @@ public class EventWrapper implements Wrapper {
     public String getEnrolledECTS() {
 	if (hasRegistration()) {
 	    return new BigDecimal(getRegistration().getLastStudentCurricularPlan()
-		    .getEnrolmentsEctsCredits(getForExecutionYear()))
-		    .toString();
+		    .getEnrolmentsEctsCredits(getForExecutionYear())).toString();
 	}
 
 	return "-";
@@ -173,30 +172,14 @@ public class EventWrapper implements Wrapper {
     }
 
     @Override
-    public AdministrativeOfficeType getRelatedAcademicOfficeType() {
-    	Registration registration = getRegistration();
-    	
-    	if(registration == null) {
-    	    return null; 
-    	}
-    	
-    	DegreeType degreeType = registration.getDegreeType();
-    	
-    	switch(degreeType) {
-    	case DEGREE:
-    	case BOLONHA_DEGREE:
-	case BOLONHA_INTEGRATED_MASTER_DEGREE:
-	case BOLONHA_MASTER_DEGREE:
-	case EMPTY:
-	    return AdministrativeOfficeType.DEGREE;
-	case MASTER_DEGREE:
-	case BOLONHA_SPECIALIZATION_DEGREE:
-	case BOLONHA_ADVANCED_FORMATION_DIPLOMA:
-	case BOLONHA_ADVANCED_SPECIALIZATION_DIPLOMA:
-	    return AdministrativeOfficeType.MASTER_DEGREE;
-    	}
+    public AdministrativeOffice getRelatedAcademicOffice() {
+	Registration registration = getRegistration();
 
-	return null;
+	if (registration == null) {
+	    return null;
+	}
+
+	return registration.getDegree().getAdministrativeOffice();
     }
 
 }

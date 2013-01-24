@@ -26,7 +26,7 @@ public class ManagementCouncilUnit extends ManagementCouncilUnit_Base {
 	    throw new DomainException("error.can.only.exist.one.managementCouncilUnit");
 	}
 	ManagementCouncilUnit unit = new ManagementCouncilUnit();
-	unit.init(name, unitNameCard, costCenterCode, acronym, beginDate, endDate, webAddress, classification,
+	unit.init(name, unitNameCard, costCenterCode, acronym, beginDate, endDate, webAddress, classification, null,
 		canBeResponsibleOfSpaces, campus);
 	unit.addParentUnit(parentUnit, accountabilityType);
 

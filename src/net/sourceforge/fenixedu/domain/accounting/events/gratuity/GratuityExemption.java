@@ -2,7 +2,7 @@ package net.sourceforge.fenixedu.domain.accounting.events.gratuity;
 
 import java.math.BigDecimal;
 
-import net.sourceforge.fenixedu.domain.Employee;
+import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.accounting.Event;
 import net.sourceforge.fenixedu.domain.accounting.Exemption;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
@@ -43,10 +43,10 @@ public abstract class GratuityExemption extends GratuityExemption_Base {
 	super();
     }
 
-    protected void init(final Employee employee, final GratuityEvent gratuityEvent,
+    protected void init(final Person responsible, final GratuityEvent gratuityEvent,
 	    final GratuityExemptionJustificationType exemptionType, final String reason, final YearMonthDay dispatchDate) {
-	super.init(employee, gratuityEvent, GratuityExemptionJustificationFactory.create(this, exemptionType, reason,
-		dispatchDate));
+	super.init(responsible, gratuityEvent,
+		GratuityExemptionJustificationFactory.create(this, exemptionType, reason, dispatchDate));
 
 	gratuityEvent.recalculateState(new DateTime());
     }

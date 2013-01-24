@@ -4,12 +4,9 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr" %>
 
-
-<logic:present role="ACADEMIC_ADMINISTRATIVE_OFFICE">
 <bean:define id="processId" name="process" property="externalId" />
 
 <%-- ### Title #### --%>
-<em><bean:message  key="label.phd.academicAdminOffice.breadcrumb" bundle="PHD_RESOURCES"/></em>
 <h2><bean:message key="label.phd.manageAlerts" bundle="PHD_RESOURCES" /></h2>
 <%-- ### End of Title ### --%>
 
@@ -61,5 +58,3 @@
 	<html:submit ><bean:message key="button.yes" bundle="APPLICATION_RESOURCES" /></html:submit>
 	<html:cancel><bean:message key="button.no" bundle="APPLICATION_RESOURCES" /></html:cancel>
 </fr:form>
-
-</logic:present>

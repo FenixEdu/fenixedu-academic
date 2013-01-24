@@ -12,7 +12,8 @@ import java.util.ResourceBundle;
 import java.util.Set;
 
 import net.sourceforge.fenixedu._development.PropertiesManager;
-import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
+import net.sourceforge.fenixedu.domain.accessControl.academicAdministration.AcademicAuthorizationGroup;
+import net.sourceforge.fenixedu.domain.accessControl.academicAdministration.AcademicOperationType;
 import net.sourceforge.fenixedu.domain.credits.CreditsPersonFunctionsSharedQueueJob;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
@@ -22,7 +23,6 @@ import net.sourceforge.fenixedu.domain.inquiries.InquiryResultComment;
 import net.sourceforge.fenixedu.domain.inquiries.InquiryTemplate;
 import net.sourceforge.fenixedu.domain.oldInquiries.InquiryResponsePeriod;
 import net.sourceforge.fenixedu.domain.person.RoleType;
-import net.sourceforge.fenixedu.domain.space.Campus;
 import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicCalendarEntry;
 import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicCalendarRootEntry;
 import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicInterval;
@@ -346,15 +346,19 @@ public class ExecutionSemester extends ExecutionSemester_Base implements Compara
 	return markSheets;
     }
 
-    public Collection<MarkSheet> getWebMarkSheetsNotPrinted(AdministrativeOffice office, DegreeCurricularPlan dcp, Campus campus) {
+    public Collection<MarkSheet> getWebMarkSheetsNotPrinted(Person person, DegreeCurricularPlan dcp) {
 	final Collection<MarkSheet> markSheets = new HashSet<MarkSheet>();
 	for (final MarkSheet sheet : getMarkSheets()) {
 	    if (sheet.getSubmittedByTeacher() && !sheet.getPrinted()) {
-		if (sheet.isFor(office) && (dcp == null || sheet.isFor(dcp))
-			&& sheet.getCurricularCourse().hasExecutionDegreeByYearAndCampus(getExecutionYear(), campus)) {
+		if ((dcp == null || sheet.isFor(dcp)) && sheet.getCurricularCourse().hasAnyExecutionDegreeFor(getExecutionYear())) {
+		    ExecutionDegree executionDegree = sheet.getCurricularCourse().getExecutionDegreeFor(
+			    getExecutionYear().getAcademicInterval());
+		    if (AcademicAuthorizationGroup.getDegreesForOperation(person, AcademicOperationType.MANAGE_MARKSHEETS)
+			    .contains(executionDegree.getDegree())) {
 		    markSheets.add(sheet);
 		}
 	    }
+	}
 	}
 	return markSheets;
     }

@@ -195,7 +195,7 @@ public abstract class PostingRule extends PostingRule_Base {
 	throw new DomainException("error.accounting.agreement.postingRule.cannot.modify.eventType");
     }
 
-    @Checked("RolePredicates.MANAGER_PREDICATE")
+    @Checked("AcademicPredicates.MANAGE_PAYMENTS")
     @Override
     public void setStartDate(DateTime startDate) {
 	super.setStartDate(startDate);
@@ -218,7 +218,7 @@ public abstract class PostingRule extends PostingRule_Base {
 	super.setEndDate(when.minus(10000));
     }
 
-    @Checked("RolePredicates.MANAGER_PREDICATE")
+    @Checked("AcademicPredicates.MANAGE_PAYMENTS")
     public final void delete() {
 	super.setServiceAgreementTemplate(null);
 	removeRootDomainObject();

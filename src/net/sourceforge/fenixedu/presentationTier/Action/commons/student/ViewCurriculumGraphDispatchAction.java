@@ -36,14 +36,8 @@ import org.jfree.data.CategoryDataset;
 import org.jfree.data.DefaultCategoryDataset;
 
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
-import pt.ist.fenixWebFramework.struts.annotations.Forward;
-import pt.ist.fenixWebFramework.struts.annotations.Forwards;
-import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
-@Mapping(path = "/viewCurriculumGraph", module = "academicAdminOffice")
+@Mapping(path = "/viewCurriculumGraph", module = "academicAdministration")
 public class ViewCurriculumGraphDispatchAction extends FenixDispatchAction {
 
     public ActionForward createAreaXYChart(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
@@ -113,9 +107,7 @@ public class ViewCurriculumGraphDispatchAction extends FenixDispatchAction {
 	for (ExecutionPeriodStatisticsBean executionPeriodStatisticsBean : studentStatistics) {
 	    year = executionPeriodStatisticsBean.getExecutionPeriod().getExecutionYear().getYear();
 	    semester = executionPeriodStatisticsBean.getExecutionPeriod().getSemester().toString();
-	    dataset
-		    .addValue(executionPeriodStatisticsBean.getTotalEnrolmentsNumber(), series1, year + " - " + semester
-			    + "º sem");
+	    dataset.addValue(executionPeriodStatisticsBean.getTotalEnrolmentsNumber(), series1, year + " - " + semester + "º sem");
 	    dataset.addValue(executionPeriodStatisticsBean.getApprovedEnrolmentsNumber(), series2, year + " - " + semester
 		    + "º sem");
 	}

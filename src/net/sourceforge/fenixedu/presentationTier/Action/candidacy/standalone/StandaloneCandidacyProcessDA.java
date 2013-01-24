@@ -19,9 +19,9 @@ import net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyProcessBean;
 import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyProcess;
 import net.sourceforge.fenixedu.domain.candidacyProcess.standalone.StandaloneCandidacyProcess;
 import net.sourceforge.fenixedu.domain.candidacyProcess.standalone.StandaloneIndividualCandidacyProcess;
-import net.sourceforge.fenixedu.domain.candidacyProcess.standalone.StandaloneIndividualCandidacyResultBean;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.period.StandaloneCandidacyPeriod;
+import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.presentationTier.Action.candidacy.CandidacyProcessDA;
 
 import org.apache.struts.action.ActionForm;
@@ -36,16 +36,16 @@ import pt.utl.ist.fenix.tools.util.excel.Spreadsheet;
 import pt.utl.ist.fenix.tools.util.excel.Spreadsheet.Row;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 
-@Mapping(path = "/caseHandlingStandaloneCandidacyProcess", module = "academicAdminOffice", formBeanClass = StandaloneCandidacyProcessDA.StandaloneCandidacyProcessForm.class)
+@Mapping(path = "/caseHandlingStandaloneCandidacyProcess", module = "academicAdministration", formBeanClass = StandaloneCandidacyProcessDA.StandaloneCandidacyProcessForm.class)
 @Forwards({
 
-	@Forward(name = "intro", path = "/candidacy/standalone/mainCandidacyProcess.jsp", tileProperties = @Tile(title = "private.academicadministrativeoffice.applications.isolatedcurriculum")),
-	@Forward(name = "prepare-create-new-process", path = "/candidacy/createCandidacyPeriod.jsp", tileProperties = @Tile(title = "private.academicadministrativeoffice.applications.isolatedcurriculum")),
-	@Forward(name = "prepare-edit-candidacy-period", path = "/candidacy/editCandidacyPeriod.jsp", tileProperties = @Tile(title = "private.academicadministrativeoffice.applications.isolatedcurriculum")),
-	@Forward(name = "send-to-coordinator", path = "/candidacy/sendToCoordinator.jsp", tileProperties = @Tile(title = "private.academicadministrativeoffice.applications.isolatedcurriculum")),
-	@Forward(name = "view-candidacy-results", path = "/candidacy/standalone/viewCandidacyResults.jsp", tileProperties = @Tile(title = "private.academicadministrativeoffice.applications.isolatedcurriculum")),
-	@Forward(name = "insert-candidacy-results", path = "/candidacy/standalone/introduceCandidacyResults.jsp", tileProperties = @Tile(title = "private.academicadministrativeoffice.applications.isolatedcurriculum")),
-	@Forward(name = "create-registrations", path = "/candidacy/createRegistrations.jsp", tileProperties = @Tile(title = "private.academicadministrativeoffice.applications.isolatedcurriculum"))
+	@Forward(name = "intro", path = "/candidacy/standalone/mainCandidacyProcess.jsp"),
+	@Forward(name = "prepare-create-new-process", path = "/candidacy/createCandidacyPeriod.jsp"),
+	@Forward(name = "prepare-edit-candidacy-period", path = "/candidacy/editCandidacyPeriod.jsp"),
+	@Forward(name = "send-to-coordinator", path = "/candidacy/sendToCoordinator.jsp"),
+	@Forward(name = "view-candidacy-results", path = "/candidacy/standalone/viewCandidacyResults.jsp"),
+	@Forward(name = "insert-candidacy-results", path = "/candidacy/standalone/introduceCandidacyResults.jsp"),
+	@Forward(name = "create-registrations", path = "/candidacy/createRegistrations.jsp")
 
 })
 public class StandaloneCandidacyProcessDA extends CandidacyProcessDA {
@@ -212,6 +212,7 @@ public class StandaloneCandidacyProcessDA extends CandidacyProcessDA {
 	final Spreadsheet spreadsheet = createSpreadSheet();
 	for (final StandaloneIndividualCandidacyProcess candidacy : process
 		.getSortedStandaloneIndividualCandidaciesThatCanBeSendToJury()) {
+	    if (candidacy.canExecuteActivity(AccessControl.getUserView()))
 	    addRow(spreadsheet, candidacy);
 	}
 	spreadsheet.exportToXLSSheet(writer);
@@ -265,49 +266,6 @@ public class StandaloneCandidacyProcessDA extends CandidacyProcessDA {
 	    result.add(new StandaloneCandidacyDegreeBean(element));
 	}
 	return result;
-    }
-
-    public ActionForward prepareExecuteIntroduceCandidacyResults(ActionMapping mapping, ActionForm actionForm,
-	    HttpServletRequest request, HttpServletResponse response) {
-	setInformationToIntroduceCandidacyResults(request);
-	return mapping.findForward("view-candidacy-results");
-    }
-
-    private void setInformationToIntroduceCandidacyResults(HttpServletRequest request) {
-	final StandaloneCandidacyProcess process = getProcess(request);
-	final List<StandaloneIndividualCandidacyResultBean> beans = new ArrayList<StandaloneIndividualCandidacyResultBean>();
-	for (final StandaloneIndividualCandidacyProcess candidacy : process
-		.getSortedStandaloneIndividualCandidaciesThatCanBeSendToJury()) {
-	    beans.add(new StandaloneIndividualCandidacyResultBean(candidacy));
-	}
-	request.setAttribute("standaloneIndividualCandidacyResultBeans", beans);
-    }
-
-    public ActionForward prepareIntroduceCandidacyResults(ActionMapping mapping, ActionForm actionForm,
-	    HttpServletRequest request, HttpServletResponse response) {
-	setInformationToIntroduceCandidacyResults(request);
-	return mapping.findForward("insert-candidacy-results");
-    }
-
-    public ActionForward executeIntroduceCandidacyResults(ActionMapping mapping, ActionForm actionForm,
-	    HttpServletRequest request, HttpServletResponse response) throws FenixFilterException, FenixServiceException {
-	try {
-	    executeActivity(getProcess(request), "IntroduceCandidacyResults",
-		    getRenderedObject("standaloneIndividualCandidacyResultBeans"));
-	} catch (final DomainException e) {
-	    addActionMessage(request, e.getMessage(), e.getArgs());
-	    request.setAttribute("standaloneIndividualCandidacyResultBeans",
-		    getRenderedObject("standaloneIndividualCandidacyResultBeans"));
-	    return mapping.findForward("insert-candidacy-results");
-	}
-	return listProcessAllowedActivities(mapping, actionForm, request, response);
-    }
-
-    public ActionForward executeIntroduceCandidacyResultsInvalid(ActionMapping mapping, ActionForm actionForm,
-	    HttpServletRequest request, HttpServletResponse response) {
-	request.setAttribute("standaloneIndividualCandidacyResultBeans",
-		getRenderedObject("standaloneIndividualCandidacyResultBeans"));
-	return mapping.findForward("insert-candidacy-results");
     }
 
     @Override

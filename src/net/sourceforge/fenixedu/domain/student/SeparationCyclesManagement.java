@@ -36,10 +36,9 @@ import net.sourceforge.fenixedu.domain.degreeStructure.OptionalCurricularCourse;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.exceptions.DomainExceptionWithInvocationResult;
 import net.sourceforge.fenixedu.domain.oldInquiries.InquiriesRegistry;
-import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationState;
-import net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationStateType;
 import net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationState.RegistrationStateCreator;
+import net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationStateType;
 import net.sourceforge.fenixedu.domain.studentCurriculum.Credits;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CreditsDismissal;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumGroup;
@@ -69,8 +68,8 @@ public class SeparationCyclesManagement {
     private static final List<DegreeType> ACCEPTED_DEGREE_TYPES = Arrays.asList(DegreeType.BOLONHA_DEGREE,
 	    DegreeType.BOLONHA_INTEGRATED_MASTER_DEGREE);
 
-    private final ResourceBundle RESOURCE_BUNDLE = ResourceBundle.getBundle("resources.ApplicationResources", Language
-	    .getLocale());
+    private final ResourceBundle RESOURCE_BUNDLE = ResourceBundle.getBundle("resources.ApplicationResources",
+	    Language.getLocale());
 
     public SeparationCyclesManagement() {
     }
@@ -208,8 +207,8 @@ public class SeparationCyclesManagement {
 	PersonalIngressionData personalIngressionData = student.getPersonalIngressionDataByExecutionYear(registration
 		.getRegistrationYear());
 	if (personalIngressionData == null) {
-	    new PersonalIngressionData(student, registration.getRegistrationYear(), studentCandidacy
-		    .getPrecedentDegreeInformation());
+	    new PersonalIngressionData(student, registration.getRegistrationYear(),
+		    studentCandidacy.getPrecedentDegreeInformation());
 	} else {
 	    personalIngressionData.addPrecedentDegreesInformations(studentCandidacy.getPrecedentDegreeInformation());
 	}
@@ -252,8 +251,8 @@ public class SeparationCyclesManagement {
 	    return result;
 	}
 
-	result = StudentCurricularPlan.createWithEmptyStructure(registration, degreeCurricularPlan, cycleType, registration
-		.getStartDate());
+	result = StudentCurricularPlan.createWithEmptyStructure(registration, degreeCurricularPlan, cycleType,
+		registration.getStartDate());
 
 	// set ingression after create studentcurricularPlan
 	registration.setIngression(Ingression.DA1C);
@@ -370,8 +369,8 @@ public class SeparationCyclesManagement {
 		return;
 	    }
 	    final Substitution substitution = createSubstitution(enrolment, parent);
-	    createNewOptionalDismissal(substitution, parent, enrolment, optional.getOptionalCurricularCourse(), optional
-		    .getEctsCredits());
+	    createNewOptionalDismissal(substitution, parent, enrolment, optional.getOptionalCurricularCourse(),
+		    optional.getEctsCredits());
 	} else {
 	    createNewDismissal(createSubstitution(enrolment, parent), parent, enrolment);
 	}
@@ -389,7 +388,7 @@ public class SeparationCyclesManagement {
 
 	final CurricularCourse curricularCourse = curriculumLine.getCurricularCourse();
 
-	if (!hasCurricularCourseToDismissal(parent, curricularCourse) && !createByAdminOffice(curriculumLine)) {
+	if (!hasCurricularCourseToDismissal(parent, curricularCourse) && !hasResponsibleForCreation(curriculumLine)) {
 	    throw new DomainException("error.SeparationCyclesManagement.parent.doesnot.have.curricularCourse.to.dismissal");
 	}
 
@@ -408,7 +407,7 @@ public class SeparationCyclesManagement {
 	    throw new DomainException("error.OptionalDismissal.invalid.credits");
 	}
 
-	if (!hasCurricularCourseToDismissal(parent, curricularCourse) && !createByAdminOffice(curriculumLine)) {
+	if (!hasCurricularCourseToDismissal(parent, curricularCourse) && !hasResponsibleForCreation(curriculumLine)) {
 	    throw new DomainException("error.SeparationCyclesManagement.parent.doesnot.have.curricularCourse.to.dismissal");
 	}
 
@@ -421,9 +420,8 @@ public class SeparationCyclesManagement {
 	return dismissal;
     }
 
-    private boolean createByAdminOffice(final CurriculumLine line) {
-	return line.hasCreatedBy()
-		&& Person.readPersonByUsername(line.getCreatedBy()).hasRole(RoleType.ACADEMIC_ADMINISTRATIVE_OFFICE);
+    private boolean hasResponsibleForCreation(final CurriculumLine line) {
+	return line.hasCreatedBy();
     }
 
     private boolean hasCurricularCourseToDismissal(final CurriculumGroup curriculumGroup, final CurricularCourse curricularCourse) {

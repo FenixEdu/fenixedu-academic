@@ -8,7 +8,6 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.AccountabilityTypeEnum;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Contract;
@@ -31,7 +30,7 @@ import pt.ist.fenixWebFramework.services.Service;
 
 /**
  * 
- * @author T�nia Pous�o
+ * @author Tânia Pousão
  */
 public class Employee extends Employee_Base {
 
@@ -45,17 +44,9 @@ public class Employee extends Employee_Base {
     }
 
     public void delete() {
-	checkRulesToDelete();
-
 	super.setPerson(null);
 	removeRootDomainObject();
 	deleteDomainObject();
-    }
-
-    private void checkRulesToDelete() {
-	if (hasAnyAcademicServiceRequestSituations()) {
-	    throw new DomainException("error.Employee.cannot.delete");
-	}
     }
 
     @Override
@@ -267,16 +258,6 @@ public class Employee extends Employee_Base {
 	    }
 	}
 	return null;
-    }
-
-    public AdministrativeOffice getAdministrativeOffice() {
-	AdministrativeOffice administrativeOffice = getCurrentWorkingPlace() == null ? null : getCurrentWorkingPlace()
-		.getAdministrativeOffice();
-	return administrativeOffice;
-    }
-
-    public boolean isAdministrativeOfficeEmployee() {
-	return getAdministrativeOffice() != null;
     }
 
     private RoleType getRoleType() {

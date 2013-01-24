@@ -6,9 +6,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.accounting.AccountingEventsCreator;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.accounting.events.AccountingEventCreateBean;
 import net.sourceforge.fenixedu.dataTransferObject.accounting.events.EnrolmentOutOfPeriodEventCreateBean;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
@@ -27,15 +25,15 @@ import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
-@Mapping(path = "/accountingEventsManagement", module = "academicAdminOffice")
+@Mapping(path = "/accountingEventsManagement", module = "academicAdministration")
 @Forwards({
 
-	@Forward(name = "chooseEventType", path = "/academicAdminOffice/accountingEventsManagement/chooseEventType.jsp", tileProperties = @Tile(title = "private.academicadministrativeoffice.studentoperations.viewstudents")),
-	@Forward(name = "createGratuityEvent", path = "/academicAdminOffice/accountingEventsManagement/createGratuityEvent.jsp", tileProperties = @Tile(title = "private.academicadministrativeoffice.studentoperations.viewstudents")),
-	@Forward(name = "createAdministrativeOfficeFeeAndInsuranceEvent", path = "/academicAdminOffice/accountingEventsManagement/createAdministrativeOfficeFeeAndInsuranceEvent.jsp", tileProperties = @Tile(title = "private.academicadministrativeoffice.studentoperations.viewstudents")),
-	@Forward(name = "createInsuranceEvent", path = "/academicAdminOffice/accountingEventsManagement/createInsuranceEvent.jsp", tileProperties = @Tile(title = "private.academicadministrativeoffice.studentoperations.viewstudents")),
-	@Forward(name = "createEnrolmentOutOfPeriodEvent", path = "/academicAdminOffice/accountingEventsManagement/createEnrolmentOutOfPeriodEvent.jsp", tileProperties = @Tile(title = "private.academicadministrativeoffice.studentoperations.viewstudents")),
-	@Forward(name = "createDfaRegistrationEvent", path = "/academicAdminOffice/accountingEventsManagement/createDfaRegistrationEvent.jsp", tileProperties = @Tile(title = "private.academicadministrativeoffice.studentoperations.viewstudents"))
+	@Forward(name = "chooseEventType", path = "/academicAdminOffice/accountingEventsManagement/chooseEventType.jsp"),
+	@Forward(name = "createGratuityEvent", path = "/academicAdminOffice/accountingEventsManagement/createGratuityEvent.jsp"),
+	@Forward(name = "createAdministrativeOfficeFeeAndInsuranceEvent", path = "/academicAdminOffice/accountingEventsManagement/createAdministrativeOfficeFeeAndInsuranceEvent.jsp"),
+	@Forward(name = "createInsuranceEvent", path = "/academicAdminOffice/accountingEventsManagement/createInsuranceEvent.jsp"),
+	@Forward(name = "createEnrolmentOutOfPeriodEvent", path = "/academicAdminOffice/accountingEventsManagement/createEnrolmentOutOfPeriodEvent.jsp"),
+	@Forward(name = "createDfaRegistrationEvent", path = "/academicAdminOffice/accountingEventsManagement/createDfaRegistrationEvent.jsp")
 
 })
 public class AccountingEventsManagementDA extends FenixDispatchAction {
@@ -45,8 +43,17 @@ public class AccountingEventsManagementDA extends FenixDispatchAction {
 
     public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
 
+	StudentCurricularPlan studentCurricularPlan = getStudentCurricularPlan(request);
+
 	request.setAttribute("eventTypes", supportedEventTypes);
-	request.setAttribute("studentCurricularPlan", getStudentCurricularPlan(request));
+	request.setAttribute("studentCurricularPlan", studentCurricularPlan);
+
+	/**
+	 * The insurance is an
+	 * {@link EventType.ADMINISTRATIVE_OFFICE_FEE_INSURANCE} if the target
+	 * degree has no PhdProgram associated
+	 */
+	request.setAttribute("officeFeeInsurance", !studentCurricularPlan.getDegree().hasPhdProgram());
 
 	return mapping.findForward("chooseEventType");
 
@@ -137,7 +144,7 @@ public class AccountingEventsManagementDA extends FenixDispatchAction {
     }
 
     public ActionForward createGratuityEvent(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+	    HttpServletResponse response) {
 
 	final AccountingEventCreateBean accountingEventCreateBean = getAccountingEventCreateBean();
 	try {
@@ -174,7 +181,7 @@ public class AccountingEventsManagementDA extends FenixDispatchAction {
     }
 
     public ActionForward createAdministrativeOfficeFeeAndInsuranceEvent(ActionMapping mapping, ActionForm form,
-	    HttpServletRequest request, HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+	    HttpServletRequest request, HttpServletResponse response) {
 
 	final AccountingEventCreateBean accountingEventCreateBean = getAccountingEventCreateBean();
 	try {
@@ -222,7 +229,7 @@ public class AccountingEventsManagementDA extends FenixDispatchAction {
     }
 
     public ActionForward createEnrolmentOutOfPeriodEvent(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+	    HttpServletResponse response) {
 
 	final EnrolmentOutOfPeriodEventCreateBean accountingEventCreateBean = (EnrolmentOutOfPeriodEventCreateBean) getAccountingEventCreateBean();
 
@@ -263,7 +270,7 @@ public class AccountingEventsManagementDA extends FenixDispatchAction {
     }
 
     public ActionForward createInsuranceEvent(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+	    HttpServletResponse response) {
 
 	final AccountingEventCreateBean accountingEventCreateBean = getAccountingEventCreateBean();
 	try {

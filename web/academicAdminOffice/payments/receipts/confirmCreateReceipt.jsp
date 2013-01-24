@@ -6,9 +6,6 @@
 
 <%@ page import="net.sourceforge.fenixedu.util.Money" %>
 
-<logic:present role="ACADEMIC_ADMINISTRATIVE_OFFICE">
-
-<em><bean:message key="label.payments" bundle="ACADEMIC_OFFICE_RESOURCES"/></em>
 <h2><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.payments.confirmCreateReceipt" /></h2>
 
 <logic:messagesPresent message="true" property="context">
@@ -82,5 +79,3 @@
 		<html:submit bundle="HTMLALT_RESOURCES" altKey="cancel.cancel" onclick="this.form.method.value='backToShowPaymentsWithoutReceipt';"><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="button.payments.back"/></html:submit>
 	</p>
 </fr:form>
-
-</logic:present>

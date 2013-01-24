@@ -6,7 +6,6 @@ import javax.servlet.http.HttpServletResponse;
 import net.sourceforge.fenixedu.dataTransferObject.administrativeOffice.studentEnrolment.StudentEnrolmentBean;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
-import net.sourceforge.fenixedu.predicates.StudentCurricularPlanPredicates;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 
@@ -20,9 +19,9 @@ import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
-@Mapping(path = "/studentEnrolments", module = "academicAdminOffice")
+@Mapping(path = "/studentEnrolments", module = "academicAdministration")
 @Forwards({
-	@Forward(name = "prepareChooseExecutionPeriod", path = "/academicAdminOffice/chooseStudentEnrolmentExecutionPeriod.jsp", tileProperties = @Tile(title = "private.academicadministrativeoffice.studentoperations.viewstudents")),
+	@Forward(name = "prepareChooseExecutionPeriod", path = "/academicAdminOffice/chooseStudentEnrolmentExecutionPeriod.jsp"),
 	@Forward(name = "visualizeRegistration", path = "/student.do?method=visualizeRegistration") })
 public class StudentEnrolmentsDA extends FenixDispatchAction {
 
@@ -35,10 +34,6 @@ public class StudentEnrolmentsDA extends FenixDispatchAction {
 	if (plan != null) {
 	    studentEnrolmentBean.setStudentCurricularPlan(plan);
 	    studentEnrolmentBean.setExecutionPeriod(ExecutionSemester.readActualExecutionSemester());
-	    studentEnrolmentBean.canEnrolWithoutRules(StudentCurricularPlanPredicates.ENROL_WITHOUT_RULES.evaluate(plan));
-	    studentEnrolmentBean
-		    .canMoveCurriculumLinesWithoutRules(StudentCurricularPlanPredicates.MOVE_CURRICULUM_LINES_WITHOUT_RULES
-			    .evaluate(plan));
 	    return showExecutionPeriodEnrolments(studentEnrolmentBean, mapping, actionForm, request, response);
 	} else {
 	    throw new FenixActionException();
@@ -56,12 +51,6 @@ public class StudentEnrolmentsDA extends FenixDispatchAction {
 	final StudentEnrolmentBean studentEnrolmentBean = new StudentEnrolmentBean();
 	studentEnrolmentBean.setExecutionPeriod((ExecutionSemester) request.getAttribute("executionPeriod"));
 	studentEnrolmentBean.setStudentCurricularPlan((StudentCurricularPlan) request.getAttribute("studentCurricularPlan"));
-	studentEnrolmentBean.canEnrolWithoutRules(StudentCurricularPlanPredicates.ENROL_WITHOUT_RULES
-		.evaluate(studentEnrolmentBean.getStudentCurricularPlan()));
-	studentEnrolmentBean
-		.canMoveCurriculumLinesWithoutRules(StudentCurricularPlanPredicates.MOVE_CURRICULUM_LINES_WITHOUT_RULES
-			.evaluate(studentEnrolmentBean.getStudentCurricularPlan()));
-
 	return showExecutionPeriodEnrolments(studentEnrolmentBean, mapping, form, request, response);
     }
 

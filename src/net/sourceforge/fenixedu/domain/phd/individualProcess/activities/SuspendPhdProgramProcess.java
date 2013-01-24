@@ -1,7 +1,6 @@
 package net.sourceforge.fenixedu.domain.phd.individualProcess.activities;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
-import net.sourceforge.fenixedu.domain.accessControl.PermissionType;
 import net.sourceforge.fenixedu.domain.caseHandling.PreConditionNotValidException;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcessBean;
@@ -21,11 +20,7 @@ public class SuspendPhdProgramProcess extends PhdIndividualProgramProcessActivit
 
     @Override
     public void activityPreConditions(PhdIndividualProgramProcess process, IUserView userView) {
-	if (!PhdIndividualProgramProcess.isMasterDegreeAdministrativeOfficeEmployee(userView)) {
-	    throw new PreConditionNotValidException();
-	}
-
-	if (!hasPermissionFor(userView, PermissionType.MANAGE_PHD_PROCESS_STATES)) {
+	if (!process.isAllowedToManageProcessState(userView)) {
 	    throw new PreConditionNotValidException();
 	}
 
@@ -38,7 +33,7 @@ public class SuspendPhdProgramProcess extends PhdIndividualProgramProcessActivit
 	DateTime stateDate = bean.getStateDate().toDateTimeAtStartOfDay();
 	PhdProgramProcessState.createWithGivenStateDate(process, PhdIndividualProgramProcessState.SUSPENDED,
 		userView.getPerson(), "", stateDate);
-	
+
 	process.cancelDebts(userView.getPerson());
 
 	if (process.hasRegistration() && process.getRegistration().isActive()) {

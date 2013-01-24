@@ -4,54 +4,51 @@
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr" %>
 <html:xhtml/>
 
-<logic:present role="MANAGER">
-	<h2><strong><bean:message key="label.payments.searchPerson" bundle="MANAGER_RESOURCES"/></strong></h2>
+<h2><strong><bean:message key="label.payments.searchPerson" bundle="MANAGER_RESOURCES"/></strong></h2>
+
+<logic:messagesPresent message="true">
+	<p>
+		<ul class="nobullet list6">
+			<html:messages id="messages" message="true" bundle="APPLICATION_RESOURCES">
+				<li><span class="error0"><bean:write name="messages" /></span></li>
+			</html:messages>
+		</ul>
+	</p>
+</logic:messagesPresent>
+
+<fr:form action="/paymentsManagement.do?method=searchPerson">
+	<fr:edit id="searchPersonBean" name="searchPersonBean" schema="SimpleSearchPersonWithStudentBean.edit">
+		<fr:layout name="tabular" >
+			<fr:property name="classes" value="tstyle4 thright thlight"/>
+			<fr:property name="columnClasses" value=",,tdclear tderror1"/>
+			<fr:destination name="invalid" path="/paymentsManagement.do?method=prepareSearchPersonInvalid"/>
+		</fr:layout>
+	</fr:edit>
 	
-	<logic:messagesPresent message="true">
-		<p>
-			<ul class="nobullet list6">
-				<html:messages id="messages" message="true" bundle="APPLICATION_RESOURCES">
-					<li><span class="error0"><bean:write name="messages" /></span></li>
-				</html:messages>
-			</ul>
+	<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.search">
+		<bean:message bundle="APPLICATION_RESOURCES" key="label.search"/>
+	</html:submit>
+</fr:form>
+
+<logic:present name="persons">
+	<logic:empty name="persons">
+		<p>		
+			<em><bean:message key="label.payments.noPersonsFound" bundle="MANAGER_RESOURCES"/></em>
 		</p>
-	</logic:messagesPresent>
-	
-	<fr:form action="/payments.do?method=searchPerson">
-		<fr:edit id="searchPersonBean" name="searchPersonBean" schema="SimpleSearchPersonWithStudentBean.edit">
+			
+	</logic:empty>
+	<logic:notEmpty name="persons">
+		<fr:view name="persons" schema="person.view-with-name-and-idDocumentType-and-documentIdNumber">
 			<fr:layout name="tabular" >
-				<fr:property name="classes" value="tstyle4 thright thlight"/>
-				<fr:property name="columnClasses" value=",,tdclear tderror1"/>
-				<fr:destination name="invalid" path="/payments.do?method=prepareSearchPersonInvalid"/>
+				<fr:property name="classes" value="tstyle4"/>
+	        	<fr:property name="columnClasses" value="listClasses,,"/>
+				<fr:property name="linkFormat(view)" value="/paymentsManagement.do?method=showEvents&personId=${idInternal}" />
+				<fr:property name="key(view)" value="label.view"/>
+				<fr:property name="bundle(view)" value="APPLICATION_RESOURCES"/>
+				<fr:property name="contextRelative(view)" value="true"/>	
 			</fr:layout>
-		</fr:edit>
-		
-		<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.search">
-			<bean:message bundle="APPLICATION_RESOURCES" key="label.search"/>
-		</html:submit>
-	</fr:form>
-	
-	<logic:present name="persons">
-		<logic:empty name="persons">
-			<p>		
-				<em><bean:message key="label.payments.noPersonsFound" bundle="MANAGER_RESOURCES"/></em>
-			</p>
-				
-		</logic:empty>
-		<logic:notEmpty name="persons">
-			<fr:view name="persons" schema="person.view-with-name-and-idDocumentType-and-documentIdNumber">
-				<fr:layout name="tabular" >
-					<fr:property name="classes" value="tstyle4"/>
-		        	<fr:property name="columnClasses" value="listClasses,,"/>
-					<fr:property name="linkFormat(view)" value="/payments.do?method=showEvents&personId=${idInternal}" />
-					<fr:property name="key(view)" value="label.view"/>
-					<fr:property name="bundle(view)" value="APPLICATION_RESOURCES"/>
-					<fr:property name="contextRelative(view)" value="true"/>	
-				</fr:layout>
-			</fr:view>
-		</logic:notEmpty>
-	</logic:present>
-	
+		</fr:view>
+	</logic:notEmpty>
 </logic:present>
 
 

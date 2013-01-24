@@ -9,18 +9,17 @@ public class EditPhdParticipant extends PhdIndividualProgramProcessActivity {
 
     @Override
     protected void activityPreConditions(PhdIndividualProgramProcess process, IUserView userView) {
-        if (!PhdIndividualProgramProcess.isMasterDegreeAdministrativeOfficeEmployee(userView)) {
-    	throw new PreConditionNotValidException();
-        }
+	if (!process.isAllowedToManageProcess(userView)) {
+	    throw new PreConditionNotValidException();
+	}
     }
 
     @Override
-    protected PhdIndividualProgramProcess executeActivity(PhdIndividualProgramProcess process, IUserView userView,
-    	Object object) {
-        PhdParticipantBean bean = (PhdParticipantBean) object;
-        bean.getParticipant().edit(bean);
+    protected PhdIndividualProgramProcess executeActivity(PhdIndividualProgramProcess process, IUserView userView, Object object) {
+	PhdParticipantBean bean = (PhdParticipantBean) object;
+	bean.getParticipant().edit(bean);
 
-        return process;
+	return process;
     }
 
 }

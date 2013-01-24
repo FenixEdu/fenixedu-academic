@@ -11,10 +11,13 @@ import java.util.Set;
 
 import net.sourceforge.fenixedu.dataTransferObject.serviceRequests.AcademicServiceRequestBean;
 import net.sourceforge.fenixedu.dataTransferObject.serviceRequests.AcademicServiceRequestCreateBean;
-import net.sourceforge.fenixedu.domain.Employee;
+import net.sourceforge.fenixedu.domain.AcademicProgram;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
+import net.sourceforge.fenixedu.domain.accessControl.PersonGroup;
+import net.sourceforge.fenixedu.domain.accessControl.academicAdministration.AcademicAuthorizationGroup;
+import net.sourceforge.fenixedu.domain.accessControl.academicAdministration.AcademicOperationType;
 import net.sourceforge.fenixedu.domain.accounting.EventType;
 import net.sourceforge.fenixedu.domain.accounting.events.serviceRequests.AcademicServiceRequestEvent;
 import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
@@ -23,6 +26,9 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.exceptions.DomainExceptionWithLabelFormatter;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.AcademicServiceRequestType;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequest;
+import net.sourceforge.fenixedu.domain.util.email.Message;
+import net.sourceforge.fenixedu.domain.util.email.Recipient;
+import net.sourceforge.fenixedu.domain.util.email.Sender;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 
 import org.apache.commons.collections.comparators.ComparatorChain;
@@ -30,6 +36,7 @@ import org.apache.commons.lang.StringUtils;
 import org.joda.time.DateTime;
 import org.joda.time.YearMonthDay;
 
+import pt.ist.fenixWebFramework.services.Service;
 import pt.utl.ist.fenix.tools.resources.LabelFormatter;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 
@@ -73,50 +80,32 @@ abstract public class AcademicServiceRequest extends AcademicServiceRequest_Base
     protected AcademicServiceRequest() {
 	super();
 	super.setRootDomainObject(RootDomainObject.getInstance());
-	super.setCreationDate(new DateTime());
     }
 
-    protected void init(final AcademicServiceRequestCreateBean bean) {
-	final AdministrativeOffice administrativeOffice = findAdministrativeOffice();
-	checkParameters(administrativeOffice, bean);
+    protected void init(final AcademicServiceRequestCreateBean bean, AdministrativeOffice office) {
+	checkParameters(bean);
 
-	super.setServiceRequestYear(bean.getRequestDate().year().get());
-	super.setAcademicServiceRequestYear(generateAcademicServiceRequestYear());
+	super.setAdministrativeOffice(office);
+	super.setAcademicServiceRequestYear(AcademicServiceRequestYear.readByYear(bean.getRequestDate().year().get(), true));
 	super.setServiceRequestNumber(getAcademicServiceRequestYear().generateServiceRequestNumber());
 	super.setRequestDate(bean.getRequestDate());
 
-	super.setAdministrativeOffice(administrativeOffice);
 	super.setUrgentRequest(bean.getUrgentRequest());
 	super.setFreeProcessed(bean.getFreeProcessed());
 	super.setExecutionYear(bean.getExecutionYear());
 	super.setLanguage(bean.getLanguage());
 
 	final AcademicServiceRequestBean situationBean = new AcademicServiceRequestBean(AcademicServiceRequestSituationType.NEW,
-		getEmployee());
+		AccessControl.getPerson());
 	situationBean.setSituationDate(getRequestDate().toYearMonthDay());
 	createAcademicServiceRequestSituations(situationBean);
     }
 
-    private AcademicServiceRequestYear generateAcademicServiceRequestYear() {
-	final AcademicServiceRequestYear result = AcademicServiceRequestYear.readByYear(getServiceRequestYear());
-	return result == null ? new AcademicServiceRequestYear(getServiceRequestYear()) : result;
+    private int getServiceRequestYear() {
+	return getAcademicServiceRequestYear().getYear();
     }
 
-    protected Employee getEmployee() {
-	final Person person = AccessControl.getPerson();
-	return person == null ? null : person.getEmployee();
-    }
-
-    protected AdministrativeOffice findAdministrativeOffice() {
-	final Person person = AccessControl.getPerson();
-	return person != null ? person.getEmployeeAdministrativeOffice() : null;
-    }
-
-    private void checkParameters(final AdministrativeOffice administrativeOffice, final AcademicServiceRequestCreateBean bean) {
-	if (administrativeOffice == null) {
-	    throw new DomainException("error.serviceRequests.AcademicServiceRequest.administrativeOffice.cannot.be.null");
-	}
-
+    private void checkParameters(final AcademicServiceRequestCreateBean bean) {
 	if (bean.getRequestDate() == null || bean.getRequestDate().isAfterNow()) {
 	    throw new DomainException("error.serviceRequests.AcademicServiceRequest.invalid.requestDate");
 	}
@@ -144,11 +133,6 @@ abstract public class AcademicServiceRequest extends AcademicServiceRequest_Base
     @Override
     final public void setExecutionYear(ExecutionYear executionYear) {
 	throw new DomainException("error.serviceRequests.AcademicServiceRequest.cannot.modify.executionYear");
-    }
-
-    @Override
-    final public void setCreationDate(DateTime creationDate) {
-	throw new DomainException("error.serviceRequests.AcademicServiceRequest.cannot.modify.creationDate");
     }
 
     @Override
@@ -182,6 +166,16 @@ abstract public class AcademicServiceRequest extends AcademicServiceRequest_Base
 
     abstract public boolean isPayedUponCreation();
 
+    public boolean isPaymentsAccessible() {
+	return AcademicAuthorizationGroup.getProgramsForOperation(AccessControl.getPerson(),
+		AcademicOperationType.MANAGE_STUDENT_PAYMENTS).contains(getAcademicProgram());
+    }
+
+    public boolean isRegistrationAccessible() {
+	return AcademicAuthorizationGroup.getProgramsForOperation(AccessControl.getPerson(),
+		AcademicOperationType.MANAGE_REGISTRATIONS).contains(getAcademicProgram());
+    }
+
     protected String getDescription(final AcademicServiceRequestType academicServiceRequestType, final String specificServiceType) {
 	final ResourceBundle enumerationResources = ResourceBundle.getBundle("resources.EnumerationResources",
 		Language.getLocale());
@@ -202,74 +196,116 @@ abstract public class AcademicServiceRequest extends AcademicServiceRequest_Base
 	return getDescription(getAcademicServiceRequestType());
     }
 
+    @Service
     final public void process() throws DomainException {
-	process(getEmployee());
+	process(AccessControl.getPerson());
     }
 
-    final public void process(final Employee employee) throws DomainException {
-	edit(new AcademicServiceRequestBean(AcademicServiceRequestSituationType.PROCESSING, employee));
+    final public void process(final Person responsible) throws DomainException {
+	edit(new AcademicServiceRequestBean(AcademicServiceRequestSituationType.PROCESSING, responsible));
     }
 
-    final public void process(final Employee employee, final YearMonthDay situationDate) throws DomainException {
-	edit(new AcademicServiceRequestBean(AcademicServiceRequestSituationType.PROCESSING, employee, situationDate, ""));
+    final public void process(final Person responsible, final YearMonthDay situationDate) throws DomainException {
+	edit(new AcademicServiceRequestBean(AcademicServiceRequestSituationType.PROCESSING, responsible, situationDate, ""));
     }
 
     final public void process(final YearMonthDay situationDate) throws DomainException {
-	process(getEmployee(), situationDate);
+	process(AccessControl.getPerson(), situationDate);
     }
 
-    final public void sendToExternalEntity(final YearMonthDay sendDate, final String description) {
-	final Employee employee = getEmployee();
-	edit(new AcademicServiceRequestBean(AcademicServiceRequestSituationType.SENT_TO_EXTERNAL_ENTITY, employee, sendDate,
-		description));
+    @Service
+    public void sendToExternalEntity(final YearMonthDay sendDate, final String description) {
+	edit(new AcademicServiceRequestBean(AcademicServiceRequestSituationType.SENT_TO_EXTERNAL_ENTITY,
+		AccessControl.getPerson(), sendDate, description));
     }
 
+    @Service
     final public void receivedFromExternalEntity(final YearMonthDay receivedDate, final String description) {
-	final Employee employee = getEmployee();
-	edit(new AcademicServiceRequestBean(AcademicServiceRequestSituationType.RECEIVED_FROM_EXTERNAL_ENTITY, employee,
-		receivedDate, description));
+	edit(new AcademicServiceRequestBean(AcademicServiceRequestSituationType.RECEIVED_FROM_EXTERNAL_ENTITY,
+		AccessControl.getPerson(), receivedDate, description));
     }
 
+    @Service
     final public void reject(final String justification) {
-	final Employee employee = getEmployee();
-	edit(new AcademicServiceRequestBean(AcademicServiceRequestSituationType.REJECTED, employee, justification));
+	edit(new AcademicServiceRequestBean(AcademicServiceRequestSituationType.REJECTED, AccessControl.getPerson(),
+		justification));
     }
 
+    @Service
     final public void cancel(final String justification) {
-	final Employee employee = getEmployee();
-	edit(new AcademicServiceRequestBean(AcademicServiceRequestSituationType.CANCELLED, employee, justification));
+	edit(new AcademicServiceRequestBean(AcademicServiceRequestSituationType.CANCELLED, AccessControl.getPerson(),
+		justification));
     }
 
     final public void conclude() {
-	conclude(getEmployee());
+	conclude(AccessControl.getPerson());
     }
 
-    final public void conclude(final Employee employee) {
-	edit(new AcademicServiceRequestBean(AcademicServiceRequestSituationType.CONCLUDED, employee));
+    final public void conclude(final Person responsible) {
+	edit(new AcademicServiceRequestBean(AcademicServiceRequestSituationType.CONCLUDED, responsible));
     }
 
     final public void conclude(final YearMonthDay situationDate, final String justification) {
-	conclude(getEmployee(), situationDate, justification);
+	conclude(AccessControl.getPerson(), situationDate, justification);
     }
 
-    final public void conclude(final Employee employee, final YearMonthDay situationDate) {
-	conclude(employee, situationDate, "");
+    final public void conclude(final Person responsible, final YearMonthDay situationDate) {
+	conclude(responsible, situationDate, "");
     }
 
-    final public void conclude(final Employee employee, final YearMonthDay situationDate, final String justification) {
-	edit(new AcademicServiceRequestBean(AcademicServiceRequestSituationType.CONCLUDED, employee, situationDate, justification));
+    final public void conclude(final Person responsible, final YearMonthDay situationDate, final String justification) {
+	edit(new AcademicServiceRequestBean(AcademicServiceRequestSituationType.CONCLUDED, responsible, situationDate,
+		justification));
     }
 
+    @Service
+    final public void conclude(final YearMonthDay situationDate, final String justification, boolean sendEmail) {
+	conclude(AccessControl.getPerson(), situationDate, justification);
+	if (sendEmail) {
+	    sendConcludeEmail();
+	}
+    }
+
+    private void sendConcludeEmail() {
+	final ResourceBundle appBundle = ResourceBundle.getBundle("resources.ApplicationResources");
+
+	String body = appBundle.getString("mail.academicServiceRequest.concluded.message1");
+	body += " " + getServiceRequestNumberYear();
+	body += " " + appBundle.getString("mail.academicServiceRequest.concluded.message2");
+	body += " '" + getDescription();
+	body += "' " + appBundle.getString("mail.academicServiceRequest.concluded.message3");
+
+	if (getAcademicServiceRequestType() == AcademicServiceRequestType.SPECIAL_SEASON_REQUEST) {
+	    if (((SpecialSeasonRequest) this).getDeferred() == null)
+		throw new DomainException("special.season.request.deferment.cant.be.null");
+	    if (((SpecialSeasonRequest) this).getDeferred() == true) {
+		body += "\n" + appBundle.getString("mail.academicServiceRequest.concluded.messageSSR4A");
+	    } else {
+		body += "\n" + appBundle.getString("mail.academicServiceRequest.concluded.messageSSR4B");
+	    }
+	    body += "\n\n" + appBundle.getString("mail.academicServiceRequest.concluded.messageSSR5");
+	} else {
+
+	    body += "\n\n" + appBundle.getString("mail.academicServiceRequest.concluded.message4");
+
+	}
+
+	final Sender sender = getAdministrativeOffice().getUnit().getUnitBasedSender().get(0);
+	final Recipient recipient = new Recipient(new PersonGroup(getPerson()));
+	new Message(sender, sender.getReplyTos(), recipient.asCollection(), getDescription(), body, "");
+    }
+
+    @Service
     final public void delivered() {
-	delivered(getEmployee());
+	delivered(AccessControl.getPerson());
     }
 
-    final public void delivered(final Employee employee) {
-	edit(new AcademicServiceRequestBean(AcademicServiceRequestSituationType.DELIVERED, employee));
+    final public void delivered(final Person responsible) {
+	edit(new AcademicServiceRequestBean(AcademicServiceRequestSituationType.DELIVERED, responsible));
     }
 
-    final public void delivered(final Employee employee, final YearMonthDay situationDate) {
-	edit(new AcademicServiceRequestBean(AcademicServiceRequestSituationType.DELIVERED, employee, situationDate, ""));
+    final public void delivered(final Person responsible, final YearMonthDay situationDate) {
+	edit(new AcademicServiceRequestBean(AcademicServiceRequestSituationType.DELIVERED, responsible, situationDate, ""));
     }
 
     final public void delete() {
@@ -296,11 +332,6 @@ abstract public class AcademicServiceRequest extends AcademicServiceRequest_Base
     @Override
     public void setAdministrativeOffice(AdministrativeOffice administrativeOffice) {
 	throw new DomainException("error.serviceRequests.RegistrationAcademicServiceRequest.cannot.modify.administrativeOffice");
-    }
-
-    @Override
-    final public void setServiceRequestYear(Integer serviceRequestYear) {
-	throw new DomainException("error.serviceRequests.AcademicServiceRequest.cannot.modify.serviceRequestYear");
     }
 
     @Override
@@ -349,10 +380,6 @@ abstract public class AcademicServiceRequest extends AcademicServiceRequest_Base
 
     final public DateTime getActiveSituationDate() {
 	return getActiveSituation().getSituationDate();
-    }
-
-    final public AcademicServiceRequestSituation getCreationSituation() {
-	return getSituationByType(AcademicServiceRequestSituationType.NEW);
     }
 
     final public AcademicServiceRequestSituation getConclusionSituation() {
@@ -501,7 +528,7 @@ abstract public class AcademicServiceRequest extends AcademicServiceRequest_Base
     protected void internalChangeState(final AcademicServiceRequestBean academicServiceRequestBean) {
 
 	if (academicServiceRequestBean.isToCancelOrReject() && hasEvent()) {
-	    getEvent().cancel(academicServiceRequestBean.getEmployee());
+	    getEvent().cancel(academicServiceRequestBean.getResponsible());
 	}
 
 	verifyIsToProcessAndHasPersonalInfo(academicServiceRequestBean);
@@ -532,47 +559,47 @@ abstract public class AcademicServiceRequest extends AcademicServiceRequest_Base
     }
 
     final public boolean isNewRequest() {
-	return (getAcademicServiceRequestSituationType() == AcademicServiceRequestSituationType.NEW);
+	return getAcademicServiceRequestSituationType() == AcademicServiceRequestSituationType.NEW;
     }
 
     final public boolean isProcessing() {
-	return (getAcademicServiceRequestSituationType() == AcademicServiceRequestSituationType.PROCESSING);
+	return getAcademicServiceRequestSituationType() == AcademicServiceRequestSituationType.PROCESSING;
     }
 
     final public boolean hasProcessed() {
-	return (getSituationByType(AcademicServiceRequestSituationType.PROCESSING) != null);
+	return getSituationByType(AcademicServiceRequestSituationType.PROCESSING) != null;
     }
 
     final public boolean isSentToExternalEntity() {
-	return (getAcademicServiceRequestSituationType() == AcademicServiceRequestSituationType.SENT_TO_EXTERNAL_ENTITY);
+	return getAcademicServiceRequestSituationType() == AcademicServiceRequestSituationType.SENT_TO_EXTERNAL_ENTITY;
     }
 
     final public boolean isReceivedFromExternalEntity() {
-	return (getAcademicServiceRequestSituationType() == AcademicServiceRequestSituationType.RECEIVED_FROM_EXTERNAL_ENTITY);
+	return getAcademicServiceRequestSituationType() == AcademicServiceRequestSituationType.RECEIVED_FROM_EXTERNAL_ENTITY;
     }
 
     final public boolean isConcluded() {
-	return (getAcademicServiceRequestSituationType() == AcademicServiceRequestSituationType.CONCLUDED);
+	return getAcademicServiceRequestSituationType() == AcademicServiceRequestSituationType.CONCLUDED;
     }
 
     final public boolean hasConcluded() {
-	return (getSituationByType(AcademicServiceRequestSituationType.CONCLUDED) != null);
+	return getSituationByType(AcademicServiceRequestSituationType.CONCLUDED) != null;
     }
 
     final public boolean isDelivered() {
-	return (getAcademicServiceRequestSituationType() == AcademicServiceRequestSituationType.DELIVERED);
+	return getAcademicServiceRequestSituationType() == AcademicServiceRequestSituationType.DELIVERED;
     }
 
     final public boolean isRejected() {
-	return (getAcademicServiceRequestSituationType() == AcademicServiceRequestSituationType.REJECTED);
+	return getAcademicServiceRequestSituationType() == AcademicServiceRequestSituationType.REJECTED;
     }
 
     final public boolean isCancelled() {
-	return (getAcademicServiceRequestSituationType() == AcademicServiceRequestSituationType.CANCELLED);
+	return getAcademicServiceRequestSituationType() == AcademicServiceRequestSituationType.CANCELLED;
     }
 
     final public boolean isHistorical() {
-	return (isDelivered() || isRejected() || isCancelled());
+	return isDelivered() || isRejected() || isCancelled();
     }
 
     final public boolean isEditable() {
@@ -622,19 +649,22 @@ abstract public class AcademicServiceRequest extends AcademicServiceRequest_Base
     }
 
     final public boolean createdByStudent() {
-	return !getCreationSituation().hasEmployee();
+	return !getSituationByType(AcademicServiceRequestSituationType.NEW).hasCreator();
     }
 
+    /**
+     * See if this can be avoided.
+     */
+    @Deprecated
     final public boolean getLoggedPersonCanCancel() {
 	return isCancelledSituationAccepted()
 		&& (!isPayable() || !hasEvent() || !isPayed())
-		&& ((createdByStudent() && !isConcluded()) || (AccessControl.getPerson().hasEmployee() && getAdministrativeOffice() == getEmployee()
-			.getAdministrativeOffice()));
+		&& (createdByStudent() && !isConcluded() || AcademicAuthorizationGroup.isAuthorized(AccessControl.getPerson(),
+			this));
     }
 
-    @Override
     final public DateTime getCreationDate() {
-	return getCreationSituation().getCreationDate();
+	return getSituationByType(AcademicServiceRequestSituationType.NEW).getCreationDate();
     }
 
     final public DateTime getProcessingDate() {
@@ -645,15 +675,6 @@ abstract public class AcademicServiceRequest extends AcademicServiceRequest_Base
     final public DateTime getRequestConclusionDate() {
 	AcademicServiceRequestSituation conclusionSituation = getConclusionSituation();
 	return conclusionSituation != null ? conclusionSituation.getCreationDate() : null;
-    }
-
-    public boolean isAvailableForEmployeeToActUpon() {
-	final Person loggedPerson = AccessControl.getPerson();
-	if (loggedPerson.hasEmployee()) {
-	    return loggedPerson.getEmployeeAdministrativeOffice() == getAdministrativeOffice();
-	} else {
-	    throw new DomainException("AcademicServiceRequest.non.employee.person.attempt.to.change.request");
-	}
     }
 
     public boolean isRequestForPerson() {
@@ -755,4 +776,5 @@ abstract public class AcademicServiceRequest extends AcademicServiceRequest_Base
 	return hasRectorateSubmissionBatch();
     }
 
+    public abstract AcademicProgram getAcademicProgram();
 }

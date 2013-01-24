@@ -8,10 +8,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoContributor;
 import net.sourceforge.fenixedu.dataTransferObject.InfoContributor.ContributorType;
-import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.ExistingActionException;
 import net.sourceforge.fenixedu.util.StringUtils;
@@ -35,10 +34,10 @@ import pt.ist.fenixWebFramework.struts.annotations.Tile;
  * @author Nuno Nunes (nmsn@rnl.ist.utl.pt) Joana Mota (jccm@rnl.ist.utl.pt)
  * 
  */
-@Mapping(module = "academicAdminOffice", path = "/createContributorDispatchAction", input = "contributor.createContributor", attribute = "createContributorForm", formBean = "createContributorForm", scope = "request", parameter = "method")
+@Mapping(module = "academicAdministration", path = "/createContributorDispatchAction", input = "contributor.createContributor", attribute = "createContributorForm", formBean = "createContributorForm", scope = "request", parameter = "method")
 @Forwards(value = {
-	@Forward(name = "PrepareReady", path = "/academicAdminOffice/contributor/createContributor.jsp", tileProperties = @Tile(title = "private.academicadministrativeoffice.contributors.create")),
-	@Forward(name = "CreateSuccess", path = "/academicAdminOffice/contributor/createContributorSuccess.jsp", tileProperties = @Tile(title = "private.academicadministrativeoffice.contributors.create")) })
+	@Forward(name = "PrepareReady", path = "/academicAdminOffice/contributor/createContributor.jsp"),
+	@Forward(name = "CreateSuccess", path = "/academicAdminOffice/contributor/createContributorSuccess.jsp") })
 @Exceptions(value = { @ExceptionHandling(type = net.sourceforge.fenixedu.presentationTier.Action.exceptions.ExistingActionException.class, key = "resources.Action.exceptions.ExistingActionException", handler = net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler.class, scope = "request") })
 public class CreateContributorDispatchAction extends FenixDispatchAction {
 
@@ -115,8 +114,8 @@ public class CreateContributorDispatchAction extends FenixDispatchAction {
 
 	Object args[] = { infoContributor };
 	try {
-	    ServiceManagerServiceFactory.executeService("CreateContributor", args);
-	} catch (ExistingServiceException e) {
+	    infoContributor.createContributor();
+	} catch (InvalidArgumentsServiceException e) {
 	    throw new ExistingActionException("O Contribuinte", e);
 	}
 

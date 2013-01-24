@@ -25,7 +25,6 @@ import net.sourceforge.fenixedu.dataTransferObject.GenericPair;
 import net.sourceforge.fenixedu.dataTransferObject.teacher.executionCourse.SearchExecutionCourseAttendsBean;
 import net.sourceforge.fenixedu.domain.accessControl.ExecutionCourseTeachersGroup;
 import net.sourceforge.fenixedu.domain.accessControl.RoleTypeGroup;
-import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOfficeType;
 import net.sourceforge.fenixedu.domain.curriculum.CurricularCourseType;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.degreeStructure.BibliographicReferences;
@@ -59,6 +58,7 @@ import net.sourceforge.fenixedu.domain.tests.NewTestGroup;
 import net.sourceforge.fenixedu.domain.tests.TestGroupStatus;
 import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicInterval;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
+import net.sourceforge.fenixedu.presentationTier.Action.academicAdministration.executionCourseManagement.ExecutionCourseManagementBean;
 import net.sourceforge.fenixedu.util.BundleUtil;
 import net.sourceforge.fenixedu.util.ProposalState;
 import net.sourceforge.fenixedu.util.domain.OrderedRelationAdapter;
@@ -1205,16 +1205,6 @@ public class ExecutionCourse extends ExecutionCourse_Base {
 	return competenceCourseInformations;
     }
 
-    public List<CurricularCourse> getCurricularCoursesWithDegreeType() {
-	List<CurricularCourse> result = new ArrayList<CurricularCourse>();
-	for (CurricularCourse curricularCourse : this.getAssociatedCurricularCoursesSet()) {
-	    if (curricularCourse.getDegreeType().getAdministrativeOfficeType() == AdministrativeOfficeType.DEGREE) {
-		result.add(curricularCourse);
-	    }
-	}
-	return result;
-    }
-
     public boolean hasAnyDegreeGradeToSubmit(final ExecutionSemester period, final DegreeCurricularPlan degreeCurricularPlan) {
 	for (final CurricularCourse curricularCourse : getAssociatedCurricularCourses()) {
 	    if (degreeCurricularPlan == null || degreeCurricularPlan.equals(curricularCourse.getDegreeCurricularPlan())) {
@@ -2292,7 +2282,8 @@ public class ExecutionCourse extends ExecutionCourse_Base {
     }
 
     /*
-     * This method returns the portuguese name and the english name with the rules implemented in getNome() method
+     * This method returns the portuguese name and the english name with the
+     * rules implemented in getNome() method
      */
     public MultiLanguageString getNameI18N() {
 	MultiLanguageString nameI18N = new MultiLanguageString();
@@ -2511,4 +2502,49 @@ public class ExecutionCourse extends ExecutionCourse_Base {
 	setProjectTutorialCourse(!getProjectTutorialCourse());
     }
 
+    @Override
+    public void addAssociatedCurricularCourses(final CurricularCourse curricularCourse) {
+	List<ExecutionCourse> executionCourses = curricularCourse.getAssociatedExecutionCourses();
+
+	for (ExecutionCourse executionCourse : executionCourses) {
+	    if (this != executionCourse && executionCourse.getExecutionPeriod() == getExecutionPeriod()) {
+		throw new DomainException("error.executionCourse.curricularCourse.already.associated");
+	    }
+	}
+
+	super.addAssociatedCurricularCourses(curricularCourse);
+    }
+
+    @Service
+    public void associateCurricularCourse(final CurricularCourse curricularCourse) {
+	addAssociatedCurricularCourses(curricularCourse);
+    }
+
+    @Service
+    public void dissociateCurricularCourse(final CurricularCourse curricularCourse) {
+	super.removeAssociatedCurricularCourses(curricularCourse);
+    }
+
+    @Service
+    public static ExecutionCourse createExecutionCourse(final ExecutionCourseManagementBean bean) {
+	final ExecutionSemester executionSemester = bean.getSemester();
+
+	final ExecutionCourse existentExecutionCourse = executionSemester.getExecutionCourseByInitials(bean.getAcronym().trim());
+	if (existentExecutionCourse != null) {
+	    throw new DomainException("error.executionCourse.with.acronym.for.semester.exists");
+	}
+
+	final ExecutionCourse executionCourse = new ExecutionCourse(bean.getName(), bean.getAcronym().trim(), executionSemester,
+		bean.getEntryPhase());
+
+	if (!bean.getCurricularCourseList().isEmpty()) {
+	    for (CurricularCourse curricularCourse : bean.getCurricularCourseList()) {
+		executionCourse.associateCurricularCourse(curricularCourse);
+	    }
+	}
+
+	executionCourse.createSite();
+
+	return executionCourse;
+    }
 }

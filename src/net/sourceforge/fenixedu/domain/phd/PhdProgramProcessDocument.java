@@ -9,9 +9,9 @@ import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.accessControl.CurrentDegreeCoordinatorsGroup;
 import net.sourceforge.fenixedu.domain.accessControl.Group;
 import net.sourceforge.fenixedu.domain.accessControl.GroupUnion;
-import net.sourceforge.fenixedu.domain.accessControl.RoleGroup;
+import net.sourceforge.fenixedu.domain.accessControl.academicAdministration.AcademicAuthorizationGroup;
+import net.sourceforge.fenixedu.domain.accessControl.academicAdministration.AcademicOperationType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.util.phd.PhdProperties;
 
@@ -23,6 +23,7 @@ import pt.utl.ist.fenix.tools.file.VirtualPathNode;
 public class PhdProgramProcessDocument extends PhdProgramProcessDocument_Base {
 
     public static Comparator<PhdProgramProcessDocument> COMPARATOR_BY_UPLOAD_TIME = new Comparator<PhdProgramProcessDocument>() {
+	@Override
 	public int compare(PhdProgramProcessDocument left, PhdProgramProcessDocument right) {
 	    int comparationResult = left.getUploadTime().compareTo(right.getUploadTime());
 	    return (comparationResult == 0) ? left.getIdInternal().compareTo(right.getIdInternal()) : comparationResult;
@@ -63,7 +64,7 @@ public class PhdProgramProcessDocument extends PhdProgramProcessDocument_Base {
 	super.setUploader(uploader);
 	super.setDocumentAccepted(true);
 
-	final Group roleGroup = new RoleGroup(RoleType.ACADEMIC_ADMINISTRATIVE_OFFICE);
+	final Group roleGroup = new AcademicAuthorizationGroup(AcademicOperationType.MANAGE_PHD_PROCESSES);
 
 	final PhdIndividualProgramProcess individualProgramProcess = process.getIndividualProgramProcess();
 	final PhdProgram phdProgram = individualProgramProcess.getPhdProgram();
@@ -139,7 +140,9 @@ public class PhdProgramProcessDocument extends PhdProgramProcessDocument_Base {
     @Override
     public boolean isPersonAllowedToAccess(Person person) {
 	if (person != null) {
-	    if (getPhdProgramProcess().getPerson() == person || person.hasRole(RoleType.ACADEMIC_ADMINISTRATIVE_OFFICE)
+	    if (getPhdProgramProcess().getPerson() == person
+		    || new AcademicAuthorizationGroup(AcademicOperationType.MANAGE_PHD_PROCESSES).isMember(AccessControl
+			    .getPerson())
 		    || getPhdProgramProcess().getIndividualProgramProcess().isCoordinatorForPhdProgram(person)
 		    || getPhdProgramProcess().getIndividualProgramProcess().isGuiderOrAssistentGuider(person)) {
 		return true;

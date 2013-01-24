@@ -1,6 +1,6 @@
 package net.sourceforge.fenixedu.dataTransferObject.serviceRequests;
 
-import net.sourceforge.fenixedu.domain.Employee;
+import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequestSituationType;
 
 public class DocumentRequestBean extends AcademicServiceRequestBean {
@@ -8,8 +8,8 @@ public class DocumentRequestBean extends AcademicServiceRequestBean {
     private Integer numberOfPages;
 
     public DocumentRequestBean(final AcademicServiceRequestSituationType academicServiceRequestSituationType,
-	    final Employee employee, final String justification, final Integer numberOfPages) {
-	super(academicServiceRequestSituationType, employee, justification);
+	    final Person responsible, final String justification, final Integer numberOfPages) {
+	super(academicServiceRequestSituationType, responsible, justification);
 	setNumberOfPages(numberOfPages);
     }
 

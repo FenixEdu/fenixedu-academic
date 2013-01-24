@@ -9,9 +9,8 @@ import java.util.Set;
 
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.Enrolment;
-import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.accessControl.PermissionType;
-import net.sourceforge.fenixedu.domain.accessControl.academicAdminOffice.AdministrativeOfficePermission;
+import net.sourceforge.fenixedu.domain.accessControl.academicAdministration.AcademicAuthorizationGroup;
+import net.sourceforge.fenixedu.domain.accessControl.academicAdministration.AcademicOperationType;
 import net.sourceforge.fenixedu.domain.accounting.events.AccountingEventsManager;
 import net.sourceforge.fenixedu.domain.curricularRules.ICurricularRule;
 import net.sourceforge.fenixedu.domain.curricularRules.MaximumNumberOfEctsInStandaloneCurriculumGroup;
@@ -36,20 +35,16 @@ public class StudentCurricularPlanStandaloneEnrolmentManager extends StudentCurr
 	    return;
 	}
 
-	if (!isResponsiblePersonAcademicAdminOffice() && !isResponsibleInternationalRelationOffice()) {
+	if (!isResponsiblePersonAllowedToEnrolStudents() && !isResponsibleInternationalRelationOffice()) {
 	    throw new DomainException("error.StudentCurricularPlan.cannot.enrol.in.propaeudeutics");
 	}
 
-	final AdministrativeOfficePermission permission1 = getEnrolmentWithoutRulesPermission();
-	if (permission1 == null || !permission1.isAppliable(getRegistration()) || !permission1.isMember(getResponsiblePerson())) {
+	if (!AcademicAuthorizationGroup.getProgramsForOperation(getResponsiblePerson(),
+		AcademicOperationType.ENROLMENT_WITHOUT_RULES).contains(getStudentCurricularPlan().getDegree()))
 	    checkRegistrationRegime();
-	}
 
-	final AdministrativeOfficePermission permission2 = getUpdateRegistrationAfterConclusionProcessPermission();
-	if (permission2 != null && permission2.isAppliable(getRegistration())) {
-	    if (!permission2.isMember(getResponsiblePerson())) {
-		throw new DomainException("error.permissions.cannot.update.registration.after.conclusion.process");
-	    }
+	if (getRegistration().isRegistrationConclusionProcessed()) {
+	    checkUpdateRegistrationAfterConclusion();
 	}
 
 	checkEnrolingDegreeModules();
@@ -59,12 +54,6 @@ public class StudentCurricularPlanStandaloneEnrolmentManager extends StudentCurr
 	if (getRegistration().isPartialRegime(getExecutionYear())) {
 	    throw new DomainException("error.StudentCurricularPlan.with.part.time.regime.cannot.enrol");
 	}
-    }
-
-    private AdministrativeOfficePermission getEnrolmentWithoutRulesPermission() {
-	final Person person = getResponsiblePerson();
-	return person.getEmployeeAdministrativeOffice().getPermission(PermissionType.ENROLMENT_WITHOUT_RULES,
-		person.getEmployeeCampus());
     }
 
     private void checkEnrolingDegreeModules() {
@@ -137,7 +126,7 @@ public class StudentCurricularPlanStandaloneEnrolmentManager extends StudentCurr
 	final Map<IDegreeModuleToEvaluate, Set<ICurricularRule>> result = new HashMap<IDegreeModuleToEvaluate, Set<ICurricularRule>>();
 	for (final IDegreeModuleToEvaluate degreeModuleToEvaluate : enrolmentContext.getDegreeModulesToEvaluate()) {
 	    if (degreeModuleToEvaluate.isEnroling() && degreeModuleToEvaluate.getDegreeModule().isCurricularCourse()) {
-		result.put(degreeModuleToEvaluate, Collections.EMPTY_SET);
+		result.put(degreeModuleToEvaluate, Collections.<ICurricularRule> emptySet());
 	    }
 	}
 

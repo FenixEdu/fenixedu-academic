@@ -3,11 +3,13 @@ package net.sourceforge.fenixedu.presentationTier.Action.phd.academicAdminOffice
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.domain.RootDomainObject;
+import net.sourceforge.fenixedu.domain.accessControl.academicAdministration.AcademicAuthorizationGroup;
+import net.sourceforge.fenixedu.domain.accessControl.academicAdministration.AcademicOperationType;
 import net.sourceforge.fenixedu.domain.phd.PhdProgram;
 import net.sourceforge.fenixedu.domain.phd.PhdProgramContextPeriod;
 import net.sourceforge.fenixedu.domain.phd.PhdProgramContextPeriodBean;
 import net.sourceforge.fenixedu.domain.phd.exceptions.PhdDomainOperationException;
+import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.presentationTier.Action.phd.PhdDA;
 
 import org.apache.struts.action.ActionForm;
@@ -17,14 +19,8 @@ import org.apache.struts.action.ActionMapping;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
-import pt.ist.fenixWebFramework.struts.annotations.Forward;
-import pt.ist.fenixWebFramework.struts.annotations.Forwards;
-import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
-@Mapping(path = "/phdProgram", module = "academicAdminOffice")
+@Mapping(path = "/phdProgram", module = "academicAdministration")
 @Forwards({
 	@Forward(name = "listPhdProgramForPeriods", path = "/phd/academicAdminOffice/periods/phdProgram/listPhdProgramForPeriods.jsp"),
 	@Forward(name = "viewPhdProgramPeriods", path = "/phd/academicAdminOffice/periods/phdProgram/viewPhdProgramPeriods.jsp"),
@@ -35,7 +31,8 @@ public class PhdProgramDA extends PhdDA {
 
     public ActionForward listPhdProgramForPeriods(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) {
-	request.setAttribute("phdPrograms", RootDomainObject.getInstance().getPhdPrograms());
+	request.setAttribute("phdPrograms", AcademicAuthorizationGroup.getPhdProgramsForOperation(AccessControl.getPerson(),
+		AcademicOperationType.MANAGE_PHD_PROCESSES));
 	return mapping.findForward("listPhdProgramForPeriods");
     }
 

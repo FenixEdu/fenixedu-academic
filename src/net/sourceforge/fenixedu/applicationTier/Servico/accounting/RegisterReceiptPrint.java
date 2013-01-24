@@ -1,13 +1,13 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.accounting;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.domain.Employee;
+import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.accounting.Receipt;
+import pt.ist.fenixWebFramework.services.Service;
 
-public class RegisterReceiptPrint extends FenixService {
+public class RegisterReceiptPrint {
 
-    public void run(final Receipt receipt, final Employee employee) throws FenixServiceException {
-	receipt.registerReceiptPrint(employee);
+    @Service
+    public static void run(final Receipt receipt, final Person person) {
+	receipt.registerReceiptPrint(person);
     }
 }

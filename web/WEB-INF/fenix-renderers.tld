@@ -121,6 +121,15 @@
     </attribute>
 
     <attribute>
+      <name>required</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+      <description>
+        If slot is required. Has the same result of adding pt.ist.fenixWebFramework.renderers.validators.RequiredValidator using validator tag 
+      </description>
+    </attribute>
+
+    <attribute>
       <name>converter</name>
       <required>false</required>
       <rtexprvalue>true</rtexprvalue>
@@ -277,6 +286,15 @@
       <rtexprvalue>true</rtexprvalue>
       <description>
          Allows to specify the validator class to be used.
+      </description>
+    </attribute>
+
+    <attribute>
+      <name>required</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+      <description>
+        If slot is required. Has the same result of adding pt.ist.fenixWebFramework.renderers.validators.RequiredValidator using validator tag 
       </description>
     </attribute>
 
@@ -579,6 +597,15 @@
     </attribute>
     
       <attribute>
+      <name>arg0</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+      <description>
+        Label argument0 to use for key
+      </description>
+    </attribute>
+    
+      <attribute>
       <name>layout</name>
       <required>false</required>
       <rtexprvalue>true</rtexprvalue>
@@ -754,7 +781,6 @@
     <name>context</name>
     <tag-class>pt.ist.fenixWebFramework.renderers.taglib.ContextTag</tag-class>
     <body-content>JSP</body-content>
-
   </tag>
 
   <tag>
@@ -884,6 +910,16 @@
     </attribute>
 
     <attribute>
+      <name>style</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+      <type>java.lang.String</type>
+      <description>
+        Style to add in the resulting form
+      </description>
+    </attribute>
+
+    <attribute>
       <name>encoding</name>
       <required>false</required>
       <rtexprvalue>true</rtexprvalue>
@@ -902,6 +938,67 @@
         Selects the target of the form.
       </description>
     </attribute>
+    
+      <attribute>
+      <name>confirmationNeeded</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+      <type>java.lang.Boolean</type>
+      <description>
+        Indicates if the form needs confirmation
+      </description>
+    </attribute>
+    
+     <attribute>
+      <name>bundle</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+      <type>java.lang.String</type>
+      <description>
+        Bundle used for confirmation labels.
+      </description>
+    </attribute>
+    
+      <attribute>
+      <name>titleKey</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+      <type>java.lang.String</type>
+      <description>
+       Title Key for confirmation dialog
+      </description>
+    </attribute>
+    
+      <attribute>
+      <name>messageKey</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+      <type>java.lang.String</type>
+      <description>
+       Message Key for confirmation dialog
+      </description>
+    </attribute>
+    
+    <attribute>
+      <name>okKey</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+      <type>java.lang.String</type>
+      <description>
+       Ok Key Button for confirmation dialog
+      </description>
+    </attribute>
+    
+    <attribute>
+      <name>cancelKey</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+      <type>java.lang.String</type>
+      <description>
+       Cancel Key Button for confirmation dialog
+      </description>
+    </attribute>
+    
   </tag>
   
   <tag>

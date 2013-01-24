@@ -26,8 +26,6 @@
 			<fr:slot name="exportPhdEvents" />
 			<fr:slot name="exportResidenceEvents" />
 			<fr:slot name="exportOthers" />
-			<fr:slot name="forDegreeAdministrativeOffice" />
-			<fr:slot name="forMasterDegreeAdministrativeOffice" />
 			
 		<logic:notEmpty name="queueJob" property="forAdministrativeOffice" >
 			<fr:slot name="forAdministrativeOffice.unit.name" />

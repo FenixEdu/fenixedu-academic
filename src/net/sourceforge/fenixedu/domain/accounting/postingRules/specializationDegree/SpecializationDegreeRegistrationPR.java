@@ -19,8 +19,6 @@ import net.sourceforge.fenixedu.util.Money;
 
 import org.joda.time.DateTime;
 
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
-
 public class SpecializationDegreeRegistrationPR extends SpecializationDegreeRegistrationPR_Base {
 
     public SpecializationDegreeRegistrationPR() {
@@ -45,7 +43,6 @@ public class SpecializationDegreeRegistrationPR extends SpecializationDegreeRegi
 			specializationDegreeRegistrationEvent.getRegistrationDate());
     }
 
-    @Checked("PostingRulePredicates.editPredicate")
     public FixedAmountWithPenaltyPR edit(final Money fixedAmount, final Money penaltyAmount) {
 	deactivate();
 
@@ -54,8 +51,8 @@ public class SpecializationDegreeRegistrationPR extends SpecializationDegreeRegi
     }
 
     @Override
-    protected Set<AccountingTransaction> internalProcess(User user, Collection<EntryDTO> entryDTOs, Event event, Account fromAccount,
-	    Account toAccount, AccountingTransactionDetailDTO transactionDetail) {
+    protected Set<AccountingTransaction> internalProcess(User user, Collection<EntryDTO> entryDTOs, Event event,
+	    Account fromAccount, Account toAccount, AccountingTransactionDetailDTO transactionDetail) {
 	checkPreconditionsToProcess(event);
 	return super.internalProcess(user, entryDTOs, event, fromAccount, toAccount, transactionDetail);
     }

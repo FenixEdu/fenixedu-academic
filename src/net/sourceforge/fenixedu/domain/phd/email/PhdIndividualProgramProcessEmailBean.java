@@ -22,6 +22,11 @@ import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 public class PhdIndividualProgramProcessEmailBean extends PhdEmailBean implements Serializable {
 
+    /**
+     * 
+     */
+    private static final long serialVersionUID = -820152568474219538L;
+
     public static enum PhdEmailTemplate {
 	FINAL_THESIS_DELIVERY("message.phd.template.final.thesis.delivery"),
 
@@ -55,6 +60,7 @@ public class PhdIndividualProgramProcessEmailBean extends PhdEmailBean implement
 	    return AlertMessage.get(getLabelForBody());
 	}
 
+	@Override
 	public String toString() {
 	    return AlertMessage.get(getLabel() + ".label");
 	}
@@ -71,11 +77,11 @@ public class PhdIndividualProgramProcessEmailBean extends PhdEmailBean implement
 	public String getGroupLabel() {
 	    return AlertMessage.get(this.label);
 	}
-	
+
 	public String getName() {
 	    return this.getClass().getSimpleName();
 	}
-	
+
 	public abstract List<PhdParticipant> getGroupParticipants(PhdIndividualProgramProcess process);
 
 	public String getEmailsAsBccs(PhdIndividualProgramProcess process) {
@@ -111,7 +117,7 @@ public class PhdIndividualProgramProcessEmailBean extends PhdEmailBean implement
 	}
 
     }
-    
+
     public static class PhdEmailParticipantsCoordinatorsGroup extends PhdEmailParticipantsGroup {
 
 	private static final long serialVersionUID = 4961478244113914645L;
@@ -132,7 +138,7 @@ public class PhdIndividualProgramProcessEmailBean extends PhdEmailBean implement
 	}
 
     }
-    
+
     public static class PhdEmailParticipantsGuidersGroup extends PhdEmailParticipantsGroup {
 
 	private static final long serialVersionUID = -3022014810736464210L;
@@ -149,9 +155,9 @@ public class PhdIndividualProgramProcessEmailBean extends PhdEmailBean implement
 
 	    return participants;
 	}
-	
+
     }
-    
+
     public static class PhdEmailParticipantsAllGroup extends PhdEmailParticipantsGroup {
 
 	private static final long serialVersionUID = -6806003598437992476L;
@@ -165,9 +171,9 @@ public class PhdIndividualProgramProcessEmailBean extends PhdEmailBean implement
 	public List<PhdParticipant> getGroupParticipants(PhdIndividualProgramProcess process) {
 	    return process.getParticipants();
 	}
-	
+
     }
-    
+
     public static class PhdEmailParticipantsJuryMembersGroup extends PhdEmailParticipantsGroup {
 
 	private static final long serialVersionUID = 3417426578342610353L;
@@ -249,10 +255,12 @@ public class PhdIndividualProgramProcessEmailBean extends PhdEmailBean implement
 	this.template = template;
     }
 
+    @Override
     public Person getCreator() {
 	return creator;
     }
 
+    @Override
     public void setCreator(Person creator) {
 	this.creator = creator;
     }
@@ -280,6 +288,7 @@ public class PhdIndividualProgramProcessEmailBean extends PhdEmailBean implement
 
     public static final Comparator<PhdEmailParticipantsGroup> COMPARATOR_BY_NAME = new Comparator<PhdEmailParticipantsGroup>() {
 
+	@Override
 	public int compare(PhdEmailParticipantsGroup g1, PhdEmailParticipantsGroup g2) {
 	    return g1.getGroupLabel().compareTo(g2.getGroupLabel());
 	}

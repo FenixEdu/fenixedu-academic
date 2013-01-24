@@ -216,8 +216,7 @@ public class DgesStudentImportationProcess extends DgesStudentImportationProcess
     }
 
     private AdministrativeOffice getAdministrativeOffice(final DegreeCurricularPlan degreeCurricularPlan) {
-	return AdministrativeOffice.readByAdministrativeOfficeType(degreeCurricularPlan.getDegreeType()
-		.getAdministrativeOfficeType());
+	return degreeCurricularPlan.getDegree().getAdministrativeOffice();
     }
 
     private void createAvailableAccountingEventsPaymentCodes(final Person person, final StudentCandidacy studentCandidacy) {

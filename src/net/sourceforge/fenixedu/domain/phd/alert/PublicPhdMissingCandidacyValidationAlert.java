@@ -8,6 +8,7 @@ import java.util.Set;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess;
 import net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyProcess;
 import net.sourceforge.fenixedu.domain.util.email.Message;
+import net.sourceforge.fenixedu.domain.util.email.Recipient;
 
 import org.joda.time.DateTime;
 import org.joda.time.Days;
@@ -40,8 +41,7 @@ public class PublicPhdMissingCandidacyValidationAlert extends PublicPhdMissingCa
 
     @Override
     protected void generateMessage() {
-	new Message(getSender(), null, Collections.EMPTY_LIST, buildMailSubject(), buildMailBody(),
-		getEmail());
+	new Message(getSender(), null, Collections.<Recipient> emptyList(), buildMailSubject(), buildMailBody(), getEmail());
     }
 
     private Set<String> getEmail() {

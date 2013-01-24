@@ -8,11 +8,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
-import net.sourceforge.fenixedu.dataTransferObject.administrativeOffice.lists.SearchStudentsByCurricularCourseParametersBean;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
-import net.sourceforge.fenixedu.domain.Tutorship;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.RegistrationProtocol;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
@@ -30,72 +28,67 @@ import pt.ist.fenixframework.pstm.AbstractDomainObject;
 import pt.utl.ist.fenix.tools.util.excel.Spreadsheet;
 import pt.utl.ist.fenix.tools.util.excel.Spreadsheet.Row;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
-import pt.ist.fenixWebFramework.struts.annotations.Forward;
-import pt.ist.fenixWebFramework.struts.annotations.Forwards;
-import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 @Mapping(path = "/viewYear", module = "externalSupervision")
-@Forwards( {
-    	@Forward(name = "selectYear", path = "/externalSupervision/consult/selectYear.jsp")})
-public class ExternalSupervisorViewYearDA extends FenixDispatchAction{
-    
-    public ActionForward beginTaskFlow(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response){
+@Forwards({ @Forward(name = "selectYear", path = "/externalSupervision/consult/selectYear.jsp") })
+public class ExternalSupervisorViewYearDA extends FenixDispatchAction {
+
+    public ActionForward beginTaskFlow(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) {
 	final IUserView userView = UserView.getUser();
 	final Person supervisor = userView.getPerson();
 
 	RegistrationProtocol protocol = supervisor.getOnlyRegistrationProtocol();
 	ExternalSupervisorViewsBean bean;
-	
-	if(protocol == null){
+
+	if (protocol == null) {
 	    bean = new ExternalSupervisorViewsBean();
 	    bean.setMegavisor(true);
 	    boolean selectProtocol = true;
 	    request.setAttribute("selectProtocol", selectProtocol);
-	    
+
 	} else {
-	    bean  = new ExternalSupervisorViewsBean(protocol);
+	    bean = new ExternalSupervisorViewsBean(protocol);
 	}
-	
+
 	request.setAttribute("sessionBean", bean);
 	return mapping.findForward("selectYear");
     }
-    
-    public ActionForward showStudents(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response){
+
+    public ActionForward showStudents(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) {
 	ExternalSupervisorViewsBean bean = getRenderedObject("sessionBean");
 	RenderUtils.invalidateViewState();
-	
-	if(bean == null){
+
+	if (bean == null) {
 	    final String registrationProtocolId = request.getParameter("registrationProtocolId");
 	    RegistrationProtocol registrationProtocol = AbstractDomainObject.fromExternalId(registrationProtocolId);
-	    
+
 	    final String executionYearId = request.getParameter("executionYearId");
 	    ExecutionYear executionYear = AbstractDomainObject.fromExternalId(executionYearId);
 
-	    Boolean megavisor =  Boolean.valueOf(request.getParameter("megavisor"));
-	    
+	    Boolean megavisor = Boolean.valueOf(request.getParameter("megavisor"));
+
 	    bean = new ExternalSupervisorViewsBean(executionYear, registrationProtocol);
 	    bean.setMegavisor(megavisor);
 	}
-	
-	if(bean.getMegavisor()){
+
+	if (bean.getMegavisor()) {
 	    boolean selectProtocol = true;
 	    request.setAttribute("selectProtocol", selectProtocol);
 	}
-	
+
 	bean.generateStudentsFromYear();
 	Boolean yearSelected = true;
-	
+
 	request.setAttribute("sessionBean", bean);
 	request.setAttribute("hasChosenYear", yearSelected);
-	
+
 	return mapping.findForward("selectYear");
     }
-    
 
-    public ActionForward exportXLS(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws IOException{
+    public ActionForward exportXLS(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) throws IOException {
 	ExternalSupervisorViewsBean bean = getRenderedObject("sessionBean");
 	final Spreadsheet spreadsheet = generateSpreadsheet(bean);
 
@@ -106,7 +99,7 @@ public class ExternalSupervisorViewYearDA extends FenixDispatchAction{
 	response.flushBuffer();
 	return null;
     }
-    
+
     private String getFilename(ExternalSupervisorViewsBean bean) {
 	StringBuilder strBuilder = new StringBuilder();
 	strBuilder.append(ResourceBundle.getBundle("resources.ApplicationResources", Language.getLocale()).getString(
@@ -117,7 +110,7 @@ public class ExternalSupervisorViewYearDA extends FenixDispatchAction{
 	strBuilder.append(bean.getExecutionYear().getName());
 	return strBuilder.toString();
     }
-    
+
     private Spreadsheet generateSpreadsheet(ExternalSupervisorViewsBean bean) {
 	final Spreadsheet spreadsheet = createSpreadSheet();
 	for (final StudentCurricularPlan studentCurricularPlan : bean.generateAllStudentCurricularPlans()) {
@@ -143,7 +136,7 @@ public class ExternalSupervisorViewYearDA extends FenixDispatchAction{
 
 	return spreadsheet;
     }
-    
+
     private String getAverageInformation(final StudentCurricularPlan studentCurricularPlan) {
 	final Registration registration = studentCurricularPlan.getRegistration();
 
@@ -158,13 +151,13 @@ public class ExternalSupervisorViewYearDA extends FenixDispatchAction{
 	    return registration.getAverage().setScale(2, RoundingMode.HALF_EVEN).toPlainString();
 	}
     }
-    
+
     private Spreadsheet createSpreadSheet() {
 	final ResourceBundle bundle = ResourceBundle.getBundle("resources.ApplicationResources", Language.getLocale());
 	final Spreadsheet spreadsheet = new Spreadsheet(bundle.getString("list.students"));
 
 	spreadsheet.setHeaders(new String[] {
-		
+
 	bundle.getString("label.istid"),
 
 	bundle.getString("label.number"),
@@ -172,17 +165,17 @@ public class ExternalSupervisorViewYearDA extends FenixDispatchAction{
 	bundle.getString("label.name"),
 
 	bundle.getString("label.email"),
-	
+
 	bundle.getString("label.identificationDocumentType"),
-	
+
 	bundle.getString("label.identificationDocumentNumber"),
-	
+
 	bundle.getString("label.Degree"),
-	
+
 	bundle.getString("label.curricularPlan"),
-	
+
 	bundle.getString("label.net.sourceforge.fenixedu.domain.student.Registration.startDate"),
-	
+
 	bundle.getString("label.net.sourceforge.fenixedu.domain.student.Registration.conclusionDate"),
 
 	bundle.getString("label.student.curricular.plan.state"),

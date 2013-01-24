@@ -3,9 +3,6 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr"%>
 
-<logic:present role="ACADEMIC_ADMINISTRATIVE_OFFICE" >
-
-<em><bean:message key="label.academicAdminOffice" bundle="ACADEMIC_OFFICE_RESOURCES"/></em>
 <h2><bean:message key="title.academicAdminOffice.scholarship.utl.report" bundle="ACADEMIC_OFFICE_RESOURCES" /></h2>	
 
 <fr:form action="/reportStudentsUTLCandidates.do?method=showReport" encoding="multipart/form-data" >
@@ -34,8 +31,6 @@
 		<html:cancel><bean:message key="button.cancel" bundle="APPLICATION_RESOURCES" /></html:cancel>
 	</p>	
 </fr:form>
-
-</logic:present>
 
 <div>
 	<html:link action="/reportStudentsUTLCandidates.do?method=prepareForOneStudent">Relatório por aluno</html:link>

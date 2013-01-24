@@ -2,23 +2,30 @@ package net.sourceforge.fenixedu.domain.candidacyProcess.over23;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.caseHandling.StartActivity;
+import net.sourceforge.fenixedu.domain.AcademicProgram;
 import net.sourceforge.fenixedu.domain.ExecutionInterval;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
+import net.sourceforge.fenixedu.domain.accessControl.academicAdministration.AcademicAuthorizationGroup;
+import net.sourceforge.fenixedu.domain.accessControl.academicAdministration.AcademicOperationType;
 import net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyProcess;
 import net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyProcessBean;
 import net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyProcessState;
 import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyProcess;
 import net.sourceforge.fenixedu.domain.caseHandling.Activity;
 import net.sourceforge.fenixedu.domain.caseHandling.PreConditionNotValidException;
+import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.period.CandidacyProcessCandidacyPeriod;
 import net.sourceforge.fenixedu.domain.period.Over23CandidacyPeriod;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 
 import org.joda.time.DateTime;
+
+import com.google.common.collect.Sets;
 
 import dml.runtime.RelationAdapter;
 
@@ -44,9 +51,6 @@ public class Over23CandidacyProcess extends Over23CandidacyProcess_Base {
 	activities.add(new EditCandidacyPeriod());
 	activities.add(new SendInformationToJury());
 	activities.add(new PrintCandidacies());
-	activities.add(new IntroduceCandidacyResults());
-	activities.add(new PublishCandidacyResults());
-	activities.add(new CreateRegistrations());
     }
 
     private Over23CandidacyProcess() {
@@ -77,7 +81,7 @@ public class Over23CandidacyProcess extends Over23CandidacyProcess_Base {
 
     @Override
     public boolean canExecuteActivity(IUserView userView) {
-	return isDegreeAdministrativeOfficeEmployee(userView) || userView.hasRoleType(RoleType.SCIENTIFIC_COUNCIL);
+	return isAllowedToManageProcess(userView) || userView.hasRoleType(RoleType.SCIENTIFIC_COUNCIL);
     }
 
     @Override
@@ -108,9 +112,16 @@ public class Over23CandidacyProcess extends Over23CandidacyProcess_Base {
 
     // static information
 
-    static private boolean isDegreeAdministrativeOfficeEmployee(IUserView userView) {
-	return userView.hasRoleType(RoleType.ACADEMIC_ADMINISTRATIVE_OFFICE)
-		&& userView.getPerson().getEmployeeAdministrativeOffice().isDegree();
+    private static final Set<DegreeType> ALLOWED_DEGREE_TYPES = Sets.newHashSet(DegreeType.BOLONHA_DEGREE,
+	    DegreeType.BOLONHA_INTEGRATED_MASTER_DEGREE);
+
+    static private boolean isAllowedToManageProcess(IUserView userView) {
+	for (AcademicProgram program : AcademicAuthorizationGroup.getProgramsForOperation(userView.getPerson(),
+		AcademicOperationType.MANAGE_CANDIDACY_PROCESSES)) {
+	    if (program.getDegreeType() != null && ALLOWED_DEGREE_TYPES.contains(program.getDegreeType()))
+		return true;
+	}
+	return false;
     }
 
     @StartActivity
@@ -118,7 +129,7 @@ public class Over23CandidacyProcess extends Over23CandidacyProcess_Base {
 
 	@Override
 	public void checkPreConditions(Over23CandidacyProcess process, IUserView userView) {
-	    if (!isDegreeAdministrativeOfficeEmployee(userView)) {
+	    if (!isAllowedToManageProcess(userView)) {
 		throw new PreConditionNotValidException();
 	    }
 	}
@@ -134,7 +145,7 @@ public class Over23CandidacyProcess extends Over23CandidacyProcess_Base {
 
 	@Override
 	public void checkPreConditions(Over23CandidacyProcess process, IUserView userView) {
-	    if (!isDegreeAdministrativeOfficeEmployee(userView)) {
+	    if (!isAllowedToManageProcess(userView)) {
 		throw new PreConditionNotValidException();
 	    }
 	}
@@ -151,7 +162,7 @@ public class Over23CandidacyProcess extends Over23CandidacyProcess_Base {
 
 	@Override
 	public void checkPreConditions(Over23CandidacyProcess process, IUserView userView) {
-	    if (!isDegreeAdministrativeOfficeEmployee(userView)) {
+	    if (!isAllowedToManageProcess(userView)) {
 		throw new PreConditionNotValidException();
 	    }
 
@@ -175,7 +186,7 @@ public class Over23CandidacyProcess extends Over23CandidacyProcess_Base {
 
 	@Override
 	public void checkPreConditions(Over23CandidacyProcess process, IUserView userView) {
-	    if (!isDegreeAdministrativeOfficeEmployee(userView)) {
+	    if (!isAllowedToManageProcess(userView)) {
 		throw new PreConditionNotValidException();
 	    }
 	    if (process.isInStandBy()) {
@@ -189,71 +200,4 @@ public class Over23CandidacyProcess extends Over23CandidacyProcess_Base {
 	}
     }
 
-    static private class IntroduceCandidacyResults extends Activity<Over23CandidacyProcess> {
-
-	@Override
-	public void checkPreConditions(Over23CandidacyProcess process, IUserView userView) {
-	    if (!isDegreeAdministrativeOfficeEmployee(userView)) {
-		throw new PreConditionNotValidException();
-	    }
-
-	    if (process.isInStandBy()) {
-		throw new PreConditionNotValidException();
-	    }
-	}
-
-	@Override
-	protected Over23CandidacyProcess executeActivity(Over23CandidacyProcess process, IUserView userView, Object object) {
-	    final List<Over23IndividualCandidacyResultBean> beans = (List<Over23IndividualCandidacyResultBean>) object;
-	    for (final Over23IndividualCandidacyResultBean bean : beans) {
-		if (bean.isValid()) {
-		    bean.getCandidacyProcess().executeActivity(userView, "IntroduceCandidacyResult", bean);
-		}
-	    }
-	    return process;
-	}
-    }
-
-    static private class PublishCandidacyResults extends Activity<Over23CandidacyProcess> {
-
-	@Override
-	public void checkPreConditions(Over23CandidacyProcess process, IUserView userView) {
-	    throw new PreConditionNotValidException();
-	}
-
-	@Override
-	protected Over23CandidacyProcess executeActivity(Over23CandidacyProcess process, IUserView userView, Object object) {
-	    process.setState(CandidacyProcessState.PUBLISHED);
-	    return process;
-	}
-    }
-
-    static private class CreateRegistrations extends Activity<Over23CandidacyProcess> {
-
-	@Override
-	public void checkPreConditions(Over23CandidacyProcess process, IUserView userView) {
-	    if (!isDegreeAdministrativeOfficeEmployee(userView)) {
-		throw new PreConditionNotValidException();
-	    }
-
-	    if (!process.isSentToJury()) {
-		throw new PreConditionNotValidException();
-	    }
-
-	    // if (!process.isPublished()) {
-	    // throw new PreConditionNotValidException();
-	    // }
-	}
-
-	@Override
-	protected Over23CandidacyProcess executeActivity(Over23CandidacyProcess process, IUserView userView, Object object) {
-	    for (final IndividualCandidacyProcess candidacyProcess : process.getChildProcesses()) {
-		final Over23IndividualCandidacyProcess over23CP = (Over23IndividualCandidacyProcess) candidacyProcess;
-		if (over23CP.isCandidacyValid() && over23CP.isCandidacyAccepted() && !over23CP.hasRegistrationForCandidacy()) {
-		    over23CP.executeActivity(userView, "CreateRegistration", null);
-		}
-	    }
-	    return process;
-	}
-    }
 }

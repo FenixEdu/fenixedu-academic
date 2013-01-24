@@ -14,53 +14,11 @@ import org.apache.struts.action.ActionMapping;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
 import pt.utl.ist.fenix.tools.util.excel.Spreadsheet;
 
-@Mapping(path = "/student/scholarship/report/utlScholarshipReport", module = "academicAdminOffice")
-@Forwards({
-	@Forward(name = "list", path = "/academicAdminOffice/student/scholarship/report/utl/list.jsp"),
-	@Forward(name = "create", path = "/academicAdminOffice/student/scholarship/report/utl/create.jsp"),
-	@Forward(name = "view", path = "/academicAdminOffice/student/scholarship/report/utl/view.jsp"),
-	@Forward(name = "search", path = "/academicAdminOffice/student/scholarship/report/utl/search.jsp"),
-	@Forward(name = "viewUTLScholarshipFromRegistration", path = "/academicAdminOffice/student/scholarship/report/utl/viewUTLScholarshipFromRegistration.jsp", tileProperties = @Tile(title = "private.academicadministrativeoffice.studentoperations.viewstudents")) })
+@Mapping(path = "/student/scholarship/report/utlScholarshipReport", module = "academicAdministration")
+@Forwards({ @Forward(name = "viewUTLScholarshipFromRegistration", path = "/academicAdminOffice/student/scholarship/report/utl/viewUTLScholarshipFromRegistration.jsp") })
 public class UTLScholarshipReportDA extends FenixDispatchAction {
-
-    public ActionForward list(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
-	return mapping.findForward("list");
-    }
-
-    public ActionForward prepareCreate(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) {
-	return mapping.findForward("create");
-    }
-
-    public ActionForward createInvalid(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) {
-	return mapping.findForward("create");
-    }
-
-    public ActionForward create(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
-	return mapping.findForward("list");
-    }
-
-    public ActionForward view(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
-	return mapping.findForward("view");
-    }
-
-    public ActionForward cancel(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
-	return mapping.findForward("cancel");
-    }
-
-    public ActionForward prepareSearch(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) {
-	return mapping.findForward("search");
-    }
-
-    public ActionForward search(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
-
-	return mapping.findForward("search");
-    }
 
     public ActionForward viewResultsOnRegistration(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) {
@@ -84,7 +42,8 @@ public class UTLScholarshipReportDA extends FenixDispatchAction {
 	Spreadsheet spreadsheet = bean.buildSpreadsheet();
 
 	response.setContentType("application/vnd.ms-excel");
-	response.setHeader("filename", "bolsa_accao_social_utl_" + registration.getNumber() + ".xls");
+	response.setHeader("Content-Disposition", "attachment; filename=bolsa_accao_social_utl_" + registration.getNumber()
+		+ ".xls");
 	spreadsheet.exportToXLSSheet(response.getOutputStream());
 
 	return null;

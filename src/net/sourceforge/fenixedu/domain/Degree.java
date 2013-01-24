@@ -1,5 +1,6 @@
 package net.sourceforge.fenixedu.domain;
 
+import java.io.Serializable;
 import java.lang.ref.SoftReference;
 import java.text.Collator;
 import java.util.ArrayList;
@@ -20,10 +21,10 @@ import java.util.SortedSet;
 import java.util.TreeSet;
 
 import net.sourceforge.fenixedu.domain.accessControl.DelegatesGroup;
-import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOfficeType;
 import net.sourceforge.fenixedu.domain.curricularPeriod.CurricularPeriod;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.degree.degreeCurricularPlan.DegreeCurricularPlanState;
+import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
 import net.sourceforge.fenixedu.domain.elections.DelegateElection;
 import net.sourceforge.fenixedu.domain.elections.YearDelegateElection;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
@@ -80,13 +81,15 @@ public class Degree extends Degree_Base implements Comparable<Degree> {
 	}
     };
 
-    static final public Comparator<Degree> COMPARATOR_BY_DEGREE_TYPE_AND_NAME_AND_ID = new Comparator<Degree>() {
+    private static class ComparatorByDegreeTypeAndNameAndId implements Serializable, Comparator<Degree> {
 	@Override
 	public int compare(final Degree o1, final Degree o2) {
 	    final int typeResult = COMPARATOR_BY_DEGREE_TYPE.compare(o1, o2);
 	    return typeResult == 0 ? COMPARATOR_BY_NAME_AND_ID.compare(o1, o2) : typeResult;
 	}
-    };
+    }
+
+    static final public Comparator<Degree> COMPARATOR_BY_DEGREE_TYPE_AND_NAME_AND_ID = new ComparatorByDegreeTypeAndNameAndId();
 
     static final public Comparator<Degree> COMPARATOR_BY_FIRST_ENROLMENTS_PERIOD_AND_ID = new Comparator<Degree>() {
 	@Override
@@ -332,12 +335,18 @@ public class Degree extends Degree_Base implements Comparable<Degree> {
 	setDegreeType(degreeType);
     }
 
+    @Override
     public DegreeType getDegreeType() {
 	return super.getTipoCurso();
     }
 
     public void setDegreeType(final DegreeType degreeType) {
 	super.setTipoCurso(degreeType);
+    }
+
+    @Override
+    public Collection<CycleType> getCycleTypes() {
+	return getDegreeType().getCycleTypes();
     }
 
     @Deprecated
@@ -546,8 +555,7 @@ public class Degree extends Degree_Base implements Comparable<Degree> {
     public MultiLanguageString getNameFor(final ExecutionYear executionYear) {
 	DegreeInfo degreeInfo = executionYear == null ? getMostRecentDegreeInfo() : getMostRecentDegreeInfo(executionYear);
 	return degreeInfo == null ? new MultiLanguageString().with(Language.pt, super.getNome()).with(Language.en,
-		super.getNameEn())
-		: degreeInfo.getName();
+		super.getNameEn()) : degreeInfo.getName();
     }
 
     @Deprecated
@@ -558,8 +566,7 @@ public class Degree extends Degree_Base implements Comparable<Degree> {
     public MultiLanguageString getNameFor(final AcademicInterval academicInterval) {
 	DegreeInfo degreeInfo = academicInterval == null ? getMostRecentDegreeInfo() : getMostRecentDegreeInfo(academicInterval);
 	return degreeInfo == null ? new MultiLanguageString().with(Language.pt, super.getNome()).with(Language.en,
-		super.getNameEn())
-		: degreeInfo.getName();
+		super.getNameEn()) : degreeInfo.getName();
     }
 
     @Override
@@ -711,7 +718,7 @@ public class Degree extends Degree_Base implements Comparable<Degree> {
 	    // investigate dcps initial dates
 	    return getMostRecentDegreeCurricularPlanByInitialDate();
 	} else {
-	    return (mostRecentExecutionDegree != null) ? mostRecentExecutionDegree.getDegreeCurricularPlan() : null;
+	    return mostRecentExecutionDegree != null ? mostRecentExecutionDegree.getDegreeCurricularPlan() : null;
 	}
     }
 
@@ -747,12 +754,12 @@ public class Degree extends Degree_Base implements Comparable<Degree> {
 	    if (degreeCurricularPlan.getInitialDateYearMonthDay() == null) {
 		continue;
 	    }
-	    if ((firstDCP.getInitialDateYearMonthDay() == null)
-		    || (degreeCurricularPlan.getInitialDateYearMonthDay().isBefore(firstDCP.getInitialDateYearMonthDay()))) {
+	    if (firstDCP.getInitialDateYearMonthDay() == null
+		    || degreeCurricularPlan.getInitialDateYearMonthDay().isBefore(firstDCP.getInitialDateYearMonthDay())) {
 		firstDCP = degreeCurricularPlan;
 	    }
 	}
-	return (firstDCP.getInitialDateYearMonthDay() == null) ? null : firstDCP;
+	return firstDCP.getInitialDateYearMonthDay() == null ? null : firstDCP;
     }
 
     public DegreeCurricularPlan getLastActiveDegreeCurricularPlan() {
@@ -769,7 +776,7 @@ public class Degree extends Degree_Base implements Comparable<Degree> {
 	    }
 	}
 
-	return (mostRecentExecutionDegree == null) ? result : mostRecentExecutionDegree.getDegreeCurricularPlan();
+	return mostRecentExecutionDegree == null ? result : mostRecentExecutionDegree.getDegreeCurricularPlan();
     }
 
     // -------------------------------------------------------------
@@ -788,7 +795,7 @@ public class Degree extends Degree_Base implements Comparable<Degree> {
     }
 
     private static void updateCache(final Degree degree, final String newLowerCaseSigla) {
-	final String currentLowerCaseSigla = (degree.getSigla() != null) ? degree.getSigla().toLowerCase() : StringUtils.EMPTY;
+	final String currentLowerCaseSigla = degree.getSigla() != null ? degree.getSigla().toLowerCase() : StringUtils.EMPTY;
 	synchronized (degrees) {
 	    degrees.remove(currentLowerCaseSigla);
 	    degrees.put(newLowerCaseSigla, new SoftReference<Degree>(degree));
@@ -852,16 +859,6 @@ public class Degree extends Degree_Base implements Comparable<Degree> {
 	List<Degree> result = new ArrayList<Degree>();
 	for (final Degree degree : Degree.readNotEmptyDegrees()) {
 	    if (degree.isBolonhaDegree()) {
-		result.add(degree);
-	    }
-	}
-	return result;
-    }
-
-    public static List<Degree> readBolonhaDegrees(final AdministrativeOfficeType type) {
-	final List<Degree> result = new ArrayList<Degree>();
-	for (final Degree degree : Degree.readNotEmptyDegrees()) {
-	    if (degree.isBolonhaDegree() && degree.getDegreeType().getAdministrativeOfficeType() == type) {
 		result.add(degree);
 	    }
 	}
@@ -970,7 +967,7 @@ public class Degree extends Degree_Base implements Comparable<Degree> {
 
     private DegreeInfo tryCreateUsingMostRecentInfo(final ExecutionYear executionYear) {
 	final DegreeInfo mostRecentDegreeInfo = getMostRecentDegreeInfo(executionYear);
-	return (mostRecentDegreeInfo != null) ? new DegreeInfo(mostRecentDegreeInfo, executionYear) : new DegreeInfo(this,
+	return mostRecentDegreeInfo != null ? new DegreeInfo(mostRecentDegreeInfo, executionYear) : new DegreeInfo(this,
 		executionYear);
     }
 
@@ -1331,7 +1328,7 @@ public class Degree extends Degree_Base implements Comparable<Degree> {
 	    return null;
 	}
 	final PersonFunction delegateFunction = getUnit().getActiveYearDelegatePersonFunctionByCurricularYear(curricularYear);
-	return (delegateFunction != null ? delegateFunction.getPerson().getStudent() : null);
+	return delegateFunction != null ? delegateFunction.getPerson().getStudent() : null;
     }
 
     public List<Student> getAllActiveDelegatesByFunctionType(FunctionType functionType, ExecutionYear executionYear) {
@@ -1390,7 +1387,7 @@ public class Degree extends Degree_Base implements Comparable<Degree> {
 
 	final PersonFunction delegateFunction = getUnit().getYearDelegatePersonFunctionByExecutionYearAndCurricularYear(
 		executionYear, curricularYear);
-	return (delegateFunction != null ? delegateFunction.getPerson().getStudent() : null);
+	return delegateFunction != null ? delegateFunction.getPerson().getStudent() : null;
     }
 
     public List<Student> getAllDelegatesByExecutionYearAndFunctionType(ExecutionYear executionYear, FunctionType functionType) {
@@ -1540,7 +1537,7 @@ public class Degree extends Degree_Base implements Comparable<Degree> {
     @Override
     public Double getEctsCredits() {
 	final Double ectsCredits = super.getEctsCredits();
-	return (ectsCredits != null) ? ectsCredits : getDegreeType().getDefaultEctsCredits();
+	return ectsCredits != null ? ectsCredits : getDegreeType().getDefaultEctsCredits();
     }
 
     public boolean hasEctsCredits() {

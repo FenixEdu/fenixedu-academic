@@ -10,7 +10,8 @@ import java.util.Map;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
-import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.accessControl.academicAdministration.AcademicAuthorizationGroup;
+import net.sourceforge.fenixedu.domain.accessControl.academicAdministration.AcademicOperationType;
 import net.sourceforge.fenixedu.domain.enrolment.EnroledCurriculumModuleWrapper;
 import net.sourceforge.fenixedu.domain.enrolment.IDegreeModuleToEvaluate;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumGroup;
@@ -70,8 +71,8 @@ public class SpecialSeasonStudentCurriculumGroupBean extends StudentCurriculumGr
 	};
 
 	final Map<CurricularCourse, Enrolment> enrolmentsMap = new HashMap<CurricularCourse, Enrolment>();
-	final Person person = AccessControl.getPerson();
-	final boolean isAcademicAdminOfficer = person.getEmployeeAdministrativeOffice() != null ? person.getEmployeeAdministrativeOffice().isDegree() : false;
+	boolean isServices = new AcademicAuthorizationGroup(AcademicOperationType.STUDENT_ENROLMENTS).isMember(AccessControl
+		.getPerson());
 
 	for (final CurriculumModule curriculumModule : group.getCurriculumModules()) {
 	    if (curriculumModule.isEnrolment()) {
@@ -81,9 +82,10 @@ public class SpecialSeasonStudentCurriculumGroupBean extends StudentCurriculumGr
 		if (!considerThisEnrolmentGeneralRule(enrolment, executionSemester, alreadyHasSpecialSeasonEnrolment))
 		    continue;
 
-		if (considerThisEnrolmentNormalEnrolments(enrolment) || considerThisEnrolmentPropaedeuticEnrolments(enrolment, isAcademicAdminOfficer)
-			|| considerThisEnrolmentExtraCurricularEnrolments(enrolment, isAcademicAdminOfficer) 
-			|| considerThisEnrolmentStandaloneEnrolments(enrolment, isAcademicAdminOfficer)) {
+		if (considerThisEnrolmentNormalEnrolments(enrolment)
+			|| considerThisEnrolmentPropaedeuticEnrolments(enrolment, isServices)
+			|| considerThisEnrolmentExtraCurricularEnrolments(enrolment, isServices)
+			|| considerThisEnrolmentStandaloneEnrolments(enrolment, isServices)) {
 
 		    if (enrolmentsMap.get(enrolment.getCurricularCourse()) != null) {
 			Enrolment enrolmentMap = enrolmentsMap.get(enrolment.getCurricularCourse());
@@ -160,15 +162,15 @@ public class SpecialSeasonStudentCurriculumGroupBean extends StudentCurriculumGr
 	return !enrolment.parentCurriculumGroupIsNoCourseGroupCurriculumGroup() || enrolment.isPropaedeutic();
     }
 
-    private boolean considerThisEnrolmentPropaedeuticEnrolments(Enrolment enrolment, boolean isAcademicAdminOfficer) {
-	return enrolment.isPropaedeutic() && isAcademicAdminOfficer;
-    }
-    
-    private boolean considerThisEnrolmentExtraCurricularEnrolments(Enrolment enrolment, boolean isAcademicAdminOfficer) {
-	return enrolment.isExtraCurricular() && isAcademicAdminOfficer;
+    private boolean considerThisEnrolmentPropaedeuticEnrolments(Enrolment enrolment, boolean isServices) {
+	return enrolment.isPropaedeutic() && isServices;
     }
 
-    private boolean considerThisEnrolmentStandaloneEnrolments(Enrolment enrolment, boolean isAcademicAdminOfficer) {
-	return enrolment.isStandalone() && isAcademicAdminOfficer;
+    private boolean considerThisEnrolmentExtraCurricularEnrolments(Enrolment enrolment, boolean isServices) {
+	return enrolment.isExtraCurricular() && isServices;
+    }
+
+    private boolean considerThisEnrolmentStandaloneEnrolments(Enrolment enrolment, boolean isServices) {
+	return enrolment.isStandalone() && isServices;
     }
 }

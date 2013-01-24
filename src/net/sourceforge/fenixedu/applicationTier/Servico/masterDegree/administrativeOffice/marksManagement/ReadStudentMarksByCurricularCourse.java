@@ -68,9 +68,8 @@ public class ReadStudentMarksByCurricularCourse extends FenixService {
 		    InfoEnrolment infoEnrolment = InfoEnrolment.newInfoFromDomain(enrolmentEvaluation.getEnrolment());
 		    infoEnrolmentEvaluation.setInfoEnrolment(infoEnrolment);
 
-		    if (enrolmentEvaluation != null && enrolmentEvaluation.hasEmployee()) {
-			infoEnrolmentEvaluation.setInfoEmployee(InfoPerson.newInfoFromDomain(enrolmentEvaluation.getEmployee()
-				.getPerson()));
+		    if (enrolmentEvaluation != null && enrolmentEvaluation.hasPerson()) {
+			infoEnrolmentEvaluation.setInfoEmployee(InfoPerson.newInfoFromDomain(enrolmentEvaluation.getPerson()));
 
 		    }
 		    infoEnrolmentEvaluations.add(infoEnrolmentEvaluation);

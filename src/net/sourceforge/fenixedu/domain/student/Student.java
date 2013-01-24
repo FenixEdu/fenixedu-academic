@@ -41,7 +41,6 @@ import net.sourceforge.fenixedu.domain.accounting.events.AccountingEventsManager
 import net.sourceforge.fenixedu.domain.accounting.events.AdministrativeOfficeFeeAndInsuranceEvent;
 import net.sourceforge.fenixedu.domain.accounting.paymentCodes.MasterDegreeInsurancePaymentCode;
 import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
-import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOfficeType;
 import net.sourceforge.fenixedu.domain.candidacy.Ingression;
 import net.sourceforge.fenixedu.domain.candidacy.PersonalInformationBean;
 import net.sourceforge.fenixedu.domain.careerWorkshop.CareerWorkshopApplication;
@@ -74,7 +73,6 @@ import net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationSt
 import net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationStateType;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CycleCurriculumGroup;
 import net.sourceforge.fenixedu.domain.studentCurriculum.ExternalEnrolment;
-import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.util.InvocationResult;
 import net.sourceforge.fenixedu.util.Money;
 import net.sourceforge.fenixedu.util.StudentPersonalDataAuthorizationChoice;
@@ -539,10 +537,6 @@ public class Student extends Student_Base {
 	return result;
     }
 
-    public List<Registration> getRegistrationsFor(final AdministrativeOfficeType administrativeOfficeType) {
-	return getRegistrationsFor(AdministrativeOffice.readByAdministrativeOfficeType(administrativeOfficeType));
-    }
-
     public boolean hasActiveRegistrationForOffice(Unit office) {
 	Set<Registration> registrations = getRegistrationsSet();
 	for (Registration registration : registrations) {
@@ -553,12 +547,6 @@ public class Student extends Student_Base {
 	return false;
     }
 
-    // Convenience method for invocation as bean.
-    public boolean getHasActiveRegistrationForOffice() {
-	Unit workingPlace = AccessControl.getPerson().getEmployee().getCurrentWorkingPlace();
-	return hasActiveRegistrationForOffice(workingPlace);
-    }
-
     public boolean hasRegistrationForOffice(final AdministrativeOffice administrativeOffice) {
 	Set<Registration> registrations = getRegistrationsSet();
 	for (Registration registration : registrations) {
@@ -567,15 +555,6 @@ public class Student extends Student_Base {
 	    }
 	}
 	return false;
-    }
-
-    public boolean getHasRegistrationForOffice() {
-	return hasRegistrationForOffice(AccessControl.getPerson().getEmployee().getAdministrativeOffice());
-    }
-
-    public boolean getHasRegistrationForOfficeOrEmptyRegistrations() {
-	return !hasAnyRegistrations()
-		|| hasRegistrationForOffice(AccessControl.getPerson().getEmployee().getAdministrativeOffice());
     }
 
     public boolean attends(ExecutionCourse executionCourse) {

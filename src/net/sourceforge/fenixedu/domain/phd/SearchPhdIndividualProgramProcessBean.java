@@ -15,7 +15,6 @@ import org.apache.commons.lang.StringUtils;
 
 import pt.utl.ist.fenix.tools.predicates.AndPredicate;
 import pt.utl.ist.fenix.tools.predicates.InlinePredicate;
-import pt.utl.ist.fenix.tools.predicates.Predicate;
 
 public class SearchPhdIndividualProgramProcessBean implements Serializable {
 
@@ -199,7 +198,7 @@ public class SearchPhdIndividualProgramProcessBean implements Serializable {
 	this.processes = result;
     }
 
-    public Predicate<PhdIndividualProgramProcess> getPredicates() {
+    public AndPredicate<PhdIndividualProgramProcess> getPredicates() {
 	if (getSearchValue() != null && !getSearchValue().isEmpty()) {
 	    String searchValue = getSearchValue().trim();
 	    setProcessNumber((getSearchCriterion() == SearchCriterion.PROCESS_NUMBER) ? searchValue : null);
@@ -252,7 +251,7 @@ public class SearchPhdIndividualProgramProcessBean implements Serializable {
 	    });
 	    return result;
 	}
-	
+
 	result.add(getAndPredicate());
 
 	return result;
@@ -271,15 +270,15 @@ public class SearchPhdIndividualProgramProcessBean implements Serializable {
 		}
 	    });
 	}
-	
-	if(getPhdProgram() != null) {
+
+	if (getPhdProgram() != null) {
 	    result.add(new InlinePredicate<PhdIndividualProgramProcess, PhdProgram>(getPhdProgram()) {
 
 		@Override
 		public boolean eval(PhdIndividualProgramProcess process) {
 		    return process.getPhdProgram() == getValue();
 		}
-		
+
 	    });
 	}
 

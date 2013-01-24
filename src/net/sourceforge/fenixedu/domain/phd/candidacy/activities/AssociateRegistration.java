@@ -15,12 +15,12 @@ public class AssociateRegistration extends PhdProgramCandidacyProcessActivity {
 	    throw new PreConditionNotValidException();
 	}
 
-	    if (!process.hasStudyPlan() || process.getIndividualProgramProcess().hasRegistration()) {
+	if (!process.hasStudyPlan() || process.getIndividualProgramProcess().hasRegistration()) {
 	    throw new PreConditionNotValidException();
 	}
     }
 
-	@Override
+    @Override
     protected PhdProgramCandidacyProcess executeActivity(PhdProgramCandidacyProcess process, IUserView userView, Object object) {
 	return process.associateRegistration((RegistrationFormalizationBean) object);
     }

@@ -7,7 +7,6 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.commons.student.ReadStudentCurricularPlan;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException;
@@ -17,11 +16,11 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoStudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
-import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
+import net.sourceforge.fenixedu.predicates.AcademicPredicates;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.ExistingActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.masterDegree.coordinator.CoordinatedDegreeInfo;
@@ -42,13 +41,20 @@ import org.apache.struts.action.DynaActionForm;
 import org.apache.struts.util.LabelValueBean;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 
 /**
  * @author Nuno Nunes (nmsn@rnl.ist.utl.pt) Joana Mota (jccm@rnl.ist.utl.pt)
  * @author David Santos
  * @author André Fernandes / João Brito
  */
-
+@Mapping(path = "/viewStudentCurriculum", module = "academicAdministration", formBean = "studentCurricularPlanAndEnrollmentsSelectionForm")
+@Forwards({ @Forward(name = "ShowStudentCurriculum", path = "/student/curriculum/displayStudentCurriculum_bd.jsp"),
+	@Forward(name = "ShowStudentCurricularPlans", path = "df.page.showStudentCurricularPlans"),
+	@Forward(name = "ShowStudentCurriculumForCoordinator", path = "df.page.showStudentCurriculumForCoordinator"),
+	@Forward(name = "NotAuthorized", path = "df.page.notAuthorized") })
 public class CurriculumDispatchAction extends FenixDispatchAction {
 
     @Override
@@ -194,8 +200,10 @@ public class CurriculumDispatchAction extends FenixDispatchAction {
 	}
 
 	if (StringUtils.isEmpty(actionForm.getString("select"))) {
-	    actionForm.set("select", loggedPersonIsManagerOrAdminOfficeEmployee() ? EnrolmentStateFilterType.ALL.name()
-		    : EnrolmentStateFilterType.APPROVED_OR_ENROLED.name());
+	    actionForm
+		    .set("select",
+			    AcademicPredicates.VIEW_FULL_STUDENT_CURRICULUM.evaluate(AccessControl.getPerson()) ? EnrolmentStateFilterType.ALL
+				    .name() : EnrolmentStateFilterType.APPROVED_OR_ENROLED.name());
 	}
 
 	if (StringUtils.isEmpty(actionForm.getString("organizedBy"))) {
@@ -211,14 +219,6 @@ public class CurriculumDispatchAction extends FenixDispatchAction {
 	    request.setAttribute("degreeCurricularPlanID", Integer.valueOf(request.getParameter("degreeCurricularPlanID")));
 	    return mapping.findForward("ShowStudentCurriculumForCoordinator");
 	}
-    }
-
-    private Boolean loggedPersonIsManager() {
-	return AccessControl.getPerson().hasRole(RoleType.MANAGER);
-    }
-
-    private Boolean loggedPersonIsManagerOrAdminOfficeEmployee() {
-	return loggedPersonIsManager() || AccessControl.getPerson().hasRole(RoleType.ACADEMIC_ADMINISTRATIVE_OFFICE);
     }
 
     private List<StudentCurricularPlan> getSelectedStudentCurricularPlans(final Registration registration,
@@ -307,13 +307,12 @@ public class CurriculumDispatchAction extends FenixDispatchAction {
 	    request.setAttribute("degreeCurricularPlanID", degreeCurricularPlanID);
 	}
 
-	IUserView userView = getUserView(request);
-
 	final String studentCurricularPlanID = getStudentCPID(request, (DynaActionForm) form);
 
 	Integer executionDegreeID = getExecutionDegree(request);
 	List result = null;
 	try {
+	    // TODO check
 	    Object args[] = { executionDegreeID, Integer.valueOf(studentCurricularPlanID) };
 	    result = (ArrayList) ServiceManagerServiceFactory.executeService("ReadStudentCurriculum", args);
 	} catch (NotAuthorizedException e) {

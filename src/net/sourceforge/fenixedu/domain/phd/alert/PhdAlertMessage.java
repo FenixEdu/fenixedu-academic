@@ -24,6 +24,7 @@ import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 public class PhdAlertMessage extends PhdAlertMessage_Base {
 
     static final public Comparator<PhdAlertMessage> COMPARATOR_BY_WHEN_CREATED_AND_ID = new Comparator<PhdAlertMessage>() {
+	@Override
 	public int compare(PhdAlertMessage m1, PhdAlertMessage m2) {
 	    int comp = m1.getWhenCreated().compareTo(m2.getWhenCreated());
 	    return (comp != 0) ? comp : COMPARATOR_BY_ID.compare(m1, m2);
@@ -147,7 +148,7 @@ public class PhdAlertMessage extends PhdAlertMessage_Base {
     }
 
     protected UnitBasedSender getSender() {
-	AdministrativeOffice administrativeOffice = AdministrativeOffice.readMasterDegreeAdministrativeOffice();
+	AdministrativeOffice administrativeOffice = this.getProcess().getAdministrativeOffice();
 	return administrativeOffice.getUnit().getUnitBasedSenderSet().iterator().next();
     }
 

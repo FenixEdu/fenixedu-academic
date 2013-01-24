@@ -23,8 +23,6 @@ import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.domain.person.RoleType;
-import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 
 import org.apache.commons.beanutils.BeanComparator;
@@ -54,8 +52,8 @@ public class CurricularCourseEquivalenciesDA extends FenixDispatchAction {
 	    if (isValidObjectID(degreeCurricularPlanIDString)) {
 		DegreeCurricularPlan degreeCurricularPlan = rootDomainObject.readDegreeCurricularPlanByOID(Integer
 			.valueOf(degreeCurricularPlanIDString));
-		List<CurricularCourseEquivalence> equivalences = new ArrayList<CurricularCourseEquivalence>(degreeCurricularPlan
-			.getCurricularCourseEquivalencesSet());
+		List<CurricularCourseEquivalence> equivalences = new ArrayList<CurricularCourseEquivalence>(
+			degreeCurricularPlan.getCurricularCourseEquivalencesSet());
 		sortInfoCurricularCourseEquivalences(equivalences);
 		request.setAttribute("curricularCourseEquivalences", equivalences);
 	    }
@@ -141,15 +139,10 @@ public class CurricularCourseEquivalenciesDA extends FenixDispatchAction {
 	final SortedSet<Degree> degrees = new TreeSet(Degree.COMPARATOR_BY_DEGREE_TYPE_AND_NAME_AND_ID);
 	degrees.addAll(Degree.readAllByDegreeType(DegreeType.DEGREE));
 
-	// FIXME: temporary solution because interface is used simultaneously in
-	// manager and admin office
-	if (AccessControl.getPerson().hasRole(RoleType.MANAGER) || AccessControl.getPerson().hasRole(RoleType.OPERATOR)) {
-	    degrees.addAll(Degree.readAllByDegreeType(DegreeType.BOLONHA_DEGREE));
-	    degrees.addAll(Degree.readAllByDegreeType(DegreeType.BOLONHA_INTEGRATED_MASTER_DEGREE));
-	    degrees.addAll(Degree.readAllByDegreeType(DegreeType.BOLONHA_MASTER_DEGREE));
-	    degrees.addAll(Degree.readAllByDegreeType(DegreeType.BOLONHA_ADVANCED_FORMATION_DIPLOMA));
-	    degrees.addAll(Degree.readAllByDegreeType(DegreeType.BOLONHA_ADVANCED_SPECIALIZATION_DIPLOMA));
-	}
+	degrees.addAll(Degree.readAllByDegreeType(DegreeType.BOLONHA_DEGREE));
+	degrees.addAll(Degree.readAllByDegreeType(DegreeType.BOLONHA_INTEGRATED_MASTER_DEGREE));
+	degrees.addAll(Degree.readAllByDegreeType(DegreeType.BOLONHA_MASTER_DEGREE));
+	degrees.addAll(Degree.readAllByDegreeType(DegreeType.BOLONHA_ADVANCED_FORMATION_DIPLOMA));
 
 	request.setAttribute("infoDegrees", degrees);
     }
@@ -157,8 +150,7 @@ public class CurricularCourseEquivalenciesDA extends FenixDispatchAction {
     private void setInfoDegreeCurricularPlans(final HttpServletRequest request, final IUserView userView, final Integer degreeID,
 	    final String attributeName) throws FenixFilterException, FenixServiceException {
 
-	final List<InfoDegreeCurricularPlan> infoDegreeCurricularPlans = ReadDegreeCurricularPlansByDegree
-		.run(degreeID);
+	final List<InfoDegreeCurricularPlan> infoDegreeCurricularPlans = ReadDegreeCurricularPlansByDegree.run(degreeID);
 	sortInfoDegreeCurricularPlans(infoDegreeCurricularPlans);
 	request.setAttribute(attributeName, infoDegreeCurricularPlans);
     }

@@ -4,8 +4,6 @@ import java.util.Collection;
 import java.util.ResourceBundle;
 
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
-import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOfficeType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess;
 import net.sourceforge.fenixedu.domain.util.email.Recipient;
@@ -20,11 +18,11 @@ import pt.ist.fenixWebFramework.services.Service;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 public class PhdIndividualProgramProcessEmail extends PhdIndividualProgramProcessEmail_Base {
-    
+
     protected PhdIndividualProgramProcessEmail() {
-        super();
+	super();
     }
-    
+
     protected PhdIndividualProgramProcessEmail(String subject, String message, String additionalTo, String additionalBcc,
 	    Person creator, PhdIndividualProgramProcess individualProcess) {
 	init(subject, message, additionalTo, additionalBcc, creator, new DateTime());
@@ -38,8 +36,7 @@ public class PhdIndividualProgramProcessEmail extends PhdIndividualProgramProces
 
     @Override
     protected Sender getSender() {
-	return AdministrativeOffice.readByAdministrativeOfficeType(AdministrativeOfficeType.MASTER_DEGREE).getUnit()
-		.getUnitBasedSender().get(0);
+	return this.getPhdIndividualProgramProcess().getAdministrativeOffice().getUnit().getUnitBasedSender().get(0);
     }
 
     @Override
@@ -51,25 +48,25 @@ public class PhdIndividualProgramProcessEmail extends PhdIndividualProgramProces
     protected String getBccs() {
 	return getAdditionalBcc();
     }
-    
+
     @Service
     static public PhdIndividualProgramProcessEmail createEmail(PhdIndividualProgramProcessEmailBean bean) {
 	final String errorWhileValidating = validateEmailBean(bean);
-	if(errorWhileValidating != null) {
+	if (errorWhileValidating != null) {
 	    throw new DomainException(errorWhileValidating);
 	}
-	
+
 	final Person creator = AccessControl.getPerson();
-	
+
 	return new PhdIndividualProgramProcessEmail(bean.getSubject(), bean.getMessage(), null,
-		bean.getBccsWithSelectedParticipants(), creator,
-		bean.getProcess());
-     }
-    
+		bean.getBccsWithSelectedParticipants(), creator, bean.getProcess());
+    }
+
     private static String validateEmailBean(PhdIndividualProgramProcessEmailBean bean) {
 	final ResourceBundle resourceBundle = ResourceBundle.getBundle("resources.ApplicationResources", Language.getLocale());
 
-	if (bean.getParticipantsGroup().isEmpty() && bean.getSelectedParticipants().isEmpty() && StringUtils.isEmpty(bean.getBccs())) {
+	if (bean.getParticipantsGroup().isEmpty() && bean.getSelectedParticipants().isEmpty()
+		&& StringUtils.isEmpty(bean.getBccs())) {
 	    return resourceBundle.getString("error.email.validation.no.recipients");
 	}
 

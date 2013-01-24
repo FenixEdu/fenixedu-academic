@@ -16,15 +16,9 @@ import org.joda.time.DateTime;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
-import pt.ist.fenixWebFramework.struts.annotations.Forward;
-import pt.ist.fenixWebFramework.struts.annotations.Forwards;
-import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 @Mapping(path = "/exportSIBSPayments", module = "manager")
-@Forwards( {
+@Forwards({
 	@Forward(name = "list-outgoing-payment-files", path = "/manager/payments/exportSIBS/listOutgoingPaymentFiles.jsp"),
 	@Forward(name = "prepare-create-outgoing-payments-file", path = "/manager/payments/exportSIBS/prepareCreateOutgoingPaymentsFiles.jsp"),
 	@Forward(name = "view-outgoing-payment-file", path = "/manager/payments/exportSIBS/viewOutgoingPaymentFile.jsp"),
@@ -87,11 +81,10 @@ public class ExportSIBSPaymentsDA extends FenixDispatchAction {
     }
 
     public ActionForward setSuccessfulSentPaymentsFileDate(ActionMapping mapping, ActionForm actionForm,
-	    HttpServletRequest request,
-	    HttpServletResponse response) {
+	    HttpServletRequest request, HttpServletResponse response) {
 	SIBSOutgoingPaymentFile paymentFile = getPaymentFileDataBeanFromViewState().getPaymentFile();
 	paymentFile.markAsSuccessfulSent(getPaymentFileDataBeanFromViewState().getLastOutgoingPaymentFileSent());
-	
+
 	return listOutgoingPaymentsFile(mapping, actionForm, request, response);
     }
 
@@ -111,7 +104,7 @@ public class ExportSIBSPaymentsDA extends FenixDispatchAction {
 	private static final long serialVersionUID = 1L;
 
 	private DateTime lastOutgoingPaymentFileSent;
-	
+
 	private SIBSOutgoingPaymentFile paymentFile;
 
 	public SIBSOutgoingPaymentFileDataBean() {

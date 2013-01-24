@@ -14,11 +14,12 @@ public class SwapJuryElementsOrder extends PhdThesisActivity {
     @Override
     protected void activityPreConditions(PhdThesisProcess process, IUserView userView) {
 
-	if (!PhdThesisProcess.isMasterDegreeAdministrativeOfficeEmployee(userView)) {
+	if (!process.isAllowedToManageProcess(userView)) {
 	    throw new PreConditionNotValidException();
 	}
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     protected PhdThesisProcess executeActivity(PhdThesisProcess process, IUserView userView, Object object) {
 	final Pair<ThesisJuryElement, ThesisJuryElement> elements = (Pair<ThesisJuryElement, ThesisJuryElement>) object;

@@ -3,8 +3,7 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr" %>
 <%@ taglib uri="/WEB-INF/phd.tld" prefix="phd" %>
-
-<logic:present role="ACADEMIC_ADMINISTRATIVE_OFFICE">
+<%@ taglib uri="/WEB-INF/academic.tld" prefix="academic" %>
 
 <%@page import="net.sourceforge.fenixedu.domain.phd.individualProcess.activities.EditPhdParticipant"%>
 <%@page import="net.sourceforge.fenixedu.domain.phd.individualProcess.activities.AddStudyPlan"%>
@@ -14,10 +13,10 @@
 <%@page import="net.sourceforge.fenixedu.domain.phd.individualProcess.activities.ConfigurePhdIndividualProgramProcess" %>
 <%@page import="net.sourceforge.fenixedu.domain.phd.individualProcess.activities.EditPhdParticipant"  %>
 <%@page import="net.sourceforge.fenixedu.domain.phd.individualProcess.activities.DissociateRegistration" %>
-<%@page import="net.sourceforge.fenixedu.domain.accessControl.PermissionType" %>
+
+<bean:define id="program" name="process" property="phdProgram" type="net.sourceforge.fenixedu.domain.phd.PhdProgram" />
 
 <%-- ### Title #### --%>
-<em><bean:message  key="label.phd.academicAdminOffice.breadcrumb" bundle="PHD_RESOURCES"/></em>
 <h2><bean:message key="label.phd.viewProcess" bundle="PHD_RESOURCES" /></h2>
 <%-- ### End of Title ### --%>
 
@@ -131,13 +130,13 @@
 				</li>
 			</logic:equal>
 			
-			<phd:permissionFor permission="<%= PermissionType.MANAGE_PHD_PROCESS_STATES %>">
+			<logic:equal value="true" name="process" property="currentUserAllowedToManageProcessState">
 			<li>
 				<html:link action="/phdIndividualProgramProcess.do?method=managePhdIndividualProgramProcessState" paramId="processId" paramName="process" paramProperty="externalId">
 					<bean:message bundle="PHD_RESOURCES" key="label.phd.manage.states"/>
 				</html:link>
 			</li>
-			</phd:permissionFor>
+			</logic:equal>
 			<li>
 				<phd:activityAvailable activity="<%= EditPhdParticipant.class %>" process="<%= process %>">
 					<html:link action="/phdIndividualProgramProcess.do?method=viewPhdParticipants" paramId="processId" paramName="process" paramProperty="externalId">
@@ -153,11 +152,13 @@
 					<bean:message bundle="PHD_RESOURCES" key="label.phd.accounting.events.create"/>
 				</html:link>
 			</li>
+			<academic:allowed operation="MANAGE_STUDENT_PAYMENTS" program="<%= program %>">
 			<li>
 				<html:link action="/payments.do?method=showOperations" target="_blank" paramId="personId" paramName="process" paramProperty="person.idInternal">
 					<bean:message bundle="PHD_RESOURCES" key="label.phd.payments"/>
 				</html:link>
 			</li>
+			</academic:allowed>
 			<li>
 				<html:link action="/fctDebts.do?method=viewDebtsForProcess" target="_blank" paramId="processId" paramName="process" paramProperty="externalId">
 					<bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.scolarships.fct" />
@@ -226,13 +227,11 @@
 				</li>
 			</phd:activityAvailable>
 			
-			<logic:equal name="<%= pt.ist.fenixWebFramework.servlets.filters.SetUserViewFilter.USER_SESSION_ATTRIBUTE %>" property="person.employee.unitCoordinator" value="true">
 				<li>
 					<html:link action="/phdIndividualProgramProcess.do?method=viewLogs" paramId="processId" paramName="process" paramProperty="externalId">
 						<bean:message bundle="PHD_RESOURCES" key="link.phd.view.log" /> 
 					</html:link>					
 				</li>
-			</logic:equal>
 			
 		</ul>
     </td>
@@ -269,6 +268,6 @@
 <jsp:include page="viewCandidacyProcess.jsp" />
 
 <%-- Academic Service Requests --%>
+<academic:allowed operation="SERVICE_REQUESTS" program="<%= program %>">
 <jsp:include page="viewAcademicServiceRequests.jsp" />
-
-</logic:present>
+</academic:allowed>

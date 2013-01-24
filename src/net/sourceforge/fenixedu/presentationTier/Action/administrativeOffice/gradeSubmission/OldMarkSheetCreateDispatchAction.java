@@ -10,6 +10,7 @@ import java.util.Set;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.dataTransferObject.degreeAdministrativeOffice.gradeSubmission.MarkSheetEnrolmentEvaluationBean;
 import net.sourceforge.fenixedu.dataTransferObject.degreeAdministrativeOffice.gradeSubmission.MarkSheetManagementCreateBean;
 import net.sourceforge.fenixedu.dataTransferObject.degreeAdministrativeOffice.gradeSubmission.MarkSheetRectifyBean;
@@ -30,14 +31,14 @@ import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
-@Mapping(path = "/oldCreateMarkSheet", module = "academicAdminOffice", formBean = "markSheetManagementForm", input = "/academicAdminOffice/gradeSubmission/oldMarkSheets/createMarkSheetStep1.jsp")
+@Mapping(path = "/oldCreateMarkSheet", module = "academicAdministration", formBean = "markSheetManagementForm", input = "/academicAdminOffice/gradeSubmission/oldMarkSheets/createMarkSheetStep1.jsp")
 @Forwards({
-	@Forward(name = "createMarkSheetStep1", path = "/academicAdminOffice/gradeSubmission/oldMarkSheets/createMarkSheetStep1.jsp", tileProperties = @Tile(title = "private.academicadministrativeoffice.marksheets.oldmanagementguidelines")),
-	@Forward(name = "createMarkSheetStep2", path = "/academicAdminOffice/gradeSubmission/oldMarkSheets/createMarkSheetStep2.jsp", tileProperties = @Tile(title = "private.academicadministrativeoffice.marksheets.oldmanagementguidelines")),
-	@Forward(name = "searchMarkSheetFilled", path = "/oldMarkSheetManagement.do?method=prepareSearchMarkSheetFilled", tileProperties = @Tile(title = "private.academicadministrativeoffice.marksheets.oldmanagementguidelines")),
-	@Forward(name = "rectifyMarkSheetStep1", path = "/academicAdminOffice/gradeSubmission/rectifyMarkSheetStep1.jsp", tileProperties = @Tile(title = "private.academicadministrativeoffice.marksheets.oldmanagementguidelines")),
-	@Forward(name = "rectifyMarkSheetStep2", path = "/academicAdminOffice/gradeSubmission/rectifyMarkSheetStep2.jsp", tileProperties = @Tile(title = "private.academicadministrativeoffice.marksheets.oldmanagementguidelines")),
-	@Forward(name = "viewMarkSheet", path = "/academicAdminOffice/gradeSubmission/oldMarkSheets/viewMarkSheet.jsp", tileProperties = @Tile(title = "private.academicadministrativeoffice.marksheets.oldmanagementguidelines")) })
+	@Forward(name = "createMarkSheetStep1", path = "/academicAdminOffice/gradeSubmission/oldMarkSheets/createMarkSheetStep1.jsp"),
+	@Forward(name = "createMarkSheetStep2", path = "/academicAdminOffice/gradeSubmission/oldMarkSheets/createMarkSheetStep2.jsp"),
+	@Forward(name = "searchMarkSheetFilled", path = "/oldMarkSheetManagement.do?method=prepareSearchMarkSheetFilled"),
+	@Forward(name = "rectifyMarkSheetStep1", path = "/academicAdminOffice/gradeSubmission/rectifyMarkSheetStep1.jsp"),
+	@Forward(name = "rectifyMarkSheetStep2", path = "/academicAdminOffice/gradeSubmission/rectifyMarkSheetStep2.jsp"),
+	@Forward(name = "viewMarkSheet", path = "/academicAdminOffice/gradeSubmission/oldMarkSheets/viewMarkSheet.jsp") })
 public class OldMarkSheetCreateDispatchAction extends MarkSheetCreateDispatchAction {
 
     @Override
@@ -63,8 +64,8 @@ public class OldMarkSheetCreateDispatchAction extends MarkSheetCreateDispatchAct
     }
 
     @Override
-    protected String getCreateMarkSheetServiceName() {
-	return "CreateOldMarkSheet";
+    protected MarkSheet createMarkSheet(MarkSheetManagementCreateBean createBean, IUserView userView) {
+	return createBean.createOldMarkSheet(userView.getPerson());
     }
 
     @Override
@@ -89,7 +90,6 @@ public class OldMarkSheetCreateDispatchAction extends MarkSheetCreateDispatchAct
 	}
     }
 
-    @Override
     public ActionForward prepareRectifyMarkSheet(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) {
 

@@ -9,18 +9,17 @@ public class EditQualificationExams extends PhdIndividualProgramProcessActivity 
 
     @Override
     protected void activityPreConditions(PhdIndividualProgramProcess process, IUserView userView) {
-        if (!PhdIndividualProgramProcess.isMasterDegreeAdministrativeOfficeEmployee(userView)) {
-    	throw new PreConditionNotValidException();
-        }
+	if (!process.isAllowedToManageProcess(userView)) {
+	    throw new PreConditionNotValidException();
+	}
     }
 
     @Override
-    protected PhdIndividualProgramProcess executeActivity(PhdIndividualProgramProcess process, IUserView userView,
-    	Object object) {
+    protected PhdIndividualProgramProcess executeActivity(PhdIndividualProgramProcess process, IUserView userView, Object object) {
 
-        process.edit(userView, (PhdIndividualProgramProcessBean) object);
+	process.edit(userView, (PhdIndividualProgramProcessBean) object);
 
-        return process;
+	return process;
     }
 
 }

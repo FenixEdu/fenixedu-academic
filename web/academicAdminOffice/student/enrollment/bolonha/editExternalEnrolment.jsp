@@ -5,9 +5,6 @@
 
 <html:xhtml/>
 
-<logic:present role="ACADEMIC_ADMINISTRATIVE_OFFICE">
-
-<em><bean:message key="label.academicAdminOffice" bundle="ACADEMIC_OFFICE_RESOURCES"/></em>
 <h2><bean:message key="label.externalUnits.editExternalEnrolment" bundle="ACADEMIC_OFFICE_RESOURCES"/></h2>
 
 <bean:define id="externalCurricularCourseId">&oid=<bean:write name="externalEnrolmentBean" property="externalCurricularCourse.idInternal" /></bean:define>
@@ -41,4 +38,3 @@
 	<html:cancel onclick="this.form.method.value='backToMainPage';" ><bean:message key="button.cancel" bundle="ACADEMIC_OFFICE_RESOURCES"/></html:cancel>
 
 </fr:form>
-</logic:present>

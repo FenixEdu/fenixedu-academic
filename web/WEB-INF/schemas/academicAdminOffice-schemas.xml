@@ -4,7 +4,7 @@
 		layout="menu-select"
 		validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
 		<property name="providerClass"
-			value="net.sourceforge.fenixedu.presentationTier.renderers.providers.executionDegree.DegreesByEmployeeUnit" />
+			value="net.sourceforge.fenixedu.presentationTier.renderers.providers.executionDegree.DegreesToCreateRegistration" />
 		<property name="format" value="${presentationName}" />
 	</slot>
 	<slot name="executionYear" key="label.executionYear" 
@@ -30,9 +30,31 @@
 	</slot>
 </schema>
 
-<schema name="choose.executionDegree" extends="choose.executionDegree.toCreateRegistration"
+<schema name="choose.executionDegree"
 	type="net.sourceforge.fenixedu.dataTransferObject.administrativeOffice.ExecutionDegreeBean" bundle="ACADEMIC_OFFICE_RESOURCES">
-	<remove name="cycleType"/>
+		<slot name="degree" key="label.degree" 
+		layout="menu-select"
+		validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
+		<property name="providerClass"
+			value="net.sourceforge.fenixedu.presentationTier.renderers.providers.executionDegree.DegreesByEmployeeUnit" />
+		<property name="format" value="${presentationName}" />
+	</slot>
+	<slot name="executionYear" key="label.executionYear" 
+		layout="menu-select-postback"
+		validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
+		<property name="providerClass"
+			value="net.sourceforge.fenixedu.presentationTier.renderers.providers.ExecutionYearsProvider" />
+		<property name="format" value="${year}" />
+		<property name="destination" value="degreePostBack"/>
+	</slot>
+	<slot name="degreeCurricularPlan" key="label.degreeCurricularPlan"
+		layout="menu-select-postback"
+		validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
+		<property name="providerClass"
+			value="net.sourceforge.fenixedu.presentationTier.renderers.providers.executionDegree.DegreeCurricularPlansForDegree" />
+		<property name="format" value="${name}" />
+		<property name="destination" value="degreeCurricularPlanPostBack"/>		
+	</slot>
 </schema>
 
 <schema name="choose.person"
@@ -1329,67 +1351,6 @@
 	<slot name="selected.curricularCourse.name" key="label.notNeedToEnrol.name"/>
 </schema>
 
-<schema name="DegreeByExecutionYearBean.edit"
-	type="net.sourceforge.fenixedu.dataTransferObject.commons.DegreeByExecutionYearBean" bundle="ACADEMIC_OFFICE_RESOURCES">
-	<slot name="executionYear" key="label.executionYear.notCapitalized" 
-		layout="menu-select-postback"
-		validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
-		<property name="providerClass"
-			value="net.sourceforge.fenixedu.presentationTier.renderers.providers.ExecutionYearsProvider" />
-		<property name="format" value="${year}" />
-		<property name="destination" value="postBack"/>
-	</slot>
-	<slot name="degreeType" key="label.degreeType"
-		layout="menu-select-postback" bundle="APPLICATION_RESOURCES">
-		<property name="providerClass"
-			value="net.sourceforge.fenixedu.presentationTier.renderers.providers.lists.DegreeTypesForEmployeeAcademicOfficeProvider" />
-		<property name="destination" value="postBack"/>
-		<property name="eachLayout" value="this-does-not-exist" />
-	</slot>
-	<slot name="degree" key="label.degree"
-		layout="menu-select-postback">
-		<property name="providerClass"
-			value="net.sourceforge.fenixedu.presentationTier.renderers.providers.lists.DegreesForExecutionYear" />
-		<property name="format" value="${presentationName}" />
-		<property name="destination" value="postBack"/>
-	</slot>
-</schema>
-
-<schema name="SearchStudentsByDegreeParametersBean.edit.degreeAndRegistrationInfo"
-	type="net.sourceforge.fenixedu.dataTransferObject.administrativeOffice.lists.SearchStudentsByDegreeParametersBean"
-	extends="DegreeByExecutionYearBean.edit" bundle="ACADEMIC_OFFICE_RESOURCES">
-	<slot name="regime" key="registration.regime"/>
-	<slot name="nationality" layout="menu-select" key="label.nationality">
-		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.CountryProvider"/>
-		<property name="format" value="${nationality}" />
-		<property name="sortBy" value="nationality"/>
-	</slot>
-	<slot name="ingression" layout="menu-select" key="label.ingression.short">
-		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.choiceType.replacement.single.IngressionProvider" />
-		<property name="eachLayout" value="" />
-	</slot>
-	<slot name="ingressedInChosenYear" key="label.ingressedInChosenYear"/>
-	<slot name="concludedInChosenYear" key="label.concludedInChosenYear"/>
-	<slot name="activeEnrolments" key="label.activeEnrolments.capitalized" />
-	<slot name="standaloneEnrolments" key="label.withStandaloneEnrolments" />
-</schema>
-
-<schema name="SearchStudentsByDegreeParametersBean.edit.parameters" bundle="ACADEMIC_OFFICE_RESOURCES" 
-		type="net.sourceforge.fenixedu.dataTransferObject.administrativeOffice.lists.SearchStudentsByDegreeParametersBean" >
-	<slot name="registrationAgreements" key="label.registrationAgreement" layout="option-select">
-		<property name="providerClass"	value="net.sourceforge.fenixedu.presentationTier.renderers.providers.choiceType.replacement.multiple.RegistrationAgreementProvider" />
-		<property name="classes" value="list2" />
-	</slot>	
-	<slot name="registrationStateTypes" key="label.registrationState" layout="option-select">
-		<property name="providerClass"	value="net.sourceforge.fenixedu.presentationTier.renderers.providers.choiceType.replacement.multiple.RegistrationStateTypeProvider" />
-		<property name="classes" value="list2" />
-	</slot>	
-	<slot name="studentStatuteTypes" key="label.statutes" layout="option-select">
-		<property name="providerClass"	value="net.sourceforge.fenixedu.presentationTier.renderers.providers.choiceType.replacement.multiple.StudentStatuteTypeProvider" />
-		<property name="classes" value="list2" />
-	</slot>
-</schema>
-
 <schema name="diploma.list.searchBySituation.chooseDegree"
 	type="net.sourceforge.fenixedu.dataTransferObject.administrativeOffice.lists.SearchDiplomasBySituationParametersBean" bundle="ACADEMIC_OFFICE_RESOURCES">
 	<slot name="searchBegin" key="label.search.begin" layout="picker" >
@@ -1415,19 +1376,6 @@
 	</slot>
 </schema>
 
-<schema name="academicAdminOffice.studentCurricularPlanList.view" 
-	type="net.sourceforge.fenixedu.dataTransferObject.student.RegistrationWithStateForExecutionYearBean" bundle="ACADEMIC_OFFICE_RESOURCES">
-	<slot name="registration.number" key="label.number" read-only="true" layout="link">
-		<property name="linkFormat" value="/academicAdminOffice/student.do?method=visualizeRegistration&amp;registrationID=${registration.idInternal}"/>
-		<property name="contextRelative" value="true"/>
-        <property name="useParent" value="true"/>
-	</slot>
-	<slot name="registration.person.name" key="label.name" read-only="true"/>
-	<slot name="registration.degree.sigla" key="label.degree" read-only="true"/>
-  	<slot name="activeStateType" key="label.registration.state" />
-	<slot name="registration.registrationAgreement" key="label.registrationAgreement" />
-</schema>
-
 <schema name="diplomasList.view" 
 	type="net.sourceforge.fenixedu.domain.serviceRequests.RegistrationAcademicServiceRequest" bundle="ACADEMIC_OFFICE_RESOURCES">
 	<slot name="registration.number" key="label.number" read-only="true" layout="link">
@@ -1442,28 +1390,8 @@
 	<slot name="serviceRequestNumberYear"/>
 </schema>
 
-<schema name="student.list.searchByCurricularCourse.chooseDegreeCurricularPlan"
-	type="net.sourceforge.fenixedu.dataTransferObject.administrativeOffice.lists.SearchStudentsByCurricularCourseParametersBean" 
-	bundle="ACADEMIC_OFFICE_RESOURCES" >
-	<slot name="executionYear" key="label.executionYear" 
-		layout="menu-select-postback"
-		validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
-		<property name="providerClass"
-			value="net.sourceforge.fenixedu.presentationTier.renderers.providers.OpenExecutionYearsProvider" />
-		<property name="format" value="${year}" />
-		<property name="destination" value="executionYearPostBack"/>
-	</slot>
-	<slot name="degreeCurricularPlan" key="label.degreeCurricularPlan"
-		layout="menu-select"
-		validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
-		<property name="providerClass"
-			value="net.sourceforge.fenixedu.presentationTier.renderers.providers.lists.DegreeCurricularPlansForExecutionYear" />
-		<property name="format" value="${degree.tipoCurso.localizedName} - ${degree.name} - ${name}" />		
-	</slot>	
-</schema>
-
 <schema name="student.list.searchByCurricularCourse.chooseDegree"
-	type="net.sourceforge.fenixedu.dataTransferObject.administrativeOffice.lists.SearchStudentsByCurricularCourseParametersBean" 
+	type="net.sourceforge.fenixedu.dataTransferObject.academicAdministration.SearchStudentsByCurricularCourseParametersBean" 
 	bundle="ACADEMIC_OFFICE_RESOURCES" >
 	<slot name="executionYear" key="label.executionYear" 
 		layout="menu-select-postback"
@@ -1473,20 +1401,6 @@
 		<property name="format" value="${year}" />
 		<property name="destination" value="executionYearPostBack"/>
 	</slot>
-</schema>
-
-<schema name="academicAdminOffice.enrolmentStudentsList.view" type="net.sourceforge.fenixedu.domain.Enrolment" bundle="ACADEMIC_OFFICE_RESOURCES">
-	<slot name="studentCurricularPlan.registration.number" key="label.number" read-only="true" layout="link">
-		<property name="linkFormat" value="/academicAdminOffice/viewCurriculum.do?method=prepare&amp;registrationOID=${studentCurricularPlan.registration.idInternal}"/>
-		<property name="contextRelative" value="true"/>
-        <property name="useParent" value="true"/>
-	</slot>     
-	<slot name="studentCurricularPlan.registration.person.istUsername" key="label.username" read-only="true"/>
-	<slot name="studentCurricularPlan.registration.person.name" key="label.name" read-only="true"/>
-	<slot name="studentCurricularPlan.registration.registrationAgreement" key="label.registrationAgreement" read-only="true"/>	
-	<slot name="studentCurricularPlan.degreeCurricularPlan.degree.sigla" key="label.degree" read-only="true"/>		
-	<slot name="enrollmentState" key="label.state"/>
-	<slot name="enrolmentEvaluationType" key="label.epoca"/>
 </schema>
 
 <schema name="registration.gratuitySituation.editPenaltyExemption" type="net.sourceforge.fenixedu.domain.GratuitySituation" bundle="APPLICATION_RESOURCES">
@@ -1501,6 +1415,10 @@
 	<slot name="hasPenaltyExemption" key="label.masterDegree.gratuity.exemptionPenalty.exemption" />
 	<slot name="penaltyExemptionJustification" key="label.masterDegree.gratuity.exemptionPenalty.justification" />
 	<setter signature="editPenaltyExemption(hasPenaltyExemption, penaltyExemptionJustification)"/>
+</schema>
+
+<schema name="responsible.name" type="net.sourceforge.fenixedu.domain.Person">
+	<slot name="name" />
 </schema>
 
 <schema name="responsibleEmployee.name" type="net.sourceforge.fenixedu.domain.Employee">
@@ -1525,7 +1443,7 @@
 		layout="menu-select-postback"
 		validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
 		<property name="providerClass"
-            value="net.sourceforge.fenixedu.presentationTier.renderers.providers.lists.DegreesByEmployeeUnit" />
+            value="net.sourceforge.fenixedu.presentationTier.renderers.providers.lists.DegreesForMarksheetsByPersonPermissions" />
         <property name="format" value="${tipoCurso.localizedName} - ${name}" />     
         <property name="destination" value="degreePostBack"/>
 	</slot>
@@ -1864,36 +1782,9 @@
    	<slot name="this" layout="link" key="documents.link" />
 </schema>
 
-<schema name="academicAdminOffice.show.permissions" type="net.sourceforge.fenixedu.presentationTier.Action.administrativeOffice.permissionManagement.PermissionManagementDA$PermissionViewBean" bundle="ACADEMIC_OFFICE_RESOURCES">
-	<slot name="permissionType.localizedName" key="label.permission">
-		<property name="classes" value="nowrap" />
-	</slot>
-	<slot name="members" key="label.elements" layout="list">
-		<property name="eachLayout" value="values" />
-		<property name="eachSchema" value="academicAdminOffice.show.permissions.member" />
-	</slot>	
+<schema name="view.academicProgram.name" type="net.sourceforge.fenixedu.domain.AcademicProgram">
+	<slot name="presentationName" key="label.name" />
 </schema>
-
-<schema name="academicAdminOffice.show.permissions.member" type="net.sourceforge.fenixedu.presentationTier.Action.administrativeOffice.permissionManagement.PermissionManagementDA$Member" bundle="ACADEMIC_OFFICE_RESOURCES">
-	<slot name="person" layout="format">
-		<property name="format" value="${name} (F${employee.employeeNumber})" />
-		<property name="classes" value="nowrap" />
-	</slot>
-</schema>
-
-<schema name="PermissionMemberBean.edit" type="net.sourceforge.fenixedu.presentationTier.Action.administrativeOffice.permissionManagement.PermissionManagementDA$PermissionMemberBean"
-	bundle="APPLICATION_RESOURCES">
-	<slot name="selected" />
-	<slot name="person" read-only="true" layout="format">
-		<property name="format" value="${name} (F${employee.employeeNumber})" />
-		<property name="classes" value="nowrap" />
-	</slot>
-</schema>
-
-<schema name="academicAdminOffice.show.permissionsTypes" type="net.sourceforge.fenixedu.domain.accessControl.PermissionType" bundle="ACADEMIC_OFFICE_RESOURCES">
-	<slot name="localizedName" key="label.name" />
-</schema>
-
 
 <schema name="set.evaluation.curriculum.entry.read.only" type="net.sourceforge.fenixedu.dataTransferObject.degreeAdministrativeOffice.gradeSubmission.MarkSheetEnrolmentEvaluationBean" bundle="ACADEMIC_OFFICE_RESOURCES">
 	<slot name="enrolmentEvaluationTypeDescription" key="label.set.evaluation.type" read-only="true" />
@@ -1942,28 +1833,22 @@
 	</slot>
 </schema>
 
-<schema name="rectorateSubmission.batchIndex.employee" type="net.sourceforge.fenixedu.domain.Employee">
-    <slot name="this" layout="format">
-        <property name="format" value="F${employeeNumber}" />
-    </slot>
-</schema>
-
 <schema name="rectorateSubmission.batchIndex"
 	type="net.sourceforge.fenixedu.domain.serviceRequests.RectorateSubmissionBatch" bundle="ACADEMIC_OFFICE_RESOURCES">
 	<slot name="creation" key="label.rectorateSubmission.creation" />
     <slot name="creator" key="label.rectorateSubmission.creator" layout="null-as-label">
         <property name="subLayout" value="values" />
-        <property name="subSchema" value="rectorateSubmission.batchIndex.employee"/>
+		<property name="subSchema" value="responsible.name"/>
     </slot>
     <slot name="submission" key="label.rectorateSubmission.submission" />
     <slot name="submitter" key="label.rectorateSubmission.submitter" layout="null-as-label">
         <property name="subLayout" value="values" />
-        <property name="subSchema" value="rectorateSubmission.batchIndex.employee"/>
+		<property name="subSchema" value="responsible.name"/>
     </slot>
     <slot name="reception" key="label.rectorateSubmission.reception" />
     <slot name="receptor" key="label.rectorateSubmission.receiver" layout="null-as-label">
         <property name="subLayout" value="values" />
-        <property name="subSchema" value="rectorateSubmission.batchIndex.employee"/>
+		<property name="subSchema" value="responsible.name"/>
     </slot>
     <slot name="range" key="label.rectorateSubmission.registryCodeRange" />
     <slot name="documentRequestCount" key="label.rectorateSubmission.documentRequestCount" />
@@ -2021,16 +1906,6 @@
 	<slot name="page" key="label.set.evaluation.page" />
 </schema>
 
-
-<schema name="utilities.export.diploma.file.bean" type="net.sourceforge.fenixedu.presentationTier.Action.administrativeOffice.utilities.ExportMasterAndPhdStudentDiplomaDA$DiplomaXmlBean" bundle="ACADEMIC_OFFICE_RESOURCES">
-	<slot name="stream" key="label.export.diploma.file">
-		<property name="fileNameSlot" value="fileName" />
-		<property name="fileContentTypeSlot" value="mimeType" />
-		<property name="fileSizeSlot" value="fileSize" />
-	</slot>
-</schema>
-
-
 <schema name="utilities.export.diploma.student.view" type="net.sourceforge.fenixedu.presentationTier.Action.administrativeOffice.utilities.StudentDiplomaInformation" bundle="ACADEMIC_OFFICE_RESOURCES">
 	<slot name="graduateTitle" key="label.export.diploma.graduateTitle" />
 	<slot name="name" key="label.export.diploma.name" />
@@ -2056,4 +1931,19 @@
 		<property name="format" value="${semester}º Sem - ${executionYear.year}" />
 		<property name="destination" value="postBack" />
 	</slot>
+</schema>
+
+<schema name="view.party.name" type="net.sourceforge.fenixedu.domain.organizationalStructure.Party" bundle="ACADEMIC_OFFICE_RESOURCES">
+	<slot name="name" />
+</schema>
+
+<schema name="Lesson.view" type="net.sourceforge.fenixedu.domain.Lesson" bundle="ACADEMIC_OFFICE_RESOURCES">
+	<slot name="diaSemana.diaSemanaString" />
+	<slot name="inicioString" />
+	<slot name="fimString" />
+	<slot name="sala" layout="null-as-label" />
+</schema>
+
+<schema name="view.administrativeOffice.nameAndType" type="net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice" bundle="ACADEMIC_OFFICE_RESOURCES">
+	<slot name="unit.name" />
 </schema>

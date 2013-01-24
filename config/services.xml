@@ -26,15 +26,6 @@
     </service>
 
     <service>
-        <name>ActivateEquivalencePlanEntry</name>
-        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.coordinator.ActivateEquivalencePlanEntry</implementationClass>
-        <isTransactional>true</isTransactional>
-        <filterChains>
-            <chain name="ManagerOrAcademicAdministrativeOfficeAuthorization"/>
-        </filterChains>
-    </service>
-
-    <service>
         <name>AddContextToCourseGroup</name>
         <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.bolonhaManager.AddContextToCourseGroup</implementationClass>
         <isTransactional>true</isTransactional>
@@ -214,15 +205,6 @@
         <filterChains />
     </service>
 
-    <service>
-        <name>CancelAcademicServiceRequest</name>
-        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.serviceRequests.CancelAcademicServiceRequest</implementationClass>
-        <isTransactional>true</isTransactional>
-        <filterChains>
-            <chain name="AlumniOrStudentOrAcademicAdministrativeOfficeAuthorization"/>
-        </filterChains>
-    </service>
-
     <!-- <service>
         <name>ChangeStatusOfFinalDegreeWorkProposals</name>
         <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.coordinator.ChangeStatusOfFinalDegreeWorkProposals</implementationClass>
@@ -317,15 +299,6 @@
     </service>
 
     <service>
-        <name>ConfirmMarkSheet</name>
-        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.administrativeOffice.gradeSubmission.ConfirmMarkSheet</implementationClass>
-        <isTransactional>true</isTransactional>
-        <filterChains>
-            <chain name="CreateMarkSheetAuthorization"/>
-        </filterChains>
-    </service>
-
-    <service>
         <name>CopyLastYearRealDataToTSDProcessPhase</name>
         <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.teacherServiceDistribution.CopyLastYearRealDataToTSDProcessPhase</implementationClass>
         <isTransactional>true</isTransactional>
@@ -385,15 +358,6 @@
         <isTransactional>true</isTransactional>
         <filterChains>
             <chain name="BolonhaOrDegreeAdministrativeOfficeSuperUserOrManagerOrOperatorAuthorization"/>
-        </filterChains>
-    </service>
-
-    <service>
-        <name>CreateContributor</name>
-        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrativeOffice.contributor.CreateContributor</implementationClass>
-        <isTransactional>true</isTransactional>
-        <filterChains>
-            <chain name="AcademicOrMasterAdministrativeOfficeAuthorization"/>
         </filterChains>
     </service>
 
@@ -496,38 +460,11 @@
     </service>
 
     <service>
-        <name>CreateMarkSheet</name>
-        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.administrativeOffice.gradeSubmission.CreateMarkSheet</implementationClass>
-        <isTransactional>true</isTransactional>
-        <filterChains>
-            <chain name="CreateMarkSheetAuthorization"/>
-        </filterChains>
-    </service>
-
-    <service>
         <name>CreateNewBlueprintVersion</name>
         <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.space.CreateNewBlueprintVersion</implementationClass>
         <isTransactional>true</isTransactional>
         <filterChains>
             <chain name="SpaceManagerAuthorization"/>
-        </filterChains>
-    </service>
-
-    <service>
-        <name>CreateNewCreditsDismissal</name>
-        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.administrativeOffice.dismissal.CreateNewCreditsDismissal</implementationClass>
-        <isTransactional>true</isTransactional>
-        <filterChains>
-            <chain name="ManagerOrAcademicAdministrativeOfficeAuthorization"/>
-        </filterChains>
-    </service>
-
-    <service>
-        <name>CreateNewEquivalenceDismissal</name>
-        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.administrativeOffice.dismissal.CreateNewEquivalenceDismissal</implementationClass>
-        <isTransactional>true</isTransactional>
-        <filterChains>
-            <chain name="ManagerOrAcademicAdministrativeOfficeAuthorization"/>
         </filterChains>
     </service>
 
@@ -544,33 +481,6 @@
         <name>CreateNewRoomsReserveComment</name>
         <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.teacher.CreateNewRoomsReserveComment</implementationClass>
         <isTransactional>true</isTransactional>
-    </service>
-
-    <service>
-        <name>CreateNewSubstitutionDismissal</name>
-        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.administrativeOffice.dismissal.CreateNewSubstitutionDismissal</implementationClass>
-        <isTransactional>true</isTransactional>
-        <filterChains>
-            <chain name="ManagerOrAcademicAdministrativeOfficeAuthorization"/>
-        </filterChains>
-    </service>
-
-    <service>
-        <name>CreateOldMarkSheet</name>
-        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.administrativeOffice.gradeSubmission.CreateOldMarkSheet</implementationClass>
-        <isTransactional>true</isTransactional>
-        <filterChains>
-            <chain name="CreateMarkSheetAuthorization"/>
-        </filterChains>
-    </service>
-
-    <service>
-        <name>CreatePaymentsForEvents</name>
-        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.accounting.CreatePaymentsForEvents</implementationClass>
-        <isTransactional>true</isTransactional>
-        <filterChains>
-            <chain name="AcademicAdministrativeOfficeOrTreasuryAuthorization"/>
-        </filterChains>
     </service>
 
     <service>
@@ -597,33 +507,6 @@
         <isTransactional>true</isTransactional>
         <filterChains>
             <chain name="ExecutionCourseLecturingTeacherOrDegreeCoordinatorAuthorization"/>
-        </filterChains>
-    </service>
-
-    <service>
-        <name>CreateReceipt</name>
-        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.accounting.CreateReceipt</implementationClass>
-        <isTransactional>true</isTransactional>
-        <filterChains>
-            <chain name="AcademicAdministrativeOfficeOrTreasuryAuthorization"/>
-        </filterChains>
-    </service>
-
-    <service>
-        <name>CreateRectificationMarkSheet</name>
-        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.administrativeOffice.gradeSubmission.CreateRectificationMarkSheet</implementationClass>
-        <isTransactional>true</isTransactional>
-        <filterChains>
-            <chain name="CreateRectificationMarkSheetAuthorization"/>
-        </filterChains>
-    </service>
-
-    <service>
-        <name>CreateRectificationOldMarkSheet</name>
-        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.administrativeOffice.gradeSubmission.CreateRectificationOldMarkSheet</implementationClass>
-        <isTransactional>true</isTransactional>
-        <filterChains>
-            <chain name="CreateRectificationMarkSheetAuthorization"/>
         </filterChains>
     </service>
 
@@ -796,15 +679,6 @@
     </service>
 
     <service>
-        <name>DeActivateEquivalencePlanEntry</name>
-        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.coordinator.DeActivateEquivalencePlanEntry</implementationClass>
-        <isTransactional>true</isTransactional>
-        <filterChains>
-            <chain name="ManagerOrAcademicAdministrativeOfficeAuthorization"/>
-        </filterChains>
-    </service>
-
-    <service>
         <name>DeleteAllGroupingMembers</name>
         <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.teacher.DeleteAllGroupingMembers</implementationClass>
         <isTransactional>true</isTransactional>
@@ -837,15 +711,6 @@
         <isTransactional>true</isTransactional>
         <filterChains>
             <chain name="BolonhaOrDegreeAdministrativeOfficeSuperUserOrManagerOrOperatorAuthorization"/>
-        </filterChains>
-    </service>
-
-    <service>
-        <name>DeleteCredits</name>
-        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.administrativeOffice.dismissal.DeleteCredits</implementationClass>
-        <isTransactional>true</isTransactional>
-        <filterChains>
-            <chain name="ManagerOrAcademicAdministrativeOfficeAuthorization"/>
         </filterChains>
     </service>
 
@@ -1012,15 +877,6 @@
     </service>
 
     <service>
-        <name>DeleteMarkSheet</name>
-        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.administrativeOffice.gradeSubmission.DeleteMarkSheet</implementationClass>
-        <isTransactional>true</isTransactional>
-        <filterChains>
-            <chain name="CreateMarkSheetAuthorization"/>
-        </filterChains>
-    </service>
-
-    <service>
         <name>DeleteNonAffiliatedTeacher</name>
         <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.gep.DeleteNonAffiliatedTeacher</implementationClass>
         <isTransactional>true</isTransactional>
@@ -1093,15 +949,6 @@
     </service>
 
     <service>
-        <name>DeleteRegistrationRegime</name>
-        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.registration.DeleteRegistrationRegime</implementationClass>
-        <isTransactional>true</isTransactional>
-        <filterChains>
-            <chain name="ManagerOrAcademicAdministrativeOfficeAuthorization"/>
-        </filterChains>
-    </service>
-
-    <service>
         <name>DeleteScientificCommission</name>
         <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.coordinator.DeleteScientificCommission</implementationClass>
         <isTransactional>true</isTransactional>
@@ -1116,15 +963,6 @@
         <isTransactional>true</isTransactional>
         <filterChains>
             <chain name="SiteManagerAuthorization"/>
-        </filterChains>
-    </service>
-
-    <service>
-        <name>DeleteStudentAttendingCourse</name>
-        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.enrollment.shift.DeleteStudentAttendingCourse</implementationClass>
-        <isTransactional>true</isTransactional>
-        <filterChains>
-            <chain name="ClassEnrollmentAuthorization"/>
         </filterChains>
     </service>
 
@@ -1363,15 +1201,6 @@
     </service>
 
     <service>
-        <name>EditContributor</name>
-        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrativeOffice.contributor.EditContributor</implementationClass>
-        <isTransactional>true</isTransactional>
-        <filterChains>
-            <chain name="AcademicOrMasterAdministrativeOfficeAuthorization"/>
-        </filterChains>
-    </service>
-
-    <service>
         <name>EditCourseGroup</name>
         <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.bolonhaManager.EditCourseGroup</implementationClass>
         <isTransactional>true</isTransactional>
@@ -1513,15 +1342,6 @@
         </filterChains>
     </service>
 
-    <service>
-        <name>EditMarkSheet</name>
-        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.administrativeOffice.gradeSubmission.EditMarkSheet</implementationClass>
-        <isTransactional>true</isTransactional>
-        <filterChains>
-            <chain name="CreateMarkSheetAuthorization"/>
-        </filterChains>
-    </service>
-    
     <service>
         <name>EditPersistentGroup</name>
         <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.research.EditPersistentGroup</implementationClass>
@@ -1715,24 +1535,6 @@
             <chain name="ExecutionCourseLecturingTeacherAuthorization"/>
         </filterChains>
     </service>
-
-    <service>
-        <name>EnrolBolonhaStudent</name>
-        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.student.enrolment.bolonha.EnrolBolonhaStudent</implementationClass>
-        <isTransactional>true</isTransactional>
-        <filterChains>
-            <chain name="StudentOrAcademicAdministrativeOfficeOrManagerAuthorization"/>
-        </filterChains>
-    </service>
-
-	<service>
-			<name>EnrolBolonhaStudentInCurriculumValidationContext</name>
-			<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.student.enrolment.bolonha.EnrolBolonhaStudentInCurriculumValidationContext</implementationClass>
-	        <isTransactional>true</isTransactional>
-	        <filterChains>
-	            <chain name="StudentOrAcademicAdministrativeOfficeOrManagerAuthorization"/>
-	        </filterChains>			
-	</service>
 
     <service>
         <name>EnrolStudentInWrittenEvaluation</name>
@@ -2136,15 +1938,6 @@
     </service>
 
     <service>
-        <name>MoveCurriculumLines</name>
-        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.student.curriculumLines.MoveCurriculumLines</implementationClass>
-        <isTransactional>true</isTransactional>
-        <filterChains>
-            <chain name="ManagerOrAcademicAdministrativeOfficeAuthorization"/>
-        </filterChains>
-    </service>
-
-    <service>
         <name>MoveLessonPlanning</name>
         <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.teacher.MoveLessonPlanning</implementationClass>
         <isTransactional>true</isTransactional>
@@ -2204,24 +1997,6 @@
         <isTransactional>true</isTransactional>
         <filterChains>
             <chain name="ExecutionCourseLecturingTeacherAuthorization"/>
-        </filterChains>
-    </service>
-
-    <service>
-        <name>PrintMarkSheet</name>
-        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.administrativeOffice.gradeSubmission.PrintMarkSheet</implementationClass>
-        <isTransactional>true</isTransactional>
-        <filterChains>
-            <chain name="CreateMarkSheetAuthorization"/>
-        </filterChains>
-    </service>
-
-    <service>
-        <name>PrintMarkSheets</name>
-        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.administrativeOffice.gradeSubmission.PrintMarkSheets</implementationClass>
-        <isTransactional>true</isTransactional>
-        <filterChains>
-            <chain name="CreateMarkSheetAuthorization"/>
         </filterChains>
     </service>
 
@@ -3260,24 +3035,6 @@
     </service>
 
     <service>
-        <name>RegisterReceiptPrint</name>
-        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.accounting.RegisterReceiptPrint</implementationClass>
-        <isTransactional>true</isTransactional>
-        <filterChains>
-            <chain name="AcademicAdministrativeOfficeOrTreasuryAuthorization"/>
-        </filterChains>
-    </service>
-
-    <service>
-        <name>RegistrationConclusionProcess</name>
-        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.administrativeOffice.student.RegistrationConclusionProcess</implementationClass>
-        <isTransactional>true</isTransactional>
-        <filterChains>
-            <chain name="ManagerOrAcademicAdministrativeOfficeAuthorization"/>
-        </filterChains>
-    </service>
-
-    <service>
         <name>RejectNewProjectProposal</name>
         <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.teacher.RejectNewProjectProposal</implementationClass>
         <isTransactional>true</isTransactional>
@@ -3423,6 +3180,13 @@
     </service>
 
     <service>
+        <name>SearchAllActiveParties</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.commons.searchers.SearchAllActiveParties</implementationClass>
+        <isTransactional>true</isTransactional>
+        <filterChains />
+    </service>
+
+    <service>
         <name>SearchAllActivePartiesByName</name>
         <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.commons.searchers.SearchAllActivePartiesByName</implementationClass>
         <isTransactional>true</isTransactional>
@@ -3520,15 +3284,6 @@
         <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.commons.SearchInternalUnits</implementationClass>
         <isTransactional>true</isTransactional>
         <filterChains />
-    </service>
-
-    <service>
-        <name>SearchMarkSheets</name>
-        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.administrativeOffice.gradeSubmission.SearchMarkSheets</implementationClass>
-        <isTransactional>true</isTransactional>
-        <filterChains>
-            <chain name="MarkSheetManagementAuthorization"/>
-        </filterChains>
     </service>
 
     <service>

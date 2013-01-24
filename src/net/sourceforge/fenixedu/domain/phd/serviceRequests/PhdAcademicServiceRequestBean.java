@@ -80,8 +80,7 @@ public class PhdAcademicServiceRequestBean implements Serializable, IPhdAcademic
 	    getAcademicServiceRequest().sendToExternalEntity(getWhenNewSituationOccured().toYearMonthDay(), getJustification());
 	    break;
 	case DELIVERED:
-	    getAcademicServiceRequest().delivered(AccessControl.getPerson().getEmployee(),
-		    getWhenNewSituationOccured().toYearMonthDay());
+	    getAcademicServiceRequest().delivered(AccessControl.getPerson(), getWhenNewSituationOccured().toYearMonthDay());
 	    break;
 	default:
 	    throw new DomainException("error.PhdAcademicServiceRequestBean.unknown.situation.type");

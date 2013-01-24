@@ -18,8 +18,6 @@ import net.sourceforge.fenixedu.util.Money;
 import org.joda.time.DateTime;
 import org.joda.time.YearMonthDay;
 
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
-
 public class AdministrativeOfficeFeePR extends AdministrativeOfficeFeePR_Base {
 
     protected AdministrativeOfficeFeePR() {
@@ -43,8 +41,7 @@ public class AdministrativeOfficeFeePR extends AdministrativeOfficeFeePR_Base {
 	final AdministrativeOfficeFeeAndInsuranceEvent administrativeOfficeFeeAndInsuranceEvent = (AdministrativeOfficeFeeAndInsuranceEvent) event;
 
 	final YearMonthDay paymentEndDate = administrativeOfficeFeeAndInsuranceEvent.getPaymentEndDate() != null ? administrativeOfficeFeeAndInsuranceEvent
-		.getPaymentEndDate()
-		: getWhenToApplyFixedAmountPenalty();
+		.getPaymentEndDate() : getWhenToApplyFixedAmountPenalty();
 
 	final Money amountPayedUntilEndDate = calculateAmountPayedUntilEndDate(administrativeOfficeFeeAndInsuranceEvent,
 		paymentEndDate);
@@ -70,7 +67,6 @@ public class AdministrativeOfficeFeePR extends AdministrativeOfficeFeePR_Base {
 	return result;
     }
 
-    @Checked("PostingRulePredicates.editPredicate")
     public AdministrativeOfficeFeePR edit(DateTime startDate, Money fixedAmount, Money penaltyAmount,
 	    YearMonthDay whenToApplyFixedAmountPenalty) {
 

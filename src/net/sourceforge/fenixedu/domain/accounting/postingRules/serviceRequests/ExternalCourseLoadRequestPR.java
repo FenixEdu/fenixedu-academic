@@ -7,8 +7,6 @@ import net.sourceforge.fenixedu.util.Money;
 
 import org.joda.time.DateTime;
 
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
-
 public class ExternalCourseLoadRequestPR extends ExternalCourseLoadRequestPR_Base {
 
     private ExternalCourseLoadRequestPR() {
@@ -24,7 +22,7 @@ public class ExternalCourseLoadRequestPR extends ExternalCourseLoadRequestPR_Bas
 	super.setAmountFirstPage(amountFirstPage);
     }
 
-    @Checked("PostingRulePredicates.editPredicate")
+    @Override
     public ExternalCourseLoadRequestPR edit(final Money baseAmount, final Money amountFirstPage, final Money amountPerUnit) {
 	deactivate();
 	return new ExternalCourseLoadRequestPR(getServiceAgreementTemplate(), new DateTime().minus(1000), null, baseAmount,

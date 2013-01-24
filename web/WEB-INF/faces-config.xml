@@ -291,6 +291,12 @@
 		<managed-bean-class>net.sourceforge.fenixedu.presentationTier.backBeans.manager.curricularPlans.ManagerDegreeManagementBackingBean</managed-bean-class>
 		<managed-bean-scope>request</managed-bean-scope>
 	</managed-bean>
+	<managed-bean>
+		<description>AcademicAdministrationDegreeManagement</description>
+		<managed-bean-name>AcademicAdministrationDegreeManagement</managed-bean-name>
+		<managed-bean-class>net.sourceforge.fenixedu.presentationTier.backBeans.academicAdministration.curricularPlans.AcademicAdministrationDegreeManagementBackingBean</managed-bean-class>
+		<managed-bean-scope>request</managed-bean-scope>
+	</managed-bean>
 	
 	<managed-bean>
 		<description>DegreeCurricularPlanManagement</description>
@@ -316,6 +322,12 @@
 		<managed-bean-class>net.sourceforge.fenixedu.presentationTier.backBeans.manager.curricularPlans.ManagerCurricularCourseManagementBackingBean</managed-bean-class>
 		<managed-bean-scope>request</managed-bean-scope>
 	</managed-bean>
+	<managed-bean>
+		<description>AcademicAdministrationCurricularCourseManagementBackingBean</description>
+		<managed-bean-name>AcademicAdministrationCurricularCourseManagement</managed-bean-name>
+		<managed-bean-class>net.sourceforge.fenixedu.presentationTier.backBeans.academicAdministration.curricularPlans.AcademicAdministrationCurricularCourseManagementBackingBean</managed-bean-class>
+		<managed-bean-scope>request</managed-bean-scope>
+	</managed-bean>	
 	<managed-bean>
 		<description>CompetenceCourseManagementBackingBean</description>
 		<managed-bean-name>CompetenceCourseManagement</managed-bean-name>
@@ -2215,6 +2227,177 @@
 		</navigation-case>
 	</navigation-rule>
 	<!-- END: MANAGER - Bolonha Navigation Rules -->
+
+
+
+	<!-- BEGIN: ACADEMIC ADMINISTRATION - Bolonha Navigation Rules -->
+	<navigation-rule>
+		<from-view-id>/academicAdministration/bolonha/curricularPlans/viewDegree.jsp</from-view-id>
+		<navigation-case>
+			<from-outcome>curricularPlansManagement</from-outcome>
+			<to-view-id>/academicAdministration/bolonha/curricularPlans/curricularPlansManagement.jsp</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	<navigation-rule>
+		<from-view-id>/academicAdministration/bolonha/curricularPlans/viewCurricularPlan.jsp</from-view-id>
+		<navigation-case>
+			<from-outcome>curricularPlansManagement</from-outcome>
+			<to-view-id>/academicAdministration/bolonha/curricularPlans/curricularPlansManagement.jsp</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	<navigation-rule>
+		<from-view-id>/academicAdministration/bolonha/curricularPlans/editCurricularPlan.jsp</from-view-id>
+		<navigation-case>
+			<from-outcome>curricularPlansManagement</from-outcome>
+			<to-view-id>/academicAdministration/bolonha/curricularPlans/curricularPlansManagement.jsp</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	<navigation-rule>
+		<from-view-id>/academicAdministration/bolonha/curricularPlans/viewCurricularPlanStructure.jsp</from-view-id>
+		<navigation-case>
+			<from-outcome>viewCurricularPlan</from-outcome>
+			<to-view-id>/academicAdministration/bolonha/curricularPlans/viewCurricularPlan.jsp</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	<navigation-rule>
+		<from-view-id>/academicAdministration/bolonha/curricularPlans/viewCurricularCourse.jsp</from-view-id>
+		<navigation-case>
+			<from-outcome>viewCurricularPlan</from-outcome>
+			<to-view-id>/academicAdministration/bolonha/curricularPlans/viewCurricularPlan.jsp</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>buildCurricularPlan</from-outcome>
+			<to-view-id>/academicAdministration/bolonha/curricularPlans/buildCurricularPlan.jsp</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	<navigation-rule>
+		<from-view-id>/academicAdministration/bolonha/curricularPlans/buildCurricularPlan.jsp</from-view-id>
+		<navigation-case>
+			<from-outcome>curricularPlansManagement</from-outcome>
+			<to-view-id>/academicAdministration/bolonha/curricularPlans/curricularPlansManagement.jsp</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	<navigation-rule>
+		<from-view-id>/academicAdministration/bolonha/curricularPlans/editCurricularPlanStructure.jsp</from-view-id>
+		<navigation-case>
+			<from-outcome>buildCurricularPlan</from-outcome>
+			<to-view-id>/academicAdministration/bolonha/curricularPlans/buildCurricularPlan.jsp</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	<navigation-rule>
+		<from-view-id>/academicAdministration/bolonha/curricularPlans/deleteCourseGroup.jsp</from-view-id>
+		<navigation-case>
+			<from-outcome>editCurricularPlanStructure</from-outcome>
+			<to-view-id>/academicAdministration/bolonha/curricularPlans/editCurricularPlanStructure.jsp</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	<navigation-rule>
+		<from-view-id>/academicAdministration/bolonha/curricularPlans/orderCourseGroup.jsp</from-view-id>
+		<navigation-case>
+			<from-outcome>editCurricularPlanStructure</from-outcome>
+			<to-view-id>/academicAdministration/bolonha/curricularPlans/editCurricularPlanStructure.jsp</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	<navigation-rule>
+		<from-view-id>/academicAdministration/bolonha/curricularPlans/createCourseGroup.jsp</from-view-id>
+		<navigation-case>
+			<from-outcome>editCurricularPlanStructure</from-outcome>
+			<to-view-id>/academicAdministration/bolonha/curricularPlans/editCurricularPlanStructure.jsp</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	<navigation-rule>
+		<from-view-id>/academicAdministration/bolonha/curricularPlans/associateCourseGroup.jsp</from-view-id>
+		<navigation-case>
+			<from-outcome>editCurricularPlanStructure</from-outcome>
+			<to-view-id>/academicAdministration/bolonha/curricularPlans/editCurricularPlanStructure.jsp</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	<navigation-rule>
+		<from-view-id>/academicAdministration/bolonha/curricularPlans/editCourseGroup.jsp</from-view-id>
+		<navigation-case>
+			<from-outcome>editCurricularPlanStructure</from-outcome>
+			<to-view-id>/academicAdministration/bolonha/curricularPlans/editCurricularPlanStructure.jsp</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	<navigation-rule>
+		<from-view-id>/academicAdministration/bolonha/curricularPlans/setCurricularRules.jsp</from-view-id>
+		<navigation-case>
+			<from-outcome>buildCurricularPlan</from-outcome>
+			<to-view-id>/academicAdministration/bolonha/curricularPlans/buildCurricularPlan.jsp</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	<navigation-rule>
+		<from-view-id>/academicAdministration/bolonha/curricularRules/createCurricularRule.jsp</from-view-id>
+		<navigation-case>
+			<from-outcome>setCurricularRules</from-outcome>
+			<to-view-id>/academicAdministration/bolonha/curricularPlans/setCurricularRules.jsp</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	<navigation-rule>
+		<from-view-id>/academicAdministration/bolonha/curricularRules/editCurricularRule.jsp</from-view-id>
+		<navigation-case>
+			<from-outcome>setCurricularRules</from-outcome>
+			<to-view-id>/academicAdministration/bolonha/curricularPlans/setCurricularRules.jsp</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	<navigation-rule>
+		<from-view-id>/academicAdministration/bolonha/curricularRules/deleteCurricularRule.jsp</from-view-id>
+		<navigation-case>
+			<from-outcome>setCurricularRules</from-outcome>
+			<to-view-id>/academicAdministration/bolonha/curricularPlans/setCurricularRules.jsp</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	<navigation-rule>
+		<from-view-id>/academicAdministration/bolonha/curricularPlans/createCurricularCourse.jsp</from-view-id>
+		<navigation-case>
+			<from-outcome>buildCurricularPlan</from-outcome>
+			<to-view-id>/academicAdministration/bolonha/curricularPlans/buildCurricularPlan.jsp</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	<navigation-rule>
+		<from-view-id>/academicAdministration/bolonha/curricularPlans/associateCurricularCourse.jsp</from-view-id>
+		<navigation-case>
+			<from-outcome>buildCurricularPlan</from-outcome>
+			<to-view-id>/academicAdministration/bolonha/curricularPlans/buildCurricularPlan.jsp</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	<navigation-rule>
+		<from-view-id>/academicAdministration/bolonha/curricularPlans/editCurricularCourse.jsp</from-view-id>
+		<navigation-case>
+			<from-outcome>buildCurricularPlan</from-outcome>
+			<to-view-id>/academicAdministration/bolonha/curricularPlans/buildCurricularPlan.jsp</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	<navigation-rule>
+		<from-view-id>/academicAdministration/bolonha/curricularPlans/deleteCurricularCourseContext.jsp</from-view-id>
+		<navigation-case>
+			<from-outcome>buildCurricularPlan</from-outcome>
+			<to-view-id>/academicAdministration/bolonha/curricularPlans/buildCurricularPlan.jsp</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	<navigation-rule>
+		<from-view-id>/academicAdministration/bolonha/competenceCourses/showCompetenceCourse.jsp</from-view-id>
+		<navigation-case>
+			<from-outcome>competenceCoursesManagement</from-outcome>
+			<to-view-id>/academicAdministration/bolonha/competenceCourses/competenceCoursesManagement.jsp</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	<navigation-rule>
+		<from-view-id>/academicAdministration/bolonha/competenceCourses/editCompetenceCourseMainPage.jsp</from-view-id>
+		<navigation-case>
+			<from-outcome>competenceCoursesManagement</from-outcome>
+			<to-view-id>/academicAdministration/bolonha/competenceCourses/competenceCoursesManagement.jsp</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	<navigation-rule>
+		<from-view-id>/academicAdministration/bolonha/competenceCourses/editCompetenceCourse.jsp</from-view-id>
+		<navigation-case>
+			<from-outcome>editCompetenceCourseMainPage</from-outcome>
+			<to-view-id>/academicAdministration/bolonha/competenceCourses/editCompetenceCourseMainPage.jsp</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	<!-- END: ACADEMIC ADMINISTRATION - Bolonha Navigation Rules -->
+
 
 	<!-- Custom Components -->
 	<component>

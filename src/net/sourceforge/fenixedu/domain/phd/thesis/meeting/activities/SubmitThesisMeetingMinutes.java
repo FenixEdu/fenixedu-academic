@@ -3,7 +3,6 @@ package net.sourceforge.fenixedu.domain.phd.thesis.meeting.activities;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.domain.caseHandling.PreConditionNotValidException;
 import net.sourceforge.fenixedu.domain.phd.PhdProgramDocumentUploadBean;
-import net.sourceforge.fenixedu.domain.phd.thesis.PhdThesisProcess;
 import net.sourceforge.fenixedu.domain.phd.thesis.PhdThesisProcessStateType;
 import net.sourceforge.fenixedu.domain.phd.thesis.meeting.PhdMeeting;
 import net.sourceforge.fenixedu.domain.phd.thesis.meeting.PhdMeetingBean;
@@ -15,7 +14,7 @@ public class SubmitThesisMeetingMinutes extends PhdMeetingSchedulingActivity {
     @Override
     protected void activityPreConditions(PhdMeetingSchedulingProcess process, IUserView userView) {
 
-	if (!PhdThesisProcess.isMasterDegreeAdministrativeOfficeEmployee(userView)) {
+	if (!process.isAllowedToManageProcess(userView)) {
 	    throw new PreConditionNotValidException();
 	}
 

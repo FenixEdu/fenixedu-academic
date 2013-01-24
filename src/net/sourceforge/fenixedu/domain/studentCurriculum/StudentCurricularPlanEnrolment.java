@@ -13,8 +13,8 @@ import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
-import net.sourceforge.fenixedu.domain.accessControl.PermissionType;
-import net.sourceforge.fenixedu.domain.accessControl.academicAdminOffice.AdministrativeOfficePermission;
+import net.sourceforge.fenixedu.domain.accessControl.academicAdministration.AcademicAuthorizationGroup;
+import net.sourceforge.fenixedu.domain.accessControl.academicAdministration.AcademicOperationType;
 import net.sourceforge.fenixedu.domain.curricularRules.ICurricularRule;
 import net.sourceforge.fenixedu.domain.curricularRules.executors.RuleResult;
 import net.sourceforge.fenixedu.domain.curricularRules.executors.ruleExecutors.CurricularRuleLevel;
@@ -28,7 +28,6 @@ import net.sourceforge.fenixedu.domain.phd.enrolments.PhdStudentCurricularPlanEn
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.domain.studentCurriculum.StudentCurricularPlanEnrolmentPreConditions.EnrolmentPreConditionResult;
-import net.sourceforge.fenixedu.predicates.StudentCurricularPlanPredicates;
 
 abstract public class StudentCurricularPlanEnrolment {
 
@@ -40,12 +39,13 @@ abstract public class StudentCurricularPlanEnrolment {
     }
 
     private void checkParameters(final EnrolmentContext enrolmentContext) {
-	if (enrolmentContext.getStudentCurricularPlan() == null) {
-	    throw new DomainException("error.StudentCurricularPlanEnrolment.invalid.studentCurricularPlan");
-	}
 
 	if (enrolmentContext == null) {
 	    throw new DomainException("error.StudentCurricularPlanEnrolment.invalid.enrolmentContext");
+	}
+
+	if (enrolmentContext.getStudentCurricularPlan() == null) {
+	    throw new DomainException("error.StudentCurricularPlanEnrolment.invalid.studentCurricularPlan");
 	}
 
 	if (!enrolmentContext.hasResponsiblePerson()) {
@@ -76,7 +76,7 @@ abstract public class StudentCurricularPlanEnrolment {
 
 	checkDebts();
 
-	if (isResponsiblePersonAcademicAdminOffice() || isResponsibleInternationalRelationOffice()) {
+	if (isResponsiblePersonAllowedToEnrolStudents() || isResponsibleInternationalRelationOffice()) {
 	    assertAcademicAdminOfficePreConditions();
 
 	} else if (isResponsiblePersonStudent()) {
@@ -116,52 +116,44 @@ abstract public class StudentCurricularPlanEnrolment {
     }
 
     protected boolean updateRegistrationAfterConclusionProcessPermissionEvaluated() {
-	final AdministrativeOfficePermission registrationPermission = getUpdateRegistrationAfterConclusionProcessPermission();
-	if (registrationPermission != null) {
 
-	    if (checkPermission(registrationPermission)) {
-		return true;
-	    }
+	if (areModifiedCyclesConcluded() || isStudentCurricularPlanConcluded()) {
+	    checkUpdateRegistrationAfterConclusion();
+	    return true;
+	} else {
+	    return false;
+	}
 
-	    if (registrationPermission.isAppliable(getStudentCurricularPlan())) {
-		if (!registrationPermission.isMember(getResponsiblePerson())) {
-		    throw new DomainException("error.permissions.cannot.update.registration.after.conclusion.process");
-		}
+    }
+
+    protected boolean areModifiedCyclesConcluded() {
+	for (final CycleCurriculumGroup curriculumGroup : getModifiedCycles()) {
+	    if (curriculumGroup.isConclusionProcessed())
 		return true;
-	    }
 	}
 
 	return false;
     }
 
+    protected boolean isStudentCurricularPlanConcluded() {
+	return !getStudentCurricularPlan().isEmptyDegree() && getStudentCurricularPlan().isConclusionProcessed();
+    }
+
     protected void checkEnrolmentWithoutRules() {
-	if (isEnrolmentWithoutRules()) {
-	    if (!StudentCurricularPlanPredicates.ENROL_WITHOUT_RULES.evaluate(getStudentCurricularPlan())) {
-		throw new DomainException("error.permissions.cannot.enrol.without.rules");
-	    }
+	if (isEnrolmentWithoutRules()
+		&& !AcademicAuthorizationGroup.getProgramsForOperation(getResponsiblePerson(),
+			AcademicOperationType.ENROLMENT_WITHOUT_RULES).contains(getStudentCurricularPlan().getDegree())) {
+	    throw new DomainException("error.permissions.cannot.enrol.without.rules");
 	}
     }
 
-    protected boolean checkPermission(final AdministrativeOfficePermission permission) {
-	boolean checked = false;
-	final Set<CycleCurriculumGroup> modifiedCycles = getModifiedCycles();
-
-	for (final CycleCurriculumGroup curriculumGroup : modifiedCycles) {
-	    if (!permission.isAppliable(curriculumGroup)) {
-		continue;
-	    }
-
-	    checked = true;
-
-	    if (!permission.isMember(getResponsiblePerson())) {
-		throw new DomainException("error.permissions.cannot.update.registration.after.conclusion.process");
-	    }
-	}
-
-	return checked;
+    protected void checkUpdateRegistrationAfterConclusion() {
+	if (!AcademicAuthorizationGroup.getProgramsForOperation(getResponsiblePerson(),
+		AcademicOperationType.UPDATE_REGISTRATION_AFTER_CONCLUSION).contains(getStudentCurricularPlan().getDegree()))
+	    throw new DomainException("error.permissions.cannot.update.registration.after.conclusion.process");
     }
 
-    private Set<CycleCurriculumGroup> getModifiedCycles() {
+    protected Set<CycleCurriculumGroup> getModifiedCycles() {
 
 	final Set<CycleCurriculumGroup> result = new HashSet<CycleCurriculumGroup>();
 
@@ -196,12 +188,6 @@ abstract public class StudentCurricularPlanEnrolment {
 	    }
 	}
 	return false;
-    }
-
-    protected AdministrativeOfficePermission getUpdateRegistrationAfterConclusionProcessPermission() {
-	final Person person = getResponsiblePerson();
-	return person.getEmployeeAdministrativeOffice().getPermission(PermissionType.UPDATE_REGISTRATION_AFTER_CONCLUSION,
-		person.getEmployeeCampus());
     }
 
     protected void assertStudentEnrolmentPreConditions() {
@@ -323,8 +309,10 @@ abstract public class StudentCurricularPlanEnrolment {
 	return getResponsiblePerson().hasRole(RoleType.MANAGER);
     }
 
-    protected boolean isResponsiblePersonAcademicAdminOffice() {
-	return getResponsiblePerson().hasRole(RoleType.ACADEMIC_ADMINISTRATIVE_OFFICE);
+    // Old AcademicAdminOffice role check
+    protected boolean isResponsiblePersonAllowedToEnrolStudents() {
+	return AcademicAuthorizationGroup.getProgramsForOperation(getResponsiblePerson(),
+		AcademicOperationType.STUDENT_ENROLMENTS).contains(getStudentCurricularPlan().getDegree());
     }
 
     protected boolean isResponsibleInternationalRelationOffice() {

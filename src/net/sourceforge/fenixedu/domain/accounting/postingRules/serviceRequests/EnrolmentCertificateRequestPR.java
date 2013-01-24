@@ -10,8 +10,6 @@ import net.sourceforge.fenixedu.util.Money;
 
 import org.joda.time.DateTime;
 
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
-
 public class EnrolmentCertificateRequestPR extends EnrolmentCertificateRequestPR_Base {
 
     protected EnrolmentCertificateRequestPR() {
@@ -45,7 +43,7 @@ public class EnrolmentCertificateRequestPR extends EnrolmentCertificateRequestPR
 	return total;
     }
 
-    @Checked("PostingRulePredicates.editPredicate")
+    @Override
     public EnrolmentCertificateRequestPR edit(final Money baseAmount, final Money amountPerUnit, final Money amountPerPage,
 	    final Money maximumAmount) {
 	deactivate();

@@ -149,6 +149,7 @@
 		            <fr:property name="regexp" value="\d{2}(.\d{1,2})?"/>
 		            <fr:property name="message" value="error.conclusionGrade.invalidFormat"/>
 		            <fr:property name="key" value="true"/>
+		            <fr:property name="bundle" value="ACADEMIC_OFFICE_RESOURCES" />
 		        </fr:validator>
 			</fr:slot>        
 		    <fr:slot name="conclusionYear">

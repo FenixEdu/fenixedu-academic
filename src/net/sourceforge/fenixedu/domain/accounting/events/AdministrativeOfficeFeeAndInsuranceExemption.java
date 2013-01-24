@@ -2,7 +2,7 @@ package net.sourceforge.fenixedu.domain.accounting.events;
 
 import java.util.ResourceBundle;
 
-import net.sourceforge.fenixedu.domain.Employee;
+import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.accounting.AdministrativeOfficeFeeAndInsuranceExemptionJustificationFactory;
 import net.sourceforge.fenixedu.domain.accounting.Event;
 import net.sourceforge.fenixedu.domain.accounting.Exemption;
@@ -36,13 +36,13 @@ public class AdministrativeOfficeFeeAndInsuranceExemption extends Administrative
 	super();
     }
 
-    public AdministrativeOfficeFeeAndInsuranceExemption(Employee employee,
+    public AdministrativeOfficeFeeAndInsuranceExemption(Person responsible,
 	    AdministrativeOfficeFeeAndInsuranceEvent administrativeOfficeFeeAndInsuranceEvent,
 	    AdministrativeOfficeFeeAndInsuranceExemptionJustificationType justificationType, String reason,
 	    YearMonthDay dispatchDate) {
 	this();
 
-	super.init(employee, administrativeOfficeFeeAndInsuranceEvent,
+	super.init(responsible, administrativeOfficeFeeAndInsuranceEvent,
 		AdministrativeOfficeFeeAndInsuranceExemptionJustificationFactory.create(this, justificationType, reason,
 			dispatchDate));
 

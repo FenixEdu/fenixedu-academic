@@ -1,6 +1,6 @@
 package net.sourceforge.fenixedu.domain.accounting;
 
-import net.sourceforge.fenixedu.domain.Employee;
+import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
@@ -15,33 +15,32 @@ public class ReceiptPrintVersion extends ReceiptPrintVersion_Base {
 	setRootDomainObject(RootDomainObject.getInstance());
     }
 
-    ReceiptPrintVersion(Receipt receipt, Employee employee) {
+    ReceiptPrintVersion(Receipt receipt, Person person) {
 	this();
-	init(receipt, employee);
+	init(receipt, person);
     }
 
-    private void init(Receipt receipt, Employee employee) {
-	checkParameters(receipt, employee);
+    private void init(Receipt receipt, Person person) {
+	checkParameters(receipt, person);
 	super.setWhenCreated(new DateTime());
 	super.setReceipt(receipt);
-	super.setEmployee(employee);
-
+	super.setPerson(person);
     }
 
-    private void checkParameters(Receipt receipt, Employee employee) {
+    private void checkParameters(Receipt receipt, Person person) {
 	if (receipt == null) {
 	    throw new DomainException("error.accounting.receiptVersion.receipt.cannot.be.null");
 	}
 
-	if (employee == null) {
-	    throw new DomainException("error.accounting.receiptVersion.employee.cannot.be.null");
+	if (person == null) {
+	    throw new DomainException("error.accounting.receiptVersion.person.cannot.be.null");
 	}
 
     }
-
+    
     @Override
-    public void setEmployee(Employee employee) {
-	throw new DomainException("error.accounting.receiptVersion.cannot.modify.employee");
+    public void setPerson(Person person) {
+	throw new DomainException("error.accounting.receiptVersion.cannot.modify.person");
     }
 
     @Override
@@ -56,7 +55,7 @@ public class ReceiptPrintVersion extends ReceiptPrintVersion_Base {
 
     @Checked("RolePredicates.MANAGER_PREDICATE")
     void delete() {
-	super.setEmployee(null);
+	super.setPerson(null);
 	super.setReceipt(null);
 	removeRootDomainObject();
 	super.deleteDomainObject();

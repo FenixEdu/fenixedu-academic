@@ -1,7 +1,10 @@
 package net.sourceforge.fenixedu.domain;
 
 import net.sourceforge.fenixedu._development.PropertiesManager;
+import net.sourceforge.fenixedu.domain.accessControl.Group;
+import net.sourceforge.fenixedu.domain.accessControl.RoleGroup;
 import net.sourceforge.fenixedu.domain.documents.GeneratedDocumentType;
+import net.sourceforge.fenixedu.domain.person.RoleType;
 import pt.ist.fenixWebFramework.services.Service;
 
 public class QueueJobResultFile extends QueueJobResultFile_Base {
@@ -10,6 +13,11 @@ public class QueueJobResultFile extends QueueJobResultFile_Base {
 	super();
 	setJob(job);
 	init(GeneratedDocumentType.QUEUE_JOB, operator, operator, filename, content);
+    }
+
+    @Override
+    protected Group computePermittedGroup() {
+	return new RoleGroup(RoleType.MANAGER);
     }
 
     @Override

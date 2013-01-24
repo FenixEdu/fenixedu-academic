@@ -9,12 +9,10 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.administrativeOffice.dismissal.CreateNewInternalSubstitution;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.administrativeOffice.dismissal.DismissalBean;
-import net.sourceforge.fenixedu.dataTransferObject.administrativeOffice.dismissal.InternalSubstitutionDismissalBean;
 import net.sourceforge.fenixedu.dataTransferObject.administrativeOffice.dismissal.DismissalBean.SelectedEnrolment;
+import net.sourceforge.fenixedu.dataTransferObject.administrativeOffice.dismissal.InternalSubstitutionDismissalBean;
 import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumGroup;
 import net.sourceforge.fenixedu.domain.studentCurriculum.InternalCreditsSourceCurriculumGroup;
@@ -26,15 +24,9 @@ import org.apache.struts.action.ActionMapping;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
-import pt.ist.fenixWebFramework.struts.annotations.Forward;
-import pt.ist.fenixWebFramework.struts.annotations.Forwards;
-import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
-@Mapping(path = "/studentInternalSubstitutions", module = "academicAdminOffice", formBean = "studentDismissalForm")
-@Forwards( {
+@Mapping(path = "/studentInternalSubstitutions", module = "academicAdministration", formBean = "studentDismissalForm")
+@Forwards({
 
 	@Forward(name = "manage", path = "/academicAdminOffice/dismissal/managementDismissals.jsp"),
 	@Forward(name = "chooseDismissalEnrolments", path = "/academicAdminOffice/dismissal/chooseInternalSubstitutionEnrolments.jsp"),
@@ -104,7 +96,7 @@ public class StudentInternalSubstitutionsDA extends StudentDismissalsDA {
     }
 
     @Override
-    protected void executeCreateDismissalService(DismissalBean dismissalBean) throws FenixFilterException, FenixServiceException {
+    protected void executeCreateDismissalService(DismissalBean dismissalBean) {
 	CreateNewInternalSubstitution.create(dismissalBean);
     }
 

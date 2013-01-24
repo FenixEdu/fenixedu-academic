@@ -4,22 +4,23 @@ import java.util.Collection;
 import java.util.Date;
 import java.util.Iterator;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.degreeAdministrativeOffice.gradeSubmission.MarkSheetEnrolmentEvaluationBean;
 import net.sourceforge.fenixedu.dataTransferObject.degreeAdministrativeOffice.gradeSubmission.MarkSheetManagementEditBean;
 import net.sourceforge.fenixedu.domain.MarkSheet;
 import net.sourceforge.fenixedu.domain.MarkSheetState;
-import net.sourceforge.fenixedu.domain.OldMarkSheet;
 import net.sourceforge.fenixedu.domain.Teacher;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
 
-public class EditMarkSheet extends FenixService {
+import pt.ist.fenixWebFramework.services.Service;
 
-    public void run(MarkSheet markSheet, Teacher responsibleTeacher, Date evaluationDate) throws FenixServiceException {
+public class EditMarkSheet {
+
+    @Service
+    public static void run(MarkSheet markSheet, Teacher responsibleTeacher, Date evaluationDate) throws FenixServiceException {
 
 	if (markSheet == null) {
 	    throw new InvalidArgumentsServiceException("error.noMarkSheet");
@@ -27,11 +28,8 @@ public class EditMarkSheet extends FenixService {
 	markSheet.editNormal(responsibleTeacher, evaluationDate);
     }
 
-    public void run(OldMarkSheet markSheet, Teacher responsibleTeacher, Date evaluationDate) throws FenixServiceException {
-	run((MarkSheet) markSheet, responsibleTeacher, evaluationDate);
-    }
-
-    public void run(MarkSheetManagementEditBean markSheetManagementEditBean) throws FenixServiceException {
+    @Service
+    public static void run(MarkSheetManagementEditBean markSheetManagementEditBean) throws FenixServiceException {
 
 	MarkSheet markSheet = markSheetManagementEditBean.getMarkSheet();
 	if (markSheet == null) {
@@ -49,7 +47,7 @@ public class EditMarkSheet extends FenixService {
 	}
     }
 
-    private void editRectificationMarkSheet(MarkSheetManagementEditBean markSheetManagementEditBean) {
+    private static void editRectificationMarkSheet(MarkSheetManagementEditBean markSheetManagementEditBean) {
 
 	Collection<MarkSheetEnrolmentEvaluationBean> filteredEnrolmentEvaluationBeansToEditList = getEnrolmentEvaluationsWithValidGrades(markSheetManagementEditBean
 		.getEnrolmentEvaluationBeansToEdit());
@@ -61,7 +59,7 @@ public class EditMarkSheet extends FenixService {
 	markSheetManagementEditBean.getMarkSheet().editRectification(iterator.hasNext() ? iterator.next() : null);
     }
 
-    private void editNormalMarkSheet(MarkSheetManagementEditBean markSheetManagementEditBean) {
+    private static void editNormalMarkSheet(MarkSheetManagementEditBean markSheetManagementEditBean) {
 	Collection<MarkSheetEnrolmentEvaluationBean> filteredEnrolmentEvaluationBeansToEditList = getEnrolmentEvaluationsWithValidGrades(markSheetManagementEditBean
 		.getEnrolmentEvaluationBeansToEdit());
 
@@ -75,7 +73,7 @@ public class EditMarkSheet extends FenixService {
 		enrolmentEvaluationBeansToAppendList, enrolmentEvaluationBeansToRemoveList);
     }
 
-    private Collection<MarkSheetEnrolmentEvaluationBean> getEnrolmentEvaluationsWithValidGrades(
+    private static Collection<MarkSheetEnrolmentEvaluationBean> getEnrolmentEvaluationsWithValidGrades(
 	    Collection<MarkSheetEnrolmentEvaluationBean> enrolmentEvaluationBeans) {
 
 	return CollectionUtils.select(enrolmentEvaluationBeans, new Predicate() {

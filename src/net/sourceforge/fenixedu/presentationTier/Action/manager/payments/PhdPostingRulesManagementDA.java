@@ -44,26 +44,29 @@ public class PhdPostingRulesManagementDA extends PostingRulesManagementDA {
     public static class CreateGratuityPhdPRQuickBean implements Serializable {
 	Integer year;
 	Integer gratuity;
-	
+
 	public Integer getYear() {
 	    return year;
 	}
+
 	public void setYear(Integer year) {
 	    this.year = year;
 	}
+
 	public Integer getGratuity() {
 	    return gratuity;
 	}
+
 	public void setGratuity(Integer gratuity) {
 	    this.gratuity = gratuity;
 	}
     }
-    
+
     public static class CreateGratuityPhdPRPeriodBean implements Serializable {
 	Partial periodStartDate;
 	Partial periodEndDate;
 	Partial limitePaymentDay;
-	
+
 	public Partial getPeriodStartDate() {
 	    return periodStartDate;
 	}
@@ -218,20 +221,20 @@ public class PhdPostingRulesManagementDA extends PostingRulesManagementDA {
 	    addErrorMessage(request, "bean", "error.missing.field.in.period.form");
 	    return prepareAddGratuityPhdPostingRule(mapping, form, request, response);
 	}
-	
+
 	Interval created = period.toInterval();
 	if (period.getStartAsDateTime().isAfter(period.getEndAsDateTime())) {
 	    addErrorMessage(request, "bean", "error.end.before.start");
-	    return backToAddPeriod(mapping, request, period, bean, phdProgram,quirks);
+	    return backToAddPeriod(mapping, request, period, bean, phdProgram, quirks);
 	}
 
 	for (CreateGratuityPhdPRPeriodBean previousPeriod : bean.getPeriods()) {
 	    if (previousPeriod.toInterval().overlap(created) != null) {
 		addErrorMessage(request, "bean", "error.intervals.overlap");
-		return backToAddPeriod(mapping, request, period, bean, phdProgram,quirks);
+		return backToAddPeriod(mapping, request, period, bean, phdProgram, quirks);
 	    }
 	}
-	
+
 	bean.getPeriods().add(period);
 
 	RenderUtils.invalidateViewState("phdProgram");
@@ -242,13 +245,12 @@ public class PhdPostingRulesManagementDA extends PostingRulesManagementDA {
 	request.setAttribute("period", new CreateGratuityPhdPRPeriodBean());
 	return mapping.findForward("addPhdProgramPostingRule");
     }
-    
 
     public ActionForward removePeriod(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) {
 	final CreateGratuityPhdBean bean = getRenderedObject("bean");
 	final PhdProgram phdProgram = getDomainObject(request, "phdProgramId");
-	final int index = Integer.parseInt((String) request.getParameter("periodToRemove"));
+	final int index = Integer.parseInt(request.getParameter("periodToRemove"));
 
 	bean.periods.remove(index);
 
@@ -258,29 +260,31 @@ public class PhdPostingRulesManagementDA extends PostingRulesManagementDA {
 	return mapping.findForward("addPhdProgramPostingRule");
     }
 
-    public ActionForward addQuirk(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response){
+    public ActionForward addQuirk(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
 	final PhdProgram phdProgram = getDomainObject(request, "phdProgramId");
 	final CreateGratuityPhdPRPeriodBean period = getRenderedObject("period");
 	final CreateGratuityPhdPRQuickBean quirks = getRenderedObject("quirks");
 	final CreateGratuityPhdBean bean = getRenderedObject("bean");
-	
+
 	bean.getExceptions().add(quirks);
-	
+
 	return backToAddPeriod(mapping, request, period, bean, phdProgram, new CreateGratuityPhdPRQuickBean());
     }
-    
-    public ActionForward removeQuirk(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response){
+
+    public ActionForward removeQuirk(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) {
 	final PhdProgram phdProgram = getDomainObject(request, "phdProgramId");
 	final CreateGratuityPhdPRPeriodBean period = getRenderedObject("period");
 	final CreateGratuityPhdPRQuickBean quirks = getRenderedObject("quirks");
 	final CreateGratuityPhdBean bean = getRenderedObject("bean");
-	final int index = Integer.parseInt((String) request.getParameter("quirkToRemove"));
+	final int index = Integer.parseInt(request.getParameter("quirkToRemove"));
 	bean.getExceptions().remove(index);
 	return backToAddPeriod(mapping, request, period, bean, phdProgram, quirks);
     }
 
     private ActionForward backToAddPeriod(ActionMapping mapping, HttpServletRequest request,
-	    final CreateGratuityPhdPRPeriodBean period, final CreateGratuityPhdBean bean, final PhdProgram phdProgram, Object quirks) {
+	    final CreateGratuityPhdPRPeriodBean period, final CreateGratuityPhdBean bean, final PhdProgram phdProgram,
+	    Object quirks) {
 	RenderUtils.invalidateViewState("phdProgram");
 	request.setAttribute("phdProgram", phdProgram);
 	RenderUtils.invalidateViewState("bean");
@@ -306,14 +310,14 @@ public class PhdPostingRulesManagementDA extends PostingRulesManagementDA {
 	    postingRule.addPhdGratuityPaymentPeriods(period);
 	    period.setRootDomainObject(RootDomainObject.getInstance());
 	}
-	
-	for (CreateGratuityPhdPRQuickBean quirkBean : bean.getExceptions()){
-	    PhdGratuityPriceQuirk quirk = new PhdGratuityPriceQuirk(quirkBean.getYear(),new Money(quirkBean.getGratuity()));
+
+	for (CreateGratuityPhdPRQuickBean quirkBean : bean.getExceptions()) {
+	    PhdGratuityPriceQuirk quirk = new PhdGratuityPriceQuirk(quirkBean.getYear(), new Money(quirkBean.getGratuity()));
 	    postingRule.addPhdGratuityPriceQuirks(quirk);
 	    quirk.setRootDomainObject(RootDomainObject.getInstance());
 	}
 	postingRule.setRootDomainObject(RootDomainObject.getInstance());
-	
+
     }
 
     public ActionForward addGratuityPhdPostingRule(ActionMapping mapping, ActionForm form, HttpServletRequest request,

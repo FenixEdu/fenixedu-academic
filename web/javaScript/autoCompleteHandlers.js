@@ -1,7 +1,7 @@
 function clearAutoComplete(input,inputText) {
 	var id = escapeId(input.attr('id')) + "_AutoComplete";
 	jQuery("input#" + id).val("");
-	jQuery(input).parents("td").next("td:last").fadeOut();
+	jQuery(input).parent().find("ul").fadeOut();
 }
 
 function updateCustomValue(input,inputText) {

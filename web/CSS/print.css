@@ -57,4 +57,4 @@ font-weight: normal;
 
 table.thnowrap_print tr th {
 white-space: nowrap;
-}/* ---------------------- -- Public Summaries -------------------------- */div.public_summary {margin-bottom: 3.0em;}div.public_summary div.summary_content * {margin: 0;}div.public_summary div.details {margin-top: 0.5em;}div#version {display: none;} /* Hide the Barra */#ist-bar-container {	display: none;}
+}/* ---------------------- -- Public Summaries -------------------------- */div.public_summary {margin-bottom: 3.0em;}div.public_summary div.summary_content * {margin: 0;}div.public_summary div.details {margin-top: 0.5em;}div#version {display: none;} /* Hide the Barra */#ist-bar-container {	display: none;}.breadcrumbs {	display: none;}

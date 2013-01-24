@@ -95,7 +95,7 @@ public class CourseGroupChangeRequest extends CourseGroupChangeRequest_Base {
 
 	if (academicServiceRequestBean.isToConclude()) {
 	    AcademicServiceRequestSituation.create(this, new AcademicServiceRequestBean(
-		    AcademicServiceRequestSituationType.DELIVERED, academicServiceRequestBean.getEmployee()));
+		    AcademicServiceRequestSituationType.DELIVERED, academicServiceRequestBean.getResponsible()));
 	}
     }
 
@@ -120,9 +120,9 @@ public class CourseGroupChangeRequest extends CourseGroupChangeRequest_Base {
 
     @Override
     public boolean isManagedWithRectorateSubmissionBatch() {
-        return false;
+	return false;
     }
-    
+
     @Override
     public boolean isAvailableForTransitedRegistrations() {
 	return false;

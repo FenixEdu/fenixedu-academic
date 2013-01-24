@@ -10,7 +10,7 @@ public class SetPhdJuryElementRatificationEntity extends PhdThesisActivity {
 
     @Override
     protected void activityPreConditions(PhdThesisProcess process, IUserView userView) {
-	if (!process.isMasterDegreeAdministrativeOfficeEmployee(userView)) {
+	if (!process.isAllowedToManageProcess(userView)) {
 	    throw new PreConditionNotValidException();
 	}
     }

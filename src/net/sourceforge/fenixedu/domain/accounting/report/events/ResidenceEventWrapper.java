@@ -2,10 +2,10 @@ package net.sourceforge.fenixedu.domain.accounting.report.events;
 
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.accounting.ResidenceEvent;
-import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOfficeType;
+import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
 
 public class ResidenceEventWrapper implements Wrapper {
-    private ResidenceEvent event;
+    private final ResidenceEvent event;
 
     public ResidenceEventWrapper(ResidenceEvent event) {
 	this.event = event;
@@ -102,7 +102,7 @@ public class ResidenceEventWrapper implements Wrapper {
     }
 
     @Override
-    public AdministrativeOfficeType getRelatedAcademicOfficeType() {
+    public AdministrativeOffice getRelatedAcademicOffice() {
 	return null;
     }
 

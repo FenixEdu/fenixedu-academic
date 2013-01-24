@@ -11,6 +11,7 @@ import net.sourceforge.fenixedu.domain.phd.alert.AlertService.AlertMessage;
 import net.sourceforge.fenixedu.domain.phd.thesis.activities.PhdThesisActivity;
 import net.sourceforge.fenixedu.domain.util.email.Message;
 import net.sourceforge.fenixedu.domain.util.email.Recipient;
+import net.sourceforge.fenixedu.domain.util.email.ReplyTo;
 
 import org.joda.time.Days;
 import org.joda.time.LocalDate;
@@ -19,7 +20,7 @@ import pt.utl.ist.fenix.tools.util.i18n.Language;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 public class PhdReporterReviewAlert extends PhdReporterReviewAlert_Base {
-    
+
     static private final int DAYS_UNTIL_WARNING = 35;
     static private final int DAYS_UNTIL_DEADLINE = 40;
 
@@ -36,7 +37,7 @@ public class PhdReporterReviewAlert extends PhdReporterReviewAlert_Base {
 
     @Override
     protected boolean isToDiscard() {
-	if(hasFireDate()) {
+	if (hasFireDate()) {
 	    return true;
 	}
 
@@ -84,18 +85,17 @@ public class PhdReporterReviewAlert extends PhdReporterReviewAlert_Base {
     }
 
     private MultiLanguageString buildSubject(final PhdIndividualProgramProcess process) {
-	return new MultiLanguageString(Language.getDefaultLanguage(), 
-		AlertMessage.get("message.phd.request.jury.reviews.external.access.subject", process
-		.getPhdProgram().getName()));
+	return new MultiLanguageString(Language.getDefaultLanguage(), AlertMessage.get(
+		"message.phd.request.jury.reviews.external.access.subject", process.getPhdProgram().getName()));
     }
 
     private MultiLanguageString buildBody(final PhdIndividualProgramProcess process, PhdParticipant participant) {
-	return new MultiLanguageString(Language.getDefaultLanguage(),
-		AlertMessage.get("message.phd.request.reminder.jury.reviews.reporter.body", process.getPerson().getName(),
+	return new MultiLanguageString(Language.getDefaultLanguage(), AlertMessage.get(
+		"message.phd.request.reminder.jury.reviews.reporter.body", process.getPerson().getName(),
 		process.getProcessNumber(), getDaysLeftUntilDeadline(process))
 		+ "\n\n"
-		+ PhdThesisActivity.getAccessInformation(process, participant, "message.phd.request.jury.reviews.coordinator.access",
- "message.phd.request.jury.reviews.teacher.access"));
+		+ PhdThesisActivity.getAccessInformation(process, participant,
+			"message.phd.request.jury.reviews.coordinator.access", "message.phd.request.jury.reviews.teacher.access"));
     }
 
     private void generateMessageForReporters() {
@@ -104,11 +104,11 @@ public class PhdReporterReviewAlert extends PhdReporterReviewAlert_Base {
 	    InternalPhdParticipant internalParticipant = (InternalPhdParticipant) participant;
 	    new PhdAlertMessage(getProcess(), internalParticipant.getPerson(), getFormattedSubject(), buildBody(getProcess(),
 		    participant));
-	    new Message(getSender(), new Recipient(Collections.singleton(internalParticipant
-		    .getPerson())), buildMailSubject(), buildMailBody());
+	    new Message(getSender(), new Recipient(Collections.singleton(internalParticipant.getPerson())), buildMailSubject(),
+		    buildMailBody());
 	} else {
-	    new Message(getSender(), Collections.EMPTY_LIST, Collections.EMPTY_LIST,
-		    buildMailSubject(), buildMailBody(), Collections.singleton(participant.getEmail()));
+	    new Message(getSender(), Collections.<ReplyTo> emptyList(), Collections.<Recipient> emptyList(), buildMailSubject(),
+		    buildMailBody(), Collections.singleton(participant.getEmail()));
 	}
 
     }
@@ -117,7 +117,7 @@ public class PhdReporterReviewAlert extends PhdReporterReviewAlert_Base {
     public boolean isToSendMail() {
 	return true;
     }
-    
+
     public static int getReporterReviewDeadlineDays() {
 	return DAYS_UNTIL_DEADLINE;
     }

@@ -11,8 +11,11 @@ import java.util.TreeSet;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.accessControl.academicAdministration.AcademicOperationType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.domain.person.RoleType;
+import net.sourceforge.fenixedu.injectionCode.AccessControl;
+
+import com.google.common.base.Predicate;
 
 abstract public class PhdProgramProcess extends PhdProgramProcess_Base {
 
@@ -85,9 +88,9 @@ abstract public class PhdProgramProcess extends PhdProgramProcess_Base {
 
 	final SortedSet<PhdProgramProcessDocument> documents = new TreeSet<PhdProgramProcessDocument>(
 		PhdProgramProcessDocument.COMPARATOR_BY_VERSION);
-	
-	for(PhdProgramProcessDocument document : getDocumentsByType(type)) {
-	    if(document.getDocumentAccepted()) {
+
+	for (PhdProgramProcessDocument document : getDocumentsByType(type)) {
+	    if (document.getDocumentAccepted()) {
 		documents.add(document);
 	    }
 	}
@@ -114,13 +117,8 @@ abstract public class PhdProgramProcess extends PhdProgramProcess_Base {
 	return filterLatestDocumentVersions(documents);
     }
 
-    static public boolean isMasterDegreeAdministrativeOfficeEmployee(IUserView userView) {
-	return userView != null && userView.hasRoleType(RoleType.ACADEMIC_ADMINISTRATIVE_OFFICE)
-		&& userView.getPerson().getEmployeeAdministrativeOffice().isMasterDegree();
-    }
-
     static public boolean isParticipant(PhdProgramProcess process, IUserView userView) {
-	return isMasterDegreeAdministrativeOfficeEmployee(userView)
+	return process.isAllowedToManageProcess(userView)
 		|| process.getIndividualProgramProcess().isCoordinatorForPhdProgram(userView.getPerson())
 		|| process.getIndividualProgramProcess().isGuiderOrAssistentGuider(userView.getPerson())
 		|| process.getIndividualProgramProcess().getPerson() == userView.getPerson()
@@ -192,6 +190,21 @@ abstract public class PhdProgramProcess extends PhdProgramProcess_Base {
     abstract protected PhdIndividualProgramProcess getIndividualProgramProcess();
 
     abstract protected Person getPerson();
+
+    /**
+     * Used to determine whether the specified person is allowed to manage the
+     * Process, according to the Rule system.
+     * 
+     * @see AcademicOperationType
+     */
+    abstract protected boolean isAllowedToManageProcess(IUserView userView);
+
+    public static final Predicate<PhdProgramProcess> IS_ALLOWED_TO_MANAGE_PROCESS_PREDICATE = new Predicate<PhdProgramProcess>() {
+	@Override
+	public boolean apply(PhdProgramProcess process) {
+	    return process.isAllowedToManageProcess(AccessControl.getUserView());
+	}
+    };
 
     public boolean isProcessCandidacy() {
 	return false;

@@ -50,6 +50,13 @@ public abstract class DegreeModuleScope {
 		return cn;
 	    }
 	    final int cb = Collator.getInstance().compare(o1.getBranch(), o2.getBranch());
+	    if (cb != 0) {
+		return cb;
+	    }
+	    final int cc = Long.compare(o1.getCurricularCourse().getOid(), o2.getCurricularCourse().getOid());
+	    if (cc == 0) {
+		return cc;
+	    }
 	    return o1.getIdInternal().compareTo(o2.getIdInternal());
 	}
 
@@ -85,8 +92,8 @@ public abstract class DegreeModuleScope {
     public abstract boolean isActiveForAcademicInterval(AcademicInterval academicInterval);
 
     public static List<DegreeModuleScope> getDegreeModuleScopes(WrittenEvaluation writtenEvaluation) {
-	return getDegreeModuleScopes(writtenEvaluation.getAssociatedCurricularCourseScope(), writtenEvaluation
-		.getAssociatedContexts());
+	return getDegreeModuleScopes(writtenEvaluation.getAssociatedCurricularCourseScope(),
+		writtenEvaluation.getAssociatedContexts());
     }
 
     public static List<DegreeModuleScope> getDegreeModuleScopes(CurricularCourse curricularCourse) {
@@ -163,10 +170,10 @@ public abstract class DegreeModuleScope {
     }
 
     public LabelFormatter getDescription() {
-	return new LabelFormatter(getCurricularYear().toString()).appendLabel("º ").appendLabel("label.curricular.year",
-		LabelFormatter.APPLICATION_RESOURCES).appendLabel(" ").appendLabel(getCurricularSemester().toString())
-		.appendLabel("º ").appendLabel("label.semester.short", LabelFormatter.APPLICATION_RESOURCES);
+	return new LabelFormatter(getCurricularYear().toString()).appendLabel("º ")
+		.appendLabel("label.curricular.year", LabelFormatter.APPLICATION_RESOURCES).appendLabel(" ")
+		.appendLabel(getCurricularSemester().toString()).appendLabel("º ")
+		.appendLabel("label.semester.short", LabelFormatter.APPLICATION_RESOURCES);
 
     }
-
 }

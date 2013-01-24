@@ -1,22 +1,3 @@
-<schema name="departmentAdmOffice.studentCurricularPlanList.view" 
-	type="net.sourceforge.fenixedu.dataTransferObject.student.RegistrationWithStateForExecutionYearBean" bundle="ACADEMIC_OFFICE_RESOURCES">
-	<slot name="registration.number" key="label.number" read-only="true"/>
-	<slot name="registration.person.name" key="label.name" read-only="true"/>
-	<slot name="registration.degree.sigla" key="label.degree" read-only="true"/>
-  	<slot name="activeStateType" key="label.registration.state" />
-	<slot name="registration.registrationAgreement" key="label.registrationAgreement" />
-</schema>
-
-<schema name="departmentAdmOffice.enrolmentStudentsList.view" type="net.sourceforge.fenixedu.domain.Enrolment" bundle="ACADEMIC_OFFICE_RESOURCES">
-	<slot name="studentCurricularPlan.registration.number" key="label.number" read-only="true"/>     
-	<slot name="studentCurricularPlan.registration.person.istUsername" key="label.username" read-only="true"/>
-	<slot name="studentCurricularPlan.registration.person.name" key="label.name" read-only="true"/>
-	<slot name="studentCurricularPlan.registration.registrationAgreement" key="label.registrationAgreement" read-only="true"/>	
-	<slot name="studentCurricularPlan.degreeCurricularPlan.degree.sigla" key="label.degree" read-only="true"/>		
-	<slot name="enrollmentState" key="label.state"/>
-	<slot name="enrolmentEvaluationType" key="label.epoca"/>
-</schema>
-
 <schema name="createTeacherPersonalExpectationsAutoAvaliationPeriod" type="net.sourceforge.fenixedu.domain.TeacherAutoEvaluationDefinitionPeriod"
 	constructor="department, executionYear, startDateYearMonthDay, endDateYearMonthDay" bundle="DEPARTMENT_ADM_OFFICE_RESOURCES">	
 	<slot name="department" hidden="true"/>

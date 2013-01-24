@@ -9,18 +9,17 @@ public class DeleteStudyPlan extends PhdIndividualProgramProcessActivity {
 
     @Override
     protected void activityPreConditions(PhdIndividualProgramProcess process, IUserView userView) {
-        if (!PhdIndividualProgramProcess.isMasterDegreeAdministrativeOfficeEmployee(userView)) {
-    	throw new PreConditionNotValidException();
-        }
+	if (!process.isAllowedToManageProcess(userView)) {
+	    throw new PreConditionNotValidException();
+	}
     }
 
     @Override
-    protected PhdIndividualProgramProcess executeActivity(PhdIndividualProgramProcess process, IUserView userView,
-    	Object object) {
+    protected PhdIndividualProgramProcess executeActivity(PhdIndividualProgramProcess process, IUserView userView, Object object) {
 
-        ((PhdStudyPlan) object).delete();
+	((PhdStudyPlan) object).delete();
 
-        return process;
+	return process;
     }
 
 }

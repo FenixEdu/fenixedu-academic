@@ -9,13 +9,14 @@ import net.sourceforge.fenixedu.domain.phd.InternalPhdParticipant;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess;
 import net.sourceforge.fenixedu.domain.phd.PhdParticipant;
 import net.sourceforge.fenixedu.domain.phd.SearchPhdIndividualProgramProcessBean;
+import net.sourceforge.fenixedu.injectionCode.AccessControl;
 
 import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 
 public class PhdGuidersReport extends PhdReport {
-    private ResourceBundle bundle;
+    private final ResourceBundle bundle;
     private int rowCounter;
 
     public PhdGuidersReport(HSSFWorkbook workbook) {
@@ -34,15 +35,15 @@ public class PhdGuidersReport extends PhdReport {
 	setHeaders(sheet);
 
 	for (PhdIndividualProgramProcess process : processes) {
-	    fillProcess(process, sheet);
+	    if (process.isAllowedToManageProcess(AccessControl.getUserView()))
+		fillProcess(process, sheet);
 	}
 
 	return sheet;
     }
 
     private void fillProcess(PhdIndividualProgramProcess process, HSSFSheet sheet) {
-	String guiderRole = this.bundle
-.getString("label.net.sourceforge.fenixedu.domain.phd.reports.PhdGuidersReport.guider");
+	String guiderRole = this.bundle.getString("label.net.sourceforge.fenixedu.domain.phd.reports.PhdGuidersReport.guider");
 	String assistantGuiderRole = this.bundle
 		.getString("label.net.sourceforge.fenixedu.domain.phd.reports.PhdGuidersReport.assistantGuider");
 

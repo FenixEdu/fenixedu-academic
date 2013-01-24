@@ -5,7 +5,7 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.dataTransferObject.accounting.EntryDTO;
 import net.sourceforge.fenixedu.dataTransferObject.accounting.PaymentsManagementDTO;
-import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.presentationTier.docs.FenixReport;
 
 import org.joda.time.DateTime;
@@ -18,8 +18,6 @@ public class GuideDocument extends FenixReport {
     private final PaymentsManagementDTO paymentsManagementDTO;
 
     private final IMessageResourceProvider messageResourceProvider;
-
-    private final Unit unit;
 
     public static class GuideDocumentEntry {
 	private String description;
@@ -49,15 +47,8 @@ public class GuideDocument extends FenixReport {
 
     }
 
-    /**
-     * 
-     */
-    private static final long serialVersionUID = 1L;
-
-    public GuideDocument(final PaymentsManagementDTO paymentsManagementDTO, final Unit unit,
-	    final IMessageResourceProvider messageResourceProvider) {
+    public GuideDocument(final PaymentsManagementDTO paymentsManagementDTO, final IMessageResourceProvider messageResourceProvider) {
 	this.paymentsManagementDTO = paymentsManagementDTO;
-	this.unit = unit;
 	this.messageResourceProvider = messageResourceProvider;
 	fillReport();
     }
@@ -67,9 +58,7 @@ public class GuideDocument extends FenixReport {
 
 	addParameter("total", this.paymentsManagementDTO.getTotalAmountToPay().toPlainString());
 	addParameter("date", new LocalDate().toString(DD_MMMM_YYYY, getLocale()));
-	addParameter("unit", unit.getName());
-	addParameter("unitPhone", unit.getDefaultPhoneNumber());
-	addParameter("costCenter", unit.getCostCenterCode().toString());
+	addParameter("unitPhone", RootDomainObject.getInstance().getInstitutionUnit().getDefaultPhoneNumber());
 	addParameter("documentIdType", this.paymentsManagementDTO.getPerson().getIdDocumentType().getLocalizedName());
 	addParameter("documentIdNumber", this.paymentsManagementDTO.getPerson().getDocumentIdNumber());
 	addParameter("name", this.paymentsManagementDTO.getPerson().getName());

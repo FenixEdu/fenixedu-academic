@@ -13,7 +13,7 @@ public class UploadDocuments extends PhdProgramCandidacyProcessActivity {
     @Override
     protected void activityPreConditions(PhdProgramCandidacyProcess process, IUserView userView) {
 	if (process.getActiveState() != PhdProgramCandidacyProcessState.PRE_CANDIDATE) {
-	    if (!isMasterDegreeAdministrativeOfficeEmployee(userView)) {
+	    if (!process.isAllowedToManageProcess(userView)) {
 		throw new PreConditionNotValidException();
 	    }
 	}
@@ -25,13 +25,13 @@ public class UploadDocuments extends PhdProgramCandidacyProcessActivity {
     protected PhdProgramCandidacyProcess executeActivity(PhdProgramCandidacyProcess process, IUserView userView, Object object) {
 	final List<PhdProgramDocumentUploadBean> documents = (List<PhdProgramDocumentUploadBean>) object;
 
-	    for (final PhdProgramDocumentUploadBean each : documents) {
+	for (final PhdProgramDocumentUploadBean each : documents) {
 	    if (each.hasAnyInformation()) {
 		process.addDocument(each, userView != null ? userView.getPerson() : null);
 	    }
 	}
 
-	    return process;
+	return process;
     }
 
 }

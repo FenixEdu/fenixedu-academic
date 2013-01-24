@@ -1,77 +1,69 @@
 package net.sourceforge.fenixedu.domain.serviceRequests.documentRequests;
 
-import static net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOfficeType.DEGREE;
-import static net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOfficeType.MASTER_DEGREE;
-
 import java.util.Arrays;
-import java.util.Collection;
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOfficeType;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 
 public enum DocumentRequestType {
 
-    SCHOOL_REGISTRATION_CERTIFICATE(true, false, DEGREE, MASTER_DEGREE),
+    SCHOOL_REGISTRATION_CERTIFICATE(true, false, true, false, false, false),
 
-    ENROLMENT_CERTIFICATE(true, false, DEGREE, MASTER_DEGREE),
+    ENROLMENT_CERTIFICATE(true, false, true, false, false, false),
 
-    APPROVEMENT_CERTIFICATE(true, false, DEGREE, MASTER_DEGREE),
+    APPROVEMENT_CERTIFICATE(true, false),
 
-    APPROVEMENT_MOBILITY_CERTIFICATE(true, false, DEGREE, MASTER_DEGREE),
+    APPROVEMENT_MOBILITY_CERTIFICATE(true, false),
 
-    DEGREE_FINALIZATION_CERTIFICATE(true, false, true, DEGREE, MASTER_DEGREE),
+    DEGREE_FINALIZATION_CERTIFICATE(true, false, false, true, false, false),
 
-    PHD_FINALIZATION_CERTIFICATE(false, false, false, MASTER_DEGREE),
+    PHD_FINALIZATION_CERTIFICATE(false, false),
 
-    EXAM_DATE_CERTIFICATE(true, false, DEGREE),
+    EXAM_DATE_CERTIFICATE(true, false),
 
-    SCHOOL_REGISTRATION_DECLARATION(false, true, DEGREE, MASTER_DEGREE),
+    SCHOOL_REGISTRATION_DECLARATION(false, true),
 
-    ENROLMENT_DECLARATION(false, true, DEGREE, MASTER_DEGREE),
+    ENROLMENT_DECLARATION(false, true),
 
-    IRS_DECLARATION(true, true, DEGREE, MASTER_DEGREE),
+    IRS_DECLARATION(true, true),
 
-    GENERIC_DECLARATION(true, true, DEGREE),
+    GENERIC_DECLARATION(true, true),
 
-    REGISTRY_DIPLOMA_REQUEST(true, false, DEGREE, MASTER_DEGREE),
+    REGISTRY_DIPLOMA_REQUEST(true, false),
 
-    DIPLOMA_REQUEST(false, false, DEGREE, MASTER_DEGREE),
+    DIPLOMA_REQUEST(false, false),
 
-    DIPLOMA_SUPPLEMENT_REQUEST(true, false, false, false, true, DEGREE, MASTER_DEGREE),
+    DIPLOMA_SUPPLEMENT_REQUEST(true, false, false, false, false, true),
 
-    PAST_DIPLOMA_REQUEST(true, false, false, true, false, DEGREE/*
-								 * ,
-								 * MASTER_DEGREE
-								 */),
+    PAST_DIPLOMA_REQUEST(true, false, false, false, true, false),
 
-    PHOTOCOPY(false, false, DEGREE, MASTER_DEGREE),
+    PHOTOCOPY(false, false),
 
-    COURSE_LOAD(true, false, DEGREE, MASTER_DEGREE),
+    COURSE_LOAD(true, false),
 
-    EXTERNAL_COURSE_LOAD(true, false, DEGREE),
+    EXTERNAL_COURSE_LOAD(true, false),
 
-    PROGRAM_CERTIFICATE(true, false, DEGREE, MASTER_DEGREE),
+    PROGRAM_CERTIFICATE(true, false),
 
-    EXTERNAL_PROGRAM_CERTIFICATE(true, false, DEGREE),
+    EXTERNAL_PROGRAM_CERTIFICATE(true, false),
 
-    EXTRA_CURRICULAR_CERTIFICATE(true, false, DEGREE),
+    EXTRA_CURRICULAR_CERTIFICATE(true, false),
 
-    UNDER_23_TRANSPORTS_REQUEST(false, false, DEGREE),
+    UNDER_23_TRANSPORTS_REQUEST(false, false),
 
-    STANDALONE_ENROLMENT_CERTIFICATE(true, false, DEGREE);
+    STANDALONE_ENROLMENT_CERTIFICATE(true, false);
 
     private boolean hasAdditionalInformation;
 
     private boolean allowedToQuickDeliver;
+
+    private boolean studentRequestable;
 
     private boolean withBranch;
 
     private boolean preBolonha;
 
     private boolean bolonhaOnly;
-
-    private Collection<AdministrativeOfficeType> administrativeOfficeTypes;
 
     static private List<DocumentRequestType> CERTIFICATES = Arrays.asList(SCHOOL_REGISTRATION_CERTIFICATE, ENROLMENT_CERTIFICATE,
 	    APPROVEMENT_CERTIFICATE, APPROVEMENT_MOBILITY_CERTIFICATE, DEGREE_FINALIZATION_CERTIFICATE, EXAM_DATE_CERTIFICATE,
@@ -81,32 +73,22 @@ public enum DocumentRequestType {
     static private List<DocumentRequestType> DECLARATIONS = Arrays.asList(SCHOOL_REGISTRATION_DECLARATION, ENROLMENT_DECLARATION,
 	    IRS_DECLARATION, GENERIC_DECLARATION);
 
-    private DocumentRequestType(boolean hasAdditionalInformation, boolean allowedToQuickDeliver, boolean withBranch,
-	    boolean preBolonha, boolean bolonhaOnly, AdministrativeOfficeType... administrativeOfficeTypes) {
+    private DocumentRequestType(boolean hasAdditionalInformation, boolean allowedToQuickDeliver, boolean studentRequestable,
+	    boolean withBranch, boolean preBolonha, boolean bolonhaOnly) {
 	this.hasAdditionalInformation = hasAdditionalInformation;
 	this.allowedToQuickDeliver = allowedToQuickDeliver;
+	this.studentRequestable = studentRequestable;
 	this.withBranch = withBranch;
 	this.preBolonha = preBolonha;
 	this.bolonhaOnly = bolonhaOnly;
-	this.administrativeOfficeTypes = Arrays.asList(administrativeOfficeTypes);
     }
 
-    private DocumentRequestType(boolean hasAdditionalInformation, boolean allowedToQuickDeliver, boolean withBranch,
-	    AdministrativeOfficeType... administrativeOfficeTypes) {
-	this(hasAdditionalInformation, allowedToQuickDeliver, withBranch, false, false, administrativeOfficeTypes);
-    }
-
-    private DocumentRequestType(boolean hasAdditionalInformation, boolean allowedToQuickDeliver,
-	    AdministrativeOfficeType... administrativeOfficeTypes) {
-	this(hasAdditionalInformation, allowedToQuickDeliver, false, false, false, administrativeOfficeTypes);
+    private DocumentRequestType(boolean hasAdditionalInformation, boolean allowedToQuickDeliver) {
+	this(hasAdditionalInformation, allowedToQuickDeliver, false, false, false, false);
     }
 
     public String getName() {
 	return name();
-    }
-
-    public Collection<AdministrativeOfficeType> getAdministrativeOfficeTypes() {
-	return administrativeOfficeTypes;
     }
 
     public String getQualifiedName() {
@@ -151,6 +133,10 @@ public enum DocumentRequestType {
 
     public boolean isAllowedToQuickDeliver() {
 	return allowedToQuickDeliver;
+    }
+
+    public boolean isStudentRequestable() {
+	return studentRequestable;
     }
 
     public boolean isPreBolonha() {

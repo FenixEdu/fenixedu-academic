@@ -6,7 +6,6 @@ import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.Department;
 import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
 import net.sourceforge.fenixedu.domain.organizationalStructure.AccountabilityType;
-import net.sourceforge.fenixedu.domain.organizationalStructure.AdministrativeOfficeUnit;
 import net.sourceforge.fenixedu.domain.organizationalStructure.AggregateUnit;
 import net.sourceforge.fenixedu.domain.organizationalStructure.CompetenceCourseGroupUnit;
 import net.sourceforge.fenixedu.domain.organizationalStructure.CountryUnit;
@@ -26,13 +25,11 @@ import net.sourceforge.fenixedu.domain.space.Campus;
 
 import org.joda.time.YearMonthDay;
 
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.ist.fenixWebFramework.services.Service;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 public class CreateUnit extends FenixService {
 
-    @Checked("RolePredicates.MANAGER_OR_ACADEMIC_ADMINISTRATIVE_OFFICE_PREDICATE")
     @Service
     public static Unit run(Unit parentUnit, MultiLanguageString unitName, String unitNameCard, String unitCostCenter,
 	    String acronym, YearMonthDay begin, YearMonthDay end, PartyTypeEnum type, Integer departmentID, Integer degreeID,
@@ -74,12 +71,16 @@ public class CreateUnit extends FenixService {
 			parentUnit, webAddress, classification, canBeResponsibleOfSpaces, campus);
 
 	    case ADMINISTRATIVE_OFFICE_UNIT:
-		AdministrativeOffice administrativeOffice = rootDomainObject
-			.readAdministrativeOfficeByOID(administrativeOfficeID);
-		return AdministrativeOfficeUnit.createNewAdministrativeOfficeUnit(unitName, unitNameCard, costCenterCode,
-			acronym, begin, end, parentUnit, accountabilityType, webAddress, classification, administrativeOffice,
-			canBeResponsibleOfSpaces, campus);
-
+		AdministrativeOffice office = null;
+		if (administrativeOfficeID == null) {
+		    office = new AdministrativeOffice();
+		} else {
+		    office = rootDomainObject.readAdministrativeOfficeByOID(administrativeOfficeID);
+		}
+		Unit unit = Unit.createNewUnit(unitName, unitNameCard, costCenterCode, acronym, begin, end, parentUnit,
+			accountabilityType, webAddress, classification, office, canBeResponsibleOfSpaces, campus);
+		unit.setType(type);
+		return unit;
 	    case AGGREGATE_UNIT:
 		return AggregateUnit.createNewAggregateUnit(unitName, unitNameCard, costCenterCode, acronym, begin, end,
 			parentUnit, accountabilityType, webAddress, classification, canBeResponsibleOfSpaces, campus);
@@ -108,7 +109,7 @@ public class CreateUnit extends FenixService {
 
 	} else {
 	    return Unit.createNewUnit(unitName, unitNameCard, costCenterCode, acronym, begin, end, parentUnit,
-		    accountabilityType, webAddress, classification, canBeResponsibleOfSpaces, campus);
+		    accountabilityType, webAddress, classification, null, canBeResponsibleOfSpaces, campus);
 	}
 
 	throw new FenixServiceException("createUnit.service.empty.unit.type");

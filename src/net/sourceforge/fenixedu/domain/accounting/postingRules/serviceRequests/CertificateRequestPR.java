@@ -12,8 +12,6 @@ import net.sourceforge.fenixedu.util.Money;
 
 import org.joda.time.DateTime;
 
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
-
 public class CertificateRequestPR extends CertificateRequestPR_Base {
 
     protected CertificateRequestPR() {
@@ -71,7 +69,6 @@ public class CertificateRequestPR extends CertificateRequestPR_Base {
 	return getAmountPerPage().multiply(BigDecimal.valueOf(event.getNumberOfPages()));
     }
 
-    @Checked("PostingRulePredicates.editPredicate")
     public CertificateRequestPR edit(final Money baseAmount, final Money amountPerUnit, final Money amountPerPage,
 	    final Money maximumAmount) {
 	deactivate();

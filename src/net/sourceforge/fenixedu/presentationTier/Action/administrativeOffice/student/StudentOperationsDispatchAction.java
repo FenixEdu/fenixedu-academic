@@ -40,10 +40,10 @@ import pt.ist.fenixWebFramework.struts.annotations.Tile;
  * @author - Ângela Almeida (argelina@ist.utl.pt)
  * 
  */
-@Mapping(path = "/createStudent", module = "academicAdminOffice")
+@Mapping(path = "/createStudent", module = "academicAdministration")
 @Forwards({
-	@Forward(name = "chooseNewStudentExecutionDegreeAndIdentification", path = "/academicAdminOffice/chooseNewStudentExecutionDegreeAndIdentification.jsp", tileProperties = @Tile(title = "private.academicadministrativeoffice.studentoperations.createstudent")),
-	@Forward(name = "fillNewPersonData", path = "/academicAdminOffice/fillNewPersonData.jsp", tileProperties = @Tile(title = "private.academicadministrativeoffice.studentoperations.createstudent")),
+	@Forward(name = "chooseNewStudentExecutionDegreeAndIdentification", path = "/academicAdminOffice/chooseNewStudentExecutionDegreeAndIdentification.jsp"),
+	@Forward(name = "fillNewPersonData", path = "/academicAdminOffice/fillNewPersonData.jsp"),
 	@Forward(name = "fillNewPersonDataForEmployee", path = "/academicAdminOffice/fillNewPersonDataForEmployee.jsp"),
 	@Forward(name = "fillOriginInformation", path = "/academicAdminOffice/fillOriginInformation.jsp"),
 	@Forward(name = "createStudentSuccess", path = "/academicAdminOffice/createStudentSuccess.jsp"),
@@ -270,7 +270,7 @@ public class StudentOperationsDispatchAction extends FenixDispatchAction {
 
 	return mapping.findForward("fillNewPersonData");
     }
-    
+
     public ActionForward fillNewPersonDataPostback(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) {
 

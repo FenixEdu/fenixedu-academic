@@ -2,6 +2,7 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr" %>
+<%@ taglib uri="/WEB-INF/academic.tld" prefix="academic" %>
 <html:xhtml/>
 
 <div style="float: right;">
@@ -9,8 +10,6 @@
 	<html:img align="middle" src="<%= request.getContextPath() +"/person/retrievePersonalPhoto.do?method=retrieveByID&amp;personCode="+personID.toString()%>" altKey="personPhoto" bundle="IMAGE_RESOURCES" styleClass="showphoto"/>
 </div>
 
-
-<em><bean:message key="label.academicAdminOffice" bundle="ACADEMIC_OFFICE_RESOURCES"/></em>
 <h2><bean:message key="label.studentPage" bundle="ACADEMIC_OFFICE_RESOURCES"/></h2>
 
 
@@ -42,17 +41,17 @@
 		<bean:message key="link.student.viewPersonalData" bundle="ACADEMIC_OFFICE_RESOURCES"/>
 	</html:link>
 
-	<logic:equal name="student" property="hasRegistrationForOfficeOrEmptyRegistrations" value="true">
-		<span class="pleft05">
-			<img src="<%= request.getContextPath() %>/images/dotist_post.gif" alt="<bean:message key="dotist_post" bundle="IMAGE_RESOURCES" />" />
-			<html:link page="/student.do?method=prepareEditPersonalData" paramId="studentID" paramName="student" paramProperty="idInternal">
-				<bean:message key="link.student.editPersonalData" bundle="ACADEMIC_OFFICE_RESOURCES"/>
-			</html:link>
-		</span>
-	</logic:equal>
+	<academic:allowed operation="EDIT_STUDENT_PERSONAL_DATA">
+	<span class="pleft05">
+		<img src="<%= request.getContextPath() %>/images/dotist_post.gif" alt="<bean:message key="dotist_post" bundle="IMAGE_RESOURCES" />" />
+		<html:link page="/student.do?method=prepareEditPersonalData" paramId="studentID" paramName="student" paramProperty="idInternal">
+			<bean:message key="link.student.editPersonalData" bundle="ACADEMIC_OFFICE_RESOURCES"/>
+		</html:link>
+	</span>
+	</academic:allowed>
 </p>
 
-
+<academic:allowed operation="MANAGE_REGISTRATIONS">
 <h3 class="mtop15 mbottom025"><bean:message key="label.studentRegistrations" bundle="ACADEMIC_OFFICE_RESOURCES"/></h3>
 <fr:view name="student" property="registrations" schema="student.registrationDetail.short" >
 	<fr:layout name="tabular">
@@ -64,12 +63,14 @@
 		<fr:property name="linkFormat(view)" value="/student.do?method=visualizeRegistration&registrationID=${idInternal}" />
 		<fr:property name="key(view)" value="link.student.visualizeRegistration"/>
 		<fr:property name="bundle(view)" value="ACADEMIC_OFFICE_RESOURCES"/>
-		<fr:property name="visibleIf(view)" value="isForOffice"/>
+		<fr:property name="visibleIf(view)" value="allowedToManageRegistration"/>
 		<fr:property name="contextRelative(view)" value="true"/>
 	</fr:layout>
 </fr:view>
+</academic:allowed>
 
 <!-- Student Status -->
+<academic:allowed operation="MANAGE_STATUTES">
 <h3 class="mbottom025"><bean:message key="label.statutes" bundle="ACADEMIC_OFFICE_RESOURCES"/></h3>
 <p class="mvert05">
 	<img src="<%= request.getContextPath() %>/images/dotist_post.gif" alt="<bean:message key="dotist_post" bundle="IMAGE_RESOURCES" />" />
@@ -84,8 +85,10 @@
 		<fr:property name="columnClasses" value=",tdhl1"/>
 	</fr:layout>
 </fr:view>
+</academic:allowed>
 
 <!-- Extra Curricular Activities -->
+<academic:allowed operation="MANAGE_EXTRA_CURRICULAR_ACTIVITIES">
 <h3 class="mbottom025"><bean:message key="label.extraCurricularActivities" bundle="ACADEMIC_OFFICE_RESOURCES"/></h3>
 <p class="mvert05">
     <img src="<%= request.getContextPath() %>/images/dotist_post.gif" alt="<bean:message key="dotist_post" bundle="IMAGE_RESOURCES" />" />
@@ -93,8 +96,10 @@
         <bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.extraCurricularActivities.manage" />
     </html:link>
 </p>
+</academic:allowed>
 
 <!-- Payments -->
+<academic:allowed operation="MANAGE_STUDENT_PAYMENTS">
 <h3 class="mbottom025"><bean:message key="label.payments" bundle="ACADEMIC_OFFICE_RESOURCES"/></h3>
 <p class="mtop05 mbottom15">
 	<img src="<%= request.getContextPath() %>/images/dotist_post.gif" alt="<bean:message key="dotist_post" bundle="IMAGE_RESOURCES" />" />
@@ -102,8 +107,10 @@
 		<bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.payments.management" />
 	</html:link>
 </p>
+</academic:allowed>
 
 <!-- RAIDES -->
+<academic:allowed operation="MANAGE_REGISTRATIONS">
 <h3 class="mbottom025"><bean:message key="label.editCandidacies" bundle="ACADEMIC_OFFICE_RESOURCES"/></h3>
 <p class="mtop05 mbottom15">
 	<fr:form action="/editCandidacyInformation.do?method=prepareEdit">
@@ -117,3 +124,4 @@
 		</fr:edit>
 	</fr:form>
 </p>
+</academic:allowed>

@@ -1,13 +1,14 @@
 package net.sourceforge.fenixedu.presentationTier.Action.internationalRelatOffice;
 
+import java.util.HashSet;
 import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.dataTransferObject.student.StudentsSearchBean;
-import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
-import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOfficeType;
+import net.sourceforge.fenixedu.domain.AcademicProgram;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 
@@ -26,10 +27,11 @@ public class SearchForStudents extends FenixDispatchAction {
 	    studentsSearchBean = new StudentsSearchBean();
 	} else {
 
-	    final AdministrativeOffice administrativeOffice = AdministrativeOffice
-		    .readByAdministrativeOfficeType(AdministrativeOfficeType.DEGREE);
+	    final Set<AcademicProgram> programs = new HashSet<AcademicProgram>();
 
-	    final Set<Student> students = studentsSearchBean.searchForOffice(administrativeOffice);
+	    programs.addAll(RootDomainObject.getInstance().getDegrees());
+
+	    final Set<Student> students = studentsSearchBean.searchForPrograms(programs);
 
 	    if (students.size() == 1) {
 

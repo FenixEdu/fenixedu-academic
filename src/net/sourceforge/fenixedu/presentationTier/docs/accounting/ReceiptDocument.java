@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.accounting.Entry;
 import net.sourceforge.fenixedu.domain.accounting.Receipt;
 import net.sourceforge.fenixedu.presentationTier.docs.FenixReport;
@@ -67,12 +68,7 @@ public class ReceiptDocument extends FenixReport {
     @Override
     protected void fillReport() {
 
-	addParameter("ownerUnit", this.receipt.getOwnerUnit().getName());
-	final Integer costCenter = this.receipt.getOwnerUnit().getCostCenterCode();
-	addParameter("ownerUnitPhone", this.receipt.getOwnerUnit().getDefaultPhoneNumber());
-	addParameter("ownerUnitCostCenter", costCenter == null ? "" : costCenter.toString());
-	addParameter("creatorUnit", this.receipt.getCreatorUnit().getName());
-	addParameter("emmittedByOtherUnit", this.receipt.getOwnerUnit() != this.receipt.getCreatorUnit());
+	addParameter("ownerUnitPhone", RootDomainObject.getInstance().getInstitutionUnit().getDefaultPhoneNumber());
 	addParameter("documentIdType", this.receipt.getPerson().getIdDocumentType().getLocalizedName());
 	addParameter("documentIdNumber", this.receipt.getPerson().getDocumentIdNumber());
 	addParameter("name", this.receipt.getPerson().getName());
@@ -90,8 +86,8 @@ public class ReceiptDocument extends FenixReport {
 	    addParameter("contributorSocialSecurityNumber", this.receipt.getContributorParty().getSocialSecurityNumber());
 	    addParameter("contributorAddress", this.receipt.getContributorParty().getAddress());
 	    addParameter("contributorArea", !StringUtils.isEmpty(this.receipt.getContributorParty().getAreaCode()) ? this.receipt
-		    .getContributorParty().getAreaCode()
-		    + SINGLE_SPACE + this.receipt.getContributorParty().getAreaOfAreaCode() : null);
+		    .getContributorParty().getAreaCode() + SINGLE_SPACE + this.receipt.getContributorParty().getAreaOfAreaCode()
+		    : null);
 	} else {
 	    addParameter("contributorName", this.receipt.getContributorName());
 	    addParameter("contributorSocialSecurityNumber", Receipt.GENERIC_CONTRIBUTOR_PARTY_NUMBER);

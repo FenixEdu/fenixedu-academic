@@ -8,8 +8,8 @@ import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import net.sourceforge.fenixedu.dataTransferObject.academicAdministration.SearchStudentsByCurricularCourseParametersBean;
 import net.sourceforge.fenixedu.dataTransferObject.administrativeOffice.lists.SearchCourseResponsiblesParametersBean;
-import net.sourceforge.fenixedu.dataTransferObject.administrativeOffice.lists.SearchStudentsByCurricularCourseParametersBean;
 import net.sourceforge.fenixedu.domain.CompetenceCourse;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.Degree;
@@ -52,8 +52,7 @@ public class ListCourseResponsibles extends FenixDispatchAction {
     private SearchStudentsByCurricularCourseParametersBean getOrCreateSearchBean() {
 	SearchStudentsByCurricularCourseParametersBean bean = getRenderedObject("searchBean");
 	if (bean == null) {
-	    bean = new SearchStudentsByCurricularCourseParametersBean();
-	    bean.setAdministratedDegrees(getAdministratedDegrees());
+	    bean = new SearchStudentsByCurricularCourseParametersBean(new TreeSet<Degree>(AccessControl.getPerson().getEmployee().getCurrentDepartmentWorkingPlace().getDegrees()));
 	}
 	return bean;
     }
@@ -172,10 +171,6 @@ public class ListCourseResponsibles extends FenixDispatchAction {
 	    row.setCell(bean.getResponsible().getName());
 	    row.setCell(bean.getExecutionSemester().getSemester().toString());
 	}
-    }
-
-    protected TreeSet<Degree> getAdministratedDegrees() {
-	return new TreeSet<Degree>(AccessControl.getPerson().getEmployee().getCurrentDepartmentWorkingPlace().getDegrees());
     }
 
 }

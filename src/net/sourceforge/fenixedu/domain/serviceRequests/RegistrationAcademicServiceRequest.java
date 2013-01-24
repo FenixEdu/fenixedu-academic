@@ -3,22 +3,20 @@ package net.sourceforge.fenixedu.domain.serviceRequests;
 import java.util.Comparator;
 
 import net.sourceforge.fenixedu.dataTransferObject.serviceRequests.RegistrationAcademicServiceRequestCreateBean;
+import net.sourceforge.fenixedu.domain.AcademicProgram;
 import net.sourceforge.fenixedu.domain.Degree;
-import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
-import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.domain.space.Campus;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.Student;
-import net.sourceforge.fenixedu.injectionCode.AccessControl;
 
 abstract public class RegistrationAcademicServiceRequest extends RegistrationAcademicServiceRequest_Base {
 
     public static Comparator<RegistrationAcademicServiceRequest> COMPARATOR_BY_SERVICE_REQUEST_NUMBER_AND_ID = new Comparator<RegistrationAcademicServiceRequest>() {
+	@Override
 	public int compare(RegistrationAcademicServiceRequest o1, RegistrationAcademicServiceRequest o2) {
 	    if (o1.getServiceRequestNumber().compareTo(o2.getServiceRequestNumber()) != 0) {
 		return o1.getServiceRequestNumber().compareTo(o2.getServiceRequestNumber());
@@ -34,7 +32,7 @@ abstract public class RegistrationAcademicServiceRequest extends RegistrationAca
     public void init(final RegistrationAcademicServiceRequestCreateBean bean) {
 	checkParameters(bean);
 	super.setRegistration(bean.getRegistration());
-	super.init(bean);
+	super.init(bean, getDegree().getAdministrativeOffice());
     }
 
     private void checkParameters(final RegistrationAcademicServiceRequestCreateBean bean) {
@@ -68,13 +66,13 @@ abstract public class RegistrationAcademicServiceRequest extends RegistrationAca
 	}
     }
 
+    public Degree getDegree() {
+	return getRegistration().getDegree();
+    }
+
     @Override
-    protected AdministrativeOffice findAdministrativeOffice() {
-	AdministrativeOffice administrativeOffice = super.findAdministrativeOffice();
-	if (administrativeOffice == null) {
-	    administrativeOffice = AdministrativeOffice.getResponsibleAdministrativeOffice(getRegistration().getDegree());
-	}
-	return administrativeOffice;
+    public AcademicProgram getAcademicProgram() {
+	return getDegree();
     }
 
     @Override
@@ -88,32 +86,12 @@ abstract public class RegistrationAcademicServiceRequest extends RegistrationAca
 	return getRegistration().getStudentCurricularPlan(executionYear);
     }
 
-    public Degree getDegree() {
-	return getStudentCurricularPlan().getDegree();
-    }
-
     public DegreeType getDegreeType() {
 	return getDegree().getDegreeType();
     }
 
     public boolean isBolonha() {
 	return getDegree().isBolonhaDegree();
-    }
-
-    public Campus getCampus() {
-	final StudentCurricularPlan studentCurricularPlan = getStudentCurricularPlan();
-	return studentCurricularPlan != null ? studentCurricularPlan.getCurrentCampus() : null;
-    }
-
-    @Override
-    public boolean isAvailableForEmployeeToActUpon() {
-	final Person loggedPerson = AccessControl.getPerson();
-	if (loggedPerson.hasEmployee()) {
-	    final Employee employee = loggedPerson.getEmployee();
-	    return employee.getAdministrativeOffice() == getAdministrativeOffice() && employee.getCurrentCampus() == getCampus();
-	} else {
-	    throw new DomainException("RegistrationAcademicServiceRequest.non.employee.person.attempt.to.change.request");
-	}
     }
 
     @Override

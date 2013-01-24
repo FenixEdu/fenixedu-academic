@@ -4,9 +4,6 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr"%>
 
-<logic:present role="ACADEMIC_ADMINISTRATIVE_OFFICE">
-
-	<em><bean:message key="label.academicAdminOffice" bundle="ACADEMIC_OFFICE_RESOURCES"/></em>
 	<h2><bean:message bundle="ACADEMIC_OFFICE_RESOURCES"  key="label.pricesManagement" /></h2>
 
 	<logic:messagesPresent message="true">
@@ -35,5 +32,3 @@
 			</p>
 		</div>
 	</logic:iterate>
-
-</logic:present>

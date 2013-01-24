@@ -1,7 +1,7 @@
 package net.sourceforge.fenixedu.domain.accounting.report.events;
 
 import net.sourceforge.fenixedu.domain.ExecutionYear;
-import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOfficeType;
+import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
 import net.sourceforge.fenixedu.domain.phd.debts.PhdEvent;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 
@@ -106,8 +106,8 @@ public class PhdEventWrapper implements Wrapper {
     }
 
     @Override
-    public AdministrativeOfficeType getRelatedAcademicOfficeType() {
-	return AdministrativeOfficeType.MASTER_DEGREE;
+    public AdministrativeOffice getRelatedAcademicOffice() {
+	return event.getPhdIndividualProgramProcess().getAdministrativeOffice();
     }
 
 }

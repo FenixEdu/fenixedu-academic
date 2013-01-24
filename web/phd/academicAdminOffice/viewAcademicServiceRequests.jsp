@@ -12,17 +12,15 @@
 	<bean:define id="process" name="process" scope="request" type="PhdIndividualProgramProcess"/>
 	<p>
 		<bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.documentRequestsManagement.createDocumentRequest"/>:
-		<html:link action="/phdAcademicServiceRequestManagement.do?method=prepareCreateDocumentRequestQuick" paramId="phdIndividualProgramProcessId" paramName="process" paramProperty="externalId">
-			<bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="declarations"/>
-		</html:link>	
-		|
 		<html:link action="/phdDocumentRequestManagement.do?method=prepareCreateNewRequest" paramId="phdIndividualProgramProcessId" paramName="process" paramProperty="externalId">
 			<bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="certificates"/>
 		</html:link>
+		<logic:present name="process" property="registration">
 		|
-		<html:link action="/academicServiceRequestsManagement.do?method=chooseServiceRequestType" paramId="phdIndividualProgramProcessId" paramName="process" paramProperty="externalId">
+		<html:link action="/academicServiceRequestsManagement.do?method=chooseServiceRequestType" paramId="registrationID" paramName="process" paramProperty="registration.idInternal">
 			<bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.serviceRequests"/>
 		</html:link>
+		</logic:present>
 
 	</p>
 	

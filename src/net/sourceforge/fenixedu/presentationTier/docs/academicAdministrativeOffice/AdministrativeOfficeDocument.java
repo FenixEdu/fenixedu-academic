@@ -9,7 +9,6 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.ResourceBundle;
 
-import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.OptionalEnrolment;
 import net.sourceforge.fenixedu.domain.Person;
@@ -17,6 +16,7 @@ import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.accounting.PostingRule;
 import net.sourceforge.fenixedu.domain.accounting.postingRules.serviceRequests.CertificateRequestPR;
 import net.sourceforge.fenixedu.domain.accounting.serviceAgreementTemplates.AdministrativeOfficeServiceAgreementTemplate;
+import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
@@ -38,7 +38,6 @@ import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.curriculum.ICurriculum;
 import net.sourceforge.fenixedu.domain.student.curriculum.ICurriculumEntry;
 import net.sourceforge.fenixedu.domain.studentCurriculum.ExternalEnrolment;
-import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.presentationTier.docs.FenixReport;
 import net.sourceforge.fenixedu.util.HtmlToTextConverterUtil;
 import net.sourceforge.fenixedu.util.Money;
@@ -72,68 +71,69 @@ public class AdministrativeOfficeDocument extends FenixReport {
 
     public static class AdministrativeOfficeDocumentCreator {
 
-	public static List<? extends AdministrativeOfficeDocument> create(final IDocumentRequest documentRequest) {
+	@SuppressWarnings("unchecked")
+	public static <T extends AdministrativeOfficeDocument> List<T> create(final IDocumentRequest documentRequest) {
 	    switch (documentRequest.getDocumentRequestType()) {
 	    case ENROLMENT_CERTIFICATE:
-		return Collections.singletonList(new EnrolmentCertificate(documentRequest));
+		return Collections.<T> singletonList((T) new EnrolmentCertificate(documentRequest));
 	    case APPROVEMENT_CERTIFICATE:
-		return Collections.singletonList(new ApprovementCertificate(documentRequest));
+		return Collections.<T> singletonList((T) new ApprovementCertificate(documentRequest));
 	    case APPROVEMENT_MOBILITY_CERTIFICATE:
-		return Collections.singletonList(new ApprovementMobilityCertificate(documentRequest));
+		return Collections.<T> singletonList((T) new ApprovementMobilityCertificate(documentRequest));
 	    case DEGREE_FINALIZATION_CERTIFICATE:
-		return Collections.singletonList(new DegreeFinalizationCertificate(documentRequest));
+		return Collections.<T> singletonList((T) new DegreeFinalizationCertificate(documentRequest));
 	    case PHD_FINALIZATION_CERTIFICATE:
-		return Collections.singletonList(new PhdFinalizationCertificate(documentRequest));
+		return Collections.<T> singletonList((T) new PhdFinalizationCertificate(documentRequest));
 	    case SCHOOL_REGISTRATION_DECLARATION:
-		return Collections.singletonList(new RegistrationDeclaration(documentRequest));
+		return Collections.<T> singletonList((T) new RegistrationDeclaration(documentRequest));
 	    case ENROLMENT_DECLARATION:
-		return Collections.singletonList(new EnrolmentDeclaration(documentRequest));
+		return Collections.<T> singletonList((T) new EnrolmentDeclaration(documentRequest));
 	    case IRS_DECLARATION:
-		return Collections.singletonList(new IRSDeclaration(documentRequest));
+		return Collections.<T> singletonList((T) new IRSDeclaration(documentRequest));
 	    case DIPLOMA_REQUEST:
 		if (documentRequest.isRequestForRegistration()) {
-		    return Collections.singletonList(new Diploma(documentRequest));
+		    return Collections.<T> singletonList((T) new Diploma(documentRequest));
 		}
 
 		if (documentRequest.isRequestForPhd()) {
-		    return Collections.singletonList(new PhdDiploma(documentRequest));
+		    return Collections.<T> singletonList((T) new PhdDiploma(documentRequest));
 		}
 	    case REGISTRY_DIPLOMA_REQUEST:
 		if (documentRequest.isRequestForRegistration()) {
-		    return Collections.singletonList(new RegistryDiploma(documentRequest));
+		    return Collections.<T> singletonList((T) new RegistryDiploma(documentRequest));
 		}
 
 		if (documentRequest.isRequestForPhd()) {
-		    return Collections.singletonList(new PhdRegistryDiploma(documentRequest));
+		    return Collections.<T> singletonList((T) new PhdRegistryDiploma(documentRequest));
 		}
 	    case DIPLOMA_SUPPLEMENT_REQUEST:
-		List<AdministrativeOfficeDocument> result = new ArrayList<AdministrativeOfficeDocument>();
+		List<T> result = new ArrayList<T>();
 		for (Locale locale : DiplomaSupplement.suportedLocales) {
-		    result.add(new DiplomaSupplement(documentRequest, locale));
+		    result.add((T) new DiplomaSupplement(documentRequest, locale));
 		}
 		return result;
 	    case EXAM_DATE_CERTIFICATE:
-		return Collections.singletonList(new ExamDateCertificate(documentRequest));
+		return Collections.<T> singletonList((T) new ExamDateCertificate(documentRequest));
 	    case COURSE_LOAD:
-		return Collections.singletonList(new CourseLoadRequestDocument((CourseLoadRequest) documentRequest));
+		return Collections.<T> singletonList((T) new CourseLoadRequestDocument((CourseLoadRequest) documentRequest));
 	    case EXTERNAL_COURSE_LOAD:
-		return Collections.singletonList(new ExternalCourseLoadRequestDocument(
+		return Collections.<T> singletonList((T) new ExternalCourseLoadRequestDocument(
 			(ExternalCourseLoadRequest) documentRequest));
 	    case PROGRAM_CERTIFICATE:
-		return Collections.singletonList(new ProgramCertificateRequestDocument(
+		return Collections.<T> singletonList((T) new ProgramCertificateRequestDocument(
 			(ProgramCertificateRequest) documentRequest));
 	    case EXTERNAL_PROGRAM_CERTIFICATE:
-		return Collections.singletonList(new ExternalProgramCertificateRequestDocument(
+		return Collections.<T> singletonList((T) new ExternalProgramCertificateRequestDocument(
 			(ExternalProgramCertificateRequest) documentRequest));
 	    case EXTRA_CURRICULAR_CERTIFICATE:
-		return Collections.singletonList(new ExtraCurricularCertificateRequestDocument(documentRequest));
+		return Collections.<T> singletonList((T) new ExtraCurricularCertificateRequestDocument(documentRequest));
 	    case STANDALONE_ENROLMENT_CERTIFICATE:
-		return Collections.singletonList(new StandaloneEnrolmentCertificateRequestDocument(documentRequest));
+		return Collections.<T> singletonList((T) new StandaloneEnrolmentCertificateRequestDocument(documentRequest));
 	    case UNDER_23_TRANSPORTS_REQUEST:
-		return Collections.singletonList(new Under23TransportsDeclarationDocument(
+		return Collections.<T> singletonList((T) new Under23TransportsDeclarationDocument(
 			(Under23TransportsDeclarationRequest) documentRequest));
 	    default:
-		return Collections.singletonList(new AdministrativeOfficeDocument(documentRequest));
+		return Collections.<T> singletonList((T) new AdministrativeOfficeDocument(documentRequest));
 	    }
 	}
 
@@ -180,7 +180,11 @@ public class AdministrativeOfficeDocument extends FenixReport {
 	return result.toString();
     }
 
-    private Registration getRegistration() {
+    protected AdministrativeOffice getAdministrativeOffice() {
+	return getDocumentRequest().getAdministrativeOffice();
+    }
+
+    protected Registration getRegistration() {
 	if (getDocumentRequest().isRequestForRegistration()) {
 	    return ((RegistrationAcademicServiceRequest) getDocumentRequest()).getRegistration();
 	}
@@ -198,7 +202,7 @@ public class AdministrativeOfficeDocument extends FenixReport {
 	    addPriceFields();
 	}
 
-	addIntroParameters(AccessControl.getPerson().getEmployee());
+	addIntroParameters();
 	setDocumentTitle();
 	setPersonFields();
 
@@ -208,7 +212,6 @@ public class AdministrativeOfficeDocument extends FenixReport {
 	}
 
 	addParameter("degreeDescription", getDegreeDescription());
-	addParameter("employeeLocation", AccessControl.getPerson().getEmployee().getCurrentCampus().getLocation());
 	addParameter("day", new LocalDate().toString(DD_MMMM_YYYY, getLocale()));
 	
 	newFillReport();
@@ -242,13 +245,16 @@ public class AdministrativeOfficeDocument extends FenixReport {
     }
 
     final protected boolean printPriceParameters(final CertificateRequest certificateRequest) {
-	return (certificateRequest.getAcademicServiceRequestSituationType() == AcademicServiceRequestSituationType.PROCESSING && !certificateRequest
-		.isFree()) || certificateRequest.hasEvent();
+	return certificateRequest.getAcademicServiceRequestSituationType() == AcademicServiceRequestSituationType.PROCESSING
+		&& !certificateRequest.isFree() || certificateRequest.hasEvent();
     }
 
-    final protected void addIntroParameters(final Employee employee) {
-	addParameter("administrativeOfficeCoordinator", employee.getCurrentWorkingPlace().getActiveUnitCoordinator());
-	addParameter("administrativeOfficeName", getMLSTextContent(employee.getCurrentWorkingPlace().getPartyName()));
+    protected void addIntroParameters() {
+	Unit adminOfficeUnit = getAdministrativeOffice().getUnit();
+	addParameter("administrativeOfficeCoordinator", adminOfficeUnit.getActiveUnitCoordinator());
+	addParameter("administrativeOfficeName", getMLSTextContent(adminOfficeUnit.getPartyName()));
+
+	addParameter("employeeLocation", adminOfficeUnit.getCampus().getLocation());
 	addParameter("supervisingUnit", getResourceBundle().getString("label.academicDocument.direcaoAcademica"));
 
 	addParameter("institutionName", getMLSTextContent(RootDomainObject.getInstance().getInstitutionUnit().getPartyName()));

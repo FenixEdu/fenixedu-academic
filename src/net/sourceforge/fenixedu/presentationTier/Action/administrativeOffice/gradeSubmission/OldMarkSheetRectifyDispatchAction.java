@@ -8,7 +8,6 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.NotAuthorizedFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.degreeAdministrativeOffice.gradeSubmission.CurricularCourseMarksheetManagementBean;
 import net.sourceforge.fenixedu.dataTransferObject.degreeAdministrativeOffice.gradeSubmission.MarkSheetManagementCreateBean;
@@ -18,7 +17,6 @@ import net.sourceforge.fenixedu.domain.EnrolmentEvaluation;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.MarkSheetType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -33,14 +31,14 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixWebFramework.struts.annotations.Tile;
 import pt.utl.ist.fenix.tools.util.DateFormatUtil;
 
-@Mapping(path = "/rectifyOldMarkSheet", module = "academicAdminOffice", formBean = "markSheetManagementForm", input = "/academicAdminOffice/gradeSubmission/oldMarkSheets/rectifyMarkSheetStep1.jsp")
+@Mapping(path = "/rectifyOldMarkSheet", module = "academicAdministration", formBean = "markSheetManagementForm", input = "/academicAdminOffice/gradeSubmission/oldMarkSheets/rectifyMarkSheetStep1.jsp")
 @Forwards({
-	@Forward(name = "rectifyMarkSheetStep1", path = "/academicAdminOffice/gradeSubmission/oldMarkSheets/rectifyMarkSheetStep1.jsp", tileProperties = @Tile(title = "private.academicadministrativeoffice.marksheets.oldmanagementguidelines")),
-	@Forward(name = "rectifyMarkSheetStep2", path = "/academicAdminOffice/gradeSubmission/oldMarkSheets/rectifyMarkSheetStep2.jsp", tileProperties = @Tile(title = "private.academicadministrativeoffice.marksheets.oldmanagementguidelines")),
-	@Forward(name = "searchMarkSheet", path = "/oldMarkSheetManagement.do?method=prepareSearchMarkSheet", tileProperties = @Tile(title = "private.academicadministrativeoffice.marksheets.oldmanagementguidelines")),
-	@Forward(name = "searchMarkSheetFilled", path = "/oldMarkSheetManagement.do?method=prepareSearchMarkSheetFilled", tileProperties = @Tile(title = "private.academicadministrativeoffice.marksheets.oldmanagementguidelines")),
-	@Forward(name = "showRectificationHistoric", path = "/academicAdminOffice/gradeSubmission/showRectificationHistoric.jsp", tileProperties = @Tile(title = "private.academicadministrativeoffice.marksheets.oldmanagementguidelines")),
-	@Forward(name = "rectifyMarkSheetStepOneByEvaluation", path = "/academicAdminOffice/gradeSubmission/oldMarkSheets/rectifyOldMarkSheetEvaluation.jsp", tileProperties = @Tile(title = "private.academicadministrativeoffice.marksheets.oldmanagementguidelines")) })
+	@Forward(name = "rectifyMarkSheetStep1", path = "/academicAdminOffice/gradeSubmission/oldMarkSheets/rectifyMarkSheetStep1.jsp"),
+	@Forward(name = "rectifyMarkSheetStep2", path = "/academicAdminOffice/gradeSubmission/oldMarkSheets/rectifyMarkSheetStep2.jsp"),
+	@Forward(name = "searchMarkSheet", path = "/oldMarkSheetManagement.do?method=prepareSearchMarkSheet"),
+	@Forward(name = "searchMarkSheetFilled", path = "/oldMarkSheetManagement.do?method=prepareSearchMarkSheetFilled"),
+	@Forward(name = "showRectificationHistoric", path = "/academicAdminOffice/gradeSubmission/showRectificationHistoric.jsp"),
+	@Forward(name = "rectifyMarkSheetStepOneByEvaluation", path = "/academicAdminOffice/gradeSubmission/oldMarkSheets/rectifyOldMarkSheetEvaluation.jsp") })
 public class OldMarkSheetRectifyDispatchAction extends OldMarkSheetCreateDispatchAction {
 
     @Override
@@ -106,7 +104,6 @@ public class OldMarkSheetRectifyDispatchAction extends OldMarkSheetCreateDispatc
 	return stringBuilder.toString();
     }
 
-    @Override
     public ActionForward rectifyMarkSheetStepOneByEvaluation(ActionMapping mapping, ActionForm actionForm,
 	    HttpServletRequest request, HttpServletResponse response) {
 	DynaActionForm form = (DynaActionForm) actionForm;
@@ -148,15 +145,8 @@ public class OldMarkSheetRectifyDispatchAction extends OldMarkSheetCreateDispatc
 	ActionMessages actionMessages = new ActionMessages();
 	IUserView userView = getUserView(request);
 	try {
-	    ServiceUtils.executeService(
-		    "CreateRectificationOldMarkSheet",
-		    new Object[] { rectifyBean.getEnrolmentEvaluation(), rectifyBean.getMarkSheetType(),
-			    rectifyBean.getRectifiedGrade(), rectifyBean.getEvaluationDate(), rectifyBean.getReason(),
-			    userView.getPerson().getEmployee() });
+	    rectifyBean.createRectificationOldMarkSheet(userView.getPerson());
 	    return mapping.findForward("searchMarkSheetFilled");
-	} catch (NotAuthorizedFilterException e) {
-	    addMessage(request, actionMessages, "error.notAuthorized");
-	    return mapping.findForward("searchMarkSheet");
 	} catch (DomainException e) {
 	    addMessage(request, actionMessages, e.getMessage(), e.getArgs());
 	    List<EnrolmentEvaluation> enrolmentEvaluations = rectifyBean.getCurricularCourseBean().getCurricularCourse()

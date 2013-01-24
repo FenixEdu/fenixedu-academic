@@ -3,8 +3,9 @@ package net.sourceforge.fenixedu.domain.phd.individualProcess.activities;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Qualification;
+import net.sourceforge.fenixedu.domain.accessControl.academicAdministration.AcademicAuthorizationGroup;
+import net.sourceforge.fenixedu.domain.accessControl.academicAdministration.AcademicOperationType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess;
 
 public class DeleteQualification extends PhdIndividualProgramProcessActivity {
@@ -25,11 +26,12 @@ public class DeleteQualification extends PhdIndividualProgramProcessActivity {
 	return process;
     }
 
-	private boolean canDelete(final Qualification qualification, final PhdIndividualProgramProcess process, final Person person) {
+    private boolean canDelete(final Qualification qualification, final PhdIndividualProgramProcess process, final Person person) {
 	if (!qualification.hasCreator()) {
 	    return process.getCandidacyProcess().isPublicCandidacy();
 	}
 	final Person creator = qualification.getCreator();
-	return creator == person || creator.hasRole(RoleType.ACADEMIC_ADMINISTRATIVE_OFFICE);
+	return creator == person
+		|| new AcademicAuthorizationGroup(AcademicOperationType.MANAGE_PHD_PROCESS_STATE).isMember(creator);
     }
 }

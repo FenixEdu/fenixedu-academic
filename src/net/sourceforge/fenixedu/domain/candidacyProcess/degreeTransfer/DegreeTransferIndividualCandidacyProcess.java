@@ -3,11 +3,15 @@ package net.sourceforge.fenixedu.domain.candidacyProcess.degreeTransfer;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.caseHandling.StartActivity;
+import net.sourceforge.fenixedu.domain.AcademicProgram;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
+import net.sourceforge.fenixedu.domain.accessControl.academicAdministration.AcademicAuthorizationGroup;
+import net.sourceforge.fenixedu.domain.accessControl.academicAdministration.AcademicOperationType;
 import net.sourceforge.fenixedu.domain.candidacy.Ingression;
 import net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyProcess;
 import net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyProcessDocumentUploadBean;
@@ -20,7 +24,6 @@ import net.sourceforge.fenixedu.domain.caseHandling.Activity;
 import net.sourceforge.fenixedu.domain.caseHandling.PreConditionNotValidException;
 import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.student.PrecedentDegreeInformation;
 
 public class DegreeTransferIndividualCandidacyProcess extends DegreeTransferIndividualCandidacyProcess_Base {
@@ -85,7 +88,7 @@ public class DegreeTransferIndividualCandidacyProcess extends DegreeTransferIndi
 
     @Override
     public boolean canExecuteActivity(IUserView userView) {
-	return isDegreeAdministrativeOfficeEmployee(userView);
+	return isAllowedToManageProcess(this, userView);
     }
 
     @Override
@@ -131,13 +134,14 @@ public class DegreeTransferIndividualCandidacyProcess extends DegreeTransferIndi
 
     // static information
 
-    static private boolean isDegreeAdministrativeOfficeEmployee(IUserView userView) {
-	return userView.hasRoleType(RoleType.ACADEMIC_ADMINISTRATIVE_OFFICE)
-		&& userView.getPerson().getEmployeeAdministrativeOffice().isDegree();
-    }
-    
-    static private boolean isCoordenator(IUserView userView){
-	return userView.hasRoleType(RoleType.COORDINATOR);
+    static private boolean isAllowedToManageProcess(DegreeTransferIndividualCandidacyProcess process, IUserView userView) {
+	Set<AcademicProgram> programs = AcademicAuthorizationGroup.getProgramsForOperation(userView.getPerson(),
+		AcademicOperationType.MANAGE_INDIVIDUAL_CANDIDACIES);
+
+	if (process == null || process.getCandidacy() == null)
+	    return false;
+
+	return programs.contains(process.getCandidacy().getSelectedDegree());
     }
 
     @StartActivity
@@ -185,7 +189,7 @@ public class DegreeTransferIndividualCandidacyProcess extends DegreeTransferIndi
     static private class CandidacyPayment extends Activity<DegreeTransferIndividualCandidacyProcess> {
 	@Override
 	public void checkPreConditions(DegreeTransferIndividualCandidacyProcess process, IUserView userView) {
-	    if (!isDegreeAdministrativeOfficeEmployee(userView)) {
+	    if (!isAllowedToManageProcess(process, userView)) {
 		throw new PreConditionNotValidException();
 	    }
 
@@ -205,7 +209,7 @@ public class DegreeTransferIndividualCandidacyProcess extends DegreeTransferIndi
     static private class EditCandidacyPersonalInformation extends Activity<DegreeTransferIndividualCandidacyProcess> {
 	@Override
 	public void checkPreConditions(DegreeTransferIndividualCandidacyProcess process, IUserView userView) {
-	    if (!isDegreeAdministrativeOfficeEmployee(userView)) {
+	    if (!isAllowedToManageProcess(process, userView)) {
 		throw new PreConditionNotValidException();
 	    }
 
@@ -225,7 +229,7 @@ public class DegreeTransferIndividualCandidacyProcess extends DegreeTransferIndi
     static private class EditCandidacyInformation extends Activity<DegreeTransferIndividualCandidacyProcess> {
 	@Override
 	public void checkPreConditions(DegreeTransferIndividualCandidacyProcess process, IUserView userView) {
-	    if (!isDegreeAdministrativeOfficeEmployee(userView)) {
+	    if (!isAllowedToManageProcess(process, userView)) {
 		throw new PreConditionNotValidException();
 	    }
 	    if (process.isCandidacyCancelled() || process.isCandidacyAccepted() || process.hasRegistrationForCandidacy()) {
@@ -247,7 +251,7 @@ public class DegreeTransferIndividualCandidacyProcess extends DegreeTransferIndi
     static private class EditCandidacyCurricularCoursesInformation extends Activity<DegreeTransferIndividualCandidacyProcess> {
 	@Override
 	public void checkPreConditions(DegreeTransferIndividualCandidacyProcess process, IUserView userView) {
-	    if (!isDegreeAdministrativeOfficeEmployee(userView)) {
+	    if (!isAllowedToManageProcess(process, userView)) {
 		throw new PreConditionNotValidException();
 	    }
 	    if (process.isCandidacyCancelled()) {
@@ -269,14 +273,14 @@ public class DegreeTransferIndividualCandidacyProcess extends DegreeTransferIndi
     static private class IntroduceCandidacyResult extends Activity<DegreeTransferIndividualCandidacyProcess> {
 	@Override
 	public void checkPreConditions(DegreeTransferIndividualCandidacyProcess process, IUserView userView) {
-	    if (!isDegreeAdministrativeOfficeEmployee(userView) && !isCoordenator(userView)) {
+	    if (!isAllowedToManageProcess(process, userView)) {
 		throw new PreConditionNotValidException();
 	    }
 
 	    if (process.isCandidacyCancelled() || !process.isCandidacyDebtPayed()) {
 		throw new PreConditionNotValidException();
 	    }
-	    
+
 	    if (!process.isSentToCoordinator()) {
 		throw new PreConditionNotValidException();
 	    }
@@ -286,7 +290,8 @@ public class DegreeTransferIndividualCandidacyProcess extends DegreeTransferIndi
 	protected DegreeTransferIndividualCandidacyProcess executeActivity(DegreeTransferIndividualCandidacyProcess process,
 		IUserView userView, Object object) {
 	    DegreeTransferIndividualCandidacyResultBean bean = (DegreeTransferIndividualCandidacyResultBean) object;
-	    DegreeTransferIndividualCandidacySeriesGrade degreeTransferIndividualCandidacySeriesGrade = process.getCandidacy().getDegreeTransferIndividualCandidacySeriesGradeForDegree(bean.getDegree());
+	    DegreeTransferIndividualCandidacySeriesGrade degreeTransferIndividualCandidacySeriesGrade = process.getCandidacy()
+		    .getDegreeTransferIndividualCandidacySeriesGradeForDegree(bean.getDegree());
 	    degreeTransferIndividualCandidacySeriesGrade.setAffinity(bean.getAffinity());
 	    degreeTransferIndividualCandidacySeriesGrade.setDegreeNature(bean.getDegreeNature());
 	    degreeTransferIndividualCandidacySeriesGrade.setApprovedEctsRate(bean.getApprovedEctsRate());
@@ -296,11 +301,12 @@ public class DegreeTransferIndividualCandidacyProcess extends DegreeTransferIndi
 	    return process;
 	}
     }
+
     static private class ChangeIndividualCandidacyState extends Activity<DegreeTransferIndividualCandidacyProcess> {
 
 	@Override
 	public void checkPreConditions(DegreeTransferIndividualCandidacyProcess process, IUserView userView) {
-	    if (!isDegreeAdministrativeOfficeEmployee(userView)) {
+	    if (!isAllowedToManageProcess(process, userView)) {
 		throw new PreConditionNotValidException();
 	    }
 
@@ -324,12 +330,13 @@ public class DegreeTransferIndividualCandidacyProcess extends DegreeTransferIndi
 	    process.getCandidacy().setState(bean.getState());
 	    return process;
 	}
-	
+
     }
+
     static private class CancelCandidacy extends Activity<DegreeTransferIndividualCandidacyProcess> {
 	@Override
 	public void checkPreConditions(DegreeTransferIndividualCandidacyProcess process, IUserView userView) {
-	    if (!isDegreeAdministrativeOfficeEmployee(userView)) {
+	    if (!isAllowedToManageProcess(process, userView)) {
 		throw new PreConditionNotValidException();
 	    }
 	    if (process.hasAnyPaymentForCandidacy() || !process.isCandidacyInStandBy()) {
@@ -348,7 +355,7 @@ public class DegreeTransferIndividualCandidacyProcess extends DegreeTransferIndi
     static private class CreateRegistration extends Activity<DegreeTransferIndividualCandidacyProcess> {
 	@Override
 	public void checkPreConditions(DegreeTransferIndividualCandidacyProcess process, IUserView userView) {
-	    if (!isDegreeAdministrativeOfficeEmployee(userView)) {
+	    if (!isAllowedToManageProcess(process, userView)) {
 		throw new PreConditionNotValidException();
 	    }
 
@@ -456,10 +463,10 @@ public class DegreeTransferIndividualCandidacyProcess extends DegreeTransferIndi
 
 	@Override
 	public void checkPreConditions(DegreeTransferIndividualCandidacyProcess process, IUserView userView) {
-	    if (!isDegreeAdministrativeOfficeEmployee(userView)) {
+	    if (!isAllowedToManageProcess(process, userView)) {
 		throw new PreConditionNotValidException();
 	    }
-	    
+
 	    if (process.isCandidacyCancelled()) {
 		throw new PreConditionNotValidException();
 	    }
@@ -478,7 +485,7 @@ public class DegreeTransferIndividualCandidacyProcess extends DegreeTransferIndi
 
 	@Override
 	public void checkPreConditions(DegreeTransferIndividualCandidacyProcess process, IUserView userView) {
-	    if (!isDegreeAdministrativeOfficeEmployee(userView)) {
+	    if (!isAllowedToManageProcess(process, userView)) {
 		throw new PreConditionNotValidException();
 	    }
 
@@ -500,7 +507,7 @@ public class DegreeTransferIndividualCandidacyProcess extends DegreeTransferIndi
 
 	@Override
 	public void checkPreConditions(DegreeTransferIndividualCandidacyProcess process, IUserView userView) {
-	    if (!isDegreeAdministrativeOfficeEmployee(userView)) {
+	    if (!isAllowedToManageProcess(process, userView)) {
 		throw new PreConditionNotValidException();
 	    }
 
@@ -576,7 +583,7 @@ public class DegreeTransferIndividualCandidacyProcess extends DegreeTransferIndi
 
 	@Override
 	public void checkPreConditions(DegreeTransferIndividualCandidacyProcess process, IUserView userView) {
-	    if (!isDegreeAdministrativeOfficeEmployee(userView)) {
+	    if (!isAllowedToManageProcess(process, userView)) {
 		throw new PreConditionNotValidException();
 	    }
 	}
@@ -599,7 +606,7 @@ public class DegreeTransferIndividualCandidacyProcess extends DegreeTransferIndi
 
 	@Override
 	public void checkPreConditions(DegreeTransferIndividualCandidacyProcess process, IUserView userView) {
-	    if (!isDegreeAdministrativeOfficeEmployee(userView)) {
+	    if (!isAllowedToManageProcess(process, userView)) {
 		throw new PreConditionNotValidException();
 	    }
 	    if (process.isCandidacyInStandBy()) {
@@ -619,7 +626,7 @@ public class DegreeTransferIndividualCandidacyProcess extends DegreeTransferIndi
 
 	@Override
 	public void checkPreConditions(DegreeTransferIndividualCandidacyProcess process, IUserView userView) {
-	    if (!isDegreeAdministrativeOfficeEmployee(userView)) {
+	    if (!isAllowedToManageProcess(process, userView)) {
 		throw new PreConditionNotValidException();
 	    }
 

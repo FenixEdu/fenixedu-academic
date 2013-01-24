@@ -7,7 +7,6 @@ import net.sourceforge.fenixedu.dataTransferObject.serviceRequests.AcademicServi
 import net.sourceforge.fenixedu.dataTransferObject.serviceRequests.DocumentRequestCreateBean;
 import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.IEnrolment;
-import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.accounting.EventType;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
@@ -21,7 +20,6 @@ import net.sourceforge.fenixedu.domain.studentCurriculum.CycleCurriculumGroup;
 import net.sourceforge.fenixedu.domain.studentCurriculum.Dismissal;
 import net.sourceforge.fenixedu.domain.studentCurriculum.ExternalCurriculumGroup;
 import net.sourceforge.fenixedu.domain.studentCurriculum.ExternalEnrolment;
-import net.sourceforge.fenixedu.injectionCode.AccessControl;
 
 import org.joda.time.DateTime;
 
@@ -40,34 +38,26 @@ public class ApprovementCertificateRequest extends ApprovementCertificateRequest
 	super.setIgnoreExternalEntries(bean.isIgnoreExternalEntries());
 	super.setIgnoreCurriculumInAdvance(bean.isIgnoreCurriculumInAdvance());
 
-	if (isEmployee()) {
+	// TODO: remove this after DEA diplomas and certificates
+	if (!isDEARegistration()) {
 
-	    // TODO: remove this after DEA diplomas and certificates
-	    if (!isDEARegistration()) {
-
-		if (getRegistration().isConcluded()) {
-		    throw new DomainException("ApprovementCertificateRequest.registration.is.concluded");
-		}
-
-		if (getRegistration().isRegistrationConclusionProcessed()) {
-		    throw new DomainException("ApprovementCertificateRequest.registration.has.conclusion.processed");
-		}
+	    if (getRegistration().isConcluded()) {
+		throw new DomainException("ApprovementCertificateRequest.registration.is.concluded");
 	    }
 
-	    if (getEntriesToReport(isDEARegistration()).isEmpty()) {
-		throw new DomainException("ApprovementCertificateRequest.registration.without.approvements");
+	    if (getRegistration().isRegistrationConclusionProcessed()) {
+		throw new DomainException("ApprovementCertificateRequest.registration.has.conclusion.processed");
 	    }
+	}
+
+	if (getEntriesToReport(isDEARegistration()).isEmpty()) {
+	    throw new DomainException("ApprovementCertificateRequest.registration.without.approvements");
 	}
     }
 
     // TODO: remove this after DEA diplomas and certificates
     private boolean isDEARegistration() {
 	return getRegistration().getDegreeType() == DegreeType.BOLONHA_ADVANCED_SPECIALIZATION_DIPLOMA;
-    }
-
-    private boolean isEmployee() {
-	final Person person = AccessControl.getPerson();
-	return person != null && person.hasEmployee();
     }
 
     @Override
@@ -115,10 +105,10 @@ public class ApprovementCertificateRequest extends ApprovementCertificateRequest
 	    super.setNumberOfUnits(calculateNumberOfUnits());
 	}
     }
-    
+
     @Override
     protected boolean isPayed() {
-        return super.isPayed() || getEvent().isCancelled();
+	return super.isPayed() || getEvent().isCancelled();
     }
 
     @Override
@@ -133,7 +123,8 @@ public class ApprovementCertificateRequest extends ApprovementCertificateRequest
 
     @Override
     final public EventType getEventType() {
-	return (RegistrationAgreement.EXEMPTED_AGREEMENTS.contains(getRegistration().getRegistrationAgreement())) ? null : EventType.APPROVEMENT_CERTIFICATE_REQUEST;
+	return RegistrationAgreement.EXEMPTED_AGREEMENTS.contains(getRegistration().getRegistrationAgreement()) ? null
+		: EventType.APPROVEMENT_CERTIFICATE_REQUEST;
     }
 
     @Override
@@ -165,7 +156,7 @@ public class ApprovementCertificateRequest extends ApprovementCertificateRequest
     @Override
     public boolean isToPrint() {
 	final Integer units = super.getNumberOfUnits();
-	return !hasConcluded() || (units != null && units.intValue() == calculateNumberOfUnits());
+	return !hasConcluded() || units != null && units.intValue() == calculateNumberOfUnits();
     }
 
     final private Collection<ICurriculumEntry> getEntriesToReport(final boolean useConcluded) {
@@ -197,8 +188,8 @@ public class ApprovementCertificateRequest extends ApprovementCertificateRequest
 	for (final ICurriculumEntry entry : curriculum.getCurriculumEntries()) {
 	    if (entry instanceof Dismissal) {
 		final Dismissal dismissal = (Dismissal) entry;
-		if (dismissal.getCredits().isEquivalence()
-			|| (dismissal.isCreditsDismissal() && !dismissal.getCredits().isSubstitution())) {
+		if (dismissal.getCredits().isEquivalence() || dismissal.isCreditsDismissal()
+			&& !dismissal.getCredits().isSubstitution()) {
 		    continue;
 		}
 	    } else if (entry instanceof ExternalEnrolment && request.getIgnoreExternalEntries()) {

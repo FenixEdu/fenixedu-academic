@@ -5,9 +5,6 @@
 
 <%@page import="org.apache.struts.action.ActionMessages"%><html:xhtml/>
 
-<logic:present role="ACADEMIC_ADMINISTRATIVE_OFFICE">
-
-	<em><bean:message key="label.academicAdminOffice" bundle="ACADEMIC_OFFICE_RESOURCES"/></em>
 	<h2><bean:message key="title.utl.scholarship.report" bundle="ACADEMIC_OFFICE_RESOURCES"/></h2>
 		
 
@@ -68,5 +65,3 @@
 			<bean:message key="link.utl.scholarship.report.download.spreadsheet" bundle="ACADEMIC_OFFICE_RESOURCES"/>
 		</html:link>
 	</p>
-	
-</logic:present>

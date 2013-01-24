@@ -12,17 +12,12 @@ import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess;
 import net.sourceforge.fenixedu.domain.phd.PhdParticipant;
 import net.sourceforge.fenixedu.domain.phd.alert.AlertService.AlertMessage;
 import net.sourceforge.fenixedu.domain.phd.log.PhdLog;
-import net.sourceforge.fenixedu.domain.phd.permissions.PhdPermissionType;
 import net.sourceforge.fenixedu.domain.phd.thesis.PhdThesisProcess;
 import net.sourceforge.fenixedu.domain.util.email.Message;
 import net.sourceforge.fenixedu.domain.util.email.SystemSender;
 import net.sourceforge.fenixedu.util.phd.PhdProperties;
 
 abstract public class PhdThesisActivity extends Activity<PhdThesisProcess> {
-
-    protected PhdPermissionType getThesisProcessPermission() {
-	return PhdPermissionType.THESIS_PROCESS_MANAGEMENT;
-    }
 
     @Override
     final public void checkPreConditions(final PhdThesisProcess process, final IUserView userView) {
@@ -39,8 +34,8 @@ abstract public class PhdThesisActivity extends Activity<PhdThesisProcess> {
 	    String coordinatorMessage, String teacherMessage) {
 
 	if (!participant.isInternal()) {
-	    return AlertMessage.get("message.phd.external.access", PhdProperties.getPhdExternalAccessLink(), participant
-		    .getAccessHashCode(), participant.getPassword());
+	    return AlertMessage.get("message.phd.external.access", PhdProperties.getPhdExternalAccessLink(),
+		    participant.getAccessHashCode(), participant.getPassword());
 
 	} else {
 	    final Person person = ((InternalPhdParticipant) participant).getPerson();

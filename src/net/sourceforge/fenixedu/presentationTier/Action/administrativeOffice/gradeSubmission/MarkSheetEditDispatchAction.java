@@ -1,6 +1,3 @@
-/*
- * Created on May 5, 2006
- */
 package net.sourceforge.fenixedu.presentationTier.Action.administrativeOffice.gradeSubmission;
 
 import java.util.Collection;
@@ -10,7 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.NotAuthorizedFilterException;
+import net.sourceforge.fenixedu.applicationTier.Servico.administrativeOffice.gradeSubmission.EditMarkSheet;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.degreeAdministrativeOffice.gradeSubmission.MarkSheetEnrolmentEvaluationBean;
@@ -20,7 +17,6 @@ import net.sourceforge.fenixedu.domain.EnrolmentEvaluation;
 import net.sourceforge.fenixedu.domain.MarkSheet;
 import net.sourceforge.fenixedu.domain.MarkSheetState;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -34,10 +30,10 @@ import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
-@Mapping(path = "/editMarkSheet", module = "academicAdminOffice", formBean = "markSheetManagementForm", input = "/markSheetManagement.do?method=prepareSearchMarkSheet")
+@Mapping(path = "/editMarkSheet", module = "academicAdministration", formBean = "markSheetManagementForm", input = "/markSheetManagement.do?method=prepareSearchMarkSheet")
 @Forwards({
-	@Forward(name = "editMarkSheet", path = "/academicAdminOffice/gradeSubmission/editMarkSheet.jsp", tileProperties = @Tile(title = "private.academicadministrativeoffice.marksheets.marksheetmanagement")),
-	@Forward(name = "searchMarkSheetFilled", path = "/markSheetManagement.do?method=prepareSearchMarkSheetFilled", tileProperties = @Tile(title = "private.academicadministrativeoffice.marksheets.marksheetmanagement")) })
+	@Forward(name = "editMarkSheet", path = "/academicAdminOffice/gradeSubmission/editMarkSheet.jsp"),
+	@Forward(name = "searchMarkSheetFilled", path = "/markSheetManagement.do?method=prepareSearchMarkSheetFilled") })
 // @Forward(name = "editArchiveInformation", path =
 // "/academicAdminOffice/gradeSubmission/editMarkSheetArchiveInformation.jsp")
 // })
@@ -81,8 +77,7 @@ public class MarkSheetEditDispatchAction extends MarkSheetDispatchAction {
 
 	if (actionMessages.isEmpty()) {
 	    try {
-		ServiceUtils.executeService("EditMarkSheet", new Object[] { editBean.getMarkSheet(), editBean.getTeacher(),
-			editBean.getEvaluationDate() });
+		EditMarkSheet.run(editBean.getMarkSheet(), editBean.getTeacher(), editBean.getEvaluationDate());
 
 		editBean.setEnrolmentEvaluationBeansToEdit(getEnrolmentEvaluationBeansToEdit(editBean.getMarkSheet()));
 		RenderUtils.invalidateViewState("edit-marksheet-enrolments");
@@ -90,8 +85,6 @@ public class MarkSheetEditDispatchAction extends MarkSheetDispatchAction {
 		editBean.setEnrolmentEvaluationBeansToAppend(getEnrolmentEvaluationBeansToAppend(editBean.getMarkSheet()));
 		RenderUtils.invalidateViewState("append-enrolments");
 
-	    } catch (NotAuthorizedFilterException e) {
-		addMessage(request, actionMessages, "error.notAuthorized");
 	    } catch (InvalidArgumentsServiceException e) {
 		addMessage(request, actionMessages, e.getMessage());
 	    } catch (DomainException e) {
@@ -108,12 +101,9 @@ public class MarkSheetEditDispatchAction extends MarkSheetDispatchAction {
 
 	ActionMessages actionMessages = createActionMessages();
 	try {
-
-	    ServiceUtils.executeService("EditMarkSheet", new Object[] { editBean });
+	    EditMarkSheet.run(editBean);
 	    return mapping.findForward("searchMarkSheetFilled");
 
-	} catch (NotAuthorizedFilterException e) {
-	    addMessage(request, actionMessages, "error.notAuthorized");
 	} catch (InvalidArgumentsServiceException e) {
 	    addMessage(request, actionMessages, e.getMessage());
 	} catch (DomainException e) {
@@ -153,16 +143,4 @@ public class MarkSheetEditDispatchAction extends MarkSheetDispatchAction {
 	}
 	return enrolmentEvaluationBeansToAppend;
     }
-
-    /*
-     * public ActionForward prepareEditArchiveInformation(ActionMapping mapping,
-     * ActionForm actionForm, HttpServletRequest request, HttpServletResponse
-     * response) {
-     * 
-     * DynaActionForm form = (DynaActionForm) actionForm;
-     * request.setAttribute("markSheet",
-     * rootDomainObject.readMarkSheetByOID((Integer) form.get("msID")));
-     * request.setAttribute("url", buildUrl(form)); return
-     * mapping.findForward("editArchiveInformation"); }
-     */
 }

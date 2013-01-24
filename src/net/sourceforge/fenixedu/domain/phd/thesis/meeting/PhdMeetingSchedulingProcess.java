@@ -21,7 +21,7 @@ import net.sourceforge.fenixedu.domain.phd.thesis.meeting.activities.SkipSchedul
 import net.sourceforge.fenixedu.domain.phd.thesis.meeting.activities.SubmitThesisMeetingMinutes;
 
 public class PhdMeetingSchedulingProcess extends PhdMeetingSchedulingProcess_Base {
-    
+
     @StartActivity
     static public class StartThesisMeetings extends PhdMeetingSchedulingActivity {
 
@@ -56,8 +56,13 @@ public class PhdMeetingSchedulingProcess extends PhdMeetingSchedulingProcess_Bas
 	activities.add(new SkipScheduleFirstThesisMeeting());
     }
 
+    @Override
+    public boolean isAllowedToManageProcess(IUserView userView) {
+	return this.getIndividualProgramProcess().isAllowedToManageProcess(userView);
+    }
+
     public PhdMeetingSchedulingProcess(PhdThesisProcess process) {
-        super();
+	super();
 	super.setThesisProcess(process);
     }
 
@@ -95,7 +100,7 @@ public class PhdMeetingSchedulingProcess extends PhdMeetingSchedulingProcess_Bas
     protected PhdIndividualProgramProcess getIndividualProgramProcess() {
 	return getThesisProcess().getIndividualProgramProcess();
     }
-    
+
     public void createState(PhdMeetingSchedulingProcessStateType type, Person person, String remarks) {
 	PhdMeetingSchedulingProcessState.createWithInferredStateDate(this, type, person, remarks);
     }

@@ -3,6 +3,7 @@ package net.sourceforge.fenixedu.presentationTier.Action.candidacy;
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -30,7 +31,6 @@ import net.sourceforge.fenixedu.presentationTier.Action.casehandling.CaseHandlin
 import net.sourceforge.fenixedu.presentationTier.formbeans.FenixActionForm;
 
 import org.apache.commons.collections.CollectionUtils;
-import org.apache.commons.collections.Predicate;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
@@ -41,6 +41,10 @@ import org.joda.time.format.DateTimeFormatter;
 import pt.utl.ist.fenix.tools.util.excel.Spreadsheet;
 import pt.utl.ist.fenix.tools.util.excel.SpreadsheetXLSExporter;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
+
+import com.google.common.base.Predicate;
+import com.google.common.base.Predicates;
+import com.google.common.collect.Collections2;
 
 /**
  * INFO: when extending this class pay attention to the following aspects
@@ -132,8 +136,8 @@ abstract public class CandidacyProcessDA extends CaseHandlingDispatchAction {
 	    request.setAttribute("hideCancelledCandidacies", getHideCancelledCandidaciesValue(request));
 	}
 	request.setAttribute("canCreateProcess", canCreateProcess(getProcessType().getName()));
-	request.setAttribute("executionIntervals", ExecutionInterval
-		.readExecutionIntervalsWithCandidacyPeriod(getCandidacyPeriodType()));
+	request.setAttribute("executionIntervals",
+		ExecutionInterval.readExecutionIntervalsWithCandidacyPeriod(getCandidacyPeriodType()));
     }
 
     public static class HideCancelledCandidaciesBean implements java.io.Serializable {
@@ -181,32 +185,50 @@ abstract public class CandidacyProcessDA extends CaseHandlingDispatchAction {
 	return new HideCancelledCandidaciesBean(value != null ? (Boolean) value : Boolean.FALSE);
     }
 
-    protected List<IndividualCandidacyProcess> getChildProcesses(final CandidacyProcess process, HttpServletRequest request) {
+    private static final Predicate<IndividualCandidacyProcess> IS_CANDIDACY_CANCELED_PREDICATE = new Predicate<IndividualCandidacyProcess>() {
+	@Override
+	public boolean apply(IndividualCandidacyProcess process) {
+	    return !process.isCandidacyCancelled();
+	}
+    };
+
+    protected static final Predicate<IndividualCandidacyProcess> CAN_EXECUTE_ACTIVITY_PREDICATE = new Predicate<IndividualCandidacyProcess>() {
+	@Override
+	public boolean apply(IndividualCandidacyProcess process) {
+	    return process.canExecuteActivity(AccessControl.getUserView());
+	}
+    };
+
+    protected Predicate<IndividualCandidacyProcess> getChildProcessSelectionPredicate(final CandidacyProcess process,
+	    HttpServletRequest request) {
+	return Predicates.alwaysTrue();
+    }
+
+    protected Collection<IndividualCandidacyProcess> getChildProcesses(final CandidacyProcess process, HttpServletRequest request) {
 	HideCancelledCandidaciesBean hideCancelledCandidacies = getHideCancelledCandidaciesValue(request);
+
+	Predicate<IndividualCandidacyProcess> predicate = Predicates.and(CAN_EXECUTE_ACTIVITY_PREDICATE,
+		getChildProcessSelectionPredicate(process, request));
+
 	if (hideCancelledCandidacies.getValue()) {
-	    return new ArrayList<IndividualCandidacyProcess>(CollectionUtils.select(process.getChildProcesses(), new Predicate() {
-
-		@Override
-		public boolean evaluate(Object arg0) {
-		    return !((IndividualCandidacyProcess) arg0).isCandidacyCancelled();
-		}
-
-	    }));
+	    predicate = Predicates.and(IS_CANDIDACY_CANCELED_PREDICATE, predicate);
 	}
 
-	return process.getChildProcesses();
+	return Collections2.filter(process.getChildProcesses(), predicate);
+
     }
 
     private List<PublicCandidacyHashCode> getIndividualCandidacyHashCodesNotBounded() {
-	List<PublicCandidacyHashCode> publicCandidacyHashCodeList = new ArrayList<PublicCandidacyHashCode>(CollectionUtils
-		.select(RootDomainObject.readAllDomainObjects(PublicCandidacyHashCode.class), new Predicate() {
+	List<PublicCandidacyHashCode> publicCandidacyHashCodeList = new ArrayList<PublicCandidacyHashCode>(
+		CollectionUtils.select(RootDomainObject.readAllDomainObjects(PublicCandidacyHashCode.class),
+			new org.apache.commons.collections.Predicate() {
 
-		    @Override
-		    public boolean evaluate(Object arg0) {
-			final PublicCandidacyHashCode hashCode = (PublicCandidacyHashCode) arg0;
-			return hashCode.isFromDegreeOffice() && !hashCode.hasCandidacyProcess();
-		    }
-		}));
+			    @Override
+			    public boolean evaluate(Object arg0) {
+				final PublicCandidacyHashCode hashCode = (PublicCandidacyHashCode) arg0;
+				return hashCode.isFromDegreeOffice() && !hashCode.hasCandidacyProcess();
+			    }
+			}));
 
 	return publicCandidacyHashCodeList;
     }
@@ -268,9 +290,10 @@ abstract public class CandidacyProcessDA extends CaseHandlingDispatchAction {
 	    this.isRegistrationCreated = isRegistrationCreated;
 	}
 
+	@Override
 	public int compareTo(CandidacyDegreeBean other) {
-	    return IndividualCandidacyPersonalDetails.COMPARATOR_BY_NAME_AND_ID.compare(getPersonalDetails(), other
-		    .getPersonalDetails());
+	    return IndividualCandidacyPersonalDetails.COMPARATOR_BY_NAME_AND_ID.compare(getPersonalDetails(),
+		    other.getPersonalDetails());
 	}
     }
 
@@ -331,29 +354,11 @@ abstract public class CandidacyProcessDA extends CaseHandlingDispatchAction {
 		+ new LocalDate().toString("ddMMyyyy") + ".xls";
     }
 
-    public ActionForward prepareExecuteCreateRegistrations(ActionMapping mapping, ActionForm actionForm,
-	    HttpServletRequest request, HttpServletResponse response) {
-	request.setAttribute("candidacyDegreeBeans", createCandidacyDegreeBeans(request));
-	return mapping.findForward("create-registrations");
-    }
-
     /**
      * Create list of CandidacyDegreeBeans with information related to accepted
      * candidacies
      */
     abstract protected List<CandidacyDegreeBean> createCandidacyDegreeBeans(final HttpServletRequest request);
-
-    public ActionForward executeCreateRegistrations(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-	    HttpServletResponse response) throws FenixFilterException, FenixServiceException {
-	try {
-	    executeActivity(getProcess(request), "CreateRegistrations");
-	} catch (final DomainException e) {
-	    addActionMessage(request, e.getMessage(), e.getArgs());
-	    request.setAttribute("candidacyDegreeBeans", createCandidacyDegreeBeans(request));
-	    return mapping.findForward("create-registrations");
-	}
-	return listProcessAllowedActivities(mapping, actionForm, request, response);
-    }
 
     public ActionForward prepareExecuteExportCandidacies(ActionMapping mapping, ActionForm actionForm,
 	    HttpServletRequest request, HttpServletResponse response) throws IOException {
@@ -377,7 +382,8 @@ abstract public class CandidacyProcessDA extends CaseHandlingDispatchAction {
 	for (final IndividualCandidacyProcess individualProcess : process.getChildProcesses()) {
 	    if (hideCancelledCandidacies.getValue() && individualProcess.isCandidacyCancelled())
 		continue;
-	    buildIndividualCandidacyReport(spreadsheet, individualProcess);
+	    if (individualProcess.canExecuteActivity(AccessControl.getUserView()))
+		buildIndividualCandidacyReport(spreadsheet, individualProcess);
 	}
 	new SpreadsheetXLSExporter().exportToXLSSheet(spreadsheet, writer);
     }

@@ -9,6 +9,8 @@ import net.sourceforge.fenixedu.dataTransferObject.student.RegistrationConclusio
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.accessControl.academicAdministration.AcademicAuthorizationGroup;
+import net.sourceforge.fenixedu.domain.accessControl.academicAdministration.AcademicOperationType;
 import net.sourceforge.fenixedu.domain.candidacy.Ingression;
 import net.sourceforge.fenixedu.domain.degreeStructure.BranchCourseGroup;
 import net.sourceforge.fenixedu.domain.degreeStructure.BranchType;
@@ -36,12 +38,14 @@ import pt.ist.fenixWebFramework.security.accessControl.Checked;
 public class CycleCurriculumGroup extends CycleCurriculumGroup_Base {
 
     static final private Comparator<CycleCurriculumGroup> COMPARATOR_BY_CYCLE_TYPE = new Comparator<CycleCurriculumGroup>() {
+	@Override
 	final public int compare(final CycleCurriculumGroup o1, final CycleCurriculumGroup o2) {
 	    return CycleType.COMPARATOR_BY_LESS_WEIGHT.compare(o1.getCycleType(), o2.getCycleType());
 	}
     };
 
     static final public Comparator<CycleCurriculumGroup> COMPARATOR_BY_CYCLE_TYPE_AND_ID = new Comparator<CycleCurriculumGroup>() {
+	@Override
 	final public int compare(final CycleCurriculumGroup o1, final CycleCurriculumGroup o2) {
 	    final ComparatorChain comparatorChain = new ComparatorChain();
 	    comparatorChain.addComparator(CycleCurriculumGroup.COMPARATOR_BY_CYCLE_TYPE);
@@ -154,7 +158,8 @@ public class CycleCurriculumGroup extends CycleCurriculumGroup_Base {
 	if (isFirstCycle()) {
 	    if (getRegistration().getIngression() == Ingression.DA1C || getRegistration().getIngression() == Ingression.CIA2C) {
 		final IUserView userView = UserView.getUser();
-		if (userView.getPerson().hasRole(RoleType.ACADEMIC_ADMINISTRATIVE_OFFICE)
+		if (AcademicAuthorizationGroup.getProgramsForOperation(userView.getPerson(),
+			AcademicOperationType.STUDENT_ENROLMENTS).contains(getRegistration().getDegree())
 			|| userView.getPerson().hasRole(RoleType.MANAGER)) {
 		    return;
 		}
@@ -294,12 +299,10 @@ public class CycleCurriculumGroup extends CycleCurriculumGroup_Base {
 	return isConclusionProcessed() ? getConclusionProcess().getLastModificationDateTime() : null;
     }
 
-    @Checked("RolePredicates.MANAGER_OR_ACADEMIC_ADMINISTRATIVE_OFFICE_PREDICATE")
     public void editConclusionInformation(final Integer finalAverage, final YearMonthDay conclusion, final String notes) {
 	editConclusionInformation(AccessControl.getPerson(), finalAverage, conclusion, notes);
     }
 
-    @Checked("RolePredicates.MANAGER_OR_ACADEMIC_ADMINISTRATIVE_OFFICE_PREDICATE")
     public void editConclusionInformation(final Person editor, final Integer finalAverage, final YearMonthDay conclusion,
 	    final String notes) {
 	if (!isConclusionProcessed()) {

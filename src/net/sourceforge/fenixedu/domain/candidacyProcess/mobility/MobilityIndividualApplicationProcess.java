@@ -4,14 +4,18 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.ResourceBundle;
+import java.util.Set;
 
 import net.sourceforge.fenixedu._development.PropertiesManager;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.caseHandling.StartActivity;
+import net.sourceforge.fenixedu.domain.AcademicProgram;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
+import net.sourceforge.fenixedu.domain.accessControl.academicAdministration.AcademicAuthorizationGroup;
+import net.sourceforge.fenixedu.domain.accessControl.academicAdministration.AcademicOperationType;
 import net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyProcess;
 import net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyProcessDocumentUploadBean;
 import net.sourceforge.fenixedu.domain.candidacyProcess.DegreeOfficePublicCandidacyHashCode;
@@ -171,7 +175,7 @@ public class MobilityIndividualApplicationProcess extends MobilityIndividualAppl
 
     @Override
     public boolean canExecuteActivity(IUserView userView) {
-	return isDegreeAdministrativeOfficeEmployee(userView) || userView.hasRoleType(RoleType.SCIENTIFIC_COUNCIL)
+	return isAllowedToManageProcess(this, userView) || userView.hasRoleType(RoleType.SCIENTIFIC_COUNCIL)
 		|| userView.hasRoleType(RoleType.COORDINATOR);
     }
 
@@ -180,9 +184,14 @@ public class MobilityIndividualApplicationProcess extends MobilityIndividualAppl
 	return activities;
     }
 
-    static private boolean isDegreeAdministrativeOfficeEmployee(IUserView userView) {
-	return userView.hasRoleType(RoleType.ACADEMIC_ADMINISTRATIVE_OFFICE)
-		&& userView.getPerson().getEmployeeAdministrativeOffice().isDegree();
+    static private boolean isAllowedToManageProcess(MobilityIndividualApplicationProcess process, IUserView userView) {
+	Set<AcademicProgram> programs = AcademicAuthorizationGroup.getProgramsForOperation(userView.getPerson(),
+		AcademicOperationType.MANAGE_INDIVIDUAL_CANDIDACIES);
+
+	if (process == null || process.getCandidacy() == null)
+	    return false;
+
+	return programs.contains(process.getCandidacy().getSelectedDegree());
     }
 
     static private boolean isGriOfficeEmployee(IUserView userView) {
@@ -419,7 +428,7 @@ public class MobilityIndividualApplicationProcess extends MobilityIndividualAppl
 
 	@Override
 	public void checkPreConditions(MobilityIndividualApplicationProcess process, IUserView userView) {
-	    if (!isDegreeAdministrativeOfficeEmployee(userView) && !isGriOfficeEmployee(userView)) {
+	    if (!isAllowedToManageProcess(process, userView) && !isGriOfficeEmployee(userView)) {
 		throw new PreConditionNotValidException();
 	    }
 	    if (process.isCandidacyCancelled() || !process.isCandidacyInStandBy() || process.hasAnyPaymentForCandidacy()) {
@@ -439,7 +448,7 @@ public class MobilityIndividualApplicationProcess extends MobilityIndividualAppl
 
 	@Override
 	public void checkPreConditions(MobilityIndividualApplicationProcess process, IUserView userView) {
-	    if (!isDegreeAdministrativeOfficeEmployee(userView) && !isGriOfficeEmployee(userView)) {
+	    if (!isAllowedToManageProcess(process, userView) && !isGriOfficeEmployee(userView)) {
 		throw new PreConditionNotValidException();
 	    }
 	    if (process.isCandidacyCancelled()) {
@@ -460,7 +469,7 @@ public class MobilityIndividualApplicationProcess extends MobilityIndividualAppl
 
 	@Override
 	public void checkPreConditions(MobilityIndividualApplicationProcess process, IUserView userView) {
-	    if (!isDegreeAdministrativeOfficeEmployee(userView) && !isGriOfficeEmployee(userView)) {
+	    if (!isAllowedToManageProcess(process, userView) && !isGriOfficeEmployee(userView)) {
 		throw new PreConditionNotValidException();
 	    }
 	    if (process.isCandidacyCancelled()) {
@@ -479,7 +488,7 @@ public class MobilityIndividualApplicationProcess extends MobilityIndividualAppl
 
 	@Override
 	public void checkPreConditions(MobilityIndividualApplicationProcess process, IUserView userView) {
-	    if (!isDegreeAdministrativeOfficeEmployee(userView) && !isGriOfficeEmployee(userView)) {
+	    if (!isAllowedToManageProcess(process, userView) && !isGriOfficeEmployee(userView)) {
 		throw new PreConditionNotValidException();
 	    }
 	    if (process.isCandidacyCancelled()) {
@@ -1123,7 +1132,7 @@ public class MobilityIndividualApplicationProcess extends MobilityIndividualAppl
 
 	@Override
 	public void checkPreConditions(MobilityIndividualApplicationProcess process, IUserView userView) {
-	    if (!isDegreeAdministrativeOfficeEmployee(userView) && !isGriOfficeEmployee(userView)) {
+	    if (!isAllowedToManageProcess(process, userView) && !isGriOfficeEmployee(userView)) {
 		throw new PreConditionNotValidException();
 	    }
 	}
@@ -1182,7 +1191,7 @@ public class MobilityIndividualApplicationProcess extends MobilityIndividualAppl
 
 	@Override
 	public void checkPreConditions(MobilityIndividualApplicationProcess process, IUserView userView) {
-	    if (!isDegreeAdministrativeOfficeEmployee(userView)) {
+	    if (!isAllowedToManageProcess(process, userView)) {
 		throw new PreConditionNotValidException();
 	    }
 
@@ -1209,7 +1218,7 @@ public class MobilityIndividualApplicationProcess extends MobilityIndividualAppl
 
 	@Override
 	public void checkPreConditions(MobilityIndividualApplicationProcess process, IUserView userView) {
-	    if (!isDegreeAdministrativeOfficeEmployee(userView)) {
+	    if (!isAllowedToManageProcess(process, userView)) {
 		throw new PreConditionNotValidException();
 	    }
 

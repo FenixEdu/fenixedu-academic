@@ -460,7 +460,7 @@ public class CurricularCourse extends CurricularCourse_Base {
     public String getCurricularCourseUniqueKeyForEnrollment() {
 	final DegreeType degreeType = (getDegreeCurricularPlan() != null && getDegreeCurricularPlan().getDegree() != null) ? getDegreeCurricularPlan()
 		.getDegree().getDegreeType() : null;
-		return constructUniqueEnrollmentKey(getCode(), getName(), degreeType);
+	return constructUniqueEnrollmentKey(getCode(), getName(), degreeType);
     }
 
     public boolean hasActiveScopeInGivenSemester(final Integer semester) {
@@ -1261,9 +1261,9 @@ public class CurricularCourse extends CurricularCourse_Base {
 	for (final CurriculumModule curriculumModule : getCurriculumModules()) {
 	    if (curriculumModule.isEnrolment()) {
 		final Enrolment enrolment = (Enrolment) curriculumModule;
-		if (!enrolment.isAnnulled() && 
-			(enrolment.getExecutionPeriod().getAcademicInterval().equals(academicInterval)
-				|| enrolment.getExecutionPeriod().getExecutionYear().getAcademicInterval().equals(academicInterval))) {
+		if (!enrolment.isAnnulled()
+			&& (enrolment.getExecutionPeriod().getAcademicInterval().equals(academicInterval) || enrolment
+				.getExecutionPeriod().getExecutionYear().getAcademicInterval().equals(academicInterval))) {
 		    enrolments.add(enrolment);
 		}
 	    }
@@ -1781,22 +1781,22 @@ public class CurricularCourse extends CurricularCourse_Base {
 
     public MarkSheet createNormalMarkSheet(ExecutionSemester executionSemester, Teacher responsibleTeacher, Date evaluationDate,
 	    MarkSheetType markSheetType, Boolean submittedByTeacher,
-	    Collection<MarkSheetEnrolmentEvaluationBean> evaluationBeans, Employee employee) {
+	    Collection<MarkSheetEnrolmentEvaluationBean> evaluationBeans, Person person) {
 
 	return MarkSheet.createNormal(this, executionSemester, responsibleTeacher, evaluationDate, markSheetType,
-		submittedByTeacher, evaluationBeans, employee);
+		submittedByTeacher, evaluationBeans, person);
     }
 
     public MarkSheet createOldNormalMarkSheet(ExecutionSemester executionSemester, Teacher responsibleTeacher,
 	    Date evaluationDate, MarkSheetType markSheetType, Collection<MarkSheetEnrolmentEvaluationBean> evaluationBeans,
-	    Employee employee) {
+	    Person person) {
 
 	return MarkSheet.createOldNormal(this, executionSemester, responsibleTeacher, evaluationDate, markSheetType,
-		evaluationBeans, employee);
+		evaluationBeans, person);
     }
 
     public MarkSheet rectifyEnrolmentEvaluation(MarkSheet markSheet, EnrolmentEvaluation enrolmentEvaluation,
-	    Date evaluationDate, Grade grade, String reason, Employee employee) {
+	    Date evaluationDate, Grade grade, String reason, Person person) {
 
 	if (markSheet == null || evaluationDate == null || grade.isEmpty()) {
 	    throw new DomainException("error.markSheet.invalid.arguments");
@@ -1820,7 +1820,7 @@ public class CurricularCourse extends CurricularCourse_Base {
 
 	MarkSheet rectificationMarkSheet = createRectificationMarkSheet(markSheet.getExecutionPeriod(), evaluationDate,
 		markSheet.getResponsibleTeacher(), markSheet.getMarkSheetType(), reason, new MarkSheetEnrolmentEvaluationBean(
-			enrolmentEvaluation.getEnrolment(), evaluationDate, grade), employee);
+			enrolmentEvaluation.getEnrolment(), evaluationDate, grade), person);
 
 	// Rectification MarkSheet MUST have only ONE EnrolmentEvaluation
 	rectificationMarkSheet.getEnrolmentEvaluations().get(0).setRectified(enrolmentEvaluation);
@@ -1828,7 +1828,7 @@ public class CurricularCourse extends CurricularCourse_Base {
     }
 
     public MarkSheet rectifyOldEnrolmentEvaluation(EnrolmentEvaluation enrolmentEvaluation, MarkSheetType markSheetType,
-	    Date evaluationDate, Grade newGrade, String reason, Employee employee) {
+	    Date evaluationDate, Grade newGrade, String reason, Person person) {
 
 	if (enrolmentEvaluation == null || evaluationDate == null || newGrade.isEmpty()) {
 	    throw new DomainException("error.markSheet.invalid.arguments");
@@ -1843,7 +1843,7 @@ public class CurricularCourse extends CurricularCourse_Base {
 
 	MarkSheet rectificationMarkSheet = createRectificationOldMarkSheet(enrolmentEvaluation.getExecutionPeriod(),
 		evaluationDate, enrolmentEvaluation.getPersonResponsibleForGrade().getTeacher(), markSheetType, reason,
-		new MarkSheetEnrolmentEvaluationBean(enrolmentEvaluation.getEnrolment(), evaluationDate, newGrade), employee);
+		new MarkSheetEnrolmentEvaluationBean(enrolmentEvaluation.getEnrolment(), evaluationDate, newGrade), person);
 
 	// Rectification MarkSheet MUST have only ONE EnrolmentEvaluation
 	rectificationMarkSheet.getEnrolmentEvaluations().get(0).setRectified(enrolmentEvaluation);
@@ -1853,18 +1853,18 @@ public class CurricularCourse extends CurricularCourse_Base {
 
     private MarkSheet createRectificationMarkSheet(ExecutionSemester executionSemester, Date evaluationDate,
 	    Teacher responsibleTeacher, MarkSheetType markSheetType, String reason,
-	    MarkSheetEnrolmentEvaluationBean evaluationBean, Employee employee) {
+	    MarkSheetEnrolmentEvaluationBean evaluationBean, Person person) {
 
 	return MarkSheet.createRectification(this, executionSemester, responsibleTeacher, evaluationDate, markSheetType, reason,
-		evaluationBean, employee);
+		evaluationBean, person);
     }
 
     public MarkSheet createRectificationOldMarkSheet(ExecutionSemester executionSemester, Date evaluationDate,
 	    Teacher responsibleTeacher, MarkSheetType markSheetType, String reason,
-	    MarkSheetEnrolmentEvaluationBean evaluationBean, Employee employee) {
+	    MarkSheetEnrolmentEvaluationBean evaluationBean, Person person) {
 
 	return MarkSheet.createOldRectification(this, executionSemester, responsibleTeacher, evaluationDate, markSheetType,
-		reason, evaluationBean, employee);
+		reason, evaluationBean, person);
     }
 
     public Collection<MarkSheet> searchMarkSheets(ExecutionSemester executionSemester, Teacher teacher, Date evaluationDate,
@@ -2163,7 +2163,7 @@ public class CurricularCourse extends CurricularCourse_Base {
     }
 
     public boolean getCanCreateMarkSheet() {
-	return !isDissertation() || (isDissertation() && MarkSheetPredicates.checkDissertation(null));
+	return !isDissertation() || (isDissertation() && MarkSheetPredicates.checkDissertation());
     }
 
     public Collection<MarkSheet> getMarkSheetsByPeriod(ExecutionSemester executionSemester) {
@@ -2218,6 +2218,10 @@ public class CurricularCourse extends CurricularCourse_Base {
 
     public boolean hasExecutionDegreeByYearAndCampus(ExecutionYear executionYear, Campus campus) {
 	return getDegreeCurricularPlan().hasExecutionDegreeByYearAndCampus(executionYear, campus);
+    }
+
+    public boolean hasAnyExecutionDegreeFor(ExecutionYear executionYear) {
+	return getDegreeCurricularPlan().hasAnyExecutionDegreeFor(executionYear);
     }
 
     @Override

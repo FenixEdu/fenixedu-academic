@@ -7,7 +7,19 @@ import net.sourceforge.fenixedu.domain.accounting.events.serviceRequests.Equival
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.AcademicServiceRequestType;
 
+import org.apache.log4j.Logger;
+
 public class EquivalencePlanRequest extends EquivalencePlanRequest_Base {
+    private static final Logger logger = Logger.getLogger(EquivalencePlanRequest.class);
+
+    private static final String COURSE_LABEL = "Nome da disciplina do currículo de Bolonha";
+    private static final String COURSE_ECTS = "ECTS";
+    private static final String EQUIVALENT_COURSE_LABEL = "Nome da(s) disciplina(s) considerada(s) equivalente(s)";
+    private static final String GRADE_LABEL = "Classificação";
+    private static final String GRADE_SCALE = "Escala";
+    private static final String MEC2006 = "MEC 2006"; // remove after when the
+						      // process is open to all
+						      // degrees
 
     protected EquivalencePlanRequest() {
 	super();
@@ -56,7 +68,7 @@ public class EquivalencePlanRequest extends EquivalencePlanRequest_Base {
     @Override
     protected void internalChangeState(final AcademicServiceRequestBean academicServiceRequestBean) {
 	if (academicServiceRequestBean.isToCancelOrReject() && hasEvent()) {
-	    getEvent().cancel(academicServiceRequestBean.getEmployee());
+	    getEvent().cancel(academicServiceRequestBean.getResponsible());
 
 	} else if (academicServiceRequestBean.isToProcess()) {
 	    if (isPayable() && !isPayed()) {
@@ -85,9 +97,9 @@ public class EquivalencePlanRequest extends EquivalencePlanRequest_Base {
 
     @Override
     public boolean isManagedWithRectorateSubmissionBatch() {
-        return false;
+	return false;
     }
-    
+
     @Override
     public boolean isAvailableForTransitedRegistrations() {
 	return true;
@@ -102,5 +114,4 @@ public class EquivalencePlanRequest extends EquivalencePlanRequest_Base {
     public boolean hasPersonalInfo() {
 	return false;
     }
-
 }

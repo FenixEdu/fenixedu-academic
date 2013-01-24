@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.ExecutionInterval;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyProcess;
 import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyProcess;
 import net.sourceforge.fenixedu.domain.candidacyProcess.mobility.MobilityApplicationProcess;
@@ -34,16 +35,18 @@ import pt.ist.fenixWebFramework.services.Service;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
 import pt.ist.fenixframework.pstm.AbstractDomainObject;
 import pt.utl.ist.fenix.tools.util.excel.Spreadsheet;
 
-@Mapping(path = "/caseHandlingMobilityApplicationProcess", module = "academicAdminOffice", formBeanClass = ErasmusCandidacyProcessDA.ErasmusCandidacyProcessForm.class)
+import com.google.common.base.Predicate;
+import com.google.common.base.Predicates;
+
+@Mapping(path = "/caseHandlingMobilityApplicationProcess", module = "academicAdministration", formBeanClass = ErasmusCandidacyProcessDA.ErasmusCandidacyProcessForm.class)
 @Forwards({
-	@Forward(name = "intro", path = "/candidacy/erasmus/mainCandidacyProcess.jsp", tileProperties = @Tile(title = "private.academicadministrativeoffice.applications.mobility")),
-	@Forward(name = "prepare-create-new-process", path = "/candidacy/createCandidacyPeriod.jsp", tileProperties = @Tile(title = "private.academicadministrativeoffice.applications.mobility")),
-	@Forward(name = "prepare-edit-candidacy-period", path = "/candidacy/editCandidacyPeriod.jsp", tileProperties = @Tile(title = "private.academicadministrativeoffice.applications.mobility")),
-	@Forward(name = "view-child-process-with-missing.required-documents", path = "/candidacy/erasmus/viewChildProcessesWithMissingRequiredDocuments.jsp", tileProperties = @Tile(title = "private.academicadministrativeoffice.applications.mobility")) })
+	@Forward(name = "intro", path = "/candidacy/erasmus/mainCandidacyProcess.jsp"),
+	@Forward(name = "prepare-create-new-process", path = "/candidacy/createCandidacyPeriod.jsp"),
+	@Forward(name = "prepare-edit-candidacy-period", path = "/candidacy/editCandidacyPeriod.jsp"),
+	@Forward(name = "view-child-process-with-missing.required-documents", path = "/candidacy/erasmus/viewChildProcessesWithMissingRequiredDocuments.jsp") })
 public class ErasmusCandidacyProcessDA extends CandidacyProcessDA {
 
     static public class ErasmusCandidacyProcessForm extends CandidacyProcessForm {
@@ -258,19 +261,35 @@ public class ErasmusCandidacyProcessDA extends CandidacyProcessDA {
     }
 
     @Override
-    protected List<IndividualCandidacyProcess> getChildProcesses(final CandidacyProcess process, HttpServletRequest request) {
-	List<IndividualCandidacyProcess> processes = process.getChildProcesses();
-	List<IndividualCandidacyProcess> selectedDegreesIndividualCandidacyProcesses = new ArrayList<IndividualCandidacyProcess>();
-	Degree selectedDegree = getChooseDegreeBean(request).getDegree();
-
-	for (IndividualCandidacyProcess child : processes) {
-	    if ((selectedDegree == null)
-		    || ((MobilityIndividualApplicationProcess) child).getCandidacy().getSelectedDegree() == selectedDegree) {
-		selectedDegreesIndividualCandidacyProcesses.add(child);
+    protected Predicate<IndividualCandidacyProcess> getChildProcessSelectionPredicate(final CandidacyProcess process,
+	    HttpServletRequest request) {
+	final Degree selectedDegree = getChooseDegreeBean(request).getDegree();
+	final MobilityProgram mobilityProgram = getChooseMobilityProgramBean(request).getMobilityProgram();
+	if (selectedDegree == null)
+	    if (mobilityProgram == null) {
+		return Predicates.alwaysTrue();
+	    } else {
+		return new Predicate<IndividualCandidacyProcess>() {
+		    @Override
+		    public boolean apply(IndividualCandidacyProcess process) {
+			return ((MobilityIndividualApplicationProcess) process).getMobilityProgram().equals(mobilityProgram);
+		    }
+		};
 	    }
-	}
+	else {
+	    return new Predicate<IndividualCandidacyProcess>() {
+		@Override
+		public boolean apply(IndividualCandidacyProcess process) {
 
-	return selectedDegreesIndividualCandidacyProcesses;
+		    MobilityIndividualApplicationProcess mobilityProcess = (MobilityIndividualApplicationProcess) process;
+
+		    if (mobilityProgram != null && !mobilityProcess.getMobilityProgram().equals(mobilityProgram))
+			return false;
+
+		    return ((MobilityIndividualApplicationProcess) process).getCandidacy().getSelectedDegree() == selectedDegree;
+		}
+	    };
+	}
     }
 
     @Override
@@ -328,7 +347,7 @@ public class ErasmusCandidacyProcessDA extends CandidacyProcessDA {
 	public Object provide(Object arg0, Object arg1) {
 	    final Set<MobilityProgram> mobilityPrograms = new TreeSet<MobilityProgram>(
 		    MobilityProgram.COMPARATOR_BY_REGISTRATION_AGREEMENT);
-	    for (Program program : rootDomainObject.getInstance().getPrograms()) {
+	    for (Program program : RootDomainObject.getInstance().getPrograms()) {
 		if (program instanceof MobilityProgram) {
 		    mobilityPrograms.add((MobilityProgram) program);
 		}

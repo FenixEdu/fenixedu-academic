@@ -4,14 +4,11 @@
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr"%>
 <html:xhtml/>
 
-<logic:present role="ACADEMIC_ADMINISTRATIVE_OFFICE">
-
 <bean:define id="personId" name="createReceiptBean" property="person.idInternal"/>
 <fr:form action="<%="/receipts.do?personId=" + personId%>">
 	
 	<input type="hidden" name="method" value=""/>
 
-	<em><bean:message key="label.payments" bundle="ACADEMIC_OFFICE_RESOURCES"/></em>
 	<h2><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.payments.paymentsWithoutReceipt" /></h2>
 	
 	
@@ -99,5 +96,3 @@
 		<html:cancel bundle="HTMLALT_RESOURCES" altKey="cancel.cancel" onclick="this.form.method.value='showOperations';"><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="button.payments.back"/></html:cancel>
 	</logic:empty>
 </fr:form>
-
-</logic:present>

@@ -17,7 +17,7 @@ public class MoveJuryElementOrder extends PhdThesisActivity {
     @Override
     protected void activityPreConditions(PhdThesisProcess process, IUserView userView) {
 
-	if (!PhdThesisProcess.isMasterDegreeAdministrativeOfficeEmployee(userView)) {
+	if (!process.isAllowedToManageProcess(userView)) {
 	    throw new PreConditionNotValidException();
 	}
     }
@@ -25,7 +25,7 @@ public class MoveJuryElementOrder extends PhdThesisActivity {
     @Override
     @SuppressWarnings("unchecked")
     protected PhdThesisProcess executeActivity(PhdThesisProcess process, IUserView userView, Object object) {
-	
+
 	final Pair<ThesisJuryElement, Integer> elementInfo = (Pair<ThesisJuryElement, Integer>) object;
 	final List<ThesisJuryElement> elements = new ArrayList<ThesisJuryElement>(process.getOrderedThesisJuryElements());
 

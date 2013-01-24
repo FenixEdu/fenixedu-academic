@@ -15,7 +15,7 @@ public class SkipScheduleThesisDiscussion extends PhdThesisActivity {
 	    throw new PreConditionNotValidException();
 	}
 
-	if (PhdThesisProcess.isMasterDegreeAdministrativeOfficeEmployee(userView)) {
+	if (process.isAllowedToManageProcess(userView)) {
 	    return;
 	}
     }

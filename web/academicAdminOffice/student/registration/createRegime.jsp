@@ -5,45 +5,40 @@
 <%@ page language="java" %>
 <html:xhtml />
 
-<logic:present role="ACADEMIC_ADMINISTRATIVE_OFFICE">
+<h2><bean:message key="registration.show.regimes" bundle="ACADEMIC_OFFICE_RESOURCES"/></h2>
 
-	<em><bean:message key="label.academicAdminOffice" bundle="ACADEMIC_OFFICE_RESOURCES"/></em>
-	<h2><bean:message key="registration.show.regimes" bundle="ACADEMIC_OFFICE_RESOURCES"/></h2>
 
-	
-	<div style="float: right;">
-		<bean:define id="personID" name="registration" property="student.person.idInternal"/>
-		<html:img align="middle" src="<%= request.getContextPath() +"/person/retrievePersonalPhoto.do?method=retrieveByID&amp;personCode="+personID.toString()%>" altKey="personPhoto" bundle="IMAGE_RESOURCES" styleClass="showphoto"/>
-	</div>
-	
-	<p class="mvert2">
-		<span class="showpersonid">
-		<bean:message key="label.student" bundle="ACADEMIC_OFFICE_RESOURCES"/>: 
-			<fr:view name="registration" property="student" schema="student.show.personAndStudentInformation.short">
-				<fr:layout name="flow">
-					<fr:property name="labelExcluded" value="true"/>
-				</fr:layout>
-			</fr:view>
-		</span>
-	</p>
+<div style="float: right;">
+	<bean:define id="personID" name="registration" property="student.person.idInternal"/>
+	<html:img align="middle" src="<%= request.getContextPath() +"/person/retrievePersonalPhoto.do?method=retrieveByID&amp;personCode="+personID.toString()%>" altKey="personPhoto" bundle="IMAGE_RESOURCES" styleClass="showphoto"/>
+</div>
 
-	<html:messages id="message" message="true" bundle="APPLICATION_RESOURCES">
-		<span class="error0"> <bean:write name="message" /> </span>
-		<br />
-	</html:messages>
+<p class="mvert2">
+	<span class="showpersonid">
+	<bean:message key="label.student" bundle="ACADEMIC_OFFICE_RESOURCES"/>: 
+		<fr:view name="registration" property="student" schema="student.show.personAndStudentInformation.short">
+			<fr:layout name="flow">
+				<fr:property name="labelExcluded" value="true"/>
+			</fr:layout>
+		</fr:view>
+	</span>
+</p>
 
-	<h3 class="mbottom05"><bean:message key="registration.regimes" bundle="ACADEMIC_OFFICE_RESOURCES"/></h3>
+<html:messages id="message" message="true" bundle="APPLICATION_RESOURCES">
+	<span class="error0"> <bean:write name="message" /> </span>
+	<br />
+</html:messages>
 
-	<bean:define id="registrationId" name="registration" property="idInternal" />
+<h3 class="mbottom05"><bean:message key="registration.regimes" bundle="ACADEMIC_OFFICE_RESOURCES"/></h3>
 
-	<fr:create schema="RegistrationRegime.create" type="net.sourceforge.fenixedu.domain.student.RegistrationRegime"
-		action='<%= "/registration.do?method=showRegimes&amp;registrationId=" + registrationId.toString() %>'>
-		<fr:hidden slot="registration" name="registration"/>
-		<fr:layout name="tabular">
-			<fr:property name="classes" value="tstyle4 thright thlight mtop05"/>
-			<fr:property name="columnClasses" value="width12em,,tdclear tderror1"/>
-		</fr:layout>
-		<fr:destination name="cancel" path='<%= "/registration.do?method=showRegimes&amp;registrationId=" + registrationId.toString() %>'/>
-	</fr:create>
+<bean:define id="registrationId" name="registration" property="idInternal" />
 
-</logic:present>
+<fr:create schema="RegistrationRegime.create" type="net.sourceforge.fenixedu.domain.student.RegistrationRegime"
+	action='<%= "/registration.do?method=showRegimes&amp;registrationId=" + registrationId.toString() %>'>
+	<fr:hidden slot="registration" name="registration"/>
+	<fr:layout name="tabular">
+		<fr:property name="classes" value="tstyle4 thright thlight mtop05"/>
+		<fr:property name="columnClasses" value="width12em,,tdclear tderror1"/>
+	</fr:layout>
+	<fr:destination name="cancel" path='<%= "/registration.do?method=showRegimes&amp;registrationId=" + registrationId.toString() %>'/>
+</fr:create>

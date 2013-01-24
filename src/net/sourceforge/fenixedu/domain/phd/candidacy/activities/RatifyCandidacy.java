@@ -15,7 +15,7 @@ public class RatifyCandidacy extends PhdProgramCandidacyProcessActivity {
 	}
     }
 
-	@Override
+    @Override
     protected PhdProgramCandidacyProcess executeActivity(PhdProgramCandidacyProcess process, IUserView userView, Object object) {
 	process.ratify((RatifyCandidacyBean) object, userView != null ? userView.getPerson() : null);
 	return process;

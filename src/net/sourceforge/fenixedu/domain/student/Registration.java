@@ -50,8 +50,8 @@ import net.sourceforge.fenixedu.domain.Tutorship;
 import net.sourceforge.fenixedu.domain.WrittenEvaluation;
 import net.sourceforge.fenixedu.domain.WrittenEvaluationEnrolment;
 import net.sourceforge.fenixedu.domain.WrittenTest;
-import net.sourceforge.fenixedu.domain.accessControl.PermissionType;
-import net.sourceforge.fenixedu.domain.accessControl.academicAdminOffice.AdministrativeOfficePermission;
+import net.sourceforge.fenixedu.domain.accessControl.academicAdministration.AcademicAuthorizationGroup;
+import net.sourceforge.fenixedu.domain.accessControl.academicAdministration.AcademicOperationType;
 import net.sourceforge.fenixedu.domain.accounting.events.AdministrativeOfficeFeeAndInsuranceEvent;
 import net.sourceforge.fenixedu.domain.accounting.events.EnrolmentOutOfPeriodEvent;
 import net.sourceforge.fenixedu.domain.accounting.events.gratuity.GratuityEvent;
@@ -75,7 +75,6 @@ import net.sourceforge.fenixedu.domain.log.CurriculumLineLog;
 import net.sourceforge.fenixedu.domain.oldInquiries.InquiriesRegistry;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.person.IDDocumentType;
-import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.reimbursementGuide.ReimbursementGuideEntry;
 import net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequest;
 import net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequestSituationType;
@@ -1822,7 +1821,9 @@ public class Registration extends Registration_Base {
 
     private void checkIfReachedAttendsLimit() {
 	final IUserView userView = AccessControl.getUserView();
-	if (userView == null || !userView.hasRoleType(RoleType.ACADEMIC_ADMINISTRATIVE_OFFICE)) {
+	if (userView == null
+		|| !AcademicAuthorizationGroup.getProgramsForOperation(userView.getPerson(),
+			AcademicOperationType.STUDENT_ENROLMENTS).contains(this.getDegree())) {
 	    if (readAttendsInCurrentExecutionPeriod().size() >= MAXIMUM_STUDENT_ATTENDS_PER_EXECUTION_PERIOD) {
 		throw new DomainException("error.student.reached.attends.limit",
 			String.valueOf(MAXIMUM_STUDENT_ATTENDS_PER_EXECUTION_PERIOD));
@@ -1830,6 +1831,7 @@ public class Registration extends Registration_Base {
 	}
     }
 
+    @Service
     final public void removeAttendFor(final ExecutionCourse executionCourse) {
 	final Attends attend = readRegistrationAttendByExecutionCourse(executionCourse);
 	if (attend != null) {
@@ -1839,13 +1841,13 @@ public class Registration extends Registration_Base {
 	}
     }
 
-    private void checkIfHasEnrolmentFor(final Attends attend) {
+    public void checkIfHasEnrolmentFor(final Attends attend) {
 	if (attend.hasEnrolment()) {
 	    throw new DomainException("errors.student.already.enroled");
 	}
     }
 
-    private void checkIfHasShiftsFor(final ExecutionCourse executionCourse) {
+    public void checkIfHasShiftsFor(final ExecutionCourse executionCourse) {
 	if (!getShiftsFor(executionCourse).isEmpty()) {
 	    throw new DomainException("errors.student.already.enroled.in.shift");
 	}
@@ -2050,17 +2052,18 @@ public class Registration extends Registration_Base {
 	return isActive() && isForOffice(office.getAdministrativeOffice());
     }
 
+    @Deprecated
     public boolean isDegreeAdministrativeOffice() {
 	return getDegreeType().getAdministrativeOfficeType() == AdministrativeOfficeType.DEGREE;
     }
 
     final public boolean isForOffice(final AdministrativeOffice administrativeOffice) {
-	return getDegreeType().getAdministrativeOfficeType().equals(administrativeOffice.getAdministrativeOfficeType());
+	return getDegree().getAdministrativeOffice().equals(administrativeOffice);
     }
 
-    final public boolean getIsForOffice() {
-	final AdministrativeOffice administrativeOffice = AccessControl.getPerson().getEmployee().getAdministrativeOffice();
-	return isForOffice(administrativeOffice);
+    final public boolean isAllowedToManageRegistration() {
+	return AcademicAuthorizationGroup.getProgramsForOperation(AccessControl.getPerson(),
+		AcademicOperationType.MANAGE_REGISTRATIONS).contains(getDegree());
     }
 
     final public List<NewTestGroup> getPublishedTestGroups() {
@@ -2759,7 +2762,6 @@ public class Registration extends Registration_Base {
 	return concludedCycles.isEmpty() ? null : concludedCycles.last();
     }
 
-    @Checked("RegistrationPredicates.MANAGE_CONCLUSION_PROCESS")
     public void conclude() {
 	if (isBolonha()) {
 	    throw new DomainException("error.Registration.cannot.apply.to.bolonha");
@@ -2780,19 +2782,14 @@ public class Registration extends Registration_Base {
     }
 
     public boolean canRepeatConclusionProcess(Person person) {
-	final AdministrativeOfficePermission permission = person.getEmployeeAdministrativeOffice().getPermission(
-		PermissionType.REPEAT_CONCLUSION_PROCESS, person.getEmployeeCampus());
-
-	return permission != null && permission.isAppliable(this) && permission.isMember(person);
-
+	return AcademicAuthorizationGroup.getProgramsForOperation(person, AcademicOperationType.REPEAT_CONCLUSION_PROCESS)
+		.contains(this.getDegree());
     }
 
-    @Checked("RolePredicates.MANAGER_OR_ACADEMIC_ADMINISTRATIVE_OFFICE_PREDICATE")
     public void editConclusionInformation(final Integer finalAverage, final YearMonthDay conclusion, final String notes) {
 	editConclusionInformation(AccessControl.getPerson(), finalAverage, conclusion, notes);
     }
 
-    @Checked("RolePredicates.MANAGER_OR_ACADEMIC_ADMINISTRATIVE_OFFICE_PREDICATE")
     public void editConclusionInformation(final Person editor, final Integer finalAverage, final YearMonthDay conclusion,
 	    final String notes) {
 	if (!isRegistrationConclusionProcessed()) {
@@ -2805,7 +2802,6 @@ public class Registration extends Registration_Base {
 	getConclusionProcess().update(editor, finalAverage, conclusion.toLocalDate(), notes);
     }
 
-    @Checked("RolePredicates.MANAGER_OR_ACADEMIC_ADMINISTRATIVE_OFFICE_PREDICATE")
     public void editConclusionInformation(final Person editor, final Integer finalAverage, final BigDecimal average,
 	    final YearMonthDay conclusion, final String notes) {
 
@@ -3618,6 +3614,7 @@ public class Registration extends Registration_Base {
 	return isActive();
     }
 
+    @Deprecated
     final public boolean getIsForDegreeOffice() {
 	return isForOffice(AdministrativeOffice.readByAdministrativeOfficeType(AdministrativeOfficeType.DEGREE));
     }
@@ -3719,37 +3716,6 @@ public class Registration extends Registration_Base {
 
     public void setStudiesStartDate(final LocalDate studiesStartDate) {
 	setStudiesStartDate(new YearMonthDay(studiesStartDate));
-    }
-
-    @Checked("RolePredicates.ACADEMIC_ADMINISTRATIVE_OFFICE_PREDICATE")
-    public void deleteActualInfo() {
-	final ExecutionYear executionYear = ExecutionYear.readCurrentExecutionYear();
-	deleteExecutionYearAttends(executionYear);
-	for (StudentCurricularPlan studentCurricularPlan : getStudentCurricularPlansSet()) {
-	    studentCurricularPlan.deleteExecutionYearEnrolments(executionYear);
-	}
-    }
-
-    @Checked("RolePredicates.ACADEMIC_ADMINISTRATIVE_OFFICE_PREDICATE")
-    private void deleteExecutionYearAttends(final ExecutionYear executionYear) {
-	for (final Attends attends : getAssociatedAttends()) {
-	    if (attends.isFor(executionYear) && !attends.hasAnyAssociatedMarkSheetOrFinalGrade()) {
-		deleteAllAttendsInfo(attends);
-	    }
-	}
-    }
-
-    @Checked("RolePredicates.ACADEMIC_ADMINISTRATIVE_OFFICE_PREDICATE")
-    private void deleteAllAttendsInfo(Attends attends) {
-	for (; attends.hasAnyAssociatedMarks(); attends.getAssociatedMarks().get(0).delete())
-	    ;
-	for (; attends.hasAnyWeeklyWorkLoads(); attends.getWeeklyWorkLoads().get(0).delete())
-	    ;
-	for (; attends.hasAnyProjectSubmissions(); attends.getProjectSubmissions().get(0).delete())
-	    ;
-	attends.getStudentGroups().clear();
-	attends.removeShifts();
-	attends.delete();
     }
 
     public Collection<CurriculumLineLog> getCurriculumLineLogs(final ExecutionSemester executionSemester) {

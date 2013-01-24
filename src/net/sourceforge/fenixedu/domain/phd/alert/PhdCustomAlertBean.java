@@ -4,8 +4,9 @@ import java.io.Serializable;
 
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.accessControl.Group;
-import net.sourceforge.fenixedu.domain.accessControl.MasterDegreeAdministrativeOfficeGroup;
 import net.sourceforge.fenixedu.domain.accessControl.PersonGroup;
+import net.sourceforge.fenixedu.domain.accessControl.academicAdministration.AcademicAuthorizationGroup;
+import net.sourceforge.fenixedu.domain.accessControl.academicAdministration.AcademicOperationType;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 
@@ -113,7 +114,7 @@ public class PhdCustomAlertBean implements Serializable {
 	switch (getTargetGroupType()) {
 
 	case MASTER_DEGREE_ADMINISTRATIVE_OFFICE_PERSONS:
-	    return new MasterDegreeAdministrativeOfficeGroup();
+	    return new AcademicAuthorizationGroup(AcademicOperationType.MANAGE_PHD_PROCESSES, this.getProcess().getPhdProgram());
 	case ONLY_FOR_ME:
 	    return new PersonGroup(AccessControl.getPerson());
 

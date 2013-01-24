@@ -45,21 +45,21 @@ import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
-@Mapping(path = "/externalUnits", module = "academicAdminOffice", formBean = "externalUnitsForm")
+@Mapping(path = "/externalUnits", module = "academicAdministration", formBean = "externalUnitsForm")
 @Forwards({
-	@Forward(name = "searchExternalUnits", path = "/academicAdminOffice/externalUnits/searchExternalUnit.jsp", tileProperties = @Tile(title = "private.academicadministrativeoffice.institutions.external")),
-	@Forward(name = "viewCountryUnit", path = "/academicAdminOffice/externalUnits/viewCountryUnit.jsp", tileProperties = @Tile(title = "private.academicadministrativeoffice.institutions.external")),
-	@Forward(name = "viewUniversityUnit", path = "/academicAdminOffice/externalUnits/viewUniversityUnit.jsp", tileProperties = @Tile(title = "private.academicadministrativeoffice.institutions.external")),
-	@Forward(name = "viewSchoolUnit", path = "/academicAdminOffice/externalUnits/viewSchoolUnit.jsp", tileProperties = @Tile(title = "private.academicadministrativeoffice.institutions.external")),
-	@Forward(name = "viewDepartmentUnit", path = "/academicAdminOffice/externalUnits/viewDepartmentUnit.jsp", tileProperties = @Tile(title = "private.academicadministrativeoffice.institutions.external")),
-	@Forward(name = "viewExternalCurricularCourse", path = "/academicAdminOffice/externalUnits/viewExternalCurricularCourse.jsp", tileProperties = @Tile(title = "private.academicadministrativeoffice.institutions.external")),
-	@Forward(name = "prepareCreateUnit", path = "/academicAdminOffice/externalUnits/createExternalUnit.jsp", tileProperties = @Tile(title = "private.academicadministrativeoffice.institutions.external")),
-	@Forward(name = "prepareEditUnit", path = "/academicAdminOffice/externalUnits/editExternalUnit.jsp", tileProperties = @Tile(title = "private.academicadministrativeoffice.institutions.external")),
-	@Forward(name = "prepareDeleteUnit", path = "/academicAdminOffice/externalUnits/deleteExternalUnit.jsp", tileProperties = @Tile(title = "private.academicadministrativeoffice.institutions.external")),
-	@Forward(name = "prepareDeleteExternalCurricularCourse", path = "/academicAdminOffice/externalUnits/deleteExternalCurricularCourse.jsp", tileProperties = @Tile(title = "private.academicadministrativeoffice.institutions.external")),
-	@Forward(name = "prepareCreateExternalCurricularCourse", path = "/academicAdminOffice/externalUnits/createExternalCurricularCourse.jsp", tileProperties = @Tile(title = "private.academicadministrativeoffice.institutions.external")),
-	@Forward(name = "prepareEditExternalCurricularCourse", path = "/academicAdminOffice/externalUnits/editExternalCurricularCourse.jsp", tileProperties = @Tile(title = "private.academicadministrativeoffice.institutions.external")),
-	@Forward(name = "prepareEditExternalEnrolment", path = "/academicAdminOffice/externalUnits/editExternalEnrolment.jsp", tileProperties = @Tile(title = "private.academicadministrativeoffice.institutions.external")) })
+	@Forward(name = "searchExternalUnits", path = "/academicAdminOffice/externalUnits/searchExternalUnit.jsp"),
+	@Forward(name = "viewCountryUnit", path = "/academicAdminOffice/externalUnits/viewCountryUnit.jsp"),
+	@Forward(name = "viewUniversityUnit", path = "/academicAdminOffice/externalUnits/viewUniversityUnit.jsp"),
+	@Forward(name = "viewSchoolUnit", path = "/academicAdminOffice/externalUnits/viewSchoolUnit.jsp"),
+	@Forward(name = "viewDepartmentUnit", path = "/academicAdminOffice/externalUnits/viewDepartmentUnit.jsp"),
+	@Forward(name = "viewExternalCurricularCourse", path = "/academicAdminOffice/externalUnits/viewExternalCurricularCourse.jsp"),
+	@Forward(name = "prepareCreateUnit", path = "/academicAdminOffice/externalUnits/createExternalUnit.jsp"),
+	@Forward(name = "prepareEditUnit", path = "/academicAdminOffice/externalUnits/editExternalUnit.jsp"),
+	@Forward(name = "prepareDeleteUnit", path = "/academicAdminOffice/externalUnits/deleteExternalUnit.jsp"),
+	@Forward(name = "prepareDeleteExternalCurricularCourse", path = "/academicAdminOffice/externalUnits/deleteExternalCurricularCourse.jsp"),
+	@Forward(name = "prepareCreateExternalCurricularCourse", path = "/academicAdminOffice/externalUnits/createExternalCurricularCourse.jsp"),
+	@Forward(name = "prepareEditExternalCurricularCourse", path = "/academicAdminOffice/externalUnits/editExternalCurricularCourse.jsp"),
+	@Forward(name = "prepareEditExternalEnrolment", path = "/academicAdminOffice/externalUnits/editExternalEnrolment.jsp") })
 public class ExternalUnitsDispatchAction extends FenixDispatchAction {
 
     public ActionForward prepareSearch(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,

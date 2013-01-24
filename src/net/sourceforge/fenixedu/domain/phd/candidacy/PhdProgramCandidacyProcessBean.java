@@ -86,7 +86,7 @@ public class PhdProgramCandidacyProcessBean implements Serializable {
 
     private ExternalPhdProgram externalPhdProgram;
 
-    private Boolean migratedProcess;
+    private Boolean migratedProcess = false;
 
     private Integer phdStudentNumber;
 

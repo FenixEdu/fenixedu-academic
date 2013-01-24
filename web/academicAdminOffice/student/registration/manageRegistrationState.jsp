@@ -4,7 +4,6 @@
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr" %>
 <html:xhtml/>
 
-<em><bean:message key="label.academicAdminOffice" bundle="ACADEMIC_OFFICE_RESOURCES"/></em>
 <h2><bean:message key="label.title.RegistrationState" bundle="ACADEMIC_OFFICE_RESOURCES"/></h2>
 
 <html:messages id="message" message="true" bundle="ACADEMIC_OFFICE_RESOURCES">
@@ -79,21 +78,19 @@
 			</fr:property>			
 			
 			<fr:property name="sortBy" value="stateDate=desc"/>
-			
-		 	<%--<fr:property name="link(deleteActualInfo)" value="/manageRegistrationState.do?method=deleteActualInfoConfirm" />
-			<fr:property name="param(deleteActualInfo)" value="registration.idInternal/registrationId" />
-			<fr:property name="key(deleteActualInfo)" value="link.view.deleteActualInfo" />
-			<fr:property name="bundle(deleteActualInfo)" value="ACADEMIC_OFFICE_RESOURCES" />
-			<fr:property name="visibleIf(deleteActualInfo)" value="canDeleteActualInfo"/>--%>
+
 		</fr:layout>
 	</fr:view>
 </logic:notEmpty>
 
 <h3 class="mtop2 mbottom1"><bean:message key="label.registration.manageState" bundle="ACADEMIC_OFFICE_RESOURCES"/></h3>
 <span class="warning0"><bean:message key="add.state.warning" bundle="ACADEMIC_OFFICE_RESOURCES"/></span>
-<fr:edit name="registrationStateBean" schema="student.manageRegistrationState" action="/manageRegistrationState.do?method=createNewState">
-	<fr:layout name="tabular">
-		<fr:property name="classes" value="tstyle5 thright thlight thmiddle mtop05"/>
-		<fr:property name="columnClasses" value=",,tderror1 tdclear"/>
-	</fr:layout>
-</fr:edit>
+<fr:form action="/manageRegistrationState.do?method=createNewState">
+	<fr:edit name="registrationStateBean" schema="student.manageRegistrationState">
+		<fr:layout name="tabular">
+			<fr:property name="classes" value="tstyle5 thright thlight thmiddle mtop05"/>
+			<fr:property name="columnClasses" value=",,tderror1 tdclear"/>
+		</fr:layout>
+	</fr:edit>
+	<html:submit><bean:message key="label.submit" bundle="APPLICATION_RESOURCES"/></html:submit>
+</fr:form>

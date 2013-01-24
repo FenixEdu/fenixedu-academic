@@ -3,7 +3,6 @@ package net.sourceforge.fenixedu.domain.phd.debts;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.accounting.EventType;
 import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
-import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOfficeType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess;
 import net.sourceforge.fenixedu.domain.phd.PhdProgram;
@@ -16,8 +15,7 @@ public class PhdThesisRequestFee extends PhdThesisRequestFee_Base {
 
     public PhdThesisRequestFee(final PhdIndividualProgramProcess process) {
 	this();
-	init(AdministrativeOffice.readByAdministrativeOfficeType(AdministrativeOfficeType.MASTER_DEGREE), process.getPerson(),
-		process);
+	init(process.getAdministrativeOffice(), process.getPerson(), process);
     }
 
     private void init(AdministrativeOffice administrativeOffice, Person person, PhdIndividualProgramProcess process) {

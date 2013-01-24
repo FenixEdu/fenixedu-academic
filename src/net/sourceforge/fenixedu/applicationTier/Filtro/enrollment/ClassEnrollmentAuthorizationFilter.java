@@ -15,6 +15,8 @@ import net.sourceforge.fenixedu.domain.DegreeCurricularPlanEquivalencePlan;
 import net.sourceforge.fenixedu.domain.EnrolmentPeriodInClasses;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
+import net.sourceforge.fenixedu.domain.accessControl.academicAdministration.AcademicAuthorizationGroup;
+import net.sourceforge.fenixedu.domain.accessControl.academicAdministration.AcademicOperationType;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import pt.utl.ist.berserk.ServiceRequest;
@@ -35,12 +37,14 @@ public class ClassEnrollmentAuthorizationFilter extends Filtro {
     public void execute(ServiceRequest request, ServiceResponse response) throws Exception {
 	Person person = getRemoteUser(request).getPerson();
 
-	if (person.hasRole(RoleType.ACADEMIC_ADMINISTRATIVE_OFFICE)) {
+	final Registration registration = (Registration) getServiceCallArguments(request)[0];
+
+	if (AcademicAuthorizationGroup.getProgramsForOperation(person, AcademicOperationType.STUDENT_ENROLMENTS).contains(
+		registration.getDegree())) {
 	    return;
 	}
 
 	if (person.hasRole(RoleType.RESOURCE_ALLOCATION_MANAGER)) {
-	    final Registration registration = (Registration) getServiceCallArguments(request)[0];
 	    person = registration.getPerson();
 	}
 

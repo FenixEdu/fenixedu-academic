@@ -2,10 +2,13 @@ package net.sourceforge.fenixedu.dataTransferObject.degreeAdministrativeOffice.g
 
 import java.util.Date;
 
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
 import net.sourceforge.fenixedu.domain.EnrolmentEvaluation;
 import net.sourceforge.fenixedu.domain.Grade;
 import net.sourceforge.fenixedu.domain.MarkSheet;
 import net.sourceforge.fenixedu.domain.MarkSheetType;
+import net.sourceforge.fenixedu.domain.Person;
+import pt.ist.fenixWebFramework.services.Service;
 
 public class MarkSheetRectifyBean extends MarkSheetManagementBaseBean {
 
@@ -78,4 +81,15 @@ public class MarkSheetRectifyBean extends MarkSheetManagementBaseBean {
 	return markSheetType;
     }
 
+    @Service
+    public MarkSheet createRectificationOldMarkSheet(Person person) throws InvalidArgumentsServiceException {
+	if (getEnrolmentEvaluation() == null) {
+	    throw new InvalidArgumentsServiceException();
+	}
+	return getEnrolmentEvaluation()
+		.getEnrolment()
+		.getCurricularCourse()
+		.rectifyOldEnrolmentEvaluation(getEnrolmentEvaluation(), getMarkSheetType(), getEvaluationDate(),
+			getRectifiedGrade(), getReason(), person);
+    }
 }

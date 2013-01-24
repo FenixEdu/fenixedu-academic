@@ -18,7 +18,6 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.util.InvocationResult;
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.ist.fenixWebFramework.services.Service;
 import pt.utl.ist.fenix.tools.resources.LabelFormatter;
 
@@ -41,18 +40,17 @@ public class AccountingEventsManager {
 	if (hasStandaloneCurriculumGroupAndEnrolmentsFor(studentCurricularPlan, executionYear)
 		&& !studentCurricularPlan.hasGratuityEvent(executionYear, StandaloneEnrolmentGratuityEvent.class)) {
 
-	    new StandaloneEnrolmentGratuityEvent(getAdministrativeOffice(studentCurricularPlan), studentCurricularPlan
-		    .getPerson(), studentCurricularPlan, executionYear);
+	    new StandaloneEnrolmentGratuityEvent(getAdministrativeOffice(studentCurricularPlan),
+		    studentCurricularPlan.getPerson(), studentCurricularPlan, executionYear);
 
 	    return InvocationResult.createSuccess();
 
 	}
 
 	final InvocationResult result = InvocationResult.createInsuccess();
-	result
-		.addMessage(
-			LabelFormatter.APPLICATION_RESOURCES,
-			"error.accounting.events.AccountingEventsManager.registration.for.student.does.not.respect.requirements.to.create.standalone.gratuity.event");
+	result.addMessage(
+		LabelFormatter.APPLICATION_RESOURCES,
+		"error.accounting.events.AccountingEventsManager.registration.for.student.does.not.respect.requirements.to.create.standalone.gratuity.event");
 
 	return result;
 
@@ -138,8 +136,8 @@ public class AccountingEventsManager {
 		return result;
 	    }
 
-	    new SpecializationDegreeGratuityEvent(getAdministrativeOffice(studentCurricularPlan), studentCurricularPlan
-		    .getPerson(), studentCurricularPlan, executionYear);
+	    new SpecializationDegreeGratuityEvent(getAdministrativeOffice(studentCurricularPlan),
+		    studentCurricularPlan.getPerson(), studentCurricularPlan, executionYear);
 	}
 
 	return result;
@@ -179,8 +177,7 @@ public class AccountingEventsManager {
 	final Registration registration = studentCurricularPlan.getRegistration();
 
 	if (verifyCommonConditionsToCreateGratuityAndAdministrativeOfficeEvents(executionYear, studentCurricularPlan,
-		registration)
-		&& studentCurricularPlan.getDegree().canCreateGratuityEvent()) {
+		registration) && studentCurricularPlan.getDegree().canCreateGratuityEvent()) {
 
 	    if (!acceptedDegreeTypesForGratuityEvent.contains(studentCurricularPlan.getDegreeType())) {
 		result.addMessage(LabelFormatter.APPLICATION_RESOURCES,
@@ -192,12 +189,11 @@ public class AccountingEventsManager {
 	    result.setSuccess(true);
 
 	} else {
-	    result
-		    .addMessage(
-			    LabelFormatter.APPLICATION_RESOURCES,
-			    "error.accounting.events.AccountingEventsManager.registration.for.student.does.not.respect.requirements.to.create.gratuity.event",
-			    studentCurricularPlan.getRegistration().getStudent().getNumber().toString(), studentCurricularPlan
-				    .getDegree().getPresentationName());
+	    result.addMessage(
+		    LabelFormatter.APPLICATION_RESOURCES,
+		    "error.accounting.events.AccountingEventsManager.registration.for.student.does.not.respect.requirements.to.create.gratuity.event",
+		    studentCurricularPlan.getRegistration().getStudent().getNumber().toString(), studentCurricularPlan
+			    .getDegree().getPresentationName());
 
 	}
 
@@ -221,11 +217,10 @@ public class AccountingEventsManager {
 	    final Student student = studentCurricularPlan.getRegistration().getStudent();
 
 	    if (student.getPerson().hasAdministrativeOfficeFeeInsuranceEventFor(executionYear)) {
-		result
-			.addMessage(
-				LabelFormatter.APPLICATION_RESOURCES,
-				"error.accounting.events.AccountingEventsManager.student.already.has.administrativeoffice.fee.and.insurance.event.for.year",
-				student.getNumber().toString(), executionYear.getYear());
+		result.addMessage(
+			LabelFormatter.APPLICATION_RESOURCES,
+			"error.accounting.events.AccountingEventsManager.student.already.has.administrativeoffice.fee.and.insurance.event.for.year",
+			student.getNumber().toString(), executionYear.getYear());
 
 		result.setSuccess(false);
 
@@ -233,8 +228,8 @@ public class AccountingEventsManager {
 
 	    }
 
-	    new AdministrativeOfficeFeeAndInsuranceEvent(getAdministrativeOffice(studentCurricularPlan), studentCurricularPlan
-		    .getPerson(), executionYear);
+	    new AdministrativeOfficeFeeAndInsuranceEvent(getAdministrativeOffice(studentCurricularPlan),
+		    studentCurricularPlan.getPerson(), executionYear);
 	}
 
 	return result;
@@ -247,8 +242,7 @@ public class AccountingEventsManager {
     }
 
     private AdministrativeOffice getAdministrativeOffice(final StudentCurricularPlan studentCurricularPlan) {
-	return AdministrativeOffice.readByAdministrativeOfficeType(studentCurricularPlan.getDegreeType()
-		.getAdministrativeOfficeType());
+	return studentCurricularPlan.getDegree().getAdministrativeOffice();
     }
 
     private InvocationResult verifyConditionsToCreateAdministrativeOfficeFeeAndInsuranceEvent(
@@ -261,11 +255,10 @@ public class AccountingEventsManager {
 	if (verifyCommonConditionsToCreateGratuityAndAdministrativeOfficeEvents(executionYear, studentCurricularPlan,
 		registration)) {
 	    if (!acceptedDegreeTypesForAdministrativeOfficeFeeAndInsuranceEvent.contains(studentCurricularPlan.getDegreeType())) {
-		result
-			.addMessage(
-				LabelFormatter.APPLICATION_RESOURCES,
-				"error.accounting.events.AccountingEventsManager.cannot.create.administrativeoffice.fee.and.insurance.event.for.degree.type",
-				studentCurricularPlan.getDegree().getPresentationName());
+		result.addMessage(
+			LabelFormatter.APPLICATION_RESOURCES,
+			"error.accounting.events.AccountingEventsManager.cannot.create.administrativeoffice.fee.and.insurance.event.for.degree.type",
+			studentCurricularPlan.getDegree().getPresentationName());
 
 		return result;
 	    }
@@ -273,12 +266,11 @@ public class AccountingEventsManager {
 	    result.setSuccess(true);
 
 	} else {
-	    result
-		    .addMessage(
-			    LabelFormatter.APPLICATION_RESOURCES,
-			    "error.accounting.events.AccountingEventsManager.registration.for.student.does.not.respect.requirements.to.create.administrativeoffice.fee.and.insurance.event",
-			    studentCurricularPlan.getRegistration().getStudent().getNumber().toString(), studentCurricularPlan
-				    .getDegree().getPresentationName());
+	    result.addMessage(
+		    LabelFormatter.APPLICATION_RESOURCES,
+		    "error.accounting.events.AccountingEventsManager.registration.for.student.does.not.respect.requirements.to.create.administrativeoffice.fee.and.insurance.event",
+		    studentCurricularPlan.getRegistration().getStudent().getNumber().toString(), studentCurricularPlan
+			    .getDegree().getPresentationName());
 	}
 
 	return result;
@@ -350,12 +342,11 @@ public class AccountingEventsManager {
 	    result.setSuccess(true);
 
 	} else {
-	    result
-		    .addMessage(
-			    LabelFormatter.APPLICATION_RESOURCES,
-			    "error.accounting.events.AccountingEventsManager.registration.for.student.does.not.respect.requirements.to.create.insurance.event",
-			    studentCurricularPlan.getRegistration().getStudent().getNumber().toString(), studentCurricularPlan
-				    .getDegree().getPresentationName());
+	    result.addMessage(
+		    LabelFormatter.APPLICATION_RESOURCES,
+		    "error.accounting.events.AccountingEventsManager.registration.for.student.does.not.respect.requirements.to.create.insurance.event",
+		    studentCurricularPlan.getRegistration().getStudent().getNumber().toString(), studentCurricularPlan
+			    .getDegree().getPresentationName());
 	}
 
 	return result;
@@ -363,7 +354,6 @@ public class AccountingEventsManager {
     }
 
     @Service
-    @Checked("RolePredicates.MANAGER_OR_ACADEMIC_ADMINISTRATIVE_OFFICE_PREDICATE")
     public InvocationResult createInsuranceEvent(final Person person, final ExecutionYear executionYear) {
 
 	final InvocationResult result = InvocationResult.createSuccess();

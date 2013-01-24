@@ -3,7 +3,7 @@ package net.sourceforge.fenixedu.domain.serviceRequests;
 import java.util.Comparator;
 
 import net.sourceforge.fenixedu.dataTransferObject.serviceRequests.AcademicServiceRequestBean;
-import net.sourceforge.fenixedu.domain.Employee;
+import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
@@ -12,6 +12,7 @@ import org.joda.time.DateTime;
 public class AcademicServiceRequestSituation extends AcademicServiceRequestSituation_Base {
 
     public static Comparator<AcademicServiceRequestSituation> COMPARATOR_BY_MOST_RECENT_CREATION_DATE_AND_ID = new Comparator<AcademicServiceRequestSituation>() {
+	@Override
 	public int compare(AcademicServiceRequestSituation leftAcademicServiceRequestSituation,
 		AcademicServiceRequestSituation rightAcademicServiceRequestSituation) {
 	    int comparationResult = leftAcademicServiceRequestSituation.getCreationDate().compareTo(
@@ -39,7 +40,7 @@ public class AcademicServiceRequestSituation extends AcademicServiceRequestSitua
 
 	super.setAcademicServiceRequest(academicServiceRequest);
 	super.setAcademicServiceRequestSituationType(academicServiceRequestBean.getAcademicServiceRequestSituationType());
-	super.setEmployee(academicServiceRequestBean.getEmployee());
+	super.setCreator(academicServiceRequestBean.getResponsible());
 	super.setJustification(academicServiceRequestBean.hasJustification() ? academicServiceRequestBean.getJustification()
 		: null);
 	super.setSituationDate(academicServiceRequestBean.getFinalSituationDate());
@@ -88,8 +89,8 @@ public class AcademicServiceRequestSituation extends AcademicServiceRequestSitua
     }
 
     @Override
-    public void setEmployee(Employee employee) {
-	throw new DomainException("error.serviceRequests.AcademicServiceRequestSituation.cannot.modify.employee");
+    public void setCreator(Person reponsible) {
+	throw new DomainException("error.serviceRequests.AcademicServiceRequestSituation.cannot.modify.creator");
     }
 
     @Override
@@ -129,7 +130,7 @@ public class AcademicServiceRequestSituation extends AcademicServiceRequestSitua
     }
 
     void edit(final AcademicServiceRequestBean academicServiceRequestBean) {
-	super.setEmployee(academicServiceRequestBean.getEmployee());
+	super.setCreator(academicServiceRequestBean.getResponsible());
 	super.setJustification(academicServiceRequestBean.getJustification());
     }
 
@@ -143,7 +144,7 @@ public class AcademicServiceRequestSituation extends AcademicServiceRequestSitua
 	}
 
 	super.setRootDomainObject(null);
-	super.setEmployee(null);
+	super.setCreator(null);
 	super.setAcademicServiceRequest(null);
 
 	super.deleteDomainObject();

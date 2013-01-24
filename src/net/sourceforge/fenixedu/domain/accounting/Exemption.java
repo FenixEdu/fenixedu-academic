@@ -1,6 +1,6 @@
 package net.sourceforge.fenixedu.domain.accounting;
 
-import net.sourceforge.fenixedu.domain.Employee;
+import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.accounting.events.ExemptionJustification;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
@@ -31,9 +31,9 @@ public abstract class Exemption extends Exemption_Base {
 	super.setWhenCreated(new DateTime());
     }
 
-    protected void init(final Employee employee, final Event event, final ExemptionJustification exemptionJustification) {
+    protected void init(final Person responsible, final Event event, final ExemptionJustification exemptionJustification) {
 	checkParameters(event, exemptionJustification);
-	super.setEmployee(employee);
+	super.setResponsible(responsible);
 	super.setEvent(event);
 	super.setExemptionJustification(exemptionJustification);
     }
@@ -53,8 +53,8 @@ public abstract class Exemption extends Exemption_Base {
     }
 
     @Override
-    public void setEmployee(Employee employee) {
-	throw new DomainException("error.accounting.Exemption.cannot.modify.employee");
+    public void setResponsible(Person responsible) {
+	throw new DomainException("error.accounting.Exemption.cannot.modify.responsible");
     }
 
     @Override
@@ -73,7 +73,7 @@ public abstract class Exemption extends Exemption_Base {
 
     public void delete(final boolean recalculateEventState) {
 	removeRootDomainObject();
-	removeEmployee();
+	removeResponsible();
 	getExemptionJustification().delete();
 	final Event event = getEvent();
 	removeEvent();
@@ -85,8 +85,8 @@ public abstract class Exemption extends Exemption_Base {
     }
 
     @Override
-    public void removeEmployee() {
-	super.setEmployee(null);
+    public void removeResponsible() {
+	super.setResponsible(null);
     }
 
     @Override

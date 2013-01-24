@@ -2,9 +2,9 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr" %>
+<%@ taglib uri="/WEB-INF/academic.tld" prefix="academic" %>
 <html:xhtml/>
 
-<em><bean:message key="label.academicAdminOffice" bundle="ACADEMIC_OFFICE_RESOURCES"/></em>
 <h2><bean:message key="label.course.enrolments" bundle="ACADEMIC_OFFICE_RESOURCES"/></h2>
 
 
@@ -30,13 +30,17 @@
 </fr:form>
 
 <logic:present name="studentEnrolmentBean" property="executionPeriod">
+
+	<bean:define id="degree" name="studentEnrolmentBean" property="studentCurricularPlan.degree" 
+				type="net.sourceforge.fenixedu.domain.AcademicProgram"/>
+
 	<ul class="mvert1">
-		<logic:equal name="studentEnrolmentBean" property="canEnrolWithoutRules" value="true">
+		<academic:allowed operation="ENROLMENT_WITHOUT_RULES" program="<%= degree %>">
 			<li>
 				<bean:define id="url1">/bolonhaStudentEnrollment.do?method=prepare&amp;scpID=<bean:write name="studentEnrolmentBean" property="studentCurricularPlan.idInternal"/>&amp;executionPeriodID=<bean:write name="studentEnrolmentBean" property="executionPeriod.idInternal"/>&amp;withRules=false</bean:define>
 				<html:link action='<%= url1 %>'><bean:message key="label.course.enrolmentWithoutRules" bundle="ACADEMIC_OFFICE_RESOURCES"/></html:link>
 			</li>
-		</logic:equal>
+		</academic:allowed>
 		<li>
 			<bean:define id="url2">/bolonhaStudentEnrollment.do?method=prepare&amp;scpID=<bean:write name="studentEnrolmentBean" property="studentCurricularPlan.idInternal"/>&amp;executionPeriodID=<bean:write name="studentEnrolmentBean" property="executionPeriod.idInternal"/>&amp;withRules=true</bean:define>
 			<html:link action='<%= url2 %>'><bean:message key="label.course.enrolmentWithRules" bundle="ACADEMIC_OFFICE_RESOURCES"/></html:link>
@@ -64,12 +68,12 @@
 			<html:link action='<%= url4 %>'><bean:message key="label.course.enrolments" bundle="ACADEMIC_OFFICE_RESOURCES"/> <bean:message key="STANDALONE" bundle="ACADEMIC_OFFICE_RESOURCES"/></html:link>
 		</li>
 		<br />
-		<logic:equal name="studentEnrolmentBean" property="canMoveCurriculumLinesWithoutRules" value="true">
+		<academic:allowed operation="MOVE_CURRICULUM_LINES_WITHOUT_RULES" program="<%= degree %>">
 			<li>
 				<bean:define id="url5">/curriculumLinesLocationManagement.do?method=prepareWithoutRules&amp;scpID=<bean:write name="studentEnrolmentBean" property="studentCurricularPlan.idInternal"/>&amp;executionPeriodID=<bean:write name="studentEnrolmentBean" property="executionPeriod.idInternal"/></bean:define>
 				<html:link action='<%= url5 %>'><bean:message key="label.course.moveEnrolments.without.rules" bundle="ACADEMIC_OFFICE_RESOURCES"/></html:link>
 			</li>
-		</logic:equal>
+		</academic:allowed>
 		<li>
 			<bean:define id="url5">/curriculumLinesLocationManagement.do?method=prepare&amp;scpID=<bean:write name="studentEnrolmentBean" property="studentCurricularPlan.idInternal"/>&amp;executionPeriodID=<bean:write name="studentEnrolmentBean" property="executionPeriod.idInternal"/></bean:define>
 			<html:link action='<%= url5 %>'><bean:message key="label.course.moveEnrolments.with.rules" bundle="ACADEMIC_OFFICE_RESOURCES"/></html:link>

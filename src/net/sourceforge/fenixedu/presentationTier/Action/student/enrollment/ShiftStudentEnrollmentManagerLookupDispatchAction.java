@@ -124,15 +124,9 @@ public class ShiftStudentEnrollmentManagerLookupDispatchAction extends Transacti
 	}
 
 	try {
-	    ServiceManagerServiceFactory.executeService("DeleteStudentAttendingCourse", new Object[] { registration,
-		    executionCourseId });
-
+	    registration.removeAttendFor(rootDomainObject.readExecutionCourseByOID(executionCourseId));
 	} catch (DomainException e) {
 	    addActionMessage(request, e.getMessage());
-	    return mapping.getInputForward();
-
-	} catch (FenixServiceException e) {
-	    addActionMessage(request, "errors.impossible.operation");
 	    return mapping.getInputForward();
 	}
 

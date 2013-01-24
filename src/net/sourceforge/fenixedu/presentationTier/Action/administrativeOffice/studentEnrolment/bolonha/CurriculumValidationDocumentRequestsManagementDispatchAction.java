@@ -29,15 +29,9 @@ import org.apache.struts.action.ActionMapping;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
-import pt.ist.fenixWebFramework.struts.annotations.Forward;
-import pt.ist.fenixWebFramework.struts.annotations.Forwards;
-import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
-@Mapping(path = "/curriculumValidationDocumentRequestsManagement", module = "academicAdminOffice")
-@Forwards( {
+@Mapping(path = "/curriculumValidationDocumentRequestsManagement", module = "academicAdministration")
+@Forwards({
 	@Forward(name = "printDocument", path = "/academicAdminOffice/student/curriculumValidation/documentRequests/printDocument.jsp"),
 	@Forward(name = "viewDocuments", path = "/academicAdminOffice/student/curriculumValidation/documentRequests/viewDocuments.jsp"),
 	@Forward(name = "notValidDocument", path = "/academicAdminOffice/student/curriculumValidation/documentRequests/notValidDocument.jsp") })
@@ -48,8 +42,8 @@ public class CurriculumValidationDocumentRequestsManagementDispatchAction extend
 	    HttpServletResponse response) throws Exception {
 
 	StudentCurricularPlan studentCurricularPlan = readStudentCurricularPlan(request);
-	request.setAttribute("studentCurriculumValidationAllowed", studentCurricularPlan
-		.getEvaluationForCurriculumValidationAllowed());
+	request.setAttribute("studentCurriculumValidationAllowed",
+		studentCurricularPlan.getEvaluationForCurriculumValidationAllowed());
 
 	return super.execute(mapping, actionForm, request, response);
     }
@@ -79,16 +73,16 @@ public class CurriculumValidationDocumentRequestsManagementDispatchAction extend
 	String degreeDescription = "";
 	String graduatedTitle = "";
 	if (DocumentRequestType.DEGREE_FINALIZATION_CERTIFICATE.equals(documentRequest.getDocumentRequestType())) {
-	    AdministrativeOfficeDocument document = ((List<AdministrativeOfficeDocument>) AdministrativeOfficeDocument.AdministrativeOfficeDocumentCreator
-		    .create(documentRequest)).get(0);
+	    AdministrativeOfficeDocument document = AdministrativeOfficeDocument.AdministrativeOfficeDocumentCreator.create(
+		    documentRequest).get(0);
 	    conlusionDate = (String) document.getParameters().get("degreeFinalizationDate");
 	    degreeDescription = (String) document.getParameters().get("degreeDescription");
 	    graduatedTitle = (String) document.getParameters().get("graduateTitle");
 	} else if (DocumentRequestType.DIPLOMA_REQUEST.equals(documentRequest.getDocumentRequestType())) {
-	    AdministrativeOfficeDocument document = ((List<AdministrativeOfficeDocument>) AdministrativeOfficeDocument.AdministrativeOfficeDocumentCreator
-		    .create(documentRequest)).get(0);
-	    conlusionDate = (String) ((List<AdministrativeOfficeDocument>) AdministrativeOfficeDocument.AdministrativeOfficeDocumentCreator
-		    .create(documentRequest)).get(0).getParameters().get("conclusionDate");
+	    AdministrativeOfficeDocument document = AdministrativeOfficeDocument.AdministrativeOfficeDocumentCreator.create(
+		    documentRequest).get(0);
+	    conlusionDate = (String) AdministrativeOfficeDocument.AdministrativeOfficeDocumentCreator.create(documentRequest)
+		    .get(0).getParameters().get("conclusionDate");
 	    degreeDescription = (String) document.getParameters().get("degreeFilteredName");
 	    graduatedTitle = (String) document.getParameters().get("graduateTitle");
 	}
@@ -104,11 +98,12 @@ public class CurriculumValidationDocumentRequestsManagementDispatchAction extend
 	return mapping.findForward("printDocument");
     }
 
+    @Override
     public ActionForward printDocument(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws JRException, IOException, FenixFilterException, FenixServiceException {
 	final IDocumentRequest documentRequest = getDocumentRequest(request);
 	try {
-	    final List<AdministrativeOfficeDocument> documents = (List<AdministrativeOfficeDocument>) AdministrativeOfficeDocument.AdministrativeOfficeDocumentCreator
+	    final List<AdministrativeOfficeDocument> documents = AdministrativeOfficeDocument.AdministrativeOfficeDocumentCreator
 		    .create(documentRequest);
 
 	    DocumentFieldsCustomization customization = getRenderedObject("document.fields.customization");

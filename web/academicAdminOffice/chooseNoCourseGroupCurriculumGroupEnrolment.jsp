@@ -7,7 +7,6 @@
 <bean:define id="type" name="enrolmentBean" property="groupType"/>
 <bean:define id="actionName" name="actionName" />
 
-<em><bean:message key="label.academicAdminOffice" bundle="ACADEMIC_OFFICE_RESOURCES"/></em>
 <h2><strong><bean:message key="label.course.enrolments" bundle="ACADEMIC_OFFICE_RESOURCES"/> <bean:message key="<%= type.toString() %>" bundle="ACADEMIC_OFFICE_RESOURCES"/></strong></h2>
 <br/>
 

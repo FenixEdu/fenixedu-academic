@@ -8,10 +8,6 @@ import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sf.jasperreports.engine.JRException;
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequest;
 import net.sourceforge.fenixedu.domain.serviceRequests.RectorateSubmissionBatch;
@@ -31,50 +27,25 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 
 @Mapping(path = "/rectorateIncomingBatches", module = "rectorate")
 @Forwards({ @Forward(name = "index", path = "/rectorate/incomingBatches.jsp"),
-	@Forward(name = "printDocument", path = "/academicAdminOffice/serviceRequests/documentRequests/printDocument.jsp"),
-	@Forward(name = "viewBatch", path = "/academicAdminOffice/rectorateDocumentSubmission/showBatch.jsp") })
+	@Forward(name = "viewBatch", path = "/rectorate/showBatch.jsp") })
 public class RectorateIncomingBatchesDispatchAction extends FenixDispatchAction {
 
     public ActionForward index(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) {
-	Set<RectorateSubmissionBatch> degreeOfficeBatches = new HashSet<RectorateSubmissionBatch>();
-	Set<RectorateSubmissionBatch> masterDegreeOfficeBatches = new HashSet<RectorateSubmissionBatch>();
-
-	AdministrativeOffice degreeAdministrativeOffice = AdministrativeOffice.readDegreeAdministrativeOffice();
-	AdministrativeOffice masterDegreeAdministrativeOffice = AdministrativeOffice.readMasterDegreeAdministrativeOffice();
-
-	for (RectorateSubmissionBatch batch : degreeAdministrativeOffice
-		.getRectorateSubmissionBatchesByState(RectorateSubmissionState.SENT)) {
-	    if (hasDiplomaRequests(batch)) {
-		degreeOfficeBatches.add(batch);
+	Set<RectorateSubmissionBatch> batches = new HashSet<RectorateSubmissionBatch>();
+	for (RectorateSubmissionBatch batch : RectorateSubmissionBatch.getRectorateSubmissionBatchesByState(
+		rootDomainObject.getAdministrativeOfficesSet(), RectorateSubmissionState.SENT)) {
+	    if (!getRelevantDocuments(batch.getDocumentRequestSet()).isEmpty()) {
+		batches.add(batch);
 	    }
 	}
-
-	for (RectorateSubmissionBatch batch : masterDegreeAdministrativeOffice
-		.getRectorateSubmissionBatchesByState(RectorateSubmissionState.SENT)) {
-	    if (hasDiplomaRequests(batch)) {
-		masterDegreeOfficeBatches.add(batch);
-	    }
-	}
-
-	request.setAttribute("degreeOfficeBatches", degreeOfficeBatches);
-	request.setAttribute("masterDegreeOfficeBatches", masterDegreeOfficeBatches);
+	request.setAttribute("batches", batches);
 	return mapping.findForward("index");
     }
 
     private boolean obeysToPresentationRestriction(AcademicServiceRequest docRequest) {
 	return !docRequest.isCancelled() && !docRequest.isRejected() && docRequest.isRegistryDiploma()
 		|| docRequest.isDiplomaSupplement();
-    }
-
-    private boolean hasDiplomaRequests(RectorateSubmissionBatch batch) {
-	for (AcademicServiceRequest docRequest : batch.getDocumentRequestSet()) {
-	    if (obeysToPresentationRestriction(docRequest)) {
-		return true;
-	    }
-	}
-
-	return false;
     }
 
     private Set<AcademicServiceRequest> getRelevantDocuments(Set<AcademicServiceRequest> documentRequestSet) {
@@ -91,7 +62,6 @@ public class RectorateIncomingBatchesDispatchAction extends FenixDispatchAction 
 	    HttpServletResponse response) {
 	RectorateSubmissionBatch batch = getDomainObject(request, "batchOid");
 	Set<String> actions = new HashSet<String>();
-	Set<String> confirmActions = new HashSet<String>();
 
 	actions.add("generateMetadataForRegistry");
 	actions.add("zipDocuments");
@@ -102,7 +72,6 @@ public class RectorateIncomingBatchesDispatchAction extends FenixDispatchAction 
 
 	request.setAttribute("requests", requests);
 	request.setAttribute("actions", actions);
-	request.setAttribute("confirmActions", confirmActions);
 	return mapping.findForward("viewBatch");
     }
 
@@ -116,11 +85,10 @@ public class RectorateIncomingBatchesDispatchAction extends FenixDispatchAction 
 	    ZipUtils zipUtils = new ZipUtils();
 	    zipUtils.createAndFlushArchive(requestsToZip, response, batch);
 	    return null;
-	} else {
-	    addActionMessage(request, "error.rectorateSubmission.noDocumentsToZip");
-	    request.setAttribute("batchOid", batch.getExternalId());
-	    return viewBatch(mapping, actionForm, request, response);
 	}
+	addActionMessage(request, "error.rectorateSubmission.noDocumentsToZip");
+	request.setAttribute("batchOid", batch.getExternalId());
+	return viewBatch(mapping, actionForm, request, response);
     }
 
     public ActionForward generateMetadataForRegistry(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
@@ -138,15 +106,14 @@ public class RectorateIncomingBatchesDispatchAction extends FenixDispatchAction 
     }
 
     public ActionForward printDocument(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-	    HttpServletResponse response) throws JRException, IOException, FenixFilterException, FenixServiceException {
+	    HttpServletResponse response) throws IOException {
 	final IDocumentRequest documentRequest = getDocumentRequest(request);
 	try {
 	    byte[] data = documentRequest.generateDocument();
 
 	    response.setContentLength(data.length);
 	    response.setContentType("application/pdf");
-	    response.addHeader("Content-Disposition", "attachment; filename=" + documentRequest.getReportFileName()
-		    + ".pdf");
+	    response.addHeader("Content-Disposition", "attachment; filename=" + documentRequest.getReportFileName() + ".pdf");
 
 	    final ServletOutputStream writer = response.getOutputStream();
 	    writer.write(data);
@@ -154,7 +121,7 @@ public class RectorateIncomingBatchesDispatchAction extends FenixDispatchAction 
 	    writer.close();
 
 	    response.flushBuffer();
-	    return mapping.findForward("");
+	    return null;
 	} catch (DomainException e) {
 	    addActionMessage(request, e.getKey());
 	    return viewBatch(mapping, actionForm, request, response);

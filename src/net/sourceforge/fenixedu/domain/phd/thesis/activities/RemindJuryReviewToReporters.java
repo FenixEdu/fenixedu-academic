@@ -23,7 +23,7 @@ public class RemindJuryReviewToReporters extends PhdThesisActivity {
 	    throw new PreConditionNotValidException();
 	}
 
-	if (!PhdThesisProcess.isMasterDegreeAdministrativeOfficeEmployee(userView)) {
+	if (!process.isAllowedToManageProcess(userView)) {
 	    throw new PreConditionNotValidException();
 	}
     }
@@ -58,11 +58,11 @@ public class RemindJuryReviewToReporters extends PhdThesisActivity {
 
     private void sendReminderToReporter(PhdIndividualProgramProcess process, PhdParticipant participant) {
 	final AlertMessage subject = AlertMessage
-		.create(AlertMessage.get("message.phd.remind.jury.reviews.subject", process.getPhdProgram()
-			.getName())).isKey(false).withPrefix(false);
+		.create(AlertMessage.get("message.phd.remind.jury.reviews.subject", process.getPhdProgram().getName()))
+		.isKey(false).withPrefix(false);
 
 	String partialBody = null;
-	
+
 	if (!hasExceededLimitForReview(process.getThesisProcess())) {
 	    partialBody = AlertMessage.get("message.phd.remind.jury.reviews.body", process.getPerson().getName(),
 		    process.getProcessNumber(), daysLeftUntilDeadline(process.getThesisProcess()));
@@ -79,7 +79,7 @@ public class RemindJuryReviewToReporters extends PhdThesisActivity {
 
 	AlertService.alertParticipants(process, subject, body, participant);
     }
-    
+
     private boolean hasExceededLimitForReview(PhdThesisProcess process) {
 	return !(new LocalDate().isBefore(process.getWhenJuryValidated().plusDays(
 		PhdReporterReviewAlert.getReporterReviewDeadlineDays())));

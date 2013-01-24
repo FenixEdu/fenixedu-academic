@@ -210,6 +210,18 @@ public class Attends extends Attends_Base {
 	return true;
     }
 
+    public boolean isAbleToBeRemoved() {
+	try {
+	    canDelete();
+	    getRegistration().checkIfHasEnrolmentFor(this);
+	    getRegistration().checkIfHasShiftsFor(this.getExecutionCourse());
+	} catch (DomainException e) {
+	    return false;
+	}
+
+	return true;
+    }
+
     public boolean hasAnyShiftEnrolments() {
 	for (Shift shift : this.getExecutionCourse().getAssociatedShifts()) {
 	    if (shift.getStudents().contains(this.getRegistration())) {

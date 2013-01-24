@@ -11,7 +11,6 @@ import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.phd.PhdProgram;
 import pt.utl.ist.fenix.tools.predicates.AndPredicate;
 import pt.utl.ist.fenix.tools.predicates.InlinePredicate;
-import pt.utl.ist.fenix.tools.predicates.Predicate;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 public class SearchPhdMigrationProcessBean implements Serializable {
@@ -146,7 +145,7 @@ public class SearchPhdMigrationProcessBean implements Serializable {
 	this.processes = result;
     }
 
-    public Predicate<PhdMigrationIndividualProcessData> getPredicates() {
+    public AndPredicate<PhdMigrationIndividualProcessData> getPredicates() {
 	if (getSearchValue() != null && !getSearchValue().isEmpty()) {
 	    String searchValue = getSearchValue().trim();
 	    setPhdStudentNumber((getSearchCriterion() == SearchCriterion.PHD_STUDENT_NUMBER) ? Integer.valueOf(searchValue)
@@ -211,7 +210,7 @@ public class SearchPhdMigrationProcessBean implements Serializable {
 		}
 	    });
 	}
-	
+
 	if (getFilterNotMigratedProcesses() != null && !getFilterNotMigratedProcesses().equals(FilterMigratedProcesses.NO_FILTER)) {
 	    result.add(new InlinePredicate<PhdMigrationIndividualProcessData, FilterMigratedProcesses>(
 		    getFilterNotMigratedProcesses()) {
@@ -224,7 +223,7 @@ public class SearchPhdMigrationProcessBean implements Serializable {
 			return !toEval.isMigratedToIndividualProgramProcess();
 		    }
 		}
-		
+
 	    });
 	}
 

@@ -11,12 +11,10 @@ import net.sourceforge.fenixedu.util.Money;
 
 import org.joda.time.DateTime;
 
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
-
 public class Over23IndividualCandidacyPR extends Over23IndividualCandidacyPR_Base {
-    
-    public  Over23IndividualCandidacyPR() {
-        super();
+
+    public Over23IndividualCandidacyPR() {
+	super();
     }
 
     public Over23IndividualCandidacyPR(final DateTime startDate, final DateTime endDate,
@@ -26,7 +24,7 @@ public class Over23IndividualCandidacyPR extends Over23IndividualCandidacyPR_Bas
 		serviceAgreementTemplate, fixedAmount);
     }
 
-    @Checked("PostingRulePredicates.editPredicate")
+    @Override
     public Over23IndividualCandidacyPR edit(final Money fixedAmount) {
 	deactivate();
 	return new Over23IndividualCandidacyPR(new DateTime().minus(1000), null, getServiceAgreementTemplate(), fixedAmount);

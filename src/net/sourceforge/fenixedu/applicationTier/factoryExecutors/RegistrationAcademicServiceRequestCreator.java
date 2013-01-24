@@ -15,7 +15,6 @@ import net.sourceforge.fenixedu.domain.serviceRequests.StudentReingressionReques
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.PhotocopyRequest;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.util.FactoryExecutor;
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.ist.fenixWebFramework.services.Service;
 
 public class RegistrationAcademicServiceRequestCreator extends RegistrationAcademicServiceRequestCreateBean implements
@@ -25,8 +24,8 @@ public class RegistrationAcademicServiceRequestCreator extends RegistrationAcade
 	super(registration);
     }
 
+    @Override
     @Service
-    @Checked("RolePredicates.MANAGER_OR_ACADEMIC_ADMINISTRATIVE_OFFICE_PREDICATE")
     public Object execute() {
 	final Object result;
 	switch (getAcademicServiceRequestType()) {

@@ -54,11 +54,11 @@ public class RequestCandidacyReview extends PhdProgramCandidacyProcessActivity {
 	return process;
     }
 
-		private AlertMessage subject() {
+    private AlertMessage subject() {
 	return AlertMessage.create("message.phd.alert.candidacy.review.subject");
     }
 
-		private AlertMessage body(final PhdIndividualProgramProcess process) {
+    private AlertMessage body(final PhdIndividualProgramProcess process) {
 	return AlertMessage.create("message.phd.alert.candidacy.review.body").args(process.getProcessNumber(),
 		process.getPerson().getName());
     }

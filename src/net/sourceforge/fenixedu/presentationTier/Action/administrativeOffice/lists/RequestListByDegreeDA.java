@@ -1,6 +1,3 @@
-/**
- * 
- */
 package net.sourceforge.fenixedu.presentationTier.Action.administrativeOffice.lists;
 
 import java.io.IOException;
@@ -13,15 +10,15 @@ import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.dataTransferObject.commons.DegreeByExecutionYearBean;
-import net.sourceforge.fenixedu.dataTransferObject.serviceRequests.DocumentRequestSearchBean;
+import net.sourceforge.fenixedu.dataTransferObject.academicAdministration.DegreeByExecutionYearBean;
+import net.sourceforge.fenixedu.dataTransferObject.academicAdministration.DocumentRequestSearchBean;
+import net.sourceforge.fenixedu.domain.AcademicProgram;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
-import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
-import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOfficeType;
+import net.sourceforge.fenixedu.domain.accessControl.academicAdministration.AcademicAuthorizationGroup;
+import net.sourceforge.fenixedu.domain.accessControl.academicAdministration.AcademicOperationType;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequest;
 import net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequestSituationType;
@@ -45,12 +42,11 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixWebFramework.struts.annotations.Tile;
 import pt.utl.ist.fenix.tools.util.excel.StyledExcelSpreadsheet;
 
-@Mapping(path = "/requestListByDegree", module = RequestListByDegreeDA.MODULE)
-@Forwards({ @Forward(name = "searchRequests", path = "/academicAdminOffice/lists/searchRequestsByDegree.jsp", tileProperties = @Tile(title = "private.academicadministrativeoffice.lists.requestsbydegree")) })
+@Mapping(path = "/requestListByDegree", module = "academicAdministration")
+@Forwards({ @Forward(name = "searchRequests", path = "/academicAdminOffice/lists/searchRequestsByDegree.jsp") })
 public class RequestListByDegreeDA extends FenixDispatchAction {
 
     private static final String DATETIME_FORMAT = "dd-MM-yyyy HH:mm";
-    protected static final String MODULE = "academicAdminOffice";
 
     public ActionForward prepareSearch(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) {
@@ -75,7 +71,10 @@ public class RequestListByDegreeDA extends FenixDispatchAction {
 
     private DegreeByExecutionYearBean getOrCreateDegreeSearchBean() {
 	DegreeByExecutionYearBean bean = getRenderedObject("degreeByExecutionYearBean");
-	return (bean != null) ? bean : new DegreeByExecutionYearBean(getAdministratedDegreeTypes());
+	return (bean != null) ? bean : new DegreeByExecutionYearBean(AcademicAuthorizationGroup.getDegreeTypesForOperation(
+		AccessControl.getPerson(), AcademicOperationType.SERVICE_REQUESTS),
+		AcademicAuthorizationGroup.getDegreesForOperation(AccessControl.getPerson(),
+			AcademicOperationType.SERVICE_REQUESTS));
     }
 
     private DocumentRequestSearchBean getOrCreateRequestSearchBean() {
@@ -84,7 +83,7 @@ public class RequestListByDegreeDA extends FenixDispatchAction {
     }
 
     public ActionForward runSearchAndShowResults(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-	    HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+	    HttpServletResponse response) {
 
 	final DegreeByExecutionYearBean degreeSearchBean = getOrCreateDegreeSearchBean();
 	final DocumentRequestSearchBean requestSearchBean = getOrCreateRequestSearchBean();
@@ -104,8 +103,9 @@ public class RequestListByDegreeDA extends FenixDispatchAction {
 	Set<RegistrationAcademicServiceRequest> resultList = new TreeSet<RegistrationAcademicServiceRequest>(
 		RegistrationAcademicServiceRequest.COMPARATOR_BY_SERVICE_REQUEST_NUMBER_AND_ID);
 
-	ArrayList<AcademicServiceRequest> requestList = getRequestsByYear(chosenExecutionYear.getBeginCivilYear());
-	requestList.addAll(getRequestsByYear(chosenExecutionYear.getEndCivilYear()));
+	ArrayList<AcademicServiceRequest> requestList = new ArrayList<AcademicServiceRequest>();
+	requestList.addAll(AcademicServiceRequestYear.getAcademicServiceRequests(chosenExecutionYear.getBeginCivilYear()));
+	requestList.addAll(AcademicServiceRequestYear.getAcademicServiceRequests(chosenExecutionYear.getEndCivilYear()));
 
 	return filterResults(degreeSearchBean, requestSearchBean, resultList, requestList);
     }
@@ -113,6 +113,10 @@ public class RequestListByDegreeDA extends FenixDispatchAction {
     private Set<RegistrationAcademicServiceRequest> filterResults(final DegreeByExecutionYearBean degreeSearchBean,
 	    final DocumentRequestSearchBean requestSearchBean, Set<RegistrationAcademicServiceRequest> resultList,
 	    final ArrayList<AcademicServiceRequest> requestList) {
+	Set<AcademicProgram> accessiblePrograms = AcademicAuthorizationGroup.getProgramsForOperation(AccessControl.getPerson(),
+		AcademicOperationType.SERVICE_REQUESTS);
+	Set<DegreeType> accessibleDegreeTypes = AcademicAuthorizationGroup.getDegreeTypesForOperation(AccessControl.getPerson(),
+		AcademicOperationType.SERVICE_REQUESTS);
 
 	final Degree chosenDegree = degreeSearchBean.getDegree();
 	final DegreeType chosenDegreeType = degreeSearchBean.getDegreeType();
@@ -136,11 +140,14 @@ public class RequestListByDegreeDA extends FenixDispatchAction {
 		continue;
 	    }
 	    if ((degreeCurricularPlan != null) && (degreeCurricularPlan.getDegreeType() != DegreeType.EMPTY)
-		    && (!getAdministratedDegreeTypes().contains(degreeCurricularPlan.getDegreeType()))) {
+		    && (!accessibleDegreeTypes.contains(degreeCurricularPlan.getDegreeType()))) {
 		continue;
 	    }
 
 	    if (chosenDegree != null && chosenDegree != request.getRegistration().getDegree()) {
+		continue;
+	    }
+	    if (!accessiblePrograms.contains(request.getAcademicProgram())) {
 		continue;
 	    }
 	    if (chosenServiceRequestType != null && chosenServiceRequestType != request.getAcademicServiceRequestType()) {
@@ -149,11 +156,6 @@ public class RequestListByDegreeDA extends FenixDispatchAction {
 	    if (request.getAcademicServiceRequestType() == AcademicServiceRequestType.DOCUMENT) {
 		DocumentRequestType documentType = ((DocumentRequest) request).getDocumentRequestType();
 		if ((chosenDocumentRequestType != null) && (chosenDocumentRequestType != documentType)) {
-		    continue;
-		}
-		AdministrativeOfficeType administrativeOfficeType = AccessControl.getPerson().getEmployee()
-			.getAdministrativeOffice().getAdministrativeOfficeType();
-		if (!documentType.getAdministrativeOfficeTypes().contains(administrativeOfficeType)) {
 		    continue;
 		}
 	    }
@@ -168,23 +170,6 @@ public class RequestListByDegreeDA extends FenixDispatchAction {
 	}
 
 	return resultList;
-    }
-
-    private static Set<DegreeType> getAdministratedDegreeTypes() {
-	return new TreeSet<DegreeType>(getAdministrativeOffice().getAdministratedDegreeTypes());
-    }
-
-    private static AdministrativeOffice getAdministrativeOffice() {
-	return AccessControl.getPerson().getEmployee().getAdministrativeOffice();
-    }
-
-    private ArrayList<AcademicServiceRequest> getRequestsByYear(int year) {
-	AcademicServiceRequestYear academicServiceRequestYear = AcademicServiceRequestYear.readByYear(year);
-	if (academicServiceRequestYear == null) {
-	    return new ArrayList<AcademicServiceRequest>();
-	} else {
-	    return new ArrayList<AcademicServiceRequest>(academicServiceRequestYear.getAcademicServiceRequests());
-	}
     }
 
     private DegreeCurricularPlan getMostRecentDegreeCurricularPlanForYear(Degree degree, final ExecutionYear executionYear) {
@@ -202,7 +187,7 @@ public class RequestListByDegreeDA extends FenixDispatchAction {
     }
 
     public ActionForward exportInfoToExcel(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-	    HttpServletResponse response) throws FenixServiceException, FenixFilterException {
+	    HttpServletResponse response) throws FenixServiceException {
 
 	final DegreeByExecutionYearBean degreeSearchBean = getOrCreateDegreeSearchBean();
 	final DocumentRequestSearchBean requestSearchBean = getOrCreateRequestSearchBean();
@@ -282,7 +267,6 @@ public class RequestListByDegreeDA extends FenixDispatchAction {
 	setHeaders(spreadsheet);
 	for (RegistrationAcademicServiceRequest request : requestList) {
 	    spreadsheet.newRow();
-	    spreadsheet.addCell(request.getCampus().getName());
 	    spreadsheet.addCell(request.getServiceRequestNumber());
 	    spreadsheet.addCell(request.getRequestDate().toString(DATETIME_FORMAT));
 	    spreadsheet.addCell(request.getDescription());
@@ -293,7 +277,6 @@ public class RequestListByDegreeDA extends FenixDispatchAction {
 
     private void setHeaders(final StyledExcelSpreadsheet spreadsheet) {
 	spreadsheet.newHeaderRow();
-	spreadsheet.addHeader(getResourceMessage("campus"));
 	spreadsheet.addHeader(getResourceMessage("label.serviceRequestNumber"));
 	spreadsheet.addHeader(getResourceMessage("label.requestDate"));
 	spreadsheet
@@ -303,6 +286,6 @@ public class RequestListByDegreeDA extends FenixDispatchAction {
     }
 
     static private String getResourceMessage(String key) {
-	return BundleUtil.getMessageFromModuleOrApplication(MODULE, key);
+	return BundleUtil.getMessageFromModuleOrApplication("academicAdminOffice", key);
     }
 }

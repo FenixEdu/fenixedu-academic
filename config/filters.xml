@@ -90,20 +90,6 @@
     </filter>
 
     <filter>
-        <name>CreateMarkSheetAuthorization</name>
-        <implementationClass>net.sourceforge.fenixedu.applicationTier.Filtro.degreeAdministrativeOffice.CreateMarkSheetAuthorizationFilter</implementationClass>
-        <description></description>
-        <isTransactional>true</isTransactional>
-    </filter>
-
-    <filter>
-        <name>CreateRectificationMarkSheetAuthorization</name>
-        <implementationClass>net.sourceforge.fenixedu.applicationTier.Filtro.degreeAdministrativeOffice.CreateRectificationMarkSheetAuthorizationFilter</implementationClass>
-        <description></description>
-        <isTransactional>true</isTransactional>
-    </filter>
-
-    <filter>
         <name>CreditsServiceWithInfoTeacherArgumentAuthorization</name>
         <implementationClass>net.sourceforge.fenixedu.applicationTier.Filtro.credits.CreditsServiceWithInfoTeacherArgumentAuthorization</implementationClass>
         <description></description>
@@ -720,13 +706,6 @@
     </filter>
 
     <filter>
-        <name>TreasuryAuthorization</name>
-        <implementationClass>net.sourceforge.fenixedu.applicationTier.Filtro.TreasuryAuthorizationFilter</implementationClass>
-        <description></description>
-        <isTransactional>false</isTransactional>
-    </filter>
-
-    <filter>
         <name>UnitSiteManagerAuthorization</name>
         <implementationClass>net.sourceforge.fenixedu.applicationTier.Filtro.ResearchSiteManagerAuthorizationFilter</implementationClass>
         <description></description>
@@ -747,4 +726,24 @@
         <isTransactional>false</isTransactional>
     </filter>
 
+    <filter>
+        <name>AcademicCurriculumsViewAuthorization</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Filtro.AcademicCurriculumsViewAuthorization</implementationClass>
+        <description></description>
+        <isTransactional>false</isTransactional>
+    </filter>
+    
+    <filter>
+        <name>SeminariesCoordinatorAuthorization</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Filtro.SeminariesCoordinatorFilter</implementationClass>
+        <description></description>
+        <isTransactional>false</isTransactional>
+    </filter>
+    
+    <filter>
+        <name>StudentCurriculumViewAuthorization</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Filtro.StudentCurriculumViewAuthorizationFilter</implementationClass>
+        <description></description>
+        <isTransactional>false</isTransactional>
+    </filter>
 </filterDefinitions>

@@ -129,9 +129,6 @@
 		<put name="body" value="/manager/insertNonAffiliatedTeacher_bd.jsp" />
 		<put name="navLocal" value="/manager/teachersBodyModificationNavLocalManager.jsp" />
 	</definition>		
-	<definition name="df.page.insert-execution-course" extends="definition.manager.masterPage" >
-		<put name="body" value="/manager/password/insertExecutionCourse_bd.jsp" />
-	</definition>	
 	<definition name="df.page.choosePerson" extends="definition.manager.masterPage" >
 		<put name="body" value="/manager/password/choosePersonPage_bd.jsp" />
 	</definition>
@@ -140,10 +137,6 @@
 	</definition>	
 	<definition name="df.page.confirmPasswordChange" extends="definition.manager.masterPage" >
 		<put name="body" value="/manager/password/confirmPasswordChange_bd.jsp" />
-	</definition>
-	<definition name="df.page.insert-execution-course" extends="definition.manager.masterPage" >
-		<put name="body" value="/manager/insertExecutionCourse_bd.jsp" />
-		<put name="navLocal" value="/manager/executionCourseManagement/mainMenu.jsp" />
 	</definition>
 	<definition name="df.page.read-execution-periods-to-choose" extends="definition.manager.masterPage" >
 		<put name="body" value="/manager/readExecutionPeriods_bd.jsp" />

@@ -17,9 +17,9 @@ import net.sourceforge.fenixedu.presentationTier.docs.academicAdministrativeOffi
 import net.sourceforge.fenixedu.util.report.ReportsUtils;
 
 public abstract class PhdDocumentRequest extends PhdDocumentRequest_Base implements IDocumentRequest {
-    
+
     protected PhdDocumentRequest() {
-        super();
+	super();
     }
 
     @Override
@@ -28,7 +28,7 @@ public abstract class PhdDocumentRequest extends PhdDocumentRequest_Base impleme
     }
 
     protected void init(PhdDocumentRequestCreateBean bean) {
-	super.init((PhdAcademicServiceRequestCreateBean) bean);
+	super.init(bean);
     }
 
     @Override
@@ -41,8 +41,10 @@ public abstract class PhdDocumentRequest extends PhdDocumentRequest_Base impleme
 	return AcademicServiceRequestType.DOCUMENT;
     }
 
+    @Override
     abstract public DocumentRequestType getDocumentRequestType();
 
+    @Override
     abstract public String getDocumentTemplateKey();
 
     @Override
@@ -60,10 +62,12 @@ public abstract class PhdDocumentRequest extends PhdDocumentRequest_Base impleme
 	return getDocumentRequestType().isDiplomaSupplement();
     }
 
+    @Override
     public boolean isCertificate() {
 	return false;
     }
 
+    @Override
     public boolean isToShowCredits() {
 	return false;
     }
@@ -114,7 +118,7 @@ public abstract class PhdDocumentRequest extends PhdDocumentRequest_Base impleme
     @Override
     public byte[] generateDocument() {
 	try {
-	    final List<AdministrativeOfficeDocument> documents = (List<AdministrativeOfficeDocument>) AdministrativeOfficeDocument.AdministrativeOfficeDocumentCreator
+	    final List<AdministrativeOfficeDocument> documents = AdministrativeOfficeDocument.AdministrativeOfficeDocumentCreator
 		    .create(this);
 	    final AdministrativeOfficeDocument[] array = {};
 	    byte[] data = ReportsUtils.exportMultipleToPdfAsByteArray(documents.toArray(array));
@@ -128,8 +132,7 @@ public abstract class PhdDocumentRequest extends PhdDocumentRequest_Base impleme
 
     @Override
     public String getReportFileName() {
-	return ((List<AdministrativeOfficeDocument>) AdministrativeOfficeDocument.AdministrativeOfficeDocumentCreator
-		.create(this))
-		.iterator().next().getReportFileName();
+	return AdministrativeOfficeDocument.AdministrativeOfficeDocumentCreator.create(this).iterator().next()
+		.getReportFileName();
     }
 }

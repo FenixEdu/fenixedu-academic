@@ -4,11 +4,8 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr" %>
 
-<logic:present role="ACADEMIC_ADMINISTRATIVE_OFFICE">
-
 <bean:define id="student" name="registration" property="student" />
 
-<em><bean:message key="label.academicAdminOffice" bundle="ACADEMIC_OFFICE_RESOURCES"/></em>
 <h2><bean:message key="label.student.manageExternalEnrolments" bundle="ACADEMIC_OFFICE_RESOURCES" /></h2>
 
 <p class="mvert2">
@@ -73,5 +70,3 @@
 	
 	<html:cancel onclick="this.form.method.value='cancelExternalEnrolment';"><bean:message key="button.back" bundle="ACADEMIC_OFFICE_RESOURCES"/></html:cancel>
 </fr:form>
-
-</logic:present>

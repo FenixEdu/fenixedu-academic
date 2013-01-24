@@ -3,14 +3,10 @@ package net.sourceforge.fenixedu.presentationTier.docs.academicAdministrativeOff
 import static pt.utl.ist.fenix.tools.util.DateFormatUtil.DEFAULT_DATE_FORMAT;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.contacts.PhysicalAddress;
-import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.domain.organizationalStructure.AdministrativeOfficeUnit;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.organizationalStructure.UnitUtils;
 import net.sourceforge.fenixedu.domain.serviceRequests.Under23TransportsDeclarationRequest;
-import net.sourceforge.fenixedu.domain.space.Campus;
-import net.sourceforge.fenixedu.injectionCode.AccessControl;
 
 import org.joda.time.LocalDate;
 
@@ -43,31 +39,13 @@ public class Under23TransportsDeclarationDocument extends AdministrativeOfficeDo
 	addParameter("executionYear", getExecutionYear().getQualifiedName());
 	addParameter("institutionName", UnitUtils.readInstitutionUnit().getName());
 
+	Unit adminOfficeUnit = getAdministrativeOffice().getUnit();
+
 	addAddressInformation("person", getDocumentRequest().getPerson());
-	addAddressInformation("institution", getAdministrativeOfficeUnit());
-	addParameter("institutionPhone", getAdministrativeOfficeUnit().getDefaultPhone().getNumber());
+	addAddressInformation("institution", adminOfficeUnit);
+	addParameter("institutionPhone", adminOfficeUnit.getDefaultPhone().getNumber());
 
 	addParameter("reportDate", new LocalDate().toString("dd 'de' MMMM 'de' yyyy", Language.getLocale()));
-    }
-
-    private Unit getAdministrativeOfficeUnit() {
-
-	switch (getDocumentRequest().getAdministrativeOffice().getAdministrativeOfficeType()) {
-
-	case DEGREE:
-	    final Campus campus = AccessControl.getPerson().getEmployeeCampus();
-	    final AdministrativeOfficeUnit officeUnit = getDocumentRequest().getAdministrativeOffice().getUnit();
-	    for (final Unit unit : officeUnit.getSubUnits()) {
-		if (unit.getCampus() == campus) {
-		    return unit;
-		}
-	    }
-
-	case MASTER_DEGREE:
-	    return getDocumentRequest().getAdministrativeOffice().getUnit();
-	}
-
-	throw new DomainException("error.Under23TransportsDeclarationDocument.unexpected.administrative.office.type");
     }
 
     private void addAddressInformation(final String prefix, final Party party) {

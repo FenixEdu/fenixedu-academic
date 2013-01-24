@@ -13,7 +13,6 @@
 <%@page import="net.sourceforge.fenixedu.domain.phd.candidacy.activities.AssociateRegistration" %>
 <%@page import="net.sourceforge.fenixedu.domain.phd.candidacy.activities.AddState" %>
 <%@page import="net.sourceforge.fenixedu.domain.phd.candidacy.activities.RemoveLastState" %>
-<%@page import="net.sourceforge.fenixedu.domain.accessControl.PermissionType" %>
 
 <%@page import="net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess"%>
 
@@ -41,11 +40,11 @@
 		
 		<phd:activityAvailable process="<%= candidacyProcess %>" activity="<%= AddState.class %>">
 			<li>
-				<phd:permissionFor permission="<%= PermissionType.MANAGE_PHD_PROCESS_STATES %>">
+				<logic:equal value="true" name="process" property="currentUserAllowedToManageProcessState">
 				<html:link action="/phdProgramCandidacyProcess.do?method=manageStates" paramId="processId" paramName="process" paramProperty="candidacyProcess.externalId">
 					<bean:message bundle="PHD_RESOURCES" key="label.phd.manage.states" />
 				</html:link>
-				</phd:permissionFor>
+				</logic:equal>
 			</li>		
 		</phd:activityAvailable>
 		
@@ -79,13 +78,11 @@
 				
 			</logic:notEmpty>
 
-		<logic:equal name="<%= pt.ist.fenixWebFramework.servlets.filters.SetUserViewFilter.USER_SESSION_ATTRIBUTE %>" property="person.employee.unitCoordinator" value="true">
 			<li>
 				<html:link action="/phdProgramCandidacyProcess.do?method=viewLogs" paramId="processId" paramName="process" paramProperty="candidacyProcess.externalId">
 					<bean:message bundle="PHD_RESOURCES" key="link.phd.view.log" /> 
 				</html:link>					
 			</li>
-		</logic:equal>
 		</ul>
 	</td>
   </tr>

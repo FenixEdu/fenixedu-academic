@@ -22,7 +22,7 @@ import org.joda.time.DateTime;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 public class DiplomaSupplementRequest extends DiplomaSupplementRequest_Base implements IDiplomaSupplementRequest,
-IRectorateSubmissionBatchDocumentEntry {
+	IRectorateSubmissionBatchDocumentEntry {
 
     public DiplomaSupplementRequest() {
 	super();
@@ -53,8 +53,8 @@ IRectorateSubmissionBatchDocumentEntry {
 
 	final String fullName = getRegistration().getStudent().getPerson().getName();
 	final String familyName = bean.getFamilyNames();
-	final String composedName = familyName == null || familyName.isEmpty() ?
-		bean.getGivenNames() : bean.getGivenNames() + " " + familyName;
+	final String composedName = familyName == null || familyName.isEmpty() ? bean.getGivenNames() : bean.getGivenNames()
+		+ " " + familyName;
 
 	if (!fullName.equals(composedName)) {
 	    throw new DomainException("error.diplomaSupplementRequest.splittedNamesDoNotMatch");
@@ -90,7 +90,7 @@ IRectorateSubmissionBatchDocumentEntry {
 
 	return getDescription(getAcademicServiceRequestType(),
 		getDocumentRequestType().getQualifiedName() + "." + degreeType.name()
-		+ (degreeType.isComposite() ? "." + requestedCycle.name() : ""));
+			+ (degreeType.isComposite() ? "." + requestedCycle.name() : ""));
     }
 
     @Override
@@ -287,4 +287,8 @@ IRectorateSubmissionBatchDocumentEntry {
 		+ getIdInternal();
     }
 
+    @Override
+    public boolean isProgrammeLinkVisible() {
+	return getRegistration().isAllowedToManageRegistration();
+    }
 }

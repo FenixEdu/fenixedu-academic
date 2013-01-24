@@ -12,7 +12,7 @@ public class UploadGuidanceAcceptanceLetter extends PhdIndividualProgramProcessA
 
     @Override
     protected void activityPreConditions(PhdIndividualProgramProcess process, IUserView userView) {
-	if (!PhdIndividualProgramProcess.isMasterDegreeAdministrativeOfficeEmployee(userView)) {
+	if (!process.isAllowedToManageProcess(userView)) {
 	    throw new PreConditionNotValidException();
 	}
     }

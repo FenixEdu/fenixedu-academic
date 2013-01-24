@@ -1,7 +1,10 @@
 package net.sourceforge.fenixedu.domain.documents;
 
 import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.accessControl.Group;
+import net.sourceforge.fenixedu.domain.accessControl.RoleGroup;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
+import net.sourceforge.fenixedu.domain.person.RoleType;
 import pt.ist.fenixWebFramework.services.Service;
 
 /**
@@ -12,6 +15,11 @@ public class GeneratedDocumentWithoutSource extends GeneratedDocumentWithoutSour
 	    byte[] content) {
 	super();
 	init(type, addressee, operator, filename, content);
+    }
+
+    @Override
+    protected Group computePermittedGroup() {
+	return new RoleGroup(RoleType.MANAGER);
     }
 
     @Service

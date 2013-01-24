@@ -1,8 +1,6 @@
 package net.sourceforge.fenixedu.domain.phd.debts;
 
-import net.sourceforge.fenixedu.domain.Employee;
-import net.sourceforge.fenixedu.domain.accounting.Event;
-import net.sourceforge.fenixedu.domain.accounting.Exemption;
+import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.accounting.events.ExemptionJustification;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.util.Money;
@@ -11,7 +9,6 @@ import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
 
 import pt.ist.fenixWebFramework.services.Service;
-import dml.runtime.RelationAdapter;
 
 public class PhdEventExemption extends PhdEventExemption_Base {
 
@@ -19,11 +16,11 @@ public class PhdEventExemption extends PhdEventExemption_Base {
 	super();
     }
 
-    public PhdEventExemption(final Employee employee, final PhdEvent event, final Money value,
+    public PhdEventExemption(final Person responsible, final PhdEvent event, final Money value,
 	    final PhdEventExemptionJustificationType justificationType, final LocalDate dispatchDate, final String reason) {
 
 	this();
-	super.init(employee, event, createJustification(justificationType, dispatchDate, reason));
+	super.init(responsible, event, createJustification(justificationType, dispatchDate, reason));
 
 	check(value, "error.PhdEventExemption.invalid.amount");
 	setValue(value);
@@ -49,9 +46,9 @@ public class PhdEventExemption extends PhdEventExemption_Base {
     }
 
     @Service
-    static public PhdEventExemption create(final Employee employee, final PhdEvent event, final Money value,
+    static public PhdEventExemption create(final Person responsible, final PhdEvent event, final Money value,
 	    final PhdEventExemptionJustificationType justificationType, final LocalDate dispatchDate, final String reason) {
-	return new PhdEventExemption(employee, event, value, justificationType, dispatchDate, reason);
+	return new PhdEventExemption(responsible, event, value, justificationType, dispatchDate, reason);
     }
 
     @Override

@@ -8,14 +8,13 @@ import net.sourceforge.fenixedu.util.Money;
 
 import org.joda.time.DateTime;
 
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
+public class SecondCycleIndividualCandidacyFixedValueMultipleDegreesPR extends
+	SecondCycleIndividualCandidacyFixedValueMultipleDegreesPR_Base {
 
-public class SecondCycleIndividualCandidacyFixedValueMultipleDegreesPR extends SecondCycleIndividualCandidacyFixedValueMultipleDegreesPR_Base {
-    
-    public  SecondCycleIndividualCandidacyFixedValueMultipleDegreesPR() {
-        super();
+    public SecondCycleIndividualCandidacyFixedValueMultipleDegreesPR() {
+	super();
     }
-    
+
     public SecondCycleIndividualCandidacyFixedValueMultipleDegreesPR(final DateTime startDate, final DateTime endDate,
 	    final ServiceAgreementTemplate serviceAgreementTemplate, final Money fixedAmount) {
 	this();
@@ -23,7 +22,7 @@ public class SecondCycleIndividualCandidacyFixedValueMultipleDegreesPR extends S
 		serviceAgreementTemplate, fixedAmount);
     }
 
-    @Checked("PostingRulePredicates.editPredicate")
+    @Override
     public SecondCycleIndividualCandidacyFixedValueMultipleDegreesPR edit(final Money fixedAmount) {
 	deactivate();
 	return new SecondCycleIndividualCandidacyFixedValueMultipleDegreesPR(new DateTime().minus(1000), null,

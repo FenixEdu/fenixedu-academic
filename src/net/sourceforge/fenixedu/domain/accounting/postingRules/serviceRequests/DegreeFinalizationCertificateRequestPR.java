@@ -9,8 +9,6 @@ import net.sourceforge.fenixedu.util.Money;
 
 import org.joda.time.DateTime;
 
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
-
 public class DegreeFinalizationCertificateRequestPR extends DegreeFinalizationCertificateRequestPR_Base {
 
     protected DegreeFinalizationCertificateRequestPR() {
@@ -25,7 +23,7 @@ public class DegreeFinalizationCertificateRequestPR extends DegreeFinalizationCe
 		endDate, serviceAgreementTemplate, baseAmount, amountPerUnit, amountPerPage, maximumAmount);
     }
 
-    @Checked("PostingRulePredicates.editPredicate")
+    @Override
     public DegreeFinalizationCertificateRequestPR edit(Money baseAmount, Money amountPerUnit, Money amountPerPage,
 	    Money maximumAmount) {
 

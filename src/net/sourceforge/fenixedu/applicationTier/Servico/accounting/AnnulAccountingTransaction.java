@@ -8,7 +8,7 @@ import pt.ist.fenixWebFramework.services.Service;
 
 public class AnnulAccountingTransaction extends FenixService {
 
-    @Checked("RolePredicates.MANAGER_PREDICATE")
+    @Checked("AcademicPredicates.MANAGE_PAYMENTS")
     @Service
     public static void run(final Employee employee, final AnnulAccountingTransactionBean annulAccountingTransactionBean) {
 	annulAccountingTransactionBean.getTransaction().annul(employee.getPerson().getUser(),

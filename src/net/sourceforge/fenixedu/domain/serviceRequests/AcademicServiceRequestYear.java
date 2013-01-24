@@ -1,10 +1,12 @@
 package net.sourceforge.fenixedu.domain.serviceRequests;
 
+import java.util.Collection;
+import java.util.Collections;
+
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 
 public class AcademicServiceRequestYear extends AcademicServiceRequestYear_Base {
-
-    public AcademicServiceRequestYear(final int year) {
+    private AcademicServiceRequestYear(final int year) {
 	super();
 	super.setRootDomainObject(RootDomainObject.getInstance());
 
@@ -12,14 +14,24 @@ public class AcademicServiceRequestYear extends AcademicServiceRequestYear_Base 
 	setLatestServiceRequestNumber(Integer.valueOf(0));
     }
 
-    static final public AcademicServiceRequestYear readByYear(final int year) {
+    static final public AcademicServiceRequestYear readByYear(final int year, boolean create) {
 	for (final AcademicServiceRequestYear requestYear : RootDomainObject.getInstance().getAcademicServiceRequestYearsSet()) {
 	    if (requestYear.getYear().intValue() == year) {
 		return requestYear;
 	    }
 	}
-
+	if (create) {
+	    return new AcademicServiceRequestYear(year);
+	}
 	return null;
+    }
+
+    public static Collection<AcademicServiceRequest> getAcademicServiceRequests(int year) {
+	AcademicServiceRequestYear requestYear = readByYear(year, false);
+	if (requestYear == null) {
+	    return Collections.emptySet();
+	}
+	return requestYear.getAcademicServiceRequests();
     }
 
     protected Integer generateServiceRequestNumber() {

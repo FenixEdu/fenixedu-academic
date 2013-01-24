@@ -13,8 +13,8 @@
 <bean:define id="processName" name="processName" />
 
 <%-- show child processes --%>
-<logic:notEmpty name="process" property="childsWithMissingRequiredDocuments" >
-	<fr:view name="process" property="childsWithMissingRequiredDocuments" schema="SecondCycleIndividualCandidacyProcess.missing.required.documents.list">
+<logic:present name="childsWithMissingRequiredDocuments" >
+	<fr:view name="childsWithMissingRequiredDocuments" schema="SecondCycleIndividualCandidacyProcess.missing.required.documents.list">
 		<fr:layout name="tabular-sortable">
 			<fr:property name="classes" value="tstyle4 thcenter thcenter thcenter"/>
 			<fr:property name="columnClasses" value="tdcenter, tdcenter, tdcenter, "/>
@@ -28,8 +28,8 @@
    	        <fr:property name="sortBy" value="<%= request.getParameter("sortBy") == null ? "candidacyState,candidacyDate=desc" : request.getParameter("sortBy") %>"/>
 		</fr:layout>
 	</fr:view>
-	<bean:size id="childProcessesSize" name="childProcesses" />
+	<bean:size id="childProcessesSize" name="childsWithMissingRequiredDocuments" />
 	
-	<p class="mvert05"><bean:message key="label.numberOfCandidates" bundle="APPLICATION_RESOURCES" />: <strong><%= process.getChildsWithMissingRequiredDocuments().size() %></strong></p>
+	<p class="mvert05"><bean:message key="label.numberOfCandidates" bundle="APPLICATION_RESOURCES" />: <strong><bean:write name="childProcessesSize"/></strong></p>
 	
-</logic:notEmpty>
+</logic:present>

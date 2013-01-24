@@ -52,7 +52,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 
-@Mapping(path = "/phdProgramCandidacyProcess", module = "academicAdminOffice")
+@Mapping(path = "/phdProgramCandidacyProcess", module = "academicAdministration")
 @Forwards({
 
 @Forward(name = "searchPerson", path = "/phd/candidacy/academicAdminOffice/searchPerson.jsp"),
@@ -251,9 +251,8 @@ public class PhdProgramCandidacyProcessDA extends CommonPhdCandidacyDA {
 	}
 
 	final ActionForward result = executeActivity(
-		net.sourceforge.fenixedu.domain.phd.candidacy.activities.UploadDocuments.class, getDocumentsToUpload(),
-		request, mapping, "manageCandidacyDocuments", "manageCandidacyDocuments",
-		"message.documents.uploaded.with.success");
+		net.sourceforge.fenixedu.domain.phd.candidacy.activities.UploadDocuments.class, getDocumentsToUpload(), request,
+		mapping, "manageCandidacyDocuments", "manageCandidacyDocuments", "message.documents.uploaded.with.success");
 
 	RenderUtils.invalidateViewState("documentsToUpload");
 
@@ -317,8 +316,8 @@ public class PhdProgramCandidacyProcessDA extends CommonPhdCandidacyDA {
 	prepareDocumentsToUpload(request);
 
 	return executeActivity(net.sourceforge.fenixedu.domain.phd.candidacy.activities.DeleteDocument.class,
-		getDocument(request), request, mapping, "manageCandidacyDocuments",
-		"manageCandidacyDocuments", "message.document.deleted.successfuly");
+		getDocument(request), request, mapping, "manageCandidacyDocuments", "manageCandidacyDocuments",
+		"message.document.deleted.successfuly");
     }
 
     public ActionForward prepareRatifyCandidacy(ActionMapping mapping, ActionForm form, HttpServletRequest request,
@@ -390,8 +389,7 @@ public class PhdProgramCandidacyProcessDA extends CommonPhdCandidacyDA {
 
 	final ActionForward result = executeActivity(
 		net.sourceforge.fenixedu.domain.phd.candidacy.activities.AddNotification.class, bean, request, mapping,
-		"createNotification",
-		"manageNotifications", "message.notification.created.with.success");
+		"createNotification", "manageNotifications", "message.notification.created.with.success");
 
 	request.setAttribute("notificationBean", bean);
 

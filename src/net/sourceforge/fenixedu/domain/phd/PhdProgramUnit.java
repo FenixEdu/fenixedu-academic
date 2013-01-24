@@ -20,7 +20,7 @@ public class PhdProgramUnit extends PhdProgramUnit_Base {
 	    final YearMonthDay endDate, final Unit parent) {
 
 	final PhdProgramUnit programUnit = new PhdProgramUnit();
-	programUnit.init(unitName, null, null, null, beginDate, endDate, null, null, null, null);
+	programUnit.init(unitName, null, null, null, beginDate, endDate, null, null, null, null, null);
 	programUnit.setPhdProgram(program);
 	programUnit.addParentUnit(parent, AccountabilityType.readByType(AccountabilityTypeEnum.ACADEMIC_STRUCTURE));
 

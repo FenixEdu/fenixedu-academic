@@ -12,7 +12,7 @@ public class RejectJuryElements extends PhdThesisActivity {
     @Override
     protected void activityPreConditions(PhdThesisProcess process, IUserView userView) {
 	if (!process.getActiveState().equals(PhdThesisProcessStateType.JURY_WAITING_FOR_VALIDATION)
-		|| !PhdThesisProcess.isMasterDegreeAdministrativeOfficeEmployee(userView)) {
+		|| !process.isAllowedToManageProcess(userView)) {
 	    throw new PreConditionNotValidException();
 	}
     }

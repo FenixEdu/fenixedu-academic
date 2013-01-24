@@ -10,7 +10,7 @@ public class DeleteCandidacyReview extends PhdProgramCandidacyProcessActivity {
 
     @Override
     protected void activityPreConditions(PhdProgramCandidacyProcess process, IUserView userView) {
-	if (isMasterDegreeAdministrativeOfficeEmployee(userView)) {
+	if (process.isAllowedToManageProcess(userView)) {
 	    return;
 	}
 
@@ -29,9 +29,9 @@ public class DeleteCandidacyReview extends PhdProgramCandidacyProcessActivity {
     protected PhdProgramCandidacyProcess executeActivity(PhdProgramCandidacyProcess process, IUserView userView, Object object) {
 	PhdProgramProcessDocument document = (PhdProgramProcessDocument) object;
 
-	    document.delete();
+	document.delete();
 
-	    return process;
+	return process;
     }
 
 }

@@ -1,17 +1,16 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.accounting;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.dataTransferObject.accounting.SecondCycleIndividualCandidacyExemptionBean;
-import net.sourceforge.fenixedu.domain.Employee;
+import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.accounting.events.candidacy.SecondCycleIndividualCandidacyExemption;
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.ist.fenixWebFramework.services.Service;
 
-public class CreateSecondCycleIndividualCandidacyExemption extends FenixService {
+public class CreateSecondCycleIndividualCandidacyExemption {
 
-    @Checked("RolePredicates.ACADEMIC_ADMINISTRATIVE_OFFICE_PREDICATE")
+    @Checked("AcademicPredicates.MANAGE_STUDENT_PAYMENTS")
     @Service
-    public static void run(final Employee employee, final SecondCycleIndividualCandidacyExemptionBean bean) {
-	new SecondCycleIndividualCandidacyExemption(employee, bean.getEvent(), bean.getJustificationType());
+    public static void run(final Person responsible, final SecondCycleIndividualCandidacyExemptionBean bean) {
+	new SecondCycleIndividualCandidacyExemption(responsible, bean.getEvent(), bean.getJustificationType());
     }
 }

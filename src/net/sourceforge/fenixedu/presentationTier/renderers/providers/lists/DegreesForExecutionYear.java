@@ -3,7 +3,7 @@ package net.sourceforge.fenixedu.presentationTier.renderers.providers.lists;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
-import net.sourceforge.fenixedu.dataTransferObject.commons.DegreeByExecutionYearBean;
+import net.sourceforge.fenixedu.dataTransferObject.academicAdministration.DegreeByExecutionYearBean;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionYear;

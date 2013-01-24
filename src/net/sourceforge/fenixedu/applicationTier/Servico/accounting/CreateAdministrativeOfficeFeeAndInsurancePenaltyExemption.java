@@ -1,23 +1,22 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.accounting;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.dataTransferObject.accounting.penaltyExemption.CreateAdministrativeOfficeFeeAndInsurancePenaltyExemptionBean;
-import net.sourceforge.fenixedu.domain.Employee;
+import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.accounting.events.AdministrativeOfficeFeeAndInsuranceEvent;
 import net.sourceforge.fenixedu.domain.accounting.events.AdministrativeOfficeFeeAndInsurancePenaltyExemption;
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.ist.fenixWebFramework.services.Service;
 
-public class CreateAdministrativeOfficeFeeAndInsurancePenaltyExemption extends FenixService {
+public class CreateAdministrativeOfficeFeeAndInsurancePenaltyExemption {
 
-    @Checked("RolePredicates.ACADEMIC_ADMINISTRATIVE_OFFICE_PREDICATE")
+    @Checked("AcademicPredicates.MANAGE_STUDENT_PAYMENTS")
     @Service
-    public static void run(final Employee employee,
+    public static void run(final Person responsible,
 	    final CreateAdministrativeOfficeFeeAndInsurancePenaltyExemptionBean penaltyExemptionBean) {
 
 	new AdministrativeOfficeFeeAndInsurancePenaltyExemption(penaltyExemptionBean.getJustificationType(),
-		(AdministrativeOfficeFeeAndInsuranceEvent) penaltyExemptionBean.getEvent(), employee, penaltyExemptionBean
-			.getReason(), penaltyExemptionBean.getDispatchDate());
+		(AdministrativeOfficeFeeAndInsuranceEvent) penaltyExemptionBean.getEvent(), responsible,
+		penaltyExemptionBean.getReason(), penaltyExemptionBean.getDispatchDate());
 
     }
 

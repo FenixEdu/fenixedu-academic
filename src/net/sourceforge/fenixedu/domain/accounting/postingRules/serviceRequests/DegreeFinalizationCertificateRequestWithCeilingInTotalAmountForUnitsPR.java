@@ -9,8 +9,6 @@ import net.sourceforge.fenixedu.util.Money;
 
 import org.joda.time.DateTime;
 
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
-
 public class DegreeFinalizationCertificateRequestWithCeilingInTotalAmountForUnitsPR extends
 	DegreeFinalizationCertificateRequestWithCeilingInTotalAmountForUnitsPR_Base {
 
@@ -44,7 +42,7 @@ public class DegreeFinalizationCertificateRequestWithCeilingInTotalAmountForUnit
 
     }
 
-    @Checked("PostingRulePredicates.editPredicate")
+    @Override
     public DegreeFinalizationCertificateRequestWithCeilingInTotalAmountForUnitsPR edit(Money baseAmount, Money amountPerUnit,
 	    Money amountPerPage, Money maximumAmount) {
 

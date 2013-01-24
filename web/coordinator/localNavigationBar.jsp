@@ -5,7 +5,6 @@
 <%@page import="org.joda.time.LocalDate"%>
 <%@page import="pt.ist.fenixWebFramework.security.UserView"%><html:xhtml/>
 
-<%@page import="net.sourceforge.fenixedu.predicates.PermissionPredicates" %>
 <%@page import="net.sourceforge.fenixedu.injectionCode.AccessControl" %>
 
 <logic:present role="COORDINATOR">

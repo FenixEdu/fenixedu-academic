@@ -13,7 +13,8 @@ public class AddQualifications extends PhdIndividualProgramProcessActivity {
 	// no precondition to check
     }
 
-	@Override
+    @SuppressWarnings("unchecked")
+    @Override
     protected PhdIndividualProgramProcess executeActivity(PhdIndividualProgramProcess process, IUserView userView, Object object) {
 	for (final QualificationBean bean : (List<QualificationBean>) object) {
 	    process.addQualification(userView != null ? userView.getPerson() : null, bean);

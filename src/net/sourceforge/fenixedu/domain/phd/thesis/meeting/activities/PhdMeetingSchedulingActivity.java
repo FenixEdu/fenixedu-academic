@@ -9,16 +9,11 @@ import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess;
 import net.sourceforge.fenixedu.domain.phd.PhdParticipant;
 import net.sourceforge.fenixedu.domain.phd.alert.AlertService.AlertMessage;
 import net.sourceforge.fenixedu.domain.phd.log.PhdLog;
-import net.sourceforge.fenixedu.domain.phd.permissions.PhdPermissionType;
 import net.sourceforge.fenixedu.domain.phd.thesis.PhdThesisProcess;
 import net.sourceforge.fenixedu.domain.phd.thesis.meeting.PhdMeetingSchedulingProcess;
 import net.sourceforge.fenixedu.util.phd.PhdProperties;
 
 abstract public class PhdMeetingSchedulingActivity extends Activity<PhdMeetingSchedulingProcess> {
-
-    protected PhdPermissionType getThesisProcessPermission() {
-	return PhdPermissionType.THESIS_PROCESS_MANAGEMENT;
-    }
 
     @Override
     final public void checkPreConditions(final PhdMeetingSchedulingProcess process, final IUserView userView) {

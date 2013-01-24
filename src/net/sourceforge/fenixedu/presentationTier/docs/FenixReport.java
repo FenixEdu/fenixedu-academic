@@ -20,7 +20,7 @@ abstract public class FenixReport implements Serializable {
 
     private static String realPath = null;
 
-    @SuppressWarnings("unchecked")
+    @SuppressWarnings("rawtypes")
     final private Collection dataSource;
 
     final private Map<String, Object> parameters = new HashMap<String, Object>();
@@ -61,17 +61,15 @@ abstract public class FenixReport implements Serializable {
 	this(null, locale);
     }
 
-    @SuppressWarnings("unchecked")
-    private FenixReport(final Collection dataSource, final Locale locale) {
-	this.dataSource = (dataSource == null) ? new ArrayList() : dataSource;
+    private FenixReport(final Collection<?> dataSource, final Locale locale) {
+	this.dataSource = dataSource == null ? new ArrayList<Object>() : dataSource;
 	this.enumerationBundle = ResourceBundle.getBundle("resources.EnumerationResources", locale);
 	this.applicationBundle = ResourceBundle.getBundle("resources.ApplicationResources", locale);
 	this.locale = locale;
 	this.language = Language.valueOf(locale.getLanguage());
     }
 
-    @SuppressWarnings("unchecked")
-    public final Collection getDataSource() {
+    public final Collection<?> getDataSource() {
 	return dataSource;
     }
 
@@ -121,7 +119,7 @@ abstract public class FenixReport implements Serializable {
     }
 
     @SuppressWarnings("unchecked")
-    public void addDataSourceElements(final Collection objects) {
+    public void addDataSourceElements(final Collection<?> objects) {
 	this.dataSource.addAll(objects);
     }
 

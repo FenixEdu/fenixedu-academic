@@ -40,8 +40,6 @@
 	</style>
 
 	<parameter name="receiptDate" isForPrompting="false" class="java.lang.String"/>
-	<parameter name="ownerUnit" isForPrompting="false" class="java.lang.String"/>
-	<parameter name="ownerUnitCostCenter" isForPrompting="false" class="java.lang.String"/>
 	<parameter name="total" isForPrompting="false" class="java.lang.String"/>
 	<parameter name="name" isForPrompting="false" class="java.lang.String"/>
 	<parameter name="documentIdType" isForPrompting="false" class="java.lang.String"/>
@@ -118,40 +116,6 @@
 					<graphicElement stretchType="NoStretch"/>
 					<imageExpression class="java.lang.String"><![CDATA[$P{path} + "/images/LogoIST.gif"]]></imageExpression>
 				</image>
-				<textField isStretchWithOverflow="true" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
-					<reportElement
-						x="129"
-						y="79"
-						width="455"
-						height="18"
-						key="textField-10"/>
-					<box>					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-					<bottomPen lineWidth="0.0" lineColor="#000000"/>
-					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-</box>
-					<textElement>
-						<font pdfFontName="Times-Bold" size="12" isBold="true" isPdfEmbedded ="true"/>
-					</textElement>
-				<textFieldExpression   class="java.lang.String"><![CDATA[$P{ownerUnit}]]></textFieldExpression>
-				</textField>
-				<textField isStretchWithOverflow="true" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
-					<reportElement
-						x="129"
-						y="97"
-						width="455"
-						height="18"
-						key="textField-11"/>
-					<box>					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-					<bottomPen lineWidth="0.0" lineColor="#000000"/>
-					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-</box>
-					<textElement>
-						<font pdfFontName="Times-Bold" size="12" isBold="true" isPdfEmbedded ="true"/>
-					</textElement>
-				<textFieldExpression   class="java.lang.String"><![CDATA["Centro de Custo " + $P{ownerUnitCostCenter}]]></textFieldExpression>
-				</textField>
 				<line direction="TopDown">
 					<reportElement
 						x="129"

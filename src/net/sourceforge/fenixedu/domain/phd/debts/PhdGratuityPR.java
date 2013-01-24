@@ -46,6 +46,7 @@ public class PhdGratuityPR extends PhdGratuityPR_Base {
 	setFineRate(fineRate);
     }
 
+    @Override
     public void setGratuity(Money gratuity) {
 	if (gratuity.lessThan(new Money(0))) {
 	    throw new RuntimeException("error.negative.gratuity");
@@ -53,6 +54,7 @@ public class PhdGratuityPR extends PhdGratuityPR_Base {
 	super.setGratuity(gratuity);
     }
 
+    @Override
     public void setFineRate(Double fineRate) {
 	if (fineRate <= 0 || fineRate > 1) {
 	    throw new RuntimeException("error.invalid.fine.rate");
@@ -107,7 +109,7 @@ public class PhdGratuityPR extends PhdGratuityPR_Base {
 	if (amountToPay.lessOrEqualThan(Money.ZERO)) {
 	    return Money.ZERO;
 	}
-	
+
 	return amountToPay;
     }
 

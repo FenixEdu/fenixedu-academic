@@ -21,12 +21,12 @@ public class OldMarkSheet extends OldMarkSheet_Base {
 
     public OldMarkSheet(CurricularCourse curricularCourse, ExecutionSemester executionSemester, Teacher responsibleTeacher,
 	    Date evaluationDate, MarkSheetType markSheetType, MarkSheetState markSheetState,
-	    Collection<MarkSheetEnrolmentEvaluationBean> evaluationBeans, Employee employee) {
+	    Collection<MarkSheetEnrolmentEvaluationBean> evaluationBeans, Person creator) {
 	this();
 	checkParameters(curricularCourse, executionSemester, responsibleTeacher, evaluationDate, markSheetType, markSheetState,
-		evaluationBeans, employee);
+		evaluationBeans, creator);
 	init(curricularCourse, executionSemester, responsibleTeacher, evaluationDate, markSheetType, markSheetState,
-		Boolean.FALSE, employee);
+		Boolean.FALSE, creator);
 
 	for (MarkSheetEnrolmentEvaluationBean evaluationBean : evaluationBeans) {
 	    addEnrolmentEvaluationToMarkSheet(responsibleTeacher, evaluationBean);
@@ -69,10 +69,10 @@ public class OldMarkSheet extends OldMarkSheet_Base {
 
     private void checkParameters(CurricularCourse curricularCourse, ExecutionSemester executionSemester,
 	    Teacher responsibleTeacher, Date evaluationDate, MarkSheetType markSheetType, MarkSheetState markSheetState,
-	    Collection<MarkSheetEnrolmentEvaluationBean> evaluationBeans, Employee employee) {
+	    Collection<MarkSheetEnrolmentEvaluationBean> evaluationBeans, Person person) {
 
 	if (curricularCourse == null || executionSemester == null || responsibleTeacher == null || evaluationDate == null
-		|| markSheetType == null || markSheetState == null || employee == null) {
+		|| markSheetType == null || markSheetState == null || person == null) {
 	    throw new DomainException("error.markSheet.invalid.arguments");
 	}
 	if (evaluationBeans == null || evaluationBeans.size() == 0) {
@@ -82,15 +82,15 @@ public class OldMarkSheet extends OldMarkSheet_Base {
 
     @Override
     @Checked("MarkSheetPredicates.confirmPredicate")
-    public void confirm(Employee employee) {
-	if (employee == null) {
+    public void confirm(Person validator) {
+	if (validator == null) {
 	    throw new DomainException("error.markSheet.invalid.arguments");
 	}
 	if (isNotConfirmed()) {
-	    setConfirmationEmployee(employee);
+	    setValidator(validator);
 
 	    for (final EnrolmentEvaluation enrolmentEvaluation : this.getEnrolmentEvaluationsSet()) {
-		enrolmentEvaluation.confirmSubmission(getEnrolmentEvaluationStateToConfirm(), employee, "");
+		enrolmentEvaluation.confirmSubmission(getEnrolmentEvaluationStateToConfirm(), validator, "");
 	    }
 
 	    setConfirmationDateDateTime(new DateTime());

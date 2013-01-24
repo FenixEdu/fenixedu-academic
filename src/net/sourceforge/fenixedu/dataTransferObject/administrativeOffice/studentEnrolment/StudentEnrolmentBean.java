@@ -20,9 +20,8 @@ public class StudentEnrolmentBean implements Serializable, IStudentCurricularPla
     private List<CurriculumModule> curriculumModules;
     private List<DegreeModuleToEnrol> degreeModulesToEnrol;
     private CurriculumModuleBean curriculumModuleBean;
-    private boolean canEnrolWithoutRules = false;
-    private boolean canMoveCurriculumLinesWithoutRules = false;
 
+    @Override
     public StudentCurricularPlan getStudentCurricularPlan() {
 	return this.studentCurricularPlan;
     }
@@ -102,22 +101,6 @@ public class StudentEnrolmentBean implements Serializable, IStudentCurricularPla
 
     public ExecutionYear getExecutionYear() {
 	return getExecutionPeriod().getExecutionYear();
-    }
-
-    public boolean getCanEnrolWithoutRules() {
-	return canEnrolWithoutRules;
-    }
-
-    public void canEnrolWithoutRules(boolean value) {
-	canEnrolWithoutRules = value;
-    }
-
-    public boolean getCanMoveCurriculumLinesWithoutRules() {
-	return canMoveCurriculumLinesWithoutRules;
-    }
-
-    public void canMoveCurriculumLinesWithoutRules(boolean value) {
-	canMoveCurriculumLinesWithoutRules = value;
     }
 
 }

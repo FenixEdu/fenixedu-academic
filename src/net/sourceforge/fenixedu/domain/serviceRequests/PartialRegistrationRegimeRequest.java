@@ -45,16 +45,16 @@ public class PartialRegistrationRegimeRequest extends PartialRegistrationRegimeR
 	}
 
 	if (enroledEctsCredits > MaximumNumberOfCreditsForEnrolmentPeriod.MAXIMUM_NUMBER_OF_CREDITS_PARTIAL_TIME) {
-	    throw new DomainException("error.RegistrationRegime.semester.has.more.ects.than.maximum.allowed", String
-		    .valueOf(enroledEctsCredits), executionYear.getQualifiedName(), String
-		    .valueOf(MaximumNumberOfCreditsForEnrolmentPeriod.MAXIMUM_NUMBER_OF_CREDITS_PARTIAL_TIME));
+	    throw new DomainException("error.RegistrationRegime.semester.has.more.ects.than.maximum.allowed",
+		    String.valueOf(enroledEctsCredits), executionYear.getQualifiedName(),
+		    String.valueOf(MaximumNumberOfCreditsForEnrolmentPeriod.MAXIMUM_NUMBER_OF_CREDITS_PARTIAL_TIME));
 	}
     }
 
     @Override
     protected void internalChangeState(final AcademicServiceRequestBean academicServiceRequestBean) {
 	if (academicServiceRequestBean.isToCancelOrReject() && hasEvent()) {
-	    getEvent().cancel(academicServiceRequestBean.getEmployee());
+	    getEvent().cancel(academicServiceRequestBean.getResponsible());
 
 	} else if (academicServiceRequestBean.isToConclude()) {
 	    if (isPayable() && !isPayed()) {
@@ -84,7 +84,7 @@ public class PartialRegistrationRegimeRequest extends PartialRegistrationRegimeR
 	    }
 	} else if (academicServiceRequestBean.isToConclude()) {
 	    AcademicServiceRequestSituation.create(this, new AcademicServiceRequestBean(
-		    AcademicServiceRequestSituationType.DELIVERED, academicServiceRequestBean.getEmployee()));
+		    AcademicServiceRequestSituationType.DELIVERED, academicServiceRequestBean.getResponsible()));
 
 	    if (!getRegistration().isPartialRegime(getExecutionYear())) {
 		new RegistrationRegime(getRegistration(), getExecutionYear(), RegistrationRegimeType.PARTIAL_TIME);
@@ -131,9 +131,9 @@ public class PartialRegistrationRegimeRequest extends PartialRegistrationRegimeR
 
     @Override
     public boolean isManagedWithRectorateSubmissionBatch() {
-        return false;
+	return false;
     }
-    
+
     @Override
     public boolean isToPrint() {
 	return false;

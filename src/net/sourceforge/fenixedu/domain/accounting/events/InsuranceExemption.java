@@ -2,7 +2,7 @@ package net.sourceforge.fenixedu.domain.accounting.events;
 
 import java.util.ResourceBundle;
 
-import net.sourceforge.fenixedu.domain.Employee;
+import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.accounting.Event;
 import net.sourceforge.fenixedu.domain.accounting.Exemption;
 import net.sourceforge.fenixedu.domain.accounting.events.insurance.IInsuranceEvent;
@@ -44,10 +44,10 @@ public class InsuranceExemption extends InsuranceExemption_Base {
 	super();
     }
 
-    public InsuranceExemption(Employee employee, IInsuranceEvent administrativeOfficeFeeAndInsuranceEvent,
+    public InsuranceExemption(Person responsible, IInsuranceEvent administrativeOfficeFeeAndInsuranceEvent,
 	    InsuranceExemptionJustificationType justificationType, String reason, YearMonthDay dispatchDate) {
 	this();
-	super.init(employee, (Event) administrativeOfficeFeeAndInsuranceEvent,
+	super.init(responsible, (Event) administrativeOfficeFeeAndInsuranceEvent,
 		InsuranceExemptionJustificationFactory.create(this, justificationType, reason, dispatchDate));
 
 	((Event) administrativeOfficeFeeAndInsuranceEvent).recalculateState(new DateTime());

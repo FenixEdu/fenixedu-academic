@@ -4,8 +4,11 @@ import java.util.List;
 
 import net.sourceforge.fenixedu._development.PropertiesManager;
 import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.accessControl.Group;
+import net.sourceforge.fenixedu.domain.accessControl.RoleGroup;
 import net.sourceforge.fenixedu.domain.library.LibraryCard;
 import net.sourceforge.fenixedu.domain.library.LibraryDocument;
+import net.sourceforge.fenixedu.domain.person.RoleType;
 
 import org.joda.time.DateTime;
 
@@ -19,6 +22,11 @@ public class LibraryMissingCardsDocument extends LibraryMissingCardsDocument_Bas
 	    addSource(card);
 	setLibraryDocument(new LibraryDocument());
 	init(GeneratedDocumentType.LIBRARY_MISSING_CARDS, operator, operator, filename, content);
+    }
+
+    @Override
+    protected Group computePermittedGroup() {
+	return new RoleGroup(RoleType.LIBRARY);
     }
 
     @Service

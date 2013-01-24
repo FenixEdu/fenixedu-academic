@@ -492,7 +492,7 @@
 
 
 
-<schema name="editReceiptBean.edit.contributorParty" type="net.sourceforge.fenixedu.presentationTier.Action.commons.administrativeOffice.payments.ReceiptsManagementDA$EditReceiptBean" bundle="APPLICATION_RESOURCES">
+<schema name="editReceiptBean.edit.contributorParty" type="net.sourceforge.fenixedu.presentationTier.Action.administrativeOffice.payments.ReceiptsManagementDA$EditReceiptBean" bundle="APPLICATION_RESOURCES">
 	<slot name="usingContributorParty" layout="radio-postback" key="label.has.contributor.number">
 		<property name="bundle" value="APPLICATION_RESOURCES"/>
 		<property name="destination" value="usingContributorPartyPostback"/>
@@ -512,7 +512,7 @@
 	</slot>
 </schema>
 
-<schema name="editReceiptBean.edit.contributorName" type="net.sourceforge.fenixedu.presentationTier.Action.commons.administrativeOffice.payments.ReceiptsManagementDA$EditReceiptBean" bundle="APPLICATION_RESOURCES">
+<schema name="editReceiptBean.edit.contributorName" type="net.sourceforge.fenixedu.presentationTier.Action.administrativeOffice.payments.ReceiptsManagementDA$EditReceiptBean" bundle="APPLICATION_RESOURCES">
 	<slot name="usingContributorParty" layout="radio-postback" key="label.has.contributor.number">
 		<property name="bundle" value="APPLICATION_RESOURCES"/>
 		<property name="destination" value="usingContributorPartyPostback"/>

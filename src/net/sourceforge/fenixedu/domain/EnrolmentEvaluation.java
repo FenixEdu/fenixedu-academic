@@ -155,17 +155,17 @@ public class EnrolmentEvaluation extends EnrolmentEvaluation_Base implements Com
     }
 
     protected EnrolmentEvaluation(Enrolment enrolment, EnrolmentEvaluationType enrolmentEvaluationType,
-	    EnrolmentEvaluationState evaluationState, Employee employee) {
+	    EnrolmentEvaluationState evaluationState, Person person) {
 	this(enrolment, enrolmentEvaluationType, evaluationState);
-	if (employee == null) {
+	if (person == null) {
 	    throw new DomainException("error.enrolmentEvaluation.invalid.parameters");
 	}
-	setEmployee(employee);
+	setPerson(person);
     }
 
     protected EnrolmentEvaluation(Enrolment enrolment, EnrolmentEvaluationType enrolmentEvaluationType,
-	    EnrolmentEvaluationState evaluationState, Employee employee, ExecutionSemester executionSemester) {
-	this(enrolment, enrolmentEvaluationType, evaluationState, employee);
+	    EnrolmentEvaluationState evaluationState, Person person, ExecutionSemester executionSemester) {
+	this(enrolment, enrolmentEvaluationType, evaluationState, person);
 	if (executionSemester == null) {
 	    throw new DomainException("error.enrolmentEvaluation.invalid.parameters");
 	}
@@ -384,11 +384,11 @@ public class EnrolmentEvaluation extends EnrolmentEvaluation_Base implements Com
 	return getExecutionPeriod().getExecutionYear();
     }
 
-    public void confirmSubmission(Employee employee, String observation) {
-	confirmSubmission(EnrolmentEvaluationState.FINAL_OBJ, employee, observation);
+    public void confirmSubmission(Person person, String observation) {
+	confirmSubmission(EnrolmentEvaluationState.FINAL_OBJ, person, observation);
     }
 
-    public void confirmSubmission(EnrolmentEvaluationState enrolmentEvaluationState, Employee employee, String observation) {
+    public void confirmSubmission(EnrolmentEvaluationState enrolmentEvaluationState, Person person, String observation) {
 
 	if (!isTemporary()) {
 	    throw new DomainException("EnrolmentEvaluation.cannot.submit.not.temporary");
@@ -417,7 +417,7 @@ public class EnrolmentEvaluation extends EnrolmentEvaluation_Base implements Com
 	}
 
 	setEnrolmentEvaluationState(enrolmentEvaluationState);
-	setEmployee(employee);
+	setPerson(person);
 	setObservation(observation);
 	setWhenDateTime(new DateTime());
 
@@ -479,7 +479,7 @@ public class EnrolmentEvaluation extends EnrolmentEvaluation_Base implements Com
 	}
 
 	removePersonResponsibleForGrade();
-	removeEmployee();
+	removePerson();
 	removeEnrolment();
 	removeMarkSheet();
 	removeRectification();
@@ -519,7 +519,7 @@ public class EnrolmentEvaluation extends EnrolmentEvaluation_Base implements Com
 	}
     }
 
-    public void alterStudentEnrolmentEvaluationForMasterDegree(String gradeValue, Employee employee, Person responsibleFor,
+    public void alterStudentEnrolmentEvaluationForMasterDegree(String gradeValue, Person person, Person responsibleFor,
 	    EnrolmentEvaluationType evaluationType, Date evaluationAvailableDate, Date examDate, String observation)
 	    throws DomainException {
 
@@ -529,7 +529,7 @@ public class EnrolmentEvaluation extends EnrolmentEvaluation_Base implements Com
 	final Grade grade = Grade.createGrade(gradeValue, getGradeScale());
 	if (grade.isEmpty()) {
 	    EnrolmentEvaluation enrolmentEvaluation = new EnrolmentEvaluation(enrolment, getEnrolmentEvaluationType());
-	    enrolmentEvaluation.confirmSubmission(EnrolmentEvaluationState.FINAL_OBJ, employee, observation);
+	    enrolmentEvaluation.confirmSubmission(EnrolmentEvaluationState.FINAL_OBJ, person, observation);
 	    enrolment.setEnrollmentState(EnrollmentState.ENROLLED);
 	} else {
 	    if (degreeCurricularPlan.isGradeValid(grade)) {
@@ -537,7 +537,7 @@ public class EnrolmentEvaluation extends EnrolmentEvaluation_Base implements Com
 		enrolmentEvaluation.edit(responsibleFor, grade, evaluationAvailableDate, examDate);
 		enrolmentEvaluation.setEnrolmentEvaluationState(EnrolmentEvaluationState.TEMPORARY_OBJ); // temporary
 		// hack
-		enrolmentEvaluation.confirmSubmission(EnrolmentEvaluationState.FINAL_OBJ, employee, observation);
+		enrolmentEvaluation.confirmSubmission(EnrolmentEvaluationState.FINAL_OBJ, person, observation);
 	    } else {
 		throw new DomainException("error.invalid.grade");
 	    }

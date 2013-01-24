@@ -12,7 +12,6 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.applicationTier.Servico.manager.executionCourseManagement.ReadExecutionCourseWithShiftsAndCurricularCoursesByOID;
 import net.sourceforge.fenixedu.applicationTier.Servico.manager.executionCourseManagement.ReadExecutionCoursesByExecutionDegreeIdAndExecutionPeriodIdAndCurYear;
 import net.sourceforge.fenixedu.applicationTier.Servico.manager.executionCourseManagement.ReadExecutionDegreesByExecutionPeriodId;
-import net.sourceforge.fenixedu.applicationTier.Servico.manager.executionCourseManagement.SeperateExecutionCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
@@ -122,8 +121,9 @@ public class SeperateExecutionCourseDispatchAction extends FenixDispatchAction {
 	    destinationExecutionCourseID = new Integer(destinationExecutionCourseIDString);
 	}
 
-	SeperateExecutionCourse.run(executionCourseId, destinationExecutionCourseID, makeIntegerArray(shiftIdsToTransfer),
-		makeIntegerArray(curricularCourseIdsToTransfer));
+	// SeperateExecutionCourse.run(executionCourseId,
+	// destinationExecutionCourseID, makeIntegerArray(shiftIdsToTransfer),
+	// makeIntegerArray(curricularCourseIdsToTransfer));
 
 	return mapping.findForward("returnFromTransfer");
     }

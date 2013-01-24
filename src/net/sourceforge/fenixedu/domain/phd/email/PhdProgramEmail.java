@@ -20,11 +20,11 @@ import pt.ist.fenixWebFramework.services.Service;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 public class PhdProgramEmail extends PhdProgramEmail_Base {
-    
+
     protected PhdProgramEmail() {
-        super();
+	super();
     }
-    
+
     protected PhdProgramEmail(String subject, String body, String additionalTo, String additionalBccs, Person creator,
 	    DateTime date, PhdProgram program, List<PhdIndividualProgramProcess> individualProcessList) {
 	init(subject, body, "", additionalBccs, creator, date);
@@ -46,7 +46,7 @@ public class PhdProgramEmail extends PhdProgramEmail_Base {
 
     @Override
     protected Collection<Recipient> getRecipients() {
-	return Collections.EMPTY_LIST;
+	return Collections.emptyList();
     }
 
     @Override

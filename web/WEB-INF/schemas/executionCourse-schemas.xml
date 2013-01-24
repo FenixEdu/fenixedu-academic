@@ -794,3 +794,7 @@
 <schema name="degree.type" type="net.sourceforge.fenixedu.domain.degree.DegreeType">
 	<slot name="name" key="label.degreeType"/>
 </schema>
+
+<schema name="CompetenceCourse.view.name" type="net.sourceforge.fenixedu.domain.CompetenceCourse">
+	<slot name="name" />
+</schema>

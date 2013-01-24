@@ -7,8 +7,6 @@ import net.sourceforge.fenixedu.util.Money;
 
 import org.joda.time.DateTime;
 
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
-
 public class DeclarationRequestPR extends DeclarationRequestPR_Base {
 
     protected DeclarationRequestPR() {
@@ -20,7 +18,7 @@ public class DeclarationRequestPR extends DeclarationRequestPR_Base {
 	init(entryType, eventType, startDate, endDate, serviceAgreementTemplate, fixedAmount);
     }
 
-    @Checked("PostingRulePredicates.editPredicate")
+    @Override
     public DeclarationRequestPR edit(final Money fixedAmount) {
 	deactivate();
 	return new DeclarationRequestPR(getEntryType(), getEventType(), new DateTime().minus(1000), null,

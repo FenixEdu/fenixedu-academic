@@ -37,14 +37,12 @@ import pt.ist.fenixWebFramework.struts.annotations.Tile;
 import pt.utl.ist.fenix.tools.util.CollectionPager;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 
-@Mapping(path = "/generatedDocuments", module = "academicAdminOffice", formBeanClass = FenixActionForm.class)
+@Mapping(path = "/generatedDocuments", module = "academicAdministration", formBeanClass = FenixActionForm.class)
 @Forwards({
 
-	@Forward(name = "searchPerson", path = "/academicAdminOffice/generatedDocuments/searchPerson.jsp", tileProperties = @Tile(title = "private.academicadministrativeoffice.documents.annualirs")),
-
-	@Forward(name = "showAnnualIRSDocuments", path = "/academicAdminOffice/generatedDocuments/showAnnualIRSDocuments.jsp", tileProperties = @Tile(title = "private.academicadministrativeoffice.documents.annualirs")),
-
-	@Forward(name = "payments.manageIRSDocuments", path = "/academicAdminOffice/generatedDocuments/payments/manageIRSDocuments.jsp", tileProperties = @Tile(title = "private.academicadministrativeoffice.studentoperations.viewstudents"))
+	@Forward(name = "searchPerson", path = "/academicAdminOffice/generatedDocuments/searchPerson.jsp"),
+	@Forward(name = "showAnnualIRSDocuments", path = "/academicAdminOffice/generatedDocuments/showAnnualIRSDocuments.jsp"),
+	@Forward(name = "payments.manageIRSDocuments", path = "/academicAdminOffice/generatedDocuments/payments/manageIRSDocuments.jsp")
 
 })
 public class GeneratedDocumentsDA extends FenixDispatchAction {

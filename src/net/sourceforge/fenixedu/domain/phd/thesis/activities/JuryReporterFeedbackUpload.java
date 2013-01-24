@@ -3,7 +3,6 @@ package net.sourceforge.fenixedu.domain.phd.thesis.activities;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.domain.caseHandling.PreConditionNotValidException;
 import net.sourceforge.fenixedu.domain.phd.PhdProgramDocumentUploadBean;
-import net.sourceforge.fenixedu.domain.phd.PhdProgramProcess;
 import net.sourceforge.fenixedu.domain.phd.PhdThesisReportFeedbackDocument;
 import net.sourceforge.fenixedu.domain.phd.thesis.PhdThesisProcess;
 import net.sourceforge.fenixedu.domain.phd.thesis.PhdThesisProcessBean;
@@ -24,7 +23,7 @@ public class JuryReporterFeedbackUpload extends PhdThesisActivity {
 	    throw new PreConditionNotValidException();
 	}
 
-	if (PhdProgramProcess.isMasterDegreeAdministrativeOfficeEmployee(userView)) {
+	if (process.isAllowedToManageProcess(userView)) {
 	    return;
 	}
 
@@ -44,8 +43,8 @@ public class JuryReporterFeedbackUpload extends PhdThesisActivity {
 
 	for (final PhdProgramDocumentUploadBean documentBean : bean.getDocuments()) {
 	    if (documentBean.hasAnyInformation()) {
-		new PhdThesisReportFeedbackDocument(bean.getJuryElement(), documentBean.getRemarks(), documentBean
-			.getFileContent(), documentBean.getFilename(), AccessControl.getPerson());
+		new PhdThesisReportFeedbackDocument(bean.getJuryElement(), documentBean.getRemarks(),
+			documentBean.getFileContent(), documentBean.getFilename(), AccessControl.getPerson());
 	    }
 	}
 

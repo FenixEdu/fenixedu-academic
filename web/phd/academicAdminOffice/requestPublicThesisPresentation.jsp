@@ -7,12 +7,9 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr" %>
 
-
-<logic:present role="ACADEMIC_ADMINISTRATIVE_OFFICE">
 <bean:define id="processId" name="process" property="externalId" />
 
 <%-- ### Title #### --%>
-<em><bean:message  key="label.phd.academicAdminOffice.breadcrumb" bundle="PHD_RESOURCES"/></em>
 <h2><bean:message key="label.phd.request.public.thesis.presentation" bundle="PHD_RESOURCES" /></h2>
 <%-- ### End of Title ### --%>
 
@@ -152,5 +149,3 @@
 
 <%--  ### End of Buttons (e.g. Submit)  ### --%>
 
-
-</logic:present>

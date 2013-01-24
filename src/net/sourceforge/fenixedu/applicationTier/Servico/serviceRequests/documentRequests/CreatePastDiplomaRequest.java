@@ -111,8 +111,7 @@ public class CreatePastDiplomaRequest {
 
     private static void editSituation(PastDiplomaRequest request, AcademicServiceRequestSituationType situationType,
 	    DateTime situationDate) {
-	final AcademicServiceRequestBean bean = new AcademicServiceRequestBean(situationType, AccessControl.getPerson()
-		.getEmployee());
+	final AcademicServiceRequestBean bean = new AcademicServiceRequestBean(situationType, AccessControl.getPerson());
 	bean.setFinalSituationDate(situationDate);
 	bean.setJustification("-");
 	request.edit(bean);

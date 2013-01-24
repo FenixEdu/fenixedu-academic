@@ -6,7 +6,6 @@ import java.util.List;
 import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
-import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.EnrolmentEvaluation;
 import pt.ist.fenixWebFramework.services.Service;
@@ -16,7 +15,6 @@ public class ConfirmStudentsFinalEvaluation extends FenixService {
     @Service
     public static Boolean run(Integer curricularCourseCode, String yearString, IUserView userView) {
 
-	final Employee employee = userView.getPerson().getEmployee();
 	final CurricularCourse curricularCourse = (CurricularCourse) rootDomainObject.readDegreeModuleByOID(curricularCourseCode);
 
 	final List<Enrolment> enrolments = (yearString != null) ? curricularCourse.getEnrolmentsByYear(yearString)
@@ -32,7 +30,7 @@ public class ConfirmStudentsFinalEvaluation extends FenixService {
 	    for (final EnrolmentEvaluation enrolmentEvaluation : enrolmentEvaluations) {
 		if (enrolmentEvaluation.hasGrade() && enrolmentEvaluation.isTemporary()
 			&& enrolmentEvaluation.hasExamDateYearMonthDay()) {
-		    enrolmentEvaluation.confirmSubmission(employee, "Lançamento de Notas na Secretaria");
+		    enrolmentEvaluation.confirmSubmission(userView.getPerson(), "Lançamento de Notas na Secretaria");
 		}
 	    }
 	}

@@ -4,11 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
-import net.sourceforge.fenixedu.domain.Employee;
-import net.sourceforge.fenixedu.domain.phd.thesis.PhdJuryElementsRatificationEntity;
+import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.phd.thesis.PhdThesisProcess;
 import net.sourceforge.fenixedu.domain.phd.thesis.ThesisJuryElement;
-import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.presentationTier.docs.FenixReport;
 import net.sourceforge.fenixedu.util.StringUtils;
 
@@ -33,24 +31,13 @@ public class PhdThesisJuryElementsDocument extends FenixReport {
 
 	addJuryElementsInformation();
 
-	final Employee employee = AccessControl.getPerson().getEmployee();
+	Unit adminOfficeUnit = process.getIndividualProgramProcess().getPhdProgram().getAdministrativeOffice().getUnit();
 
 	addParameter("presidentTitle", this.process.getPresidentTitle().getContent(getLanguage()));
-	addParameter("administrativeOfficeCoordinator", employee.getCurrentWorkingPlace().getActiveUnitCoordinator().getName());
-	addParameter("administrativeOfficeName", employee.getCurrentWorkingPlace().getPartyName().getContent());
+	addParameter("administrativeOfficeCoordinator", adminOfficeUnit.getActiveUnitCoordinator().getPartyName().getContent());
+	addParameter("administrativeOfficeName", adminOfficeUnit.getPartyName().getContent());
 	addParameter("ratificationEntityMessage",
 		process.getPhdJuryElementsRatificationEntity().getRatificationEntityMessage(process, getLocale()));
-    }
-
-    private String getRatificationEntityMessage(final PhdThesisProcess process) {
-	ResourceBundle bundle = ResourceBundle.getBundle("resources.PhdResources", Language.getLocale());
-
-	if (process.getPhdJuryElementsRatificationEntity() != null) {
-	    return bundle.getString("message.phd.thesis.ratification.entity."
-		    + process.getPhdJuryElementsRatificationEntity().getName());
-	}
-
-	return bundle.getString("message.phd.thesis.ratification.entity." + PhdJuryElementsRatificationEntity.BY_COORDINATOR);
     }
 
     private void addJuryElementsInformation() {

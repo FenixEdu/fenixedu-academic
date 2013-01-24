@@ -5,9 +5,6 @@
 
 <html:xhtml/>
 
-<logic:present role="ACADEMIC_ADMINISTRATIVE_OFFICE">
-
-	<em><bean:message key="label.academicAdminOffice" bundle="ACADEMIC_OFFICE_RESOURCES"/></em>
 	<h2><bean:message key="registration.curriculum" bundle="ACADEMIC_OFFICE_RESOURCES"/></h2>
 	
 	<ul class="mtop2 list5">
@@ -81,6 +78,3 @@
 			<bean:message bundle="APPLICATION_RESOURCES" key="label.continue"/>
 		</html:submit>
 	</fr:form>
-
-</logic:present>
-

@@ -16,10 +16,11 @@ public class BolonhaStudentSpecialSeasonEnrolmentLayout extends BolonhaStudentEn
 	    return;
 	}
 
-	if (isAcademicAdminOfficeEmployee()) {
+	if (canPerformStudentEnrolments) {
 	    for (final CycleType cycleType : getAllCycleTypesToEnrolPreviousToFirstExistingCycle(studentCurricularPlan)) {
-		generateCourseGroupToEnroll(container, buildDegreeModuleToEnrolForCycle(studentCurricularPlan, cycleType,
-			executionSemester), depth + getRenderer().getWidthDecreasePerLevel());
+		generateCourseGroupToEnroll(container,
+			buildDegreeModuleToEnrolForCycle(studentCurricularPlan, cycleType, executionSemester), depth
+				+ getRenderer().getWidthDecreasePerLevel());
 
 	    }
 	}

@@ -16,17 +16,18 @@ import net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.util.FactoryExecutor;
 import net.sourceforge.fenixedu.domain.util.LogicOperator;
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
 
 public class EquivalencePlanEntry extends EquivalencePlanEntry_Base {
 
     public static Comparator<EquivalencePlanEntry> COMPARATOR = new Comparator<EquivalencePlanEntry>() {
+	@Override
 	public int compare(EquivalencePlanEntry o1, EquivalencePlanEntry o2) {
 	    return o1.getCompareString().compareTo(o2.getCompareString());
 	}
     };
 
     public static Comparator<EquivalencePlanEntry> COMPARATOR_BY_SOURCE_NUMBER = new Comparator<EquivalencePlanEntry>() {
+	@Override
 	public int compare(EquivalencePlanEntry o1, EquivalencePlanEntry o2) {
 	    final Integer count1 = Integer.valueOf(o1.getOldDegreeModulesCount());
 	    final Integer count2 = Integer.valueOf(o2.getOldDegreeModulesCount());
@@ -38,9 +39,9 @@ public class EquivalencePlanEntry extends EquivalencePlanEntry_Base {
 
 	private EquivalencePlan equivalencePlan;
 
-	private Set<DegreeModule> originDegreeModules = new HashSet<DegreeModule>();
+	private final Set<DegreeModule> originDegreeModules = new HashSet<DegreeModule>();
 
-	private Set<DegreeModule> destinationDegreeModules = new HashSet<DegreeModule>();
+	private final Set<DegreeModule> destinationDegreeModules = new HashSet<DegreeModule>();
 
 	private DegreeModule originDegreeModuleToAdd;
 
@@ -60,6 +61,7 @@ public class EquivalencePlanEntry extends EquivalencePlanEntry_Base {
 	    setEquivalencePlan(equivalencePlan);
 	}
 
+	@Override
 	public Object execute() {
 
 	    final Double ectsCredits;
@@ -175,7 +177,6 @@ public class EquivalencePlanEntry extends EquivalencePlanEntry_Base {
 	super.setRootDomainObject(RootDomainObject.getInstance());
     }
 
-    @Checked("EquivalencePlanEntryPredicates.checkPermissionsToCreate")
     public EquivalencePlanEntry(final EquivalencePlan equivalencePlan, final CourseGroup oldCourseGroup,
 	    final CourseGroup newCourseGroup) {
 	this();
@@ -183,7 +184,6 @@ public class EquivalencePlanEntry extends EquivalencePlanEntry_Base {
 		true, null);
     }
 
-    @Checked("EquivalencePlanEntryPredicates.checkPermissionsToCreate")
     public EquivalencePlanEntry(final EquivalencePlan equivalencePlan, final Collection<? extends DegreeModule> oldDegreeModules,
 	    final Collection<? extends DegreeModule> newDegreeModules, final CourseGroup previousCourseGroupForNewDegreeModules,
 	    final LogicOperator sourceDegreeModulesOperator, final LogicOperator newDegreeModulesOperator,
@@ -242,6 +242,7 @@ public class EquivalencePlanEntry extends EquivalencePlanEntry_Base {
     public List<DegreeModule> getNewDegreeModulesSortedByType() {
 	final List<DegreeModule> result = new ArrayList<DegreeModule>(super.getNewDegreeModules());
 	Collections.sort(result, new Comparator<DegreeModule>() {
+	    @Override
 	    public int compare(final DegreeModule o1, final DegreeModule o2) {
 		if (o1.isCourseGroup() && !o2.isCourseGroup()) {
 		    return -1;

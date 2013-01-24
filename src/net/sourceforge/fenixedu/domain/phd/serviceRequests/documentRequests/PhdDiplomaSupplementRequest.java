@@ -4,7 +4,6 @@ import java.util.Locale;
 import java.util.ResourceBundle;
 
 import net.sourceforge.fenixedu.dataTransferObject.serviceRequests.AcademicServiceRequestBean;
-import net.sourceforge.fenixedu.dataTransferObject.serviceRequests.AcademicServiceRequestCreateBean;
 import net.sourceforge.fenixedu.domain.DegreeOfficialPublication;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.accounting.EventType;
@@ -34,7 +33,7 @@ import org.joda.time.LocalDate;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 public class PhdDiplomaSupplementRequest extends PhdDiplomaSupplementRequest_Base implements IDiplomaSupplementRequest,
-IRectorateSubmissionBatchDocumentEntry {
+	IRectorateSubmissionBatchDocumentEntry {
 
     protected PhdDiplomaSupplementRequest() {
 	super();
@@ -43,11 +42,6 @@ IRectorateSubmissionBatchDocumentEntry {
     protected PhdDiplomaSupplementRequest(final PhdDocumentRequestCreateBean bean) {
 	this();
 	init(bean);
-    }
-
-    @Override
-    protected void init(AcademicServiceRequestCreateBean bean) {
-	throw new DomainException("invoke init(PhdDocumentRequestCreateBean)");
     }
 
     @Override
@@ -67,8 +61,8 @@ IRectorateSubmissionBatchDocumentEntry {
     private void checkParameters(final PhdDocumentRequestCreateBean bean) {
 	final String fullName = getPhdIndividualProgramProcess().getStudent().getPerson().getName();
 	final String familyName = bean.getFamilyNames();
-	final String composedName = familyName == null || familyName.isEmpty() ?
-		bean.getGivenNames() : bean.getGivenNames() + " " + familyName;
+	final String composedName = familyName == null || familyName.isEmpty() ? bean.getGivenNames() : bean.getGivenNames()
+		+ " " + familyName;
 
 	if (!fullName.equals(composedName)) {
 	    throw new DomainException("error.diplomaSupplementRequest.splittedNamesDoNotMatch");
@@ -338,5 +332,10 @@ IRectorateSubmissionBatchDocumentEntry {
 	return String
 		.format("/phdAcademicServiceRequestManagement.do?method=prepareReceiveOnRectorate&amp;phdAcademicServiceRequestId=%s&amp;batchOid=%s",
 			getExternalId(), getRectorateSubmissionBatch().getExternalId());
+    }
+
+    @Override
+    public boolean isProgrammeLinkVisible() {
+	return getPhdIndividualProgramProcess().isCurrentUserAllowedToManageProcess();
     }
 }

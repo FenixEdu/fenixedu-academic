@@ -12,7 +12,6 @@ import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.ApprovementCertificateRequest;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.CertificateRequest;
-import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequest;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.IDocumentRequest;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.curriculum.Curriculum;
@@ -38,9 +37,8 @@ public class ApprovementCertificate extends AdministrativeOfficeDocument {
     }
 
     @Override
-    protected DocumentRequest getDocumentRequest() {
-	// TODO Auto-generated method stub
-	return (DocumentRequest) super.getDocumentRequest();
+    protected ApprovementCertificateRequest getDocumentRequest() {
+	return (ApprovementCertificateRequest) super.getDocumentRequest();
     }
 
     @Override
@@ -50,7 +48,7 @@ public class ApprovementCertificate extends AdministrativeOfficeDocument {
     }
 
     final private String getApprovementsInfo() {
-	final ApprovementCertificateRequest request = (ApprovementCertificateRequest) getDocumentRequest();
+	final ApprovementCertificateRequest request = getDocumentRequest();
 
 	final StringBuilder res = new StringBuilder();
 
@@ -120,7 +118,7 @@ public class ApprovementCertificate extends AdministrativeOfficeDocument {
 	CycleCurriculumGroup lastReported = null;
 	for (final CycleCurriculumGroup cycle : cycles) {
 	    if (!cycle.isConclusionProcessed() || isDEARegistration()) {
-		final ApprovementCertificateRequest request = ((ApprovementCertificateRequest) getDocumentRequest());
+		final ApprovementCertificateRequest request = (getDocumentRequest());
 		final Curriculum curriculum = cycle.getCurriculum(request.getFilteringDate());
 		ApprovementCertificateRequest.filterEntries(entries, request, curriculum);
 
@@ -147,8 +145,8 @@ public class ApprovementCertificate extends AdministrativeOfficeDocument {
 
     final private void reportRemainingEntries(final StringBuilder result, final Collection<ICurriculumEntry> entries,
 	    final Map<Unit, String> academicUnitIdentifiers, final NoCourseGroupCurriculumGroup group) {
-	result.append(generateEndLine()).append(LINE_BREAK).append(getMLSTextContent(group.getName())).append(":").append(
-		LINE_BREAK);
+	result.append(generateEndLine()).append(LINE_BREAK).append(getMLSTextContent(group.getName())).append(":")
+		.append(LINE_BREAK);
 
 	for (final ICurriculumEntry entry : entries) {
 	    reportEntry(result, entry, academicUnitIdentifiers, entry.getExecutionYear());
@@ -162,8 +160,9 @@ public class ApprovementCertificate extends AdministrativeOfficeDocument {
 			END_CHAR, getCreditsAndGradeInfo(entry, executionYear))).append(LINE_BREAK);
     }
 
+    @Override
     protected void addPriceFields() {
-	final CertificateRequest certificateRequest = (CertificateRequest) getDocumentRequest();
+	final CertificateRequest certificateRequest = getDocumentRequest();
 	final CertificateRequestPR certificateRequestPR = (CertificateRequestPR) getPostingRule();
 
 	final Money amountPerPage = certificateRequestPR.getAmountPerPage();

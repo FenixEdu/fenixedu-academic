@@ -11,8 +11,9 @@ import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.OptionalEnrolment;
-import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
+import net.sourceforge.fenixedu.domain.accessControl.academicAdministration.AcademicAuthorizationGroup;
+import net.sourceforge.fenixedu.domain.accessControl.academicAdministration.AcademicOperationType;
 import net.sourceforge.fenixedu.domain.curricularRules.CreditsLimit;
 import net.sourceforge.fenixedu.domain.curricularRules.CurricularRule;
 import net.sourceforge.fenixedu.domain.curricularRules.CurricularRuleType;
@@ -23,7 +24,6 @@ import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
 import net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule;
 import net.sourceforge.fenixedu.domain.enrolment.DegreeModuleToEnrol;
 import net.sourceforge.fenixedu.domain.enrolment.IDegreeModuleToEvaluate;
-import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumGroup;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CycleCurriculumGroup;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
@@ -63,8 +63,10 @@ public class BolonhaStudentEnrolmentLayout extends Layout {
 
     private BolonhaStudentEnrollmentBean bolonhaStudentEnrollmentBean = null;
 
+    protected boolean canPerformStudentEnrolments = false;
+
     public CopyCheckBoxValuesController getEnrollmentsController() {
-        return enrollmentsController;
+	return enrollmentsController;
     }
 
     private BolonhaStudentEnrollmentInputRenderer renderer;
@@ -96,7 +98,7 @@ public class BolonhaStudentEnrolmentLayout extends Layout {
 	hiddenDegreeModulesToEvaluate.bind(getRenderer().getInputContext().getMetaObject(), "degreeModulesToEvaluate");
 	hiddenDegreeModulesToEvaluate.setConverter(getBolonhaStudentEnrollmentBean().getDegreeModulesToEvaluateConverter());
 	hiddenDegreeModulesToEvaluate.setController(getDegreeModulesToEvaluateController());
-	
+
 	container.addChild(hiddenEnrollments);
 	container.addChild(hiddenDegreeModulesToEvaluate);
 
@@ -113,7 +115,7 @@ public class BolonhaStudentEnrolmentLayout extends Layout {
 	final HtmlTable groupTable = createGroupTable(blockContainer, depth);
 	addGroupHeaderRow(groupTable, studentCurriculumGroupBean, executionSemester);
 
-	if (isAcademicAdminOfficeEmployee() || !groupIsConcluded(studentCurriculumGroupBean)) {
+	if (canPerformStudentEnrolments || !groupIsConcluded(studentCurriculumGroupBean)) {
 
 	    if (getRenderer().isEncodeGroupRules()) {
 		encodeCurricularRules(groupTable, studentCurriculumGroupBean.getCurriculumModule());
@@ -328,7 +330,7 @@ public class BolonhaStudentEnrolmentLayout extends Layout {
 
 	    String degreeName = degreeModuleToEvaluate.getName();
 
-	    if (isAcademicAdminOfficeEmployee() && degreeModuleToEvaluate.getDegreeModule() instanceof CurricularCourse) {
+	    if (canPerformStudentEnrolments && degreeModuleToEvaluate.getDegreeModule() instanceof CurricularCourse) {
 		if (!StringUtils.isEmpty(degreeModuleToEvaluate.getDegreeModule().getCode())) {
 		    degreeName = degreeModuleToEvaluate.getDegreeModule().getCode() + " - " + degreeName;
 		}
@@ -352,8 +354,8 @@ public class BolonhaStudentEnrolmentLayout extends Layout {
 		ectsCell.setClasses(getRenderer().getCurricularCourseToEnrolEctsClasses());
 
 		final StringBuilder ects = new StringBuilder();
-		ects.append(degreeModuleToEvaluate.getEctsCredits()).append(" ").append(
-			getRenderer().studentResources.getString("label.credits.abbreviation"));
+		ects.append(degreeModuleToEvaluate.getEctsCredits()).append(" ")
+			.append(getRenderer().studentResources.getString("label.credits.abbreviation"));
 		ectsCell.setBody(new HtmlText(ects.toString()));
 
 		HtmlTableCell checkBoxCell = htmlTableRow.createCell();
@@ -427,12 +429,13 @@ public class BolonhaStudentEnrolmentLayout extends Layout {
 	    } else if (studentEnrolmentBean.getCurriculumModule().isImpossible()) {
 		generateEnrolment(groupTable, studentEnrolmentBean.getCurriculumModule(), getRenderer()
 			.getImpossibleEnrolmentNameClasses(), getRenderer().getImpossibleEnrolmentYearClasses(), getRenderer()
-			.getImpossibleEnrolmentSemesterClasses(), getRenderer().getImpossibleEnrolmentEctsClasses(), getRenderer()
-			.getImpossibleEnrolmentCheckBoxClasses());
+			.getImpossibleEnrolmentSemesterClasses(), getRenderer().getImpossibleEnrolmentEctsClasses(),
+			getRenderer().getImpossibleEnrolmentCheckBoxClasses());
 	    } else {
-		generateEnrolment(groupTable, studentEnrolmentBean.getCurriculumModule(), getRenderer().getEnrolmentNameClasses(),
-			getRenderer().getEnrolmentYearClasses(), getRenderer().getEnrolmentSemesterClasses(), getRenderer()
-				.getEnrolmentEctsClasses(), getRenderer().getEnrolmentCheckBoxClasses());
+		generateEnrolment(groupTable, studentEnrolmentBean.getCurriculumModule(),
+			getRenderer().getEnrolmentNameClasses(), getRenderer().getEnrolmentYearClasses(), getRenderer()
+				.getEnrolmentSemesterClasses(), getRenderer().getEnrolmentEctsClasses(), getRenderer()
+				.getEnrolmentCheckBoxClasses());
 	    }
 	}
     }
@@ -445,7 +448,7 @@ public class BolonhaStudentEnrolmentLayout extends Layout {
 	cellName.setClasses(enrolmentNameClasses);
 
 	String enrolmentName = getPresentationNameFor(enrolment);
-	if (isAcademicAdminOfficeEmployee() && enrolment.getDegreeModule() instanceof CurricularCourse) {
+	if (canPerformStudentEnrolments && enrolment.getDegreeModule() instanceof CurricularCourse) {
 	    CurricularCourse curricularCourse = (CurricularCourse) enrolment.getDegreeModule();
 
 	    if (!StringUtils.isEmpty(curricularCourse.getCode())) {
@@ -528,7 +531,7 @@ public class BolonhaStudentEnrolmentLayout extends Layout {
 		courseGroupsToEnrol.remove(0);
 	    } else {
 		Context context = courseGroupsToEnrol.get(0).getContext();
-		CurriculumGroup curriculumGroup = (CurriculumGroup) curriculumGroups.get(0).getCurriculumModule();
+		CurriculumGroup curriculumGroup = curriculumGroups.get(0).getCurriculumModule();
 		if (curriculumGroup.getChildOrder(executionSemester) <= context.getChildOrder()) {
 		    generateGroup(blockContainer, studentCurricularPlan, curriculumGroups.get(0), executionSemester, depth
 			    + getRenderer().getWidthDecreasePerLevel());
@@ -584,14 +587,14 @@ public class BolonhaStudentEnrolmentLayout extends Layout {
 	    return;
 	}
 
-	if (isAcademicAdminOfficeEmployee()) {
+	if (canPerformStudentEnrolments) {
 	    for (final CycleType cycleType : getAllCycleTypesToEnrolPreviousToFirstExistingCycle(studentCurricularPlan)) {
-		generateCourseGroupToEnroll(container, buildDegreeModuleToEnrolForCycle(studentCurricularPlan, cycleType,
-			executionSemester), depth + getRenderer().getWidthDecreasePerLevel());
+		generateCourseGroupToEnroll(container,
+			buildDegreeModuleToEnrolForCycle(studentCurricularPlan, cycleType, executionSemester), depth
+				+ getRenderer().getWidthDecreasePerLevel());
 
 	    }
 	}
-
 
 	for (final CycleType cycleType : studentCurricularPlan.getSupportedCycleTypesToEnrol()) {
 	    generateCycleCourseGroupToEnrol(container, cycleType, depth + getRenderer().getWidthDecreasePerLevel());
@@ -622,11 +625,6 @@ public class BolonhaStudentEnrolmentLayout extends Layout {
 	return result;
     }
 
-    protected boolean isAcademicAdminOfficeEmployee() {
-	final Person person = AccessControl.getPerson();
-	return person.hasRole(RoleType.ACADEMIC_ADMINISTRATIVE_OFFICE) && person.isAdministrativeOfficeEmployee();
-    }
-
     protected void generateCycleCourseGroupToEnrol(HtmlBlockContainer container, CycleType cycleType, int depth) {
 
 	final HtmlTable groupTable = createGroupTable(container, depth);
@@ -639,7 +637,8 @@ public class BolonhaStudentEnrolmentLayout extends Layout {
 	final HtmlActionLink actionLink = new HtmlActionLink();
 	actionLink.setText(getRenderer().studentResources.getString("label.choose"));
 	actionLink.setController(new CycleSelectionLinkController(cycleType));
-	actionLink.setOnClick("(function (z){var node = z; while(node.tagName != 'FORM'){ node = node.parentNode; } return node;})(this).method.value='prepareChooseCycleCourseGroupToEnrol';");
+	actionLink
+		.setOnClick("(function (z){var node = z; while(node.tagName != 'FORM'){ node = node.parentNode; } return node;})(this).method.value='prepareChooseCycleCourseGroupToEnrol';");
 	actionLink.setName("cycleLink_" + cycleType.name());
 	cell.setBody(actionLink);
 
@@ -651,6 +650,9 @@ public class BolonhaStudentEnrolmentLayout extends Layout {
 
     public void setBolonhaStudentEnrollmentBean(BolonhaStudentEnrollmentBean bolonhaStudentEnrollmentBean) {
 	this.bolonhaStudentEnrollmentBean = bolonhaStudentEnrollmentBean;
+	this.canPerformStudentEnrolments = AcademicAuthorizationGroup.getProgramsForOperation(AccessControl.getPerson(),
+		AcademicOperationType.STUDENT_ENROLMENTS).contains(
+		bolonhaStudentEnrollmentBean.getStudentCurricularPlan().getDegree());
     }
 
     public BolonhaStudentEnrollmentBean getBolonhaStudentEnrollmentBean() {
@@ -660,7 +662,7 @@ public class BolonhaStudentEnrolmentLayout extends Layout {
     protected static class OptionalCurricularCourseLinkController extends HtmlActionLinkController {
 
 	private static final long serialVersionUID = 2760270166511466030L;
-	private IDegreeModuleToEvaluate degreeModuleToEnrol;
+	private final IDegreeModuleToEvaluate degreeModuleToEnrol;
 
 	public OptionalCurricularCourseLinkController(final IDegreeModuleToEvaluate degreeModuleToEnrol) {
 	    this.degreeModuleToEnrol = degreeModuleToEnrol;
@@ -682,7 +684,7 @@ public class BolonhaStudentEnrolmentLayout extends Layout {
     protected static class CycleSelectionLinkController extends HtmlActionLinkController {
 
 	private static final long serialVersionUID = -5469571160954095720L;
-	private CycleType cycleTypeToEnrol;
+	private final CycleType cycleTypeToEnrol;
 
 	public CycleSelectionLinkController(final CycleType cycleTypeToEnrol) {
 	    this.cycleTypeToEnrol = cycleTypeToEnrol;

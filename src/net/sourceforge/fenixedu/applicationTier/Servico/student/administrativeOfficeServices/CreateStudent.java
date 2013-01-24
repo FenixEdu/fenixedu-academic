@@ -26,7 +26,7 @@ import pt.ist.fenixWebFramework.services.Service;
  */
 public class CreateStudent extends FenixService {
 
-    @Checked("RolePredicates.ACADEMIC_ADMINISTRATIVE_OFFICE_PREDICATE")
+    @Checked("AcademicPredicates.CREATE_REGISTRATION")
     @Service
     public static Registration run(PersonBean personBean, ExecutionDegreeBean executionDegreeBean,
 	    PrecedentDegreeInformationBean precedentDegreeInformationBean, IngressionInformationBean ingressionInformationBean,

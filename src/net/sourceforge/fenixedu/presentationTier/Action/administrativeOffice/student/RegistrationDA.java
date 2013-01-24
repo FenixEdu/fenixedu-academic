@@ -12,7 +12,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
+import net.sourceforge.fenixedu.applicationTier.Servico.administrativeOffice.student.RegistrationConclusionProcess;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.registration.DeleteRegistrationRegime;
 import net.sourceforge.fenixedu.dataTransferObject.AddAttendsBean;
 import net.sourceforge.fenixedu.dataTransferObject.student.RegistrationConclusionBean;
 import net.sourceforge.fenixedu.dataTransferObject.student.RegistrationCurriculumBean;
@@ -30,7 +32,6 @@ import net.sourceforge.fenixedu.domain.student.RegistrationRegime;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CycleCurriculumGroup;
 import net.sourceforge.fenixedu.injectionCode.IllegalDataAccessException;
 import net.sourceforge.fenixedu.predicates.RegistrationPredicates;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
 
 import org.apache.commons.collections.comparators.ReverseComparator;
 import org.apache.struts.action.ActionForm;
@@ -43,17 +44,17 @@ import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
-@Mapping(path = "/registration", module = "academicAdminOffice")
+@Mapping(path = "/registration", module = "academicAdministration")
 @Forwards({
 	@Forward(name = "chooseCycleForViewRegistrationCurriculum", path = "/academicAdminOffice/student/registration/chooseCycleForViewRegistrationCurriculum.jsp"),
 	@Forward(name = "chooseCycleForRegistrationConclusion", path = "/academicAdminOffice/student/registration/chooseCycleForRegistrationConclusion.jsp"),
-	@Forward(name = "view-registration-curriculum", path = "/academicAdminOffice/student/registration/viewRegistrationCurriculum.jsp", tileProperties = @Tile(title = "private.academicadministrativeoffice.studentoperations.viewstudents")),
+	@Forward(name = "view-registration-curriculum", path = "/academicAdminOffice/student/registration/viewRegistrationCurriculum.jsp"),
 	@Forward(name = "registrationConclusion", path = "/academicAdminOffice/student/registration/registrationConclusion.jsp"),
 	@Forward(name = "registrationConclusionDocument", path = "/academicAdminOffice/student/registration/registrationConclusionDocument.jsp"),
-	@Forward(name = "viewAttends", path = "/academicAdminOffice/student/registration/viewAttends.jsp", tileProperties = @Tile(title = "private.academicadministrativeoffice.studentoperations.viewstudents")),
-	@Forward(name = "addAttends", path = "/academicAdminOffice/student/registration/addAttends.jsp", tileProperties = @Tile(title = "private.academicadministrativeoffice.studentoperations.viewstudents")),
-	@Forward(name = "showRegimes", path = "/academicAdminOffice/student/registration/showRegimes.jsp", tileProperties = @Tile(title = "private.academicadministrativeoffice.studentoperations.viewstudents")),
-	@Forward(name = "createRegime", path = "/academicAdminOffice/student/registration/createRegime.jsp", tileProperties = @Tile(title = "private.academicadministrativeoffice.studentoperations.viewstudents")) })
+	@Forward(name = "viewAttends", path = "/academicAdminOffice/student/registration/viewAttends.jsp"),
+	@Forward(name = "addAttends", path = "/academicAdminOffice/student/registration/addAttends.jsp"),
+	@Forward(name = "showRegimes", path = "/academicAdminOffice/student/registration/showRegimes.jsp"),
+	@Forward(name = "createRegime", path = "/academicAdminOffice/student/registration/createRegime.jsp") })
 public class RegistrationDA extends StudentRegistrationDA {
 
     public ActionForward prepareViewRegistrationCurriculum(ActionMapping mapping, ActionForm actionForm,
@@ -173,12 +174,12 @@ public class RegistrationDA extends StudentRegistrationDA {
     }
 
     public ActionForward doRegistrationConclusion(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+	    HttpServletResponse response) {
 
 	final RegistrationConclusionBean registrationConclusionBean = getRegistrationConclusionBeanFromViewState();
 
 	try {
-	    executeService("RegistrationConclusionProcess", new Object[] { registrationConclusionBean });
+	    RegistrationConclusionProcess.run(registrationConclusionBean);
 	} catch (final IllegalDataAccessException e) {
 	    addActionMessage("illegal.access", request, "error.not.authorized.to.registration.conclusion.process");
 	    request.setAttribute("registrationConclusionBean", registrationConclusionBean);
@@ -309,8 +310,7 @@ public class RegistrationDA extends StudentRegistrationDA {
 	final Attends attends = attendsId == null ? null : rootDomainObject.readAttendsByOID(attendsId);
 
 	try {
-	    executeService("DeleteStudentAttendingCourse", new Object[] { registration,
-		    attends.getExecutionCourse().getIdInternal() });
+	    registration.removeAttendFor(attends.getExecutionCourse());
 	} catch (final DomainException e) {
 	    addActionMessage(request, e.getMessage(), e.getArgs());
 	}
@@ -354,10 +354,10 @@ public class RegistrationDA extends StudentRegistrationDA {
     }
 
     public ActionForward deleteRegime(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-	    HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+	    HttpServletResponse response) {
 	try {
 	    final RegistrationRegime regime = getRegistrationRegime(request);
-	    ServiceUtils.executeService("DeleteRegistrationRegime", new Object[] { regime });
+	    DeleteRegistrationRegime.run(regime);
 	} catch (DomainException e) {
 	    addActionMessage(request, e.getMessage(), e.getArgs());
 	}

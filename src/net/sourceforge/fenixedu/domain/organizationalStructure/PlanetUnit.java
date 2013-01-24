@@ -24,7 +24,7 @@ public class PlanetUnit extends PlanetUnit_Base {
 
 	PlanetUnit planetUnit = new PlanetUnit();
 	planetUnit.init(planetName, planetNameCard, costCenterCode, planetAcronym, beginDate, endDate, webAddress,
-		classification, canBeResponsibleOfSpaces, campus);
+		classification, null, canBeResponsibleOfSpaces, campus);
 
 	checkIfAlreadyExistsOnePlanetWithSameAcronymAndName(planetUnit);
 

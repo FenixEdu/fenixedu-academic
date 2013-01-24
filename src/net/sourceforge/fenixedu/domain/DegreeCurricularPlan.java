@@ -1921,24 +1921,6 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
 	}
     }
 
-    public boolean canManageMarkSheetsForExecutionPeriod(final Employee employee, final ExecutionSemester executionSemester) {
-	if (employee == null || executionSemester == null) {
-	    return false;
-	}
-	final Campus employeeCampus = employee.getCurrentCampus();
-	final ExecutionSemester considerCampusExecutionPeriod = ExecutionSemester.readBySemesterAndExecutionYear(1, "2006/2007");
-	if (executionSemester.isBeforeOrEquals(considerCampusExecutionPeriod)) {
-	    return !employeeCampus.getName().equalsIgnoreCase("Taguspark");
-	}
-	final ExecutionYear executionYear = executionSemester.getExecutionYear();
-	for (final ExecutionDegree executionDegree : getExecutionDegreesSet()) {
-	    if (executionDegree.getExecutionYear() == executionYear) {
-		return employeeCampus == executionDegree.getCampus();
-	    }
-	}
-	return false;
-    }
-
     public Set<Registration> getRegistrations(ExecutionYear executionYear, Set<Registration> registrations) {
 	for (final StudentCurricularPlan studentCurricularPlan : this.getStudentCurricularPlans()) {
 	    if (studentCurricularPlan.isActive(executionYear)) {
@@ -2100,4 +2082,17 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
 	}
     }
 
+    public Set<CurricularCourse> getCurricularCoursesWithoutExecutionCourseFor(final ExecutionSemester semester) {
+	Set<CurricularCourse> curricularCourses = getCurricularCourses(semester);
+
+	Set<CurricularCourse> result = new HashSet<CurricularCourse>();
+
+	for (CurricularCourse curricularCourse : curricularCourses) {
+	    if (curricularCourse.getExecutionCoursesByExecutionPeriod(semester).isEmpty()) {
+		result.add(curricularCourse);
+	    }
+	}
+
+	return result;
+    }
 }

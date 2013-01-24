@@ -5,9 +5,7 @@
 
 <html:xhtml/>
 
-<logic:present role="ACADEMIC_ADMINISTRATIVE_OFFICE">
-
-<em><bean:message key="label.academicAdminOffice" bundle="ACADEMIC_OFFICE_RESOURCES"/></em>
+<br />
 <h2><bean:message key="label.edit" bundle="ACADEMIC_OFFICE_RESOURCES"/> <bean:message name="editUnitBean" property="unitType.name" bundle="ENUMERATION_RESOURCES" /></h2>
 
 <bean:define id="unitId">&oid=<bean:write name="editUnitBean" property="externalUnit.idInternal" /></bean:define>
@@ -29,5 +27,3 @@
 	
 	<fr:destination name="cancel" path="<%= "/externalUnits.do?method=viewUnit" + unitId %>" />
 </fr:edit>
-
-</logic:present>

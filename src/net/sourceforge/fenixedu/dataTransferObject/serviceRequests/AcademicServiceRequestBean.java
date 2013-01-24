@@ -4,13 +4,12 @@ import java.io.Serializable;
 import java.util.Collection;
 import java.util.ResourceBundle;
 
-import net.sourceforge.fenixedu.domain.Employee;
-import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
-import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOfficeType;
+import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.accessControl.academicAdministration.AcademicAuthorizationGroup;
 import net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequest;
 import net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequestSituationType;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequest;
-import net.sourceforge.fenixedu.domain.space.Campus;
+import net.sourceforge.fenixedu.injectionCode.AccessControl;
 
 import org.apache.commons.lang.StringUtils;
 import org.joda.time.DateTime;
@@ -20,9 +19,7 @@ import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 public class AcademicServiceRequestBean implements Serializable {
 
-    private AcademicServiceRequestSituationType academicServiceRequestSituationType;
-
-    private Employee employee;
+    protected AcademicServiceRequestSituationType academicServiceRequestSituationType;
 
     private AcademicServiceRequest request;
 
@@ -30,7 +27,9 @@ public class AcademicServiceRequestBean implements Serializable {
 
     private YearMonthDay situationDate;
 
-    private Integer serviceRequestYear;
+    protected Integer serviceRequestYear;
+
+    private Person responsible;
 
     protected AcademicServiceRequestBean() {
 	super();
@@ -41,36 +40,37 @@ public class AcademicServiceRequestBean implements Serializable {
 	this();
 	setAcademicServiceRequest(request);
 	setAcademicServiceRequestSituationType(situationType);
-    }
-
-    public AcademicServiceRequestBean(final AcademicServiceRequestSituationType academicServiceRequestSituationType,
-	    final Employee employee) {
-	this();
-	setAcademicServiceRequestSituationType(academicServiceRequestSituationType);
-	setEmployee(employee);
 	setSituationDate(new YearMonthDay());
     }
 
     public AcademicServiceRequestBean(final AcademicServiceRequestSituationType academicServiceRequestSituationType,
-	    final Employee employee, final Integer serviceRequestYear) {
-	this(academicServiceRequestSituationType, employee);
+	    final Person responsible) {
+	this();
+	setAcademicServiceRequestSituationType(academicServiceRequestSituationType);
+	setResponsible(responsible);
+	setSituationDate(new YearMonthDay());
+    }
+
+    public AcademicServiceRequestBean(final AcademicServiceRequestSituationType academicServiceRequestSituationType,
+	    final Person responsible, final Integer serviceRequestYear) {
+	this(academicServiceRequestSituationType, responsible);
 	setServiceRequestYear(serviceRequestYear);
     }
 
     public AcademicServiceRequestBean(final AcademicServiceRequestSituationType academicServiceRequestSituationType,
-	    final Employee employee, final String justification) {
-	this(academicServiceRequestSituationType, employee);
+	    final Person responsible, final String justification) {
+	this(academicServiceRequestSituationType, responsible);
 	setJustification(justification);
     }
 
     public AcademicServiceRequestBean(final AcademicServiceRequestSituationType academicServiceRequestSituationType,
-	    final Employee employee, final YearMonthDay situationDate, final String justification) {
-	this(academicServiceRequestSituationType, employee, justification);
+	    final Person responsible, final YearMonthDay situationDate, final String justification) {
+	this(academicServiceRequestSituationType, responsible, justification);
 	setSituationDate(situationDate);
     }
 
-    public AcademicServiceRequestBean(final Employee employee, final String justification) {
-	this((AcademicServiceRequestSituationType) null, employee, justification);
+    public AcademicServiceRequestBean(final Person responsible, final String justification) {
+	this((AcademicServiceRequestSituationType) null, responsible, justification);
     }
 
     public AcademicServiceRequestSituationType getAcademicServiceRequestSituationType() {
@@ -107,12 +107,12 @@ public class AcademicServiceRequestBean implements Serializable {
 	this.situationDate = situationDate;
     }
 
-    public Employee getEmployee() {
-	return employee;
+    public Person getResponsible() {
+	return responsible;
     }
 
-    public void setEmployee(Employee employee) {
-	this.employee = employee;
+    public void setResponsible(Person responsible) {
+	this.responsible = responsible;
     }
 
     private AcademicServiceRequest getAcademicServiceRequest() {
@@ -124,9 +124,8 @@ public class AcademicServiceRequestBean implements Serializable {
     }
 
     public String getJustification() {
-	if (StringUtils.isEmpty(justification)
-		&& getAcademicServiceRequest().getAdministrativeOffice().getAdministrativeOfficeType() == AdministrativeOfficeType.DEGREE
-		&& getAcademicServiceRequest().isDocumentRequest() && ((DocumentRequest) getAcademicServiceRequest()).isDiploma()) {
+	if (StringUtils.isEmpty(justification) && getAcademicServiceRequest().isDocumentRequest()
+		&& ((DocumentRequest) getAcademicServiceRequest()).isDiploma()) {
 	    if (getAcademicServiceRequestSituationType() == AcademicServiceRequestSituationType.CONCLUDED) {
 		return ResourceBundle.getBundle("resources.AcademicAdminOffice", Language.getLocale()).getString(
 			"DiplomaRequest.diploma.concluded");
@@ -196,17 +195,8 @@ public class AcademicServiceRequestBean implements Serializable {
 	return isToCancel() || isToReject();
     }
 
-    protected AdministrativeOffice getAdministrativeOffice() {
-	return getEmployee() == null ? null : getEmployee().getAdministrativeOffice();
-    }
-
-    protected Campus getCampus() {
-	return getEmployee() == null ? null : getEmployee().getCurrentCampus();
-    }
-
     public Collection<AcademicServiceRequest> searchAcademicServiceRequests() {
-	return getAdministrativeOffice().searchRegistrationAcademicServiceRequests(serviceRequestYear,
-		academicServiceRequestSituationType, getCampus());
+	return AcademicAuthorizationGroup.getAcademicServiceRequests(AccessControl.getPerson(), serviceRequestYear,
+		academicServiceRequestSituationType, null);
     }
-
 }

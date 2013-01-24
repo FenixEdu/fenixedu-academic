@@ -1188,8 +1188,9 @@
 
 <schema name="AcademicAdminOffice.PhdIndividualProgramProcess.view.student.information" type="net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess" bundle="PHD_RESOURCES">
 	<slot name="student.number" read-only="true" layout="conditional-link">
-		<property name="linkFormat" value="/academicAdminOffice/student.do?method=visualizeRegistration&amp;registrationID=${registration.idInternal}"/>
+		<property name="linkFormat" value="/student.do?method=visualizeRegistration&amp;registrationID=${registration.idInternal}"/>
 		<property name="contextRelative" value="true"/>
+		<property name="moduleRelative" value="true"/>
         <property name="useParent" value="true"/>
         <property name="blankTarget" value="true"/>
         <property name="visibleIf" value="registrationAvailable"/>
@@ -1416,8 +1417,8 @@
 </schema>
 
 <schema name="PhdMigrationIndividualProcessDataBean.manualMigration.candidacy" bundle="PHD_RESOURCES" type="net.sourceforge.fenixedu.domain.phd.migration.PhdMigrationIndividualProcessDataBean">
-	<slot name="phdProgram" layout="menu-select">
-		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.Action.phd.PhdProgramsProvider" />
+	<slot name="phdProgram" layout="menu-select" required="true">
+		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.Action.phd.PhdProgramsFilteredProvider" />
 		<property name="format" value="${name}" />
 	</slot>
 	<slot name="title" >
@@ -1466,7 +1467,7 @@
 	<slot name="socialSecurityNumber" />
 	<slot name="fullName" />
 	<slot name="familyName" />
-	<slot name="dateOfBirth" layout="year-month-day"/>
+	<slot name="dateOfBirth" layout="year-month-day" required="true"/>
 	<slot name="gender" layout="phd-enum-renderer"/>
 	<slot name="nationality" layout="menu-select" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
 		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.choiceType.replacement.single.CountryProvider"/>

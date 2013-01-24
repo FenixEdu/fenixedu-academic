@@ -158,7 +158,7 @@ public class DegreeFinalizationCertificateRequest extends DegreeFinalizationCert
 	}
 
 	if (academicServiceRequestBean.isToCancelOrReject() && hasEvent()) {
-	    getEvent().cancel(academicServiceRequestBean.getEmployee());
+	    getEvent().cancel(academicServiceRequestBean.getResponsible());
 	}
 
 	if (academicServiceRequestBean.isToDeliver()) {
@@ -337,7 +337,7 @@ public class DegreeFinalizationCertificateRequest extends DegreeFinalizationCert
 
     @Service
     @Override
-    @Checked("AcademicServiceRequestPredicates.REVERT_TO_PROCESSING_STATE")
+    @Checked("AcademicPredicates.SERVICE_REQUESTS_REVERT_TO_PROCESSING_STATE")
     public void revertToProcessingState() {
 	internalRevertToProcessingState();
     }

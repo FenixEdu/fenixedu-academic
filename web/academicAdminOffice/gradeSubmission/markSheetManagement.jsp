@@ -4,17 +4,13 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr" %>
 
-<em><bean:message key="label.academicAdminOffice" bundle="ACADEMIC_OFFICE_RESOURCES"/></em>
-<h2><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="link.markSheet.management"/></h2>
-
 <ul>
 	<li><html:link action="/createMarkSheet.do?method=prepareCreateMarkSheet"><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.createMarkSheet"/></html:link></li>
-	<li><html:link action="/printMarkSheetWeb.do?method=choosePrinterMarkSheetsWeb"> <bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.print.web.markSheets"/></html:link></li>
-	<logic:equal name="<%= pt.ist.fenixWebFramework.servlets.filters.SetUserViewFilter.USER_SESSION_ATTRIBUTE %>" property="person.employee.administrativeOffice.administrativeOfficeType" value="DEGREE">
+	<li><html:link action="/printMarkSheet.do?method=choosePrinterMarkSheetsWeb"> <bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.print.web.markSheets"/></html:link></li>
+	<!-- TODO AA logic:equal name="<%= pt.ist.fenixWebFramework.servlets.filters.SetUserViewFilter.USER_SESSION_ATTRIBUTE %>" property="person.employee.administrativeOffice.administrativeOfficeType" value="DEGREE"-->
 		<li><html:link action="/markSheetSendMail.do?method=prepareSearchSendMail"><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.markSheet.send.mail"/></html:link></li>
-	</logic:equal>
+	<!-- /logic:equal-->
 </ul>
-
 
 <logic:messagesPresent message="true">
 	<ul>
@@ -40,7 +36,6 @@
 	<fr:destination name="invalid" path="/markSheetManagement.do?method=prepareSearchMarkSheetInvalid"/>
 	<fr:destination name="cancel" path="/markSheetManagement.do?method=prepareSearchMarkSheet" />
 </fr:edit>
-
 
 
 <logic:present name="searchResult">

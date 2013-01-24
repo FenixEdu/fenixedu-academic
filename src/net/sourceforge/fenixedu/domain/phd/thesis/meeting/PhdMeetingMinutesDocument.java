@@ -7,8 +7,8 @@ import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.accessControl.CurrentDegreeCoordinatorsGroup;
 import net.sourceforge.fenixedu.domain.accessControl.Group;
 import net.sourceforge.fenixedu.domain.accessControl.GroupUnion;
-import net.sourceforge.fenixedu.domain.accessControl.RoleGroup;
-import net.sourceforge.fenixedu.domain.person.RoleType;
+import net.sourceforge.fenixedu.domain.accessControl.academicAdministration.AcademicAuthorizationGroup;
+import net.sourceforge.fenixedu.domain.accessControl.academicAdministration.AcademicOperationType;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramDocumentType;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess;
 import net.sourceforge.fenixedu.domain.phd.PhdProgram;
@@ -43,7 +43,7 @@ public class PhdMeetingMinutesDocument extends PhdMeetingMinutesDocument_Base {
 	super.setUploader(uploader);
 	super.setDocumentAccepted(true);
 
-	final Group roleGroup = new RoleGroup(RoleType.ACADEMIC_ADMINISTRATIVE_OFFICE);
+	final Group roleGroup = new AcademicAuthorizationGroup(AcademicOperationType.MANAGE_PHD_PROCESSES);
 
 	final PhdIndividualProgramProcess individualProgramProcess = meeting.getMeetingProcess().getThesisProcess()
 		.getIndividualProgramProcess();

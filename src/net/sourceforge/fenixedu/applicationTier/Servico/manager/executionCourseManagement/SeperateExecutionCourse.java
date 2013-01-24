@@ -11,7 +11,6 @@ import net.sourceforge.fenixedu.applicationTier.utils.ExecutionCourseUtils;
 import net.sourceforge.fenixedu.domain.Attends;
 import net.sourceforge.fenixedu.domain.CourseLoad;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
-import net.sourceforge.fenixedu.domain.DomainObject;
 import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
@@ -31,11 +30,9 @@ public class SeperateExecutionCourse extends FenixService {
 
     @Checked("RolePredicates.MANAGER_OR_OPERATOR_PREDICATE")
     @Service
-    public static void run(final Integer originExecutionCourseOid, final Integer destinationExecutionCourseId,
-	    final Integer[] shiftIdsToTransfer, final Integer[] curricularCourseIdsToTransfer) {
+    public static ExecutionCourse run(final ExecutionCourse originExecutionCourse, ExecutionCourse destinationExecutionCourse,
+	    final List<Shift> shiftsToTransfer, final List<CurricularCourse> curricularCourseToTransfer) {
 
-	final ExecutionCourse originExecutionCourse = rootDomainObject.readExecutionCourseByOID(originExecutionCourseOid);
-	ExecutionCourse destinationExecutionCourse = rootDomainObject.readExecutionCourseByOID(destinationExecutionCourseId);
 	if (destinationExecutionCourse == null) {
 	    destinationExecutionCourse = createNewExecutionCourse(originExecutionCourse);
 	    destinationExecutionCourse.createSite();
@@ -43,23 +40,23 @@ public class SeperateExecutionCourse extends FenixService {
 	    ExecutionCourseUtils.copyEvaluationMethod(originExecutionCourse, destinationExecutionCourse);
 	}
 
-	transferCurricularCourses(originExecutionCourse, destinationExecutionCourse, curricularCourseIdsToTransfer);
+	transferCurricularCourses(originExecutionCourse, destinationExecutionCourse, curricularCourseToTransfer);
 
 	transferAttends(originExecutionCourse, destinationExecutionCourse);
 
-	transferShifts(originExecutionCourse, destinationExecutionCourse, shiftIdsToTransfer);
+	transferShifts(originExecutionCourse, destinationExecutionCourse, shiftsToTransfer);
 
 	fixStudentShiftEnrolements(originExecutionCourse);
 	fixStudentShiftEnrolements(destinationExecutionCourse);
 
 	associateGroupings(originExecutionCourse, destinationExecutionCourse);
+	
+	return destinationExecutionCourse;
     }
 
     private static void transferCurricularCourses(final ExecutionCourse originExecutionCourse,
-	    final ExecutionCourse destinationExecutionCourse, final Integer[] curricularCourseIdsToTransfer) {
-	for (final Integer curricularCourseID : curricularCourseIdsToTransfer) {
-	    final CurricularCourse curricularCourse = (CurricularCourse) findDomainObjectByID(
-		    originExecutionCourse.getAssociatedCurricularCoursesSet(), curricularCourseID);
+	    final ExecutionCourse destinationExecutionCourse, final List<CurricularCourse> curricularCoursesToTransfer) {
+	for (final CurricularCourse curricularCourse : curricularCoursesToTransfer) {
 	    originExecutionCourse.removeAssociatedCurricularCourses(curricularCourse);
 	    destinationExecutionCourse.addAssociatedCurricularCourses(curricularCourse);
 	}
@@ -79,9 +76,9 @@ public class SeperateExecutionCourse extends FenixService {
     }
 
     private static void transferShifts(final ExecutionCourse originExecutionCourse,
-	    final ExecutionCourse destinationExecutionCourse, final Integer[] shiftIdsToTransfer) {
-	for (final Integer shiftId : shiftIdsToTransfer) {
-	    final Shift shift = (Shift) findDomainObjectByID(originExecutionCourse.getAssociatedShifts(), shiftId);
+	    final ExecutionCourse destinationExecutionCourse, final List<Shift> shiftsToTransfer) {
+	for (final Shift shift : shiftsToTransfer) {
+
 	    List<CourseLoad> courseLoads = shift.getCourseLoads();
 	    for (Iterator<CourseLoad> iter = courseLoads.iterator(); iter.hasNext();) {
 		CourseLoad courseLoad = iter.next();
@@ -96,15 +93,6 @@ public class SeperateExecutionCourse extends FenixService {
 	    }
 
 	}
-    }
-
-    private static DomainObject findDomainObjectByID(final Set<? extends DomainObject> domainObjects, final Integer id) {
-	for (final DomainObject domainObject : (Set<DomainObject>) domainObjects) {
-	    if (domainObject.getIdInternal().equals(id)) {
-		return domainObject;
-	    }
-	}
-	return null;
     }
 
     private static void fixStudentShiftEnrolements(final ExecutionCourse executionCourse) {

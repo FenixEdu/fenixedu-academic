@@ -5,10 +5,7 @@
 
 <html:xhtml/>
 
-<logic:present role="ACADEMIC_ADMINISTRATIVE_OFFICE">
-
 <%-- ### Title #### --%>
-<em><bean:message key="label.phd.academicAdminOffice.breadcrumb" bundle="PHD_RESOURCES"/></em>
 <h2><bean:message key="label.phd.manage.states" bundle="PHD_RESOURCES" /></h2>
 <%-- ### End of Title ### --%>
 
@@ -34,7 +31,7 @@
 
 
 <%--  ### Context Information (e.g. Person Information, Registration Information)  ### --%>
-<strong><bean:message  key="label.phd.phdProgramCandidacyProcess" bundle="PHD_RESOURCES"/></strong>
+<strong><bean:message  key="label.phd.candidacyProcess" bundle="PHD_RESOURCES"/></strong>
 <fr:view schema="PhdProgramCandidacyProcess.view" name="process">
 	<fr:layout name="tabular">
 		<fr:property name="classes" value="tstyle2 thlight mtop10" />
@@ -72,4 +69,3 @@
 <%--  ### Buttons (e.g. Submit)  ### --%>
 
 <%--  ### End of Buttons (e.g. Submit)  ### --%>
-</logic:present>

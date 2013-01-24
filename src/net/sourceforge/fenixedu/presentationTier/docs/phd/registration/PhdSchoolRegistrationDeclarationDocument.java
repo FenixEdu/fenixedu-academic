@@ -4,9 +4,7 @@ import java.util.ResourceBundle;
 
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
-import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
-import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOfficeType;
-import net.sourceforge.fenixedu.domain.organizationalStructure.AdministrativeOfficeUnit;
+import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.organizationalStructure.UniversityUnit;
 import net.sourceforge.fenixedu.domain.person.Gender;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess;
@@ -23,7 +21,7 @@ public class PhdSchoolRegistrationDeclarationDocument extends FenixReport {
 
     static private final long serialVersionUID = 1L;
 
-    private PhdIndividualProgramProcess process;
+    private final PhdIndividualProgramProcess process;
 
     public PhdSchoolRegistrationDeclarationDocument(final PhdIndividualProgramProcess process) {
 	this.process = process;
@@ -34,7 +32,7 @@ public class PhdSchoolRegistrationDeclarationDocument extends FenixReport {
 
     @Override
     protected void fillReport() {
-	final AdministrativeOfficeUnit unit = getAdministrativeOfficeUnit();
+	final Unit unit = process.getPhdProgram().getAdministrativeOffice().getUnit();
 
 	addParameter("administrativeOfficeName", unit.getName());
 	addParameter("administrativeOfficeCoordinator", unit.getActiveUnitCoordinator().getName());
@@ -83,10 +81,6 @@ public class PhdSchoolRegistrationDeclarationDocument extends FenixReport {
 
     private String getMessage(final String key) {
 	return getResourceBundle().getString(key);
-    }
-
-    private AdministrativeOfficeUnit getAdministrativeOfficeUnit() {
-	return AdministrativeOffice.readByAdministrativeOfficeType(AdministrativeOfficeType.MASTER_DEGREE).getUnit();
     }
 
     @Override

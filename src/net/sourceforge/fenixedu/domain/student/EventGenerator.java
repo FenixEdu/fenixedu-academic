@@ -12,8 +12,7 @@ public class EventGenerator {
     public static void generateNecessaryEvents(StudentCurricularPlan studentCurricularPlan, Person person,
 	    ExecutionYear executionYear) {
 
-	final AdministrativeOffice administrativeOffice = AdministrativeOffice
-		.readByAdministrativeOfficeType(studentCurricularPlan.getDegree().getDegreeType().getAdministrativeOfficeType());
+	final AdministrativeOffice administrativeOffice = studentCurricularPlan.getDegree().getAdministrativeOffice();
 
 	switch (studentCurricularPlan.getDegree().getDegreeType()) {
 

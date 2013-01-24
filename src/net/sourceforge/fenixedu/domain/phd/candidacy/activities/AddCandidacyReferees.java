@@ -13,7 +13,8 @@ public class AddCandidacyReferees extends PhdProgramCandidacyProcessActivity {
     protected void activityPreConditions(PhdProgramCandidacyProcess process, IUserView userView) {
     }
 
-	@Override
+    @SuppressWarnings("unchecked")
+    @Override
     protected PhdProgramCandidacyProcess executeActivity(PhdProgramCandidacyProcess process, IUserView userView, Object object) {
 	for (final PhdCandidacyRefereeBean bean : (List<PhdCandidacyRefereeBean>) object) {
 	    process.addCandidacyReferees(new PhdCandidacyReferee(process, bean));

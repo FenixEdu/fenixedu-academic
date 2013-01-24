@@ -2,10 +2,6 @@
 	<slot name="requestDate" read-only="true" key="label.requestDate" layout="no-time" />
 	<slot name="activeSituationDate" read-only="true" key="last.modification" layout="no-time" />
 	<slot name="urgentRequest" key="label.net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequest.urgentRequest"/>	
-	<slot name="campus" key="campus" layout="null-as-label">
-		<property name="label" value="-"/>
-		<property name="subLayout" value="spaceInformation-presentationName-label" />
-	</slot>	    
 	<slot name="serviceRequestNumberYear"  />
 	<slot name="description" read-only="true" key="label.net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequest.description"/>
 	<slot name="executionYear" layout="null-as-label">
@@ -44,10 +40,10 @@
 <schema name="AcademicServiceRequestSituation.view" type="net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequestSituation"  bundle="ACADEMIC_OFFICE_RESOURCES">
 	<slot name="academicServiceRequestSituationType" key="label.net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequest.academicServiceRequestSituationType" />
 	<slot name="situationDate" key="label.date"/>
-	<slot name="employee" key="label.net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequest.employee.person.name" layout="null-as-label">
+	<slot name="creator" key="label.net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequest.employee.person.name" layout="null-as-label">
 		<property name="label" value=" - "/>
 		<property name="subLayout" value="values"/>
-		<property name="subSchema" value="responsibleEmployee.name"/>
+		<property name="subSchema" value="responsible.name"/>
 	</slot>
 	<slot name="justification" key="label.net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequest.justification" />
 </schema>
@@ -55,10 +51,10 @@
 <schema name="SentToExternalEntityAcademicServiceRequestSituation.view" type="net.sourceforge.fenixedu.domain.serviceRequests.SentToExternalEntityAcademicServiceRequestSituation" bundle="ACADEMIC_OFFICE_RESOURCES">
 	<slot name="academicServiceRequestSituationType" key="label.net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequest.academicServiceRequestSituationType" />
 	<slot name="sentDate" key="label.sentDate"/>
-	<slot name="employee" key="label.net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequest.employee.person.name" layout="null-as-label">
+	<slot name="creator" key="label.net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequest.employee.person.name" layout="null-as-label">
 		<property name="label" value=" - "/>
 		<property name="subLayout" value="values"/>
-		<property name="subSchema" value="responsibleEmployee.name"/>
+		<property name="subSchema" value="responsible.name"/>
 	</slot>
 	<slot name="justification" key="label.net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequest.justification" />
 </schema>
@@ -66,10 +62,10 @@
 <schema name="ReceivedFromExternalEntityAcademicServiceRequestSituation.view" type="net.sourceforge.fenixedu.domain.serviceRequests.ReceivedFromExternalEntityAcademicServiceRequestSituation" bundle="ACADEMIC_OFFICE_RESOURCES">
 	<slot name="academicServiceRequestSituationType" key="label.net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequest.academicServiceRequestSituationType" />
 	<slot name="receivedDate" key="label.receiveDate"/>
-	<slot name="employee" key="label.net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequest.employee.person.name" layout="null-as-label">
+	<slot name="creator" key="label.net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequest.employee.person.name" layout="null-as-label">
 		<property name="label" value=" - "/>
 		<property name="subLayout" value="values"/>
-		<property name="subSchema" value="responsibleEmployee.name"/>
+		<property name="subSchema" value="responsible.name"/>
 	</slot>
 	<slot name="justification" key="label.net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequest.justification" />
 </schema>
@@ -263,7 +259,7 @@
 <schema name="DocumentRequestCreateBean.chooseDocumentRequestQuickType"
 	type="net.sourceforge.fenixedu.dataTransferObject.serviceRequests.DocumentRequestCreateBean" bundle="ACADEMIC_OFFICE_RESOURCES">
 	<slot name="chosenDocumentRequestType" key="label.documentRequestsManagement.searchDocumentRequests.documentRequestType" layout="menu-select-postback" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" >
-		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.DocumentRequestQuickTypeProvider" />
+		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.DocumentRequestTypeProvider$QuickDeliveryTypes" />
 		<property name="eachLayout" value=""/>
 		<property name="destination" value="documentRequestTypeChosenPostBack"/>
 	</slot>
@@ -732,10 +728,12 @@
 
 <schema name="DocumentRequest.view-documentPurposeTypeInformation" type="net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequest" bundle="ACADEMIC_OFFICE_RESOURCES">
 	<slot name="serviceRequestNumberYear" key="label.serviceRequestNumberYear.withLineBreak" />
-	<slot name="registration.number" layout="link" key="label.registration.number.withLineBreak">
-        <property name="linkFormat" value="/academicAdminOffice/student.do?method=visualizeRegistration&amp;registrationID=${registration.idInternal}"/>
+	<slot name="registration.number" layout="conditional-link" key="label.registration.number.withLineBreak">
+        <property name="linkFormat" value="/student.do?method=visualizeRegistration&amp;registrationID=${registration.idInternal}"/>
         <property name="contextRelative" value="true"/>
+        <property name="moduleRelative" value="true"/>
         <property name="useParent" value="true"/>
+        <property name="visibleIf" value="registrationAccessible" />
 	</slot>
 	<slot name="description" read-only="true" key="label.net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequest.description"/>
 	<slot name="executionYear" layout="null-as-label">
@@ -748,46 +746,14 @@
 	<slot name="activeSituationDate" read-only="true" key="last.modification.withLineBreak"/>
 </schema>
 
-<schema name="AcademicServiceRequestSearchBean.edit" type="net.sourceforge.fenixedu.dataTransferObject.serviceRequests.AcademicServiceRequestSearchBean" bundle="ACADEMIC_OFFICE_RESOURCES">
-	<slot name="academicServiceRequestType" key="label.requestType" layout="menu-select-postback">
-		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.serviceRequests.AcademicServiceRequestTypeProvider" />
-		<property name="eachLayout" value="" />
-	</slot>
-	<slot name="academicServiceRequestSituationType" key="label.net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequest.academicServiceRequestSituationType"/>
-	<slot name="urgentRequest" key="label.only.urgent"/>
-</schema>
-
-<schema name="DocumentRequestSearchBean.edit" type="net.sourceforge.fenixedu.dataTransferObject.serviceRequests.DocumentRequestSearchBean" extends="AcademicServiceRequestSearchBean.edit" bundle="ACADEMIC_OFFICE_RESOURCES">
-	<slot name="chosenDocumentRequestType" key="label.documentRequestsManagement.searchDocumentRequests.documentRequestType" layout="menu-select">
-		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.DocumentRequestTypeProvider$QuickDeliveryTypes"/>
-		<property name="eachLayout" value="" />
-	</slot>
-</schema>
-
 <schema name="AcademicServiceRequest.view-for-given-registration-and-search" extends="AcademicServiceRequest.view"  type="net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequest" bundle="ACADEMIC_OFFICE_RESOURCES">
 	<slot name="academicServiceRequestSituationType" key="label.net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequest.academicServiceRequestSituationType" />
 	<slot name="registration.number" layout="link">
-        <property name="linkFormat" value="/academicAdminOffice/student.do?method=visualizeRegistration&amp;registrationID=${registration.idInternal}"/>
+        <property name="linkFormat" value="/student.do?method=visualizeRegistration&amp;registrationID=${registration.idInternal}"/>
         <property name="contextRelative" value="true"/>
+        <property name="moduleRelative" value="true"/>
         <property name="useParent" value="true"/>
 	</slot>
-</schema>
-
-<schema name="RegistrationAcademicServiceRequestList.view" type="net.sourceforge.fenixedu.domain.serviceRequests.RegistrationAcademicServiceRequest" bundle="ACADEMIC_OFFICE_RESOURCES">
-	<slot name="campus.name" key="campus"/>
-	<slot name="serviceRequestNumber" key="label.serviceRequestNumber" layout="link">
-        <property name="linkFormat" value="/academicAdminOffice/academicServiceRequestsManagement.do?backMethod=visualizeRegistration&amp;backAction=student&amp;academicServiceRequestId=${idInternal}&amp;method=viewAcademicServiceRequest"/>
-        <property name="contextRelative" value="true"/>
-        <property name="useParent" value="true"/>
-	</slot>
-	<slot name="requestDate" key="label.requestDate"/>
-	<slot name="description" key="label.net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequest.description"/>
-	<slot name="student.number" key="label.net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequest.studentCurricularPlan.student.studentNumber" layout="link">
-        <property name="linkFormat" value="/academicAdminOffice/student.do?method=visualizeRegistration&amp;registrationID=${registration.idInternal}"/>
-        <property name="contextRelative" value="true"/>
-        <property name="useParent" value="true"/>
-	</slot>
-	<slot name="student.name" key="label.net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequest.studentCurricularPlan.student.person.name"/>
 </schema>
 
 <schema name="DocumentRequestCreateBean.chooseDocumentRequestType-for-given-registration"

@@ -26,7 +26,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
  * @author nmgo
  * @author lmre
  */
-@Mapping(path = "/showCurriculumHistoric", module = "academicAdminOffice")
+@Mapping(path = "/showCurriculumHistoric", module = "academicAdministration")
 @Forwards( { @Forward(name = "show-report", path = "/commons/curriculumHistoric/showCurriculumHistoricReport.jsp") })
 public class ShowCurriculumHistoricAction extends FenixDispatchAction {
 

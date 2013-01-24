@@ -7,8 +7,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.student.curriculumLines.MoveCurriculumLines;
 import net.sourceforge.fenixedu.domain.DomainObject;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.curricularRules.executors.RuleResult;
@@ -67,7 +66,7 @@ abstract public class AbstractCurriculumLinesLocationManagementDA extends FenixD
     }
 
     public ActionForward moveCurriculumLines(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+	    HttpServletResponse response) {
 
 	final MoveCurriculumLinesBean moveCurriculumLinesBean = getRenderedObject("move-curriculum-lines-bean");
 
@@ -77,7 +76,7 @@ abstract public class AbstractCurriculumLinesLocationManagementDA extends FenixD
 	}
 
 	try {
-	    executeService("MoveCurriculumLines", new Object[] { moveCurriculumLinesBean });
+	    MoveCurriculumLines.run(moveCurriculumLinesBean);
 	} catch (final EnrollmentDomainException e) {
 	    addRuleResultMessagesToActionMessages(request, e.getFalseResult());
 	    request.setAttribute("moveCurriculumLinesBean", moveCurriculumLinesBean);

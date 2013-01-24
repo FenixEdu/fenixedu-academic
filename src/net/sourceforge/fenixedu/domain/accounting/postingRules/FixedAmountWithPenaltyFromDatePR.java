@@ -10,8 +10,6 @@ import net.sourceforge.fenixedu.util.Money;
 import org.joda.time.DateTime;
 import org.joda.time.YearMonthDay;
 
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
-
 public class FixedAmountWithPenaltyFromDatePR extends FixedAmountWithPenaltyFromDatePR_Base {
 
     protected FixedAmountWithPenaltyFromDatePR() {
@@ -55,7 +53,6 @@ public class FixedAmountWithPenaltyFromDatePR extends FixedAmountWithPenaltyFrom
 	return when.toYearMonthDay().isAfter(getWhenToApplyFixedAmountPenalty());
     }
 
-    @Checked("PostingRulePredicates.editPredicate")
     public FixedAmountWithPenaltyFromDatePR edit(Money fixedAmount, Money penaltyAmount,
 	    YearMonthDay whenToApplyFixedAmountPenalty) {
 

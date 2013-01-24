@@ -12,11 +12,9 @@ import net.sourceforge.fenixedu.domain.studentCurricularPlan.equivalencyPlan.Equ
 import net.sourceforge.fenixedu.domain.studentCurricularPlan.equivalencyPlan.EquivalencyPlanEntryWrapper;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumGroup;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumModule;
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
 
 public class StudentCurricularPlanEquivalencePlan extends StudentCurricularPlanEquivalencePlan_Base {
 
-    @Checked("StudentCurricularPlanEquivalencePlanPredicates.checkPermissionsToCreate")
     public StudentCurricularPlanEquivalencePlan(final StudentCurricularPlan studentCurricularPlan) {
 	super();
 
@@ -99,8 +97,8 @@ public class StudentCurricularPlanEquivalencePlan extends StudentCurricularPlanE
 
 	final DegreeModule degreeModule = curriculumModule.getDegreeModule();
 
-	addEquivalencyPlanEntryCurriculumModuleWrappers(equivalencyPlanEntryCurriculumModuleWrapper, degreeCurricularPlan
-		.getEquivalencePlan(), degreeModule);
+	addEquivalencyPlanEntryCurriculumModuleWrappers(equivalencyPlanEntryCurriculumModuleWrapper,
+		degreeCurricularPlan.getEquivalencePlan(), degreeModule);
 
 	for (EquivalencePlanEntry equivalencePlanEntry : getEntriesSet()) {
 	    if (equivalencePlanEntry.isFor(degreeModule)) {
@@ -131,13 +129,13 @@ public class StudentCurricularPlanEquivalencePlan extends StudentCurricularPlanE
 	if (degreeModule.isLeaf()) {
 	    final CurricularCourse curricularCourse = (CurricularCourse) degreeModule;
 	    if (getOldStudentCurricularPlan().hasEnrolmentOrAprovalInCurriculumModule(curricularCourse)) {
-		equivalencePlanEntries = (Set) curricularCourse.getOldEquivalencePlanEntriesSet();
+		equivalencePlanEntries = curricularCourse.getOldEquivalencePlanEntriesSet();
 	    } else {
 		equivalencePlanEntries = Collections.EMPTY_SET;
 	    }
 	} else {
 	    final CourseGroup courseGroup = (CourseGroup) degreeModule;
-	    equivalencePlanEntries = (Set) courseGroup.getOldEquivalencePlanEntriesSet();
+	    equivalencePlanEntries = courseGroup.getOldEquivalencePlanEntriesSet();
 	}
 	for (final EquivalencePlanEntry equivalencePlanEntry : equivalencePlanEntries) {
 	    if (equivalencePlanEntry.getEquivalencePlan() == equivalencePlan) {

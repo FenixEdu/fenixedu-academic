@@ -124,7 +124,6 @@ import net.sourceforge.fenixedu.domain.research.result.ResultParticipation;
 import net.sourceforge.fenixedu.domain.research.result.patent.ResearchResultPatent;
 import net.sourceforge.fenixedu.domain.research.result.publication.PreferredPublication;
 import net.sourceforge.fenixedu.domain.research.result.publication.ResearchResultPublication;
-import net.sourceforge.fenixedu.domain.space.Campus;
 import net.sourceforge.fenixedu.domain.space.PersonSpaceOccupation;
 import net.sourceforge.fenixedu.domain.space.Space;
 import net.sourceforge.fenixedu.domain.student.Registration;
@@ -426,7 +425,7 @@ public class Person extends Person_Base {
 	return this;
     }
 
-    @Checked("RolePredicates.MANAGER_OR_ACADEMIC_ADMINISTRATIVE_OFFICE_OR_GRANT_OWNER_MANAGER_PREDICATE")
+    @Checked("AcademicPredicates.EDIT_STUDENT_PERSONAL_DATA")
     public Person editPersonalInformation(final PersonBean personBean) {
 	setProperties(personBean);
 	return this;
@@ -446,7 +445,6 @@ public class Person extends Person_Base {
 	return this;
     }
 
-    @Checked("RolePredicates.MANAGER_OR_ACADEMIC_ADMINISTRATIVE_OFFICE_OR_GRANT_OWNER_MANAGER_PREDICATE")
     public Person edit(final IndividualCandidacyPersonalDetails candidacyExternalDetails) {
 	this.setCountry(candidacyExternalDetails.getCountry());
 
@@ -1380,9 +1378,8 @@ public class Person extends Person_Base {
 		&& !hasAnyProjectAccesses() && !hasEmployee() && !hasTeacher() && !hasGrantOwner() && !hasAnyPayedGuides()
 		&& !hasAnyPayedReceipts() && !hasParking() && !hasAnyResearchInterests() && !hasAnyProjectParticipations()
 		&& !hasAnyParticipations() && !hasAnyBoards() && !hasAnyPersonFunctions()
-		&& (!hasHomepage() || getHomepage().isDeletable()) && !hasLibraryCard() && !hasAnyAcademicServiceRequests()
-		&& !hasAnyCardGenerationEntries() && !hasAnyInternalParticipants() && !hasAnyCreatedQualifications()
-		&& !hasAnyCreateJobs();
+		&& (!hasHomepage() || getHomepage().isDeletable()) && !hasLibraryCard() && !hasAnyCardGenerationEntries()
+		&& !hasAnyInternalParticipants() && !hasAnyCreatedQualifications() && !hasAnyCreateJobs();
     }
 
     private boolean hasParking() {
@@ -2059,7 +2056,7 @@ public class Person extends Person_Base {
 
 	for (final Event event : getEventsFromType(eventClass)) {
 	    if (event.isOpen() && event.hasInstallments() == withInstallments
-		    && isPayableOnAdministrativeOffice(administrativeOffice, event)) {
+		    && isPayableOnAnyOfAdministrativeOffices(Collections.singleton(administrativeOffice), event)) {
 		result.add(event);
 	    }
 	}
@@ -2074,7 +2071,7 @@ public class Person extends Person_Base {
     public Set<Event> getNotPayedEventsPayableOn(final AdministrativeOffice administrativeOffice) {
 	final Set<Event> result = new HashSet<Event>();
 	for (final Event event : getAcademicEvents()) {
-	    if (event.isOpen() && isPayableOnAdministrativeOffice(administrativeOffice, event)) {
+	    if (event.isOpen() && isPayableOnAnyOfAdministrativeOffices(Collections.singleton(administrativeOffice), event)) {
 		result.add(event);
 	    }
 	}
@@ -2093,8 +2090,16 @@ public class Person extends Person_Base {
 	return result;
     }
 
-    private boolean isPayableOnAdministrativeOffice(final AdministrativeOffice administrativeOffice, final Event event) {
-	return administrativeOffice == null || event.isPayableOnAdministrativeOffice(administrativeOffice);
+    private boolean isPayableOnAnyOfAdministrativeOffices(final Set<AdministrativeOffice> administrativeOffices, final Event event) {
+
+	if (administrativeOffices == null)
+	    return true;
+
+	for (final AdministrativeOffice administrativeOffice : administrativeOffices)
+	    if (event.isPayableOnAdministrativeOffice(administrativeOffice))
+		return true;
+
+	return false;
     }
 
     public List<Event> getPayedEvents(final Class eventClass) {
@@ -2144,14 +2149,14 @@ public class Person extends Person_Base {
     }
 
     public Set<Entry> getPaymentsWithoutReceipt() {
-	return getPaymentsWithoutReceiptByAdministrativeOffice(null);
+	return getPaymentsWithoutReceiptByAdministrativeOffices(null);
     }
 
-    public Set<Entry> getPaymentsWithoutReceiptByAdministrativeOffice(final AdministrativeOffice administrativeOffice) {
+    public Set<Entry> getPaymentsWithoutReceiptByAdministrativeOffices(final Set<AdministrativeOffice> administrativeOffices) {
 	final Set<Entry> result = new HashSet<Entry>();
 
 	for (final Event event : getAcademicEvents()) {
-	    if (!event.isCancelled() && isPayableOnAdministrativeOffice(administrativeOffice, event)) {
+	    if (!event.isCancelled() && isPayableOnAnyOfAdministrativeOffices(administrativeOffices, event)) {
 		result.addAll(event.getEntriesWithoutReceipt());
 	    }
 	}
@@ -2392,12 +2397,14 @@ public class Person extends Person_Base {
 	return result;
     }
 
-    public Set<Receipt> getReceiptsByAdministrativeOffice(final AdministrativeOffice administrativeOffice) {
+    public Set<Receipt> getReceiptsByAdministrativeOffices(final Set<AdministrativeOffice> administrativeOffices) {
 	final Set<Receipt> result = new HashSet<Receipt>();
 	for (final Receipt receipt : getReceipts()) {
+	    for (final AdministrativeOffice administrativeOffice : administrativeOffices) {
 	    if (receipt.isFromAdministrativeOffice(administrativeOffice)) {
 		result.add(receipt);
 	    }
+	}
 	}
 
 	return result;
@@ -2408,6 +2415,7 @@ public class Person extends Person_Base {
 
 	final Person externalPerson = createExternalPerson(contributorName, Gender.MALE, data, null, null, null, null,
 		String.valueOf(System.currentTimeMillis()), IDDocumentType.EXTERNAL);
+	externalPerson.getPendingOrValidPhysicalAddresses().iterator().next().setValid();
 	externalPerson.setSocialSecurityNumber(contributorNumber);
 
 	new ExternalContract(externalPerson, RootDomainObject.getInstance().getExternalInstitutionUnit(), new YearMonthDay(),
@@ -2828,10 +2836,6 @@ public class Person extends Person_Base {
 
     public boolean isHomePageAvailable() {
 	return hasHomepage() && getHomepage().getActivated();
-    }
-
-    public boolean isAdministrativeOfficeEmployee() {
-	return getEmployee() != null && getEmployee().getAdministrativeOffice() != null;
     }
 
     public List<PunctualRoomsOccupationRequest> getPunctualRoomsOccupationRequestsOrderByMoreRecentComment() {
@@ -3359,14 +3363,6 @@ public class Person extends Person_Base {
 	    }
 	}
 	return result;
-    }
-
-    public AdministrativeOffice getEmployeeAdministrativeOffice() {
-	return hasEmployee() ? getEmployee().getAdministrativeOffice() : null;
-    }
-
-    public Campus getEmployeeCampus() {
-	return hasEmployee() ? getEmployee().getCurrentCampus() : null;
     }
 
     public Collection<Forum> getForuns(final ExecutionSemester executionSemester) {

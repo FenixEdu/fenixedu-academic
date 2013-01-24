@@ -35,7 +35,7 @@ public class CompetenceCourseGroupUnit extends CompetenceCourseGroupUnit_Base {
 
 	CompetenceCourseGroupUnit competenceCourseGroupUnit = new CompetenceCourseGroupUnit();
 	competenceCourseGroupUnit.init(name, unitNameCard, costCenterCode, acronym, beginDate, endDate, webAddress,
-		classification, canBeResponsibleOfSpaces, campus);
+		classification, null, canBeResponsibleOfSpaces, campus);
 	competenceCourseGroupUnit.addParentUnit(parentUnit, accountabilityType);
 
 	checkIfAlreadyExistsOneCompetenceCourseGroupUnitWithSameAcronymAndName(competenceCourseGroupUnit);

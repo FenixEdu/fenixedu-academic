@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.student.enrolment.bolonha.EnrolBolonhaStudent;
 import net.sourceforge.fenixedu.applicationTier.Servico.student.enrolment.bolonha.EnrolInAffinityCycle;
 import net.sourceforge.fenixedu.dataTransferObject.student.enrollment.bolonha.BolonhaStudentEnrollmentBean;
 import net.sourceforge.fenixedu.dataTransferObject.student.enrollment.bolonha.BolonhaStudentOptionalEnrollmentBean;
@@ -19,11 +20,11 @@ import net.sourceforge.fenixedu.domain.curricularRules.CurricularRule;
 import net.sourceforge.fenixedu.domain.curricularRules.executors.RuleResult;
 import net.sourceforge.fenixedu.domain.curricularRules.executors.ruleExecutors.CurricularRuleLevel;
 import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
-import net.sourceforge.fenixedu.domain.enrolment.DegreeModuleToEnrol;
 import net.sourceforge.fenixedu.domain.enrolment.IDegreeModuleToEvaluate;
 import net.sourceforge.fenixedu.domain.enrolment.OptionalDegreeModuleToEnrol;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.exceptions.EnrollmentDomainException;
+import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumModule;
 import net.sourceforge.fenixedu.injectionCode.IllegalDataAccessException;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.util.CurricularRuleLabelFormatter;
@@ -81,13 +82,10 @@ public abstract class AbstractBolonhaStudentEnrollmentDA extends FenixDispatchAc
 
 	final BolonhaStudentEnrollmentBean bolonhaStudentEnrollmentBean = getBolonhaStudentEnrollmentBeanFromViewState();
 	try {
-	    final RuleResult ruleResults = (RuleResult) executeService(
-		    "EnrolBolonhaStudent",
-		    new Object[] { bolonhaStudentEnrollmentBean.getStudentCurricularPlan(),
-			    bolonhaStudentEnrollmentBean.getExecutionPeriod(),
-			    bolonhaStudentEnrollmentBean.getDegreeModulesToEvaluate(),
+	    final RuleResult ruleResults = EnrolBolonhaStudent.run(bolonhaStudentEnrollmentBean.getStudentCurricularPlan(),
+		    bolonhaStudentEnrollmentBean.getExecutionPeriod(), bolonhaStudentEnrollmentBean.getDegreeModulesToEvaluate(),
 			    bolonhaStudentEnrollmentBean.getCurriculumModulesToRemove(),
-			    bolonhaStudentEnrollmentBean.getCurricularRuleLevel() });
+		    bolonhaStudentEnrollmentBean.getCurricularRuleLevel());
 
 	    if (!bolonhaStudentEnrollmentBean.getDegreeModulesToEvaluate().isEmpty()
 		    || !bolonhaStudentEnrollmentBean.getCurriculumModulesToRemove().isEmpty()) {
@@ -151,10 +149,10 @@ public abstract class AbstractBolonhaStudentEnrollmentDA extends FenixDispatchAc
 
 	final BolonhaStudentOptionalEnrollmentBean optionalStudentEnrollmentBean = getBolonhaStudentOptionalEnrollmentBeanFromViewState();
 	try {
-	    final RuleResult ruleResults = (RuleResult) executeService("EnrolBolonhaStudent", new Object[] {
-		    optionalStudentEnrollmentBean.getStudentCurricularPlan(), optionalStudentEnrollmentBean.getExecutionPeriod(),
-		    buildOptionalDegreeModuleToEnrolList(optionalStudentEnrollmentBean), Collections.EMPTY_LIST,
-		    getCurricularRuleLevel(form) });
+	    final RuleResult ruleResults = EnrolBolonhaStudent.run(optionalStudentEnrollmentBean.getStudentCurricularPlan(),
+		    optionalStudentEnrollmentBean.getExecutionPeriod(),
+		    buildOptionalDegreeModuleToEnrolList(optionalStudentEnrollmentBean),
+		    Collections.<CurriculumModule> emptyList(), getCurricularRuleLevel(form));
 
 	    if (ruleResults.isWarning()) {
 		addRuleResultMessagesToActionMessages("warning", request, ruleResults);
@@ -177,7 +175,7 @@ public abstract class AbstractBolonhaStudentEnrollmentDA extends FenixDispatchAc
 		optionalStudentEnrollmentBean.getStudentCurricularPlan(), optionalStudentEnrollmentBean.getExecutionPeriod());
     }
 
-    private List<DegreeModuleToEnrol> buildOptionalDegreeModuleToEnrolList(
+    private List<IDegreeModuleToEvaluate> buildOptionalDegreeModuleToEnrolList(
 	    final BolonhaStudentOptionalEnrollmentBean optionalStudentEnrollmentBean) {
 	final IDegreeModuleToEvaluate selectedDegreeModuleToEnrol = optionalStudentEnrollmentBean
 		.getSelectedDegreeModuleToEnrol();
@@ -186,7 +184,7 @@ public abstract class AbstractBolonhaStudentEnrollmentDA extends FenixDispatchAc
 		optionalStudentEnrollmentBean.getExecutionPeriod(),
 		optionalStudentEnrollmentBean.getSelectedOptionalCurricularCourse());
 
-	final List<DegreeModuleToEnrol> result = new ArrayList<DegreeModuleToEnrol>();
+	final List<IDegreeModuleToEvaluate> result = new ArrayList<IDegreeModuleToEvaluate>();
 	result.add(optionalDegreeModuleToEnrol);
 
 	return result;

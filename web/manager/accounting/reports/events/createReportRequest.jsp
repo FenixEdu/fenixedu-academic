@@ -35,6 +35,10 @@
 				<fr:slot name="endDate" required="true" >
 					<fr:validator name="pt.ist.fenixWebFramework.renderers.validators.DateValidator" />
 				</fr:slot>
+				<fr:slot name="administrativeOffice" layout="menu-select-postback" key="label.academicAdminOffice">
+					<fr:property name="from" value="availableOfficesForManager" />
+					<fr:property name="format" value="${unit.name}" />
+				</fr:slot>
 			</fr:schema>
 			
 			<fr:layout name="tabular">
@@ -42,10 +46,13 @@
 				<fr:property name="columnClasses" value=",,tderror1 tdclear" />
 			</fr:layout>
 		
+			<fr:destination name="postback" path="/eventReports.do?method=createReportRequestPostback" />
 			<fr:destination name="invalid" path="/eventReports.do?method=createReportRequestInvalid" />
 			<fr:destination name="cancel" path="/eventReports.do?method=listReports" />
 
 		</fr:edit>
+
+		<logic:present name="bean" property="administrativeOffice">
 
 		<fr:edit id="bean-edit-options" name="bean">
 		
@@ -62,8 +69,6 @@
 				<fr:slot name="exportPhdEvents" required="true" />
 				<fr:slot name="exportResidenceEvents" required="true" />
 				<fr:slot name="exportOthers" required="true" />
-				<fr:slot name="forDegreeAdministrativeOffice" required="true" />
-				<fr:slot name="forMasterDegreeAdministrativeOffice" required="true" />
 			</fr:schema>
 
 			<fr:layout name="tabular">
@@ -74,6 +79,8 @@
 		</fr:edit>
 
 		<html:submit><bean:message key="label.create" bundle="APPLICATION_RESOURCES" /></html:submit>
+		</logic:present>
+
 		<html:cancel><bean:message key="label.cancel" bundle="APPLICATION_RESOURCES" /></html:cancel>
 	</fr:form>
 	

@@ -8,8 +8,6 @@ import net.sourceforge.fenixedu.util.Money;
 
 import org.joda.time.DateTime;
 
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
-
 public class PhdProgramCandidacyPR extends PhdProgramCandidacyPR_Base {
 
     private PhdProgramCandidacyPR() {
@@ -23,7 +21,7 @@ public class PhdProgramCandidacyPR extends PhdProgramCandidacyPR_Base {
 		amount);
     }
 
-    @Checked("PostingRulePredicates.editPredicate")
+    @Override
     public PhdProgramCandidacyPR edit(final Money amount) {
 	deactivate();
 	return new PhdProgramCandidacyPR(getServiceAgreementTemplate(), new DateTime().minus(1000), null, amount);

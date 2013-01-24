@@ -3,11 +3,11 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr" %>
+<%@ taglib uri="/WEB-INF/academic.tld" prefix="academic" %>
 
 <bean:define id="type" name="enrolmentBean" property="groupType"/>
 <bean:define id="actionName" name="actionName" />
 
-<em><bean:message key="label.academicAdminOffice" bundle="ACADEMIC_OFFICE_RESOURCES"/></em>
 <h2><strong><bean:message key="label.course.enrolments" bundle="ACADEMIC_OFFICE_RESOURCES"/> <bean:message key="<%= type.toString() %>" bundle="ACADEMIC_OFFICE_RESOURCES"/></strong></h2>
 
 <html:messages id="message" message="true" bundle="ACADEMIC_OFFICE_RESOURCES" property="error">
@@ -31,11 +31,12 @@
 	</div>
 </logic:messagesPresent>
 
+<bean:define id="bean" name="enrolmentBean" type="net.sourceforge.fenixedu.dataTransferObject.administrativeOffice.studentEnrolment.NoCourseGroupEnrolmentBean"/>
+
 <fr:form action='<%= "/" + actionName + ".do" %>'>
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="chooseCurricular"/>
 	<fr:edit id="enrolmentBean" name="enrolmentBean" visible="false"/>
 	<logic:present name="enrolments">
-		<bean:define id="bean" name="enrolmentBean" type="net.sourceforge.fenixedu.dataTransferObject.administrativeOffice.studentEnrolment.NoCourseGroupEnrolmentBean"/>
 		<bean:define id="url">/<%= actionName %>.do?method=delete&amp;enrolment=${idInternal}&amp;scpID=<%= bean.getStudentCurricularPlan().getIdInternal().toString() %>&amp;executionPeriodID=<%= bean.getExecutionPeriod().getIdInternal().toString() %></bean:define>
 		<fr:view name="enrolments" property="enrolments" schema="student.no.course.group.enrolments">
 			<fr:layout name="tabular">
@@ -69,9 +70,9 @@
 			If necessary can be moved to superclass
 		--%>
 		<logic:equal name="enrolmentBean" property="groupType" value="STANDALONE">
-			<logic:equal name="canEnrolWithoutRules" value="true">
+			<academic:allowed operation="ENROLMENT_WITHOUT_RULES" program="<%= bean.getStudentCurricularPlan().getDegree() %>">
 				<html:submit onclick="this.form.method.value='chooseCurricularWithoutRules'; return true;"><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="button.enrol.without.rules"/></html:submit>
-			</logic:equal>
+			</academic:allowed>
 		</logic:equal>
 		
 		<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" onclick="this.form.method.value='back'; return true;"><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="back"/></html:submit>

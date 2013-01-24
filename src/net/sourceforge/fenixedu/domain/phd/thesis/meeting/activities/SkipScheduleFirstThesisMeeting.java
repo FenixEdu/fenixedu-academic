@@ -22,7 +22,7 @@ public class SkipScheduleFirstThesisMeeting extends PhdMeetingSchedulingActivity
 	    throw new PreConditionNotValidException();
 	}
 
-	if (PhdThesisProcess.isMasterDegreeAdministrativeOfficeEmployee(userView)) {
+	if (process.isAllowedToManageProcess(userView)) {
 	    return;
 	}
 

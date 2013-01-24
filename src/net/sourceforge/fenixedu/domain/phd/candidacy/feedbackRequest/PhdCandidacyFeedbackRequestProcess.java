@@ -62,6 +62,11 @@ public class PhdCandidacyFeedbackRequestProcess extends PhdCandidacyFeedbackRequ
     }
 
     @Override
+    public boolean isAllowedToManageProcess(IUserView userView) {
+	return true;
+    }
+
+    @Override
     public String getDisplayName() {
 	return ResourceBundle.getBundle("resources/PhdResources").getString(getClass().getSimpleName());
     }
@@ -143,8 +148,7 @@ public class PhdCandidacyFeedbackRequestProcess extends PhdCandidacyFeedbackRequ
 	    final PhdParticipant participant = mainProcess.getParticipant(person);
 
 	    if (participant == null) {
-		result.add(PhdParticipant
-			.getUpdatedOrCreate(mainProcess, new PhdParticipantBean().setInternalParticipant(person)));
+		result.add(PhdParticipant.getUpdatedOrCreate(mainProcess, new PhdParticipantBean().setInternalParticipant(person)));
 
 	    } else if (!participant.hasAnyCandidacyFeedbackRequestElements()) {
 		result.add(participant);
@@ -299,8 +303,8 @@ public class PhdCandidacyFeedbackRequestProcess extends PhdCandidacyFeedbackRequ
 	private String getAccessInformation(PhdIndividualProgramProcess process, PhdParticipant participant) {
 
 	    if (!participant.isInternal()) {
-		return AlertMessage.get("message.phd.external.access", PhdProperties.getPhdExternalAccessLink(), participant
-			.getAccessHashCode(), participant.getPassword());
+		return AlertMessage.get("message.phd.external.access", PhdProperties.getPhdExternalAccessLink(),
+			participant.getAccessHashCode(), participant.getPassword());
 
 	    } else {
 		final Person person = ((InternalPhdParticipant) participant).getPerson();

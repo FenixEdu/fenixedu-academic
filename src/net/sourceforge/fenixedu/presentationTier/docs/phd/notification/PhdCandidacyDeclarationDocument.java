@@ -1,8 +1,6 @@
 package net.sourceforge.fenixedu.presentationTier.docs.phd.notification;
 
 import net.sourceforge.fenixedu.domain.RootDomainObject;
-import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
-import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOfficeType;
 import net.sourceforge.fenixedu.domain.organizationalStructure.UniversityUnit;
 import net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyProcess;
 import net.sourceforge.fenixedu.presentationTier.docs.FenixReport;
@@ -13,12 +11,6 @@ import org.joda.time.LocalDate;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 public class PhdCandidacyDeclarationDocument extends FenixReport {
-
-    /**
-     * 
-     */
-    private static final long serialVersionUID = 1L;
-
     private PhdProgramCandidacyProcess candidacyProcess;
 
     private Language language;
@@ -30,6 +22,7 @@ public class PhdCandidacyDeclarationDocument extends FenixReport {
 	fillReport();
     }
 
+    @Override
     public Language getLanguage() {
 	return language;
     }
@@ -49,15 +42,15 @@ public class PhdCandidacyDeclarationDocument extends FenixReport {
     @Override
     protected void fillReport() {
 	addParameter("name", getCandidacyProcess().getPerson().getName());
-	addParameter("programName", getCandidacyProcess().getIndividualProgramProcess().getPhdProgram().getName().getContent(
-		getLanguage()));
+	addParameter("programName",
+		getCandidacyProcess().getIndividualProgramProcess().getPhdProgram().getName().getContent(getLanguage()));
 	addParameter("candidacyDate", getCandidacyProcess().getCandidacyDate());
 	addParameter("currentDate", new LocalDate());
 	addParameter("documentIdNumber", getCandidacyProcess().getPerson().getDocumentIdNumber());
 	addParameter("candidacyNumber", getCandidacyProcess().getProcessNumber());
 
-	addParameter("administrativeOfficeCoordinator", AdministrativeOffice.readByAdministrativeOfficeType(
-		AdministrativeOfficeType.MASTER_DEGREE).getUnit().getActiveUnitCoordinator().getFirstAndLastName());
+	addParameter("administrativeOfficeCoordinator", getCandidacyProcess().getIndividualProgramProcess().getPhdProgram()
+		.getAdministrativeOffice().getUnit().getActiveUnitCoordinator().getFirstAndLastName());
 
 	addParameter("institutionName", RootDomainObject.getInstance().getInstitutionUnit().getPartyName().getContent());
 	addParameter("universityName", UniversityUnit.getInstitutionsUniversityUnit().getPartyName().getContent());

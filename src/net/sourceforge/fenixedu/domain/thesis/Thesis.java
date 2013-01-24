@@ -18,7 +18,6 @@ import net.sourceforge.fenixedu.domain.Coordinator;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
-import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.EnrolmentEvaluation;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
@@ -953,12 +952,10 @@ public class Thesis extends Thesis_Base {
 	    responsible = AccessControl.getPerson().getTeacher();
 	}
 
-	Employee employee = responsible.getPerson().getEmployee();
-
 	List<MarkSheetEnrolmentEvaluationBean> evaluations = getStudentEvalutionBean();
 
 	return curricularCourse.createNormalMarkSheet(executionSemester, responsible, evaluationDate, type, true, evaluations,
-		employee);
+		responsible.getPerson());
     }
 
     private List<MarkSheetEnrolmentEvaluationBean> getStudentEvalutionBean() {

@@ -11,8 +11,6 @@ import net.sourceforge.fenixedu.util.Money;
 
 import org.joda.time.DateTime;
 
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
-
 public class ExamDateCertificateRequestPR extends ExamDateCertificateRequestPR_Base {
 
     protected ExamDateCertificateRequestPR() {
@@ -26,7 +24,6 @@ public class ExamDateCertificateRequestPR extends ExamDateCertificateRequestPR_B
 		serviceAgreementTemplate, baseAmount, amountPerPage);
     }
 
-    @Checked("PostingRulePredicates.editPredicate")
     public ExamDateCertificateRequestPR edit(final Money baseAmount, final Money amountPerUnit) {
 	deactivate();
 	return new ExamDateCertificateRequestPR(getServiceAgreementTemplate(), new DateTime().minus(1000), null, baseAmount,

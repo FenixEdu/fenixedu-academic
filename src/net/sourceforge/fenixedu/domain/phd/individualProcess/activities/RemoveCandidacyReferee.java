@@ -11,22 +11,21 @@ public class RemoveCandidacyReferee extends PhdIndividualProgramProcessActivity 
 
     @Override
     protected void activityPreConditions(PhdIndividualProgramProcess process, IUserView userView) {
-        if (!PhdProgramCandidacyProcessState.PRE_CANDIDATE.equals(process.getCandidacyProcess().getActiveState())) {
-    	throw new PreConditionNotValidException();
-        }
+	if (!PhdProgramCandidacyProcessState.PRE_CANDIDATE.equals(process.getCandidacyProcess().getActiveState())) {
+	    throw new PreConditionNotValidException();
+	}
     }
 
     @Override
-    protected PhdIndividualProgramProcess executeActivity(PhdIndividualProgramProcess process, IUserView userView,
-    	Object object) {
-        PhdCandidacyReferee referee = (PhdCandidacyReferee) object;
-        
-        if(referee.isLetterAvailable()) {
-    	throw new DomainException("error.PhdIndividualProgramProcess.candidacy.referee.has.letter.submitted");
-        }
-        
-        referee.delete();
+    protected PhdIndividualProgramProcess executeActivity(PhdIndividualProgramProcess process, IUserView userView, Object object) {
+	PhdCandidacyReferee referee = (PhdCandidacyReferee) object;
 
-        return process;
+	if (referee.isLetterAvailable()) {
+	    throw new DomainException("error.PhdIndividualProgramProcess.candidacy.referee.has.letter.submitted");
+	}
+
+	referee.delete();
+
+	return process;
     }
 }

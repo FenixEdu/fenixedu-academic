@@ -2,14 +2,18 @@ package net.sourceforge.fenixedu.domain.candidacyProcess.standalone;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.caseHandling.StartActivity;
 import net.sourceforge.fenixedu.dataTransferObject.commons.CurricularCourseByExecutionSemesterBean;
+import net.sourceforge.fenixedu.domain.AcademicProgram;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
+import net.sourceforge.fenixedu.domain.accessControl.academicAdministration.AcademicAuthorizationGroup;
+import net.sourceforge.fenixedu.domain.accessControl.academicAdministration.AcademicOperationType;
 import net.sourceforge.fenixedu.domain.candidacy.Ingression;
 import net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyProcess;
 import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyDocumentFile;
@@ -18,7 +22,6 @@ import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyProce
 import net.sourceforge.fenixedu.domain.caseHandling.Activity;
 import net.sourceforge.fenixedu.domain.caseHandling.PreConditionNotValidException;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.domain.person.RoleType;
 
 public class StandaloneIndividualCandidacyProcess extends StandaloneIndividualCandidacyProcess_Base {
 
@@ -61,7 +64,7 @@ public class StandaloneIndividualCandidacyProcess extends StandaloneIndividualCa
 
     @Override
     public boolean canExecuteActivity(IUserView userView) {
-	return isDegreeAdministrativeOfficeEmployee(userView);
+	return isAllowedToManageProcess(this, userView);
     }
 
     @Override
@@ -103,14 +106,21 @@ public class StandaloneIndividualCandidacyProcess extends StandaloneIndividualCa
 
     // static information
 
-    static private boolean isDegreeAdministrativeOfficeEmployee(IUserView userView) {
-	return userView.hasRoleType(RoleType.ACADEMIC_ADMINISTRATIVE_OFFICE)
-		&& userView.getPerson().getEmployeeAdministrativeOffice().isDegree();
-    }
+    static private boolean isAllowedToManageProcess(StandaloneIndividualCandidacyProcess process, IUserView userView) {
+	Set<AcademicProgram> programs = AcademicAuthorizationGroup.getProgramsForOperation(userView.getPerson(),
+		AcademicOperationType.MANAGE_INDIVIDUAL_CANDIDACIES);
 
-    static private boolean isMasterDegreeAdministrativeOfficeEmployee(IUserView userView) {
-	return userView.hasRoleType(RoleType.ACADEMIC_ADMINISTRATIVE_OFFICE)
-		&& userView.getPerson().getEmployeeAdministrativeOffice().isMasterDegree();
+	if (process == null || process.getCandidacy() == null)
+	    return false;
+
+	if (process.getCandidacy().getCurricularCourses().isEmpty())
+	    return true;
+
+	for (CurricularCourse course : process.getCandidacy().getCurricularCourses()) {
+	    if (programs.contains(course.getDegreeCurricularPlan().getDegree()))
+		return true;
+	}
+	return false;
     }
 
     @StartActivity
@@ -118,7 +128,7 @@ public class StandaloneIndividualCandidacyProcess extends StandaloneIndividualCa
 
 	@Override
 	public void checkPreConditions(StandaloneIndividualCandidacyProcess process, IUserView userView) {
-	    if (!isDegreeAdministrativeOfficeEmployee(userView) && !isMasterDegreeAdministrativeOfficeEmployee(userView)) {
+	    if (!isAllowedToManageProcess(process, userView)) {
 		throw new PreConditionNotValidException();
 	    }
 	}
@@ -134,7 +144,7 @@ public class StandaloneIndividualCandidacyProcess extends StandaloneIndividualCa
 
 	@Override
 	public void checkPreConditions(StandaloneIndividualCandidacyProcess process, IUserView userView) {
-	    if (!isDegreeAdministrativeOfficeEmployee(userView) && !isMasterDegreeAdministrativeOfficeEmployee(userView)) {
+	    if (!isAllowedToManageProcess(process, userView)) {
 		throw new PreConditionNotValidException();
 	    }
 	}
@@ -151,7 +161,7 @@ public class StandaloneIndividualCandidacyProcess extends StandaloneIndividualCa
 
 	@Override
 	public void checkPreConditions(StandaloneIndividualCandidacyProcess process, IUserView userView) {
-	    if (!isDegreeAdministrativeOfficeEmployee(userView) && !isMasterDegreeAdministrativeOfficeEmployee(userView)) {
+	    if (!isAllowedToManageProcess(process, userView)) {
 		throw new PreConditionNotValidException();
 	    }
 	    if (process.isCandidacyCancelled()) {
@@ -172,7 +182,7 @@ public class StandaloneIndividualCandidacyProcess extends StandaloneIndividualCa
 
 	@Override
 	public void checkPreConditions(StandaloneIndividualCandidacyProcess process, IUserView userView) {
-	    if (!isDegreeAdministrativeOfficeEmployee(userView) && !isMasterDegreeAdministrativeOfficeEmployee(userView)) {
+	    if (!isAllowedToManageProcess(process, userView)) {
 		throw new PreConditionNotValidException();
 	    }
 
@@ -192,7 +202,7 @@ public class StandaloneIndividualCandidacyProcess extends StandaloneIndividualCa
 
 	@Override
 	public void checkPreConditions(StandaloneIndividualCandidacyProcess process, IUserView userView) {
-	    if (!isDegreeAdministrativeOfficeEmployee(userView) && !isMasterDegreeAdministrativeOfficeEmployee(userView)) {
+	    if (!isAllowedToManageProcess(process, userView)) {
 		throw new PreConditionNotValidException();
 	    }
 
@@ -226,7 +236,7 @@ public class StandaloneIndividualCandidacyProcess extends StandaloneIndividualCa
 
 	@Override
 	public void checkPreConditions(StandaloneIndividualCandidacyProcess process, IUserView userView) {
-	    if (!isDegreeAdministrativeOfficeEmployee(userView) && !isMasterDegreeAdministrativeOfficeEmployee(userView)) {
+	    if (!isAllowedToManageProcess(process, userView)) {
 		throw new PreConditionNotValidException();
 	    }
 	    if (process.isCandidacyCancelled()) {
@@ -246,7 +256,7 @@ public class StandaloneIndividualCandidacyProcess extends StandaloneIndividualCa
 
 	@Override
 	public void checkPreConditions(StandaloneIndividualCandidacyProcess process, IUserView userView) {
-	    if (!isDegreeAdministrativeOfficeEmployee(userView) && !isMasterDegreeAdministrativeOfficeEmployee(userView)) {
+	    if (!isAllowedToManageProcess(process, userView)) {
 		throw new PreConditionNotValidException();
 	    }
 	    if (!process.isCandidacyAccepted()) {
@@ -274,7 +284,7 @@ public class StandaloneIndividualCandidacyProcess extends StandaloneIndividualCa
 
 	@Override
 	public void checkPreConditions(StandaloneIndividualCandidacyProcess process, IUserView userView) {
-	    if (!isDegreeAdministrativeOfficeEmployee(userView) && !isMasterDegreeAdministrativeOfficeEmployee(userView)) {
+	    if (!isAllowedToManageProcess(process, userView)) {
 		throw new PreConditionNotValidException();
 	    }
 

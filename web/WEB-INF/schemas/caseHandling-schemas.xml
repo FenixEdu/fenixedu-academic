@@ -548,7 +548,7 @@
 
 <schema name="SecondCycleCandidacyProcessBean.selectDegrees" type="net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyProcessSelectDegreesBean" bundle="APPLICATION_RESOURCES">
 	<slot name="degrees" key="label.candidacy.choosed.degree" layout="option-select">
-        <property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.candidacy.SecondCycleDegreesProvider" />
+        <property name="from" value="secondCycleDegrees" />
         <property name="eachSchema" value="degreeName-schema"/>
         <property name="eachLayout" value="values"/>
         <property name="classes" value="nobullet noindent"/>
@@ -810,7 +810,7 @@
 
 <schema name="DegreeCandidacyForGraduatedPersonProcessBean.selectDegrees" type="net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyProcessSelectDegreesBean" bundle="APPLICATION_RESOURCES">
 	<slot name="degrees" key="label.candidacy.choosed.degree" layout="option-select">
-        <property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.candidacy.DegreeCandidacyForGraduatedPersonDegreesProvider" />
+        <property name="from" value="firstCycleDegrees" />
         <property name="eachSchema" value="degreeName-schema"/>
         <property name="eachLayout" value="values"/>
         <property name="classes" value="nobullet noindent"/>
@@ -989,7 +989,7 @@
 
 <schema name="DegreeChangeCandidacyProcessBean.selectDegrees" type="net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyProcessSelectDegreesBean" bundle="APPLICATION_RESOURCES">
 	<slot name="degrees" key="label.candidacy.choosed.degree" layout="option-select">
-        <property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.candidacy.DegreeCandidacyForGraduatedPersonDegreesProvider" />
+        <property name="from" value="firstCycleDegrees" />
         <property name="eachSchema" value="degreeName-schema"/>
         <property name="eachLayout" value="values"/>
         <property name="classes" value="nobullet noindent"/>
@@ -1228,7 +1228,7 @@
 
 <schema name="DegreeTransferCandidacyProcessBean.selectDegrees" type="net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyProcessSelectDegreesBean" bundle="APPLICATION_RESOURCES">
 	<slot name="degrees" key="label.candidacy.choosed.degree" layout="option-select">
-        <property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.candidacy.DegreeCandidacyForGraduatedPersonDegreesProvider" />
+        <property name="from" value="firstCycleDegrees" />
         <property name="eachSchema" value="degreeName-schema"/>
         <property name="eachLayout" value="values"/>
         <property name="classes" value="nobullet noindent"/>
@@ -1432,7 +1432,7 @@
 	<slot name="candidacyPersonName" key="label.name" read-only="true">
 		<property name="classes" value="nowrap" />
 	</slot>
-	<slot name="state" key="label.candidacy.individual.state">
+	<slot name="state" key="label.candidacy.individual.state" required="true">
 		<property name="excludedValues" value="STAND_BY, CANCELLED" />
 	</slot>
 </schema>
@@ -2117,7 +2117,7 @@
 
 <schema name="PublicCandidacyProcessBean.degree.change.selectedDegree.manage" type="net.sourceforge.fenixedu.domain.candidacyProcess.degreeChange.DegreeChangeIndividualCandidacyProcessBean" bundle="APPLICATION_RESOURCES">
    	<slot name="selectedDegree" layout="menu-select" key="label.degree.name" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
-        <property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.candidacy.DegreeChangeIndividualCandidacyDegreesProvider" />
+        <property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.candidacy.DegreeChangePublicIndividualCandidacyDegreesProvider" />
         <property name="format" value="${presentationName}" />
         <property name="sortBy" value="degreeType, name"/>
     </slot>
@@ -2435,7 +2435,7 @@
 		<property name="maxLength" value="10"/>
 	</slot>	
 	
-	<slot name="documentIdNumber" key="label.passportIdNumber" >
+	<slot name="documentIdNumber" key="label.passportIdNumber">
 		<validator class="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
 		<validator class="net.sourceforge.fenixedu.presentationTier.renderers.validators.TextLengthValidator">
 			<property name="type" value="character"/>
@@ -2514,6 +2514,19 @@
 		<property name="format" value="${presentationName}" />
 		<property name="destination" value="chooseDegreePostback"/>
 		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.Action.candidacy.erasmus.DegreesForExecutionYearProvider" />		
+	</slot>
+	
+	<slot name="chosenCourse" key="label.erasmus.course" layout="menu-select">
+		<property name="format" value="${nameI18N}" />
+		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.Action.candidacy.erasmus.DegreeCourseInformationBean" />
+	</slot>	
+</schema>
+
+<schema name="PublicErasmusCandidacyProcess.degreeCourseInformationBean" type="net.sourceforge.fenixedu.presentationTier.Action.candidacy.erasmus.DegreeCourseInformationBean" bundle="ACADEMIC_OFFICE_RESOURCES" >
+	<slot name="chosenDegree" key="label.mobility.degree" layout="menu-select-postback">
+		<property name="format" value="${presentationName}" />
+		<property name="destination" value="chooseDegreePostback"/>
+		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.Action.candidacy.erasmus.DegreesForExecutionYearPublicProvider" />		
 	</slot>
 	
 	<slot name="chosenCourse" key="label.erasmus.course" layout="menu-select">

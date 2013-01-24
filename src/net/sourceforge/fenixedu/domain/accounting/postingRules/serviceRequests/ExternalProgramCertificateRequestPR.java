@@ -7,8 +7,6 @@ import net.sourceforge.fenixedu.util.Money;
 
 import org.joda.time.DateTime;
 
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
-
 public class ExternalProgramCertificateRequestPR extends ExternalProgramCertificateRequestPR_Base {
 
     private ExternalProgramCertificateRequestPR() {
@@ -24,7 +22,7 @@ public class ExternalProgramCertificateRequestPR extends ExternalProgramCertific
 	super.setAmountFirstPage(amountFirstPage);
     }
 
-    @Checked("PostingRulePredicates.editPredicate")
+    @Override
     public ExternalProgramCertificateRequestPR edit(final Money certificateAmount, final Money amountFirstPage,
 	    final Money amountPerPage) {
 	deactivate();

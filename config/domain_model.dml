@@ -62,6 +62,7 @@ enum net.sourceforge.fenixedu.domain.UnitBoardPermittedGroupType                
 enum net.sourceforge.fenixedu.domain.UnitSiteBannerRepeatType                                                             as UnitSiteBannerRepeatType;
 enum net.sourceforge.fenixedu.domain.UnitSiteLayoutType                                                                   as UnitSiteLayoutType;
 enum net.sourceforge.fenixedu.domain.accessControl.PersistentGroupMembersType                                             as PersistentGroupMembersType;
+enum net.sourceforge.fenixedu.domain.accessControl.academicAdministration.AcademicOperationType				  			  as AcademicOperationType;
 enum net.sourceforge.fenixedu.domain.accounting.AccountType                                                               as AccountType;
 enum net.sourceforge.fenixedu.domain.accounting.CreditNoteState                                                           as CreditNoteState;
 enum net.sourceforge.fenixedu.domain.accounting.EntryType                                                                 as EntryType;
@@ -182,7 +183,6 @@ enum net.sourceforge.fenixedu.domain.phd.PhdStudyPlanEntryType                  
 enum net.sourceforge.fenixedu.domain.phd.notification.PhdNotificationType                                                 as PhdNotificationType;
 enum net.sourceforge.fenixedu.domain.phd.notification.PhdNotificationState                                                as PhdNotificationState;
 enum net.sourceforge.fenixedu.domain.phd.access.PhdProcessAccessType                                              		  as PhdProcessAccessType;
-enum net.sourceforge.fenixedu.domain.phd.permissions.PhdPermissionType													  as PhdPermissionType;
 enum net.sourceforge.fenixedu.domain.phd.candidacy.feedbackRequest.PhdCandidacyFeedbackStateType						  as PhdCandidacyFeedbackStateType;
 enum net.sourceforge.fenixedu.domain.phd.thesis.PhdThesisFinalGrade														  as PhdThesisFinalGrade;
 enum net.sourceforge.fenixedu.domain.phd.thesis.meeting.PhdMeetingSchedulingProcessStateType							  as PhdMeetingSchedulingProcessStateType;
@@ -860,7 +860,10 @@ class DomainObject {
         String programEn;
     }
 
-    class Degree extends DomainObject {
+	class AcademicProgram extends DomainObject {
+	}
+
+    class Degree extends AcademicProgram {
         Double ectsCredits;
         GradeScale gradeScale;
         String nameEn;
@@ -4963,8 +4966,6 @@ class DomainObject {
         Boolean freeProcessed;
         Boolean urgentRequest;
         Integer serviceRequestNumber;
-        Integer serviceRequestYear;
-        DateTime creationDate;
         DateTime requestDate;
         Language language;
     }
@@ -5113,9 +5114,6 @@ class DomainObject {
             class serviceRequests.PartialRegistrationRegimeRequest extends serviceRequests.RegistrationAcademicServiceRequest {
             }
                         
-        class serviceRequests.PersonAcademicServiceRequest extends serviceRequests.AcademicServiceRequest {
-        }
-    
         class phd.serviceRequests.PhdAcademicServiceRequest extends serviceRequests.AcademicServiceRequest {
         	Integer horizontalOffset;
         	Integer verticalOffset;
@@ -7270,19 +7268,12 @@ class student.YearDelegateCourseInquiry extends DomainObject {
     String reportDisclosureAuthorization;
 }
 
-
-class accessControl.academicAdminOffice.AdministrativeOfficePermissionGroup extends DomainObject {
+class accessControl.PersistentAccessGroup extends DomainObject {
+	DateTime created (REQUIRED);
 }
 
-class accessControl.academicAdminOffice.AdministrativeOfficePermission extends DomainObject {
-    PermissionType permissionType;
-    Group permissionMembersGroup;
-}
-
-    class accessControl.academicAdminOffice.GenericAdministrativeOfficePermission extends accessControl.academicAdminOffice.AdministrativeOfficePermission {
-    }
-
-    class accessControl.academicAdminOffice.UpdateRegistrationAfterConclusionPermission extends accessControl.academicAdminOffice.AdministrativeOfficePermission {
+class accessControl.academicAdministration.PersistentAcademicAuthorizationGroup extends accessControl.PersistentAccessGroup {
+	AcademicOperationType operation;
     }
 
 class messaging.AnnouncementCategory extends DomainObject {
@@ -7301,7 +7292,7 @@ class PublicCandidacyHashCode extends DomainObject {
 
 /* Phd Module */
 
-class phd.PhdProgram extends DomainObject {
+class phd.PhdProgram extends AcademicProgram {
     DateTime whenCreated;
     String creator;
     
@@ -7646,16 +7637,6 @@ class phd.debts.PhdEventExemptionJustification extends accounting.events.Exempti
 }
 
 class phd.debts.PhdRegistrationFeePenaltyExemption extends accounting.events.PenaltyExemption {
-}
-
-class phd.PhdProcessesManager extends DomainObject {
-	DateTime whenCreated;
-}
-
-class phd.permissions.PhdPermission extends DomainObject {
-    DateTime whenCreated;
-	PhdPermissionType type;
-    Group members;
 }
 
 class phd.PhdConfigurationIndividualProgramProcess extends DomainObject {
@@ -8858,32 +8839,6 @@ relation PhdIndividualProgramProcessThesisSubjectsOrders {
     }
 }
 
-relation PhdProcessesManagerRootDomainObject {
-    RootDomainObject playsRole rootDomainObject;
-    phd.PhdProcessesManager playsRole processesManagers {
-        multiplicity *;
-    }
-}
-
-relation PhdProcessesManagerAdministrativeOffice {
-	phd.PhdProcessesManager playsRole phdProcessesManager;
-	administrativeOffice.AdministrativeOffice playsRole administrativeOffice;
-}
-
-relation PhdPermissionRootDomainObject {
-    RootDomainObject playsRole rootDomainObject;
-    phd.permissions.PhdPermission playsRole phdPermissions {
-        multiplicity *;
-    }
-}
-
-relation PhdProcessesManagerPhdPermissions {
-    phd.PhdProcessesManager playsRole phdProcessesManager;
-    phd.permissions.PhdPermission playsRole permissions {
-        multiplicity *;
-    }
-}
-
 relation PhdProgramPhdProgramFocusArea {
     phd.PhdProgram playsRole phdPrograms {
         multiplicity *;
@@ -9580,14 +9535,18 @@ relation AcademicCalendarEntryBasedAcademicCalendarEntry {
 }
 
 relation AcademicServiceRequestAcademicServiceRequestSituation {
-    serviceRequests.AcademicServiceRequest playsRole academicServiceRequest;
+    serviceRequests.AcademicServiceRequest playsRole academicServiceRequest {
+    	multiplicity 1..1;
+    }
     serviceRequests.AcademicServiceRequestSituation playsRole academicServiceRequestSituations {
         multiplicity *;
     }
 }
 
 relation AcademicServiceRequestAcademicServiceRequestYear {
-    serviceRequests.AcademicServiceRequestYear playsRole academicServiceRequestYear;
+    serviceRequests.AcademicServiceRequestYear playsRole academicServiceRequestYear {
+    	multiplicity 1..1;
+    }
     serviceRequests.AcademicServiceRequest playsRole academicServiceRequests {
         multiplicity *;
     }
@@ -9600,8 +9559,19 @@ relation AcademicServiceRequestYearRootDomainObject {
     }
 }
 
+relation AdministrativeOfficeManagedAcademicPrograms {
+    administrativeOffice.AdministrativeOffice playsRole administrativeOffice {
+    	multiplicity 1..1;
+    }
+    AcademicProgram playsRole managedAcademicProgram {
+    	multiplicity *;
+    }
+}
+
 relation AcademicServiceRequestAdministrativeOffice {
-    administrativeOffice.AdministrativeOffice playsRole administrativeOffice;
+    administrativeOffice.AdministrativeOffice playsRole administrativeOffice {
+    	multiplicity 1..1;
+    }
     serviceRequests.AcademicServiceRequest playsRole academicServiceRequests {
         multiplicity *;
     }
@@ -9674,21 +9644,21 @@ relation RectorateSubmissionBatchCreator {
     serviceRequests.RectorateSubmissionBatch playsRole createdRectorateSubmissionBatch {
         multiplicity *;
     }
-    Employee playsRole creator;
+    Person playsRole creator;
 }
 
 relation RectorateSubmissionBatchSubmitter {
     serviceRequests.RectorateSubmissionBatch playsRole submittedRectorateSubmissionBatch {
         multiplicity *;
     }
-    Employee playsRole submitter;
+    Person playsRole submitter;
 }
 
 relation RectorateSubmissionBatchReceptor {
     serviceRequests.RectorateSubmissionBatch playsRole receivedRectorateSubmissionBatch {
         multiplicity *;
     }
-    Employee playsRole receptor;
+    Person playsRole receptor;
 }
 
 relation RegistrationAcademicServiceRequestRegistration {
@@ -9698,18 +9668,11 @@ relation RegistrationAcademicServiceRequestRegistration {
     }
 }
 
-relation PersonAcademicServiceRequestPerson {
-    Person playsRole person;
-    serviceRequests.PersonAcademicServiceRequest playsRole academicServiceRequests {
-        multiplicity *;
-    }
-}
-
 relation AcademicServiceRequestSituationEmployee {
-    Employee playsRole employee;
     serviceRequests.AcademicServiceRequestSituation playsRole academicServiceRequestSituations {
         multiplicity *;
     }
+    Person playsRole creator;
 }
 
 relation EquivalencePlanRevisionRequestEquivalencePlanRequest {
@@ -9875,10 +9838,10 @@ relation AccountingEntryCreditNoteEntry {
 }
 
 relation AccountingEventEmployeeResponsibleForCancel {
-    Employee playsRole employeeResponsibleForCancel;
-    accounting.Event playsRole events {
+    accounting.Event playsRole responsibleForCancelEvent {
         multiplicity *;
     }
+    Person playsRole responsibleForCancel;
 }
 
 relation AccountingEventDiscount {
@@ -9906,8 +9869,12 @@ relation AdjustmentAccountingEntryCreditNoteEntry {
 }
 
 relation AdministrativeOfficeAdministrativeOfficeServiceAgreementTemplate {
-    administrativeOffice.AdministrativeOffice playsRole administrativeOffice;
-    accounting.serviceAgreementTemplates.AdministrativeOfficeServiceAgreementTemplate playsRole serviceAgreementTemplate;
+    administrativeOffice.AdministrativeOffice playsRole administrativeOffice {
+    	multiplicity *;
+    }
+    accounting.serviceAgreementTemplates.AdministrativeOfficeServiceAgreementTemplate playsRole serviceAgreementTemplate {
+    	multiplicity 1..1;
+    }
 }
 
 relation AdministrativeOfficeEvent {
@@ -9919,7 +9886,9 @@ relation AdministrativeOfficeEvent {
 
 relation AdministrativeOfficeUnit {
     administrativeOffice.AdministrativeOffice playsRole administrativeOffice;
-    organizationalStructure.AdministrativeOfficeUnit playsRole unit;
+    organizationalStructure.Unit playsRole unit {
+    	multiplicity 1..1;
+    }
 }
 
 relation AdviseEndPeriod {
@@ -10996,7 +10965,7 @@ relation DomainObjectActionLogPerson {
 }
 
 relation EmployeeCreditNote {
-    Employee playsRole employee;
+    Person playsRole responsible;
     accounting.CreditNote playsRole creditNotes {
         multiplicity *;
     }
@@ -11105,11 +11074,11 @@ relation EnrolmentEnrolmentEvaluation {
     }
 }
 
-relation EnrolmentEvaluationEmployee {
-    EnrolmentEvaluation playsRole enrolmentEvaluations {
+relation EnrolmentEvaluationPerson {
+    EnrolmentEvaluation playsRole enrolmentEvaluationsConfirmations {
         multiplicity *;
     }
-    Employee playsRole employee;
+    Person playsRole person;
 }
 
 relation EnrolmentEvaluationExecutionPeriod {
@@ -11126,7 +11095,7 @@ relation EnrolmentEvaluationImprovementOfApprovedEnrolmentEvent {
     accounting.events.ImprovementOfApprovedEnrolmentEvent playsRole improvementOfApprovedEnrolmentEvent;
 }
 
-relation EnrolmentEvaluationPerson {
+relation EnrolmentEvaluationResponsiblePerson {
     EnrolmentEvaluation playsRole enrolmentEvaluations {
         multiplicity *;
     }
@@ -11499,8 +11468,8 @@ relation ExecutionYearShiftDistribution {
 }
 
 relation ExemptionEmployee {
-    Employee playsRole employee;
-    accounting.Exemption playsRole exemptions {
+    Person playsRole responsible;
+    accounting.Exemption playsRole createdExemptions {
         multiplicity *;
     }
 }
@@ -12248,18 +12217,18 @@ relation MarkEvaluation {
     Evaluation playsRole evaluation;
 }
 
-relation MarkSheetConfirmationEmployee {
+relation MarkSheetConfirmationPerson {
     MarkSheet playsRole confirmedMarkSheets {
         multiplicity *;
     }
-    Employee playsRole confirmationEmployee;
+    Person playsRole validator;
 }
 
-relation MarkSheetCreationEmployee {
+relation MarkSheetCreationPerson {
     MarkSheet playsRole createdMarkSheets {
         multiplicity *;
     }
-    Employee playsRole creationEmployee;
+    Person playsRole creator;
 }
 
 relation MarkSheetCurricularCourse {
@@ -12817,6 +12786,69 @@ relation PermissionUnitQuestion {
         multiplicity *;
     }
     tests.NewQuestion playsRole question;
+}
+
+relation PersistentAccessGroupRoot {
+	RootDomainObject playsRole rootDomainObject {
+		multiplicity 0..1;
+	}
+	accessControl.PersistentAccessGroup playsRole persistentAccessGroup {
+		multiplicity *;
+	}
+}
+
+relation PersistentAccessGroupDeletedRoot {
+	RootDomainObject playsRole deletedRootDomainObject {
+		multiplicity 0..1;
+	}
+	accessControl.PersistentAccessGroup playsRole deletedPersistentAccessGroup {
+		multiplicity *;
+	}
+}
+
+relation PersistentAccessGroupMembers {
+	organizationalStructure.Party playsRole member {
+		multiplicity *;
+	}
+	accessControl.PersistentAccessGroup playsRole persistentAccessGroup {
+		multiplicity *;
+	}
+}
+
+relation PersistentAccessGroupCreator {
+	accessControl.PersistentAccessGroup playsRole createdGroup {
+		multiplicity *;
+	}
+	Person playsRole creator {
+		multiplicity 1..1;
+	}
+}
+
+relation PersistentAccessGroupHistoric {
+	accessControl.PersistentAccessGroup playsRole oldGroup {
+		multiplicity 0..1;
+	}
+	accessControl.PersistentAccessGroup playsRole newGroup {
+		multiplicity 0..1;
+	}
+}
+
+relation AcademicAuthorizationPrograms {
+	accessControl.academicAdministration.PersistentAcademicAuthorizationGroup playsRole academicGroup {
+		multiplicity *;
+	}
+	AcademicProgram playsRole program {
+		multiplicity *;
+	}
+}
+
+relation AcademicAuthorizationOffices {
+	accessControl.academicAdministration.PersistentAcademicAuthorizationGroup playsRole academicGroup {
+		multiplicity *;
+	}
+	administrativeOffice.AdministrativeOffice playsRole office {
+		multiplicity *;
+	}
 }
 
 relation PersistentGroupMembersPerson {
@@ -13395,13 +13427,6 @@ relation ReceiptContributorParty {
     }
 }
 
-relation ReceiptCreatorUnit {
-    organizationalStructure.Unit playsRole creatorUnit;
-    accounting.Receipt playsRole createdReceipts {
-        multiplicity *;
-    }
-}
-
 relation ReceiptCreditNote {
     accounting.Receipt playsRole receipt;
     accounting.CreditNote playsRole creditNotes {
@@ -13409,9 +13434,9 @@ relation ReceiptCreditNote {
     }
 }
 
-relation ReceiptEmployee {
-    Employee playsRole employee;
-    accounting.Receipt playsRole receipts {
+relation ReceiptResponsible {
+    Person playsRole responsible;
+    accounting.Receipt playsRole receiptsCreated {
         multiplicity *;
     }
 }
@@ -13439,8 +13464,8 @@ relation ReceiptPerson {
     }
 }
 
-relation ReceiptPrintVersionEmployee {
-    Employee playsRole employee;
+relation ReceiptPrintVersionPerson {
+    Person playsRole person;
     accounting.ReceiptPrintVersion playsRole receiptsVersions {
         multiplicity *;
     }
@@ -18918,44 +18943,9 @@ relation YearDelegateCourseInquiryRootDomainObject {
     }
 }
 
-relation AdministrativeOfficePermissionGroupRootDomainObject {
-    RootDomainObject playsRole rootDomainObject;
-    accessControl.academicAdminOffice.AdministrativeOfficePermissionGroup playsRole administrativeOfficePermissionGroups {
-        multiplicity *;
-    }
-}
-
-relation AdministrativeOfficePermissionRootDomainObject {
-    RootDomainObject playsRole rootDomainObject;
-    accessControl.academicAdminOffice.AdministrativeOfficePermission playsRole administrativeOfficePermissions {
-        multiplicity *;
-    }
-}
-
-relation AdministrativeOfficeAdministrativeOfficePermissionGroup {
-    administrativeOffice.AdministrativeOffice playsRole administrativeOffice;
-    accessControl.academicAdminOffice.AdministrativeOfficePermissionGroup playsRole administrativeOfficePermissionGroups {
-        multiplicity *;
-    }
-}
-
 relation QueueJobWithFileResult{
     QueueJobWithFile playsRole job;
     QueueJobResultFile playsRole file;
-}
-
-relation CampusAdministrativeOfficePermissionGroup {
-    space.Campus playsRole campus;
-    accessControl.academicAdminOffice.AdministrativeOfficePermissionGroup playsRole administrativeOfficePermissionGroups {
-        multiplicity *;
-    }
-}
-
-relation AdministrativeOfficePermissionGroupPermission {
-    accessControl.academicAdminOffice.AdministrativeOfficePermissionGroup playsRole administrativeOfficePermissionGroup;
-    accessControl.academicAdminOffice.AdministrativeOfficePermission playsRole administrativeOfficePermissions {
-        multiplicity *;
-    }
 }
 
 relation AnnouncementCategoryRootDomainObject {

@@ -21,8 +21,6 @@ import net.sourceforge.fenixedu.util.Money;
 
 import org.joda.time.DateTime;
 
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
-
 public class FixedAmountPR extends FixedAmountPR_Base {
 
     protected FixedAmountPR() {
@@ -105,7 +103,6 @@ public class FixedAmountPR extends FixedAmountPR_Base {
 	return amountToPay;
     }
 
-    @Checked("PostingRulePredicates.editPredicate")
     public FixedAmountPR edit(final Money fixedAmount) {
 
 	deactivate();

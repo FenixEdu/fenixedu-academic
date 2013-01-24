@@ -6,7 +6,6 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Properties;
@@ -16,6 +15,8 @@ import jvstm.TransactionalCommand;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.QueueJobResult;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
+import net.sourceforge.fenixedu.domain.accessControl.academicAdministration.AcademicAuthorizationGroup;
+import net.sourceforge.fenixedu.domain.accessControl.academicAdministration.AcademicOperationType;
 import net.sourceforge.fenixedu.domain.accounting.AccountingTransaction;
 import net.sourceforge.fenixedu.domain.accounting.Entry;
 import net.sourceforge.fenixedu.domain.accounting.Event;
@@ -29,7 +30,6 @@ import net.sourceforge.fenixedu.domain.accounting.events.gratuity.GratuityEvent;
 import net.sourceforge.fenixedu.domain.accounting.events.insurance.InsuranceEvent;
 import net.sourceforge.fenixedu.domain.accounting.events.serviceRequests.AcademicServiceRequestEvent;
 import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
-import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOfficeType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyEvent;
@@ -48,12 +48,8 @@ import pt.utl.ist.fenix.tools.resources.LabelFormatter;
 import pt.utl.ist.fenix.tools.spreadsheet.SheetData;
 import pt.utl.ist.fenix.tools.spreadsheet.SpreadsheetBuilder;
 import pt.utl.ist.fenix.tools.spreadsheet.WorkbookExportFormat;
-import pt.utl.ist.fenix.tools.util.excel.Spreadsheet;
-import pt.utl.ist.fenix.tools.util.excel.Spreadsheet.Row;
 
 public class EventReportQueueJob extends EventReportQueueJob_Base {
-
-    private static final List<String> EVENTS = Arrays.asList(new String[] {});
 
     private static final List<Class<? extends Event>> CANDIDACY_EVENT_TYPES = new ArrayList<Class<? extends Event>>();
     private static final List<Class<? extends AnnualEvent>> ADMIN_OFFICE_AND_INSURANCE_TYPES = new ArrayList<Class<? extends AnnualEvent>>();
@@ -66,40 +62,6 @@ public class EventReportQueueJob extends EventReportQueueJob_Base {
 	ADMIN_OFFICE_AND_INSURANCE_TYPES.add(AdministrativeOfficeFeeAndInsuranceEvent.class);
 	ADMIN_OFFICE_AND_INSURANCE_TYPES.add(InsuranceEvent.class);
     }
-
-    private static boolean IS_CANDIDACY_EVENT(final Event event) {
-	for (Class<? extends Event> type : CANDIDACY_EVENT_TYPES) {
-	    if (type.isAssignableFrom(event.getClass())) {
-		return true;
-	    }
-	}
-
-	return false;
-    }
-
-    private static boolean ALL_OTHER(final Event event) {
-	if (event.isGratuity()) {
-	    return false;
-	}
-
-	if (event.isAcademicServiceRequestEvent()) {
-	    return false;
-	}
-
-	return !IS_CANDIDACY_EVENT(event) && !IS_ADMIN_OFFICE_OR_INSURANCE_EVENT(event);
-    }
-
-    private static boolean IS_ADMIN_OFFICE_OR_INSURANCE_EVENT(final Event event) {
-	for (Class<? extends Event> type : ADMIN_OFFICE_AND_INSURANCE_TYPES) {
-	    if (type.isAssignableFrom(event.getClass())) {
-		return true;
-	    }
-	}
-
-	return false;
-    }
-
-    private List<Event> eventsToProcess = null;
 
     private EventReportQueueJob() {
 	super();
@@ -115,23 +77,11 @@ public class EventReportQueueJob extends EventReportQueueJob_Base {
 	setExportPhdEvents(bean.getExportPhdEvents());
 	setExportResidenceEvents(bean.getExportResidenceEvents());
 	setExportOthers(bean.getExportOthers());
-	setForDegreeAdministrativeOffice(bean.getForDegreeAdministrativeOffice());
-	setForMasterDegreeAdministrativeOffice(bean.getForMasterDegreeAdministrativeOffice());
 	setBeginDate(bean.getBeginDate());
 	setEndDate(bean.getEndDate());
 
 	setForExecutionYear(bean.getExecutionYear());
-	setForAdministrativeOffice(readAdministrativeOffice());
-    }
-
-    private AdministrativeOffice readAdministrativeOffice() {
-	Person loggedPerson = AccessControl.getPerson();
-
-	if (!loggedPerson.hasEmployee()) {
-	    return null;
-	}
-
-	return loggedPerson.getEmployee().getAdministrativeOffice();
+	setForAdministrativeOffice(bean.getAdministrativeOffice());
     }
 
     private void checkPermissions(EventReportQueueJobBean bean) {
@@ -145,22 +95,18 @@ public class EventReportQueueJob extends EventReportQueueJob_Base {
 	    return;
 	}
 
-	if (!loggedPerson.hasEmployee()) {
+	// Only the manager can create Reports with no AdminOffice
+	if (bean.getAdministrativeOffice() == null) {
 	    throw new DomainException("error.EventReportQueueJob.permission.denied");
 	}
 
-	AdministrativeOffice administrativeOffice = loggedPerson.getEmployee().getAdministrativeOffice();
-	if (administrativeOffice == null) {
+	final Set<AdministrativeOffice> offices = AcademicAuthorizationGroup.getOfficesForOperation(loggedPerson,
+		AcademicOperationType.MANAGE_EVENT_REPORTS);
+
+	if (!offices.contains(bean.getAdministrativeOffice())) {
 	    throw new DomainException("error.EventReportQueueJob.permission.denied");
 	}
 
-	if (administrativeOffice.isMasterDegree() && bean.getForDegreeAdministrativeOffice()) {
-	    throw new DomainException("error.EventReportQueueJob.permission.denied");
-	}
-
-	if (administrativeOffice.isDegree() && bean.getForMasterDegreeAdministrativeOffice()) {
-	    throw new DomainException("error.EventReportQueueJob.permission.denied");
-	}
     }
 
     @Override
@@ -256,7 +202,6 @@ public class EventReportQueueJob extends EventReportQueueJob_Base {
 
     /* ALL EVENTS */
     private SheetData<EventBean> allEvents() {
-	final Spreadsheet spreadsheet = new Spreadsheet("dividas");
 
 	List<String> allEventsExternalIds = getAllEventsExternalIds();
 	System.out.println(String.format("%s events to process", allEventsExternalIds.size()));
@@ -360,8 +305,6 @@ public class EventReportQueueJob extends EventReportQueueJob_Base {
 
     private boolean isAccountingEventForReport(final Event event) {
 
-	int count = 0;
-
 	if (event.isCancelled()) {
 	    return false;
 	}
@@ -376,16 +319,8 @@ public class EventReportQueueJob extends EventReportQueueJob_Base {
 	    return false;
 	}
 
-	if (hasForAdministrativeOffice() && getForAdministrativeOffice().isDegree()) {
-	    if (!isForDegreeAdministrativeOffice(wrapper)) {
-		return false;
-	    }
-	}
-
-	if (hasForAdministrativeOffice() && getForAdministrativeOffice().isMasterDegree()) {
-	    if (!isForMasterDegreeAdministrativeOffice(wrapper)) {
-		return false;
-	    }
+	if (!officesMatch(wrapper)) {
+	    return false;
 	}
 
 	if (event.getWhenOccured().isAfter(getBeginDate().toDateTimeAtStartOfDay())
@@ -429,32 +364,11 @@ public class EventReportQueueJob extends EventReportQueueJob_Base {
 	return false;
     }
 
-    private boolean isForMasterDegreeAdministrativeOffice(Wrapper wrapper) {
-	if (!hasForAdministrativeOffice()) {
+    private boolean officesMatch(Wrapper wrapper) {
+	if (wrapper.getRelatedAcademicOffice() == null)
 	    return true;
-	}
 
-	if (wrapper.getRelatedAcademicOfficeType() == null) {
-	    return true;
-	}
-
-	return getForAdministrativeOffice().isMasterDegree()
-		&& wrapper.getRelatedAcademicOfficeType() == AdministrativeOfficeType.MASTER_DEGREE
-		&& getForMasterDegreeAdministrativeOffice();
-    }
-
-    private boolean isForDegreeAdministrativeOffice(Wrapper wrapper) {
-	if (!hasForAdministrativeOffice()) {
-	    return true;
-	}
-
-	if (wrapper.getRelatedAcademicOfficeType() == null) {
-	    return true;
-	}
-
-	return getForAdministrativeOffice().isDegree()
-		&& wrapper.getRelatedAcademicOfficeType() == AdministrativeOfficeType.DEGREE
-		&& getForDegreeAdministrativeOffice();
+	return wrapper.getRelatedAcademicOffice().equals(getForAdministrativeOffice());
     }
 
     private EventBean writeEvent(final Event event) {
@@ -490,11 +404,11 @@ public class EventReportQueueJob extends EventReportQueueJob_Base {
 	bean.amountToPay = event.getAmountToPay().toPlainString();
 	bean.reimbursableAmount = event.getReimbursableAmount().toPlainString();
 	bean.totalDiscount = event.getTotalDiscount().toPlainString();
-	
-	if(wrapper instanceof GratuityEventWrapper) {
+
+	if (wrapper instanceof GratuityEventWrapper) {
 	    bean.installments = ((GratuityEventWrapper) wrapper).getInstallments();
 	}
-	
+
 	return bean;
     }
 
@@ -524,8 +438,6 @@ public class EventReportQueueJob extends EventReportQueueJob_Base {
 
 	public List<InstallmentWrapper> installments;
     }
-
-    private static final int NUM_THREADS = 3;
 
     /* ALL EXEMPTIONS */
     private SheetData<ExemptionBean> allExemptions() {
@@ -642,7 +554,6 @@ public class EventReportQueueJob extends EventReportQueueJob_Base {
     /* ALL TRANSACTIONS */
 
     private SheetData<AccountingTransactionBean> allTransactions() {
-	final Spreadsheet spreadsheet = new Spreadsheet("Transacções");
 
 	List<String> allEventsExternalIds = getAllEventsExternalIds();
 	System.out.println(String.format("%s events to process", allEventsExternalIds.size()));
@@ -842,14 +753,6 @@ public class EventReportQueueJob extends EventReportQueueJob_Base {
 	return null;
     }
 
-    private void copyRowCells(Row from, Row to) {
-	List<Object> cells = from.getCells();
-
-	for (Object cell : cells) {
-	    to.setCell((String) cell);
-	}
-    }
-
     public static List<EventReportQueueJob> retrieveAllGeneratedReports() {
 	List<EventReportQueueJob> reports = new ArrayList<EventReportQueueJob>();
 
@@ -900,33 +803,30 @@ public class EventReportQueueJob extends EventReportQueueJob_Base {
 	return new EventReportQueueJob(bean);
     }
 
-    public static List<EventReportQueueJob> readPendingOrCancelledJobs(final AdministrativeOfficeType type) {
+    public static List<EventReportQueueJob> readPendingOrCancelledJobs(final Set<AdministrativeOffice> offices) {
 	List<EventReportQueueJob> list = retrievePendingOrCancelledGeneratedReports();
 
-	return filterByAdministrativeOfficeType(list, type);
+	return filterByAdministrativeOfficeType(list, offices);
     }
 
-    public static List<EventReportQueueJob> readDoneReports(AdministrativeOfficeType type) {
+    public static List<EventReportQueueJob> readDoneReports(final Set<AdministrativeOffice> offices) {
 	List<EventReportQueueJob> list = retrieveDoneGeneratedReports();
 
-	return filterByAdministrativeOfficeType(list, type);
+	return filterByAdministrativeOfficeType(list, offices);
     }
 
     private static List<EventReportQueueJob> filterByAdministrativeOfficeType(final List<EventReportQueueJob> list,
-	    final AdministrativeOfficeType type) {
+	    final Set<AdministrativeOffice> offices) {
 
-	if (type == null) {
+	if (offices == null) {
 	    return list;
 	}
 
 	List<EventReportQueueJob> result = new ArrayList<EventReportQueueJob>();
 
 	for (EventReportQueueJob eventReportQueueJob : list) {
-	    if (!eventReportQueueJob.hasForAdministrativeOffice()) {
-		continue;
-	    }
 
-	    if (eventReportQueueJob.getForAdministrativeOffice().getAdministrativeOfficeType() == type) {
+	    if (offices.contains(eventReportQueueJob.getForAdministrativeOffice())) {
 		result.add(eventReportQueueJob);
 	    }
 	}

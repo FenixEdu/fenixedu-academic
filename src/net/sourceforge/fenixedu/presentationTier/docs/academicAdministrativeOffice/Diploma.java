@@ -3,7 +3,6 @@ package net.sourceforge.fenixedu.presentationTier.docs.academicAdministrativeOff
 import java.util.ResourceBundle;
 
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.organizationalStructure.UniversityUnit;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DiplomaRequest;
@@ -23,21 +22,18 @@ public class Diploma extends AdministrativeOfficeDocument {
     }
 
     @Override
-    protected void fillReport() {
-	addInstitutionParameters();
-	addPersonParameters();
+    protected DiplomaRequest getDocumentRequest() {
+	return (DiplomaRequest) super.getDocumentRequest();
+    }
 
-	addParameter("bundle", getResourceBundle());
-	final DiplomaRequest diplomaRequest = (DiplomaRequest) getDocumentRequest();
-	addParameter("documentRequest", diplomaRequest);
+    @Override
+    protected void fillReport() {
+	super.fillReport();
+	final DiplomaRequest diplomaRequest = getDocumentRequest();
 
 	addParameter("registryCode", diplomaRequest.hasRegistryCode() ? diplomaRequest.getRegistryCode().getCode() : null);
 
-	final Registration registration = diplomaRequest.getRegistration();
-	addParameter("registration", registration);
-
 	addParameter("conclusionDate", diplomaRequest.getConclusionDate().toString(getDatePattern(), getLocale()));
-	addParameter("institutionName", RootDomainObject.getInstance().getInstitutionUnit().getName());
 	addParameter("day", getFormatedCurrentDate());
 
 	if (diplomaRequest.hasFinalAverageDescription()) {
@@ -48,22 +44,22 @@ public class Diploma extends AdministrativeOfficeDocument {
 	    addParameter("dissertationTitle", diplomaRequest.getDissertationThesisTitle());
 	}
 
-	addParameter("conclusionStatus", getConclusionStatusAndDegreeType(diplomaRequest, registration));
+	addParameter("conclusionStatus", getConclusionStatusAndDegreeType(diplomaRequest, getRegistration()));
 	addParameter("degreeFilteredName", diplomaRequest.getDegreeFilteredName());
 
 	addParameter("graduateTitle", diplomaRequest.getGraduateTitle(getLocale()));
-
     }
 
-    private void addInstitutionParameters() {
-	final UniversityUnit institutionsUniversityUnit = UniversityUnit.getInstitutionsUniversityUnit();
-	Person institutionsUniversityPrincipal = institutionsUniversityUnit.getInstitutionsUniversityPrincipal();
-	addParameter("universityPrincipal", institutionsUniversityPrincipal);
-	addParameter("universityName", institutionsUniversityUnit.getName());
-	addParameter("universityPrincipalName", institutionsUniversityPrincipal.getValidatedName());
+    @Override
+    protected void addIntroParameters() {
+	super.addIntroParameters();
+	Person principal = UniversityUnit.getInstitutionsUniversityUnit().getInstitutionsUniversityPrincipal();
+	addParameter("universityPrincipal", principal);
+	addParameter("universityPrincipalName", principal.getValidatedName());
     }
 
-    protected void addPersonParameters() {
+    @Override
+    protected void setPersonFields() {
 	final Person person = getDocumentRequest().getPerson();
 	addParameter("name", StringFormatter.prettyPrint(person.getName()));
 	addParameter("nameOfFather", StringFormatter.prettyPrint(person.getNameOfFather()));

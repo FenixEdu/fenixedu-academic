@@ -10,8 +10,6 @@ import net.sourceforge.fenixedu.util.Money;
 
 import org.joda.time.DateTime;
 
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
-
 public class InsurancePR extends InsurancePR_Base {
 
     protected InsurancePR() {
@@ -45,7 +43,6 @@ public class InsurancePR extends InsurancePR_Base {
 	return amountToPay;
     }
 
-    @Checked("PostingRulePredicates.editPredicate")
     @Override
     public FixedAmountPR edit(final Money fixedAmount) {
 	deactivate();

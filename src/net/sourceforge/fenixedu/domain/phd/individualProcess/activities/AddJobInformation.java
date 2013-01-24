@@ -11,7 +11,7 @@ public class AddJobInformation extends PhdIndividualProgramProcessActivity {
 	// no precondition to check
     }
 
-	@Override
+    @Override
     protected PhdIndividualProgramProcess executeActivity(PhdIndividualProgramProcess process, IUserView userView, Object object) {
 	return process.addJobInformation(userView.getPerson(), (JobBean) object);
     }

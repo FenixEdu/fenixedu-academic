@@ -518,6 +518,18 @@ public class ExecutionDegree extends ExecutionDegree_Base implements Comparable<
 	return result;
     }
 
+    public static List<ExecutionDegree> getAllByDegree(final Degree degree) {
+	List<ExecutionDegree> result = new ArrayList<ExecutionDegree>();
+
+	for (ExecutionDegree executionDegree : RootDomainObject.getInstance().getExecutionDegrees()) {
+	    if (executionDegree.getDegree() == degree) {
+		result.add(executionDegree);
+	    }
+	}
+
+	return result;
+    }
+
     public static List<ExecutionDegree> getAllByDegreeAndCurricularStage(Degree degree, CurricularStage stage) {
 	List<ExecutionDegree> result = new ArrayList<ExecutionDegree>();
 

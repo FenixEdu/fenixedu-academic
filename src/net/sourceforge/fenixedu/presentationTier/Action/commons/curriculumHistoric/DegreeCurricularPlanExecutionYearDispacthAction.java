@@ -32,10 +32,10 @@ import pt.ist.fenixWebFramework.struts.annotations.Tile;
  * @author nmgo
  * @author lmre
  */
-@Mapping(path = "/chooseExecutionYearAndDegreeCurricularPlan", module = "academicAdminOffice", formBean = "executionYearDegreeCurricularPlanForm")
+@Mapping(path = "/chooseExecutionYearAndDegreeCurricularPlan", module = "academicAdministration", formBean = "executionYearDegreeCurricularPlanForm")
 @Forwards({
-	@Forward(name = "chooseExecutionYear", path = "/commons/curriculumHistoric/chooseDegreeCPlanExecutionYear.jsp", tileProperties = @Tile(title = "private.academicadministrativeoffice.marksheets.consult")),
-	@Forward(name = "showActiveCurricularCourses", path = "/commons/curriculumHistoric/showActiveCurricularCourseScopes.jsp", tileProperties = @Tile(title = "private.academicadministrativeoffice.marksheets.consult")) })
+	@Forward(name = "chooseExecutionYear", path = "/commons/curriculumHistoric/chooseDegreeCPlanExecutionYear.jsp"),
+	@Forward(name = "showActiveCurricularCourses", path = "/commons/curriculumHistoric/showActiveCurricularCourseScopes.jsp") })
 public class DegreeCurricularPlanExecutionYearDispacthAction extends FenixDispatchAction {
 
     public ActionForward prepare(final ActionMapping mapping, final ActionForm form, final HttpServletRequest request,

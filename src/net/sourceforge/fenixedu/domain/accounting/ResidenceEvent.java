@@ -6,7 +6,6 @@ import java.util.Set;
 
 import net.sourceforge.fenixedu.dataTransferObject.accounting.EntryDTO;
 import net.sourceforge.fenixedu.dataTransferObject.accounting.SibsTransactionDetailDTO;
-import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.User;
 import net.sourceforge.fenixedu.domain.accounting.paymentCodes.AccountingEventPaymentCode;
@@ -88,8 +87,8 @@ public class ResidenceEvent extends ResidenceEvent_Base {
 
     @Override
     @Checked("EventsPredicates.MANAGER_OR_RESIDENCE_UNIT_EMPLOYEE")
-    public void cancel(Employee responsibleEmployee) {
-	super.cancel(responsibleEmployee);
+    public void cancel(Person responsible) {
+	super.cancel(responsible);
     }
 
     public DateTime getPaymentDate() {
@@ -102,6 +101,7 @@ public class ResidenceEvent extends ResidenceEvent_Base {
 		.getPaymentMode();
     }
 
+    @Override
     public Money getAmountToPay() {
 	return calculateAmountToPay(new DateTime());
     }
@@ -126,8 +126,8 @@ public class ResidenceEvent extends ResidenceEvent_Base {
     @Override
     protected Set<Entry> internalProcess(User responsibleUser, AccountingEventPaymentCode paymentCode, Money amountToPay,
 	    SibsTransactionDetailDTO transactionDetail) {
-	return internalProcess(responsibleUser, Collections
-		.singletonList(new EntryDTO(EntryType.RESIDENCE_FEE, this, amountToPay)), transactionDetail);
+	return internalProcess(responsibleUser,
+		Collections.singletonList(new EntryDTO(EntryType.RESIDENCE_FEE, this, amountToPay)), transactionDetail);
     }
 
     public boolean isFor(int year) {

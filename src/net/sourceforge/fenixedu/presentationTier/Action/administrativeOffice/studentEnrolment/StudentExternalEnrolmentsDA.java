@@ -8,7 +8,6 @@ import java.util.TreeSet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.administrativeOffice.enrolment.CreateExternalEnrolments;
 import net.sourceforge.fenixedu.applicationTier.Servico.administrativeOffice.enrolment.DeleteExternalEnrolments;
 import net.sourceforge.fenixedu.applicationTier.Servico.administrativeOffice.externalUnits.EditExternalEnrolment;
@@ -38,13 +37,13 @@ import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
-@Mapping(path = "/studentExternalEnrolments", module = "academicAdminOffice", formBean = "studentExternalEnrolmentsForm")
+@Mapping(path = "/studentExternalEnrolments", module = "academicAdministration", formBean = "studentExternalEnrolmentsForm")
 @Forwards({
-	@Forward(name = "manageExternalEnrolments", path = "/academicAdminOffice/student/enrollment/bolonha/manageExternalEnrolments.jsp", tileProperties = @Tile(title = "private.academicadministrativeoffice.studentoperations.viewstudents")),
-	@Forward(name = "prepareEditExternalEnrolment", path = "/academicAdminOffice/student/enrollment/bolonha/editExternalEnrolment.jsp", tileProperties = @Tile(title = "private.academicadministrativeoffice.studentoperations.viewstudents")),
-	@Forward(name = "chooseExternalUnit", path = "/academicAdminOffice/student/enrollment/bolonha/chooseExternalUnit.jsp", tileProperties = @Tile(head = "/commons/renderers/treeRendererHeader.jsp", title = "private.academicadministrativeoffice.studentoperations.viewstudents")),
-	@Forward(name = "chooseExternalCurricularCourses", path = "/academicAdminOffice/student/enrollment/bolonha/chooseExternalCurricularCourses.jsp", tileProperties = @Tile(title = "private.academicadministrativeoffice.studentoperations.viewstudents")),
-	@Forward(name = "createExternalEnrolments", path = "/academicAdminOffice/student/enrollment/bolonha/createExternalEnrolments.jsp", tileProperties = @Tile(title = "private.academicadministrativeoffice.studentoperations.viewstudents")),
+	@Forward(name = "manageExternalEnrolments", path = "/academicAdminOffice/student/enrollment/bolonha/manageExternalEnrolments.jsp"),
+	@Forward(name = "prepareEditExternalEnrolment", path = "/academicAdminOffice/student/enrollment/bolonha/editExternalEnrolment.jsp"),
+	@Forward(name = "chooseExternalUnit", path = "/academicAdminOffice/student/enrollment/bolonha/chooseExternalUnit.jsp", tileProperties = @Tile(head = "/commons/renderers/treeRendererHeader.jsp")),
+	@Forward(name = "chooseExternalCurricularCourses", path = "/academicAdminOffice/student/enrollment/bolonha/chooseExternalCurricularCourses.jsp"),
+	@Forward(name = "createExternalEnrolments", path = "/academicAdminOffice/student/enrollment/bolonha/createExternalEnrolments.jsp"),
 	@Forward(name = "viewRegistrationDetails", path = "/academicAdminOffice/student/registration/viewRegistrationDetails.jsp") })
 public class StudentExternalEnrolmentsDA extends FenixDispatchAction {
 
@@ -132,21 +131,13 @@ public class StudentExternalEnrolmentsDA extends FenixDispatchAction {
     }
 
     public ActionForward createExternalEnrolments(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-	    HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+	    HttpServletResponse response) {
 
 	final List<ExternalCurricularCourseEnrolmentBean> externalCurricularCourseEnrolmentBeans = getRenderedObject("externalCurricularCourseEnrolmentBeans");
 	final Registration registration = getRegistration(request, actionForm);
 
 	try {
 	    CreateExternalEnrolments.run(registration, externalCurricularCourseEnrolmentBeans);
-
-	} catch (NotAuthorizedException e) {
-	    addActionMessage("error", request, "error.notAuthorized");
-	    request.setAttribute("registration", getRegistration(request, actionForm));
-	    request.setAttribute("externalCurricularCourseEnrolmentBeans", externalCurricularCourseEnrolmentBeans);
-	    request.setAttribute("externalUnit", getExternalUnit(request, actionForm));
-	    return mapping.findForward("createExternalEnrolments");
-
 	} catch (DomainException e) {
 	    addActionMessage("error", request, e.getMessage(), e.getArgs());
 	    request.setAttribute("registration", getRegistration(request, actionForm));
@@ -159,7 +150,7 @@ public class StudentExternalEnrolmentsDA extends FenixDispatchAction {
     }
 
     public ActionForward deleteExternalEnrolments(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-	    HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+	    HttpServletResponse response) throws FenixServiceException {
 
 	final String[] externalEnrolmentIDs = ((DynaActionForm) actionForm).getStrings("externalEnrolmentsToDelete");
 	final Registration registration = getRegistration(request, actionForm);
@@ -186,7 +177,7 @@ public class StudentExternalEnrolmentsDA extends FenixDispatchAction {
     }
 
     public ActionForward editExternalEnrolment(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-	    HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+	    HttpServletResponse response) {
 
 	final EditExternalEnrolmentBean externalEnrolmentBean = getRenderedObject();
 	final ExternalEnrolment externalEnrolment = externalEnrolmentBean.getExternalEnrolment();

@@ -14,7 +14,6 @@ import java.util.TreeSet;
 import net.sourceforge.fenixedu.dataTransferObject.accounting.AccountingTransactionDetailDTO;
 import net.sourceforge.fenixedu.dataTransferObject.accounting.EntryDTO;
 import net.sourceforge.fenixedu.dataTransferObject.accounting.SibsTransactionDetailDTO;
-import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.User;
@@ -38,13 +37,13 @@ import pt.utl.ist.fenix.tools.resources.LabelFormatter;
 public abstract class Event extends Event_Base {
 
     public static final Comparator<Event> COMPARATOR_BY_DATE = new Comparator<Event>() {
-        @Override
-        public int compare(final Event e1, final Event e2) {
-            final int i = e1.getWhenOccured().compareTo(e2.getWhenOccured());
-            return i == 0 ? COMPARATOR_BY_ID.compare(e1, e2) : i;
-        }
+	@Override
+	public int compare(final Event e1, final Event e2) {
+	    final int i = e1.getWhenOccured().compareTo(e2.getWhenOccured());
+	    return i == 0 ? COMPARATOR_BY_ID.compare(e1, e2) : i;
+	}
     };
-    
+
     protected Event() {
 	super();
 
@@ -60,7 +59,7 @@ public abstract class Event extends Event_Base {
 	super.setEventType(eventType);
 	super.setParty(person);
     }
-    
+
     protected void init(EventType eventType, Party party) {
 	checkParameters(eventType, party);
 	super.setEventType(eventType);
@@ -232,12 +231,12 @@ public abstract class Event extends Event_Base {
     }
 
     @Override
-    public void setEmployeeResponsibleForCancel(Employee employee) {
+    public void setResponsibleForCancel(Person responsible) {
 	throw new DomainException("error.accounting.Event.cannot.modify.employeeResponsibleForCancel");
     }
 
     @Override
-    @Checked("RolePredicates.MANAGER_PREDICATE")
+    @Checked("AcademicPredicates.MANAGE_PAYMENTS")
     public void setEventStateDate(DateTime eventStateDate) {
 	super.setEventStateDate(eventStateDate);
     }
@@ -542,28 +541,28 @@ public abstract class Event extends Event_Base {
 	return getPostingRule().calculateEntries(this, when);
     }
 
-    @Checked("RolePredicates.MANAGER_PREDICATE")
+    @Checked("AcademicPredicates.MANAGE_PAYMENTS")
     public void open() {
 
 	changeState(EventState.OPEN, new DateTime());
-	super.setEmployeeResponsibleForCancel(null);
+	super.setResponsibleForCancel(null);
 	super.setCancelJustification(null);
 
     }
 
-    public void cancel(final Employee responsibleEmployee) {
-	cancel(responsibleEmployee, null);
+    public void cancel(final Person responsible) {
+	cancel(responsible, null);
     }
 
-    public void cancel(final Employee responsibleEmployee, final String cancelJustification) {
+    public void cancel(final Person responsible, final String cancelJustification) {
 	if (isCancelled()) {
 	    return;
 	}
 
-	checkRulesToCancel(responsibleEmployee);
+	checkRulesToCancel(responsible);
 
 	changeState(EventState.CANCELLED, new DateTime());
-	super.setEmployeeResponsibleForCancel(responsibleEmployee);
+	super.setResponsibleForCancel(responsible);
 	super.setCancelJustification(cancelJustification);
 	closeNonProcessedCodes();
     }
@@ -582,8 +581,8 @@ public abstract class Event extends Event_Base {
 	closeNonProcessedCodes();
     }
 
-    private void checkRulesToCancel(final Employee employee) {
-	if (!employee.getPerson().hasRole(RoleType.MANAGER) && !isOpen()) {
+    private void checkRulesToCancel(final Person responsible) {
+	if (!responsible.hasRole(RoleType.MANAGER) && !isOpen()) {
 	    throw new DomainException("error.accounting.Event.only.open.events.can.be.cancelled");
 	}
 
@@ -746,7 +745,7 @@ public abstract class Event extends Event_Base {
 	return result;
     }
 
-    @Checked("RolePredicates.MANAGER_PREDICATE")
+    @Checked("AcademicPredicates.MANAGE_PAYMENTS")
     public final void forceChangeState(EventState state, DateTime when) {
 	changeState(state, when);
     }
@@ -769,7 +768,7 @@ public abstract class Event extends Event_Base {
 	recalculateState(transactionDetailDTO.getWhenRegistered());
     }
 
-    @Checked("RolePredicates.MANAGER_OR_ACADEMIC_ADMINISTRATIVE_OFFICE_PREDICATE")
+    @Checked("AcademicPredicates.DEPOSIT_AMOUNT_ON_PAYMENT_EVENT")
     public final AccountingTransaction depositAmount(final User responsibleUser, final Money amount,
 	    final AccountingTransactionDetailDTO transactionDetailDTO) {
 
@@ -781,7 +780,7 @@ public abstract class Event extends Event_Base {
 	return result;
     }
 
-    @Checked("RolePredicates.MANAGER_OR_ACADEMIC_ADMINISTRATIVE_OFFICE_PREDICATE")
+    @Checked("AcademicPredicates.DEPOSIT_AMOUNT_ON_PAYMENT_EVENT")
     public final AccountingTransaction depositAmount(final User responsibleUser, final Money amount, final EntryType entryType,
 	    final AccountingTransactionDetailDTO transactionDetailDTO) {
 
@@ -815,7 +814,7 @@ public abstract class Event extends Event_Base {
 	return result;
     }
 
-    @Checked("RolePredicates.MANAGER_PREDICATE")
+    @Checked("AcademicPredicates.MANAGE_PAYMENTS")
     public void rollbackCompletly() {
 	while (!getNonAdjustingTransactions().isEmpty()) {
 	    getNonAdjustingTransactions().get(0).delete();
@@ -828,7 +827,7 @@ public abstract class Event extends Event_Base {
 	}
     }
 
-    @Checked("RolePredicates.MANAGER_PREDICATE")
+    @Checked("AcademicPredicates.MANAGE_PAYMENTS")
     public List<AccountingEventPaymentCode> getExistingPaymentCodes() {
 	return Collections.unmodifiableList(super.getPaymentCodes());
     }
@@ -856,7 +855,7 @@ public abstract class Event extends Event_Base {
 	}
 
 	super.setParty(null);
-	super.setEmployeeResponsibleForCancel(null);
+	super.setResponsibleForCancel(null);
 	removeRootDomainObject();
 	deleteDomainObject();
     }
@@ -972,8 +971,8 @@ public abstract class Event extends Event_Base {
 	setWhenSentLetter(new LocalDate());
     }
 
-    @Checked("RolePredicates.MANAGER_PREDICATE")
-    public void transferPaymentsAndCancel(Employee employee, Event targetEvent, String justification) {
+    @Checked("AcademicPredicates.MANAGE_PAYMENTS")
+    public void transferPaymentsAndCancel(Person responsible, Event targetEvent, String justification) {
 
 	checkConditionsToTransferPaymentsAndCancel(targetEvent);
 
@@ -982,14 +981,13 @@ public abstract class Event extends Event_Base {
 	    final AccountingTransactionDetailDTO transactionDetail = createAccountingTransactionDetailForTransfer(entryToTransfer
 		    .getAccountingTransaction());
 
-	    targetEvent.depositAmount(employee.getPerson().getUser(), entryToTransfer.getAmountWithAdjustment(),
-		    transactionDetail);
+	    targetEvent.depositAmount(responsible.getUser(), entryToTransfer.getAmountWithAdjustment(), transactionDetail);
 
-	    entryToTransfer.getAccountingTransaction().reimburseWithoutRules(employee.getPerson().getUser(), PaymentMode.CASH,
+	    entryToTransfer.getAccountingTransaction().reimburseWithoutRules(responsible.getUser(), PaymentMode.CASH,
 		    entryToTransfer.getAmountWithAdjustment());
 	}
 
-	cancel(employee, justification);
+	cancel(responsible, justification);
 
     }
 
@@ -1096,14 +1094,14 @@ public abstract class Event extends Event_Base {
     public abstract Unit getOwnerUnit();
 
     public SortedSet<AccountingTransaction> getSortedTransactionsForPresentation() {
-	final SortedSet<AccountingTransaction> result = new TreeSet<AccountingTransaction>(AccountingTransaction.COMPARATOR_BY_WHEN_REGISTERED);
+	final SortedSet<AccountingTransaction> result = new TreeSet<AccountingTransaction>(
+		AccountingTransaction.COMPARATOR_BY_WHEN_REGISTERED);
 	result.addAll(getAdjustedTransactions());
 	return result;
     }
-    
-    public Person getPerson(){
+
+    public Person getPerson() {
 	return (Person) getParty();
     }
-
 
 }

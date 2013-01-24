@@ -225,7 +225,6 @@ public class StandaloneEnrolmentGratuityPR extends StandaloneEnrolmentGratuityPR
 		.toPlainString(), getEctsForYear().toPlainString());
     }
 
-    @Checked("PostingRulePredicates.editPredicate")
     public StandaloneEnrolmentGratuityPR edit(final BigDecimal ectsForYear, final BigDecimal gratuityFactor,
 	    final BigDecimal ectsFactor) {
 	deactivate();

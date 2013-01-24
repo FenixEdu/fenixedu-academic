@@ -175,15 +175,6 @@
                   <form-property type="java.lang.String" name="availableGradeSubmission"></form-property>
                   <form-property type="java.lang.String" name="entryPhase"></form-property>
             </form-bean>
-            <form-bean dynamic="true" type="org.apache.struts.validator.DynaValidatorForm" name="insertExecutionCourseForm">
-                  <form-property type="java.lang.String" name="name"></form-property>
-                  <form-property type="java.lang.String" name="code"></form-property>
-                  <form-property type="java.lang.String" name="semester"></form-property>
-                  <form-property type="java.lang.String" name="comment"></form-property>
-                  <form-property type="java.lang.String" name="executionPeriodId"></form-property>
-                  <form-property initial="0" type="java.lang.Integer" name="page"></form-property>
-                  <form-property type="java.lang.String" name="entryPhase"></form-property>
-            </form-bean>
             <form-bean dynamic="true" type="org.apache.struts.validator.DynaValidatorForm" name="createExecutionCoursesForm">
                   <form-property type="java.lang.String" name="degreeType"></form-property>
                   <form-property type="java.lang.Integer[]" name="degreeCurricularPlansIDs"></form-property>
@@ -591,24 +582,6 @@
             <!--insertExecutionCourseAtExecutionPeriod
     insertExecutionCourse -->
             <!--
-    <action
-		path="/insertExecutionCourse"
-		name="executionCourseForm"
-		input="/insertExecutionCourse.do?method=prepareInsert&amp;page=0"
-		parameter="method"
-		scope="request"
-		type="net.sourceforge.fenixedu.presentationTier.Action.manager.InsertExecutionCourseDA"
-        validate="true">
-        <exception type="net.sourceforge.fenixedu.presentationTier.Action.exceptions.NonExistingActionException"
-         	       key="resources.Action.exceptions.NonExistingActionException"
-                   handler="net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler"/>
-        <exception type="net.sourceforge.fenixedu.presentationTier.Action.exceptions.ExistingActionException"
-         	       key="resources.Action.exceptions.ExistingActionException"
-                   handler="net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler"/>
-       <forward name="insertExecutionCourse" path="df.page.insert-execution-course"/>
-       <forward name="readExecutionCourses" path="/readExecutionCourses.do"/> 
-         <forward name="readExecutionPeriods" path="/readExecutionPeriods.do"/>    	      
-	</action>
     -->
             <!-- Action for deleting execution courses -->
             <!--Input actions-->

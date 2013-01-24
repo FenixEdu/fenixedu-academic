@@ -5,9 +5,9 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.TreeSet;
 
+import net.sourceforge.fenixedu.domain.AcademicProgram;
 import net.sourceforge.fenixedu.domain.Login;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
 import net.sourceforge.fenixedu.domain.person.IDDocumentType;
 import net.sourceforge.fenixedu.domain.person.PersonName;
 import net.sourceforge.fenixedu.domain.student.Registration;
@@ -92,7 +92,8 @@ public class StudentsSearchBean implements Serializable {
 	    }
 	} else if (!StringUtils.isEmpty(getName())) {
 	    for (final PersonName personName : PersonName.find(getName(), Integer.MAX_VALUE)) {
-		students.add(personName.getPerson().getStudent());
+		if (personName.getPerson().hasStudent())
+		    students.add(personName.getPerson().getStudent());
 	    }
 	} else if (!StringUtils.isEmpty(getUsername())) {
 	    Login login = Login.readLoginByUsername(getUsername());
@@ -104,12 +105,21 @@ public class StudentsSearchBean implements Serializable {
 	return students;
     }
 
-    public Set<Student> searchForOffice(final AdministrativeOffice administrativeOffice) {
+    public Set<Student> searchForPrograms(final Set<AcademicProgram> programs) {
 	final Set<Student> students = new TreeSet<Student>(Student.NUMBER_COMPARATOR);
 	for (Student student : search()) {
-	    if (student != null && (student.hasRegistrationForOffice(administrativeOffice) || !student.hasAnyRegistrations())) {
+
+	    if (student == null)
+		continue;
+
+	    if (!student.hasAnyRegistrations())
 		students.add(student);
+
+	    for (Registration registration : student.getRegistrations()) {
+		if (programs.contains(registration.getDegree()))
+		    students.add(student);
 	    }
+
 	}
 	return students;
     }

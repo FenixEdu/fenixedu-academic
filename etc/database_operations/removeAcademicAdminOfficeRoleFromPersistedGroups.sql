@@ -1,0 +1,9 @@
+UPDATE FILE SET PERMITTED_GROUP = "academic('SERVICE_REQUESTS')" WHERE OJB_CONCRETE_CLASS = 'net.sourceforge.fenixedu.domain.documents.DocumentRequestGeneratedDocument';
+
+UPDATE FILE SET PERMITTED_GROUP = "academic('MANAGE_STUDENT_PAYMENTS')" WHERE OJB_CONCRETE_CLASS = 'net.sourceforge.fenixedu.domain.documents.CreditNoteGeneratedDocument' AND PERMITTED_GROUP like '%ACADEMIC_ADMINISTRATIVE_OFFICE%';
+
+UPDATE FILE SET PERMITTED_GROUP = "role('MANAGER')" WHERE OJB_CONCRETE_CLASS in ('net.sourceforge.fenixedu.domain.documents.ReceiptGeneratedDocument', 'net.sourceforge.fenixedu.domain.documents.GeneratedDocumentWithoutSource', 'net.sourceforge.fenixedu.domain.documents.AnnualIRSDeclarationDocument', 'net.sourceforge.fenixedu.domain.QueueJobResultFile') AND PERMITTED_GROUP like '%ACADEMIC_ADMINISTRATIVE_OFFICE%';
+
+UPDATE FILE SET PERMITTED_GROUP = "role('LIBRARY')" WHERE OJB_CONCRETE_CLASS in ('net.sourceforge.fenixedu.domain.documents.LibraryMissingCardsDocument', 'net.sourceforge.fenixedu.domain.documents.LibraryMissingLettersDocument') AND PERMITTED_GROUP like '%ACADEMIC_ADMINISTRATIVE_OFFICE%';
+
+UPDATE FILE SET PERMITTED_GROUP = REPLACE(PERMITTED_GROUP, "role('ACADEMIC_ADMINISTRATIVE_OFFICE')", "academic('MANAGE_PHD_PROCESSES')") WHERE OJB_CONCRETE_CLASS IN ('net.sourceforge.fenixedu.domain.phd.PhdProgramProcessDocument', 'net.sourceforge.fenixedu.domain.phd.candidacy.PhdCandidacyRefereeLetterFile', 'net.sourceforge.fenixedu.domain.phd.candidacy.feedbackRequest.PhdCandidacyFeedbackRequestDocument', 'net.sourceforge.fenixedu.domain.phd.guidance.PhdGuidanceDocument', 'net.sourceforge.fenixedu.domain.phd.PhdThesisReportFeedbackDocument', 'net.sourceforge.fenixedu.domain.phd.candidacy.PhdGuiderAcceptanceLetter', 'net.sourceforge.fenixedu.domain.phd.thesis.meeting.PhdMeetingMinutesDocument') AND PERMITTED_GROUP LIKE '%ACADEMIC_ADMINISTRATIVE_OFFICE%';

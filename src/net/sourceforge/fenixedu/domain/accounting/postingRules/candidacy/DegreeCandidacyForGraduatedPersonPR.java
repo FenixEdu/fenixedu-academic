@@ -26,8 +26,6 @@ import net.sourceforge.fenixedu.util.Money;
 
 import org.joda.time.DateTime;
 
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
-
 public class DegreeCandidacyForGraduatedPersonPR extends DegreeCandidacyForGraduatedPersonPR_Base {
 
     private DegreeCandidacyForGraduatedPersonPR() {
@@ -138,8 +136,9 @@ public class DegreeCandidacyForGraduatedPersonPR extends DegreeCandidacyForGradu
     }
 
     @Override
-    protected Set<AccountingTransaction> internalProcess(final User user, final Collection<EntryDTO> entryDTOs, final Event event,
-	    final Account fromAccount, final Account toAccount, final AccountingTransactionDetailDTO transactionDetail) {
+    protected Set<AccountingTransaction> internalProcess(final User user, final Collection<EntryDTO> entryDTOs,
+	    final Event event, final Account fromAccount, final Account toAccount,
+	    final AccountingTransactionDetailDTO transactionDetail) {
 
 	if (entryDTOs.size() != 1) {
 	    throw new DomainException("error.DegreeCandidacyForGraduatedPersonPR.invalid.number.of.entryDTOs");
@@ -155,12 +154,11 @@ public class DegreeCandidacyForGraduatedPersonPR extends DegreeCandidacyForGradu
     private void checkIfCanAddAmount(final Money amountToPay, final Event event, final DateTime when) {
 	if (amountToPay.compareTo(calculateTotalAmountToPay(event, when)) < 0) {
 	    throw new DomainExceptionWithLabelFormatter(
-		    "error.DegreeCandidacyForGraduatedPersonPR.amount.being.payed.must.match.amount.to.pay", event
-			    .getDescriptionForEntryType(getEntryType()));
+		    "error.DegreeCandidacyForGraduatedPersonPR.amount.being.payed.must.match.amount.to.pay",
+		    event.getDescriptionForEntryType(getEntryType()));
 	}
     }
 
-    @Checked("PostingRulePredicates.editPredicate")
     public DegreeCandidacyForGraduatedPersonPR edit(final Money amountForInstitutionStudent, final Money amountForExternalStudent) {
 	deactivate();
 	return new DegreeCandidacyForGraduatedPersonPR(new DateTime(), null, getServiceAgreementTemplate(),

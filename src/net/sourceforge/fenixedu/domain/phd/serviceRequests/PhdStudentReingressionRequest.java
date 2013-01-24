@@ -11,6 +11,7 @@ import net.sourceforge.fenixedu.domain.phd.exceptions.PhdDomainOperationExceptio
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.AcademicServiceRequestType;
 import net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationState;
 import net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationState.RegistrationStateCreator;
+import net.sourceforge.fenixedu.injectionCode.AccessControl;
 
 import org.joda.time.DateTime;
 
@@ -71,9 +72,9 @@ public class PhdStudentReingressionRequest extends PhdStudentReingressionRequest
 
     @Override
     public boolean isManagedWithRectorateSubmissionBatch() {
-        return false;
+	return false;
     }
-    
+
     @Override
     public boolean isToPrint() {
 	return false;
@@ -99,17 +100,16 @@ public class PhdStudentReingressionRequest extends PhdStudentReingressionRequest
 	    PhdIndividualProgramProcess process = getPhdIndividualProgramProcess();
 	    PhdProgramProcessState lastActiveState = process.getLastActiveState();
 	    String remarks = String
-		    .format(
-			    phdBundle
-				    .getString("message.net.sourceforge.fenixedu.domain.phd.serviceRequests.PhdStudentReingressionRequest.conclusion.remark"),
+		    .format(phdBundle
+			    .getString("message.net.sourceforge.fenixedu.domain.phd.serviceRequests.PhdStudentReingressionRequest.conclusion.remark"),
 			    getServiceRequestNumberYear());
 
-	    process.createState(lastActiveState.getType(), getEmployee().getPerson(), remarks);
+	    process.createState(lastActiveState.getType(), AccessControl.getPerson(), remarks);
 
 	    if (process.hasRegistration() && !process.getRegistration().isActive()) {
 		RegistrationState registrationLastActiveState = process.getRegistration().getLastActiveState();
 
-		RegistrationStateCreator.createState(process.getRegistration(), getEmployee().getPerson(), new DateTime(),
+		RegistrationStateCreator.createState(process.getRegistration(), AccessControl.getPerson(), new DateTime(),
 			registrationLastActiveState.getStateType());
 	    }
 

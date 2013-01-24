@@ -44,7 +44,7 @@
 	<h3 class="mtop15 mbottom025"><bean:message key="label.selectDegree" bundle="APPLICATION_RESOURCES"/>:</h3>
 	<fr:edit id="individualCandidacyProcessBean.degree"
 		name="individualCandidacyProcessBean"
-		schema="PublicCandidacyProcessBean.degree.change.selectedDegree.manage">
+		schema="DegreeCandidacyForGraduatedPersonIndividualProcessBean.selectDegree.manage">
 		<fr:layout name="tabular-editable">
 			<fr:property name="classes" value="tstyle4 thlight thright mtop025"/>
 	        <fr:property name="columnClasses" value="width12em,,tdclear tderror1"/>

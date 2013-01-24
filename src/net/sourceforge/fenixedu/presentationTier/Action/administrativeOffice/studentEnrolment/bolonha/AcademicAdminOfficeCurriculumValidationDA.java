@@ -11,6 +11,8 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.student.enrolment.bolonha.EnrolBolonhaStudent;
+import net.sourceforge.fenixedu.applicationTier.Servico.student.enrolment.bolonha.EnrolBolonhaStudentInCurriculumValidationContext;
 import net.sourceforge.fenixedu.dataTransferObject.degreeAdministrativeOffice.gradeSubmission.MarkSheetEnrolmentEvaluationBean;
 import net.sourceforge.fenixedu.dataTransferObject.student.RegistrationConclusionBean;
 import net.sourceforge.fenixedu.dataTransferObject.student.enrollment.bolonha.BolonhaStudentEnrollmentBean;
@@ -31,7 +33,6 @@ import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumModule;
 import net.sourceforge.fenixedu.domain.studentCurriculum.RootCurriculumGroup;
 import net.sourceforge.fenixedu.injectionCode.IllegalDataAccessException;
-import net.sourceforge.fenixedu.predicates.RegistrationPredicates;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.formbeans.FenixActionForm;
 
@@ -44,16 +45,15 @@ import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
-@Mapping(path = "/curriculumValidation", module = "academicAdminOffice", formBeanClass = FenixActionForm.class)
+@Mapping(path = "/curriculumValidation", module = "academicAdministration", formBeanClass = FenixActionForm.class)
 @Forwards({
-	@Forward(name = "show-curriculum-validation-options", path = "/academicAdminOffice/student/curriculumValidation/curriculumValidationOperations.jsp", tileProperties = @Tile(title = "private.academicadministrativeoffice.studentoperations.viewstudents")),
-	@Forward(name = "show-degree-modules-to-enrol", path = "/academicAdminOffice/student/curriculumValidation/showDegreeModulesToEnrol.jsp", tileProperties = @Tile(title = "private.academicadministrativeoffice.studentoperations.viewstudents")),
-	@Forward(name = "show-set-evaluations-form", path = "/academicAdminOffice/student/curriculumValidation/setEvaluationsForm.jsp", tileProperties = @Tile(title = "private.academicadministrativeoffice.studentoperations.viewstudents")),
-	@Forward(name = "show-edit-evaluation-form", path = "/academicAdminOffice/student/curriculumValidation/editEvaluationForm.jsp", tileProperties = @Tile(title = "private.academicadministrativeoffice.studentoperations.viewstudents")),
-	@Forward(name = "show-set-end-stage-date-form", path = "/academicAdminOffice/student/curriculumValidation/setStageDate.jsp", tileProperties = @Tile(title = "private.academicadministrativeoffice.studentoperations.viewstudents")),
-	@Forward(name = "registrationConclusion", path = "/academicAdminOffice/student/curriculumValidation/registrationConclusion.jsp", tileProperties = @Tile(title = "private.academicadministrativeoffice.studentoperations.viewstudents"))
+	@Forward(name = "show-curriculum-validation-options", path = "/academicAdminOffice/student/curriculumValidation/curriculumValidationOperations.jsp"),
+	@Forward(name = "show-degree-modules-to-enrol", path = "/academicAdminOffice/student/curriculumValidation/showDegreeModulesToEnrol.jsp"),
+	@Forward(name = "show-set-evaluations-form", path = "/academicAdminOffice/student/curriculumValidation/setEvaluationsForm.jsp"),
+	@Forward(name = "show-edit-evaluation-form", path = "/academicAdminOffice/student/curriculumValidation/editEvaluationForm.jsp"),
+	@Forward(name = "show-set-end-stage-date-form", path = "/academicAdminOffice/student/curriculumValidation/setStageDate.jsp"),
+	@Forward(name = "registrationConclusion", path = "/academicAdminOffice/student/curriculumValidation/registrationConclusion.jsp")
 
 })
 public class AcademicAdminOfficeCurriculumValidationDA extends FenixDispatchAction {
@@ -104,13 +104,12 @@ public class AcademicAdminOfficeCurriculumValidationDA extends FenixDispatchActi
 
 	final BolonhaStudentEnrollmentBean bolonhaStudentEnrollmentBean = getBolonhaStudentEnrollmentBeanFromViewState();
 	try {
-	    final RuleResult ruleResults = (RuleResult) executeService(
-		    "EnrolBolonhaStudentInCurriculumValidationContext",
-		    new Object[] { bolonhaStudentEnrollmentBean.getStudentCurricularPlan(),
-			    bolonhaStudentEnrollmentBean.getExecutionPeriod(),
-			    bolonhaStudentEnrollmentBean.getDegreeModulesToEvaluate(),
-			    bolonhaStudentEnrollmentBean.getCurriculumModulesToRemove(),
-			    bolonhaStudentEnrollmentBean.getCurricularRuleLevel() });
+	    final RuleResult ruleResults = EnrolBolonhaStudentInCurriculumValidationContext.run(
+
+	    bolonhaStudentEnrollmentBean.getStudentCurricularPlan(), bolonhaStudentEnrollmentBean.getExecutionPeriod(),
+		    bolonhaStudentEnrollmentBean.getDegreeModulesToEvaluate(),
+		    bolonhaStudentEnrollmentBean.getCurriculumModulesToRemove(),
+		    bolonhaStudentEnrollmentBean.getCurricularRuleLevel());
 
 	    if (!bolonhaStudentEnrollmentBean.getDegreeModulesToEvaluate().isEmpty()
 		    || !bolonhaStudentEnrollmentBean.getCurriculumModulesToRemove().isEmpty()) {
@@ -274,9 +273,9 @@ public class AcademicAdminOfficeCurriculumValidationDA extends FenixDispatchActi
 	Enrolment enrolment = readEnrolment(request);
 
 	try {
-	    final RuleResult ruleResults = (RuleResult) executeService("EnrolBolonhaStudent", new Object[] {
-		    readStudentCurricularPlan(request), enrolment.getExecutionPeriod(), new ArrayList<IDegreeModuleToEvaluate>(),
-		    Arrays.asList(new CurriculumModule[] { enrolment }), CurricularRuleLevel.ENROLMENT_NO_RULES });
+	    final RuleResult ruleResults = EnrolBolonhaStudent.run(readStudentCurricularPlan(request),
+		    enrolment.getExecutionPeriod(), new ArrayList<IDegreeModuleToEvaluate>(),
+		    Arrays.asList(new CurriculumModule[] { enrolment }), CurricularRuleLevel.ENROLMENT_NO_RULES);
 
 	    if (ruleResults.isWarning()) {
 		addRuleResultMessagesToActionMessages("warning", request, ruleResults);
@@ -315,10 +314,6 @@ public class AcademicAdminOfficeCurriculumValidationDA extends FenixDispatchActi
 	final RegistrationConclusionBean registrationConclusionBean = getRegistrationConclusionBeanFromViewState();
 
 	try {
-	    if (!RegistrationPredicates.REGISTRATION_CONCLUSION_CURRICULUM_VALIDATION.evaluate(readRegistration(request))) {
-		throw new DomainException("error.not.authorized.to.registration.conclusion.process");
-	    }
-
 	    new CurriculumValidationServicesHelper().concludeRegistration(registrationConclusionBean);
 	    return prepareCurriculumValidation(mapping, form, request, response);
 	} catch (final IllegalDataAccessException e) {
@@ -334,10 +329,7 @@ public class AcademicAdminOfficeCurriculumValidationDA extends FenixDispatchActi
     }
 
     private RegistrationConclusionBean buildRegistrationConclusionBean(final Registration registration) {
-	final RegistrationConclusionBean bean = new RegistrationConclusionBean(registration);
-	bean.setHasAccessToRegistrationConclusionProcess(RegistrationPredicates.REGISTRATION_CONCLUSION_CURRICULUM_VALIDATION
-		.evaluate(registration));
-	return bean;
+	return new RegistrationConclusionBean(registration);
     }
 
     private Enrolment readEnrolment(HttpServletRequest request) {

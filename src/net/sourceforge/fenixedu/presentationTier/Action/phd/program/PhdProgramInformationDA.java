@@ -3,11 +3,13 @@ package net.sourceforge.fenixedu.presentationTier.Action.phd.program;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.domain.RootDomainObject;
+import net.sourceforge.fenixedu.domain.accessControl.academicAdministration.AcademicAuthorizationGroup;
+import net.sourceforge.fenixedu.domain.accessControl.academicAdministration.AcademicOperationType;
 import net.sourceforge.fenixedu.domain.phd.PhdProgram;
 import net.sourceforge.fenixedu.domain.phd.PhdProgramInformation;
 import net.sourceforge.fenixedu.domain.phd.PhdProgramInformationBean;
 import net.sourceforge.fenixedu.domain.phd.exceptions.PhdDomainOperationException;
+import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 
 import org.apache.struts.action.ActionForm;
@@ -18,7 +20,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 
-@Mapping(path = "/phdProgramInformation", module = "academicAdminOffice")
+@Mapping(path = "/phdProgramInformation", module = "academicAdministration")
 @Forwards({
 	@Forward(name = "listPhdPrograms", path = "/phd/academicAdminOffice/program/information/listPhdPrograms.jsp"),
 	@Forward(name = "listPhdProgramInformations", path = "/phd/academicAdminOffice/program/information/listPhdProgramInformations.jsp"),
@@ -29,7 +31,8 @@ public class PhdProgramInformationDA extends FenixDispatchAction {
     public ActionForward listPhdPrograms(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) {
 
-	request.setAttribute("phdPrograms", RootDomainObject.getInstance().getPhdPrograms());
+	request.setAttribute("phdPrograms", AcademicAuthorizationGroup.getPhdProgramsForOperation(AccessControl.getPerson(),
+		AcademicOperationType.MANAGE_PHD_PROCESSES));
 	return mapping.findForward("listPhdPrograms");
     }
 

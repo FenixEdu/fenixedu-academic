@@ -19,13 +19,12 @@ import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 
-@Mapping(path = "/phdCandidacyPeriodManagement", module = "academicAdminOffice")
+@Mapping(path = "/phdCandidacyPeriodManagement", module = "academicAdministration")
 @Forwards({
 	@Forward(name = "list", path = "/phd/candidacy/academicAdminOffice/periods/list.jsp"),
 	@Forward(name = "createPhdCandidacyPeriod", path = "/phd/candidacy/academicAdminOffice/periods/createPhdCandidacyPeriod.jsp"),
 	@Forward(name = "editPhdCandidacyPeriod", path = "/phd/candidacy/academicAdminOffice/periods/editPhdCandidacyPeriod.jsp"),
-	@Forward(name = "view", path = "/phd/candidacy/academicAdminOffice/periods/view.jsp")
-})
+	@Forward(name = "view", path = "/phd/candidacy/academicAdminOffice/periods/view.jsp") })
 public class PhdCandidacyPeriodManagementDA extends FenixDispatchAction {
 
     public ActionForward list(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
@@ -148,4 +147,3 @@ public class PhdCandidacyPeriodManagementDA extends FenixDispatchAction {
 	return getDomainObject(request, "phdCandidacyPeriodId");
     }
 }
-

@@ -14,11 +14,9 @@
 <%@page import="net.sourceforge.fenixedu.domain.phd.thesis.activities.AddPresidentJuryElement"%>
 <%@page import="net.sourceforge.fenixedu.domain.phd.thesis.activities.AddJuryElement"%><html:xhtml/>
 
-<logic:present role="ACADEMIC_ADMINISTRATIVE_OFFICE">
 <bean:define id="individualProcessId" name="process" property="individualProgramProcess.externalId" />
 
 <%-- ### Title #### --%>
-<em><bean:message  key="label.phd.academicAdminOffice.breadcrumb" bundle="PHD_RESOURCES"/></em>
 <h2><bean:message key="label.phd.thesis.jury.elements" bundle="PHD_RESOURCES" /></h2>
 <%-- ### End of Title ### --%>
 
@@ -201,5 +199,3 @@
 <%--  ### Buttons (e.g. Submit)  ### --%>
 
 <%--  ### End of Buttons (e.g. Submit)  ### --%>
-
-</logic:present>

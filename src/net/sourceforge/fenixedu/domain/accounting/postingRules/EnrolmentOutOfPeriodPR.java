@@ -22,8 +22,6 @@ import net.sourceforge.fenixedu.util.Money;
 
 import org.joda.time.DateTime;
 
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
-
 public class EnrolmentOutOfPeriodPR extends EnrolmentOutOfPeriodPR_Base {
 
     protected EnrolmentOutOfPeriodPR() {
@@ -93,8 +91,8 @@ public class EnrolmentOutOfPeriodPR extends EnrolmentOutOfPeriodPR_Base {
     }
 
     @Override
-    protected Set<AccountingTransaction> internalProcess(User user, Collection<EntryDTO> entryDTOs, Event event, Account fromAccount,
-	    Account toAccount, AccountingTransactionDetailDTO transactionDetail) {
+    protected Set<AccountingTransaction> internalProcess(User user, Collection<EntryDTO> entryDTOs, Event event,
+	    Account fromAccount, Account toAccount, AccountingTransactionDetailDTO transactionDetail) {
 	if (entryDTOs.size() != 1) {
 	    throw new DomainException("error.accounting.postingRules.EnrolmentOutOfPeriodPR.invalid.number.of.entryDTOs");
 	}
@@ -110,13 +108,12 @@ public class EnrolmentOutOfPeriodPR extends EnrolmentOutOfPeriodPR_Base {
     private void checkIfCanAddAmount(Money amountToPay, Event event, DateTime whenRegistered) {
 	if (amountToPay.compareTo(calculateTotalAmountToPay(event, whenRegistered)) < 0) {
 	    throw new DomainExceptionWithLabelFormatter(
-		    "error.accounting.postingRules.EnrolmentOutOfPeriodPR.amount.being.payed.must.match.amount.to.pay", event
-			    .getDescriptionForEntryType(getEntryType()));
+		    "error.accounting.postingRules.EnrolmentOutOfPeriodPR.amount.being.payed.must.match.amount.to.pay",
+		    event.getDescriptionForEntryType(getEntryType()));
 	}
 
     }
 
-    @Checked("PostingRulePredicates.editPredicate")
     public EnrolmentOutOfPeriodPR edit(final Money baseAmount, final Money amountPerDay, final Money maxAmount) {
 
 	deactivate();

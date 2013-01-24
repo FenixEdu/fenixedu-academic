@@ -86,7 +86,7 @@ public class Unit extends Unit_Base {
 
     protected void init(MultiLanguageString name, String unitNameCard, Integer costCenterCode, String acronym,
 	    YearMonthDay beginDate, YearMonthDay endDate, String webAddress, UnitClassification classification,
-	    Boolean canBeResponsibleOfSpaces, Campus campus) {
+	    AdministrativeOffice administrativeOffice, Boolean canBeResponsibleOfSpaces, Campus campus) {
 
 	setPartyName(name);
 	if (acronym != null) {
@@ -99,6 +99,7 @@ public class Unit extends Unit_Base {
 	setBeginDateYearMonthDay(beginDate);
 	setEndDateYearMonthDay(endDate);
 	setClassification(classification);
+	setAdministrativeOffice(administrativeOffice);
 	setCanBeResponsibleOfSpaces(canBeResponsibleOfSpaces);
 	setCampus(campus);
 	setDefaultWebAddressUrl(webAddress);
@@ -144,7 +145,7 @@ public class Unit extends Unit_Base {
 	    Campus campus) {
 
 	init(unitName, unitNameCard, unitCostCenter, acronym, beginDate, endDate, webAddress, classification,
-		canBeResponsibleOfSpaces, campus);
+		administrativeOffice, canBeResponsibleOfSpaces, campus);
     }
 
     @Override
@@ -216,8 +217,8 @@ public class Unit extends Unit_Base {
 		&& !hasAnyPayedGuides() && !hasAnyPayedReceipts() && !hasAnyExternalCurricularCourses()
 		&& !hasAnyResultUnitAssociations() && !hasUnitServiceAgreementTemplate() && !hasAnyResearchInterests()
 		&& !hasAnyProjectParticipations() && !hasAnyParticipations() && !hasAnyBoards()
-		&& (!hasSite() || getSite().isDeletable()) && !hasAnyOwnedReceipts() && !hasAnyCreatedReceipts()
-		&& !hasAnyProtocols() && !hasAnyPartnerProtocols() && !hasAnyPrecedentDegreeInformations()
+		&& (!hasSite() || getSite().isDeletable()) && !hasAnyOwnedReceipts() && !hasAnyProtocols()
+		&& !hasAnyPartnerProtocols() && !hasAnyPrecedentDegreeInformations()
 		&& !hasAnyCandidacyPrecedentDegreeInformations() && !hasAnyUnitSpaceOccupations() && !hasAnyExamCoordinators()
 		&& !hasAnyExternalRegistrationDatas() && !hasAnyCooperation() && !hasAnyFiles() && !hasAnyPersistentGroups()
 		&& !hasAnyExternalCourseLoadRequests() && !hasAnyExternalProgramCertificateRequests();
@@ -639,22 +640,27 @@ public class Unit extends Unit_Base {
 	return new ArrayList<Employee>(employees);
     }
 
+    @Override
     public Collection<Unit> getParentUnits() {
 	return (Collection<Unit>) getParentParties(Unit.class);
     }
 
+    @Override
     public Collection<Unit> getParentUnits(String accountabilityTypeEnum) {
 	return (Collection<Unit>) getParentParties(AccountabilityTypeEnum.valueOf(accountabilityTypeEnum), Unit.class);
     }
 
+    @Override
     public Collection<Unit> getParentUnits(AccountabilityTypeEnum accountabilityTypeEnum) {
 	return (Collection<Unit>) getParentParties(accountabilityTypeEnum, Unit.class);
     }
 
+    @Override
     public Collection<Unit> getParentUnits(List<AccountabilityTypeEnum> accountabilityTypeEnums) {
 	return (Collection<Unit>) getParentParties(accountabilityTypeEnums, Unit.class);
     }
 
+    @Override
     public Collection<Unit> getSubUnits() {
 	return (Collection<Unit>) getChildParties(Unit.class);
     }
@@ -732,15 +738,6 @@ public class Unit extends Unit_Base {
 	}
 
 	return new Accountability(parentUnit, this, accountabilityType);
-    }
-
-    public AdministrativeOffice getAdministrativeOffice() {
-	for (Unit parentUnit : getParentUnits(AccountabilityTypeEnum.ADMINISTRATIVE_STRUCTURE)) {
-	    if (parentUnit.isAdministrativeOfficeUnit()) {
-		return (parentUnit).getAdministrativeOffice();
-	    }
-	}
-	return null;
     }
 
     public NonAffiliatedTeacher findNonAffiliatedTeacherByName(final String name) {
@@ -821,11 +818,12 @@ public class Unit extends Unit_Base {
 
     public static Unit createNewUnit(MultiLanguageString unitName, String unitNameCard, Integer costCenterCode, String acronym,
 	    YearMonthDay beginDate, YearMonthDay endDate, Unit parentUnit, AccountabilityType accountabilityType,
-	    String webAddress, UnitClassification classification, Boolean canBeResponsibleOfSpaces, Campus campus) {
+	    String webAddress, UnitClassification classification, AdministrativeOffice administrativeOffice,
+	    Boolean canBeResponsibleOfSpaces, Campus campus) {
 
 	Unit unit = new Unit();
 	unit.init(unitName, unitNameCard, costCenterCode, acronym, beginDate, endDate, webAddress, classification,
-		canBeResponsibleOfSpaces, campus);
+		administrativeOffice, canBeResponsibleOfSpaces, campus);
 	if (parentUnit != null && accountabilityType != null) {
 	    unit.addParentUnit(parentUnit, accountabilityType);
 	}
@@ -840,7 +838,7 @@ public class Unit extends Unit_Base {
 	Unit externalInstitutionUnit = UnitUtils.readExternalInstitutionUnit();
 	Unit noOfficialExternalInstitutionUnit = new Unit();
 	noOfficialExternalInstitutionUnit.init(new MultiLanguageString(Language.getDefaultLanguage(), unitName), null, null,
-		null, new YearMonthDay(), null, null, null, null, null);
+		null, new YearMonthDay(), null, null, null, null, null, null);
 	noOfficialExternalInstitutionUnit.addParentUnit(externalInstitutionUnit,
 		AccountabilityType.readByType(AccountabilityTypeEnum.ORGANIZATIONAL_STRUCTURE));
 	noOfficialExternalInstitutionUnit.setCountry(country);
@@ -1695,4 +1693,8 @@ public class Unit extends Unit_Base {
 	    setEndDateYearMonthDay(org.joda.time.YearMonthDay.fromDateFields(date));
     }
 
+    @Override
+    public boolean isAdministrativeOfficeUnit() {
+	return getAdministrativeOffice() != null;
+    }
 }

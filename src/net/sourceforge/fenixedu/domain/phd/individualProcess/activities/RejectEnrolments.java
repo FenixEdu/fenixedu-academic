@@ -9,6 +9,7 @@ import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.caseHandling.PreConditionNotValidException;
 import net.sourceforge.fenixedu.domain.curricularRules.executors.ruleExecutors.CurricularRuleLevel;
+import net.sourceforge.fenixedu.domain.enrolment.IDegreeModuleToEvaluate;
 import net.sourceforge.fenixedu.domain.phd.ManageEnrolmentsBean;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess;
 import net.sourceforge.fenixedu.domain.phd.alert.AlertService;
@@ -32,8 +33,8 @@ public class RejectEnrolments extends PhdIndividualProgramProcessActivity {
 	final StudentCurricularPlan scp = process.getRegistration().getLastStudentCurricularPlan();
 	final String mailBody = buildBody(bean);
 
-	scp.enrol(bean.getSemester(), Collections.EMPTY_SET, getCurriculumModules(bean.getEnrolmentsToValidate()),
-		CurricularRuleLevel.ENROLMENT_WITH_RULES);
+	scp.enrol(bean.getSemester(), Collections.<IDegreeModuleToEvaluate> emptySet(),
+		getCurriculumModules(bean.getEnrolmentsToValidate()), CurricularRuleLevel.ENROLMENT_WITH_RULES);
 
 	AlertService.alertStudent(process, AlertMessage.create(bean.getMailSubject()).isKey(false), AlertMessage.create(mailBody)
 		.isKey(false));

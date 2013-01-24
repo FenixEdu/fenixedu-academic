@@ -1,6 +1,6 @@
 package net.sourceforge.fenixedu.domain.phd.debts;
 
-import net.sourceforge.fenixedu.domain.Employee;
+import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.accounting.Event;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
@@ -14,11 +14,11 @@ import pt.utl.ist.fenix.tools.resources.LabelFormatter;
 
 public class PhdGratuityExternalScholarshipExemption extends PhdGratuityExternalScholarshipExemption_Base {
 
-    public PhdGratuityExternalScholarshipExemption(Employee who, Event event, Party party, Money value) {
+    public PhdGratuityExternalScholarshipExemption(Person responsible, Event event, Party party, Money value) {
 	PhdEventExemptionJustification exemptionJustification = new PhdEventExemptionJustification(this,
 		PhdEventExemptionJustificationType.PHD_GRATUITY_FCT_SCHOLARSHIP_EXEMPTION, event.getWhenOccured().toLocalDate(),
-		"Criado pela existencia de bolsa de entidade externa.");	
-	super.init(who, event, exemptionJustification);
+		"Criado pela existencia de bolsa de entidade externa.");
+	super.init(responsible, event, exemptionJustification);
 	setParty(party);
 	createExternalDebt();
 	setValue(value);
@@ -32,35 +32,39 @@ public class PhdGratuityExternalScholarshipExemption extends PhdGratuityExternal
     }
 
     @Service
-    public static PhdGratuityExternalScholarshipExemption createPhdGratuityExternalScholarshipExemption(Employee who, Money value,
-	    Party party, PhdGratuityEvent event) {
-	if (event.hasExemptionsOfType(PhdGratuityExternalScholarshipExemption.class)){
-	   throw new DomainException("error.already.has.scolarship"); 
+    public static PhdGratuityExternalScholarshipExemption createPhdGratuityExternalScholarshipExemption(Person responsible,
+	    Money value, Party party, PhdGratuityEvent event) {
+	if (event.hasExemptionsOfType(PhdGratuityExternalScholarshipExemption.class)) {
+	    throw new DomainException("error.already.has.scolarship");
 	}
-	PhdGratuityExternalScholarshipExemption phdGratuityExternalScholarshipExemption = new PhdGratuityExternalScholarshipExemption(who,
-		event, party, value);
+	PhdGratuityExternalScholarshipExemption phdGratuityExternalScholarshipExemption = new PhdGratuityExternalScholarshipExemption(
+		responsible, event, party, value);
 	return phdGratuityExternalScholarshipExemption;
     }
-    
+
     @Override
     public LabelFormatter getDescription() {
 	PhdGratuityEvent event = (PhdGratuityEvent) getEvent();
-	return new LabelFormatter().appendLabel("Bolsa de entidade externa ("  + getParty().getName() + ") aplicada à Propina do Programa de Doutoramento de ").appendLabel(event.getPhdProgram().getName().getContent()).appendLabel(" referente a " +  event.getYear());
+	return new LabelFormatter()
+		.appendLabel(
+			"Bolsa de entidade externa (" + getParty().getName()
+				+ ") aplicada à Propina do Programa de Doutoramento de ")
+		.appendLabel(event.getPhdProgram().getName().getContent()).appendLabel(" referente a " + event.getYear());
     }
-   
-    public void doDelete(){
+
+    public void doDelete() {
 	removeExternalScholarshipPhdGratuityContribuitionEvent();
 	removeParty();
 	super.delete();
     }
-    
+
     @Override
     public void delete() {
 	ExternalScholarshipPhdGratuityContribuitionEvent event = getExternalScholarshipPhdGratuityContribuitionEvent();
 	event.delete();
     }
-    
-    public Money getAmoutStillMissing(){
+
+    public Money getAmoutStillMissing() {
 	return getExternalScholarshipPhdGratuityContribuitionEvent().calculateAmountToPay();
     }
 }

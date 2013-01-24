@@ -34,24 +34,24 @@ import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
-@Mapping(path = "/caseHandlingMobilityIndividualApplicationProcess", module = "academicAdminOffice", formBeanClass = FenixActionForm.class)
+@Mapping(path = "/caseHandlingMobilityIndividualApplicationProcess", module = "academicAdministration", formBeanClass = FenixActionForm.class)
 @Forwards({
-	@Forward(name = "intro", path = "/caseHandlingMobilityApplicationProcess.do?method=listProcessAllowedActivities", tileProperties = @Tile(title = "private.academicadministrativeoffice.applications.mobility")),
-	@Forward(name = "list-allowed-activities", path = "/candidacy/erasmus/listIndividualCandidacyActivities.jsp", tileProperties = @Tile(title = "private.academicadministrativeoffice.applications.mobility")),
-	@Forward(name = "prepare-create-new-process", path = "/candidacy/erasmus/selectPersonForCandidacy.jsp", tileProperties = @Tile(title = "private.academicadministrativeoffice.applications.mobility")),
-	@Forward(name = "fill-personal-information", path = "/candidacy/erasmus/fillPersonalInformation.jsp", tileProperties = @Tile(title = "private.academicadministrativeoffice.applications.mobility")),
-	@Forward(name = "fill-candidacy-information", path = "/candidacy/erasmus/fillCandidacyInformation.jsp", tileProperties = @Tile(title = "private.academicadministrativeoffice.applications.mobility")),
-	@Forward(name = "fill-degree-information", path = "/candidacy/erasmus/fillDegreeInformation.jsp", tileProperties = @Tile(title = "private.academicadministrativeoffice.applications.mobility")),
-	@Forward(name = "fill-courses-information", path = "/candidacy/erasmus/fillCoursesInformation.jsp", tileProperties = @Tile(title = "private.academicadministrativeoffice.applications.mobility")),
-	@Forward(name = "edit-candidacy-personal-information", path = "/candidacy/erasmus/editPersonalInformation.jsp", tileProperties = @Tile(title = "private.academicadministrativeoffice.applications.mobility")),
-	@Forward(name = "edit-candidacy-information", path = "/candidacy/erasmus/editCandidacyInformation.jsp", tileProperties = @Tile(title = "private.academicadministrativeoffice.applications.mobility")),
-	@Forward(name = "edit-degree-courses-information", path = "/candidacy/erasmus/editDegreeAndCoursesInformation.jsp", tileProperties = @Tile(title = "private.academicadministrativeoffice.applications.mobility")),
-	@Forward(name = "visualize-alerts", path = "/candidacy/erasmus/visualizeAlerts.jsp", tileProperties = @Tile(title = "private.academicadministrativeoffice.applications.mobility")),
-	@Forward(name = "prepare-edit-candidacy-documents", path = "/candidacy/erasmus/editCandidacyDocuments.jsp", tileProperties = @Tile(title = "private.academicadministrativeoffice.applications.mobility")),
-	@Forward(name = "cancel-candidacy", path = "/candidacy/cancelCandidacy.jsp", tileProperties = @Tile(title = "private.academicadministrativeoffice.applications.mobility")),
-	@Forward(name = "prepare-create-registration", path = "/candidacy/erasmus/prepareCreateRegistration.jsp", tileProperties = @Tile(title = "private.academicadministrativeoffice.applications.mobility")),
-	@Forward(name = "view-registration", path = "/candidacy/erasmus/viewRegistrationData.jsp", tileProperties = @Tile(title = "private.academicadministrativeoffice.applications.mobility")),
-	@Forward(name = "prepare-enrol-on-modules", path = "/candidacy/erasmus/prepareEnrolOnModules.jsp", tileProperties = @Tile(title = "private.academicadministrativeoffice.applications.mobility")) })
+	@Forward(name = "intro", path = "/caseHandlingMobilityApplicationProcess.do?method=listProcessAllowedActivities"),
+	@Forward(name = "list-allowed-activities", path = "/candidacy/erasmus/listIndividualCandidacyActivities.jsp"),
+	@Forward(name = "prepare-create-new-process", path = "/candidacy/erasmus/selectPersonForCandidacy.jsp"),
+	@Forward(name = "fill-personal-information", path = "/candidacy/erasmus/fillPersonalInformation.jsp"),
+	@Forward(name = "fill-candidacy-information", path = "/candidacy/erasmus/fillCandidacyInformation.jsp"),
+	@Forward(name = "fill-degree-information", path = "/candidacy/erasmus/fillDegreeInformation.jsp"),
+	@Forward(name = "fill-courses-information", path = "/candidacy/erasmus/fillCoursesInformation.jsp"),
+	@Forward(name = "edit-candidacy-personal-information", path = "/candidacy/erasmus/editPersonalInformation.jsp"),
+	@Forward(name = "edit-candidacy-information", path = "/candidacy/erasmus/editCandidacyInformation.jsp"),
+	@Forward(name = "edit-degree-courses-information", path = "/candidacy/erasmus/editDegreeAndCoursesInformation.jsp"),
+	@Forward(name = "visualize-alerts", path = "/candidacy/erasmus/visualizeAlerts.jsp"),
+	@Forward(name = "prepare-edit-candidacy-documents", path = "/candidacy/erasmus/editCandidacyDocuments.jsp"),
+	@Forward(name = "cancel-candidacy", path = "/candidacy/cancelCandidacy.jsp"),
+	@Forward(name = "prepare-create-registration", path = "/candidacy/erasmus/prepareCreateRegistration.jsp"),
+	@Forward(name = "view-registration", path = "/candidacy/erasmus/viewRegistrationData.jsp"),
+	@Forward(name = "prepare-enrol-on-modules", path = "/candidacy/erasmus/prepareEnrolOnModules.jsp") })
 public class ErasmusIndividualCandidacyProcessDA extends IndividualCandidacyProcessDA {
 
     @Override

@@ -28,7 +28,6 @@
 				<fr:property name="classes" value="tstyle4 thlight thright mtop025"/>
 		        <fr:property name="columnClasses" value="width12em,,tdclear tderror1"/>
 			</fr:layout>
-			<fr:destination name="invalid" path='<%="/caseHandling" + processName + ".do?method=executeIntroduceCandidacyResultInvalid&amp;processId=" + processId.toString() %>' />
 		</fr:edit>
 		
 		<html:submit><bean:message key="label.submit" bundle="APPLICATION_RESOURCES" /></html:submit>

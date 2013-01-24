@@ -11,15 +11,12 @@
 <%@page import="net.sourceforge.fenixedu.domain.phd.thesis.meeting.PhdMeeting"%>
 <%@page import="net.sourceforge.fenixedu.domain.phd.thesis.PhdThesisProcessBean"%>
 
-<logic:present role="ACADEMIC_ADMINISTRATIVE_OFFICE">
-
 <bean:define id="individualProcess" name="process" property="individualProgramProcess" />
 <bean:define id="meetingProcess" name="process" property="meetingProcess" />
 <bean:define id="individualProcessId" name="individualProcess" property="externalId" />
 <bean:define id="thesisProcessId" name="process" property="externalId" />
 
 <%-- ### Title #### --%>
-<em><bean:message  key="label.phd.academicAdminOffice.breadcrumb" bundle="PHD_RESOURCES"/></em>
 <h2><bean:message key="label.phd.thesis.jury.meeting.scheduling" bundle="PHD_RESOURCES" /></h2>
 
 <%--  ###  Return Links / Steps Information(for multistep forms)  ### --%>
@@ -95,5 +92,3 @@
 			
 	</fr:layout>
 </fr:view>
-
-</logic:present>

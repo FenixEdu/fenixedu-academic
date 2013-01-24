@@ -6,12 +6,8 @@ import java.util.Comparator;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.Role;
 import net.sourceforge.fenixedu.domain.accessControl.Group;
-import net.sourceforge.fenixedu.domain.accessControl.GroupUnion;
-import net.sourceforge.fenixedu.domain.accessControl.RoleGroup;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
-import net.sourceforge.fenixedu.domain.person.RoleType;
 import pt.utl.ist.fenix.tools.file.FileSetMetaData;
 import pt.utl.ist.fenix.tools.file.VirtualPath;
 import pt.utl.ist.fenix.tools.file.VirtualPathNode;
@@ -84,11 +80,7 @@ public abstract class GeneratedDocument extends GeneratedDocument_Base {
 	return filePath;
     }
 
-    protected Group computePermittedGroup() {
-	RoleGroup adminOffice = new RoleGroup(Role.getRoleByRoleType(RoleType.ACADEMIC_ADMINISTRATIVE_OFFICE));
-	RoleGroup manager = new RoleGroup(Role.getRoleByRoleType(RoleType.MANAGER));
-	return new GroupUnion(adminOffice, manager);
-    }
+    protected abstract Group computePermittedGroup();
 
     private Collection<FileSetMetaData> createMetaData(Person operator, String filename) {
 	List<FileSetMetaData> metaData = new ArrayList<FileSetMetaData>();

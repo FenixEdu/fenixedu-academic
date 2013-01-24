@@ -31,7 +31,6 @@
 <logic:notEmpty name="process">
 	<bean:define id="processId" name="process" property="idInternal" />
 	
-	
 	<logic:notEmpty name="activities">
 		<%-- list process activities --%>
 		<ul>

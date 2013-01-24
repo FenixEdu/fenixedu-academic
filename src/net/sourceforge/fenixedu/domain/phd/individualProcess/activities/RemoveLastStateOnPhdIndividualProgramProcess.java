@@ -1,7 +1,6 @@
 package net.sourceforge.fenixedu.domain.phd.individualProcess.activities;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
-import net.sourceforge.fenixedu.domain.accessControl.PermissionType;
 import net.sourceforge.fenixedu.domain.caseHandling.PreConditionNotValidException;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess;
 
@@ -9,13 +8,10 @@ public class RemoveLastStateOnPhdIndividualProgramProcess extends PhdIndividualP
 
     @Override
     public void activityPreConditions(PhdIndividualProgramProcess process, IUserView userView) {
-	if (!PhdIndividualProgramProcess.isMasterDegreeAdministrativeOfficeEmployee(userView)) {
+	if (!process.isAllowedToManageProcessState(userView)) {
 	    throw new PreConditionNotValidException();
 	}
 
-	if (!hasPermissionFor(userView, PermissionType.MANAGE_PHD_PROCESS_STATES)) {
-	    throw new PreConditionNotValidException();
-	}
     }
 
     @Override

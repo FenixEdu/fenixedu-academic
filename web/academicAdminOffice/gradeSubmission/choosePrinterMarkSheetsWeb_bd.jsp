@@ -11,7 +11,7 @@
 <h2><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.print.web.markSheets"/></h2>
 
 
-<html:form action="/printMarkSheetWeb.do">
+<html:form action="/printMarkSheet.do">
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="printMarkSheets"/>
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.markSheet" property="markSheet" value="all"/>
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="1"/>

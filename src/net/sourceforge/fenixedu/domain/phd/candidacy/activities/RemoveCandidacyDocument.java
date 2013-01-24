@@ -9,7 +9,7 @@ public class RemoveCandidacyDocument extends PhdProgramCandidacyProcessActivity 
 
     @Override
     protected void activityPreConditions(PhdProgramCandidacyProcess process, IUserView userView) {
-	if (!isMasterDegreeAdministrativeOfficeEmployee(userView)) {
+	if (!process.isAllowedToManageProcess(userView)) {
 	    return;
 	}
 
@@ -24,9 +24,9 @@ public class RemoveCandidacyDocument extends PhdProgramCandidacyProcessActivity 
     protected PhdProgramCandidacyProcess executeActivity(PhdProgramCandidacyProcess process, IUserView userView, Object object) {
 	PhdProgramProcessDocument phdDocument = (PhdProgramProcessDocument) object;
 
-	    phdDocument.removeFromProcess();
+	phdDocument.removeFromProcess();
 
-	    return process;
+	return process;
     }
 
 }

@@ -5,7 +5,6 @@
 <%@ taglib uri="/WEB-INF/phd.tld" prefix="phd" %>
 
 <%@page import="net.sourceforge.fenixedu.domain.phd.seminar.PublicPresentationSeminarProcess"%>
-<%@page import="net.sourceforge.fenixedu.domain.accessControl.PermissionType" %>
 
 <logic:notEmpty name="process" property="seminarProcess">
 <logic:equal name="process" property="activeState.active" value="true">
@@ -24,13 +23,13 @@
 			</td>
 			<td>
 				<ul class="operations" >
-					<phd:permissionFor permission="<%= PermissionType.MANAGE_PHD_PROCESS_STATES %>">
+					<logic:equal value="true" name="process" property="currentUserAllowedToManageProcessState">
 					<li >
 						<html:link action="/publicPresentationSeminarProcess.do?method=manageStates" paramId="processId" paramName="process" paramProperty="seminarProcess.externalId">
 							<bean:message bundle="PHD_RESOURCES" key="label.phd.manage.states"/>
 						</html:link>
 					</li>
-					</phd:permissionFor>
+					</logic:equal>
 				<phd:activityAvailable process="<%= seminarProcess  %>" activity="<%= PublicPresentationSeminarProcess.EditProcessAttributes.class %>">
 					<li >
 						<html:link action="/publicPresentationSeminarProcess.do?method=prepareEditProcessAttributes" paramId="processId" paramName="process" paramProperty="seminarProcess.externalId">

@@ -7,7 +7,8 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.NotAuthorizedFilterException;
+import net.sourceforge.fenixedu.applicationTier.Servico.administrativeOffice.gradeSubmission.ConfirmMarkSheet;
+import net.sourceforge.fenixedu.applicationTier.Servico.administrativeOffice.gradeSubmission.DeleteMarkSheet;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.degreeAdministrativeOffice.gradeSubmission.CurricularCourseMarksheetManagementBean;
 import net.sourceforge.fenixedu.dataTransferObject.degreeAdministrativeOffice.gradeSubmission.MarkSheetManagementBaseBean;
@@ -23,7 +24,6 @@ import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.exceptions.InDebtEnrolmentsException;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.struts.action.ActionForm;
@@ -113,11 +113,7 @@ abstract public class MarkSheetDispatchAction extends FenixDispatchAction {
 	Integer markSheetID = (Integer) form.get("msID");
 
 	try {
-	    ServiceUtils.executeService("DeleteMarkSheet", new Object[] { markSheetID });
-	} catch (FenixFilterException e) {
-	    addMessage(request, actionMessages, "error.notAuthorized");
-	} catch (FenixServiceException e) {
-	    addMessage(request, actionMessages, e.getMessage());
+	    DeleteMarkSheet.run(markSheetID);
 	} catch (DomainException e) {
 	    addMessage(request, actionMessages, e.getMessage(), e.getArgs());
 	}
@@ -143,9 +139,7 @@ abstract public class MarkSheetDispatchAction extends FenixDispatchAction {
 	IUserView userView = getUserView(request);
 	ActionMessages actionMessages = new ActionMessages();
 	try {
-	    ServiceUtils.executeService("ConfirmMarkSheet", new Object[] { markSheet, userView.getPerson().getEmployee() });
-	} catch (NotAuthorizedFilterException e) {
-	    addMessage(request, actionMessages, "error.notAuthorized");
+	    ConfirmMarkSheet.run(markSheet, userView.getPerson());
 	} catch (InDebtEnrolmentsException e) {
 	    for (Enrolment enrolment : e.getEnrolments()) {
 		addMessage(request, actionMessages, e.getMessage(), enrolment.getRegistration().getStudent().getNumber()
@@ -177,8 +171,8 @@ abstract public class MarkSheetDispatchAction extends FenixDispatchAction {
 		addMessage(request, actionMessages, "error.evaluationDateNotInExamsPeriod");
 	    } else {
 		addMessage(request, actionMessages, "error.evaluationDateNotInExamsPeriodWithDates", occupationPeriod
-			.getStartYearMonthDay().toString("dd/MM/yyyy"), occupationPeriod.getEndYearMonthDay().toString(
-			"dd/MM/yyyy"));
+			.getStartYearMonthDay().toString("dd/MM/yyyy"),
+			occupationPeriod.getEndYearMonthDay().toString("dd/MM/yyyy"));
 	    }
 	}
     }

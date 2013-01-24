@@ -209,6 +209,26 @@ public abstract class Party extends Party_Base implements Comparable<Party> {
 	return result;
     }
 
+    public Collection<Unit> getParentUnits() {
+	return (Collection<Unit>) getParentParties(Unit.class);
+    }
+
+    public Collection<Unit> getParentUnits(String accountabilityTypeEnum) {
+	return (Collection<Unit>) getParentParties(AccountabilityTypeEnum.valueOf(accountabilityTypeEnum), Unit.class);
+    }
+
+    public Collection<Unit> getParentUnits(AccountabilityTypeEnum accountabilityTypeEnum) {
+	return (Collection<Unit>) getParentParties(accountabilityTypeEnum, Unit.class);
+    }
+
+    public Collection<Unit> getParentUnits(List<AccountabilityTypeEnum> accountabilityTypeEnums) {
+	return (Collection<Unit>) getParentParties(accountabilityTypeEnums, Unit.class);
+    }
+
+    public Collection<Unit> getSubUnits() {
+	return (Collection<Unit>) getChildParties(Unit.class);
+    }
+
     public Collection<? extends Party> getChildParties(Class<? extends Party> childPartyClass) {
 	final Set<Party> result = new HashSet<Party>();
 	for (final Accountability accountability : getChildsSet()) {

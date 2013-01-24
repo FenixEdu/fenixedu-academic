@@ -115,8 +115,7 @@ public class SearchPerson extends FenixService implements Serializable {
 		    && StringUtils.isEmpty(this.documentIdNumber) && this.role == null && this.degree == null
 		    && this.department == null && this.degreeType == null && this.nameWords == null && this.studentNumber == null
 		    && this.mechanoGraphicalNumber == null && this.idDocumentType == null
-		    && this.showOnlySearchableResearchers == null
-		    && (this.paymentCode == null || this.paymentCode.trim().isEmpty());
+		    && this.showOnlySearchableResearchers == null && StringUtils.isEmpty(this.getPaymentCode());
 	}
 
 	private static String[] getNameWords(String name) {
@@ -252,7 +251,6 @@ public class SearchPerson extends FenixService implements Serializable {
 	public void setPaymentCode(final String paymentCode) {
 	    this.paymentCode = paymentCode;
 	}
-
     }
 
     public CollectionPager<Person> run(SearchParameters searchParameters, Predicate predicate) {
@@ -334,17 +332,13 @@ public class SearchPerson extends FenixService implements Serializable {
 		persons.addAll(Person.findExternalPerson(searchParameters.getName()));
 	    }
 
-	} else if (searchParameters.getPaymentCode() != null && !searchParameters.getPaymentCode().trim().isEmpty()) {
-	    String paymentCode = searchParameters.getPaymentCode().trim();
-
-	    List<PaymentCode> paymentCodes = RootDomainObject.getInstance().getPaymentCodes();
+	} else if (!StringUtils.isEmpty(searchParameters.getPaymentCode())) {
 	    persons = new ArrayList<Person>();
 
-	    for (PaymentCode code : paymentCodes) {
-		if (code.getCode().equals(paymentCode)) {
-		    persons.add(code.getPerson());
-		    break;
-		}
+	    PaymentCode paymentCode = PaymentCode.readByCode(searchParameters.getPaymentCode());
+
+	    if (paymentCode != null && paymentCode.getPerson() != null) {
+		persons.add(paymentCode.getPerson());
 	    }
 	} else {
 	    persons = new ArrayList<Person>(0);
@@ -374,6 +368,7 @@ public class SearchPerson extends FenixService implements Serializable {
 		    && verifyDegreeType(searchParameters.getDegree(), searchParameters.getDegreeType(), person)
 		    && verifyStudentNumber(searchParameters.getStudentNumber(), person)
 		    && verifyMechanoGraphicalNumber(searchParameters.getMechanoGraphicalNumber(), person)
+		    && verifyPaymentCodes(searchParameters.getPaymentCode(), person)
 		    && verifyShowOnlySearchableResearchers(searchParameters.showOnlySearchableResearchers, person);
 	}
 
@@ -451,6 +446,10 @@ public class SearchPerson extends FenixService implements Serializable {
 	protected static boolean verifyShowOnlySearchableResearchers(Boolean showOnlySearchableResearchers, final Person person) {
 	    return showOnlySearchableResearchers == null || showOnlySearchableResearchers && person.hasResearcher()
 		    && person.getResearcher().getAllowsToBeSearched();
+	}
+
+	protected static boolean verifyPaymentCodes(String paymentCode, final Person person) {
+	    return StringUtils.isEmpty(paymentCode) || person.getPaymentCodeBy(paymentCode) != null;
 	}
 
 	public SearchParameters getSearchParameters() {

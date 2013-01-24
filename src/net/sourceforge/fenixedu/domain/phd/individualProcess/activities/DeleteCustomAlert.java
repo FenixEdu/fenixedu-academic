@@ -9,16 +9,15 @@ public class DeleteCustomAlert extends PhdIndividualProgramProcessActivity {
 
     @Override
     protected void activityPreConditions(PhdIndividualProgramProcess process, IUserView userView) {
-        if (!PhdIndividualProgramProcess.isMasterDegreeAdministrativeOfficeEmployee(userView)) {
-    	throw new PreConditionNotValidException();
-        }
+	if (!process.isAllowedToManageProcess(userView)) {
+	    throw new PreConditionNotValidException();
+	}
     }
 
     @Override
-    protected PhdIndividualProgramProcess executeActivity(PhdIndividualProgramProcess process, IUserView userView,
-    	Object object) {
+    protected PhdIndividualProgramProcess executeActivity(PhdIndividualProgramProcess process, IUserView userView, Object object) {
 
-        ((PhdCustomAlert) object).delete();
-        return process;
+	((PhdCustomAlert) object).delete();
+	return process;
     }
 }

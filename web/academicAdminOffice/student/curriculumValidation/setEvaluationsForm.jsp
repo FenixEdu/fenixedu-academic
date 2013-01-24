@@ -2,6 +2,7 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr" %>
+<%@ taglib uri="/WEB-INF/academic.tld" prefix="academic" %>
 
 <%@ page import="net.sourceforge.fenixedu.dataTransferObject.degreeAdministrativeOffice.gradeSubmission.MarkSheetEnrolmentEvaluationBean" %>
 <%@ page import="net.sourceforge.fenixedu.domain.Enrolment" %>
@@ -11,6 +12,7 @@
 <em><bean:message key="label.academicAdminOffice" bundle="ACADEMIC_OFFICE_RESOURCES"/></em>
 <h2><bean:message key="label.curriculum.validation.set.evaluations" bundle="ACADEMIC_OFFICE_RESOURCES"/></h2>
 
+<bean:define id="studentCurricularPlan" name="studentCurricularPlan" type="net.sourceforge.fenixedu.domain.StudentCurricularPlan"/>
 <bean:define id="studentCurricularPlanId" name="studentCurricularPlan" property="externalId"/>
 <bean:define id="executionSemesterId" name="executionSemester" property="externalId" />
 
@@ -19,12 +21,13 @@
 		<bean:message key="label.back" bundle="ACADEMIC_OFFICE_RESOURCES" />
 	</html:link>
 </p>
-<p>
-	<html:link page="<%= "/curriculumValidation.do?method=prepareStudentEnrolment&amp;studentCurricularPlanId=" + studentCurricularPlanId  + "&amp;executionSemesterId=" + executionSemesterId %>">
-		« <bean:message key="label.curriculum.validation.student.enrolment.without.rules" bundle="ACADEMIC_OFFICE_RESOURCES" />
-	</html:link>
-</p>
-
+<academic:allowed operation="ENROLMENT_WITHOUT_RULES" program="<%= studentCurricularPlan.getRegistration().getDegree() %>">
+	<p>
+		<html:link page="<%= "/curriculumValidation.do?method=prepareStudentEnrolment&amp;studentCurricularPlanId=" + studentCurricularPlanId  + "&amp;executionSemesterId=" + executionSemesterId %>">
+			« <bean:message key="label.curriculum.validation.student.enrolment.without.rules" bundle="ACADEMIC_OFFICE_RESOURCES" />
+		</html:link>
+	</p>
+</academic:allowed>
 
 
 

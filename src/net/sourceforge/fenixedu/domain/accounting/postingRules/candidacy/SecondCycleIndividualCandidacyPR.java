@@ -15,8 +15,6 @@ import net.sourceforge.fenixedu.util.Money;
 
 import org.joda.time.DateTime;
 
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
-
 public class SecondCycleIndividualCandidacyPR extends SecondCycleIndividualCandidacyPR_Base {
 
     protected SecondCycleIndividualCandidacyPR() {
@@ -30,7 +28,7 @@ public class SecondCycleIndividualCandidacyPR extends SecondCycleIndividualCandi
 		serviceAgreementTemplate, fixedAmount);
     }
 
-    @Checked("PostingRulePredicates.editPredicate")
+    @Override
     public SecondCycleIndividualCandidacyPR edit(final Money fixedAmount) {
 	deactivate();
 	return new SecondCycleIndividualCandidacyPR(new DateTime().minus(1000), null, getServiceAgreementTemplate(), fixedAmount);

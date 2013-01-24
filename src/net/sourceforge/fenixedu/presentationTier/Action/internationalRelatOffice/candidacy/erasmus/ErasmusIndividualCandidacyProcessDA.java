@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.student.administrativeOfficeServices.CreateExtraEnrolment;
+import net.sourceforge.fenixedu.applicationTier.Servico.student.enrolment.bolonha.EnrolBolonhaStudent;
 import net.sourceforge.fenixedu.applicationTier.Servico.student.enrolment.bolonha.EnrolInAffinityCycle;
 import net.sourceforge.fenixedu.dataTransferObject.administrativeOffice.studentEnrolment.MobilityExtraEnrolmentBean;
 import net.sourceforge.fenixedu.dataTransferObject.person.PersonBean;
@@ -330,13 +331,12 @@ public class ErasmusIndividualCandidacyProcessDA extends
 	    throws FenixFilterException, FenixServiceException {
 	ErasmusBolonhaStudentEnrollmentBean erasmusBolonhaStudentEnrollmentBean = (ErasmusBolonhaStudentEnrollmentBean) getRenderedObject();
 	try {
-	    final RuleResult ruleResults = (RuleResult) executeService(
-		    "EnrolBolonhaStudent",
-		    new Object[] { erasmusBolonhaStudentEnrollmentBean.getStudentCurricularPlan(),
-			    erasmusBolonhaStudentEnrollmentBean.getExecutionPeriod(),
-			    erasmusBolonhaStudentEnrollmentBean.getDegreeModulesToEvaluate(),
-			    erasmusBolonhaStudentEnrollmentBean.getCurriculumModulesToRemove(),
-			    erasmusBolonhaStudentEnrollmentBean.getCurricularRuleLevel() });
+	    final RuleResult ruleResults = EnrolBolonhaStudent.run(
+		    erasmusBolonhaStudentEnrollmentBean.getStudentCurricularPlan(),
+		    erasmusBolonhaStudentEnrollmentBean.getExecutionPeriod(),
+		    erasmusBolonhaStudentEnrollmentBean.getDegreeModulesToEvaluate(),
+		    erasmusBolonhaStudentEnrollmentBean.getCurriculumModulesToRemove(),
+		    erasmusBolonhaStudentEnrollmentBean.getCurricularRuleLevel());
 
 	    if (!erasmusBolonhaStudentEnrollmentBean.getDegreeModulesToEvaluate().isEmpty()
 		    || !erasmusBolonhaStudentEnrollmentBean.getCurriculumModulesToRemove().isEmpty()) {

@@ -5,7 +5,9 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Set;
 
+import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.EntryPhase;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
@@ -28,16 +30,17 @@ public class RegisteredDegreeCandidaciesSelectionBean implements Serializable {
     private static final long serialVersionUID = 1L;
 
     final static Comparator<StudentCandidacy> DEGREE_CANDIDACIES_COMPARATOR = new Comparator<StudentCandidacy>() {
+	@Override
 	public int compare(StudentCandidacy o1, StudentCandidacy o2) {
 	    int result = o1.getEntryPhase().compareTo(o2.getEntryPhase());
 	    if (result == 0) {
-		result = o1.getActiveCandidacySituation().getSituationDate().compareTo(
-			o2.getActiveCandidacySituation().getSituationDate());
+		result = o1.getActiveCandidacySituation().getSituationDate()
+			.compareTo(o2.getActiveCandidacySituation().getSituationDate());
 	    }
 	    if (result == 0) {
 		final ExecutionYear executionYear = ExecutionYear.readCurrentExecutionYear();
-		result = o1.getExecutionDegree().getDegree().getNameFor(executionYear).compareTo(
-			o2.getExecutionDegree().getDegree().getNameFor(executionYear));
+		result = o1.getExecutionDegree().getDegree().getNameFor(executionYear)
+			.compareTo(o2.getExecutionDegree().getDegree().getNameFor(executionYear));
 	    }
 	    if (result == 0) {
 		result = o1.getRegistration().getNumber().compareTo(o2.getRegistration().getNumber());
@@ -102,7 +105,7 @@ public class RegisteredDegreeCandidaciesSelectionBean implements Serializable {
 	this.endDate = endDate;
     }
 
-    public List<StudentCandidacy> search() {
+    public List<StudentCandidacy> search(final Set<Degree> allowedPrograms) {
 	final List<StudentCandidacy> degreeCandidacies = new ArrayList<StudentCandidacy>();
 	for (final ExecutionDegree executionDegree : getExecutionYear().getExecutionDegreesSet()) {
 	    if (executionDegree.getCampus() == getCampus()) {
@@ -122,7 +125,8 @@ public class RegisteredDegreeCandidaciesSelectionBean implements Serializable {
 			if (candidacy.getRegistration() != null && candidacy.getRegistration().isCanceled()) {
 			    continue;
 			}
-			degreeCandidacies.add(candidacy);
+			if (allowedPrograms.contains(candidacy.getExecutionDegree().getDegree()))
+			    degreeCandidacies.add(candidacy);
 		    }
 		}
 	    }
@@ -132,11 +136,11 @@ public class RegisteredDegreeCandidaciesSelectionBean implements Serializable {
 	return degreeCandidacies;
     }
 
-    public Spreadsheet export() {
+    public Spreadsheet export(final Set<Degree> allowedPrograms) {
 	final Spreadsheet spreadsheet = new Spreadsheet(campus.getName());
 	addHeaders(spreadsheet);
 
-	List<StudentCandidacy> result = search();
+	List<StudentCandidacy> result = search(allowedPrograms);
 	Collections.sort(result, DEGREE_CANDIDACIES_COMPARATOR);
 
 	for (final StudentCandidacy candidacy : result) {

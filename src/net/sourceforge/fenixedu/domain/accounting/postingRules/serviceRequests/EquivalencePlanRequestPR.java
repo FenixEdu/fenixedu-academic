@@ -22,8 +22,6 @@ import net.sourceforge.fenixedu.util.Money;
 
 import org.joda.time.DateTime;
 
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
-
 public class EquivalencePlanRequestPR extends EquivalencePlanRequestPR_Base {
 
     private EquivalencePlanRequestPR() {
@@ -95,8 +93,8 @@ public class EquivalencePlanRequestPR extends EquivalencePlanRequestPR_Base {
     }
 
     @Override
-    protected Set<AccountingTransaction> internalProcess(User user, Collection<EntryDTO> entryDTOs, Event event, Account fromAccount,
-	    Account toAccount, AccountingTransactionDetailDTO transactionDetail) {
+    protected Set<AccountingTransaction> internalProcess(User user, Collection<EntryDTO> entryDTOs, Event event,
+	    Account fromAccount, Account toAccount, AccountingTransactionDetailDTO transactionDetail) {
 
 	if (entryDTOs.size() != 1) {
 	    throw new DomainException(
@@ -119,7 +117,6 @@ public class EquivalencePlanRequestPR extends EquivalencePlanRequestPR_Base {
 	}
     }
 
-    @Checked("PostingRulePredicates.editPredicate")
     public EquivalencePlanRequestPR edit(final Money amountPerUnit, final Money maximumAmount) {
 	deactivate();
 	return new EquivalencePlanRequestPR(new DateTime().minus(1000), null, getServiceAgreementTemplate(), amountPerUnit,

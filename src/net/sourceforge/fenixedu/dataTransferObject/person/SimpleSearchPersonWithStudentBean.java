@@ -124,10 +124,10 @@ public class SimpleSearchPersonWithStudentBean implements Serializable {
     }
 
     public String getPaymentCode() {
-	return this.paymentCode;
+	return paymentCode;
     }
 
-    public void setPaymentCode(final String paymentCode) {
+    public void setPaymentCode(String paymentCode) {
 	this.paymentCode = paymentCode;
     }
 

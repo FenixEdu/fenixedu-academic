@@ -15,7 +15,7 @@ public class RegistrationFormalization extends PhdProgramCandidacyProcessActivit
 	}
     }
 
-	@Override
+    @Override
     protected PhdProgramCandidacyProcess executeActivity(PhdProgramCandidacyProcess process, IUserView userView, Object object) {
 	return process.registrationFormalization((RegistrationFormalizationBean) object, userView.getPerson());
     }

@@ -15,7 +15,6 @@ import net.sourceforge.fenixedu.domain.accounting.PaymentCodeType;
 import net.sourceforge.fenixedu.domain.accounting.paymentCodes.AccountingEventPaymentCode;
 import net.sourceforge.fenixedu.domain.accounting.paymentCodes.IndividualCandidacyPaymentCode;
 import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
-import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOfficeType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess;
 import net.sourceforge.fenixedu.domain.phd.PhdProgram;
@@ -39,7 +38,7 @@ public class PhdProgramCandidacyEvent extends PhdProgramCandidacyEvent_Base {
     }
 
     public PhdProgramCandidacyEvent(final Person person, final PhdProgramCandidacyProcess process) {
-	this(AdministrativeOffice.readByAdministrativeOfficeType(AdministrativeOfficeType.MASTER_DEGREE), person, process);
+	this(process.getIndividualProgramProcess().getAdministrativeOffice(), person, process);
 
 	if (process.isPublicCandidacy()) {
 	    attachAvailablePaymentCode();
@@ -54,7 +53,6 @@ public class PhdProgramCandidacyEvent extends PhdProgramCandidacyEvent_Base {
 	    throw new DomainException("error.IndividualCandidacyEvent.invalid.payment.code");
 	}
     }
-
 
     private void init(AdministrativeOffice administrativeOffice, Person person, PhdProgramCandidacyProcess candidacyProcess) {
 	super.init(administrativeOffice, EventType.CANDIDACY_ENROLMENT, person);
@@ -118,8 +116,8 @@ public class PhdProgramCandidacyEvent extends PhdProgramCandidacyEvent_Base {
 	return internalProcess(responsibleUser, Collections.singletonList(new EntryDTO(getEntryType(), this, amountToPay)),
 		transactionDetail);
     }
-    
+
     protected EntryType getEntryType() {
 	return EntryType.CANDIDACY_ENROLMENT_FEE;
-    }    
+    }
 }

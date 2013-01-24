@@ -14,16 +14,11 @@ import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
-@Mapping(path = "/curriculumLinesLocationManagement", module = "academicAdminOffice")
+@Mapping(path = "/curriculumLinesLocationManagement", module = "academicAdministration")
 @Forwards({
-
-	@Forward(name = "showCurriculum", path = "/academicAdminOffice/curriculum/curriculumLines/location/showCurriculum.jsp", tileProperties = @Tile(title = "private.academicadministrativeoffice.studentoperations.viewstudents")),
-
+	@Forward(name = "showCurriculum", path = "/academicAdminOffice/curriculum/curriculumLines/location/showCurriculum.jsp"),
 	@Forward(name = "chooseNewLocation", path = "/academicAdminOffice/curriculum/curriculumLines/location/chooseNewLocation.jsp"),
-
-	@Forward(name = "backToStudentEnrolments", path = "/studentEnrolments.do?method=prepare")
-
-})
+	@Forward(name = "backToStudentEnrolments", path = "/studentEnrolments.do?method=prepare") })
 public class CurriculumLinesLocationManagementDA extends AbstractCurriculumLinesLocationManagementDA {
 
     public ActionForward backToStudentEnrolments(ActionMapping mapping, ActionForm form, HttpServletRequest request,

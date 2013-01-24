@@ -18,12 +18,10 @@ import java.util.zip.ZipOutputStream;
 import javax.ws.rs.core.MediaType;
 
 import net.sourceforge.fenixedu._development.PropertiesManager;
-import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.File;
-import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOfficeType;
 import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacy;
 import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyDocumentFile;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
@@ -50,7 +48,6 @@ import org.apache.poi.ss.util.CellRangeAddress;
 import org.joda.time.YearMonthDay;
 
 import pt.ist.fenixWebFramework.security.UserView;
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.ist.fenixWebFramework.services.Service;
 import pt.utl.ist.fenix.tools.util.excel.StyledExcelSpreadsheet;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
@@ -60,8 +57,7 @@ import com.sun.jersey.api.client.ClientResponse;
 import com.sun.jersey.multipart.FormDataMultiPart;
 import com.sun.jersey.multipart.file.StreamDataBodyPart;
 
-public class SendAcademicServiceRequestToExternalEntity extends FenixService {
-
+public class SendAcademicServiceRequestToExternalEntity {
     private static final Logger logger = Logger.getLogger(SendAcademicServiceRequestToExternalEntity.class);
 
     private static final String COURSE_LABEL = "Nome da disciplina do currículo de Bolonha";
@@ -73,11 +69,9 @@ public class SendAcademicServiceRequestToExternalEntity extends FenixService {
 						      // process is open to all
 						      // degrees
 
-    @Checked("RolePredicates.ACADEMIC_ADMINISTRATIVE_OFFICE_PREDICATE")
     @Service
     public static void run(final AcademicServiceRequest academicServiceRequest, final YearMonthDay sendDate,
 	    final String justification) {
-
 	academicServiceRequest.sendToExternalEntity(sendDate, justification);
 
 	if (academicServiceRequest instanceof EquivalencePlanRequest) {
@@ -104,7 +98,7 @@ public class SendAcademicServiceRequestToExternalEntity extends FenixService {
 
 	    final StringBuilder studentGrades = new StringBuilder();
 	    for (final Registration otherRegistration : registration.getStudent().getRegistrations()) {
-		if (otherRegistration.getDegreeType().getAdministrativeOfficeType() == AdministrativeOfficeType.DEGREE) {
+		if (otherRegistration.getDegreeType().equals(registration.getDegreeType())) {
 		    String approvementsInfo = ApprovementInfoForEquivalenceProcess.getApprovementsInfo(otherRegistration);
 		    if (!StringUtils.isEmpty(approvementsInfo.trim())) {
 			studentGrades.append("\n\n\n");

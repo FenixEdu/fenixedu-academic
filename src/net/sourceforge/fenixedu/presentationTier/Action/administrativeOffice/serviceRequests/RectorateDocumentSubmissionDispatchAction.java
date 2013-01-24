@@ -14,6 +14,8 @@ import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import net.sourceforge.fenixedu.domain.accessControl.academicAdministration.AcademicAuthorizationGroup;
+import net.sourceforge.fenixedu.domain.accessControl.academicAdministration.AcademicOperationType;
 import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
 import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
@@ -42,18 +44,24 @@ import pt.utl.ist.fenix.tools.spreadsheet.SpreadsheetBuilder;
 import pt.utl.ist.fenix.tools.spreadsheet.WorkbookExportFormat;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 
-@Mapping(path = "/rectorateDocumentSubmission", module = "academicAdminOffice")
+@Mapping(path = "/rectorateDocumentSubmission", module = "academicAdministration")
 @Forwards({
-	@Forward(name = "index", path = "/academicAdminOffice/rectorateDocumentSubmission/batchIndex.jsp", tileProperties = @Tile(title = "private.academicadministrativeoffice.academicservices.documentstorectory")),
-	@Forward(name = "viewBatch", path = "/academicAdminOffice/rectorateDocumentSubmission/showBatch.jsp", tileProperties = @Tile(title = "private.academicadministrativeoffice.academicservices.documentstorectory")) })
+	@Forward(name = "index", path = "/academicAdminOffice/rectorateDocumentSubmission/batchIndex.jsp"),
+	@Forward(name = "viewBatch", path = "/academicAdminOffice/rectorateDocumentSubmission/showBatch.jsp") })
 public class RectorateDocumentSubmissionDispatchAction extends FenixDispatchAction {
     public ActionForward index(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) {
-	AdministrativeOffice office = getLoggedPerson(request).getEmployee().getAdministrativeOffice();
-	request.setAttribute("unsent", office.getRectorateSubmissionBatchesByState(RectorateSubmissionState.UNSENT));
-	request.setAttribute("closed", office.getRectorateSubmissionBatchesByState(RectorateSubmissionState.CLOSED));
-	request.setAttribute("sent", office.getRectorateSubmissionBatchesByState(RectorateSubmissionState.SENT));
-	request.setAttribute("received", office.getRectorateSubmissionBatchesByState(RectorateSubmissionState.RECEIVED));
+	Set<AdministrativeOffice> offices = AcademicAuthorizationGroup.getOfficesForOperation(getLoggedPerson(request),
+		AcademicOperationType.SERVICE_REQUESTS_RECTORAL_SENDING);
+
+	request.setAttribute("unsent",
+		RectorateSubmissionBatch.getRectorateSubmissionBatchesByState(offices, RectorateSubmissionState.UNSENT));
+	request.setAttribute("closed",
+		RectorateSubmissionBatch.getRectorateSubmissionBatchesByState(offices, RectorateSubmissionState.CLOSED));
+	request.setAttribute("sent",
+		RectorateSubmissionBatch.getRectorateSubmissionBatchesByState(offices, RectorateSubmissionState.SENT));
+	request.setAttribute("received",
+		RectorateSubmissionBatch.getRectorateSubmissionBatchesByState(offices, RectorateSubmissionState.RECEIVED));
 	return mapping.findForward("index");
     }
 
@@ -81,9 +89,7 @@ public class RectorateDocumentSubmissionDispatchAction extends FenixDispatchActi
 	    }
 	    break;
 	case RECEIVED:
-	    actions.add("generateMetadataForRegistry");
-	    actions.add("generateMetadataForDiplomas");
-	    actions.add("zipDocuments");
+	    break;
 	}
 	request.setAttribute("batch", batch);
 	// Filter out canceled document requests, ticket: #248539

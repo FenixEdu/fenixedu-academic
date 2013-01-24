@@ -47,7 +47,7 @@ public class UniversityUnit extends UniversityUnit_Base {
 
 	UniversityUnit universityUnit = new UniversityUnit();
 	universityUnit.init(universityName, universityNameCard, costCenterCode, universityAcronym, beginDate, endDate,
-		webAddress, classification, canBeResponsibleOfSpaces, campus);
+		webAddress, classification, null, canBeResponsibleOfSpaces, campus);
 	return createNewUnit(parentUnit, universityUnit);
     }
 

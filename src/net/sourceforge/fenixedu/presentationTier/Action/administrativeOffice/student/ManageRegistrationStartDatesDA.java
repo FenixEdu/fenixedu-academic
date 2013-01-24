@@ -20,8 +20,8 @@ import pt.ist.fenixWebFramework.struts.annotations.Tile;
  * 
  */
 
-@Mapping(path = "/manageRegistrationStartDates", module = "academicAdminOffice")
-@Forwards({ @Forward(name = "showEditStartDates", path = "/academicAdminOffice/student/registration/manageRegistrationStartDates.jsp", tileProperties = @Tile(title = "private.academicadministrativeoffice.studentoperations.viewstudents")) })
+@Mapping(path = "/manageRegistrationStartDates", module = "academicAdministration")
+@Forwards({ @Forward(name = "showEditStartDates", path = "/academicAdminOffice/student/registration/manageRegistrationStartDates.jsp") })
 public class ManageRegistrationStartDatesDA extends FenixDispatchAction {
 
     @Input

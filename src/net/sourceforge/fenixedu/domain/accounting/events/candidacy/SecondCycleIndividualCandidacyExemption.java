@@ -1,6 +1,6 @@
 package net.sourceforge.fenixedu.domain.accounting.events.candidacy;
 
-import net.sourceforge.fenixedu.domain.Employee;
+import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.accounting.Event;
 import net.sourceforge.fenixedu.domain.accounting.Exemption;
 import net.sourceforge.fenixedu.domain.accounting.events.ExemptionJustification;
@@ -33,10 +33,10 @@ public class SecondCycleIndividualCandidacyExemption extends SecondCycleIndividu
 	super();
     }
 
-    public SecondCycleIndividualCandidacyExemption(final Employee employee, final SecondCycleIndividualCandidacyEvent event,
+    public SecondCycleIndividualCandidacyExemption(final Person responsible, final SecondCycleIndividualCandidacyEvent event,
 	    final CandidacyExemptionJustificationType candidacyExemptionJustificationType) {
 	this();
-	super.init(employee, event, createJustification(candidacyExemptionJustificationType));
+	super.init(responsible, event, createJustification(candidacyExemptionJustificationType));
 	event.recalculateState(new DateTime());
     }
 

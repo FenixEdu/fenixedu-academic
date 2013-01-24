@@ -9,12 +9,9 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoContributor;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
-import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
-import net.sourceforge.fenixedu.presentationTier.Action.exceptions.ExistingActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants;
 
 import org.apache.struts.action.ActionForm;
@@ -22,12 +19,21 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+
 /**
  * 
  * @author Nuno Nunes (nmsn@rnl.ist.utl.pt) Joana Mota (jccm@rnl.ist.utl.pt)
  * 
  * 
  */
+
+@Mapping(path = "/visualizeContributors", module = "academicAdministration", formBean = "chooseContributorForm")
+@Forwards({ @Forward(name = "PrepareReady", path = "/academicAdminOffice/contributor/chooseContributor.jsp"),
+	@Forward(name = "ActionReady", path = "/academicAdminOffice/contributor/visualizeContributor.jsp"),
+	@Forward(name = "ChooseContributor", path = "/academicAdminOffice/contributor/selectContributorFromList.jsp") })
 public class ListContributorsDispatchAction extends FenixDispatchAction {
 
     public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
@@ -38,16 +44,14 @@ public class ListContributorsDispatchAction extends FenixDispatchAction {
 	// Clean the form
 	createContributorForm.set("contributorNumber", null);
 
-	String action = request.getParameter("action");
-
-	if (action.equals("visualize")) {
-	    request.setAttribute(PresentationConstants.CONTRIBUTOR_ACTION, "label.action.contributor.visualize");
-	} else if (action.equals("edit")) {
-	    request.setAttribute(PresentationConstants.CONTRIBUTOR_ACTION, "label.action.contributor.edit");
-	}
+	setActionToRequest(request);
 
 	return mapping.findForward("PrepareReady");
 
+    }
+
+    protected void setActionToRequest(HttpServletRequest request) {
+	request.setAttribute(PresentationConstants.CONTRIBUTOR_ACTION, "label.action.contributor.visualize");
     }
 
     public ActionForward getContributors(final ActionMapping mapping, final ActionForm form, final HttpServletRequest request,
@@ -83,66 +87,4 @@ public class ListContributorsDispatchAction extends FenixDispatchAction {
 	return mapping.findForward("ActionReady");
 
     }
-
-    public ActionForward prepareEdit(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) throws Exception {
-
-	DynaActionForm editContributorForm = (DynaActionForm) form;
-
-	InfoContributor infoContributor = getInfoContributor(request, editContributorForm);
-
-	editContributorForm.set("contributorNumber", String.valueOf(infoContributor.getContributorNumber()));
-	editContributorForm.set("contributorName", infoContributor.getContributorName());
-	editContributorForm.set("contributorAddress", infoContributor.getContributorAddress());
-	editContributorForm.set("areaCode", infoContributor.getAreaCode());
-	editContributorForm.set("areaOfAreaCode", infoContributor.getAreaOfAreaCode());
-	editContributorForm.set("area", infoContributor.getArea());
-	editContributorForm.set("parishOfResidence", infoContributor.getParishOfResidence());
-	editContributorForm.set("districtSubdivisionOfResidence", infoContributor.getDistrictSubdivisionOfResidence());
-	editContributorForm.set("districtOfResidence", infoContributor.getDistrictOfResidence());
-	editContributorForm.set("contributorId", infoContributor.getIdInternal());
-
-	return mapping.findForward("EditReady");
-
-    }
-
-    private InfoContributor getInfoContributor(HttpServletRequest request, DynaActionForm form) {
-	final InfoContributor infoContributor = (InfoContributor) request.getAttribute(PresentationConstants.CONTRIBUTOR);
-	return infoContributor != null ? infoContributor : InfoContributor.newInfoFromDomain((Party) readDomainObject(request,
-		Party.class, getIntegerFromRequestOrForm(request, form, "contributorId")));
-    }
-
-    public ActionForward edit(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
-	    throws Exception {
-
-	DynaActionForm editContributorForm = (DynaActionForm) form;
-
-	InfoContributor infoContributor = getInfoContributor(request, editContributorForm);
-
-	// Get the Information
-	String contributorNumberString = (String) editContributorForm.get("contributorNumber");
-	Integer contributorNumber = Integer.valueOf(contributorNumberString);
-	String contributorName = (String) editContributorForm.get("contributorName");
-	String contributorAddress = (String) editContributorForm.get("contributorAddress");
-	String areaCode = (String) editContributorForm.get("areaCode");
-	String areaOfAreaCode = (String) editContributorForm.get("areaOfAreaCode");
-	String area = (String) editContributorForm.get("area");
-	String parishOfResidence = (String) editContributorForm.get("parishOfResidence");
-	String districtSubdivisionOfResidence = (String) editContributorForm.get("districtSubdivisionOfResidence");
-	String districtOfResidence = (String) editContributorForm.get("districtOfResidence");
-
-	Object args[] = { infoContributor, contributorNumber, contributorName, contributorAddress, areaCode, areaOfAreaCode,
-		area, parishOfResidence, districtSubdivisionOfResidence, districtOfResidence };
-	InfoContributor newInfoContributor = null;
-	try {
-	    newInfoContributor = (InfoContributor) ServiceManagerServiceFactory.executeService("EditContributor", args);
-	} catch (ExistingServiceException e) {
-	    throw new ExistingActionException("O Contribuinte", e);
-	}
-
-	request.setAttribute(PresentationConstants.CONTRIBUTOR, newInfoContributor);
-	return mapping.findForward("EditSuccess");
-
-    }
-
 }

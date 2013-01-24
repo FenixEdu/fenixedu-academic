@@ -19,8 +19,6 @@ import net.sourceforge.fenixedu.util.Money;
 
 import org.joda.time.DateTime;
 
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
-
 public class DFACandidacyPR extends DFACandidacyPR_Base {
 
     private DFACandidacyPR() {
@@ -44,7 +42,6 @@ public class DFACandidacyPR extends DFACandidacyPR_Base {
 
     }
 
-    @Checked("PostingRulePredicates.editPredicate")
     public FixedAmountWithPenaltyPR edit(final Money fixedAmount, final Money penaltyAmount) {
 
 	deactivate();
@@ -53,8 +50,8 @@ public class DFACandidacyPR extends DFACandidacyPR_Base {
     }
 
     @Override
-    protected Set<AccountingTransaction> internalProcess(User user, Collection<EntryDTO> entryDTOs, Event event, Account fromAccount,
-	    Account toAccount, AccountingTransactionDetailDTO transactionDetail) {
+    protected Set<AccountingTransaction> internalProcess(User user, Collection<EntryDTO> entryDTOs, Event event,
+	    Account fromAccount, Account toAccount, AccountingTransactionDetailDTO transactionDetail) {
 	checkPreconditionsToProcess(event);
 	return super.internalProcess(user, entryDTOs, event, fromAccount, toAccount, transactionDetail);
     }

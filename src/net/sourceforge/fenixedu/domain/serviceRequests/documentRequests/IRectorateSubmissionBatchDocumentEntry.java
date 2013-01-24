@@ -28,4 +28,6 @@ public interface IRectorateSubmissionBatchDocumentEntry {
 
     public String getReceivedActionLink();
 
+    public boolean isProgrammeLinkVisible();
+
 }

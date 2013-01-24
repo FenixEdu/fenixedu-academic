@@ -4,6 +4,7 @@
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr" %>
 <%@ taglib uri="/WEB-INF/taglibs-datetime.tld" prefix="dt"%>
 <%@ taglib uri="/WEB-INF/enum.tld" prefix="e" %>
+<%@ taglib uri="/WEB-INF/academic.tld" prefix="academic" %>
 <%@ page language="java" %>
 <%@page import="net.sourceforge.fenixedu.domain.degree.DegreeType"%>
 <%@page import="org.apache.struts.util.LabelValueBean"%>
@@ -13,13 +14,13 @@
 
 <bean:define id="registration" name="registration" type="net.sourceforge.fenixedu.domain.student.Registration"/>
 
-<logic:present role="ACADEMIC_ADMINISTRATIVE_OFFICE">
+<academic:allowed operation="VIEW_FULL_STUDENT_CURRICULUM" program="<%= registration.getDegree() %>">
 	<p class="printhidden">
 		<html:link page="/student.do?method=visualizeRegistration" paramId="registrationID" paramName="registration" paramProperty="idInternal">
 			<bean:message key="link.student.back" bundle="ACADEMIC_OFFICE_RESOURCES"/>
 		</html:link>
 	</p>
-</logic:present>
+</academic:allowed>
 
 <p><span class="error0"><!-- Error messages go here --><html:errors /></span></p>
 
@@ -64,8 +65,7 @@
 
 <%-- Registration Average and Curricular Year calculations --%>
 
-<logic:notPresent role="ACADEMIC_ADMINISTRATIVE_OFFICE">
-
+<academic:notAllowed operation="VIEW_FULL_STUDENT_CURRICULUM" program="<%= registration.getDegree() %>">
 	<p class="mtop1 mbottom1">
 		<img src="<%= request.getContextPath() %>/images/dotist_post.gif" alt="<bean:message key="dotist_post" bundle="IMAGE_RESOURCES" />" />
 		<bean:define id="url" value="<%="/registration.do?method=prepareViewRegistrationCurriculum&amp;registrationID=" + registration.getIdInternal()%>"/>
@@ -78,8 +78,7 @@
 			<bean:message key="link.registration.viewCurriculum" bundle="ACADEMIC_OFFICE_RESOURCES"/>
 		</html:link>
 	</p>
-
-</logic:notPresent>
+</academic:notAllowed>
 
 <%-- Choose Student Curricular Plan form --%>
 <html:form action="<%="/viewStudentCurriculum.do?method=prepare&registrationOID=" + registration.getIdInternal()%>">
@@ -211,10 +210,8 @@
 	<p class="mtop2 mbottom0"><strong><bean:message key="label.legend" bundle="STUDENT_RESOURCES"/></strong></p>
 	<div style="width: 350px; float: left;">
 		<p class="mvert05"><em><bean:message  key="label.curriculum.credits.legend.minCredits" bundle="APPLICATION_RESOURCES"/></em></p>
-		<p class="mvert05"><em><bean:message  key="label.curriculum.credits.legend.creditsConcluded" bundle="APPLICATION_RESOURCES"/></em></p>	
-		<logic:present role="ACADEMIC_ADMINISTRATIVE_OFFICE">
+		<p class="mvert05"><em><bean:message  key="label.curriculum.credits.legend.creditsConcluded" bundle="APPLICATION_RESOURCES"/></em></p>			
 		<p class="mvert05"><em><bean:message  key="label.curriculum.credits.legend.approvedCredits" bundle="APPLICATION_RESOURCES"/></em></p>
-		</logic:present>
 		<p class="mvert05"><em><bean:message  key="label.curriculum.credits.legend.maxCredits" bundle="APPLICATION_RESOURCES"/></em></p>
 	    <e:labelValues id="enrolmentEvaluationTypes" enumeration="net.sourceforge.fenixedu.domain.curriculum.EnrolmentEvaluationType" />
 		<logic:iterate id="enrolmentEvaluationType" name="enrolmentEvaluationTypes" type="LabelValueBean">

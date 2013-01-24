@@ -5,8 +5,6 @@ import java.util.Collections;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.student.administrativeOfficeServices.CreateExtraEnrolment;
 import net.sourceforge.fenixedu.dataTransferObject.administrativeOffice.studentEnrolment.NoCourseGroupEnrolmentBean;
 import net.sourceforge.fenixedu.dataTransferObject.administrativeOffice.studentEnrolment.StudentEnrolmentBean;
@@ -20,7 +18,6 @@ import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumModule;
 import net.sourceforge.fenixedu.domain.studentCurriculum.NoCourseGroupCurriculumGroup;
 import net.sourceforge.fenixedu.domain.studentCurriculum.NoCourseGroupCurriculumGroupType;
 import net.sourceforge.fenixedu.injectionCode.IllegalDataAccessException;
-import net.sourceforge.fenixedu.predicates.StudentCurricularPlanPredicates;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 
 import org.apache.struts.action.ActionForm;
@@ -36,10 +33,6 @@ abstract public class NoCourseGroupCurriculumGroupEnrolmentsDA extends FenixDisp
 	    HttpServletResponse response) throws Exception {
 	request.setAttribute("actionName", getActionName());
 	return super.execute(mapping, actionForm, request, response);
-    }
-
-    private boolean canEnrolWithouRules(final NoCourseGroupEnrolmentBean bean) {
-	return StudentCurricularPlanPredicates.ENROL_WITHOUT_RULES.evaluate(bean.getStudentCurricularPlan());
     }
 
     public ActionForward prepare(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
@@ -69,7 +62,6 @@ abstract public class NoCourseGroupCurriculumGroupEnrolmentsDA extends FenixDisp
 	}
 
 	request.setAttribute("enrolmentBean", bean);
-	request.setAttribute("canEnrolWithoutRules", canEnrolWithouRules(bean));
 
 	return mapping.findForward("showExtraEnrolments");
     }
@@ -96,7 +88,7 @@ abstract public class NoCourseGroupCurriculumGroupEnrolmentsDA extends FenixDisp
     }
 
     public ActionForward enrol(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-	    HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+	    HttpServletResponse response) {
 
 	final NoCourseGroupEnrolmentBean bean = getNoCourseGroupEnrolmentBean();
 	request.setAttribute("enrolmentBean", bean);
@@ -125,7 +117,7 @@ abstract public class NoCourseGroupCurriculumGroupEnrolmentsDA extends FenixDisp
     }
 
     public ActionForward delete(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-	    HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+	    HttpServletResponse response) {
 
 	final Enrolment enrolment = getEnrolment(request);
 	final StudentCurricularPlan studentCurricularPlan = getStudentCurricularPlan(request);

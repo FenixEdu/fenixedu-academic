@@ -11,12 +11,9 @@
 <%@page import="net.sourceforge.fenixedu.domain.phd.thesis.PhdThesisProcessBean"%>
 <%@page import="net.sourceforge.fenixedu.presentationTier.Action.phd.thesis.providers.PhdJuryReportersProvider"%><html:xhtml/>
 
-<logic:present role="ACADEMIC_ADMINISTRATIVE_OFFICE">
-
 <bean:define id="processId" name="process" property="externalId" />
 
 <%-- ### Title #### --%>
-<em><bean:message  key="label.phd.academicAdminOffice.breadcrumb" bundle="PHD_RESOURCES"/></em>
 <h2><bean:message key="label.phd.thesis.jury.feedback.upload.document" bundle="PHD_RESOURCES" /></h2>
 <%-- ### End of Title ### --%>
 
@@ -107,5 +104,3 @@
 
 
 <%--  ### End of Operation Area  ### --%>
-
-</logic:present>

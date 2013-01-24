@@ -2,6 +2,7 @@ package net.sourceforge.fenixedu.presentationTier.Action.candidacy.secondCycle;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map.Entry;
@@ -20,9 +21,9 @@ import net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyProcess;
 import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyProcess;
 import net.sourceforge.fenixedu.domain.candidacyProcess.secondCycle.SecondCycleCandidacyProcess;
 import net.sourceforge.fenixedu.domain.candidacyProcess.secondCycle.SecondCycleIndividualCandidacyProcess;
-import net.sourceforge.fenixedu.domain.candidacyProcess.secondCycle.SecondCycleIndividualCandidacyResultBean;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.period.SecondCycleCandidacyPeriod;
+import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.presentationTier.Action.candidacy.CandidacyProcessDA;
 
 import org.apache.struts.action.ActionForm;
@@ -38,18 +39,22 @@ import pt.utl.ist.fenix.tools.util.excel.Spreadsheet.Row;
 import pt.utl.ist.fenix.tools.util.excel.SpreadsheetXLSExporter;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 
-@Mapping(path = "/caseHandlingSecondCycleCandidacyProcess", module = "academicAdminOffice", formBeanClass = SecondCycleCandidacyProcessDA.SecondCycleCandidacyProcessForm.class)
+import com.google.common.base.Predicate;
+import com.google.common.base.Predicates;
+import com.google.common.collect.Collections2;
+
+@Mapping(path = "/caseHandlingSecondCycleCandidacyProcess", module = "academicAdministration", formBeanClass = SecondCycleCandidacyProcessDA.SecondCycleCandidacyProcessForm.class)
 @Forwards({
-	@Forward(name = "intro", path = "/candidacy/secondCycle/mainCandidacyProcess.jsp", tileProperties = @Tile(title = "private.academicadministrativeoffice.applications.2ndcycle")),
-	@Forward(name = "prepare-create-new-process", path = "/candidacy/createCandidacyPeriod.jsp", tileProperties = @Tile(title = "private.academicadministrativeoffice.applications.2ndcycle")),
-	@Forward(name = "prepare-edit-candidacy-period", path = "/candidacy/editCandidacyPeriod.jsp", tileProperties = @Tile(title = "private.academicadministrativeoffice.applications.2ndcycle")),
-	@Forward(name = "send-to-coordinator", path = "/candidacy/sendToCoordinator.jsp", tileProperties = @Tile(title = "private.academicadministrativeoffice.applications.2ndcycle")),
-	@Forward(name = "introduce-candidacy-results", path = "/candidacy/secondCycle/introduceCandidacyResults.jsp", tileProperties = @Tile(title = "private.academicadministrativeoffice.applications.2ndcycle")),
-	@Forward(name = "introduce-candidacy-results-for-degree", path = "/candidacy/secondCycle/introduceCandidacyResultsForDegree.jsp", tileProperties = @Tile(title = "private.academicadministrativeoffice.applications.2ndcycle")),
-	@Forward(name = "send-to-scientificCouncil", path = "/candidacy/sendToScientificCouncil.jsp", tileProperties = @Tile(title = "private.academicadministrativeoffice.applications.2ndcycle")),
-	@Forward(name = "create-registrations", path = "/candidacy/createRegistrations.jsp", tileProperties = @Tile(title = "private.academicadministrativeoffice.applications.2ndcycle")),
-	@Forward(name = "view-child-process-with-missing-required-documents", path = "/candidacy/secondCycle/viewChildProcessWithMissingRequiredDocuments.jsp", tileProperties = @Tile(title = "private.academicadministrativeoffice.applications.2ndcycle")),
-	@Forward(name = "prepare-select-available-degrees", path = "/candidacy/selectAvailableDegrees.jsp", tileProperties = @Tile(title = "private.academicadministrativeoffice.applications.2ndcycle")) })
+	@Forward(name = "intro", path = "/candidacy/secondCycle/mainCandidacyProcess.jsp"),
+	@Forward(name = "prepare-create-new-process", path = "/candidacy/createCandidacyPeriod.jsp"),
+	@Forward(name = "prepare-edit-candidacy-period", path = "/candidacy/editCandidacyPeriod.jsp"),
+	@Forward(name = "send-to-coordinator", path = "/candidacy/sendToCoordinator.jsp"),
+	@Forward(name = "introduce-candidacy-results", path = "/candidacy/secondCycle/introduceCandidacyResults.jsp"),
+	@Forward(name = "introduce-candidacy-results-for-degree", path = "/candidacy/secondCycle/introduceCandidacyResultsForDegree.jsp"),
+	@Forward(name = "send-to-scientificCouncil", path = "/candidacy/sendToScientificCouncil.jsp"),
+	@Forward(name = "create-registrations", path = "/candidacy/createRegistrations.jsp"),
+	@Forward(name = "view-child-process-with-missing-required-documents", path = "/candidacy/secondCycle/viewChildProcessWithMissingRequiredDocuments.jsp"),
+	@Forward(name = "prepare-select-available-degrees", path = "/candidacy/selectAvailableDegrees.jsp") })
 public class SecondCycleCandidacyProcessDA extends CandidacyProcessDA {
 
     static public class SecondCycleCandidacyProcessForm extends CandidacyProcessForm {
@@ -233,55 +238,6 @@ public class SecondCycleCandidacyProcessDA extends CandidacyProcessDA {
 	return null;
     }
 
-    public ActionForward prepareExecuteIntroduceCandidacyResults(ActionMapping mapping, ActionForm actionForm,
-	    HttpServletRequest request, HttpServletResponse response) {
-	final SecondCycleCandidacyProcess process = getProcess(request);
-	request.setAttribute("secondCycleIndividualCandidaciesByDegree",
-		process.getValidSecondCycleIndividualCandidaciesByDegree());
-	return mapping.findForward("introduce-candidacy-results");
-    }
-
-    public ActionForward prepareExecuteIntroduceCandidacyResultsForDegree(ActionMapping mapping, ActionForm actionForm,
-	    HttpServletRequest request, HttpServletResponse response) {
-
-	final SecondCycleCandidacyProcess process = getProcess(request);
-	final List<SecondCycleIndividualCandidacyResultBean> beans = new ArrayList<SecondCycleIndividualCandidacyResultBean>();
-	for (final SecondCycleIndividualCandidacyProcess candidacyProcess : process
-		.getValidSecondCycleIndividualCandidacies(getAndSetDegree(request))) {
-	    beans.add(new SecondCycleIndividualCandidacyResultBean(candidacyProcess));
-	}
-	request.setAttribute("secondCycleIndividualCandidacyResultBeans", beans);
-	return mapping.findForward("introduce-candidacy-results-for-degree");
-    }
-
-    private Degree getAndSetDegree(final HttpServletRequest request) {
-	final Degree degree = rootDomainObject.readDegreeByOID(getIntegerFromRequest(request, "degreeId"));
-	request.setAttribute("degree", degree);
-	return degree;
-    }
-
-    public ActionForward executeIntroduceCandidacyResultsInvalid(ActionMapping mapping, ActionForm actionForm,
-	    HttpServletRequest request, HttpServletResponse response) {
-	getAndSetDegree(request);
-	request.setAttribute("secondCycleIndividualCandidacyResultBeans",
-		getRenderedObject("secondCycleIndividualCandidacyResultBeans"));
-	return mapping.findForward("introduce-candidacy-results-for-degree");
-    }
-
-    public ActionForward executeIntroduceCandidacyResults(ActionMapping mapping, ActionForm actionForm,
-	    HttpServletRequest request, HttpServletResponse response) throws FenixFilterException, FenixServiceException {
-
-	try {
-	    executeActivity(getProcess(request), "IntroduceCandidacyResults",
-		    getRenderedObject("secondCycleIndividualCandidacyResultBeans"));
-	} catch (final DomainException e) {
-	    addActionMessage(request, e.getMessage(), e.getArgs());
-	    return executeIntroduceCandidacyResultsInvalid(mapping, actionForm, request, response);
-	}
-
-	return prepareExecuteIntroduceCandidacyResults(mapping, actionForm, request, response);
-    }
-
     public ActionForward prepareExecuteSendToScientificCouncil(ActionMapping mapping, ActionForm actionForm,
 	    HttpServletRequest request, HttpServletResponse response) {
 	return mapping.findForward("send-to-scientificCouncil");
@@ -311,6 +267,8 @@ public class SecondCycleCandidacyProcessDA extends CandidacyProcessDA {
 	final Spreadsheet spreadsheet = new Spreadsheet(degree.getSigla(), getHeader());
 
 	for (final SecondCycleIndividualCandidacyProcess process : name) {
+	    if (!process.canExecuteActivity(AccessControl.getUserView()))
+		continue;
 	    final Row row = spreadsheet.addRow();
 	    row.setCell(process.getPersonalDetails().getName());
 	    row.setCell(process.getPrecedentDegreeInformation().getConclusionGrade());
@@ -425,20 +383,20 @@ public class SecondCycleCandidacyProcessDA extends CandidacyProcessDA {
     }
 
     @Override
-    protected List<IndividualCandidacyProcess> getChildProcesses(final CandidacyProcess process, HttpServletRequest request) {
-	List<IndividualCandidacyProcess> processes = process.getChildProcesses();
-	List<IndividualCandidacyProcess> selectedDegreesIndividualCandidacyProcesses = new ArrayList<IndividualCandidacyProcess>();
-	Degree selectedDegree = getChooseDegreeBean(request).getDegree();
-
-	for (IndividualCandidacyProcess child : processes) {
-	    if ((selectedDegree == null)
-		    || ((SecondCycleIndividualCandidacyProcess) child).getCandidacy().getSelectedDegrees()
-			    .contains(selectedDegree)) {
-		selectedDegreesIndividualCandidacyProcesses.add(child);
+    protected Predicate<IndividualCandidacyProcess> getChildProcessSelectionPredicate(final CandidacyProcess process,
+	    HttpServletRequest request) {
+	final Degree selectedDegree = getChooseDegreeBean(request).getDegree();
+	if (selectedDegree == null)
+	    return Predicates.alwaysTrue();
+	else {
+	    return new Predicate<IndividualCandidacyProcess>() {
+		@Override
+		public boolean apply(IndividualCandidacyProcess process) {
+		    return ((SecondCycleIndividualCandidacyProcess) process).getCandidacy().getSelectedDegrees()
+			    .contains(selectedDegree);
 	    }
+	    };
 	}
-
-	return selectedDegreesIndividualCandidacyProcesses;
     }
 
     public ActionForward prepareExecuteViewChildProcessWithMissingRequiredDocumentFiles(ActionMapping mapping, ActionForm form,
@@ -447,7 +405,14 @@ public class SecondCycleCandidacyProcessDA extends CandidacyProcessDA {
 	setCandidacyProcessInformation(form, getProcess(request));
 	request.setAttribute("candidacyProcesses", getCandidacyProcesses(getProcess(request).getCandidacyExecutionInterval()));
 
+	request.setAttribute("childsWithMissingRequiredDocuments", getChildsWithMissingRequiredDocuments(getProcess(request)));
+
 	return mapping.findForward("view-child-process-with-missing-required-documents");
+    }
+
+    private Collection<IndividualCandidacyProcess> getChildsWithMissingRequiredDocuments(SecondCycleCandidacyProcess process) {
+
+	return Collections2.filter(process.getChildsWithMissingRequiredDocuments(), CAN_EXECUTE_ACTIVITY_PREDICATE);
     }
 
 }

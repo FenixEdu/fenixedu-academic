@@ -19,7 +19,7 @@ public class AggregateUnit extends AggregateUnit_Base {
 	    String webAddress, UnitClassification classification, Boolean canBeResponsibleOfSpaces, Campus campus) {
 
 	AggregateUnit aggregateUnit = new AggregateUnit();
-	aggregateUnit.init(name, unitNameCard, costCenterCode, acronym, beginDate, endDate, webAddress, classification,
+	aggregateUnit.init(name, unitNameCard, costCenterCode, acronym, beginDate, endDate, webAddress, classification, null,
 		canBeResponsibleOfSpaces, campus);
 	aggregateUnit.addParentUnit(parentUnit, accountabilityType);
 

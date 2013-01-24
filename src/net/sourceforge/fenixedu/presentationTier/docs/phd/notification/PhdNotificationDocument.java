@@ -9,8 +9,6 @@ import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.accounting.EventType;
 import net.sourceforge.fenixedu.domain.accounting.postingRules.FixedAmountPR;
-import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
-import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOfficeType;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess;
 import net.sourceforge.fenixedu.domain.phd.PhdParticipant;
 import net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyProcess;
@@ -27,11 +25,6 @@ public class PhdNotificationDocument extends FenixReport {
     private static final String DATE_FORMAT_PT = "dd/MM/yyyy";
 
     private static final String DATE_FORMAT_EN = "yyyy/MM/dd";
-
-    /**
-     * 
-     */
-    private static final long serialVersionUID = 1L;
 
     private PhdNotification notification;
 
@@ -51,6 +44,7 @@ public class PhdNotificationDocument extends FenixReport {
 	this.notification = notification;
     }
 
+    @Override
     public Language getLanguage() {
 	return language;
     }
@@ -66,8 +60,8 @@ public class PhdNotificationDocument extends FenixReport {
 	final Person person = candidacyProcess.getPerson();
 	final PhdIndividualProgramProcess individualProgramProcess = candidacyProcess.getIndividualProgramProcess();
 
-	addParameter("administrativeOfficeCoordinator", AdministrativeOffice.readByAdministrativeOfficeType(
-		AdministrativeOfficeType.MASTER_DEGREE).getUnit().getActiveUnitCoordinator().getFirstAndLastName());
+	addParameter("administrativeOfficeCoordinator", individualProgramProcess.getPhdProgram().getAdministrativeOffice()
+		.getUnit().getActiveUnitCoordinator().getFirstAndLastName());
 
 	addParameter("name", person.getName());
 	addParameter("address", person.getAddress());
@@ -145,7 +139,10 @@ public class PhdNotificationDocument extends FenixReport {
     }
 
     private String getInsuranceFee(final PhdIndividualProgramProcess individualProgramProcess) {
-	return ((FixedAmountPR) RootDomainObject.getInstance().getInstitutionUnit().getUnitServiceAgreementTemplate()
+	return ((FixedAmountPR) RootDomainObject
+		.getInstance()
+		.getInstitutionUnit()
+		.getUnitServiceAgreementTemplate()
 		.findPostingRuleBy(EventType.INSURANCE,
 			individualProgramProcess.getExecutionYear().getBeginDateYearMonthDay().toDateTimeAtMidnight(),
 			individualProgramProcess.getExecutionYear().getEndDateYearMonthDay().toDateTimeAtMidnight()))

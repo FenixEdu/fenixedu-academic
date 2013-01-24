@@ -26,7 +26,7 @@ import pt.ist.fenixWebFramework.services.Service;
 public class PostingRulesManager {
 
     @Service
-    @Checked("RolePredicates.MANAGER_PREDICATE")
+    @Checked("AcademicPredicates.MANAGE_PAYMENTS")
     static public void createGraduationGratuityPostingRule(final CreateGratuityPostingRuleBean bean) {
 
 	if (bean.getRule() == GratuityWithPaymentPlanPR.class) {
@@ -56,7 +56,7 @@ public class PostingRulesManager {
     }
 
     @Service
-    @Checked("RolePredicates.MANAGER_PREDICATE")
+    @Checked("AcademicPredicates.MANAGE_PAYMENTS")
     static public void createStandaloneGraduationGratuityPostingRule(final CreateStandaloneEnrolmentGratuityPRBean bean) {
 
 	if (bean.getRule() == StandaloneEnrolmentGratuityPR.class) {
@@ -87,7 +87,7 @@ public class PostingRulesManager {
     }
 
     @Service
-    @Checked("RolePredicates.MANAGER_PREDICATE")
+    @Checked("AcademicPredicates.MANAGE_PAYMENTS")
     static public void createDFAGratuityPostingRule(final CreateDFAGratuityPostingRuleBean bean) {
 	if (bean.getRule() == DFAGratuityByAmountPerEctsPR.class) {
 	    new DFAGratuityByAmountPerEctsPR(bean.getStartDate(), null, bean.getServiceAgreementTemplate(),
@@ -101,7 +101,7 @@ public class PostingRulesManager {
     }
 
     @Service
-    @Checked("RolePredicates.MANAGER_PREDICATE")
+    @Checked("AcademicPredicates.MANAGE_PAYMENTS")
     static public void createSpecializationDegreeGratuityPostingRule(final CreateSpecializationDegreeGratuityPostingRuleBean bean) {
 	if (bean.getRule() == SpecializationDegreeGratuityByAmountPerEctsPR.class) {
 	    new SpecializationDegreeGratuityByAmountPerEctsPR(bean.getStartDate(), null, bean.getServiceAgreementTemplate(), bean
@@ -112,13 +112,13 @@ public class PostingRulesManager {
     }
 
     @Service
-    @Checked("RolePredicates.MANAGER_PREDICATE")
+    @Checked("AcademicPredicates.MANAGE_PAYMENTS")
     static public void deletePostingRule(final PostingRule postingRule) {
 	postingRule.delete();
     }
 
     @Service
-    @Checked("RolePredicates.MANAGER_PREDICATE")
+    @Checked("AcademicPredicates.MANAGE_PAYMENTS")
     public static void createDEAGratuityPostingRule(PaymentPlanBean paymentPlanBean) {
 	CreateGratuityPostingRuleBean createGratuityPostingRuleBean = new CreateGratuityPostingRuleBean();
 	createGratuityPostingRuleBean.setExecutionYear(paymentPlanBean.getExecutionYear());

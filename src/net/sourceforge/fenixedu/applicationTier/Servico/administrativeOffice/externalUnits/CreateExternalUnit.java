@@ -10,14 +10,12 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 
 import org.joda.time.YearMonthDay;
 
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.ist.fenixWebFramework.services.Service;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 public class CreateExternalUnit extends FenixService {
 
-    @Checked("RolePredicates.ACADEMIC_ADMINISTRATIVE_OFFICE_PREDICATE")
     @Service
     public static Unit run(final CreateExternalUnitBean externalUnitBean) throws FenixServiceException {
 

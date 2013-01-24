@@ -1,9 +1,10 @@
 package net.sourceforge.fenixedu.domain.serviceRequests;
 
+import java.util.Collection;
+import java.util.HashSet;
 import java.util.Set;
 
 import net.sourceforge.fenixedu.dataTransferObject.serviceRequests.AcademicServiceRequestBean;
-import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
@@ -16,7 +17,7 @@ public class RectorateSubmissionBatch extends RectorateSubmissionBatch_Base {
     public RectorateSubmissionBatch(AdministrativeOffice administrativeOffice) {
 	super();
 	setCreation(new DateTime());
-	setCreator(AccessControl.hasPerson() ? AccessControl.getPerson().getEmployee() : null);
+	setCreator(AccessControl.hasPerson() ? AccessControl.getPerson() : null);
 	setState(RectorateSubmissionState.UNSENT);
 	setAdministrativeOffice(administrativeOffice);
 	setRootDomainObject(RootDomainObject.getInstance());
@@ -89,9 +90,8 @@ public class RectorateSubmissionBatch extends RectorateSubmissionBatch_Base {
 
 	if (first != null && last != null) {
 	    return first + "-" + last;
-	} else {
-	    return "-";
 	}
+	return "-";
     }
 
     public int getDiplomaDocumentRequestCount() {
@@ -106,11 +106,11 @@ public class RectorateSubmissionBatch extends RectorateSubmissionBatch_Base {
 	return acc;
     }
 
-    public void closeBatch() {
+    public RectorateSubmissionBatch closeBatch() {
 	if (!getState().equals(RectorateSubmissionState.UNSENT))
 	    throw new DomainException("error.rectorateSubmission.attemptingToCloseABatchNotInUnsentState");
 	setState(RectorateSubmissionState.CLOSED);
-	new RectorateSubmissionBatch(getAdministrativeOffice());
+	return new RectorateSubmissionBatch(getAdministrativeOffice());
     }
 
     public void markAsSent() {
@@ -118,21 +118,21 @@ public class RectorateSubmissionBatch extends RectorateSubmissionBatch_Base {
 	    throw new DomainException("error.rectorateSubmission.attemptingToSendABatchNotInClosedState");
 	setState(RectorateSubmissionState.SENT);
 	setSubmission(new DateTime());
-	setSubmitter(AccessControl.getPerson().getEmployee());
-	Employee employee = AccessControl.getPerson().getEmployee();
+	setSubmitter(AccessControl.getPerson());
 	for (AcademicServiceRequest document : getDocumentRequestSet()) {
 	    if (document.isCancelled() || document.isRejected()) {
 		continue;
 	    }
-	    document.edit(new AcademicServiceRequestBean(AcademicServiceRequestSituationType.SENT_TO_EXTERNAL_ENTITY, employee,
-		    "Insert Template Text Here"));
+	    document.edit(new AcademicServiceRequestBean(AcademicServiceRequestSituationType.SENT_TO_EXTERNAL_ENTITY,
+		    AccessControl.getPerson(), "Insert Template Text Here"));
 	}
     }
 
     public boolean allDocumentsReceived() {
 	for (AcademicServiceRequest document : getDocumentRequestSet()) {
-	    if (!document.getAcademicServiceRequestSituationType().equals(
-		    AcademicServiceRequestSituationType.RECEIVED_FROM_EXTERNAL_ENTITY)) {
+	    AcademicServiceRequestSituationType type = document.getAcademicServiceRequestSituationType();
+	    if (!type.equals(AcademicServiceRequestSituationType.RECEIVED_FROM_EXTERNAL_ENTITY)
+		    && !type.equals(AcademicServiceRequestSituationType.DELIVERED)) {
 		return false;
 	    }
 	}
@@ -145,7 +145,7 @@ public class RectorateSubmissionBatch extends RectorateSubmissionBatch_Base {
 	if (allDocumentsReceived()) {
 	    setState(RectorateSubmissionState.RECEIVED);
 	    setReception(new DateTime());
-	    setReceptor(AccessControl.getPerson().getEmployee());
+	    setReceptor(AccessControl.getPerson());
 	}
     }
 
@@ -182,4 +182,16 @@ public class RectorateSubmissionBatch extends RectorateSubmissionBatch_Base {
 	return result;
     }
 
+    public static Set<RectorateSubmissionBatch> getRectorateSubmissionBatchesByState(Collection<AdministrativeOffice> offices,
+	    RectorateSubmissionState state) {
+	Set<RectorateSubmissionBatch> result = new HashSet<RectorateSubmissionBatch>();
+	for (AdministrativeOffice office : offices) {
+	    for (RectorateSubmissionBatch batch : office.getRectorateSubmissionBatchSet()) {
+		if (batch.getState().equals(state)) {
+		    result.add(batch);
+		}
+	    }
+	}
+	return result;
+    }
 }

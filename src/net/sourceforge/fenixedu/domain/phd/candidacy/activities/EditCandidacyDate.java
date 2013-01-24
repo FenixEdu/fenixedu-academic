@@ -9,13 +9,12 @@ import org.joda.time.LocalDate;
 public class EditCandidacyDate extends PhdProgramCandidacyProcessActivity {
 
     @Override
-    protected void activityPreConditions(PhdProgramCandidacyProcess arg0, IUserView userView) {
-	if (!isMasterDegreeAdministrativeOfficeEmployee(userView)) {
+    protected void activityPreConditions(PhdProgramCandidacyProcess process, IUserView userView) {
+	if (!process.isAllowedToManageProcess(userView)) {
 	    throw new PreConditionNotValidException();
 	}
     }
 
-	@SuppressWarnings("unchecked")
     @Override
     protected PhdProgramCandidacyProcess executeActivity(PhdProgramCandidacyProcess process, IUserView userView, Object object) {
 	return process.edit((LocalDate) object);

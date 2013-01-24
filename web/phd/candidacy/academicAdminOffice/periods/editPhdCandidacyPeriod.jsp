@@ -8,10 +8,7 @@
 <%@page import="net.sourceforge.fenixedu.domain.phd.individualProcess.activities.EditPhdParticipant"%>
 <%@page import="net.sourceforge.fenixedu.domain.phd.candidacy.InstitutionPhdCandidacyPeriod" %>
 
-<logic:present role="ACADEMIC_ADMINISTRATIVE_OFFICE">
-
 <%-- ### Title #### --%>
-<em><bean:message  key="label.phd.academicAdminOffice.breadcrumb" bundle="PHD_RESOURCES"/></em>
 <h2><bean:message key="title.phd.candidacy.periods" bundle="PHD_RESOURCES" /></h2>
 <%-- ### End of Title ### --%>
 
@@ -106,5 +103,3 @@
 		<html:submit><bean:message bundle="PHD_RESOURCES" key="label.add"/></html:submit>
 	</fr:form>
 </logic:equal>
-
-</logic:present>
