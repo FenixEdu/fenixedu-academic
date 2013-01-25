@@ -286,42 +286,42 @@ public class ReportsUtils extends PropertiesManager {
     static private Map<FontKey, PdfFont> createFontMap() {
 	final Map<FontKey, PdfFont> result = new HashMap<FontKey, PdfFont>(4);
 
-	GenericPair<FontKey, PdfFont> aux = createFont("Quadraat-Regular", "/QUAD____.ttf");
+	GenericPair<FontKey, PdfFont> aux = createFont("Quadraat-Regular", "/QUAD____.ttf", BaseFont.CP1252);
 	result.put(aux.getLeft(), aux.getRight());
 
-	aux = createFont("Quadraat-Bold", "QUADBD__.ttf");
+	aux = createFont("Quadraat-Bold", "QUADBD__.ttf", BaseFont.CP1252);
 	result.put(aux.getLeft(), aux.getRight());
 
-	aux = createFont("Quadraat-Italic", "QUADI___.ttf");
+	aux = createFont("Quadraat-Italic", "QUADI___.ttf", BaseFont.CP1252);
 	result.put(aux.getLeft(), aux.getRight());
 
-	aux = createFont("Quadraat-BoldItalic", "QUADBDI_.ttf");
+	aux = createFont("Quadraat-BoldItalic", "QUADBDI_.ttf", BaseFont.CP1252);
 	result.put(aux.getLeft(), aux.getRight());
 
-	aux = createFont("Arial", "Arial.ttf");
+	aux = createFont("Arial", "Arial.ttf", BaseFont.CP1252);
 	result.put(aux.getLeft(), aux.getRight());
 
-	aux = createFont("Arial Black", "Arial_Black.ttf");
+	aux = createFont("Arial Black", "Arial_Black.ttf", BaseFont.CP1252);
 	result.put(aux.getLeft(), aux.getRight());
 
-	aux = createFont("Lucida Handwriting", "LucidaHandwrit.ttf");
+	aux = createFont("Lucida Handwriting", "LucidaHandwrit.ttf", BaseFont.CP1252);
 	result.put(aux.getLeft(), aux.getRight());
 
-	aux = createFont("Garamond", "AGaramond.ttf");
+	aux = createFont("Garamond", "AGaramond.ttf", BaseFont.CP1252);
 	result.put(aux.getLeft(), aux.getRight());
 
-	aux = createFont("Garamond Bold", "AGaramondBold.ttf");
+	aux = createFont("Garamond Bold", "AGaramondBold.ttf", BaseFont.CP1252);
 	result.put(aux.getLeft(), aux.getRight());
 
-	aux = createFont("Arial Unicode MS", "arialuni.ttf");
+	aux = createFont("Arial Unicode MS", "arialuni.ttf", BaseFont.IDENTITY_H);
 	result.put(aux.getLeft(), aux.getRight());
 
 	return result;
     }
 
-    static private GenericPair<FontKey, PdfFont> createFont(final String fontName, final String pdfFontName) {
+    static private GenericPair<FontKey, PdfFont> createFont(final String fontName, final String pdfFontName, final String baseFont) {
 	return new GenericPair<FontKey, PdfFont>(new FontKey(fontName, false, false), new PdfFont(System.getenv("JAVA_HOME")
-		+ "/jre/lib/fonts/" + pdfFontName, BaseFont.IDENTITY_H, true));
+		+ "/jre/lib/fonts/" + pdfFontName, baseFont, true));
     }
 
 }
