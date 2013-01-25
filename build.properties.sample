@@ -37,6 +37,7 @@ fenix.framework.codeGenerator=pt.ist.fenixframework.pstm.dml.FenixCodeGeneratorO
 #development.mode - if set to true it will change the appearance of the application
 # that is being run in test mode.
 development.mode=true
+debug.actions=true
 
 #----------------------------------------------
 # Barra as authentication broker
