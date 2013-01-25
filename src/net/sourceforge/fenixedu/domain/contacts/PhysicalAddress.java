@@ -3,6 +3,7 @@ package net.sourceforge.fenixedu.domain.contacts;
 import java.util.Comparator;
 
 import net.sourceforge.fenixedu.domain.Country;
+import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
@@ -34,12 +35,6 @@ public class PhysicalAddress extends PhysicalAddress_Base {
 
     static public PhysicalAddress createPhysicalAddress(final Party party, final PhysicalAddressData data, PartyContactType type,
 	    Boolean isDefault) {
-	// for (PhysicalAddress address : party.getPhysicalAddresses()) {
-	// if (new PhysicalAddressData(address).equals(data)) {
-	// return address;
-	// }
-	// }
-
 	return new PhysicalAddress(party, type, isDefault, data);
     }
 
@@ -157,4 +152,28 @@ public class PhysicalAddress extends PhysicalAddress_Base {
 	}
     }
 
+    @Override
+    public void logCreate(Person person) {
+	logCreateAux(person, "label.partyContacts.PhysicalAddress");
+    }
+
+    @Override
+    public void logEdit(Person person, boolean propertiesChanged, boolean valueChanged, boolean createdNewContact, String newValue) {
+	logEditAux(person, propertiesChanged, valueChanged, createdNewContact, newValue, "label.partyContacts.PhysicalAddress");
+    }
+
+    @Override
+    public void logDelete(Person person) {
+	logDeleteAux(person, "label.partyContacts.PhysicalAddress");
+    }
+
+    @Override
+    public void logValid(Person person) {
+	logValidAux(person, "label.partyContacts.PhysicalAddress");
+    }
+
+    @Override
+    public void logRefuse(Person person) {
+	logRefuseAux(person, "label.partyContacts.PhysicalAddress");
+    }
 }

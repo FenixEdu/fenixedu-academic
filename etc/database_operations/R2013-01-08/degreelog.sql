@@ -1,0 +1,1 @@
+alter table `DOMAIN_OPERATION_LOG` add `OID_DEGREE` bigint unsigned, add `OID_EXECUTION_YEAR` bigint unsigned, add index (OID_DEGREE), add index (OID_EXECUTION_YEAR);

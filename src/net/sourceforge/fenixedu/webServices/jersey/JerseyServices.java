@@ -43,9 +43,10 @@ public class JerseyServices {
 	final Person person = Person.readPersonByUsername(username);
 	if (person != null) {
 	    final Method personMethod = Person.class.getMethod(method);
-	    return (String) personMethod.invoke(person);
+	    Object result = personMethod.invoke(person);
+	    return result == null ? StringUtils.EMPTY : result.toString();
 	}
-	return null;
+	return StringUtils.EMPTY;
     }
 
     @GET
@@ -106,11 +107,20 @@ public class JerseyServices {
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    @Path("readAllStudentInfoForJobBank")
-    public static String readAllStudentInfoForJobBank(@QueryParam("username") final String username) {
+    @Path("readActiveStudentInfoForJobBank")
+    public static String readActiveStudentInfoForJobBank(@QueryParam("username") final String username) {
 	final Person person = Person.readPersonByUsername(username);
 	final Student student = person.getStudent();
-	return student != null ? student.readAllStudentInfoForJobBank() : StringUtils.EMPTY;
+	return student != null ? student.readActiveStudentInfoForJobBank() : StringUtils.EMPTY;
+    }
+
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    @Path("readStudentInfoForJobBank")
+    public static String readStudentInfoForJobBank(@QueryParam("username") final String username) {
+	final Person person = Person.readPersonByUsername(username);
+	final Student student = person.getStudent();
+	return student != null ? student.readStudentInfoForJobBank() : StringUtils.EMPTY;
     }
 
     @GET
@@ -129,7 +139,7 @@ public class JerseyServices {
 	for (Degree degree : administrativeOffice.getAdministratedBolonhaDegrees()) {
 	    JSONObject degreeInfo = new JSONObject();
 	    degreeInfo.put("degreeOid", degree.getExternalId());
-	    degreeInfo.put("name", degree.getName());
+	    degreeInfo.put("name", degree.getPresentationName());
 	    degreeInfo.put("degreeType", degree.getDegreeTypeName());
 	    infos.add(degreeInfo);
 	}
@@ -142,9 +152,17 @@ public class JerseyServices {
     public static String readAllProtocols() {
 	JSONArray array = new JSONArray();
 	for (Protocol protocol : RootDomainObject.getInstance().getProtocols()) {
-	    array.add(protocol.readProtocol());
+	    array.add(protocol.getExternalId());
 	}
 	return array.toJSONString();
+    }
+
+    @GET
+    @Produces(MediaType.TEXT_PLAIN)
+    @Path("readProtocol")
+    public static String readProtocol(@QueryParam("id") String externalId) {
+	Protocol protocol = Protocol.fromExternalId(externalId);
+	return protocol.readProtocol().toJSONString();
     }
 
 }

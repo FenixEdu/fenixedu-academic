@@ -92,7 +92,7 @@ function check(e,v){
 			<logic:equal name="bean" property="roleType" value="TEACHER">
 				<fr:slot name="department" layout="menu-select-postback" key="label.teacher.finalWork.department">
 					<fr:property name="providerClass"
-						value="net.sourceforge.fenixedu.presentationTier.renderers.providers.DepartmentsProvider" />
+						value="net.sourceforge.fenixedu.presentationTier.renderers.providers.ActiveDepartmentsProvider" />
 					<fr:destination name="postback"
 						path="/findPerson.do?method=postback" />
 					<fr:property name="destination" value="postback" />

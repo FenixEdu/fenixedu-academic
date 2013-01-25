@@ -27,10 +27,10 @@ public class ExecutionCourseLog extends ExecutionCourseLog_Base {
 	super();
     }
 
-    public ExecutionCourseLog(ExecutionCourse ec, String description) {
+    public ExecutionCourseLog(ExecutionCourse executionCourse, String description) {
 	super();
 	if (getExecutionCourse() == null) {
-	    setExecutionCourse(ec);
+	    setExecutionCourse(executionCourse);
 	}
 	setDescription(description);
     }

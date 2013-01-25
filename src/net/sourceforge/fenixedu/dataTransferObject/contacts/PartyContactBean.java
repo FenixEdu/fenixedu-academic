@@ -153,6 +153,8 @@ public abstract class PartyContactBean implements Serializable {
 
     public Boolean edit() {
 	boolean isValueChanged = isValueChanged();
+	boolean createdNewContact = false;
+	String newValue = getPresentationValue();
 	if (isValueChanged) {
 	    if (!getContact().waitsValidation()) {
 		PartyContact contact;
@@ -162,22 +164,52 @@ public abstract class PartyContactBean implements Serializable {
 		} else {
 		    contact = createNewContact();
 		    contact.setPrevPartyContact(getContact());
+		    createdNewContact = true;
 		}
 		setContact(contact);
 	    }
 	}
-	if (!isInstitutional()) {
-	    getContact().setType(getType());
-	}
+
+	boolean isChanged = setContactProperties();
+
+	getParty().logEditContact(getContact(), isChanged, isValueChanged, createdNewContact, newValue);
+	return isValueChanged;
+    }
+
+    protected String getPresentationValue() {
+	return getValue();
+    }
+
+    private boolean setContactProperties() {
+	boolean changes = false;
 	final boolean isDefault = getDefaultContact().booleanValue();
 
-	getContact().setDefaultContactInformation(isDefault);
-	getContact().setVisibleToPublic(getVisibleToPublic());
-	getContact().setVisibleToStudents(getVisibleToStudents());
-	getContact().setVisibleToTeachers(getVisibleToTeachers());
-	getContact().setVisibleToEmployees(getVisibleToEmployees());
-	getContact().setVisibleToAlumni(getVisibleToAlumni());
-	return isValueChanged;
+	if (!isInstitutional()) {
+	    if (getContact().getType() != getType()) {
+		changes = true;
+	    }
+	}
+
+	changes = changes || (getContact().getDefaultContact().booleanValue() != isDefault)
+		|| (getContact().getVisibleToPublic().booleanValue() != getVisibleToPublic().booleanValue())
+		|| (getContact().getVisibleToStudents().booleanValue() != getVisibleToStudents().booleanValue())
+		|| (getContact().getVisibleToTeachers().booleanValue() != getVisibleToTeachers().booleanValue())
+		|| (getContact().getVisibleToEmployees().booleanValue() != getVisibleToEmployees().booleanValue())
+		|| (getContact().getVisibleToAlumni().booleanValue() != getVisibleToAlumni().booleanValue());
+
+	if (changes) {
+	    if (!isInstitutional()) {
+		getContact().setType(getType());
+	    }
+	    getContact().setDefaultContactInformation(isDefault);
+	    getContact().setVisibleToPublic(getVisibleToPublic());
+	    getContact().setVisibleToStudents(getVisibleToStudents());
+	    getContact().setVisibleToTeachers(getVisibleToTeachers());
+	    getContact().setVisibleToEmployees(getVisibleToEmployees());
+	    getContact().setVisibleToAlumni(getVisibleToAlumni());
+	}
+
+	return changes;
     }
 
     public boolean hasPartyContact() {

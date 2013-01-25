@@ -127,7 +127,7 @@ public abstract class Party extends Party_Base implements Comparable<Party> {
 	return super.getNationality();
     }
 
-    final public void setCountry(final Country country) {
+    public void setCountry(final Country country) {
 	super.setNationality(country);
     }
 
@@ -1577,5 +1577,21 @@ public abstract class Party extends Party_Base implements Comparable<Party> {
     @Override
     public int compareTo(Party party) {
 	return COMPARATOR_BY_NAME.compare(this, party);
+    }
+
+    public void logCreateContact(PartyContact contact) {
+    }
+
+    public void logEditContact(PartyContact contact, boolean propertiesChanged, boolean valueChanged, boolean createdNewContact,
+	    String newValue) {
+    }
+
+    public void logDeleteContact(PartyContact contact) {
+    }
+
+    public void logValidContact(PartyContact contact) {
+    }
+
+    public void logRefuseContact(PartyContact contact) {
     }
 }

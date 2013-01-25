@@ -95,12 +95,15 @@ public abstract class PartyContactValidation extends PartyContactValidation_Base
 	if (hasRootDomainObject()) {
 	    setRootDomainObject(null);
 	}
+
 	super.setState(PartyContactValidationState.VALID);
 	setLastChangeDate(new DateTime());
 	final PartyContact partyContact = getPartyContact();
+	partyContact.getParty().logValidContact(partyContact);
 	if (partyContact.hasPrevPartyContact()) {
 	    partyContact.getPrevPartyContact().deleteWithoutCheckRules();
 	}
+
 	final Boolean toBeDefault = getToBeDefault();
 	if (toBeDefault != null) {
 	    partyContact.setDefaultContactInformation(toBeDefault);
@@ -125,6 +128,7 @@ public abstract class PartyContactValidation extends PartyContactValidation_Base
 
     protected void setRefused() {
 	if (!isRefused()) {
+	    getPartyContact().getParty().logRefuseContact(getPartyContact());
 	    setNotValidState(PartyContactValidationState.REFUSED);
 	    getPartyContact().deleteWithoutCheckRules();
 	}

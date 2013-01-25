@@ -6,21 +6,21 @@ public class ContentManagementLog extends ContentManagementLog_Base {
 	super();
     }
 
-    public ContentManagementLog(ExecutionCourse ec, String description) {
+    public ContentManagementLog(ExecutionCourse executionCourse, String description) {
 	super();
 	if (getExecutionCourse() == null) {
-	    setExecutionCourse(ec);
+	    setExecutionCourse(executionCourse);
 	}
 	setDescription(description);
     }
 
-    public static ContentManagementLog createContentManagementLog(ExecutionCourse ec, String description) {
-	return new ContentManagementLog(ec, description);
+    public static ContentManagementLog createContentManagementLog(ExecutionCourse executionCourse, String description) {
+	return new ContentManagementLog(executionCourse, description);
     }
 
-    public static ContentManagementLog createLog(ExecutionCourse ec, String bundle, String key, String... args) {
+    public static ContentManagementLog createLog(ExecutionCourse executionCourse, String bundle, String key, String... args) {
 	final String label = generateLabelDescription(bundle, key, args);
-	return createContentManagementLog(ec, label);
+	return createContentManagementLog(executionCourse, label);
     }
 
     @Override

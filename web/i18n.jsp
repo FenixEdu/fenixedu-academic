@@ -1,3 +1,4 @@
+<%@page import="java.net.URLEncoder"%>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
@@ -15,7 +16,7 @@
 			<%
 				final RequestReconstructor requestReconstructor = (RequestReconstructor) request.getAttribute("requestReconstructor");
 			%>
-			<%= pt.ist.fenixWebFramework.servlets.filters.contentRewrite.RequestRewriter.HAS_CONTEXT_PREFIX %><form method="post" action="<%= requestReconstructor.getUrlSwitch("pt_PT") %>">
+			<%= pt.ist.fenixWebFramework.servlets.filters.contentRewrite.RequestRewriter.HAS_CONTEXT_PREFIX %><form method="post" action="<%= requestReconstructor.getUrlSwitch("pt_PT").replace('<', '_').replace('>', '_').replace('"', '_') %>">
 			<%
 				for (Pair entry : requestReconstructor.getAttributes()) {
     				String key = (String) entry.getKey();
@@ -35,7 +36,7 @@
 			</form>
 		</td>
 		<td>
-			<%= pt.ist.fenixWebFramework.servlets.filters.contentRewrite.RequestRewriter.HAS_CONTEXT_PREFIX %><form method="post" action="<%= requestReconstructor.getUrlSwitch("en_EN") %>">
+			<%= pt.ist.fenixWebFramework.servlets.filters.contentRewrite.RequestRewriter.HAS_CONTEXT_PREFIX %><form method="post" action="<%= requestReconstructor.getUrlSwitch("en_EN").replace('<', '_').replace('>', '_').replace('"', '_') %>">
 			<%
 				for (Pair entry : requestReconstructor.getAttributes()) {
     				String key = (String) entry.getKey();

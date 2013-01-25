@@ -23,8 +23,9 @@
 
 	<logic:empty name="createdPerson">
 		<b><bean:message key="label.verify.if.invitedPerson.already.exists" bundle="MANAGER_RESOURCES"/></b>
-		<fr:form action="/personnelManagePeople.do?method=showExistentPersonsWithSameMandatoryDetails">		
+		<fr:form action="/personnelManagePeople.do">
 			<fr:edit name="anyPersonSearchBean" id="anyPersonSearchBeanId">
+				<input type="hidden" name="method"/>
 				<fr:schema type="net.sourceforge.fenixedu.domain.Person$AnyPersonSearchBean" bundle="MANAGER_RESOURCES">
 					<fr:slot name="name">
 						<fr:property name="size" value="50"/>
@@ -36,8 +37,8 @@
 			        <fr:property name="columnClasses" value=",,noborder"/>
 				</fr:layout>	
 			</fr:edit>			
-			<html:submit><bean:message key="label.search" bundle="MANAGER_RESOURCES" /></html:submit>	
-		</fr:form>
+			<html:submit onclick="this.form.method.value='showExistentPersonsWithSameMandatoryDetails';"><bean:message key="label.search" bundle="MANAGER_RESOURCES" /></html:submit>	
+		
 		
 		<p>
 			<logic:notEmpty name="resultPersons">
@@ -92,13 +93,12 @@
 					</logic:iterate>
 				</table>				
 			</logic:notEmpty>
+			</p>
 			<logic:present name="resultPersons">
-				<bean:define id="url" type="java.lang.String">/personnelManagePeople.do?method=prepareCreatePersonFillInformation&name=<bean:write name="anyPersonSearchBean" property="name"/>&idDocumentType=<bean:write name="anyPersonSearchBean" property="idDocumentType"/>&documentIdNumber=<bean:write name="anyPersonSearchBean" property="documentIdNumber"/></bean:define>
-				<html:link action="<%= url %>">
-					<bean:message key="link.create.person.because.does.not.exist" bundle="MANAGER_RESOURCES"/>
-				</html:link>
+				<html:submit onclick="this.form.method.value='prepareCreatePersonFillInformation';"><bean:message key="link.create.person.because.does.not.exist" bundle="MANAGER_RESOURCES" /></html:submit>	
 			</logic:present>
-		</p>
+			</fr:form>
+		
 	</logic:empty>	
 					
 </logic:present>

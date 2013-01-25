@@ -37,7 +37,7 @@
 		</bean:define>
 	
 		<bean:define id="url" type="java.lang.String">/facultyAdmOffice/listGrantOwner.do?method=listGrantOwners&amp;orderBy=<%=sortCriteria%></bean:define>
-		<cp:collectionPages url="<%= url %>" 
+			<cp:collectionPages url="<%= url %>"
 			pageNumberAttributeName="pageNumber" numberOfPagesAttributeName="numberOfPages" numberOfVisualizedPages="10"/>
 	
 		<fr:view name="resultPage" schema="InfoListGrantOwnerByOrder.list">

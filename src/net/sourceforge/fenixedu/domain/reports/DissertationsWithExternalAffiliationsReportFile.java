@@ -25,12 +25,12 @@ public class DissertationsWithExternalAffiliationsReportFile extends Dissertatio
 
     @Override
     public String getJobName() {
-	return "Listagem de disserta��es com afilia��es externas";
+	return "Listagem de dissertações com afiliações externas";
     }
 
     @Override
     protected String getPrefix() {
-	return "disserta��es com afilia��es externas";
+	return "dissertações com afiliações externas";
     }
 
     @Override

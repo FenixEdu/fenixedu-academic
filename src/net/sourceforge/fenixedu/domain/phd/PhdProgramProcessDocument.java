@@ -72,10 +72,6 @@ public class PhdProgramProcessDocument extends PhdProgramProcessDocument_Base {
 
 	final Group group = new GroupUnion(roleGroup, coordinatorGroup);
 	super.init(getVirtualPath(), filename, filename, Collections.EMPTY_SET, content, group);
-
-	if (PhdProperties.isWriteDocumentsOnDSpaceEnabled()) {
-	    storeToContentManager();
-	}
     }
 
     protected void setDocumentVersion(PhdProgramProcess process, PhdIndividualProgramDocumentType documentType) {

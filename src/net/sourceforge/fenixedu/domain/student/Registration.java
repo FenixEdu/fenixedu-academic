@@ -3484,7 +3484,8 @@ public class Registration extends Registration_Base {
     final public boolean isAvailableDegreeTypeForInquiries() {
 	final DegreeType degreeType = getDegreeType();
 	return degreeType == DegreeType.BOLONHA_DEGREE || degreeType == DegreeType.BOLONHA_INTEGRATED_MASTER_DEGREE
-		|| degreeType == DegreeType.BOLONHA_MASTER_DEGREE;
+		|| degreeType == DegreeType.BOLONHA_MASTER_DEGREE
+		|| ExecutionCourse.DEA_AVAILABLE_INQUIRY_DEGREES.contains(getDegree().getSigla().toLowerCase());
     }
 
     final public boolean hasInquiryResponseFor(final ExecutionCourse executionCourse) {
@@ -3932,7 +3933,8 @@ public class Registration extends Registration_Base {
 
 	Formatter formatter = new Formatter(result);
 	final Student student = getStudent();
-	formatter.format("%s: %s\n", bundle.getString("label.ingression"), getIngression() == null ? " - " : getIngression().getFullDescription());
+	formatter.format("%s: %s\n", bundle.getString("label.ingression"), getIngression() == null ? " - " : getIngression()
+		.getFullDescription());
 	formatter.format("%s: %d\n", bundle.getString("label.studentNumber"), student.getNumber());
 	formatter.format("%s: %s\n", bundle.getString("label.Student.Person.name"), student.getPerson().getName());
 	formatter.format("%s: %s\n", bundle.getString("label.degree"), getDegree().getPresentationName());
@@ -3988,13 +3990,13 @@ public class Registration extends Registration_Base {
     public static String readAllStudentsInfoForJobBank() {
 	ExecutionYear currentExecutionYear = ExecutionYear.readCurrentExecutionYear();
 	Set<Registration> registrations = new HashSet<Registration>();
+	LocalDate today = new LocalDate();
 	for (Registration registration : RootDomainObject.getInstance().getRegistrations()) {
 	    if (registration.hasAnyActiveState(currentExecutionYear) && registration.isBolonha()
 		    && !registration.getDegreeType().equals(DegreeType.EMPTY)) {
 		registrations.add(registration);
 	    }
 	}
-	LocalDate today = new LocalDate();
 	for (ConclusionProcess conclusionProcess : RootDomainObject.getInstance().getConclusionProcessesSet()) {
 	    if (conclusionProcess.getConclusionDate() != null
 		    && !conclusionProcess.getConclusionDate().plusYears(1).isBefore(today)) {
@@ -4035,11 +4037,11 @@ public class Registration extends Registration_Base {
 	    studentInfoForJobBank.put("degreeOID", registration.getDegree().getExternalId());
 	    studentInfoForJobBank.put("isConcluded", String.valueOf(registration.isRegistrationConclusionProcessed()));
 	    studentInfoForJobBank.put("curricularYear", String.valueOf(registration.getCurricularYear()));
-	    for (CycleCurriculumGroup cycleCurriculumGroup : registration.getLastStudentCurricularPlan()
-		    .getCycleCurriculumGroups()) {
-		studentInfoForJobBank.put(cycleCurriculumGroup.getCycleType().name(), cycleCurriculumGroup.getAverage()
-			.toString());
-
+	    for (CycleType cycleType : registration.getDegreeType().getCycleTypes()) {
+		CycleCurriculumGroup cycle = registration.getLastStudentCurricularPlan().getCycle(cycleType);
+		if (cycle != null) {
+		    studentInfoForJobBank.put(cycle.getCycleType().name(), cycle.getAverage().toString());
+		}
 	    }
 	    return studentInfoForJobBank;
 	} catch (Throwable e) {

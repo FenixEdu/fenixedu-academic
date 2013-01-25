@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.domain.phd.InternalPhdParticipant;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess;
+import net.sourceforge.fenixedu.domain.phd.PhdParticipant;
 import net.sourceforge.fenixedu.domain.phd.SearchPhdIndividualProgramProcessBean;
 import net.sourceforge.fenixedu.domain.phd.seminar.PublicPresentationSeminarProcessBean;
 import net.sourceforge.fenixedu.presentationTier.Action.phd.CommonPhdIndividualProgramProcessDA;
@@ -21,6 +22,7 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
+import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
@@ -75,6 +77,12 @@ public class PhdIndividualProgramProcessDA extends CommonPhdIndividualProgramPro
     @Override
     public ActionForward viewProcess(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) {
+	RenderUtils.invalidateViewState();
+	final PhdIndividualProgramProcess process = getProcess(request);
+	List<PhdParticipant> guidingsList = process.getGuidings();
+	List<PhdParticipant> assistantGuidingsList = process.getAssistantGuidings();
+	request.setAttribute("guidingsList", guidingsList);
+	request.setAttribute("assistantGuidingsList", assistantGuidingsList);
 	return forwardToViewProcess(mapping, request);
     }
 

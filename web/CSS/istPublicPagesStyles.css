@@ -77,6 +77,35 @@ body {
 	font-style: normal;
 }
 
+/********************
+	The following four entries where added to remove an external dependency from: http://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic
+********************/
+@font-face {
+  font-family: 'Lato';
+  font-style: normal;
+  font-weight: 700;
+  src: local('Lato Bold'), local('Lato-Bold'), url('../images/type/wkfQbvfT_02e2IWO3yYueQ.woff') format('woff');
+}
+@font-face {
+  font-family: 'Lato';
+  font-style: italic;
+  font-weight: 400;
+  src: local('Lato Italic'), local('Lato-Italic'), url('../images/type/oUan5VrEkpzIazlUe5ieaA.woff') format('woff');
+}
+@font-face {
+  font-family: 'Lato';
+  font-style: italic;
+  font-weight: 700;
+  src: local('Lato Bold Italic'), local('Lato-BoldItalic'), url('../images/type/HkF_qI1x_noxlxhrhMQYED8E0i7KZn-EPnyo3HZu7kw.woff') format('woff');
+}
+@font-face {
+  font-family: 'Lato';
+  font-style: normal;
+  font-weight: 400;
+  src: local('Lato Regular'), local('Lato-Regular'), url('../images/type/9k-RPmcnxYEPm8CNFsH2gg.woff') format('woff');
+}
+
+
 
 html, body, p,
 h1, h2, h3, h4, h5, h6 {

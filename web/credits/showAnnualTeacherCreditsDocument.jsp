@@ -246,8 +246,6 @@ padding: 0;
 					<fr:schema bundle="TEACHER_CREDITS_SHEET_RESOURCES" type="net.sourceforge.fenixedu.domain.organizationalStructure.PersonFunction">
 						<fr:slot name="function.name" key="label.managementPosition.position"/>
 						<fr:slot name="function.unit.name" key="label.managementPosition.unit"/>
-						<fr:slot name="beginDateInDateType" key="label.managementPosition.start"/>
-						<fr:slot name="endDateInDateType" key="label.managementPosition.end"/>
 					</fr:schema>
 					<fr:layout name="tabular">
 						<fr:property name="classes" value="tstyle2 thlight thleft mtop05 mbottom05"/>

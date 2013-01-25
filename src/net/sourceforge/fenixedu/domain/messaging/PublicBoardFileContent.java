@@ -16,9 +16,7 @@ public class PublicBoardFileContent extends PublicBoardFileContent_Base {
 
     public PublicBoardFileContent(String fileName, byte[] content, String creatorName, AnnouncementBoard board) {
 	super();
-
 	init(getVirtualPath(board), fileName, fileName, createMetaData(creatorName, fileName), content, new EveryoneGroup());
-	storeToContentManager();
 	board.addFile(this);
     }
 

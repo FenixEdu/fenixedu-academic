@@ -168,6 +168,7 @@ import org.joda.time.LocalDate;
 import org.joda.time.Months;
 import org.joda.time.YearMonthDay;
 
+import pt.ist.fenixWebFramework.rendererExtensions.util.IPresentableEnum;
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.ist.fenixWebFramework.services.Service;
 import pt.ist.fenixframework.pstm.AbstractDomainObject;
@@ -226,6 +227,7 @@ public class Person extends Person_Base {
 	}
 
 	final String formattedName = PersonNameFormatter.prettyPrint(name);
+	String oldName = (getPartyName() == null) ? null : getPartyName().getPreferedContent();
 
 	MultiLanguageString partyName = super.getPartyName();
 	partyName = partyName == null ? new MultiLanguageString() : partyName;
@@ -236,6 +238,8 @@ public class Person extends Person_Base {
 	PersonName personName = getPersonName();
 	personName = personName == null ? new PersonName(this) : personName;
 	personName.setName(formattedName);
+
+	logSetterNullString("log.personInformation.edit.generalTemplate.personalData", oldName, name, "label.name");
     }
 
     @Override
@@ -261,6 +265,8 @@ public class Person extends Person_Base {
 	} else {
 	    idDocument.setValue(documentIdNumber);
 	}
+	logSetterNullString("log.personInformation.edit.generalTemplate.personalId", getDocumentIdNumber(), documentIdNumber,
+		"label.documentNumber");
 	super.setDocumentIdNumber(documentIdNumber);
     }
 
@@ -275,6 +281,9 @@ public class Person extends Person_Base {
 	} else {
 	    idDocument.setIdDocumentType(idDocumentType);
 	}
+
+	logSetterNullEnum("log.personInformation.edit.generalTemplate.personalId", getIdDocumentType(), idDocumentType,
+		"label.documentIdType");
 	super.setIdDocumentType(idDocumentType);
     }
 
@@ -941,7 +950,7 @@ public class Person extends Person_Base {
 	}
 	setDistrictOfBirth(infoPerson.getDistritoNaturalidade());
 
-	setMaritalStatus(infoPerson.getMaritalStatus() == null ? MaritalStatus.UNKNOWN : infoPerson.getMaritalStatus());
+	setMaritalStatus(infoPerson.getMaritalStatus());
 	setParishOfBirth(infoPerson.getFreguesiaNaturalidade());
 	setEmissionLocationOfDocumentId(infoPerson.getLocalEmissaoDocumentoIdentificacao());
 
@@ -975,7 +984,7 @@ public class Person extends Person_Base {
 
 	final MaritalStatus maritalStatus = (MaritalStatus) valueToUpdateIfNewNotNull(getMaritalStatus(),
 		infoPerson.getMaritalStatus());
-	setMaritalStatus(maritalStatus == null ? MaritalStatus.UNKNOWN : maritalStatus);
+	setMaritalStatus(maritalStatus);
 
 	setDateOfBirthYearMonthDay(infoPerson.getNascimento() != null ? YearMonthDay.fromDateFields(infoPerson.getNascimento())
 		: getDateOfBirthYearMonthDay());
@@ -1039,26 +1048,30 @@ public class Person extends Person_Base {
 	final String fullName = personBean.getName();
 	final String familyName = personBean.getFamilyNames();
 	final String givenNames = personBean.getGivenNames();
-	final String composedName = familyName == null || familyName.isEmpty()
-		? givenNames : givenNames + " " + familyName;
+	final String composedName = familyName == null || familyName.isEmpty() ? givenNames : givenNames + " " + familyName;
 
 	if ((givenNames != null || familyName != null) && !fullName.equals(composedName)) {
-	    throw new DomainException("error.person.splittedNamesDoNotMatch");	    
+	    throw new DomainException("error.person.splittedNamesDoNotMatch");
 	}
 
+	// personal info
 	setName(fullName);
 	setGivenNames(personBean.getGivenNames());
 	setFamilyNames(familyName);
 
 	setGender(personBean.getGender());
+	setProfession(personBean.getProfession());
+	setMaritalStatus(personBean.getMaritalStatus());
+
+	// identification
 	setIdentification(personBean.getDocumentIdNumber(), personBean.getIdDocumentType());
 	setEmissionLocationOfDocumentId(personBean.getDocumentIdEmissionLocation());
 	setEmissionDateOfDocumentIdYearMonthDay(personBean.getDocumentIdEmissionDate());
 	setExpirationDateOfDocumentIdYearMonthDay(personBean.getDocumentIdExpirationDate());
 	setSocialSecurityNumber(personBean.getSocialSecurityNumber());
-	setProfession(personBean.getProfession());
-	setMaritalStatus(personBean.getMaritalStatus());
+	setEidentifier(personBean.getEidentifier());
 
+	// filiation
 	setDateOfBirthYearMonthDay(personBean.getDateOfBirth());
 	setCountry(personBean.getNationality());
 	setParishOfBirth(personBean.getParishOfBirth());
@@ -1067,8 +1080,6 @@ public class Person extends Person_Base {
 	setCountryOfBirth(personBean.getCountryOfBirth());
 	setNameOfMother(personBean.getMotherName());
 	setNameOfFather(personBean.getFatherName());
-
-	setEidentifier(personBean.getEidentifier());
     }
 
     /***************************************************************************
@@ -1369,15 +1380,15 @@ public class Person extends Person_Base {
     }
 
     private boolean canBeDeleted() {
-	return !hasAnyChilds() && !hasAnyParents() && !hasAnyDomainObjectActionLogs() && !hasAnyExportGroupingReceivers()
-		&& !hasAnyPersistentGroups() && !hasAnyPersonSpaceOccupations() && !hasAnyPunctualRoomsOccupationComments()
-		&& !hasAnyVehicleAllocations() && !hasAnyPunctualRoomsOccupationRequests()
-		&& !hasAnyPunctualRoomsOccupationRequestsToProcess() && !hasAnyAssociatedQualifications()
-		&& !hasAnyAssociatedAlteredCurriculums() && !hasAnyEnrolmentEvaluations() && !hasAnyExportGroupingSenders()
-		&& !hasAnyResponsabilityTransactions() && !hasAnyMasterDegreeCandidates() && !hasAnyGuides()
-		&& !hasAnyProjectAccesses() && !hasEmployee() && !hasTeacher() && !hasGrantOwner() && !hasAnyPayedGuides()
-		&& !hasAnyPayedReceipts() && !hasParking() && !hasAnyResearchInterests() && !hasAnyProjectParticipations()
-		&& !hasAnyParticipations() && !hasAnyBoards() && !hasAnyPersonFunctions()
+	return !hasAnyPartyContacts() && !hasAnyChilds() && !hasAnyParents() && !hasAnyDomainObjectActionLogs()
+		&& !hasAnyExportGroupingReceivers() && !hasAnyPersistentGroups() && !hasAnyPersonSpaceOccupations()
+		&& !hasAnyPunctualRoomsOccupationComments() && !hasAnyVehicleAllocations()
+		&& !hasAnyPunctualRoomsOccupationRequests() && !hasAnyPunctualRoomsOccupationRequestsToProcess()
+		&& !hasAnyAssociatedQualifications() && !hasAnyAssociatedAlteredCurriculums() && !hasAnyEnrolmentEvaluations()
+		&& !hasAnyExportGroupingSenders() && !hasAnyResponsabilityTransactions() && !hasAnyMasterDegreeCandidates()
+		&& !hasAnyGuides() && !hasAnyProjectAccesses() && !hasEmployee() && !hasTeacher() && !hasGrantOwner()
+		&& !hasAnyPayedGuides() && !hasAnyPayedReceipts() && !hasParking() && !hasAnyResearchInterests()
+		&& !hasAnyProjectParticipations() && !hasAnyParticipations() && !hasAnyBoards() && !hasAnyPersonFunctions()
 		&& (!hasHomepage() || getHomepage().isDeletable()) && !hasLibraryCard() && !hasAnyCardGenerationEntries()
 		&& !hasAnyInternalParticipants() && !hasAnyCreatedQualifications() && !hasAnyCreateJobs();
     }
@@ -1425,6 +1436,9 @@ public class Person extends Person_Base {
 	public void beforeAdd(final Role newRole, final Person person) {
 	    if (newRole != null && person != null && !person.hasPersonRoles(newRole)) {
 		addRoleOperationLog(person, newRole, RoleOperationType.ADD);
+		if (newRole.getRoleType() == RoleType.MANAGER) {
+		    sendManagerRoleMembershipChangeNotification(person, "label.manager.add.subject", "label.manager.add.body");
+		}
 	    }
 	}
 
@@ -1434,10 +1448,6 @@ public class Person extends Person_Base {
 		addDependencies(role, person);
 		person.addAlias(role);
 		person.updateIstUsername();
-
-		if (role.getRoleType() == RoleType.MANAGER) {
-		    sendManagerRoleMembershipChangeNotification(person, "label.manager.add.subject", "label.manager.add.body");
-		}
 	    }
 	}
 
@@ -1445,9 +1455,9 @@ public class Person extends Person_Base {
 	public void beforeRemove(final Role role, final Person person) {
 	    if (person != null && role != null && person.hasRole(role.getRoleType())) {
 		if (role.getRoleType() == RoleType.MANAGER) {
-		    sendManagerRoleMembershipChangeNotification(person, "label.manager.remove.subject", "label.manager.remove.body");
+		    sendManagerRoleMembershipChangeNotification(person, "label.manager.remove.subject",
+			    "label.manager.remove.body");
 		}
-
 		removeDependencies(person, role);
 		addRoleOperationLog(person, role, RoleOperationType.REMOVE);
 	    }
@@ -1600,11 +1610,13 @@ public class Person extends Person_Base {
 	    }
 	}
 
-	private void sendManagerRoleMembershipChangeNotification(final Person person, final String subjectKey, final String bodyKey) {
+	private void sendManagerRoleMembershipChangeNotification(final Person person, final String subjectKey,
+		final String bodyKey) {
 	    final Sender sender = RootDomainObject.getInstance().getSystemSender();
 	    final Recipient recipient = new Recipient(new RoleGroup(RoleType.MANAGER));
-	    new Message(sender, recipient, BundleUtil.getStringFromResourceBundle("resources.ApplicationResources",  subjectKey),
-		    BundleUtil.getStringFromResourceBundle("resources.ApplicationResources", bodyKey, person.getPresentationName()));
+	    new Message(sender, recipient, BundleUtil.getStringFromResourceBundle("resources.ApplicationResources", subjectKey),
+		    BundleUtil.getStringFromResourceBundle("resources.ApplicationResources", bodyKey,
+			    person.getPresentationName()));
 	}
 
     }
@@ -3219,8 +3231,15 @@ public class Person extends Person_Base {
 
     @Override
     public void setPersonalPhoto(final Photograph photo) {
+
+	final String personViewed = PersonInformationLog.getPersonNameForLogDescription(this);
 	if (super.getPersonalPhoto() != null) {
+	    PersonInformationLog
+		    .createLog(this, "resources.MessagingResources", "log.personInformation.photo.edit", personViewed);
 	    photo.setPrevious(super.getPersonalPhoto());
+	} else {
+	    PersonInformationLog.createLog(this, "resources.MessagingResources", "log.personInformation.photo.created",
+		    personViewed);
 	}
 	super.setPersonalPhoto(photo);
     }
@@ -3923,7 +3942,7 @@ public class Person extends Person_Base {
 	    return getEmployee() != null ? getEmployee().getCurrentWorkingPlace() : null;
 	}
 	if (hasRole(RoleType.RESEARCHER)) {
-	    if (getEmployee() != null) {
+	    if (getEmployee() != null && getResearcher() != null && getResearcher().isActiveContractedResearcher()) {
 		final Unit currentWorkingPlace = getEmployee().getCurrentWorkingPlace();
 		if (currentWorkingPlace != null) {
 		    return currentWorkingPlace;
@@ -4065,7 +4084,7 @@ public class Person extends Person_Base {
 	    final RoleType... exclusionRoleTypes) {
 	final Role role = Role.getRoleByRoleType(roleType);
 	for (final Person person : role.getAssociatedPersonsSet()) {
-	    if (!person.hasAnyRole(exclusionRoleTypes)) {
+	    if (!person.hasAnyRoleHack(exclusionRoleTypes)) {
 		final String costCenter = person.getWorkingPlaceCostCenter();
 		if (costCenter != null && !costCenter.isEmpty()) {
 		    final String institution = person.getEmployer(roleType);
@@ -4081,8 +4100,23 @@ public class Person extends Person_Base {
 		    result.append(institution);
 		}
 	    }
+	    if (!person.hasAnyRole(exclusionRoleTypes)
+		    || (roleType != RoleType.RESEARCHER || (person.getResearcher() != null && person.getResearcher()
+			    .isActiveContractedResearcher()))) {
+	    }
 	}
 	return result.toString();
+    }
+
+    private boolean hasAnyRoleHack(final RoleType[] roleTypes) {
+	for (final RoleType roleType : roleTypes) {
+	    if (hasRole(roleType)
+		    && (roleType != RoleType.RESEARCHER || (getResearcher() != null && getResearcher()
+			    .isActiveContractedResearcher()))) {
+		return true;
+	    }
+	}
+	return false;
     }
 
     protected static String readAllInformation(final RoleType roleType, final RoleType... exclusionRoleTypes) {
@@ -4176,8 +4210,8 @@ public class Person extends Person_Base {
 
 	final String fullName = getName();
 	final String familyName = getFamilyNames();
-	final String composedName = familyName == null || familyName.isEmpty() ?
-		getGivenNames() : getGivenNames() + " " + familyName;
+	final String composedName = familyName == null || familyName.isEmpty() ? getGivenNames() : getGivenNames() + " "
+		+ familyName;
 
 	return fullName.equals(composedName);
     }
@@ -4443,6 +4477,248 @@ public class Person extends Person_Base {
 	    }
 	}
 	return builder.toString();
+    }
+
+    /*********************************
+     * LOGGING METHODS AND OVERRIDES *
+     ********************************/
+
+    private void logSetter(String keyTypeOfData, String oldValue, String newValue, String keyLabel) {
+
+	final String personViewed = PersonInformationLog.getPersonNameForLogDescription(this);
+	if (oldValue.compareTo(newValue) != 0) {
+	    String infoLabel = BundleUtil.getStringFromResourceBundle("resources.ApplicationResources", keyLabel);
+	    String typeOfData = BundleUtil.getStringFromResourceBundle("resources.MessagingResources", keyTypeOfData);
+	    PersonInformationLog.createLog(this, "resources.MessagingResources", "log.personInformation.edit.generalTemplate",
+		    typeOfData, infoLabel, personViewed, oldValue);
+	}
+    }
+
+    private void logSetterNullString(String keyInfoType, String oldValue, String newValue, String keyLabel) {
+	String argNew, argOld;
+	argOld = valueToUpdateIfNewNotNull(
+		BundleUtil.getStringFromResourceBundle("resources.ApplicationResources", "label.empty"), oldValue);
+	argNew = valueToUpdateIfNewNotNull(
+		BundleUtil.getStringFromResourceBundle("resources.ApplicationResources", "label.empty"), newValue);
+	logSetter(keyInfoType, argOld, argNew, keyLabel);
+    }
+
+    private void logSetterNullYearMonthDay(String keyInfoType, YearMonthDay oldValue, YearMonthDay newValue, String keyLabel) {
+	Object argNew, argOld;
+	String strNew, strOld;
+	argOld = valueToUpdateIfNewNotNull(
+		BundleUtil.getStringFromResourceBundle("resources.HtmlAltResources", "text.dateEmpty"), oldValue);
+	argNew = valueToUpdateIfNewNotNull(
+		BundleUtil.getStringFromResourceBundle("resources.HtmlAltResources", "text.dateEmpty"), newValue);
+
+	if (argOld instanceof YearMonthDay) {
+	    strOld = ((YearMonthDay) argOld).toString("yyyy/MM/dd");
+	} else {
+	    strOld = (String) argOld;
+	}
+
+	if (argNew instanceof YearMonthDay) {
+	    strNew = ((YearMonthDay) argNew).toString("yyyy/MM/dd");
+	} else {
+	    strNew = (String) argNew;
+	}
+	logSetter(keyInfoType, strOld, strNew, keyLabel);
+    }
+
+    private void logSetterNullEnum(String keyInfoType, IPresentableEnum oldValue, IPresentableEnum newValue, String keyLabel) {
+	Object argNew, argOld;
+	String strNew, strOld;
+	argOld = valueToUpdateIfNewNotNull(
+		BundleUtil.getStringFromResourceBundle("resources.ApplicationResources", "label.empty"), oldValue);
+	argNew = valueToUpdateIfNewNotNull(
+		BundleUtil.getStringFromResourceBundle("resources.ApplicationResources", "label.empty"), newValue);
+
+	if (argOld instanceof Enum) {
+	    strOld = ((IPresentableEnum) argOld).getLocalizedName();
+	} else {
+	    strOld = (String) argOld;
+	}
+
+	if (argNew instanceof Enum) {
+	    strNew = ((IPresentableEnum) argNew).getLocalizedName();
+	} else {
+	    strNew = (String) argNew;
+	}
+	logSetter(keyInfoType, strOld, strNew, keyLabel);
+    }
+
+    @Override
+    public void setGender(Gender arg) {
+	logSetterNullEnum("log.personInformation.edit.generalTemplate.personalData", getGender(), arg, "label.gender");
+	super.setGender(arg);
+    }
+
+    @Override
+    public void setProfession(String arg) {
+	logSetterNullString("log.personInformation.edit.generalTemplate.personalData", getProfession(), arg, "label.occupation");
+	super.setProfession(arg);
+    }
+
+    @Override
+    public void setMaritalStatus(MaritalStatus arg) {
+	// avmc: logic here is different: null value is converted to UNKNOWN
+	MaritalStatus argToSet;
+	if (arg != null) {
+	    argToSet = arg;
+	} else {
+	    argToSet = MaritalStatus.UNKNOWN;
+	}
+	logSetterNullEnum("log.personInformation.edit.generalTemplate.personalData", getMaritalStatus(), argToSet,
+		"label.maritalStatus");
+	super.setMaritalStatus(argToSet);
+    }
+
+    @Override
+    public void setEmissionLocationOfDocumentId(String arg) {
+	logSetterNullString("log.personInformation.edit.generalTemplate.personalId", getEmissionLocationOfDocumentId(), arg,
+		"label.documentIdEmissionLocation");
+	super.setEmissionLocationOfDocumentId(arg);
+    }
+
+    @Override
+    public void setEmissionDateOfDocumentIdYearMonthDay(YearMonthDay arg) {
+	logSetterNullYearMonthDay("log.personInformation.edit.generalTemplate.personalId",
+		getEmissionDateOfDocumentIdYearMonthDay(), arg, "label.documentIdEmissionDate");
+	super.setEmissionDateOfDocumentIdYearMonthDay(arg);
+    }
+
+    @Override
+    public void setExpirationDateOfDocumentIdYearMonthDay(YearMonthDay arg) {
+	logSetterNullYearMonthDay("log.personInformation.edit.generalTemplate.personalId",
+		getExpirationDateOfDocumentIdYearMonthDay(), arg, "label.documentIdExpirationDate");
+	super.setExpirationDateOfDocumentIdYearMonthDay(arg);
+    }
+
+    @Override
+    public void setSocialSecurityNumber(String arg) {
+	logSetterNullString("log.personInformation.edit.generalTemplate.personalId", getSocialSecurityNumber(), arg,
+		"label.socialSecurityNumber");
+	super.setSocialSecurityNumber(arg);
+    }
+
+    @Override
+    public void setEidentifier(String arg) {
+	logSetterNullString("log.personInformation.edit.generalTemplate.personalId", getEidentifier(), arg, "label.eidentifier");
+	super.setEidentifier(arg);
+    }
+
+    @Override
+    public void setDateOfBirthYearMonthDay(YearMonthDay arg) {
+	logSetterNullYearMonthDay("log.personInformation.edit.generalTemplate.filiation", getDateOfBirthYearMonthDay(), arg,
+		"label.dateOfBirth");
+	super.setDateOfBirthYearMonthDay(arg);
+    }
+
+    // Nationality
+    @Override
+    public void setCountry(Country arg) {
+	String argNew, argOld;
+
+	if (getCountry() != null) {
+	    if (getCountry().getCountryNationality() != null) {
+		argOld = getCountry().getCountryNationality().getContent();
+	    } else {
+		argOld = getCountry().getName();
+	    }
+	} else {
+	    argOld = BundleUtil.getStringFromResourceBundle("resources.ApplicationResources", "label.empty");
+	}
+
+	if (arg != null) {
+	    if (arg.getCountryNationality() != null) {
+		argNew = arg.getCountryNationality().getContent();
+	    } else {
+		argNew = arg.getName();
+	    }
+	} else {
+	    argNew = BundleUtil.getStringFromResourceBundle("resources.ApplicationResources", "label.empty");
+	}
+	super.setCountry(arg);
+	logSetter("log.personInformation.edit.generalTemplate.filiation", argOld, argNew, "label.nationality");
+    }
+
+    @Override
+    public void setParishOfBirth(String arg) {
+	logSetterNullString("log.personInformation.edit.generalTemplate.filiation", getParishOfBirth(), arg,
+		"label.parishOfBirth");
+	super.setParishOfBirth(arg);
+    }
+
+    @Override
+    public void setDistrictSubdivisionOfBirth(String arg) {
+	logSetterNullString("log.personInformation.edit.generalTemplate.filiation", getDistrictSubdivisionOfBirth(), arg,
+		"label.districtSubdivisionOfBirth");
+	super.setDistrictSubdivisionOfBirth(arg);
+    }
+
+    @Override
+    public void setDistrictOfBirth(String arg) {
+	logSetterNullString("log.personInformation.edit.generalTemplate.filiation", getDistrictOfBirth(), arg,
+		"label.districtOfBirth");
+	super.setDistrictOfBirth(arg);
+    }
+
+    // Not to be confused with Nationality
+    @Override
+    public void setCountryOfBirth(Country arg) {
+	String argNew, argOld;
+
+	if (getCountryOfBirth() != null) {
+	    argOld = getCountryOfBirth().getName();
+	} else {
+	    argOld = BundleUtil.getStringFromResourceBundle("resources.ApplicationResources", "label.empty");
+	}
+
+	if (arg != null) {
+	    argNew = arg.getName();
+	} else {
+	    argNew = BundleUtil.getStringFromResourceBundle("resources.ApplicationResources", "label.empty");
+	}
+	super.setCountryOfBirth(arg);
+	logSetter("log.personInformation.edit.generalTemplate.filiation", argOld, argNew, "label.countryOfBirth");
+    }
+
+    @Override
+    public void setNameOfMother(String arg) {
+	logSetterNullString("log.personInformation.edit.generalTemplate.filiation", getNameOfMother(), arg, "label.nameOfMother");
+	super.setNameOfMother(arg);
+    }
+
+    @Override
+    public void setNameOfFather(String arg) {
+	logSetterNullString("log.personInformation.edit.generalTemplate.filiation", getNameOfFather(), arg, "label.nameOfFather");
+	super.setNameOfFather(arg);
+    }
+
+    @Override
+    public void logCreateContact(PartyContact contact) {
+	contact.logCreate(this);
+    }
+
+    @Override
+    public void logEditContact(PartyContact contact, boolean propertiesChanged, boolean valueChanged, boolean createdNewContact,
+	    String newValue) {
+	contact.logEdit(this, propertiesChanged, valueChanged, createdNewContact, newValue);
+    }
+
+    @Override
+    public void logDeleteContact(PartyContact contact) {
+	contact.logDelete(this);
+    }
+
+    @Override
+    public void logValidContact(PartyContact contact) {
+	contact.logValid(this);
+    }
+
+    @Override
+    public void logRefuseContact(PartyContact contact) {
+	contact.logRefuse(this);
     }
 
 }

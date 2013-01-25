@@ -5,7 +5,9 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
+import net.sourceforge.fenixedu.domain.CandidaciesLog;
 import net.sourceforge.fenixedu.domain.Degree;
+import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacySeriesGradeState;
 import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyState;
 
@@ -51,7 +53,6 @@ public class DegreeCandidacyForGraduatedPersonIndividualCandidacyResultBean impl
 	setDegree(degree);
 	setSeriesGradeState(seriesGradeForDegree.getState());
     }
-
 
     public DegreeCandidacyForGraduatedPersonIndividualProcess getCandidacyProcess() {
 	return this.candidacyProcess;
@@ -116,4 +117,13 @@ public class DegreeCandidacyForGraduatedPersonIndividualCandidacyResultBean impl
     public void setDegrees(List<Degree> degrees) {
 	this.degrees = degrees;
     }
+
+    public void graduatedPersonCandidacyLog() {
+	ExecutionYear executionYear = ExecutionYear.readCurrentExecutionYear();
+	CandidaciesLog.createLog(getDegree(), executionYear, "resources.MessagingResources",
+		"log.degree.candidacies.introduceresultsforgraduatedperson", getCandidacyProcess().getPersonalDetails()
+			.getPerson().getName());
+
+    }
+
 }

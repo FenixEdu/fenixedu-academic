@@ -301,6 +301,8 @@
             </form-bean>
             <form-bean dynamic="true" type="org.apache.struts.validator.DynaValidatorForm" name="sepeateExecutionCourseForm">
                   <form-property type="java.lang.Integer" name="page"></form-property>
+                  <form-property type="java.lang.Integer" name="originExecutionDegreeID"></form-property>
+                  <form-property type="java.lang.Integer" name="curricularYearId"></form-property>
                   <form-property type="java.lang.String" name="destinationExecutionDegreeId"></form-property>
                   <form-property type="java.lang.String" name="destinationCurricularYear"></form-property>
                   <form-property type="java.lang.String" name="destinationExecutionCourseID"></form-property>

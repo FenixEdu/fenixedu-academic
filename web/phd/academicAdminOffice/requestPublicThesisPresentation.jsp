@@ -97,7 +97,12 @@
 			<fr:slot name="type" readOnly="true" key="label.net.sourceforge.fenixedu.domain.phd.PhdProgramDocumentUploadBean.type" layout="phd-enum-renderer" />
 			<fr:slot name="file" key="label.net.sourceforge.fenixedu.domain.phd.PhdProgramDocumentUploadBean.file">
 				<fr:property name="fileNameSlot" value="filename"/>
+				<fr:property name="fileSizeSlot" value="filesize"/>
 				<fr:property name="size" value="20"/>
+				<fr:validator name="pt.ist.fenixWebFramework.renderers.validators.FileValidator">
+					<fr:property name="maxSize" value="66060288"/>
+					<fr:property name="typeMessage" value="phd.document.maxSize"/>
+				</fr:validator>		
 			</fr:slot>
 		</fr:schema>
 		

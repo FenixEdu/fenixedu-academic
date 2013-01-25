@@ -317,17 +317,19 @@ public class ExecutionCourseSite extends ExecutionCourseSite_Base {
     @Override
     public void setLessonPlanningAvailable(Boolean lessonPlanningAvailable) {
 
-	final String avaiable;
+	if (getSiteExecutionCourse() != null) {
+	    final String avaiable;
 
-	if (lessonPlanningAvailable) {
-	    avaiable = BundleUtil.getStringFromResourceBundle("resources.ApplicationResources", "message.available");
-	} else {
-	    avaiable = BundleUtil.getStringFromResourceBundle("resources.ApplicationResources", "message.not.available");
+	    if (lessonPlanningAvailable) {
+		avaiable = BundleUtil.getStringFromResourceBundle("resources.ApplicationResources", "message.available");
+	    } else {
+		avaiable = BundleUtil.getStringFromResourceBundle("resources.ApplicationResources", "message.not.available");
+	    }
+
+	    CurricularManagementLog.createLog(getSiteExecutionCourse(), "resources.MessagingResources",
+		    "log.executionCourse.curricular.planning.publish", avaiable, getSiteExecutionCourse().getNome(),
+		    getSiteExecutionCourse().getDegreePresentationString());
+	    super.setLessonPlanningAvailable(lessonPlanningAvailable);
 	}
-
-	CurricularManagementLog.createLog(getSiteExecutionCourse(), "resources.MessagingResources",
-		"log.executionCourse.curricular.planning.publish", avaiable, getSiteExecutionCourse().getNome(),
-		getSiteExecutionCourse().getDegreePresentationString());
-	super.setLessonPlanningAvailable(lessonPlanningAvailable);
     }
 }

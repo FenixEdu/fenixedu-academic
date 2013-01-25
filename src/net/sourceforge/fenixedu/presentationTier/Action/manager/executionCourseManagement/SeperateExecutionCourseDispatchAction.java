@@ -14,6 +14,9 @@ import net.sourceforge.fenixedu.applicationTier.Servico.manager.executionCourseM
 import net.sourceforge.fenixedu.applicationTier.Servico.manager.executionCourseManagement.ReadExecutionDegreesByExecutionPeriodId;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
+import net.sourceforge.fenixedu.domain.CurricularYear;
+import net.sourceforge.fenixedu.domain.ExecutionCourse;
+import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants;
 import net.sourceforge.fenixedu.presentationTier.Action.utils.RequestUtils;
@@ -43,25 +46,28 @@ public class SeperateExecutionCourseDispatchAction extends FenixDispatchAction {
 	IUserView userView = UserView.getUser();
 
 	Integer executionCourseId = new Integer(request.getParameter("executionCourseId"));
+	Integer executionDegreeID = getIntegerFromRequest(request, "originExecutionDegreeID");
+	Integer curricularYearID = getIntegerFromRequest(request, "curricularYearId");
 
-	InfoExecutionCourse infoExecutionCourse = (InfoExecutionCourse) ReadExecutionCourseWithShiftsAndCurricularCoursesByOID
-		.run(executionCourseId);
+	InfoExecutionCourse infoExecutionCourse = ReadExecutionCourseWithShiftsAndCurricularCoursesByOID.run(executionCourseId);
 	request.setAttribute("infoExecutionCourse", infoExecutionCourse);
 
-	List executionDegrees = (List) ReadExecutionDegreesByExecutionPeriodId.run(infoExecutionCourse.getInfoExecutionPeriod()
+	List executionDegrees = ReadExecutionDegreesByExecutionPeriodId.run(infoExecutionCourse.getInfoExecutionPeriod()
 		.getIdInternal());
 	transformExecutionDegreesIntoLabelValueBean(executionDegrees);
 	request.setAttribute("executionDegrees", executionDegrees);
 
 	List curricularYears = RequestUtils.buildCurricularYearLabelValueBean();
 	request.setAttribute(PresentationConstants.CURRICULAR_YEAR_LIST_KEY, curricularYears);
-
+	request.setAttribute("originExecutionDegreeID", executionDegreeID);
+	request.setAttribute("curricularYearId", curricularYearID);
 	return mapping.findForward("showSeperationPage");
     }
 
     private void transformExecutionDegreesIntoLabelValueBean(List executionDegreeList) {
 	CollectionUtils.transform(executionDegreeList, new Transformer() {
 
+	    @Override
 	    public Object transform(Object arg0) {
 		InfoExecutionDegree infoExecutionDegree = (InfoExecutionDegree) arg0;
 		StringBuilder label = new StringBuilder(infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree()
@@ -105,11 +111,16 @@ public class SeperateExecutionCourseDispatchAction extends FenixDispatchAction {
 
     public ActionForward transfer(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
 	    throws FenixServiceException, FenixFilterException {
+	/**/
+	ExecutionCourseBean bean = new ExecutionCourseBean();
 
+	/**/
 	DynaActionForm dynaActionForm = (DynaActionForm) form;
 
 	Integer executionCourseId = new Integer(request.getParameter("executionCourseId"));
 	String destinationExecutionCourseIDString = (String) dynaActionForm.get("destinationExecutionCourseID");
+	Integer originExecutionDegreeID = (Integer) dynaActionForm.get("originExecutionDegreeID");
+	Integer curricularYearID = (Integer) dynaActionForm.get("curricularYearId");
 	String[] shiftIdsToTransfer = (String[]) dynaActionForm.get("shiftIdsToTransfer");
 	String[] curricularCourseIdsToTransfer = (String[]) dynaActionForm.get("curricularCourseIdsToTransfer");
 
@@ -124,6 +135,21 @@ public class SeperateExecutionCourseDispatchAction extends FenixDispatchAction {
 	// SeperateExecutionCourse.run(executionCourseId,
 	// destinationExecutionCourseID, makeIntegerArray(shiftIdsToTransfer),
 	// makeIntegerArray(curricularCourseIdsToTransfer));
+
+	ExecutionDegree originExecutionDegree = rootDomainObject.readExecutionDegreeByOID(originExecutionDegreeID);
+	final ExecutionCourse originExecutionCourse = rootDomainObject.readExecutionCourseByOID(executionCourseId);
+	final CurricularYear curricularYear = rootDomainObject.readCurricularYearByOID(curricularYearID);
+
+	bean.setExecutionDegree(originExecutionDegree);
+	bean.setChooseNotLinked(false);
+	bean.setSourceExecutionCourse(originExecutionCourse);
+	bean.setExecutionSemester(originExecutionCourse.getExecutionPeriod());
+	bean.setCurricularYear(curricularYear);
+	request.setAttribute("originExecutionDegree", originExecutionDegree);
+
+	Boolean transferSucess = true;
+	request.setAttribute("transferSucess", transferSucess);
+	request.setAttribute("sessionBean", bean);
 
 	return mapping.findForward("returnFromTransfer");
     }

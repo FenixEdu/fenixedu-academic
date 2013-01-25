@@ -200,15 +200,6 @@
 			</logic:notEmpty>		
 		</logic:notEmpty>
 	</logic:notEmpty>
-		
-	<logic:notEmpty name="<%= pt.ist.fenixWebFramework.servlets.filters.SetUserViewFilter.USER_SESSION_ATTRIBUTE %>" property="person.protocols">
-		<ul style="margin-top: 1em">
-			<li class="navheader"><bean:message key="title.protocolsResponsible" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/></li>
-			<li>
-				<html:link page="/protocols.do?method=showProtocols"><bean:message key="title.protocols" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/></html:link>
-			</li>	
-		</ul>
-	</logic:notEmpty>
 				
 	<ul style="margin-top: 1em">
   		<li>

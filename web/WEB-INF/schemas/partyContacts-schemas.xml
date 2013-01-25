@@ -47,6 +47,7 @@
 	extends="contacts.PartyContact.manage" bundle="ACADEMIC_OFFICE_RESOURCES">
 	<slot name="type">
 		<property name="excludedValues" value="INSTITUTIONAL" />
+		<validator class="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" />
 	</slot>
 	<slot name="value" key="label.partyContacts.Phone">
 		<property name="size" value="30" />
@@ -61,6 +62,7 @@
 	extends="contacts.PartyContact.manage" bundle="ACADEMIC_OFFICE_RESOURCES">
 	<slot name="type">
 		<property name="excludedValues" value="INSTITUTIONAL" />
+		<validator class="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" />
 	</slot>
 	<slot name="value" key="label.partyContacts.MobilePhone">
 		<property name="size" value="30" />
@@ -85,6 +87,7 @@
 	extends="contacts.PartyContact.manage" bundle="ACADEMIC_OFFICE_RESOURCES">
 	<slot name="type">
 		<property name="excludedValues" value="INSTITUTIONAL" />
+		<validator class="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" />
 	</slot>
 	<slot name="value" key="label.partyContacts.WebAddress">
 		<property name="size" value="40" />

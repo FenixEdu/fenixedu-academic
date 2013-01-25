@@ -28,7 +28,10 @@
 	   	<html:link page="<%= "/qualification.do?method=showQualifications&personID="+ personID%>" >
 	   		<bean:message key="link.title.qualification" bundle="MANAGER_RESOURCES"/>
 	   	</html:link>
-	   </p>
+	   	<html:link page="<%= "/qualification.do?method=viewStudentLog&personID="+ personID%>" >
+	   		<bean:message key="link.executionCourse.log" bundle="APPLICATION_RESOURCES"/>
+	   	</html:link>
+	  </p>
 	<logic:messagesPresent message="true" property="contacts">
 		<ul class="nobullet list6">
 			<html:messages id="messages" property="contacts" message="true">
@@ -178,7 +181,7 @@
                     <img src="<%=request.getContextPath()%>/images/accept.gif"/>
             </td>
 			<td class="tdclear">
-				<html:link action="/partyContacts.do?method=prepareCreatePhysicalAddress">
+				<html:link action="<%="/partyContacts.do?method=prepareCreatePhysicalAddress&personID=" + personID %>">
 					<bean:message key="label.add" />
 				</html:link>,
 				<logic:equal name="contact" property="valid" value="true">
@@ -186,11 +189,11 @@
 						<bean:message key="label.edit" />
 					</html:link>,
 				</logic:equal>
-				<html:link action="/partyContacts.do?method=deletePartyContact" paramId="contactId" paramName="contact" paramProperty="externalId">
+				<html:link action="<%="/partyContacts.do?method=deletePartyContact&personID=" + personID%>" paramId="contactId" paramName="contact" paramProperty="externalId">
 					<bean:message key="label.clear" />
 				</html:link>
 				<logic:equal name="contact" property="valid" value="false" >
-					,<html:link action="/partyContacts.do?method=prepareValidate" paramId="partyContact" paramName="contact" paramProperty="externalId">
+					,<html:link action="<%="/partyContacts.do?method=prepareValidate&personID=" + personID%>" paramId="partyContact" paramName="contact" paramProperty="externalId">
 						<bean:message key="label.validate" />
 					</html:link>
 				</logic:equal>
@@ -282,6 +285,7 @@
 					<td class="acenter">-</td>
 					<td class="acenter">-</td>
 					<td class="acenter">-</td>
+					<td class="acenter">-</td>
 					<td class="tdclear"><html:link
 						action="<%="/partyContacts.do?method=prepareCreatePhone&personID=" + personID%>">
 						<bean:message key="label.add" />
@@ -351,6 +355,7 @@
 				<tr>
 					<td><bean:message key="label.partyContacts.MobilePhone" />:</td>
 					<td>-</td>
+					<td class="acenter">-</td>
 					<td class="acenter">-</td>
 					<td class="acenter">-</td>
 					<td class="acenter">-</td>
@@ -427,6 +432,7 @@
 				<tr>
 					<td><bean:message key="label.partyContacts.EmailAddress" />:</td>
 					<td>-</td>
+					<td class="acenter">-</td>
 					<td class="acenter">-</td>
 					<td class="acenter">-</td>
 					<td class="acenter">-</td>

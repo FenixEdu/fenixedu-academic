@@ -24,7 +24,6 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
-
 public abstract class PublicPhdProgramCandidacyProcessDA extends PhdProgramCandidacyProcessDA {
     private static final String SIBS_ENTITY_CODE = PropertiesManager.getProperty("sibs.entityCode");
 
@@ -83,7 +82,7 @@ public abstract class PublicPhdProgramCandidacyProcessDA extends PhdProgramCandi
     protected IUserView createMockUserView(final Person person) {
 	return new MockUserView(null, Collections.EMPTY_LIST, person);
     }
-    
+
     public abstract ActionForward fillPersonalDataInvalid(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response);
 
@@ -98,7 +97,7 @@ public abstract class PublicPhdProgramCandidacyProcessDA extends PhdProgramCandi
 
 	if (personsFoundByDocumentId.size() > 1) {
 	    // There's more than one person, throw an error
-	    addErrorMessage(request, "error.phd.public.candidacy.fill.personal.information.and.institution.id");
+	    addErrorMessage(request, "error.phd.public.candidacy.fill.personal.information.and.institution.id.more.than.one");
 	    return fillPersonalDataInvalid(mapping, form, request, response);
 	}
 
@@ -113,7 +112,8 @@ public abstract class PublicPhdProgramCandidacyProcessDA extends PhdProgramCandi
 	    // security number must be equal
 	    if (person != null || partyFoundBySocialSecurityNumber != null) {
 		if (person != partyFoundBySocialSecurityNumber) {
-		    addErrorMessage(request, "error.phd.public.candidacy.fill.personal.information.and.institution.id");
+		    addErrorMessage(request,
+			    "error.phd.public.candidacy.fill.personal.information.and.institution.id.different.ssn");
 		    return fillPersonalDataInvalid(mapping, form, request, response);
 		}
 	    }
@@ -123,12 +123,13 @@ public abstract class PublicPhdProgramCandidacyProcessDA extends PhdProgramCandi
 	    Person personByIstId = Person.readPersonByIstUsername(bean.getInstitutionId());
 
 	    if (personByIstId == null) {
-		addErrorMessage(request, "error.phd.public.candidacy.fill.personal.information.and.institution.id");
+		addErrorMessage(request, "error.phd.public.candidacy.fill.personal.information.and.institution.id.noIstIdPerson");
 		return fillPersonalDataInvalid(mapping, form, request, response);
 	    }
 
 	    if (person != null && person != personByIstId) {
-		addErrorMessage(request, "error.phd.public.candidacy.fill.personal.information.and.institution.id");
+		addErrorMessage(request,
+			"error.phd.public.candidacy.fill.personal.information.and.institution.id.different.istId");
 		return fillPersonalDataInvalid(mapping, form, request, response);
 	    }
 	}
@@ -145,22 +146,25 @@ public abstract class PublicPhdProgramCandidacyProcessDA extends PhdProgramCandi
 		} else if (!person.hasIstUsername() && !bean.hasInstitutionId()) {
 		    personBean.setPerson(person);
 		} else {
-		    addErrorMessage(request, "error.phd.public.candidacy.fill.personal.information.and.institution.id");
+		    addErrorMessage(request,
+			    "error.phd.public.candidacy.fill.personal.information.and.institution.id.different.istIds");
 		    return fillPersonalDataInvalid(mapping, form, request, response);
 		}
 	    } else {
-		addErrorMessage(request, "error.phd.public.candidacy.fill.personal.information.and.institution.id");
+		addErrorMessage(request,
+			"error.phd.public.candidacy.fill.personal.information.and.institution.id.different.birthday");
 		return fillPersonalDataInvalid(mapping, form, request, response);
 	    }
 
 	    // Check if person has an application for this period
 	    if (PhdProgramCandidacyProcess.hasOnlineApplicationForPeriod(person, bean.getPhdCandidacyPeriod())) {
-		addErrorMessage(request, "error.phd.public.candidacy.fill.personal.information.and.institution.id");
+		addErrorMessage(request,
+			"error.phd.public.candidacy.fill.personal.information.and.institution.alreadyHasApplication");
 		return fillPersonalDataInvalid(mapping, form, request, response);
 	    }
 	}
 
 	return null;
     }
-    
+
 }

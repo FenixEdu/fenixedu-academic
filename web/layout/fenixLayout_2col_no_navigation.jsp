@@ -8,7 +8,18 @@
 <%@page import="net.sourceforge.fenixedu.presentationTier.tiles.LayoutLinkInjector"%>
 <html:html xhtml="true">
 <head>
-	<title><bean:message key="dot.title" bundle="GLOBAL_RESOURCES"/><tiles:getAsString name="title" ignore="true" /></title>
+	<title>
+	    <tiles:useAttribute name="title" id="titleK" ignore="true"/>
+	    <tiles:useAttribute name="bundle" id="bundleT" ignore="true"/>
+	    <logic:present name="bundleT">
+	    	<logic:present name="titleK">
+		    		<bean:message key="<%= titleK.toString() %>" bundle="<%= bundleT.toString() %>"/>
+	    	</logic:present>
+	    </logic:present>
+	     <logic:notPresent name="bundleT">
+	     	<tiles:getAsString name="title" ignore="true"/>
+		</logic:notPresent>
+	</title>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 
 	<% final String contextPath = request.getContextPath(); out.write(LayoutLinkInjector.getFenixLayout2colMapLinks(contextPath)); %>

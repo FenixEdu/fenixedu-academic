@@ -16,6 +16,7 @@ import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess;
+import net.sourceforge.fenixedu.domain.phd.PhdParticipant;
 import net.sourceforge.fenixedu.domain.phd.PhdProgramDocumentUploadBean;
 import net.sourceforge.fenixedu.domain.phd.SearchPhdIndividualProgramProcessBean;
 import net.sourceforge.fenixedu.domain.phd.alert.PhdAlertMessage;
@@ -137,11 +138,15 @@ abstract public class CommonPhdIndividualProgramProcessDA extends PhdProcessDA {
 
     public ActionForward viewProcess(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) {
+	RenderUtils.invalidateViewState();
 	final PhdIndividualProgramProcess process = getProcess(request);
 	if (process != null && process.hasRegistration()) {
 	    request.setAttribute("registrationConclusionBean", new PhdRegistrationConclusionBean(process.getRegistration()));
 	}
-
+	List<PhdParticipant> guidingsList = process.getGuidings();
+	List<PhdParticipant> assistantGuidingsList = process.getAssistantGuidings();
+	request.setAttribute("guidingsList", guidingsList);
+	request.setAttribute("assistantGuidingsList", assistantGuidingsList);
 	return forwardToViewProcess(mapping, request);
     }
 

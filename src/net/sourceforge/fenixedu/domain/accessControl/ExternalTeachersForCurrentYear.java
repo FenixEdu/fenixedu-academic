@@ -14,29 +14,15 @@ import net.sourceforge.fenixedu.domain.accessControl.groups.language.Argument;
 public class ExternalTeachersForCurrentYear extends Group {
 
     @Override
-    public boolean equals(final Object other) {
-	boolean result = other != null;
-
-	if (result) {
-	    result = this.getClass().equals(other.getClass());
-	}
-
-	return result;
-    }
-
-    @Override
-    public int hashCode() {
-	return getClass().hashCode();
-    }
-
-    @Override
     public Set<Person> getElements() {
 	final Set<Person> result = new HashSet<Person>();
 	final ExecutionYear executionYear = ExecutionYear.readCurrentExecutionYear();
 	for (final ExecutionSemester executionSemester : executionYear.getExecutionPeriodsSet()) {
 	    for (final TeacherAuthorization teacherAuthorization : executionSemester.getAuthorizationSet()) {
-		final Teacher teacher = teacherAuthorization.getTeacher();
-		result.add(teacher.getPerson());
+		if (teacherAuthorization instanceof ExternalTeacherAuthorization) {
+		    final Teacher teacher = teacherAuthorization.getTeacher();
+		    result.add(teacher.getPerson());
+		}
 	    }
 	}
 	return result;

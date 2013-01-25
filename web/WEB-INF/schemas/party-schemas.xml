@@ -200,7 +200,7 @@
 	<slot name="name" key="label.person.name">
 		<property name="size" value="50"/>
 	</slot>	
-	<slot name="gender" key="label.person.sex"/>
+	<slot name="gender" key="label.person.sex" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
 	<slot name="idDocumentType" key="label.person.identificationDocumentType">
 		<property name="excludedValues" value="CITIZEN_CARD" />
 	</slot>

@@ -377,8 +377,6 @@ $(document).ready(function() {
 					<fr:schema bundle="TEACHER_CREDITS_SHEET_RESOURCES" type="net.sourceforge.fenixedu.domain.organizationalStructure.PersonFunction">
 						<fr:slot name="function.name" key="label.managementPosition.position"/>
 						<fr:slot name="function.unit.name" key="label.managementPosition.unit"/>
-						<fr:slot name="beginDateInDateType" key="label.managementPosition.start"/>
-						<fr:slot name="endDateInDateType" key="label.managementPosition.end"/>
 						<logic:equal name="areCreditsCalculated" value="true">	
 							<fr:slot name="credits" key="label.managementPosition.credits"/>
 						</logic:equal>

@@ -26,8 +26,7 @@ public class DeleteDegreeSpecializationArea extends FenixService {
 	    throw new InvalidArgumentsServiceException();
 	}
 
-	degreeOfficialPublication.removeSpecializationArea(degreeSpecializationArea);
-
+	degreeSpecializationArea.delete();
     }
 
 }

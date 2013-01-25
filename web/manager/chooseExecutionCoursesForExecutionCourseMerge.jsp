@@ -4,82 +4,77 @@
 <%@page import="net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicInterval"%><html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
+<%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr"%>
 
+<p>
+	<h2>
+		<bean:message key="title.execution.course.merge" bundle="SOP_RESOURCES"/>
+	</h2>
+</p>
 
+<logic:equal name="previousOrEqualSemester" value="true">
+		<div class="error0">
+			<bean:write name="degreeBean" property="academicInterval.pathName"/>
+		</div>
+</logic:equal>
+<logic:equal name="previousOrEqualSemester" value="false">
+	<bean:write name="degreeBean" property="academicInterval.pathName"/>
+</logic:equal>
 
-<br/>
+<logic:messagesPresent message="true" property="error">
+	<br />
+	<html:messages id="messages" message="true" bundle="SOP_RESOURCES" property="error">
+		<div class="error2"><bean:write name="messages"/></div>
+	</html:messages>
+	<br />
+</logic:messagesPresent>
 
-<span class="error"><!-- Error messages go here --><html:errors /></span>
+<span class="error"><!-- Error messages go here --><html:errors/></span>
 
-
-
-<br/>
-<bean:write name="academicInterval" property="pathName" />
-<br/>
-
-<html:form action="/mergeExecutionCoursesForm.do?method=mergeExecutionCourses" >
-
-    <html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="<%= PresentationConstants.ACADEMIC_INTERVAL%>" value="<%= ((AcademicInterval)request.getAttribute(PresentationConstants.ACADEMIC_INTERVAL)).getResumedRepresentationInStringFormat() %>"/>
-	<br/>
+<html:form action="/mergeExecutionCoursesForm.do?method=mergeExecutionCourses" styleId="submitForm">
+	<p>
+		<html:link page="/chooseDegreesForExecutionCourseMerge.do?method=prepareChooseDegreesAndExecutionPeriod">
+			<bean:message key="link.student.back" bundle="ACADEMIC_OFFICE_RESOURCES"/>
+		</html:link>
+	</p>
+	</br>
+	(<bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.mergedegrees.source"/>) <br/>
+	<bean:write name="degreeBean" property="sourceDegree.sigla" /> - <bean:write name="degreeBean" property="sourceDegree.presentationName"/>
 	
 	
+
+	<fr:edit id="degreeBean" name="degreeBean">
+		<fr:schema type="net.sourceforge.fenixedu.presentationTier.Action.manager.MergeExecutionCourseDispatchionAction$DegreesMergeBean" bundle="ACADEMIC_OFFICE_RESOURCES">				
+			<fr:slot name="sourceExecutionCourse" layout="menu-select" key="label.mergedegrees.mergecourses.source" required="true">
+				<fr:property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.SourceExecutionCoursesProvider"/>
+				<fr:property name="format" value="${nome}" />
+			</fr:slot>
+			<fr:slot name="destinationExecutionCourse" layout="menu-select" key="label.mergedegrees.mergecourses.destination" required="true">
+				<fr:property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.DestinationExecutionCoursesProvider"/>
+				<fr:property name="format" value="${nome}"/>
+			</fr:slot>
+		</fr:schema>
+		<fr:layout name="tabular">
+			<fr:property name="classes" value="tstyle0 thleft mtop15"/>
+			<fr:property name="columnClasses" value=",,tdclear tderror1"/>
+		</fr:layout>
+	</fr:edit>
 	<br/>
-	
-	
-	<table cellpadding="1" >
-	<tr >
-	<td valign="top">
-	<bean:write name="sourceInfoDegree" property="sigla" /> - 
-	<bean:write name="sourceInfoDegree" property="presentationName" />
-	<br/>
-	<strong>Escolha a Disciplina Execução de Origem</strong>
-	<br/>	
-	<br/>
-	<table>
-	<logic:iterate id="executionCourse" name="sourceExecutionCourses">
-		<tr>
-			<td class="listClasses">
-			<html:radio bundle="HTMLALT_RESOURCES" altKey="radio.sourceExecutionCourseId" property="sourceExecutionCourseId" idName="executionCourse" value="idInternal"/> 
-			</td>
-			<td class="listClasses">
-			<bean:write name="executionCourse" property="sigla"/>
-			</td>
-			<td class="listClasses">
-			<bean:write name="executionCourse" property="nome"/>
-			</td>
-		</tr>
-	</logic:iterate>
-	</table>
-	</td>
-	<td valign="top">
-	<bean:write name="destinationInfoDegree" property="sigla" /> - 
-	<bean:write name="destinationInfoDegree" property="presentationName" />
-	<br/>
-	<strong>Escolha a Disciplina Execução de Destino</strong>
-	<table>
-	<logic:iterate id="executionCourse" name="destinationExecutionCourses">
-		<tr>
-			<td class="listClasses">
-			<html:radio bundle="HTMLALT_RESOURCES" altKey="radio.destinationExecutionCourseId" property="destinationExecutionCourseId" idName="executionCourse" value="idInternal"/> 
-			</td>
-			<td class="listClasses">
-			<bean:write name="executionCourse" property="sigla"/>
-			</td>
-			<td class="listClasses">
-			<bean:write name="executionCourse" property="nome"/>
-			</td>
-		</tr>
-	</logic:iterate>
-	</table>
-	</td>
-	</tr>
-	</table>
+	<bean:write name="degreeBean" property="destinationDegree.sigla"/> - <bean:write name="degreeBean" property="destinationDegree.presentationName"/> <br/>
+	(<bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.mergedegrees.destination"/>)
 	<br/>
 	<br/>
-	<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton">
+	<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton" onclick="askForConfirmation(); return false;">
 		<bean:message bundle="MANAGER_RESOURCES" key="button.save"/>
 	</html:submit>
-	<html:reset bundle="HTMLALT_RESOURCES" altKey="reset.reset"  styleClass="inputbutton">
-		<bean:message bundle="MANAGER_RESOURCES" key="label.clear"/>
-	</html:reset>
 </html:form>
+
+
+<script src="../javaScript/alertHandlers.js"></script>
+<script src="../javaScript/jquery.alerts.js"></script>
+
+<script type="text/javascript">
+function askForConfirmation()  {
+	  requestConfirmation("submitForm","Tem a certeza que pretende agrupar as duas disciplinas?","Confirmar");
+}
+</script>

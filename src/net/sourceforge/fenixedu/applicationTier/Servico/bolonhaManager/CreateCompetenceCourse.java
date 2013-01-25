@@ -40,13 +40,18 @@ public class CreateCompetenceCourse extends FenixService {
 	final String normalizedNameEn = StringFormatter.normalize(nameEn);
 
 	for (final CompetenceCourse competenceCourse : CompetenceCourse.readBolonhaCompetenceCourses()) {
-	    if (StringFormatter.normalize(competenceCourse.getName()).equals(normalizedName)) {
-		throw new ExistingCompetenceCourseInformationException("error.existingCompetenceCourseWithSameName",
-			competenceCourse.getDepartmentUnit().getName());
+
+	    if (StringFormatter.normalize(competenceCourse.getName()) != null) {
+		if (StringFormatter.normalize(competenceCourse.getName()).equals(normalizedName)) {
+		    throw new ExistingCompetenceCourseInformationException("error.existingCompetenceCourseWithSameName",
+			    competenceCourse.getDepartmentUnit().getName());
+		}
 	    }
-	    if (StringFormatter.normalize(competenceCourse.getNameEn()).equals(normalizedNameEn)) {
-		throw new ExistingCompetenceCourseInformationException("error.existingCompetenceCourseWithSameNameEn",
-			competenceCourse.getDepartmentUnit().getName());
+	    if (StringFormatter.normalize(competenceCourse.getNameEn()) != null) {
+		if (StringFormatter.normalize(competenceCourse.getNameEn()).equals(normalizedNameEn)) {
+		    throw new ExistingCompetenceCourseInformationException("error.existingCompetenceCourseWithSameNameEn",
+			    competenceCourse.getDepartmentUnit().getName());
+		}
 	    }
 	}
     }

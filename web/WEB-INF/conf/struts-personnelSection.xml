@@ -24,7 +24,7 @@
       <global-forwards type="org.apache.struts.action.ActionForward"></global-forwards>
       <!-- ========== Action Mapping Definitions =============================== -->
       <action-mappings type="org.apache.struts.action.ActionMapping">
-            <action forward="managementAssiduousnessWelcome" type="net.sourceforge.fenixedu.presentationTier.Action.base.FenixForwardAction" path="/index"></action>
+            <action forward="findPerson" type="net.sourceforge.fenixedu.presentationTier.Action.base.FenixForwardAction" path="/index"></action>
       </action-mappings>
       <!-- ========== Controller Configuration ================================ -->
       <controller processorClass="net.sourceforge.fenixedu.presentationTier.processor.FenixRequestProcessorWithTiles"></controller>

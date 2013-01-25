@@ -9,6 +9,8 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.Department;
+import net.sourceforge.fenixedu.domain.ExecutionYear;
+import net.sourceforge.fenixedu.domain.ProgramTutoredParticipationLog;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.TutorshipIntention;
 import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicInterval;
@@ -116,9 +118,16 @@ public class TutorTeachersManagementDispatchAction extends FenixDispatchAction {
 
 	public void save() {
 	    TutorshipIntention intention = TutorshipIntention.readByDcpAndTeacherAndInterval(dcp, teacher, academicInterval);
+	    ExecutionYear executionYear = (ExecutionYear) ExecutionYear.getExecutionInterval(academicInterval);
 	    if (intention == null && intending) {
 		new TutorshipIntention(dcp, teacher, academicInterval);
+		ProgramTutoredParticipationLog.createLog(dcp.getDegree(), executionYear, "resources.MessagingResources",
+			"log.degree.programtutoredparticipation.addteacher", teacher.getPerson().getPresentationName(), dcp
+				.getDegree().getPresentationName());
 	    } else if (intention != null && !intending) {
+		ProgramTutoredParticipationLog.createLog(dcp.getDegree(), executionYear, "resources.MessagingResources",
+			"log.degree.programtutoredparticipation.removeteacher", teacher.getPerson().getPresentationName(), dcp
+				.getDegree().getPresentationName());
 		intention.delete();
 	    }
 	}

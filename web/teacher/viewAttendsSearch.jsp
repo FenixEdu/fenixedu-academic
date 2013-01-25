@@ -10,7 +10,8 @@
 
 
 <logic:present name="searchBean">
-	<h2>Alunos de <bean:write name="searchBean" property="executionCourse.nome" /></h2>
+	<h2> <bean:message key="message.attendingStudentsOf"/> 
+	<bean:write name="searchBean" property="executionCourse.nome" /></h2>
 	
 	<span class="error"><!-- Error messages go here --><html:errors /></span>
 	<div class="infoop2">
@@ -29,7 +30,8 @@
 	</fr:form>
 	<logic:notEmpty name="searchBean" property="attendsResult">
 		<bean:size id="size" name="searchBean" property="attendsResult"/>
-		<h3> <bean:write name="size"/> Aluno(s) </h3>
+		<h3> <bean:write name="size"/>
+			<bean:message key="message.attendingStudents"/> </h3>
 	
 		<fr:form id="sendMailForm" action="<%="/searchECAttends.do?method=sendEmail&" + net.sourceforge.fenixedu.presentationTier.servlets.filters.ContentInjectionRewriter.buildContextAttribute("/messaging")%>">
 			<fr:edit name="searchBean" id="mailViewState" visible="false"/>

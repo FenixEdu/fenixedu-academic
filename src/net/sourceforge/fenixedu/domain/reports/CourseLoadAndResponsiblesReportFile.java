@@ -31,7 +31,7 @@ public class CourseLoadAndResponsiblesReportFile extends CourseLoadAndResponsibl
 
     @Override
     public String getJobName() {
-	return "Listagem de informa��o sobre disciplinas";
+	return "Listagem de informação sobre disciplinas";
     }
 
     @Override
@@ -149,8 +149,8 @@ public class CourseLoadAndResponsiblesReportFile extends CourseLoadAndResponsibl
 	row.setCell(executionCourse != null ? executionCourse.getExternalId() : "");
 	row.setCell(curricularCourse.hasCompetenceCourse() ? curricularCourse.getCompetenceCourse().getExternalId() : "");
 
-	row.setCell(executionCourse != null ? (executionCourse.isDissertation() ? "DISS" : executionCourse
-		.getProjectTutorialCourse() ? "A" : "B") : "");
+	row.setCell(executionCourse != null ? executionCourse.isDissertation() ? "DISS" : executionCourse
+		.getProjectTutorialCourse() ? "A" : "B" : "");
 	row.setCell(executionCourse != null ? executionCourse.getUnitCreditValue().toString() : "");
     }
 
@@ -210,8 +210,9 @@ public class CourseLoadAndResponsiblesReportFile extends CourseLoadAndResponsibl
 		final Context context = degreeModuleScopeContext.getContext();
 		return context.getParentCourseGroup().getName();
 	    }
-	} else
+	} else {
 	    return null;
+	}
     }
 
     private String findResponsibleTeachers(final ExecutionCourse executionCourse) {
@@ -308,8 +309,9 @@ public class CourseLoadAndResponsiblesReportFile extends CourseLoadAndResponsibl
 
     private BigDecimal findCourseLoadFromExecutionCourse(final CompetenceCourseLoad competenceCourseLoad,
 	    final ExecutionCourse executionCourse, final ShiftType shiftType) {
-	if (executionCourse == null)
+	if (executionCourse == null) {
 	    return null;
+	}
 	BigDecimal total = BigDecimal.valueOf(0);
 	for (final CourseLoad courseLoad : executionCourse.getCourseLoadsSet()) {
 	    if (shiftType == null || courseLoad.getType() == shiftType) {

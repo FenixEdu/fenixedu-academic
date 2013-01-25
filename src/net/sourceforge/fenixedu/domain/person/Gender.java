@@ -31,10 +31,14 @@
 package net.sourceforge.fenixedu.domain.person;
 
 import java.util.Locale;
+import java.util.ResourceBundle;
 
 import org.apache.struts.util.LabelValueBean;
 
-public enum Gender {
+import pt.ist.fenixWebFramework.rendererExtensions.util.IPresentableEnum;
+import pt.utl.ist.fenix.tools.util.i18n.Language;
+
+public enum Gender implements IPresentableEnum {
 
     MALE, FEMALE;
 
@@ -51,6 +55,7 @@ public enum Gender {
      * @return an array of LabelValueBean containing the name of the Gender and
      *         its localized string version
      */
+    @Deprecated
     public static LabelValueBean[] getSexLabelValues(Locale locale) {
 	return GenderHelper.getSexLabelValues(locale);
     }
@@ -91,5 +96,11 @@ public enum Gender {
      */
     public static Gender parseGender(String name) {
 	return GenderHelper.parseGender(name);
+    }
+
+    @Override
+    public String getLocalizedName() {
+	final ResourceBundle bundle = ResourceBundle.getBundle("resources.EnumerationResources", Language.getLocale());
+	return bundle.getString(this.getClass().getName() + "." + name());
     }
 }

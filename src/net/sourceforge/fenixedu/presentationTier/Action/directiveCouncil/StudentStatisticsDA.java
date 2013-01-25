@@ -26,7 +26,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 @Mapping(path = "/studentStatistics", module = "directiveCouncil")
-@Forwards({ @Forward(name = "show.student.statistics", path = "/directiveCouncil/showStudentStatistics.jsp", tileProperties = @Tile(title = "private.steeringcouncil.studentstatistics")), })
+@Forwards({ @Forward(name = "show.student.statistics", path = "/directiveCouncil/showStudentStatistics.jsp", tileProperties = @Tile(title = "private.steeringcouncil.studentstatistics")) })
 public class StudentStatisticsDA extends FenixDispatchAction {
 
     public static class ContextBean implements Serializable, HasExecutionYear, HasDegreeType {

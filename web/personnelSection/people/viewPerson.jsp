@@ -64,6 +64,9 @@
 	   	<html:link page="<%= "/qualification.do?method=showQualifications&personID="+ personID%>" >
 	   		<bean:message key="link.title.qualification" bundle="MANAGER_RESOURCES"/>
 	   	</html:link>
+	   	<html:link page="<%= "/qualification.do?method=viewStudentLog&personID="+ personID%>" >
+	   		<bean:message key="link.executionCourse.log" bundle="APPLICATION_RESOURCES"/>
+	   	</html:link>
 	</p>
 
 	 <table class="tstyle2 thlight thleft">
@@ -237,11 +240,11 @@
 						<bean:message key="label.edit" bundle="APPLICATION_RESOURCES"/>
 					</html:link>,
 				</logic:equal>
-				<html:link action="/partyContacts.do?method=deletePartyContact" paramId="contactId" paramName="contact" paramProperty="externalId">
+				<html:link action="<%="/partyContacts.do?method=deletePartyContact&personID=" + personID%>" paramId="contactId" paramName="contact" paramProperty="externalId">
 					<bean:message key="label.clear" bundle="APPLICATION_RESOURCES"/>
 				</html:link>
 				<logic:equal name="contact" property="valid" value="false" >
-					,<html:link action="/partyContacts.do?method=prepareValidate" paramId="partyContact" paramName="contact" paramProperty="externalId">
+					,<html:link action="<%="/partyContacts.do?method=prepareValidate&personID=" + personID%>" paramId="partyContact" paramName="contact" paramProperty="externalId">
 						<bean:message key="label.validate" bundle="APPLICATION_RESOURCES"/>
 					</html:link>
 				</logic:equal>
@@ -333,6 +336,7 @@
 					<td class="acenter">-</td>
 					<td class="acenter">-</td>
 					<td class="acenter">-</td>
+					<td class="acenter">-</td>
 					<td class="tdclear"><html:link
 						action="<%="/partyContacts.do?method=prepareCreatePhone&personID=" + personID%>">
 						<bean:message key="label.add" bundle="APPLICATION_RESOURCES"/>
@@ -402,6 +406,7 @@
 				<tr>
 					<td><bean:message key="label.partyContacts.MobilePhone" bundle="APPLICATION_RESOURCES"/>:</td>
 					<td>-</td>
+					<td class="acenter">-</td>
 					<td class="acenter">-</td>
 					<td class="acenter">-</td>
 					<td class="acenter">-</td>
@@ -478,6 +483,7 @@
 				<tr>
 					<td><bean:message key="label.partyContacts.EmailAddress" bundle="APPLICATION_RESOURCES"/>:</td>
 					<td>-</td>
+					<td class="acenter">-</td>
 					<td class="acenter">-</td>
 					<td class="acenter">-</td>
 					<td class="acenter">-</td>

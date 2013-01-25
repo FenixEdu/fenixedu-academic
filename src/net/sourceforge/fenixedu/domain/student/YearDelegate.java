@@ -78,7 +78,8 @@ public class YearDelegate extends YearDelegate_Base {
 
 	final Set<ExecutionCourse> result = new TreeSet<ExecutionCourse>(ExecutionCourse.EXECUTION_COURSE_NAME_COMPARATOR);
 	for (ExecutionCourse executionCourse : getDelegatedExecutionCourses(executionSemester)) {
-	    if (executionCourse.getAvailableForInquiries() && executionCourse.hasAnyAttends(executionDegree)) {
+	    if (executionCourse.getAvailableForInquiries() && executionCourse.hasAnyInquiryResults()
+		    && executionCourse.hasAnyEnrolment(executionDegree)) {
 		result.add(executionCourse);
 	    }
 	}
@@ -111,8 +112,8 @@ public class YearDelegate extends YearDelegate_Base {
 		    if (delegate instanceof YearDelegate) {
 			if (delegate.isActiveForFirstExecutionYear(executionPeriod.getExecutionYear())) {
 			    if (otherYearDelegate == null
-				    || delegate.getDelegateFunction().getEndDate().isAfter(
-					    otherYearDelegate.getDelegateFunction().getEndDate())) {
+				    || delegate.getDelegateFunction().getEndDate()
+					    .isAfter(otherYearDelegate.getDelegateFunction().getEndDate())) {
 				otherYearDelegate = (YearDelegate) delegate;
 			    }
 			}
@@ -159,7 +160,7 @@ public class YearDelegate extends YearDelegate_Base {
 	    final ExecutionDegree executionDegree, Integer curricularYear) {
 	final List<ExecutionCourse> result = new ArrayList<ExecutionCourse>();
 	for (ExecutionCourse executionCourse : getDegree().getExecutionCourses(curricularYear, executionSemester)) {
-	    if (executionCourse.getAvailableForInquiries() && executionCourse.hasAnyAttends(executionDegree)) {
+	    if (executionCourse.getAvailableForInquiries() && executionCourse.hasAnyEnrolment(executionDegree)) {
 		result.add(executionCourse);
 	    }
 	}

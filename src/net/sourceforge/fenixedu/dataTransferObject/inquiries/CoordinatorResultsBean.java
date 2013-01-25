@@ -7,6 +7,7 @@ import java.util.List;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.QUCResultsLog;
 import net.sourceforge.fenixedu.domain.inquiries.CurricularCourseInquiryTemplate;
 import net.sourceforge.fenixedu.domain.inquiries.InquiryBlock;
 import net.sourceforge.fenixedu.domain.inquiries.InquiryGlobalComment;
@@ -52,6 +53,7 @@ public class CoordinatorResultsBean extends GlobalCommentsResultsBean {
 	return ResultPersonCategory.DEGREE_COORDINATOR;
     }
 
+    @Override
     public InquiryGlobalComment getInquiryGlobalComment() {
 	return getExecutionCourse().getInquiryGlobalComment(getExecutionDegree());
     }
@@ -70,5 +72,11 @@ public class CoordinatorResultsBean extends GlobalCommentsResultsBean {
 
     public ExecutionDegree getExecutionDegree() {
 	return executionDegree;
+    }
+
+    public void qucResultsLog() {
+	QUCResultsLog.createLog(getExecutionDegree().getDegree(), getExecutionDegree().getExecutionYear(),
+		"resources.MessagingResources", "log.degree.qucresults.comment", getExecutionDegree().getDegree()
+			.getPresentationName(), getExecutionCourse().getNameI18N().getContent());
     }
 }

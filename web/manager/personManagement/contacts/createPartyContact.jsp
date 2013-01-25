@@ -9,7 +9,6 @@
 
 <h2><bean:message key="<%= "label.partyContacts.add" +  partyContactClass %>" bundle="ACADEMIC_OFFICE_RESOURCES"/></h2>
 
-
 <logic:equal name="partyContactClass" value="<%=PhysicalAddress.class.getSimpleName() %>">
 	<bean:define id="changeAddressIRSFormURL">
 		<a href="<%= request.getContextPath() %>/templates/Decl_CIRS_ART99.pdf">

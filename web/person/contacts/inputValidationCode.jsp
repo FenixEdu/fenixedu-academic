@@ -37,7 +37,7 @@
 		<form action="<%= request.getContextPath() + "/person/partyContacts.do"%>" method="post">
 			<input type="hidden" name="method" value="inputValidationCode"/>
 			<input type="hidden" name="partyContactValidation" value="<%= request.getAttribute("partyContactValidation") %>"/>
-			Código Validação <input name="validationCode" type="text"/>
+			<bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.contact.validation.token"/><input name="validationCode" type="text"/>
 			<input type="submit" value="Validar">
 		</form>
 		<p class="mbottom2">

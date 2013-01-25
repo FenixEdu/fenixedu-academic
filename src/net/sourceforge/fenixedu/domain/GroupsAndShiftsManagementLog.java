@@ -6,21 +6,23 @@ public class GroupsAndShiftsManagementLog extends GroupsAndShiftsManagementLog_B
 	super();
     }
 
-    public GroupsAndShiftsManagementLog(ExecutionCourse ec, String description) {
+    public GroupsAndShiftsManagementLog(ExecutionCourse executionCourse, String description) {
 	super();
 	if (getExecutionCourse() == null) {
-	    setExecutionCourse(ec);
+	    setExecutionCourse(executionCourse);
 	}
 	setDescription(description);
     }
 
-    private static GroupsAndShiftsManagementLog createGroupsAndShiftsManagementLog(ExecutionCourse ec, String description) {
-	return new GroupsAndShiftsManagementLog(ec, description);
+    private static GroupsAndShiftsManagementLog createGroupsAndShiftsManagementLog(ExecutionCourse executionCourse,
+	    String description) {
+	return new GroupsAndShiftsManagementLog(executionCourse, description);
     }
 
-    public static GroupsAndShiftsManagementLog createLog(ExecutionCourse ec, String bundle, String key, String... args) {
+    public static GroupsAndShiftsManagementLog createLog(ExecutionCourse executionCourse, String bundle, String key,
+	    String... args) {
 	final String label = generateLabelDescription(bundle, key, args);
-	return createGroupsAndShiftsManagementLog(ec, label);
+	return createGroupsAndShiftsManagementLog(executionCourse, label);
     }
 
     @Override

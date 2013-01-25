@@ -2,6 +2,7 @@ package net.sourceforge.fenixedu.domain.contacts;
 
 import java.util.Comparator;
 
+import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
 
@@ -11,6 +12,7 @@ import org.joda.time.DateTime;
 public class Phone extends Phone_Base {
 
     public static Comparator<Phone> COMPARATOR_BY_NUMBER = new Comparator<Phone>() {
+	@Override
 	public int compare(Phone contact, Phone otherContact) {
 	    final String number = contact.getNumber();
 	    final String otherNumber = otherContact.getNumber();
@@ -29,12 +31,12 @@ public class Phone extends Phone_Base {
     public static Phone createPhone(Party party, String number, PartyContactType type, Boolean isDefault,
 	    Boolean visibleToPublic, Boolean visibleToStudents, Boolean visibleToTeachers, Boolean visibleToEmployees,
 	    Boolean visibleToAlumni) {
-	// for (Phone phone : party.getPhones()) {
-	// if (phone.getNumber().equals(number))
-	// return phone;
-	// }
-	return (!StringUtils.isEmpty(number)) ? new Phone(party, type, visibleToPublic, visibleToStudents, visibleToTeachers,
-		visibleToEmployees, visibleToAlumni, isDefault, number) : null;
+	Phone result = null;
+	if (!StringUtils.isEmpty(number)) {
+	    result = new Phone(party, type, visibleToPublic, visibleToStudents, visibleToTeachers, visibleToEmployees,
+		    visibleToAlumni, isDefault, number);
+	}
+	return result;
     }
 
     public static Phone createPhone(Party party, String number, PartyContactType type, boolean isDefault) {
@@ -108,5 +110,30 @@ public class Phone extends Phone_Base {
     @Override
     public boolean hasValue(String value) {
 	return hasNumber() && getNumber().equals(value);
+    }
+
+    @Override
+    public void logCreate(Person person) {
+	logCreateAux(person, "label.partyContacts.Phone");
+    }
+
+    @Override
+    public void logEdit(Person person, boolean propertiesChanged, boolean valueChanged, boolean createdNewContact, String newValue) {
+	logEditAux(person, propertiesChanged, valueChanged, createdNewContact, newValue, "label.partyContacts.Phone");
+    }
+
+    @Override
+    public void logDelete(Person person) {
+	logDeleteAux(person, "label.partyContacts.Phone");
+    }
+
+    @Override
+    public void logValid(Person person) {
+	logValidAux(person, "label.partyContacts.Phone");
+    }
+
+    @Override
+    public void logRefuse(Person person) {
+	logRefuseAux(person, "label.partyContacts.Phone");
     }
 }

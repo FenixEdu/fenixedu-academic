@@ -158,4 +158,9 @@ public class PhysicalAddressBean extends PartyContactBean {
 		|| !getDistrictOfResidence().equals(address.getDistrictOfResidence())
 		|| !getCountryOfResidence().equals(address.getCountryOfResidence());
     }
+
+    @Override
+    public String getPresentationValue() {
+	return getAddress();
+    }
 }

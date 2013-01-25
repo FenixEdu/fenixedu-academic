@@ -130,7 +130,7 @@ ul.material li.feedback { background: url(<%= request.getContextPath() %>/images
 	</div>
 </logic:notPresent>
 
-<h3>Vantagens</h3>
+<h3><bean:message key="label.alumni.advantages" bundle="ALUMNI_RESOURCES"/></h3>
 <div style="background: #f5f5f5; border: 1px solid #ddd; padding: 0.75em 0.5em;">
 	<p class="indent1 mtop025 mbottom05">Além das opções visíveis nos menus, lembramos que o leque de vantagens já disponíveis inclui:</p>
 	<ul class="material">
@@ -142,14 +142,14 @@ ul.material li.feedback { background: url(<%= request.getContextPath() %>/images
 
 <p>Recordamos, ainda, que os serviços a seguir listados, estão à vossa disposição, prontos a corresponder às solicitações que lhes forem dirigidas:</p>
 
-<h3>Descontos especiais</h3>
+<h3> <bean:message key="label.alumni.specialDiscounts" bundle="ALUMNI_RESOURCES"/></h3>
 <ul>
 	<li>na aquisição de publicações da <a target="_blank" href="http://www.istpress.ist.utl.pt/">IST Press</a>;</li>
 	<li>na aquisição de produtos de <a target="_blank" href="http://gcrp.ist.utl.pt/html/relacoespublicas/produtos.shtml">merchandising</a>;</li>
 	<li>na utilização de espaços do <a target="_blank" href="http://centrocongressos.ist.utl.pt/">Centro de Congressos do IST</a>.</li>
 </ul>
 
-<h3>Oportunidades, aconselhamento e apoio informativo</h3>
+<h3> <bean:message key="label.alumni.opportunities" bundle="ALUMNI_RESOURCES"/></h3>
 <ul>
 	<li><a target="_blank" href="http://www.ist.utl.pt/html/ensino/">Ensino, Pós-graduações e Formação</a></li>
 	<li><a target="_blank" href="http://galtec.ist.utl.pt/">Licenciamento de Tecnologia</a></li>
@@ -161,7 +161,7 @@ ul.material li.feedback { background: url(<%= request.getContextPath() %>/images
 	<li><a target="_blank" href="http://nape.ist.utl.pt">Cultura e Desporto</a></li>
 </ul>
 
-<h3>Links Úteis</h3>
+<h3> <bean:message key="label.alumni.usefulLinks" bundle="ALUMNI_RESOURCES"/></h3>
 <ul>
 	<li><a target="_blank" href="http://aaa.ist.utl.pt" title="Uma ponte entre o Técnico e os seus Antigos Alunos">Associação dos Antigos Alunos do <%=net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionName()%> (AAAIST)</a></li>
 	<li><a target="_blank" href="http://www.ordemengenheiros.pt">Ordem dos Engenheiros</a></li>
@@ -171,16 +171,15 @@ ul.material li.feedback { background: url(<%= request.getContextPath() %>/images
 	<li><a target="_blank" href="http://www.apea.pt">Associação Portuguesa de Engenharia do Ambiente</a></li>
 </ul>
 
-<h3>Dados Pessoais</h3>
+<h3> <bean:message key="label.alumni.personalData" bundle="ALUMNI_RESOURCES"/></h3>
 <ul>
 	Não se esqueça de activar, no seu Perfil Pessoal, as autorizações relativas aos dados pessoais disponibilizados.
 </ul>
 
-
-<h3>Comentários ou sugestões</h3>
+<h3> <bean:message key="label.alumni.commentsOrSuggestions" bundle="ALUMNI_RESOURCES"/></h3>
 <ul class="material">
 	<li class="feedback">A sua opinião é importante. Se tem alguma sugestão, critíca ou comentário <a href="mailto:alumni@ist.utl.pt?subject=Alumni_feedback">escreva-nos um e-mail</a>. Nós prometemos uma resposta!</li>
 </ul>
 
-<p><em>O IST, ontem como hoje , continua ao seu serviço.</em></p>
+<p><em><bean:message key="label.alumni.ISTEndMessage" bundle="ALUMNI_RESOURCES"/></em></p>
 

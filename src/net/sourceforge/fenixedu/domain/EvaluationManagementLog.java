@@ -6,21 +6,21 @@ public class EvaluationManagementLog extends EvaluationManagementLog_Base {
 	super();
     }
 
-    public EvaluationManagementLog(ExecutionCourse ec, String description) {
+    public EvaluationManagementLog(ExecutionCourse executionCourse, String description) {
 	super();
 	if (getExecutionCourse() == null) {
-	    setExecutionCourse(ec);
+	    setExecutionCourse(executionCourse);
 	}
 	setDescription(description);
     }
 
-    public static EvaluationManagementLog createEvaluationManagementLog(ExecutionCourse ec, String description) {
-	return new EvaluationManagementLog(ec, description);
+    public static EvaluationManagementLog createEvaluationManagementLog(ExecutionCourse executionCourse, String description) {
+	return new EvaluationManagementLog(executionCourse, description);
     }
 
-    public static EvaluationManagementLog createLog(ExecutionCourse ec, String bundle, String key, String... args) {
+    public static EvaluationManagementLog createLog(ExecutionCourse executionCourse, String bundle, String key, String... args) {
 	final String label = generateLabelDescription(bundle, key, args);
-	return createEvaluationManagementLog(ec, label);
+	return createEvaluationManagementLog(executionCourse, label);
     }
 
     @Override

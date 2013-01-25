@@ -1,9 +1,12 @@
 package net.sourceforge.fenixedu.presentationTier.Action.manager;
 
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.PersonInformationLog;
 import net.sourceforge.fenixedu.domain.Qualification;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 
@@ -16,17 +19,12 @@ import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixframework.pstm.AbstractDomainObject;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
-import pt.ist.fenixWebFramework.struts.annotations.Forward;
-import pt.ist.fenixWebFramework.struts.annotations.Forwards;
-import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 @Mapping(path = "/qualification", module = "manager")
-@Forwards( { @Forward(name = "showQualifications", path = "/manager/qualifications/showQualifications.jsp"),
+@Forwards({ @Forward(name = "showQualifications", path = "/manager/qualifications/showQualifications.jsp"),
 	@Forward(name = "qualification", path = "/manager/qualifications/qualification.jsp"),
-	@Forward(name = "viewPerson", path = "/manager/personManagement/viewPerson.jsp") })
+	@Forward(name = "viewPerson", path = "/manager/personManagement/viewPerson.jsp"),
+	@Forward(name = "viewStudentLogChanges", path = "/manager/personManagement/viewStudentLogChanges.jsp") })
 public class QualificationDA extends FenixDispatchAction {
 
     public ActionForward showQualifications(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
@@ -83,5 +81,15 @@ public class QualificationDA extends FenixDispatchAction {
     private void setAttributePerson(HttpServletRequest request) {
 	Person person = getPersonSelectedFromParameter(request);
 	request.setAttribute("person", person);
+    }
+
+    public ActionForward viewStudentLog(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) {
+	Person person = getPersonSelectedFromParameter(request);
+
+	List<PersonInformationLog> logsList = person.getPersonInformationLogs();
+	request.setAttribute("person", person);
+	request.setAttribute("logsList", logsList);
+	return mapping.findForward("viewStudentLogChanges");
     }
 }

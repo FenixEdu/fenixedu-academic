@@ -2,6 +2,7 @@ package net.sourceforge.fenixedu.domain.contacts;
 
 import java.util.Comparator;
 
+import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
@@ -15,6 +16,7 @@ import pt.utl.ist.fenix.tools.smtp.EmailSender;
 public class EmailAddress extends EmailAddress_Base {
 
     public static Comparator<EmailAddress> COMPARATOR_BY_EMAIL = new Comparator<EmailAddress>() {
+	@Override
 	public int compare(EmailAddress contact, EmailAddress otherContact) {
 	    final String value = contact.getValue();
 	    final String otherValue = otherContact.getValue();
@@ -33,12 +35,13 @@ public class EmailAddress extends EmailAddress_Base {
     public static EmailAddress createEmailAddress(Party party, String email, PartyContactType type, Boolean isDefault,
 	    Boolean visibleToPublic, Boolean visibleToStudents, Boolean visibleToTeachers, Boolean visibleToEmployees,
 	    Boolean visibleToAlumni) {
-	// for (EmailAddress emailAddress : party.getEmailAddresses()) {
-	// if (emailAddress.getValue().equals(email))
-	// return emailAddress;
-	// }
-	return (!StringUtils.isEmpty(email)) ? new EmailAddress(party, type, visibleToPublic, visibleToStudents,
-		visibleToTeachers, visibleToEmployees, visibleToAlumni, isDefault, email) : null;
+
+	EmailAddress result = null;
+	if (!StringUtils.isEmpty(email)) {
+	    result = new EmailAddress(party, type, visibleToPublic, visibleToStudents, visibleToTeachers, visibleToEmployees,
+		    visibleToAlumni, isDefault, email);
+	}
+	return result;
     }
 
     public static EmailAddress createEmailAddress(Party party, String email, PartyContactType type, boolean isDefault) {
@@ -139,4 +142,28 @@ public class EmailAddress extends EmailAddress_Base {
 	return getValue();
     }
 
+    @Override
+    public void logCreate(Person person) {
+	logCreateAux(person, "label.partyContacts.EmailAddress");
+    }
+
+    @Override
+    public void logEdit(Person person, boolean propertiesChanged, boolean valueChanged, boolean createdNewContact, String newValue) {
+	logEditAux(person, propertiesChanged, valueChanged, createdNewContact, newValue, "label.partyContacts.EmailAddress");
+    }
+
+    @Override
+    public void logDelete(Person person) {
+	logDeleteAux(person, "label.partyContacts.EmailAddress");
+    }
+
+    @Override
+    public void logValid(Person person) {
+	logValidAux(person, "label.partyContacts.EmailAddress");
+    }
+
+    @Override
+    public void logRefuse(Person person) {
+	logRefuseAux(person, "label.partyContacts.EmailAddress");
+    }
 }

@@ -1,12 +1,14 @@
 package net.sourceforge.fenixedu.presentationTier.Action.person;
 
 import java.io.IOException;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.contacts.CreatePartyContact;
+import net.sourceforge.fenixedu.applicationTier.Servico.contacts.DeletePartyContact;
 import net.sourceforge.fenixedu.applicationTier.Servico.contacts.EditPartyContact;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.contacts.EmailAddressBean;
@@ -17,6 +19,7 @@ import net.sourceforge.fenixedu.dataTransferObject.contacts.PhysicalAddressBean;
 import net.sourceforge.fenixedu.dataTransferObject.contacts.PhysicalAddressValidationBean;
 import net.sourceforge.fenixedu.dataTransferObject.contacts.WebAddressBean;
 import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.PersonInformationLog;
 import net.sourceforge.fenixedu.domain.contacts.PartyContact;
 import net.sourceforge.fenixedu.domain.contacts.PartyContactValidation;
 import net.sourceforge.fenixedu.domain.contacts.PhysicalAddress;
@@ -42,7 +45,8 @@ import pt.ist.fenixWebFramework.struts.annotations.Tile;
 	@Forward(name = "visualizePersonalInformation", path = "/person/visualizePersonalInfo.jsp", tileProperties = @Tile(title = "private.personal.dspace.information")),
 	@Forward(name = "editPartyContact", path = "/person/contacts/editPartyContact.jsp", tileProperties = @Tile(title = "private.personal.dspace.information")),
 	@Forward(name = "createPartyContact", path = "/person/contacts/createPartyContact.jsp", tileProperties = @Tile(title = "private.personal.dspace.information")),
-	@Forward(name = "inputValidationCode", path = "/person/contacts/inputValidationCode.jsp", tileProperties = @Tile(title = "private.personal.dspace.information")) })
+	@Forward(name = "inputValidationCode", path = "/person/contacts/inputValidationCode.jsp", tileProperties = @Tile(title = "private.personal.dspace.information")),
+	@Forward(name = "viewStudentLogChanges", path = "/person/contacts/viewStudentLogChanges.jsp", tileProperties = @Tile(title = "private.personal.dspace.information")) })
 public class PartyContactsManagementDispatchAction extends FenixDispatchAction {
     public ActionForward postbackSetPublic(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) {
@@ -271,7 +275,7 @@ public class PartyContactsManagementDispatchAction extends FenixDispatchAction {
 	final String extId = (String) getFromRequest(request, "partyContactValidation");
 
 	if (StringUtils.isEmpty(code) || StringUtils.isEmpty(extId)) {
-	    addActionMessage("contacts", request, "Invalid Request");
+	    addActionMessage("contacts", request, "error.contacts.validation.token.empty");
 	    return mapping.findForward("inputValidationCode");
 	}
 	PartyContactValidation partyContactValidation;
@@ -290,11 +294,15 @@ public class PartyContactsManagementDispatchAction extends FenixDispatchAction {
 	    HttpServletResponse response) throws FenixFilterException, FenixServiceException {
 	try {
 	    final PartyContact partyContact = getPartyContact(request);
-	    partyContact.delete();
+	    deleteContact(partyContact);
 	} catch (DomainException e) {
 	    addActionMessage("contacts", request, e.getMessage(), e.getArgs());
 	}
 	return backToShowInformation(mapping, actionForm, request, response);
+    }
+
+    public void deleteContact(PartyContact partyContact) {
+	DeletePartyContact.run(partyContact);
     }
 
     protected Party getParty(final HttpServletRequest request) {
@@ -320,6 +328,17 @@ public class PartyContactsManagementDispatchAction extends FenixDispatchAction {
     public ActionForward requestOptOut(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) {
 	return backToShowInformation(mapping, actionForm, request, response);
+    }
+
+    public ActionForward viewStudentLog(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) {
+
+	Person person = AccessControl.getPerson();
+
+	List<PersonInformationLog> logsList = person.getPersonInformationLogs();
+	request.setAttribute("person", person);
+	request.setAttribute("logsList", logsList);
+	return mapping.findForward("viewStudentLogChanges");
     }
 
 }

@@ -6,9 +6,10 @@ package net.sourceforge.fenixedu.domain.person;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
+import pt.ist.fenixWebFramework.rendererExtensions.util.IPresentableEnum;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 
-public enum IDDocumentType {
+public enum IDDocumentType implements IPresentableEnum {
 
     IDENTITY_CARD,
 
@@ -36,6 +37,7 @@ public enum IDDocumentType {
 	return name();
     }
 
+    @Override
     public String getLocalizedName() {
 	return getLocalizedName(Language.getLocale());
     }
@@ -43,5 +45,4 @@ public enum IDDocumentType {
     public String getLocalizedName(final Locale locale) {
 	return ResourceBundle.getBundle("resources.EnumerationResources", locale).getString(name());
     }
-
 }

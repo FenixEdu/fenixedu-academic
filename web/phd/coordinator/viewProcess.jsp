@@ -91,4 +91,73 @@
 
 <%--  ### End Of Context Information  ### --%>
 
+<%-- ### Guiding ### --%>
+<br/>
+<strong>
+	<bean:message key="label.phd.guiding" bundle="PHD_RESOURCES"/>
+</strong>
+<logic:empty name="guidingsList">
+	<p><em><bean:message key="message.no.guiding" bundle="PHD_RESOURCES"/></em></p>
+</logic:empty>
+
+<bean:define id="processId" name="process" property="externalId" />
+
+<fr:form action="<%= "/phdIndividualProgramProcess.do?processId=" + processId %>">
+	<input type="hidden" name="method" value="" />
+	<logic:notEmpty name="guidingsList">
+		<fr:view name="guidingsList">
+			<fr:schema type="net.sourceforge.fenixedu.domain.PersonInformationLog" bundle="PHD_RESOURCES">
+				<fr:slot name="name" key="label.istid" >
+					<fr:property name="classes" value="nobullet noindent"/>   
+			   	</fr:slot>
+			   	<fr:slot name="qualification" key="label.net.sourceforge.fenixedu.domain.phd.PhdParticipant.qualification"/>
+				<fr:slot name="category" key="label.net.sourceforge.fenixedu.domain.phd.PhdParticipant.category"/>
+				<fr:slot name="workLocation" key="label.net.sourceforge.fenixedu.domain.phd.PhdParticipant.workLocation"/>
+				<fr:slot name="institution" key="label.net.sourceforge.fenixedu.domain.phd.PhdParticipant.institution"/>
+				<fr:slot name="address" key="label.net.sourceforge.fenixedu.domain.phd.PhdParticipant.address"/>
+				<fr:slot name="email" key="label.net.sourceforge.fenixedu.domain.phd.PhdParticipant.email"/>
+				<fr:slot name="phone" key="label.net.sourceforge.fenixedu.domain.phd.PhdParticipant.phone"/>
+				<fr:slot name="acceptanceLetter" layout="link" />		
+			</fr:schema>
+			<fr:layout name="tabular">
+				<fr:property name="classes" value="tstyle2 mtop15 center" />
+			</fr:layout>
+		</fr:view>
+	</logic:notEmpty>
+</fr:form>
+
+<br/>
+<strong>
+	<bean:message key="label.phd.assistant.guiding" bundle="PHD_RESOURCES"/>
+</strong>
+
+<logic:empty name="assistantGuidingsList">
+	<p><em><bean:message key="message.no.assistant.guiding" bundle="PHD_RESOURCES"/></em></p>
+</logic:empty>
+
+<fr:form action="<%= "/phdIndividualProgramProcess.do?processId=" + processId %>">
+	<input type="hidden" name="method" value="" />
+	<logic:notEmpty name="assistantGuidingsList">
+		<fr:view name="guidingsList">
+			<fr:schema type="net.sourceforge.fenixedu.domain.PersonInformationLog" bundle="PHD_RESOURCES">
+				<fr:slot name="name" key="label.istid" >
+					<fr:property name="classes" value="nobullet noindent"/>   
+			   	</fr:slot>
+			   	<fr:slot name="qualification" key="label.net.sourceforge.fenixedu.domain.phd.PhdParticipant.qualification"/>
+				<fr:slot name="category" key="label.net.sourceforge.fenixedu.domain.phd.PhdParticipant.category"/>
+				<fr:slot name="workLocation" key="label.net.sourceforge.fenixedu.domain.phd.PhdParticipant.workLocation"/>
+				<fr:slot name="institution" key="label.net.sourceforge.fenixedu.domain.phd.PhdParticipant.institution"/>
+				<fr:slot name="address" key="label.net.sourceforge.fenixedu.domain.phd.PhdParticipant.address"/>
+				<fr:slot name="email" key="label.net.sourceforge.fenixedu.domain.phd.PhdParticipant.email"/>
+				<fr:slot name="phone" key="label.net.sourceforge.fenixedu.domain.phd.PhdParticipant.phone"/>
+				<fr:slot name="acceptanceLetter" layout="link" />		
+			</fr:schema>
+			<fr:layout name="tabular">
+				<fr:property name="classes" value="tstyle2 mtop15 center" />
+			</fr:layout>
+		</fr:view>
+	</logic:notEmpty>
+</fr:form>
+
+	<%-- ### End of Guiding ### --%>
 </logic:present>

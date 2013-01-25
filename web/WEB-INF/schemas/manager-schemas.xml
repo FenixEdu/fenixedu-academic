@@ -105,12 +105,12 @@
 </schema>	
 
 <schema name="NewInvitedPersonFiliationInfo" type="net.sourceforge.fenixedu.dataTransferObject.person.InvitedPersonBean" bundle="MANAGER_RESOURCES">
-    <slot name="countryOfBirth" layout="menu-select"> 
+    <slot name="countryOfBirth" layout="menu-select" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"> 
 		<property name="format" value="${name}"/>
 		<property name="sortBy" value="name=asc" />
 		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.DistinctCountriesProvider" />
 	</slot>
-   	<slot name="nationality" layout="menu-select"> 
+   	<slot name="nationality" layout="menu-select" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"> 
 		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.CountryProvider"/> 
 		<property name="format" value="${nationality}"/>
 		<property name="sortBy" value="nationality=asc" />

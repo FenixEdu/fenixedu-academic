@@ -2015,8 +2015,7 @@ public class Student extends Student_Base {
 	return false;
     }
 
-    @SuppressWarnings("unchecked")
-    public String readAllStudentInfoForJobBank() {
+    public String readActiveStudentInfoForJobBank() {
 	ExecutionYear currentExecutionYear = ExecutionYear.readCurrentExecutionYear();
 	ExecutionYear previousExecutionYear = currentExecutionYear.getPreviousExecutionYear();
 	Set<Registration> registrations = new HashSet<Registration>();
@@ -2036,6 +2035,24 @@ public class Student extends Student_Base {
 		}
 	    }
 	}
+	return getRegistrationsAsJSON(registrations);
+    }
+
+    public String readStudentInfoForJobBank() {
+	Set<Registration> registrations = new HashSet<Registration>();
+	LocalDate today = new LocalDate();
+	for (Registration registration : getRegistrations()) {
+	    if (registration.isBolonha() && !registration.getDegreeType().equals(DegreeType.EMPTY)) {
+		RegistrationConclusionBean registrationConclusionBean = new RegistrationConclusionBean(registration);
+		if (registration.isActive() || registrationConclusionBean.isConcluded()) {
+		    registrations.add(registration);
+		}
+	    }
+	}
+	return getRegistrationsAsJSON(registrations);
+    }
+
+    protected String getRegistrationsAsJSON(Set<Registration> registrations) {
 	JSONArray infos = new JSONArray();
 	int i = 0;
 	for (Registration registration : registrations) {
@@ -2060,6 +2077,12 @@ public class Student extends Student_Base {
 	    studentInfoForJobBank.put("degreeOID", registration.getDegree().getExternalId());
 	    studentInfoForJobBank.put("isConcluded", String.valueOf(registration.isRegistrationConclusionProcessed()));
 	    studentInfoForJobBank.put("curricularYear", String.valueOf(registration.getCurricularYear()));
+	    //	    for (CycleType cycleType : registration.getDegreeType().getCycleTypes()) {
+	    //		CycleCurriculumGroup cycle = registration.getLastStudentCurricularPlan().getCycle(cycleType);
+	    //		if (cycle != null) {
+	    //		    studentInfoForJobBank.put(cycle.getCycleType().name(), cycle.getAverage().toString());
+	    //		}
+	    //	    }
 	    for (CycleCurriculumGroup cycleCurriculumGroup : registration.getLastStudentCurricularPlan()
 		    .getCycleCurriculumGroups()) {
 		studentInfoForJobBank.put(cycleCurriculumGroup.getCycleType().name(), cycleCurriculumGroup.getAverage()

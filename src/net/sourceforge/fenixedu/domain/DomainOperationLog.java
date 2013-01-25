@@ -14,10 +14,10 @@ public class DomainOperationLog extends DomainOperationLog_Base {
     public static final Comparator<DomainOperationLog> COMPARATOR_BY_WHEN_DATETIME = new Comparator<DomainOperationLog>() {
 
 	@Override
-	public int compare(DomainOperationLog log1, DomainOperationLog log2) {
-	    final DateTime d1 = log1.getWhenDateTime();
-	    final DateTime d2 = log2.getWhenDateTime();
-	    int res = d2.compareTo(d1);
+	public int compare(DomainOperationLog domainOperationLog1, DomainOperationLog domainOperationLog2) {
+	    final DateTime dateTime1 = domainOperationLog1.getWhenDateTime();
+	    final DateTime dateTime2 = domainOperationLog2.getWhenDateTime();
+	    int res = dateTime1.compareTo(dateTime1);
 	    return res;
 	}
     };

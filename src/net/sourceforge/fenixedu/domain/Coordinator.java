@@ -92,6 +92,11 @@ public class Coordinator extends Coordinator_Base {
 
     @Service
     public static Coordinator createCoordinator(ExecutionDegree executionDegree, Person person, Boolean responsible) {
+
+	CoordinationTeamLog.createLog(executionDegree.getDegree(), executionDegree.getExecutionYear(),
+		"resources.MessagingResources", "log.degree.coordinationteam.addmember", person.getPresentationName(),
+		executionDegree.getPresentationName());
+
 	return new Coordinator(executionDegree, person, responsible);
     }
 

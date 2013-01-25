@@ -8,9 +8,9 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingCompe
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.CompetenceCourse;
 import net.sourceforge.fenixedu.domain.CompetenceCourseType;
+import net.sourceforge.fenixedu.domain.degreeStructure.BibliographicReferences.BibliographicReferenceType;
 import net.sourceforge.fenixedu.domain.degreeStructure.CompetenceCourseLevel;
 import net.sourceforge.fenixedu.domain.degreeStructure.CurricularStage;
-import net.sourceforge.fenixedu.domain.degreeStructure.BibliographicReferences.BibliographicReferenceType;
 import net.sourceforge.fenixedu.util.StringFormatter;
 
 public class EditCompetenceCourse extends FenixService {
@@ -83,13 +83,17 @@ public class EditCompetenceCourse extends FenixService {
 
 	for (final CompetenceCourse competenceCourse : CompetenceCourse.readBolonhaCompetenceCourses()) {
 	    if (competenceCourse != competenceCourseToEdit) {
-		if (StringFormatter.normalize(competenceCourse.getName()).equals(normalizedName)) {
-		    throw new ExistingCompetenceCourseInformationException("error.existingCompetenceCourseWithSameName",
-			    competenceCourse.getDepartmentUnit().getName());
+		if (StringFormatter.normalize(competenceCourse.getName()) != null) {
+		    if (StringFormatter.normalize(competenceCourse.getName()).equals(normalizedName)) {
+			throw new ExistingCompetenceCourseInformationException("error.existingCompetenceCourseWithSameName",
+				competenceCourse.getDepartmentUnit().getName());
+		    }
 		}
-		if (StringFormatter.normalize(competenceCourse.getNameEn()).equals(normalizedNameEn)) {
-		    throw new ExistingCompetenceCourseInformationException("error.existingCompetenceCourseWithSameNameEn",
-			    competenceCourse.getDepartmentUnit().getName());
+		if (StringFormatter.normalize(competenceCourse.getNameEn()) != null) {
+		    if (StringFormatter.normalize(competenceCourse.getNameEn()).equals(normalizedNameEn)) {
+			throw new ExistingCompetenceCourseInformationException("error.existingCompetenceCourseWithSameNameEn",
+				competenceCourse.getDepartmentUnit().getName());
+		    }
 		}
 	    }
 	}

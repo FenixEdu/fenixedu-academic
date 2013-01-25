@@ -13,6 +13,7 @@ public class CreatePartyContact {
 	    return null;
 	}
 	final PartyContact createNewContact = contactBean.createNewContact();
+	createNewContact.getParty().logCreateContact(createNewContact);
 	if (toBeValidated) {
 	    createNewContact.triggerValidationProcessIfNeeded();
 	} else {

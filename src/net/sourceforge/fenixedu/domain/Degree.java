@@ -531,6 +531,28 @@ public class Degree extends Degree_Base implements Comparable<Degree> {
 	return result;
     }
 
+    // início da nova operação -- Ricardo Marcão
+    public List<ExecutionCourse> getExecutionCourses(final AcademicInterval academicInterval) {
+	final List<ExecutionCourse> result = new ArrayList<ExecutionCourse>();
+	for (final DegreeCurricularPlan degreeCurricularPlan : getDegreeCurricularPlansSet()) {
+	    for (final CurricularCourse course : degreeCurricularPlan.getCurricularCourses()) {
+		for (final ExecutionCourse executionCourse : course.getAssociatedExecutionCourses()) {
+		    if (academicInterval.isEqualOrEquivalent(executionCourse.getAcademicInterval())) {
+			for (final DegreeModuleScope scope : course.getDegreeModuleScopes()) {
+			    if (scope.isActiveForAcademicInterval(academicInterval)
+				    && scope.getCurricularSemester() == academicInterval.getAcademicSemesterOfAcademicYear()) {
+				result.add(executionCourse);
+			    }
+			}
+		    }
+		}
+	    }
+	}
+	return result;
+    }
+
+    // -- fim da nova operação -- Ricardo Marcão
+
     public List<ExecutionCourse> getExecutionCourses(final Integer curricularYear, final ExecutionSemester executionSemester) {
 	final List<ExecutionCourse> result = new ArrayList<ExecutionCourse>();
 	for (final DegreeCurricularPlan degreeCurricularPlan : getDegreeCurricularPlansSet()) {

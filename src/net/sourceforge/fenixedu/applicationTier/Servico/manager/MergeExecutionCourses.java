@@ -21,6 +21,7 @@ import net.sourceforge.fenixedu.domain.Attends;
 import net.sourceforge.fenixedu.domain.CourseLoad;
 import net.sourceforge.fenixedu.domain.Evaluation;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
+import net.sourceforge.fenixedu.domain.ExecutionCourseLog;
 import net.sourceforge.fenixedu.domain.ExportGrouping;
 import net.sourceforge.fenixedu.domain.FileContent;
 import net.sourceforge.fenixedu.domain.FinalEvaluation;
@@ -121,7 +122,7 @@ public class MergeExecutionCourses extends FenixService {
 	copyInquiries(executionCourseFrom, executionCourseTo);
 	copyDistributedTestStuff(executionCourseFrom, executionCourseTo);
 	copyVigilantGroups(executionCourseFrom, executionCourseTo);
-
+	copyExecutionCourseLogs(executionCourseFrom, executionCourseTo);
 	executionCourseTo.getAssociatedCurricularCourses().addAll(executionCourseFrom.getAssociatedCurricularCourses());
 
 	executionCourseTo.copyLessonPlanningsFrom(executionCourseFrom);
@@ -181,7 +182,6 @@ public class MergeExecutionCourses extends FenixService {
 	    executionCourseAnnouncementBoardTo.addAnnouncements(announcement);
 	}
 	executionCourseAnnouncementBoardTo.getChildrenSet().addAll(executionCourseAnnouncementBoardFrom.getChildrenSet());
-	
 
 	executionCourseAnnouncementBoardFrom.delete();
     }
@@ -521,6 +521,13 @@ public class MergeExecutionCourses extends FenixService {
 		sourceConversationThread.delete();
 	    }
 	}
+    }
+
+    private void copyExecutionCourseLogs(ExecutionCourse executionCourseFrom, ExecutionCourse executionCourseTo) {
+	for (ExecutionCourseLog executionCourseLog : executionCourseFrom.getExecutionCourseLogs()) {
+	    executionCourseLog.setExecutionCourse(executionCourseTo);
+	}
+
     }
 
 }

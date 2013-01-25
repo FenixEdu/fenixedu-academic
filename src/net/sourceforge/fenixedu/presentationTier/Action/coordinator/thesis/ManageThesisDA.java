@@ -22,7 +22,6 @@ import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
-import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
@@ -386,6 +385,7 @@ public class ManageThesisDA extends AbstractManageThesisDA {
 
     // Draft
 
+    @Override
     public ActionForward editProposal(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
 	Thesis thesis = getThesis(request);
@@ -711,7 +711,6 @@ public class ManageThesisDA extends AbstractManageThesisDA {
 	    response.setContentLength(data.length);
 	    response.setContentType("application/pdf");
 	    response.addHeader("Content-Disposition", String.format("attachment; filename=%s.pdf", document.getReportFileName()));
-
 	    response.getOutputStream().write(data);
 
 	    return null;

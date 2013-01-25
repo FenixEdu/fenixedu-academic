@@ -11,6 +11,8 @@ import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import jvstm.cps.ConsistencyException;
+
 import net.sf.jasperreports.engine.JRException;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
@@ -333,6 +335,9 @@ public class DocumentRequestsManagementDispatchAction extends FenixDispatchActio
 	    documentRequest = (DocumentRequest) executeFactoryMethod();
 	} catch (DomainException ex) {
 	    addActionMessage(request, ex.getKey());
+	    return mapping.findForward("viewRegistrationDetails");
+	} catch (ConsistencyException ce) {
+	    addActionMessage(request, "error." + ce.getMethodFullname());
 	    return mapping.findForward("viewRegistrationDetails");
 	}
 

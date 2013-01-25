@@ -84,6 +84,16 @@ import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 public class ExecutionCourse extends ExecutionCourse_Base {
 
+    public static List<ExecutionCourse> readNotEmptyExecutionCourses() {
+	final List<ExecutionCourse> result = new ArrayList<ExecutionCourse>(RootDomainObject.getInstance().getExecutionCourses());
+	for (ExecutionCourse ec : result) {
+	    if (ec == null) {
+		result.remove(ec);
+	    }
+	}
+	return result;
+    }
+
     public static final Comparator<ExecutionCourse> EXECUTION_COURSE_EXECUTION_PERIOD_COMPARATOR = new Comparator<ExecutionCourse>() {
 
 	@Override
@@ -118,6 +128,7 @@ public class ExecutionCourse extends ExecutionCourse_Base {
     };
 
     public static OrderedRelationAdapter<ExecutionCourse, BibliographicReference> BIBLIOGRAPHIC_REFERENCE_ORDER_ADAPTER;
+    public static final List<String> DEA_AVAILABLE_INQUIRY_DEGREES = new ArrayList<String>();
 
     static {
 	CurricularCourseExecutionCourse.addListener(new CurricularCourseExecutionCourseListener());
@@ -125,6 +136,11 @@ public class ExecutionCourse extends ExecutionCourse_Base {
 	BIBLIOGRAPHIC_REFERENCE_ORDER_ADAPTER = new OrderedRelationAdapter<ExecutionCourse, BibliographicReference>(
 		"associatedBibliographicReferences", "referenceOrder");
 	ExecutionCourseBibliographicReference.addListener(BIBLIOGRAPHIC_REFERENCE_ORDER_ADAPTER);
+
+	DEA_AVAILABLE_INQUIRY_DEGREES.add("deec");
+	DEA_AVAILABLE_INQUIRY_DEGREES.add("degest");
+	DEA_AVAILABLE_INQUIRY_DEGREES.add("demec");
+	DEA_AVAILABLE_INQUIRY_DEGREES.add("dequim");
     }
 
     public ExecutionCourse(final String nome, final String sigla, final ExecutionSemester executionSemester, EntryPhase entryPhase) {
@@ -226,10 +242,29 @@ public class ExecutionCourse extends ExecutionCourse_Base {
 	return true;
     }
 
-    public boolean isBolonhaDegreeOrMasterDegree() {
+    public boolean isMasterDegreeDFAOnly() {
 	for (final CurricularCourse curricularCourse : getAssociatedCurricularCourses()) {
 	    DegreeType degreeType = curricularCourse.getDegreeCurricularPlan().getDegree().getDegreeType();
-	    if (degreeType.equals(DegreeType.BOLONHA_DEGREE) || degreeType.equals(DegreeType.BOLONHA_MASTER_DEGREE)) {
+	    if (!degreeType.equals(DegreeType.MASTER_DEGREE)
+		    && !degreeType.equals(DegreeType.BOLONHA_ADVANCED_FORMATION_DIPLOMA)
+		    && !degreeType.equals(DegreeType.BOLONHA_SPECIALIZATION_DEGREE)
+		    && !DEA_AVAILABLE_INQUIRY_DEGREES.contains(curricularCourse.getDegreeCurricularPlan().getDegree().getSigla()
+			    .toLowerCase())) {
+		return false;
+	    }
+	}
+	return true;
+    }
+
+    public boolean isBolonhaDegreeOrMasterDegreeOrIntegratedMasterDegree() {
+	for (final CurricularCourse curricularCourse : getAssociatedCurricularCourses()) {
+	    DegreeType degreeType = curricularCourse.getDegreeCurricularPlan().getDegree().getDegreeType();
+	    if (degreeType.equals(DegreeType.BOLONHA_DEGREE) || degreeType.equals(DegreeType.BOLONHA_MASTER_DEGREE)
+		    || degreeType.equals(DegreeType.BOLONHA_INTEGRATED_MASTER_DEGREE)) {
+		return true;
+	    }
+	    if (DEA_AVAILABLE_INQUIRY_DEGREES.contains(curricularCourse.getDegreeCurricularPlan().getDegree().getSigla()
+		    .toLowerCase())) {
 		return true;
 	    }
 	}
@@ -1832,7 +1867,7 @@ public class ExecutionCourse extends ExecutionCourse_Base {
 
     @Override
     public Boolean getAvailableForInquiries() {
-	if (isBolonhaDegreeOrMasterDegree()) {
+	if (isBolonhaDegreeOrMasterDegreeOrIntegratedMasterDegree()) {
 	    if (super.getAvailableForInquiries() != null) {
 		return super.getAvailableForInquiries();
 	    }
@@ -2374,14 +2409,16 @@ public class ExecutionCourse extends ExecutionCourse_Base {
 	return false;
     }
 
-    public boolean hasAnyAttends(ExecutionDegree executionDegree) {
+    public boolean hasAnyEnrolment(ExecutionDegree executionDegree) {
 	for (Attends attend : getAttends()) {
-	    StudentCurricularPlan scp = attend.getRegistration().getStudentCurricularPlan(getExecutionPeriod());
-	    if (scp != null) {
-		ExecutionDegree studentExecutionDegree = scp.getDegreeCurricularPlan().getExecutionDegreeByYearAndCampus(
-			getExecutionYear(), scp.getCampus(getExecutionYear()));
-		if (studentExecutionDegree == executionDegree) {
-		    return true;
+	    if (attend.hasEnrolment()) {
+		StudentCurricularPlan scp = attend.getRegistration().getStudentCurricularPlan(getExecutionPeriod());
+		if (scp != null) {
+		    ExecutionDegree studentExecutionDegree = scp.getDegreeCurricularPlan().getExecutionDegreeByYearAndCampus(
+			    getExecutionYear(), scp.getCampus(getExecutionYear()));
+		    if (studentExecutionDegree == executionDegree) {
+			return true;
+		    }
 		}
 	    }
 	}
@@ -2421,7 +2458,7 @@ public class ExecutionCourse extends ExecutionCourse_Base {
     }
 
     public boolean isAvailableForInquiry() {
-	return getAvailableForInquiries() && hasEnrolmentsInAnyCurricularCourse() && !isMasterDegreeDFAOrDEAOnly();
+	return getAvailableForInquiries() && hasEnrolmentsInAnyCurricularCourse() && !isMasterDegreeDFAOnly();
     }
 
     public boolean hasEnrolmentsInAnyCurricularCourse() {
@@ -2441,8 +2478,7 @@ public class ExecutionCourse extends ExecutionCourse_Base {
     public Boolean deleteInquiryResults() {
 	boolean deletedResults = false;
 	for (InquiryResult inquiryResult : getInquiryResultsSet()) {
-	    if (inquiryResult.getProfessorship() == null) { // delete only the
-							    // direct EC results
+	    if (inquiryResult.getProfessorship() == null) { // delete only the direct EC results
 		inquiryResult.delete();
 		deletedResults = true;
 	    }
@@ -2455,10 +2491,7 @@ public class ExecutionCourse extends ExecutionCourse_Base {
 	boolean deletedResults = false;
 	for (InquiryResult inquiryResult : getInquiryResultsByExecutionDegree(executionDegree)) {
 	    if ((inquiryQuestion == null || inquiryResult.getInquiryQuestion() == inquiryQuestion)
-		    && inquiryResult.getProfessorship() == null) { // delete
-								   // only the
-								   // direct EC
-								   // results
+		    && inquiryResult.getProfessorship() == null) { // delete only the direct EC results
 		inquiryResult.delete();
 		deletedResults = true;
 	    }

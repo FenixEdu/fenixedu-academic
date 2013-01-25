@@ -70,11 +70,15 @@ import net.sourceforge.fenixedu.domain.accessControl.PedagogicalCouncilMembersGr
 import net.sourceforge.fenixedu.domain.accessControl.PersistentGroup;
 import net.sourceforge.fenixedu.domain.accessControl.PersonGroup;
 import net.sourceforge.fenixedu.domain.accessControl.PersonsInFunctionGroup;
+import net.sourceforge.fenixedu.domain.accessControl.ProfessorshipsForCurrentSemester;
+import net.sourceforge.fenixedu.domain.accessControl.ProfessorshipsForCurrentYear;
 import net.sourceforge.fenixedu.domain.accessControl.ProjectDepartmentAccessGroup;
 import net.sourceforge.fenixedu.domain.accessControl.RegisteredAlumniGroup;
 import net.sourceforge.fenixedu.domain.accessControl.ResearchUnitElementGroup;
 import net.sourceforge.fenixedu.domain.accessControl.ResearchUnitMembersGroup;
 import net.sourceforge.fenixedu.domain.accessControl.ResearchersGroup;
+import net.sourceforge.fenixedu.domain.accessControl.ResponsibleProfessorshipsForCurrentSemester;
+import net.sourceforge.fenixedu.domain.accessControl.ResponsibleProfessorshipsForCurrentYear;
 import net.sourceforge.fenixedu.domain.accessControl.RoleGroup;
 import net.sourceforge.fenixedu.domain.accessControl.ScientificAreaMemberGroup;
 import net.sourceforge.fenixedu.domain.accessControl.ScientificCouncilMembersGroup;
@@ -301,7 +305,9 @@ public class GroupBuilderRegistry {
 		ActiveAssistantCoordinatorCycle1Group.class, ActiveAssistantCoordinatorCycle2Group.class,
 		ActiveAssistantCoordinatorCycle3Group.class, ActiveAssistantCoordinatorDFAGroup.class,
 		ActiveAssistantCoordinatorIntegradedMasterDegreeGroup.class, RegisteredAlumniGroup.class,
-		ExternalTeachersForCurrentSemester.class, ExternalTeachersForCurrentYear.class };
+		ExternalTeachersForCurrentSemester.class, ExternalTeachersForCurrentYear.class,
+		ProfessorshipsForCurrentSemester.class, ProfessorshipsForCurrentYear.class,
+		ResponsibleProfessorshipsForCurrentSemester.class, ResponsibleProfessorshipsForCurrentYear.class };
 	for (Class groupClass : groups) {
 	    String className = groupClass.getSimpleName();
 

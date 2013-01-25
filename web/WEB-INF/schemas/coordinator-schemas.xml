@@ -469,12 +469,13 @@
         <property name="format" value="${name} (${loginIdentification.mostImportantAlias})"/>
     </slot>
     <slot name="contact" key="label.scientificCommission.contact"/>
-    <slot name="person.email" key="email"/> 
+    <slot name="person.email" key="email" read-only="true"/> 
     <slot name="hasCoordinator" key="label.coordinator" read-only="true" bundle="APPLICATION_RESOURCES" /> 
 	<slot name="coordinator" key="label.responsible.coordinator" layout="null-as-label" read-only="true" bundle="APPLICATION_RESOURCES" >
 		<property name="subLayout" value="values"/>
 		<property name="subSchema" value="coordinator.responsible"/> 
 	</slot>
+	<setter signature="changeContactStatus(contact)"/>
 </schema>
 
 <schema name="coordinator.responsible" type="net.sourceforge.fenixedu.domain.Coordinator">
@@ -495,7 +496,7 @@
 <schema name="coordinator.commissionTeam.addMemberByIstId" type="net.sourceforge.fenixedu.dataTransferObject.VariantBean">
     <slot name="string" key="label.istid">
     	<validator class="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
-     </slot>
+    </slot>
 </schema>
 
 <schema name="thesis.jury.proposal.participant.edit" type="net.sourceforge.fenixedu.domain.thesis.ThesisEvaluationParticipant">
@@ -918,6 +919,15 @@
 		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.ManageThesisContextProvider" />
 		<property name="format" value="${executionYear.year}" />
     </slot>
+</schema>
+
+<schema name="quc.results.log"
+		type="net.sourceforge.fenixedu.dataTransferObject.inquiries.CoordinatorResultsBean" bundle="INQUIRIES_RESOURCES">
+	<slot name="comment" layout="longText" key="label.inquiry.comment">
+		<property name="columns" value="70"/>
+		<property name="rows" value="6"/>
+	</slot>
+	<setter signature="qucResultsLog()"/>
 </schema>
 
 <!--

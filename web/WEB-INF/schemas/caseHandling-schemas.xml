@@ -918,6 +918,7 @@
 	</slot>
 	<slot name="seriesGradeState" key="label.candidacy.individual.state">
 	</slot>
+	<setter signature="graduatedPersonCandidacyLog()"/>
 </schema>
 
 <schema name="DegreeCandidacyForGraduatedPersonIndividualCandidacyResultBean.introduce.result.adminOffice" type="net.sourceforge.fenixedu.domain.candidacyProcess.graduatedPerson.DegreeCandidacyForGraduatedPersonIndividualCandidacyResultBean" bundle="APPLICATION_RESOURCES">

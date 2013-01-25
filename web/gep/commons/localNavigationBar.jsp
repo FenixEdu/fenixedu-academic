@@ -96,14 +96,6 @@
     </li>
     
 	<li class="navheader">
-		<bean:message key="label.protocols.navigation.header" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/>
-	</li>
-	<li>
-		<html:link page="/protocols.do?method=searchProtocols&amp;showAllNationalityTypes">
-	  		<bean:message key="link.protocols.search" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/>
-	  	</html:link>
-	</li>	
-	<li class="navheader">
 		<bean:message key="label.alumni" bundle="GEP_RESOURCES"/>
 	</li>
 	<li>

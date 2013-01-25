@@ -45,13 +45,22 @@
             </tr>
         </tbody>
     </table>
-
-		<p class="mtop1 mbottom0">
+	
+	
+	<p> 
+		<span class="mtop1 mbottom0">
 			<html:link page="/uploadPhoto.do?method=prepare">
-			<bean:message key="link.person.upload.photo" bundle="APPLICATION_RESOURCES" />
+				<bean:message key="link.person.upload.photo" bundle="APPLICATION_RESOURCES" />
 			</html:link>
-		</p>
+		</span>
 		
+		<span class="pleft05">		
+			<html:link action="/partyContacts.do?method=viewStudentLog">
+				<bean:message key="link.executionCourse.log" bundle="APPLICATION_RESOURCES"/>
+			</html:link>
+		</span>
+	</p>
+	
 		<p class="mvert05">
 			<logic:notEmpty name="person" property="personalPhotoEvenIfRejected">
 			<logic:equal name="person" property="personalPhotoEvenIfRejected.state" value="PENDING">
@@ -271,6 +280,7 @@
         <td class="acenter">-</td>
         <td class="acenter">-</td>
         <td class="acenter">-</td>
+        <td class="acenter">-</td>
 		<td class="tdclear">
 		<logic:equal name="person" property="canValidateContacts" value="true">
 			<html:link action="/partyContacts.do?method=prepareCreatePhone">
@@ -359,6 +369,7 @@
 	<tr>
 		<td><bean:message key="label.partyContacts.MobilePhone" />:</td>
         <td>-</td>
+        <td class="acenter">-</td>
         <td class="acenter">-</td>
         <td class="acenter">-</td>
         <td class="acenter">-</td>
@@ -459,6 +470,7 @@
 	<tr>
 		<td><bean:message key="label.partyContacts.EmailAddress" />:</td>
         <td>-</td>
+        <td class="acenter">-</td>
         <td class="acenter">-</td>
         <td class="acenter">-</td>
         <td class="acenter">-</td>

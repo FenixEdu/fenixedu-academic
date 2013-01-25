@@ -1,5 +1,7 @@
 package net.sourceforge.fenixedu.presentationTier.Action.administrativeOffice.student;
 
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -7,6 +9,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.contacts.CreatePartyCont
 import net.sourceforge.fenixedu.applicationTier.Servico.contacts.EditPartyContact;
 import net.sourceforge.fenixedu.dataTransferObject.contacts.PartyContactBean;
 import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.PersonInformationLog;
 import net.sourceforge.fenixedu.domain.contacts.PartyContact;
 import net.sourceforge.fenixedu.domain.contacts.PartyContactValidationState;
 import net.sourceforge.fenixedu.domain.contacts.PhysicalAddress;
@@ -100,6 +103,17 @@ public class PartyContactsAcademicAdministrativeOfficeDA extends PartyContactsMa
 
     @Override
     protected void addWarningMessage(HttpServletRequest request, PartyContactBean contactBean) {
+    }
+
+    @Override
+    public ActionForward viewStudentLog(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) {
+
+	Person person = getStudent(request).getPerson();
+	List<PersonInformationLog> logsList = person.getPersonInformationLogs();
+
+	request.setAttribute("logsList", logsList);
+	return mapping.findForward("viewStudentLogChanges");
     }
 
 }

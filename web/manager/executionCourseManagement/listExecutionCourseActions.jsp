@@ -12,13 +12,20 @@
 <bean:define id="executionPeriodQName" name="sessionBean"
 	property="executionPeriod.qualifiedName" />
 
-	
+<logic:equal name="transferSucess" value="true">
+    <p>
+        <span class="success0">
+            <bean:message key="message.sucess" bundle="MANAGER_RESOURCES"/>
+        </span>
+    </p>
+</logic:equal>
+
 <bean:define id="linkGetRequestBigMessage" value=""/>
 <bean:define id="linkGetRequestLilMessage" value=""/>
-
+<bean:define id="executionDegreeId" name="sessionBean"/>
+<bean:define id="curricularYearId" name="sessionBean" />
 
 <logic:equal name="sessionBean" property="chooseNotLinked" value="false">
-
 	<bean:define id="executionDegreeType" name="sessionBean"
 		property="executionDegree.degreeType" />
 	<bean:define id="executionDegreeName" name="sessionBean"
@@ -80,7 +87,6 @@
 
 <fr:view name="sessionBean" property="executionCourses">
 	<fr:layout name="tabular">
-
 		<fr:property name="linkGroupSeparator" value="&nbsp&nbsp|&nbsp&nbsp" />
 
 		<fr:property name="linkFormat(edit)"
@@ -98,7 +104,7 @@
 		<fr:property name="bundle(swapAnnoun)" value="MANAGER_RESOURCES" />
 
 		<fr:property name="linkFormat(splitCourses)"
-			value="/seperateExecutionCourse.do?method=prepareTransfer&executionCourseId=${idInternal}" />
+			value="<%="/seperateExecutionCourse.do?method=prepareTransfer&executionCourseId=${idInternal}&originExecutionDegreeID="  + executionDegreeId.toString() + "&curricularYearId=" + curricularYearId.toString() %>"/> 
 		<fr:property name="order(splitCourses)" value="3" />
 		<fr:property name="key(splitCourses)"
 			value="link.manager.seperate.execution_course" />
@@ -114,7 +120,6 @@
 		<fr:property name="confirmationKey(delete)" value="label.manager.delete.selected.executionCourses.certainty"/>
 		<fr:property name="confirmationBundle(delete)" value="MANAGER_RESOURCES"/>
 		<fr:property name="confirmationArgs(delete)" value="${idInternal},${nome},${sigla}"/>
-
 
 		<fr:property name="linkFormat(sentEmails)"
 			value="/emails.do?method=viewSentEmails&senderId=${sender.idInternal}" />

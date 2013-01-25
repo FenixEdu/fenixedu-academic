@@ -20,6 +20,7 @@ import net.sourceforge.fenixedu.domain.contacts.Phone;
 import net.sourceforge.fenixedu.domain.contacts.PhysicalAddress;
 import net.sourceforge.fenixedu.domain.grant.contract.GrantContractRegime;
 import net.sourceforge.fenixedu.domain.grant.contract.GrantCostCenter;
+import net.sourceforge.fenixedu.domain.grant.contract.GrantInsurance;
 import net.sourceforge.fenixedu.domain.grant.contract.GrantPart;
 import net.sourceforge.fenixedu.domain.grant.contract.GrantSubsidy;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
@@ -174,39 +175,50 @@ public class ExportGrantsAction extends FenixDispatchAction {
 	    spreadsheet.addCell(stringBuilder.toString());
 	    spreadsheet.addCell(grantSubsidy.getValue());
 	    spreadsheet.addCell(grantSubsidy.getTotalCost());
+	} else {
+	    spreadsheet.addCell(null);
+	    spreadsheet.addCell(null);
+	    spreadsheet.addCell(null);
+	    spreadsheet.addCell(null);
+	    spreadsheet.addCell(null);
 	}
 
-	if (grantContractRegime.getGrantContract().getGrantInsurance() != null) {
-	    spreadsheet
-		    .addCell(grantContractRegime.getGrantContract().getGrantInsurance().getDateBeginInsuranceYearMonthDay() != null ? grantContractRegime
-			    .getGrantContract().getGrantInsurance().getDateBeginInsuranceYearMonthDay().toString()
-			    : EMPTY_STRING);
-	    spreadsheet
-		    .addCell(grantContractRegime.getGrantContract().getGrantInsurance().getDateEndInsuranceYearMonthDay() != null ? grantContractRegime
-			    .getGrantContract().getGrantInsurance().getDateEndInsuranceYearMonthDay().toString()
-			    : EMPTY_STRING);
-	    int totalDays = Days.daysBetween(
-		    grantContractRegime.getGrantContract().getGrantInsurance().getDateBeginInsuranceYearMonthDay(),
-		    grantContractRegime.getGrantContract().getGrantInsurance().getDateEndInsuranceYearMonthDay()).getDays();
-	    spreadsheet.addCell(totalDays);
-	    spreadsheet.addCell(grantContractRegime.getGrantContract().getGrantInsurance().getTotalValue());
-	    spreadsheet.addCell(grantContractRegime.getGrantContract().getGrantInsurance().getGrantPaymentEntity().getNumber()
-		    + separtor
-		    + grantContractRegime.getGrantContract().getGrantInsurance().getGrantPaymentEntity().getDesignation(), true);
+	GrantInsurance grantInsurance = grantContractRegime.getGrantContract().getGrantInsurance();
+	if (grantInsurance != null) {
+	    spreadsheet.addCell(grantInsurance.getDateBeginInsuranceYearMonthDay() != null ? grantInsurance
+		    .getDateBeginInsuranceYearMonthDay().toString() : EMPTY_STRING);
+	    spreadsheet.addCell(grantInsurance.getDateEndInsuranceYearMonthDay() != null ? grantInsurance
+		    .getDateEndInsuranceYearMonthDay().toString() : EMPTY_STRING);
+
+	    if (grantInsurance.getDateBeginInsuranceYearMonthDay() == null
+		    || grantInsurance.getDateEndInsuranceYearMonthDay() == null) {
+		spreadsheet.addCell("ERRO");
+	    } else {
+		int totalDays = Days.daysBetween(grantInsurance.getDateBeginInsuranceYearMonthDay(),
+			grantInsurance.getDateEndInsuranceYearMonthDay()).getDays();
+		spreadsheet.addCell(totalDays);
+	    }
+	    spreadsheet.addCell(grantInsurance.getTotalValue());
+	    spreadsheet.addCell(grantInsurance.getGrantPaymentEntity().getNumber() + separtor
+		    + grantInsurance.getGrantPaymentEntity().getDesignation(), true);
 	    if (betweenDates) {
-		LocalDate beginLocalDate = grantContractRegime.getGrantContract().getGrantInsurance()
-			.getDateBeginInsuranceYearMonthDay().toLocalDate();
-		LocalDate endLocalDate = grantContractRegime.getGrantContract().getGrantInsurance()
-			.getDateEndInsuranceYearMonthDay().toLocalDate();
-		if (beginLocalDate.isBefore(grantSearch.getBeginDate())) {
-		    beginLocalDate = grantSearch.getBeginDate();
+		if (grantInsurance.getDateBeginInsuranceYearMonthDay() == null
+			|| grantInsurance.getDateEndInsuranceYearMonthDay() == null) {
+		    spreadsheet.addCell("ERRO");
+		    spreadsheet.addCell("ERRO");
+		} else {
+		    LocalDate beginLocalDate = grantInsurance.getDateBeginInsuranceYearMonthDay().toLocalDate();
+		    LocalDate endLocalDate = grantInsurance.getDateEndInsuranceYearMonthDay().toLocalDate();
+		    if (beginLocalDate.isBefore(grantSearch.getBeginDate())) {
+			beginLocalDate = grantSearch.getBeginDate();
+		    }
+		    if (endLocalDate.isAfter(grantSearch.getEndDate())) {
+			endLocalDate = grantSearch.getEndDate();
+		    }
+		    int totalDaysBetween = Math.max(Days.daysBetween(beginLocalDate, endLocalDate).getDays(), 0);
+		    spreadsheet.addCell(totalDaysBetween);
+		    spreadsheet.addCell(FormatDouble.round((InfoGrantInsurance.dayValueOfInsurance / 365) * totalDaysBetween));
 		}
-		if (endLocalDate.isAfter(grantSearch.getEndDate())) {
-		    endLocalDate = grantSearch.getEndDate();
-		}
-		int totalDaysBetween = Math.max(Days.daysBetween(beginLocalDate, endLocalDate).getDays(), 0);
-		spreadsheet.addCell(totalDaysBetween);
-		spreadsheet.addCell(FormatDouble.round((InfoGrantInsurance.dayValueOfInsurance / 365) * totalDaysBetween));
 	    }
 	}
     }

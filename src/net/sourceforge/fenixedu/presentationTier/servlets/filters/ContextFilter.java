@@ -60,7 +60,8 @@ public class ContextFilter implements Filter {
 		|| path.startsWith("/isAlive.do") || path.endsWith(".html") || path.endsWith(".htm")
 		|| path.startsWith("/exceptionHandlingAction.do") || path.startsWith("/showErrorPageRegistered.do")
 		|| path.startsWith("/services") || path.contains("/loginExpired.do") || path.contains("/summariesRSS.do")
-		|| path.startsWith("/gwt") || path.startsWith("/remote") || path.startsWith("/jersey") || path.startsWith("/downloadFile");
+		|| path.startsWith("/gwt") || path.startsWith("/remote") || path.startsWith("/jersey") || path.startsWith("/downloadFile")
+		|| (path.indexOf("/google") >= 0 && path.endsWith(".html"));
     }
 
     private FunctionalityContext getContextAttibute(final HttpServletRequest httpServletRequest) {

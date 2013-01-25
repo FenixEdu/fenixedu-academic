@@ -22,6 +22,10 @@ public class ScientificCommission extends ScientificCommission_Base {
 	setContact(false);
 	setExecutionDegree(executionDegree);
 	setPerson(person);
+
+	ScientificCommissionLog.createLog(this.getExecutionDegree().getDegree(), this.getExecutionDegree().getExecutionYear(),
+		"resources.MessagingResources", "log.degree.scientificcomission.addmember", this.getPerson()
+			.getPresentationName(), this.getExecutionDegree().getDegree().getPresentationName());
     }
 
     public Coordinator getCoordinator() {
@@ -42,6 +46,9 @@ public class ScientificCommission extends ScientificCommission_Base {
     }
 
     public void delete() {
+	ScientificCommissionLog.createLog(getExecutionDegree().getDegree(), getExecutionDegree().getExecutionYear(),
+		"resources.MessagingResources", "log.degree.scientificcomission.removemember", this.getPerson().getName(), this
+			.getPerson().getIstUsername(), this.getExecutionDegree().getDegree().getPresentationName());
 	removePerson();
 	removeExecutionDegree();
 	removeRootDomainObject();
@@ -84,5 +91,18 @@ public class ScientificCommission extends ScientificCommission_Base {
 	    }
 	}
 
+    }
+
+    public void changeContactStatus(Boolean contact) {
+	if (!contact.equals(getContact())) {
+	    setContact(contact);
+	    logEditMember();
+	}
+    }
+
+    public void logEditMember() {
+	ScientificCommissionLog.createLog(this.getExecutionDegree().getDegree(), this.getExecutionDegree().getExecutionYear(),
+		"resources.MessagingResources", "log.degree.scientificcomission.editmember", this.getPerson()
+			.getPresentationName(), this.getExecutionDegree().getDegree().getPresentationName());
     }
 }

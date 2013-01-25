@@ -1159,7 +1159,21 @@ class DomainObject {
     	}
     	class EvaluationManagementLog extends ExecutionCourseLog {
     	}
+
+    class DegreeLog extends DomainOperationLog { }
     
+    	class CoordinationTeamLog extends DegreeLog { }
+    	
+    	class ProgramTutoredParticipationLog extends DegreeLog { }
+    	
+    	class QUCResultsLog extends DegreeLog { }
+    	
+    	class CandidaciesLog extends DegreeLog { }
+    	
+    	class ScientificCommissionLog extends DegreeLog {}    
+    
+    class  PersonInformationLog extends DomainOperationLog {
+    }
     	
     class CourseLoad extends DomainObject {
         ShiftType type;
@@ -8195,6 +8209,33 @@ relation ExecutionCourseExecutionCourseLog {
 	}
 }
 
+relation ExecutionYearDegreeLog {
+	ExecutionYear playsRole executionYear{
+		multiplicity 1..1;
+	}
+	DegreeLog playsRole degreeLogs {
+		multiplicity*;
+	}
+}
+
+relation DegreeDegreeLog {
+	Degree playsRole degree{
+		multiplicity 1..1;
+	}
+	DegreeLog playsRole degreeLogs {
+		multiplicity*;
+	}
+}
+
+relation PersonViewedPersonInformationLog {
+	Person playsRole personViewed{
+		multiplicity 1..1;
+	}
+	PersonInformationLog playsRole personInformationLogs {
+		multiplicity *;
+	}
+}
+
 relation RootDomainObjectInquiryTemplate {
     RootDomainObject playsRole rootDomainObject;
     inquiries.InquiryTemplate playsRole inquiryTemplates {
@@ -13177,7 +13218,9 @@ relation ProjectSubmissionAttends {
 
 relation ProjectSubmissionFileProjectSubmission {
     ProjectSubmission playsRole projectSubmission;
-    ProjectSubmissionFile playsRole projectSubmissionFile;
+    ProjectSubmissionFile playsRole projectSubmissionFile {
+        multiplicity 1..1;
+    }
 }
 
 relation ProjectSubmissionLogAttends {

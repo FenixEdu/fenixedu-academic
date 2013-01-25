@@ -16,7 +16,7 @@ public class CourseLoadReportFile extends CourseLoadReportFile_Base {
 
     @Override
     public String getJobName() {
-	return "Listagem de tipos de aula e carga hor�ria";
+	return "Listagem de tipos de aula e carga horária";
     }
 
     @Override

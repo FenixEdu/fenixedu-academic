@@ -23,7 +23,8 @@
 	<html:form action="/seperateExecutionCourse">
 		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="transfer"/>
 		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.executionCourseId" property="executionCourseId" value="<%= pageContext.findAttribute("executionCourseID").toString() %>"/>
-
+		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.curricularYearId" property="curricularYearId" value="<%= pageContext.findAttribute("curricularYearId").toString()%>"/>
+		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.originExecutionDegreeID" property="originExecutionDegreeID" value="<%= pageContext.findAttribute("originExecutionDegreeID").toString()%>"/>
 		<bean:message bundle="MANAGER_RESOURCES" key="executionDegree.destination"/>:<br />
 		<html:select bundle="HTMLALT_RESOURCES" altKey="select.destinationExecutionDegreeId" property="destinationExecutionDegreeId" size="1"
 				onchange="this.form.method.value='changeDestinationContext'; this.form.submit();">

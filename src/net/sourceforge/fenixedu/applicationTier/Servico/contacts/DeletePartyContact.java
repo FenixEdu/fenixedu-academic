@@ -1,11 +1,13 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.contacts;
 
-import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.domain.contacts.PartyContact;
+import pt.ist.fenixWebFramework.services.Service;
 
-public class DeletePartyContact extends FenixService {
+public class DeletePartyContact {
 
-    public void run(final PartyContact contact) {
+    @Service
+    public static void run(PartyContact contact) {
+	contact.getParty().logDeleteContact(contact);
 	contact.delete();
     }
 }

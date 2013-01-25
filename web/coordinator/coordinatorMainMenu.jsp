@@ -346,5 +346,12 @@
 		        	<bean:message key="link.finalDegreeWork.proposal.listings" bundle="STUDENT_RESOURCES"/>
 		        </html:link>
 	        </li>
-
+		<li class="navheader">
+			<bean:message key="label.coordinator.logs"/>
+		</li>
+		<li>
+			<html:link page="<%= "/searchDLog.do?method=prepareInit&amp;degreeCurricularPlanID=" + degreeCurricularPlanOID%>">
+				<bean:message key="label.coordinator.logs.viewlogs"/>
+			</html:link>
+		</li>
 	</ul>

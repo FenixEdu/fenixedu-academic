@@ -65,19 +65,25 @@ public class ManagePeople extends FenixDispatchAction {
 
     private void setRequestParametersToCreateInvitedPerson(final HttpServletRequest request, final InternalPersonBean personBean) {
 
-	final String name = request.getParameter("name");
-	if (isSpecified(name)) {
-	    personBean.setName(name);
+	AnyPersonSearchBean anyPersonSearchBean = getRenderedObject("anyPersonSearchBeanId");
+	if (anyPersonSearchBean != null) {
+	    personBean.setName(anyPersonSearchBean.getName());
+	    personBean.setIdDocumentType(anyPersonSearchBean.getIdDocumentType());
+	    personBean.setDocumentIdNumber(anyPersonSearchBean.getDocumentIdNumber());
+	} else {
+	    final String name = request.getParameter("name");
+	    if (isSpecified(name)) {
+		personBean.setName(name);
+	    }
+	    final String idDocumentType = request.getParameter("idDocumentType");
+	    if (isSpecified(idDocumentType)) {
+		personBean.setIdDocumentType(IDDocumentType.valueOf(idDocumentType));
+	    }
+	    final String documentIdNumber = request.getParameter("documentIdNumber");
+	    if (isSpecified(documentIdNumber)) {
+		personBean.setDocumentIdNumber(documentIdNumber);
+	    }
 	}
-	final String idDocumentType = request.getParameter("idDocumentType");
-	if (isSpecified(idDocumentType)) {
-	    personBean.setIdDocumentType(IDDocumentType.valueOf(idDocumentType));
-	}
-	final String documentIdNumber = request.getParameter("documentIdNumber");
-	if (isSpecified(documentIdNumber)) {
-	    personBean.setDocumentIdNumber(documentIdNumber);
-	}
-
 	request.setAttribute("personBean", personBean);
     }
 
