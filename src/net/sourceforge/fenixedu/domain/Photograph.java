@@ -90,32 +90,40 @@ public class Photograph extends Photograph_Base implements Comparable<Photograph
 
     @Override
     public void setState(PhotoState state) {
-	super.setState(state);
-	setStateChange(new DateTime());
-	if (state == PhotoState.PENDING) {
-	    setPendingHolder(RootDomainObject.getInstance());
-	} else {
-	    setPendingHolder(null);
-	}
-	if (state == PhotoState.REJECTED) {
-	    Person person = AccessControl.getPerson();
-	    if (person != null) {
-		setRejector(person);
+	if (getState() != state) {
+	    super.setState(state);
+	    setStateChange(new DateTime());
+	    if (state == PhotoState.PENDING) {
+		setPendingHolder(RootDomainObject.getInstance());
+	    } else {
+		setPendingHolder(null);
 	    }
-	    final EmailAddress institutionalOrDefaultEmailAddress = getPerson().getInstitutionalOrDefaultEmailAddress();
-	    if (institutionalOrDefaultEmailAddress != null) {
-		ResourceBundle bundle = ResourceBundle.getBundle(RESOURCE_BUNDLE_NAME, Language.getDefaultLocale());
-		Set<String> sendTo = Collections.singleton(institutionalOrDefaultEmailAddress.getValue());
+	    if (state == PhotoState.REJECTED) {
+		logState("log.personInformation.photo.rejected");
+		Person person = AccessControl.getPerson();
+		if (person != null) {
+		    setRejector(person);
+		}
+		final EmailAddress institutionalOrDefaultEmailAddress = getPerson().getInstitutionalOrDefaultEmailAddress();
+		if (institutionalOrDefaultEmailAddress != null) {
+		    ResourceBundle bundle = ResourceBundle.getBundle(RESOURCE_BUNDLE_NAME, Language.getDefaultLocale());
+		    Set<String> sendTo = Collections.singleton(institutionalOrDefaultEmailAddress.getValue());
 
-		SystemSender systemSender = getRootDomainObject().getSystemSender();
-		new Message(systemSender, systemSender.getConcreteReplyTos(), new Recipient(new PersonGroup(getPerson()))
-		    	.asCollection(), bundle.getString(REJECTION_MAIL_SUBJECT_KEY), bundle.getString(REJECTION_MAIL_BODY_KEY), "");
+		    SystemSender systemSender = getRootDomainObject().getSystemSender();
+		    new Message(systemSender, systemSender.getConcreteReplyTos(),
+			    new Recipient(new PersonGroup(getPerson())).asCollection(),
+			    bundle.getString(REJECTION_MAIL_SUBJECT_KEY), bundle.getString(REJECTION_MAIL_BODY_KEY), "");
+		}
+
 	    }
-	}
-	if (state == PhotoState.APPROVED) {
-	    Person person = AccessControl.getPerson();
-	    if (person != null) {
-		setApprover(person);
+	    if (state == PhotoState.APPROVED) {
+		Person person = AccessControl.getPerson();
+		if (person != null) {
+		    setApprover(person);
+		}
+		if (getPhotoType() != PhotoType.INSTITUTIONAL) {
+		    logState("log.personInformation.photo.approved");
+		}
 	    }
 	}
     }
@@ -144,6 +152,7 @@ public class Photograph extends Photograph_Base implements Comparable<Photograph
     public void cancelSubmission() {
 	if (getState() == PhotoState.PENDING) {
 	    setState(PhotoState.USER_REJECTED);
+	    logState("log.personInformation.photo.canceled");
 	}
     }
 
@@ -208,5 +217,22 @@ public class Photograph extends Photograph_Base implements Comparable<Photograph
     @Override
     public int compareTo(Photograph photo) {
 	return getSubmission().compareTo(photo.getSubmission());
+    }
+
+    public void logCreate(Person person) {
+	if (getState() == PhotoState.PENDING) {
+	    logState("log.personInformation.photo.created");
+	} else if (getState() == PhotoState.APPROVED) {
+	    if (getPhotoType() == PhotoType.INSTITUTIONAL) {
+		logState("log.personInformation.photo.created.noValidation");
+	    } else {
+		logState("log.personInformation.photo.approved");
+	    }
+	}
+    }
+
+    private void logState(String keyLabel) {
+	final String personViewed = PersonInformationLog.getPersonNameForLogDescription(getPerson());
+	PersonInformationLog.createLog(getPerson(), "resources.MessagingResources", keyLabel, personViewed);
     }
 }

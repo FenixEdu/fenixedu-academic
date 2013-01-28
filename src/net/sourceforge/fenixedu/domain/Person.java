@@ -2413,10 +2413,10 @@ public class Person extends Person_Base {
 	final Set<Receipt> result = new HashSet<Receipt>();
 	for (final Receipt receipt : getReceipts()) {
 	    for (final AdministrativeOffice administrativeOffice : administrativeOffices) {
-	    if (receipt.isFromAdministrativeOffice(administrativeOffice)) {
-		result.add(receipt);
+		if (receipt.isFromAdministrativeOffice(administrativeOffice)) {
+		    result.add(receipt);
+		}
 	    }
-	}
 	}
 
 	return result;
@@ -3231,17 +3231,13 @@ public class Person extends Person_Base {
 
     @Override
     public void setPersonalPhoto(final Photograph photo) {
-
-	final String personViewed = PersonInformationLog.getPersonNameForLogDescription(this);
 	if (super.getPersonalPhoto() != null) {
-	    PersonInformationLog
-		    .createLog(this, "resources.MessagingResources", "log.personInformation.photo.edit", personViewed);
 	    photo.setPrevious(super.getPersonalPhoto());
-	} else {
-	    PersonInformationLog.createLog(this, "resources.MessagingResources", "log.personInformation.photo.created",
-		    personViewed);
 	}
 	super.setPersonalPhoto(photo);
+	if (photo != null) {
+	    photo.logCreate(this);
+	}
     }
 
     public List<Photograph> getPhotographHistory() {
