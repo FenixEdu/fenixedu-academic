@@ -2,6 +2,7 @@ package net.sourceforge.fenixedu.presentationTier.Action.publico.rss;
 
 import java.net.URL;
 import java.util.List;
+import java.util.regex.Pattern;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -17,6 +18,12 @@ import de.nava.informa.impl.basic.Item;
 
 public abstract class RSSAction extends InformaRSSAction {
 
+    // private static Pattern sanitizeInputForXml = Pattern
+    // .compile("[^\\u0009\\u000A\\u000D\\u0020-\\uD7FF\\uE000-\\uFFFD\\x{10000}-\\x{10FFFF}]");
+
+    private static Pattern sanitizeInputForXml = Pattern
+	    .compile("[^\\u0009\\u000A\\u000D\\u0020-\\uD7FF\\uE000-\\uFFFD\uD800\uDC00-\uDBFF\uDFFF]");
+
     public static class SyndEntryFenixImpl extends SyndEntryImpl {
 
 	private final DomainObject domainObject;
@@ -29,6 +36,11 @@ public abstract class RSSAction extends InformaRSSAction {
 	public ItemGuidIF getItemGuidIF(final ItemIF itemIF) {
 	    return InformaRSSAction.getItemGuidIF(itemIF, domainObject);
 	}
+
+    }
+
+    private String sanitizeStringForXml(final String xml) {
+	return sanitizeInputForXml.matcher(xml).replaceAll("");
     }
 
     @Override
@@ -46,7 +58,7 @@ public abstract class RSSAction extends InformaRSSAction {
 	for (final SyndEntryFenixImpl syndEntry : getFeedEntries(request)) {
 	    final ItemIF item = new Item();
 	    item.setTitle(syndEntry.getTitle());
-	    item.setDescription(syndEntry.getDescription().getValue());
+	    item.setDescription(sanitizeStringForXml(syndEntry.getDescription().getValue()));
 	    item.setCreator(syndEntry.getAuthor());
 	    item.setDate(syndEntry.getUpdatedDate());
 	    item.setFound(syndEntry.getPublishedDate());

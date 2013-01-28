@@ -23,20 +23,10 @@ import net.sourceforge.fenixedu.presentationTier.Action.publico.rss.RSSAction;
 import org.apache.struts.util.MessageResources;
 import org.apache.struts.util.ModuleUtils;
 
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+
 import com.sun.syndication.feed.synd.SyndContent;
 import com.sun.syndication.feed.synd.SyndContentImpl;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
-import pt.ist.fenixWebFramework.struts.annotations.Forward;
-import pt.ist.fenixWebFramework.struts.annotations.Forwards;
-import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
-import pt.ist.fenixWebFramework.struts.annotations.Forward;
-import pt.ist.fenixWebFramework.struts.annotations.Forwards;
-import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 /**
  * @author <a href="mailto:goncalo@ist.utl.pt">Goncalo Luiz</a><br>
@@ -59,7 +49,7 @@ public class AnnouncementRSS extends RSSAction {
 
     private String getAuthor(Announcement announcement) {
 	final Person person = announcement.getCreator();
-	return (person != null) ? person.getNickname() : announcement.getAuthor();
+	return person != null ? person.getNickname() : announcement.getAuthor();
     }
 
     @Override
@@ -113,7 +103,7 @@ public class AnnouncementRSS extends RSSAction {
 	int serverPort = request.getServerPort();
 	String serverName = request.getServerName();
 	String appContext = PropertiesManager.getProperty("app.context");
-	String context = (appContext != null && appContext.length() > 0) ? "/" + appContext : "";
+	String context = appContext != null && appContext.length() > 0 ? "/" + appContext : "";
 	String module = ModuleUtils.getInstance().getModuleName(request, getServlet().getServletContext());
 	String actionPath = "/announcementsRSS.do";
 
@@ -143,13 +133,13 @@ public class AnnouncementRSS extends RSSAction {
 	int serverPort = request.getServerPort();
 	String serverName = request.getServerName();
 	String appContext = PropertiesManager.getProperty("app.context");
-	String context = (appContext != null && appContext.length() > 0) ? "/" + appContext : "";
+	String context = appContext != null && appContext.length() > 0 ? "/" + appContext : "";
 
 	if (actionPath.indexOf("?") == -1) {
 	    actionPath.append("?");
 	}
 
-	return scheme + "://" + serverName + ((serverPort == 80 || serverPort == 443) ? "" : ":" + serverPort) + context
+	return scheme + "://" + serverName + (serverPort == 80 || serverPort == 443 ? "" : ":" + serverPort) + context
 		+ actionPath.toString();
     }
 
@@ -181,7 +171,7 @@ public class AnnouncementRSS extends RSSAction {
     protected final AnnouncementBoard getSelectedBoard(HttpServletRequest request) {
 	final String id = request.getParameter("announcementBoardId");
 	Content content = rootDomainObject.readContentByOID(Integer.valueOf(id));
-	return (content instanceof AnnouncementBoard) ? (AnnouncementBoard) content : null;
+	return content instanceof AnnouncementBoard ? (AnnouncementBoard) content : null;
     }
 
     @Override
