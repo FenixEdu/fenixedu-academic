@@ -23,10 +23,12 @@
 <logic:notEmpty name="logsList">
 
 	<script type="text/javascript" src="<%= request.getContextPath() + "/javaScript/dataTables/media/js/jquery.dataTables.js"%>"></script>
+		<script type="text/javascript" src="js/jquery.mim.js"></script>
 		<script type="text/javascript">
 			$(document).ready(function() {
 	    		$('.results').dataTable( {
 	    			"iDisplayLength": 25,
+	    			"sPaginationType": "full_numbers",
 	    			"oLanguage" : {
 	    				"sProcessing": "A processar...",
 	    				"sLengthMenu": "Mostrar _MENU_ registos",

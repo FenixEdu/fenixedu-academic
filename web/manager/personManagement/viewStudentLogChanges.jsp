@@ -10,11 +10,10 @@
 <h2><bean:message key="link.executionCourse.log" bundle="APPLICATION_RESOURCES"/></h2>
 
 <logic:empty name="logsList">
- <div class="infoop6">
-	<bean:message key="link.personInformation.noLog" bundle="APPLICATION_RESOURCES"/>
-</div>
+	<div class="infoop6">
+		<bean:message key="link.personInformation.noLog" bundle="APPLICATION_RESOURCES"/>
+	</div>
 </logic:empty>
-
 
 <p class="mtop2">
 	<html:link page= "/findPerson.do?method=viewPerson" paramName="person" paramId="personID" paramProperty="externalId">
@@ -30,6 +29,7 @@
 			$(document).ready(function() {
 	    		$('.results').dataTable( {
 	    			"iDisplayLength": 25,
+	    			"sPaginationType": "full_numbers",
 	    			"oLanguage" : {
 	    				"sProcessing": "A processar...",
 	    				"sLengthMenu": "Mostrar _MENU_ registos",

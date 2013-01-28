@@ -26,6 +26,7 @@
 			$(document).ready(function() {
 	    		$('.results').dataTable( {
 	    			"iDisplayLength": 25,
+	    			"sPaginationType": "full_numbers",
 	    			"oLanguage" : {
 	    				"sProcessing": "A processar...",
 	    				"sLengthMenu": "Mostrar _MENU_ registos",
