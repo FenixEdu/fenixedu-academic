@@ -30,10 +30,8 @@ ul.material li.feedback { background: url(<%= request.getContextPath() %>/images
 </style>
 
 
-<p>
-	Bem-vindo à comunidade Alumni do IST. Todos temos de regressar à Escola, por isto ou por aquilo. Esta forma de regressar será, com certeza e mais uma vez, bem sucedida.
-	Este serviço está no início. O IST espera a contribuição dos Alumni quer pela sua utilização intensiva, quer pelos comentários, críticas e sugestões que são encorajados a fazer.
-	O desenvolvimento do serviço depende, em grande medida, desses dois factores.
+<p> 
+	<bean:message key="label.alumni.firstMessage" bundle="ALUMNI_RESOURCES"/>
 </p>
 
 <logic:present name="displayWarning">
@@ -172,13 +170,16 @@ ul.material li.feedback { background: url(<%= request.getContextPath() %>/images
 </ul>
 
 <h3> <bean:message key="label.alumni.personalData" bundle="ALUMNI_RESOURCES"/></h3>
-<ul>
-	Não se esqueça de activar, no seu Perfil Pessoal, as autorizações relativas aos dados pessoais disponibilizados.
-</ul>
+<ul><bean:message key="label.alumni.personalData.message" bundle="ALUMNI_RESOURCES"/></ul>
 
 <h3> <bean:message key="label.alumni.commentsOrSuggestions" bundle="ALUMNI_RESOURCES"/></h3>
-<ul class="material">
-	<li class="feedback">A sua opinião é importante. Se tem alguma sugestão, critíca ou comentário <a href="mailto:alumni@ist.utl.pt?subject=Alumni_feedback">escreva-nos um e-mail</a>. Nós prometemos uma resposta!</li>
+<ul class="material">  
+	<li class="feedback">
+		<bean:message key="label.alumni.commentsMessageP1" bundle="ALUMNI_RESOURCES"/>
+		<a href="mailto:alumni@ist.utl.pt?subject=Alumni_feedback"> <bean:message key="label.alumni.commentsMessageP2" bundle="ALUMNI_RESOURCES"/> </a>
+		<bean:message key="label.alumni.commentsMessageP3" bundle="ALUMNI_RESOURCES"/> 
+	</li>
+	
 </ul>
 
 <p><em><bean:message key="label.alumni.ISTEndMessage" bundle="ALUMNI_RESOURCES"/></em></p>
