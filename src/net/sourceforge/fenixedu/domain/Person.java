@@ -1128,10 +1128,8 @@ public class Person extends Person_Base {
     }
 
     /**
-     * The main difference between this method and
-     * {@link #getActivePersonFunctions()} is that person functions with a
-     * virtual function are also included. This method also collects person
-     * functions from the given unit and all subunits.
+     * The main difference between this method and {@link #getActivePersonFunctions()} is that person functions with a virtual
+     * function are also included. This method also collects person functions from the given unit and all subunits.
      * 
      * @see Function#isVirtual()
      */
@@ -1234,8 +1232,7 @@ public class Person extends Person_Base {
      * @param includeSubUnits
      *            if even subunits of the given unit are considered
      * @param active
-     *            the state of the function, <code>null</code> for all
-     *            PersonFunctions
+     *            the state of the function, <code>null</code> for all PersonFunctions
      */
     public List<PersonFunction> getPersonFunctions(final Unit unit, final boolean includeSubUnits, final Boolean active,
 	    final Boolean virtual, final AccountabilityTypeEnum accountabilityTypeEnum) {
@@ -2677,7 +2674,7 @@ public class Person extends Person_Base {
     public SortedSet<String> getOrganizationalUnitsPresentation() {
 	final SortedSet<String> organizationalUnits = new TreeSet<String>();
 	for (final Accountability accountability : getParentsSet()) {
-	    if (isOrganizationalUnitsForPresentation(accountability)) {
+	    if (accountability.isActive() && isOrganizationalUnitsForPresentation(accountability)) {
 		final Party party = accountability.getParentParty();
 		organizationalUnits.add(party.getName());
 	    }

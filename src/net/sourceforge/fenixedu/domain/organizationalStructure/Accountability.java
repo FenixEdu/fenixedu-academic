@@ -38,6 +38,10 @@ public class Accountability extends Accountability_Base {
 	return belongsToPeriod(currentDate, currentDate);
     }
 
+    public boolean isActive() {
+	return isActive(new YearMonthDay());
+    }
+
     public boolean isFinished() {
 	return getEndDate() != null && getEndDate().isBefore(new YearMonthDay());
     }
@@ -88,4 +92,5 @@ public class Accountability extends Accountability_Base {
 	final YearMonthDay end = getEndDate();
 	return start != null && (end == null || !start.isAfter(end));
     }
+
 }

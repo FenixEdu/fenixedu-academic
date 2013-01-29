@@ -179,7 +179,7 @@ public abstract class Party extends Party_Base implements Comparable<Party> {
 	    Class<? extends Party> parentPartyClass) {
 	final Set<Party> result = new HashSet<Party>();
 	for (final Accountability accountability : getParentsSet()) {
-	    if (accountability.getAccountabilityType().getType() == accountabilityTypeEnum
+	    if (accountability.isActive() && accountability.getAccountabilityType().getType() == accountabilityTypeEnum
 		    && parentPartyClass.isAssignableFrom(accountability.getParentParty().getClass())) {
 		result.add(accountability.getParentParty());
 	    }
@@ -190,7 +190,7 @@ public abstract class Party extends Party_Base implements Comparable<Party> {
     public Collection<? extends Party> getParentParties(Class<? extends Party> parentPartyClass) {
 	final Set<Party> result = new HashSet<Party>();
 	for (final Accountability accountability : getParentsSet()) {
-	    if (parentPartyClass.isAssignableFrom(accountability.getParentParty().getClass())) {
+	    if (accountability.isActive() && parentPartyClass.isAssignableFrom(accountability.getParentParty().getClass())) {
 		result.add(accountability.getParentParty());
 	    }
 	}
@@ -201,7 +201,7 @@ public abstract class Party extends Party_Base implements Comparable<Party> {
 	    Class<? extends Party> parentPartyClass) {
 	final Set<Party> result = new HashSet<Party>();
 	for (final Accountability accountability : getParentsSet()) {
-	    if (accountabilityTypeEnums.contains(accountability.getAccountabilityType().getType())
+	    if (accountability.isActive() && accountabilityTypeEnums.contains(accountability.getAccountabilityType().getType())
 		    && parentPartyClass.isAssignableFrom(accountability.getParentParty().getClass())) {
 		result.add(accountability.getParentParty());
 	    }
@@ -277,7 +277,7 @@ public abstract class Party extends Party_Base implements Comparable<Party> {
     public Collection<? extends Accountability> getParentAccountabilities(AccountabilityTypeEnum accountabilityTypeEnum) {
 	final Set<Accountability> result = new HashSet<Accountability>();
 	for (final Accountability accountability : getParentsSet()) {
-	    if (accountability.getAccountabilityType().getType() == accountabilityTypeEnum) {
+	    if (accountability.isActive() && accountability.getAccountabilityType().getType() == accountabilityTypeEnum) {
 		result.add(accountability);
 	    }
 	}
@@ -298,7 +298,7 @@ public abstract class Party extends Party_Base implements Comparable<Party> {
 	    Class<? extends Accountability> accountabilityClass) {
 	final Set<Accountability> result = new HashSet<Accountability>();
 	for (final Accountability accountability : getParentsSet()) {
-	    if (accountability.getAccountabilityType().getType() == accountabilityTypeEnum
+	    if (accountability.isActive() && accountability.getAccountabilityType().getType() == accountabilityTypeEnum
 		    && accountabilityClass.isAssignableFrom(accountability.getClass())) {
 		result.add(accountability);
 	    }
@@ -340,7 +340,7 @@ public abstract class Party extends Party_Base implements Comparable<Party> {
     public Collection<? extends Accountability> getParentAccountabilitiesByParentClass(Class<? extends Party> parentClass) {
 	final Set<Accountability> result = new HashSet<Accountability>();
 	for (final Accountability accountability : getParentsSet()) {
-	    if (parentClass.isAssignableFrom(accountability.getParentParty().getClass())) {
+	    if (accountability.isActive() && parentClass.isAssignableFrom(accountability.getParentParty().getClass())) {
 		result.add(accountability);
 	    }
 	}
@@ -951,8 +951,7 @@ public abstract class Party extends Party_Base implements Comparable<Party> {
     }
 
     /**
-     * This should not be used because assumes that there is only one work
-     * phone.
+     * This should not be used because assumes that there is only one work phone.
      */
     @Deprecated
     public void setWorkPhoneNumber(final String number) {
@@ -1555,14 +1554,11 @@ public abstract class Party extends Party_Base implements Comparable<Party> {
     protected abstract Site createSite();
 
     /**
-     * Initializes the party's site. This method ensures that if the party has a
-     * site then no other is created and that site is returned. Nevertheless if
-     * the party does not have a site, it is asked to create one by calling
-     * {@link #createSite()}. This allows each specific party to create the
-     * appropriate site.
+     * Initializes the party's site. This method ensures that if the party has a site then no other is created and that site is
+     * returned. Nevertheless if the party does not have a site, it is asked to create one by calling {@link #createSite()}. This
+     * allows each specific party to create the appropriate site.
      * 
-     * @return the newly created site or, if this party already contains a site,
-     *         the currently existing one(publication.getYear())
+     * @return the newly created site or, if this party already contains a site, the currently existing one(publication.getYear())
      */
     public Site initializeSite() {
 	Site site = getSite();
