@@ -43,3 +43,4 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "Fixing accountabilities without begin date, set them to IST's foundation date" fixNullAcountabilityPeriods.sql IST
