@@ -43,3 +43,9 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "Logging relations with employee moved to person" employeeLogsToPerson.sql
+execute "Persistent Access Group" persistentAccessGroup.sql
+execute "Migrate Administrative Office Unit" migrateAdministrativeOfficeUnitsToUnits.sql IST
+execute "Service request changes" serviceRequestsChanges.sql
+execute "Merging Degree and PhdProgram into AcademicProgram" mergeDegreeAndPhdProgram.sql
+execute "Remove AcademicAdminOffice role from persisted groups" removeAcademicAdminOfficeRoleFromPersistedGroups.sql

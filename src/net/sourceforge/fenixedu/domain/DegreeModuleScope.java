@@ -53,7 +53,7 @@ public abstract class DegreeModuleScope {
 	    if (cb != 0) {
 		return cb;
 	    }
-	    final int cc = Long.compare(o1.getCurricularCourse().getOid(), o2.getCurricularCourse().getOid());
+	    final int cc = o1.getCurricularCourse().getExternalId().compareTo(o2.getCurricularCourse().getExternalId());
 	    if (cc == 0) {
 		return cc;
 	    }
