@@ -594,7 +594,7 @@
 	<logic:present parameter="editPersonalInfo">
 		<fr:edit name="person"
 			action="<%="/personnelManagePeople.do?method=viewPerson&personId=" + personID %>"
-			schema="net.sourceforge.fenixedu.domain.Person.personal.info">
+			schema="net.sourceforge.fenixedu.domain.Person.personal.info.withPartitionedNames">
 			<fr:layout name="tabular">
 				<fr:property name="classes"
 					value="tstyle2 thleft thlight mtop15 thwhite" />
