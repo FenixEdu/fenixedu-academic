@@ -62,6 +62,7 @@ public class ISTConnectDA extends ExternalInterfaceDispatchAction {
 	    if (person != null) {
 		jsonObject.put("externalId", person.getExternalId());
 		jsonObject.put("className", person.getClass().getName());
+		jsonObject.put("email", person.getEmailForSendingEmails());
 
 		jsonObject.put("partyName", person.getPartyName().toString());
 		jsonObject.put("nickname", person.getNickname());
