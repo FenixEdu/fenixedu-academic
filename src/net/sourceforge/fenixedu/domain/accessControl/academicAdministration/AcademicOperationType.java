@@ -1,5 +1,9 @@
 package net.sourceforge.fenixedu.domain.accessControl.academicAdministration;
 
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Comparator;
+
 import net.sourceforge.fenixedu.util.BundleUtil;
 import pt.ist.fenixWebFramework.rendererExtensions.util.IPresentableEnum;
 
@@ -109,6 +113,16 @@ public enum AcademicOperationType implements IPresentableEnum {
     private boolean allowPrograms;
 
     private Scope scope;
+
+    static public Comparator<AcademicOperationType> COMPARATOR_BY_LOCALIZED_NAME = new Comparator<AcademicOperationType>() {
+	@Override
+	public int compare(final AcademicOperationType p1, final AcademicOperationType p2) {
+	    String operationName1 = p1.getLocalizedName();
+	    String operationName2 = p2.getLocalizedName();
+	    int res = operationName1.compareTo(operationName2);
+	    return res;
+	}
+    };
 
     private AcademicOperationType(boolean allowOffices, boolean allowPrograms, Scope scope) {
 	this.allowOffices = allowOffices;

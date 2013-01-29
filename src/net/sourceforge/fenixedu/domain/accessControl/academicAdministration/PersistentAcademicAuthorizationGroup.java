@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.domain.accessControl.academicAdministration;
 
 import java.util.Collection;
+import java.util.Comparator;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -21,6 +22,17 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
  * @author Pedro Santos (pedro.miguel.santos@ist.utl.pt)
  */
 public class PersistentAcademicAuthorizationGroup extends PersistentAcademicAuthorizationGroup_Base {
+
+    static public Comparator<PersistentAcademicAuthorizationGroup> COMPARATOR_BY_LOCALIZED_NAME = new Comparator<PersistentAcademicAuthorizationGroup>() {
+	@Override
+	public int compare(final PersistentAcademicAuthorizationGroup p1, final PersistentAcademicAuthorizationGroup p2) {
+	    String operationName1 = p1.getOperation().getLocalizedName();
+	    String operationName2 = p2.getOperation().getLocalizedName();
+	    int res = operationName1.compareTo(operationName2);
+	    return res;
+	}
+    };
+
     public PersistentAcademicAuthorizationGroup(AcademicOperationType operation, Set<AcademicProgram> targetPrograms,
 	    Set<AdministrativeOffice> administrativeOffices) {
 	super();

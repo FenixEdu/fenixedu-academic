@@ -44,7 +44,7 @@ public class AuthorizationsManagementBean implements Serializable {
 		    groups.add(bean);
 		}
 	    }
-	    Collections.sort(this.groups);
+	    Collections.sort(this.groups, AuthorizationGroupBean.COMPARATOR_BY_LOCALIZED_NAME);
 	}
     }
 
@@ -164,5 +164,4 @@ public class AuthorizationsManagementBean implements Serializable {
 	    }
 	}
     }
-
 }

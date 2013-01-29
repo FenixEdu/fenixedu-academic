@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.presentationTier.Action.academicAdministration;
 
 import java.io.Serializable;
+import java.util.Comparator;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -24,6 +25,16 @@ public class AuthorizationGroupBean implements Serializable, Comparable<Authoriz
     private Set<AcademicProgram> programs;
 
     private Set<AdministrativeOffice> offices;
+
+    static public Comparator<AuthorizationGroupBean> COMPARATOR_BY_LOCALIZED_NAME = new Comparator<AuthorizationGroupBean>() {
+	@Override
+	public int compare(final AuthorizationGroupBean p1, final AuthorizationGroupBean p2) {
+	    String operationName1 = p1.getOperation().getLocalizedName();
+	    String operationName2 = p2.getOperation().getLocalizedName();
+	    int res = operationName1.compareTo(operationName2);
+	    return res;
+	}
+    };
 
     public AuthorizationGroupBean() {
 	super();

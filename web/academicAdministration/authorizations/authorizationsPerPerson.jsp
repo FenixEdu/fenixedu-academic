@@ -73,6 +73,7 @@
 							<fr:schema type="net.sourceforge.fenixedu.presentationTier.Action.academicAdministration.AuthorizationGroupBean" bundle="ACADEMIC_OFFICE_RESOURCES">
 								<fr:slot name="operation" key="label.operation">
 									<fr:property name="defaultOptionHidden" value="true"/>
+									<fr:property name="sort" value="true"/>
 									<fr:property name="onChange" value="changedValue($(this));"/>
 								</fr:slot>
 							</fr:schema>

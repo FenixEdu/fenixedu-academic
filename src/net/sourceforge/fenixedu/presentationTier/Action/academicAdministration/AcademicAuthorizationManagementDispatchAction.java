@@ -1,9 +1,8 @@
 package net.sourceforge.fenixedu.presentationTier.Action.academicAdministration;
 
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
+import java.util.SortedMap;
+import java.util.TreeMap;
+import java.util.TreeSet;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -30,17 +29,20 @@ public class AcademicAuthorizationManagementDispatchAction extends FenixDispatch
 
     public ActionForward authorizations(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) {
-	Map<Party, Set<PersistentAcademicAuthorizationGroup>> groups = new HashMap<Party, Set<PersistentAcademicAuthorizationGroup>>();
+	SortedMap<Party, TreeSet<PersistentAcademicAuthorizationGroup>> groups = new TreeMap<Party, TreeSet<PersistentAcademicAuthorizationGroup>>(
+		Party.COMPARATOR_BY_SUBPARTY_AND_NAME_AND_ID);
 	for (PersistentAccessGroup group : rootDomainObject.getPersistentAccessGroupSet()) {
 	    if (group instanceof PersistentAcademicAuthorizationGroup) {
 		for (Party member : group.getMemberSet()) {
 		    if (!groups.containsKey(member)) {
-			groups.put(member, new HashSet<PersistentAcademicAuthorizationGroup>());
+			groups.put(member, new TreeSet<PersistentAcademicAuthorizationGroup>(
+				PersistentAcademicAuthorizationGroup.COMPARATOR_BY_LOCALIZED_NAME));
 		    }
 		    groups.get(member).add((PersistentAcademicAuthorizationGroup) group);
 		}
 	    }
 	}
+
 	request.setAttribute("groups", groups.entrySet());
 	request.setAttribute("authorizationsBean", new AuthorizationsManagementBean());
 	return mapping.findForward("listAuthorizations");

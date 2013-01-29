@@ -79,6 +79,19 @@ public abstract class Party extends Party_Base implements Comparable<Party> {
 	}
     };
 
+    static final public Comparator<Party> COMPARATOR_BY_SUBPARTY = new Comparator<Party>() {
+	@Override
+	public int compare(final Party o1, final Party o2) {
+	    if ((o1 instanceof Person) && (o2 instanceof Unit)) {
+		return 1;
+	    } else if ((o1 instanceof Unit) && (o2 instanceof Person)) {
+		return -1;
+	    } else {
+		return 0;
+	    }
+	}
+    };
+
     static final public Comparator<Party> COMPARATOR_BY_NAME_AND_ID = new Comparator<Party>() {
 	@Override
 	public int compare(final Party o1, final Party o2) {
@@ -86,6 +99,17 @@ public abstract class Party extends Party_Base implements Comparable<Party> {
 	    comparatorChain.addComparator(Party.COMPARATOR_BY_NAME);
 	    comparatorChain.addComparator(Party.COMPARATOR_BY_ID);
 
+	    return comparatorChain.compare(o1, o2);
+	}
+    };
+
+    static final public Comparator<Party> COMPARATOR_BY_SUBPARTY_AND_NAME_AND_ID = new Comparator<Party>() {
+	@Override
+	public int compare(final Party o1, final Party o2) {
+	    final ComparatorChain comparatorChain = new ComparatorChain();
+	    comparatorChain.addComparator(Party.COMPARATOR_BY_SUBPARTY);
+	    comparatorChain.addComparator(Party.COMPARATOR_BY_NAME);
+	    comparatorChain.addComparator(Party.COMPARATOR_BY_ID);
 	    return comparatorChain.compare(o1, o2);
 	}
     };
