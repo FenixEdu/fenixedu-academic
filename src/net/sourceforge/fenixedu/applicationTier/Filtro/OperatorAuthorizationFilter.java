@@ -12,7 +12,7 @@ import net.sourceforge.fenixedu.domain.person.RoleType;
 public class OperatorAuthorizationFilter extends AuthorizationByRoleFilter {
 
     // the singleton of this class
-    public final static PersonAuthorizationFilter instance = new PersonAuthorizationFilter();
+    public final static OperatorAuthorizationFilter instance = new OperatorAuthorizationFilter();
 
     /**
      * The singleton access method of this class.
@@ -29,6 +29,7 @@ public class OperatorAuthorizationFilter extends AuthorizationByRoleFilter {
      * 
      * @see ServidorAplicacao.Filtro.AuthorizationByRoleFilter#getRoleType()
      */
+    @Override
     protected RoleType getRoleType() {
 	return RoleType.OPERATOR;
     }

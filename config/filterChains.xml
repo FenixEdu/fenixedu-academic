@@ -690,13 +690,6 @@
     </filterChain>
 
     <filterChain>
-        <name>SearchPersonAuthorization</name>
-        <expression>PersonAuthorization</expression>
-        <invocationTiming>1</invocationTiming>
-        <filterClass>net.sourceforge.fenixedu.applicationTier.Filtro.AccessControlFilter</filterClass>
-    </filterChain>
-
-    <filterChain>
         <name>SeminaryCoordinatorOrStudent</name>
         <expression>SeminaryCoordinatorOrStudent</expression>
         <invocationTiming>1</invocationTiming>

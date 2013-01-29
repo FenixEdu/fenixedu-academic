@@ -419,13 +419,6 @@
     </filter>
 
     <filter>
-        <name>PersonAuthorization</name>
-        <implementationClass>net.sourceforge.fenixedu.applicationTier.Filtro.PersonAuthorizationFilter</implementationClass>
-        <description></description>
-        <isTransactional>false</isTransactional>
-    </filter>
-
-    <filter>
         <name>ProjectsManagerAuthorization</name>
         <implementationClass>net.sourceforge.fenixedu.applicationTier.Filtro.projectsManagement.ProjectsManagerAuthorizationFilter</implementationClass>
         <description></description>

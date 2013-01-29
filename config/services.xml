@@ -3346,17 +3346,13 @@
         <name>SearchPerson</name>
         <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.person.SearchPerson</implementationClass>
         <isTransactional>true</isTransactional>
-        <filterChains>
-            <chain name="SearchPersonAuthorization"/>
-        </filterChains>
+        <filterChains />
     </service>
     <service>
         <name>SearchPersonWithCard</name>
         <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.person.SearchPersonWithCard</implementationClass>
         <isTransactional>true</isTransactional>
-        <filterChains>
-            <chain name="SearchPersonAuthorization"/>
-        </filterChains>
+       <filterChains />
     </service>
     <service>
         <name>SearchPersonsForParticipations</name>
