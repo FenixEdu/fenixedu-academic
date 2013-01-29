@@ -128,25 +128,45 @@ ul.material li.feedback { background: url(<%= request.getContextPath() %>/images
 	</div>
 </logic:notPresent>
 
+<!--
+	<h3>VANTAGENS</h3>
+	-->
+
 <h3><bean:message key="label.alumni.advantages" bundle="ALUMNI_RESOURCES"/></h3>
 <div style="background: #f5f5f5; border: 1px solid #ddd; padding: 0.75em 0.5em;">
-	<p class="indent1 mtop025 mbottom05">Além das opções visíveis nos menus, lembramos que o leque de vantagens já disponíveis inclui:</p>
+	<p class="indent1 mtop025 mbottom05"><bean:message key="label.alumni.advantages.remember" bundle="ALUMNI_RESOURCES"/></p>
 	<ul class="material">
-		<li class="mailfwd">endereço de <html:link target="_blank" href="https://ciist.ist.utl.pt/servicos/mail.php">mail personalizado</html:link> e, se necessário, com <em>forward</em> automático (se já possui mail, efectue a sua <html:link target="_blank" href="https://ciist.ist.utl.pt/servicos/self_service">activação</html:link>)</li>
-		<li class="homepage">alojamento de página web institucional (cf. área Pessoal)</li>
-		<li class="library">acesso à <a target="_blank" href="http://bist.ist.utl.pt">Biblioteca do IST</a> (cartão de utilizador + recursos electrónicos)</li>
+		<li class="mailfwd"><bean:message key="label.alumni.advantages.mail1" bundle="ALUMNI_RESOURCES"/> 
+			<html:link target="_blank" href="https://ciist.ist.utl.pt/servicos/mail.php"><bean:message key="label.alumni.advantages.mail2" bundle="ALUMNI_RESOURCES"/></html:link>
+			<bean:message key="label.alumni.advantages.mail3" bundle="ALUMNI_RESOURCES"/> 
+			<em><bean:message key="label.alumni.advantages.mail4" bundle="ALUMNI_RESOURCES"/></em>
+			<bean:message key="label.alumni.advantages.mail5" bundle="ALUMNI_RESOURCES"/> 
+			<html:link target="_blank" href="https://ciist.ist.utl.pt/servicos/self_service"><bean:message key="label.alumni.advantages.mail6" bundle="ALUMNI_RESOURCES"/></html:link>)
+		</li>
+		<li class="homepage"><bean:message key="label.alumni.advantages.website" bundle="ALUMNI_RESOURCES"/> </li>
+		<li class="library"><bean:message key="label.alumni.advantages.library1" bundle="ALUMNI_RESOURCES"/>
+			<a target="_blank" href="http://bist.ist.utl.pt"><bean:message key="label.alumni.advantages.library2" bundle="ALUMNI_RESOURCES"/></a> 
+			<bean:message key="label.alumni.advantages.library3" bundle="ALUMNI_RESOURCES"/>
+		</li>
 	</ul>
 </div>
+<p><bean:message key="label.alumni.advantages.message" bundle="ALUMNI_RESOURCES"/></p>
 
-<p>Recordamos, ainda, que os serviços a seguir listados, estão à vossa disposição, prontos a corresponder às solicitações que lhes forem dirigidas:</p>
+<!--
+	<h3>DESCONTOS ESPECIAIS</h3>
+	-->
 
 <h3> <bean:message key="label.alumni.specialDiscounts" bundle="ALUMNI_RESOURCES"/></h3>
 <ul>
-	<li>na aquisição de publicações da <a target="_blank" href="http://www.istpress.ist.utl.pt/">IST Press</a>;</li>
-	<li>na aquisição de produtos de <a target="_blank" href="http://gcrp.ist.utl.pt/html/relacoespublicas/produtos.shtml">merchandising</a>;</li>
-	<li>na utilização de espaços do <a target="_blank" href="http://centrocongressos.ist.utl.pt/">Centro de Congressos do IST</a>.</li>
-</ul>
 
+	<li><bean:message key="label.alumni.specialDiscounts.publications" bundle="ALUMNI_RESOURCES"/><a target="_blank" href="http://www.istpress.ist.utl.pt/">IST Press</a>;</li>
+	<li><bean:message key="label.alumni.specialDiscounts.produts" bundle="ALUMNI_RESOURCES"/> <a target="_blank" href="http://gcrp.ist.utl.pt/html/relacoespublicas/produtos.shtml">merchandising</a>;</li>
+	<li><bean:message key="label.alumni.specialDiscounts.spaces" bundle="ALUMNI_RESOURCES"/> <a target="_blank" href="http://centrocongressos.ist.utl.pt/"><bean:message key="label.alumni.specialDiscounts.spaces.congress" bundle="ALUMNI_RESOURCES"/></a>.</li>
+</ul>
+<!--
+	<h3>OPORTUNIDADES</h3>
+	-->
+	
 <h3> <bean:message key="label.alumni.opportunities" bundle="ALUMNI_RESOURCES"/></h3>
 <ul>
 	<li><a target="_blank" href="http://www.ist.utl.pt/html/ensino/">Ensino, Pós-graduações e Formação</a></li>
@@ -159,6 +179,10 @@ ul.material li.feedback { background: url(<%= request.getContextPath() %>/images
 	<li><a target="_blank" href="http://nape.ist.utl.pt">Cultura e Desporto</a></li>
 </ul>
 
+<!--
+	<h3>LINKS ÚTEIS</h3>
+	-->
+
 <h3> <bean:message key="label.alumni.usefulLinks" bundle="ALUMNI_RESOURCES"/></h3>
 <ul>
 	<li><a target="_blank" href="http://aaa.ist.utl.pt" title="Uma ponte entre o Técnico e os seus Antigos Alunos">Associação dos Antigos Alunos do <%=net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionName()%> (AAAIST)</a></li>
@@ -169,8 +193,16 @@ ul.material li.feedback { background: url(<%= request.getContextPath() %>/images
 	<li><a target="_blank" href="http://www.apea.pt">Associação Portuguesa de Engenharia do Ambiente</a></li>
 </ul>
 
+<!--
+	<h3>DADOS PESSOAIS</h3>
+	-->
+
 <h3> <bean:message key="label.alumni.personalData" bundle="ALUMNI_RESOURCES"/></h3>
 <ul><bean:message key="label.alumni.personalData.message" bundle="ALUMNI_RESOURCES"/></ul>
+
+<!--
+	<h3>COMENTÁRIOS</h3>
+	-->
 
 <h3> <bean:message key="label.alumni.commentsOrSuggestions" bundle="ALUMNI_RESOURCES"/></h3>
 <ul class="material">  
