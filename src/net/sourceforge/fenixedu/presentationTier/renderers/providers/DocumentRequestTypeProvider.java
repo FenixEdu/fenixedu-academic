@@ -45,10 +45,10 @@ public class DocumentRequestTypeProvider implements DataProvider {
 	final Collection<DocumentRequestType> result = new ArrayList<DocumentRequestType>();
 
 	for (final DocumentRequestType documentRequestType : DocumentRequestType.values()) {
-	    if (!includeQuickDeliveryTypes && documentRequestType.isAllowedToQuickDeliver()) {
+	    if (includeQuickDeliveryTypes != documentRequestType.isAllowedToQuickDeliver()) {
 		continue;
 	    }
-	    if (!includePreBolonhaTypes && documentRequestType.isPreBolonha()) {
+	    if (includePreBolonhaTypes != documentRequestType.isPreBolonha()) {
 		continue;
 	    }
 	    if (documentRequestType.isBolonhaOnly() && bean.hasRegistration() && !bean.getRegistration().isBolonha()) {
