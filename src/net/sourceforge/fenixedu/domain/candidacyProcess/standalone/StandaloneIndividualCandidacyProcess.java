@@ -110,8 +110,10 @@ public class StandaloneIndividualCandidacyProcess extends StandaloneIndividualCa
 	Set<AcademicProgram> programs = AcademicAuthorizationGroup.getProgramsForOperation(userView.getPerson(),
 		AcademicOperationType.MANAGE_INDIVIDUAL_CANDIDACIES);
 
-	if (process == null || process.getCandidacy() == null)
-	    return false;
+	if (process == null || process.getCandidacy() == null) {
+	    return new AcademicAuthorizationGroup(AcademicOperationType.MANAGE_INDIVIDUAL_CANDIDACIES).isMember(userView
+		    .getPerson());
+	}
 
 	if (process.getCandidacy().getCurricularCourses().isEmpty())
 	    return true;
