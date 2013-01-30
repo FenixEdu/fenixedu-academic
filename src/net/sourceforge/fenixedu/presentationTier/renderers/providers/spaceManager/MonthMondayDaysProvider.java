@@ -32,7 +32,7 @@ public class MonthMondayDaysProvider implements DataProvider {
 	    YearMonthDay firstDayOfMonth = new YearMonthDay(yearNumber, monthNumber, 1);
 	    YearMonthDay monday = firstDayOfMonth.toDateTimeAtMidnight().withDayOfWeek(MONDAY_IN_JODA_TIME).toYearMonthDay();
 
-	    if (monday.getMonthOfYear() < monthNumber) {
+	    if ((monday.getMonthOfYear() < monthNumber) || (monday.getYear() < yearNumber)) {
 		monday = monday.plusDays(Lesson.NUMBER_OF_DAYS_IN_WEEK);
 	    }
 

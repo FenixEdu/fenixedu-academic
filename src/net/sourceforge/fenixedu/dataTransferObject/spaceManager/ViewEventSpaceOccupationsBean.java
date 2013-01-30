@@ -31,7 +31,7 @@ public class ViewEventSpaceOccupationsBean implements Serializable {
 	    setMonth(new Partial(DateTimeFieldType.monthOfYear(), day.getMonthOfYear()));
 
 	    YearMonthDay monday = day.toDateTimeAtMidnight().withDayOfWeek(MONDAY_IN_JODA_TIME).toYearMonthDay();
-	    if (monday.getMonthOfYear() < day.getMonthOfYear()) {
+	    if ((monday.getMonthOfYear() < day.getMonthOfYear()) || (monday.getYear() < day.getYear())) {
 		monday = monday.plusDays(Lesson.NUMBER_OF_DAYS_IN_WEEK);
 	    }
 
