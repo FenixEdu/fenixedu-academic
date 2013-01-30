@@ -160,7 +160,6 @@ ul.material li.feedback { background: url(<%= request.getContextPath() %>/images
 <ul>
 
 	<li><bean:message key="label.alumni.specialDiscounts.publications" bundle="ALUMNI_RESOURCES"/><a target="_blank" href="http://www.istpress.ist.utl.pt/">IST Press</a>;</li>
-	<li><bean:message key="label.alumni.specialDiscounts.produts" bundle="ALUMNI_RESOURCES"/> <a target="_blank" href="http://gcrp.ist.utl.pt/html/relacoespublicas/produtos.shtml">merchandising</a>;</li>
 	<li><bean:message key="label.alumni.specialDiscounts.spaces" bundle="ALUMNI_RESOURCES"/> <a target="_blank" href="http://centrocongressos.ist.utl.pt/"><bean:message key="label.alumni.specialDiscounts.spaces.congress" bundle="ALUMNI_RESOURCES"/></a>.</li>
 </ul>
 <!--
@@ -173,9 +172,9 @@ ul.material li.feedback { background: url(<%= request.getContextPath() %>/images
 	<li><a target="_blank" href="http://galtec.ist.utl.pt/">Licenciamento de Tecnologia</a></li>
 	<li><a target="_blank" href="http://www.istpress.ist.utl.pt/">Oportunidades de publicação de livros</a></li>
 	<li><a href="mailto:empreendedorismo@ist.utl.pt">Empreendedorismo</a></li>
-	<li><a target="_blank" href="http://gep.ist.utl.pt/html/oe">Empregabilidade</a></li>
-	<li><a target="_blank" href="http://gep.ist.utl.pt/">Estudos, Projectos e Estatísticas do IST</a></li>
-	<li><a target="_blank" href="http://namp.ist.utl.pt/">Apoio Médico e Psicológico</a></li>
+	<li><a target="_blank" href="http://aep.ist.utl.pt/observatorio-de-empregabilidade/">Empregabilidade</a></li>
+	<li><a target="_blank" href="http://aep.ist.utl.pt/">Estudos, Projectos e Estatísticas do IST</a></li>
+	<li><a target="_blank" href="http://smap.ist.utl.pt/">Apoio Médico e Psicológico</a></li>
 	<li><a target="_blank" href="http://nape.ist.utl.pt">Cultura e Desporto</a></li>
 </ul>
 

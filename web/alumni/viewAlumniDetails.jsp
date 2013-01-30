@@ -17,7 +17,7 @@
 <h2><bean:message key="link.search.alumni" bundle="ALUMNI_RESOURCES" /></h2>
 
 <p class="mtop15 mbottom05">
-	<a href="<%= request.getContextPath() + "/alumni/searchAlumni.do?method=showAlumniList"%>">&laquo; Efectuar nova procura</a>
+	<a href="<%= request.getContextPath() + "/alumni/searchAlumni.do?method=showAlumniList"%>"><bean:message key="link.search.alumni.newSearch" bundle="ALUMNI_RESOURCES" /></a>
 </p>
 
 <table class="tstyle2 thlight thleft thwhite">

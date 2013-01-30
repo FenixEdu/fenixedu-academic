@@ -104,8 +104,8 @@
 		<tr>
 			<th><bean:message key="label.numberAprovedCurricularCourses" bundle="ACADEMIC_OFFICE_RESOURCES"/></th>
 			<th><bean:message key="label.total.ects.credits" bundle="ACADEMIC_OFFICE_RESOURCES"/></th>
-			<th><bean:message key="average" bundle="STUDENT_RESOURCES"/> Ponderada</th>
-			<th><bean:message key="average" bundle="STUDENT_RESOURCES"/> Simples</th>
+			<th><bean:message key="average" bundle="STUDENT_RESOURCES"/> <bean:message key="AverageType.WEIGHTED" bundle="ENUMERATION_RESOURCES"/></th>
+			<th><bean:message key="average" bundle="STUDENT_RESOURCES"/> <bean:message key="AverageType.SIMPLE" bundle="ENUMERATION_RESOURCES"/></th>
 			<th><bean:message key="label.curricular.year" bundle="STUDENT_RESOURCES"/></th>
 		</tr>
 		<tr>
