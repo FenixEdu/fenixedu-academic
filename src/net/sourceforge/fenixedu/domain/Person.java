@@ -227,7 +227,7 @@ public class Person extends Person_Base {
 	}
 
 	final String formattedName = PersonNameFormatter.prettyPrint(name);
-	String oldName = (getPartyName() == null) ? null : getPartyName().getPreferedContent();
+	String oldName = getPartyName() == null ? null : getPartyName().getPreferedContent();
 
 	MultiLanguageString partyName = super.getPartyName();
 	partyName = partyName == null ? new MultiLanguageString() : partyName;
@@ -1223,12 +1223,11 @@ public class Person extends Person_Base {
     }
 
     /**
-     * Filters all parent PersonFunction accountabilities and returns all the
-     * PersonFunctions that selection indicated in the parameters.
+     * Filters all parent PersonFunction accountabilities and returns all the PersonFunctions that selection indicated in the
+     * parameters.
      * 
      * @param unit
-     *            filter all PersonFunctions to this unit, or <code>null</code>
-     *            for all PersonFunctions
+     *            filter all PersonFunctions to this unit, or <code>null</code> for all PersonFunctions
      * @param includeSubUnits
      *            if even subunits of the given unit are considered
      * @param active
@@ -2101,12 +2100,15 @@ public class Person extends Person_Base {
 
     private boolean isPayableOnAnyOfAdministrativeOffices(final Set<AdministrativeOffice> administrativeOffices, final Event event) {
 
-	if (administrativeOffices == null)
+	if (administrativeOffices == null) {
 	    return true;
+	}
 
-	for (final AdministrativeOffice administrativeOffice : administrativeOffices)
-	    if (event.isPayableOnAdministrativeOffice(administrativeOffice))
+	for (final AdministrativeOffice administrativeOffice : administrativeOffices) {
+	    if (administrativeOffice == null || event.isPayableOnAdministrativeOffice(administrativeOffice)) {
 		return true;
+	    }
+	}
 
 	return false;
     }
@@ -2657,8 +2659,8 @@ public class Person extends Person_Base {
 
 	private boolean areNamesPresent(final String name, final String[] searchNameParts) {
 	    final String nameNormalized = StringNormalizer.normalize(name).toLowerCase();
-	    for (int i = 0; i < searchNameParts.length; i++) {
-		final String namePart = searchNameParts[i];
+	    for (String searchNamePart : searchNameParts) {
+		final String namePart = searchNamePart;
 		if (!nameNormalized.contains(namePart)) {
 		    return false;
 		}
@@ -4093,9 +4095,8 @@ public class Person extends Person_Base {
 		    result.append(institution);
 		}
 	    }
-	    if (!person.hasAnyRole(exclusionRoleTypes)
-		    || (roleType != RoleType.RESEARCHER || (person.getResearcher() != null && person.getResearcher()
-			    .isActiveContractedResearcher()))) {
+	    if (!person.hasAnyRole(exclusionRoleTypes) || roleType != RoleType.RESEARCHER || person.getResearcher() != null
+		    && person.getResearcher().isActiveContractedResearcher()) {
 	    }
 	}
 	return result.toString();
@@ -4104,8 +4105,8 @@ public class Person extends Person_Base {
     private boolean hasAnyRoleHack(final RoleType[] roleTypes) {
 	for (final RoleType roleType : roleTypes) {
 	    if (hasRole(roleType)
-		    && (roleType != RoleType.RESEARCHER || (getResearcher() != null && getResearcher()
-			    .isActiveContractedResearcher()))) {
+		    && (roleType != RoleType.RESEARCHER || getResearcher() != null
+			    && getResearcher().isActiveContractedResearcher())) {
 		return true;
 	    }
 	}
