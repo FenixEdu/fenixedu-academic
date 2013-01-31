@@ -53,7 +53,6 @@
 		<fr:property name="linkFormat(view)" value="/student.do?method=visualizeRegistration&registrationID=${idInternal}" />
 		<fr:property name="key(view)" value="link.student.visualizeRegistration"/>
 		<fr:property name="bundle(view)" value="ACADEMIC_OFFICE_RESOURCES"/>
-		<fr:property name="visibleIf(view)" value="isForDegreeOffice"/>
 		<fr:property name="contextRelative(view)" value="true"/>
 	</fr:layout>
 </fr:view>
