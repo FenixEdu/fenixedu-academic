@@ -16,6 +16,7 @@
 <html:form action="/printMarkSheet.do">
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="printMarkSheets"/>
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.markSheet" property="markSheet"/>
+	<html:hidden bundle="HTMLALT_RESOURCES" property="ecID"/>
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="1"/>
 	<table>
 		<tr>
